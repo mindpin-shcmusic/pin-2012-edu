@@ -78,7 +78,7 @@ end
 #############
 
 MINDPIN_DOMAINS = {
-  'pin-user-auth' => '2010.edu.mindpin.com'
+  'pin-user-auth' => '2012.edu.mindpin.com'
 }
 
 def pin_url_for(site_name, path = '')
