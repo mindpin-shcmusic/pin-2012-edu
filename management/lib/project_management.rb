@@ -7,16 +7,17 @@ class ProjectManagement
     # param operation 要做的操作
     #       start stop restart usr2_stop
     def operate(project_name,operation)
-      short_name = find_short_project_name_by_project_name(project_name)
+      check_project_name(project_name)
       unicorn_sh = File.join(UNICORN_SH_PATH,"unicorn.sh")
       raise "不支持 #{operation} 操作" if !["start","stop","restart","usr2_stop"].include?(operation)
       Dir.chdir(UNICORN_SH_PATH) do
-        `sh #{unicorn_sh} #{short_name} #{operation}`
+        `sh #{unicorn_sh} #{project_name} #{operation}`
       end
     end
 
     # 可能返回的值: 正常运行 关闭 停止或者僵死
     def state(project_name)
+      check_project_name(project_name)
       pid_file_path = find_pid_file_path_by_project_name(project_name)
       ManagementUtil.check_process_by_pid_file(pid_file_path)
     end
@@ -50,29 +51,16 @@ class ProjectManagement
     end
 
     private
-    # 根据完整的工程名 找到 unicorn.sh 中对应的名字
-    def find_short_project_name_by_project_name(project_name)
-      case project_name
-      when "pin-user-auth" then "user"
-      else
-        raise "#{project_name} 工程不存在"
-      end
+    def check_project_name(project_name)
+      raise "没有 #{project_name} 这个工程" if !PROJECTS.include?(project_name)
     end
-
+    
     # 根据 工程名 找到 工程进程的 pid文件 的存放路径
     def find_pid_file_path_by_project_name(project_name)
-      case project_name
-      when "pin-user-auth"
-        "/web/2012/pids/unicorn-user-auth.pid"
-      else
-        raise "#{project_name} 工程不存在"
-      end
+        "/web/2012/pids/unicorn-#{project_name}.pid"
     end
 
     def find_log_file_path_by_project_name(project_name)
-      if !["pin-user-auth"].include?(project_name)
-        raise "#{project_name} 工程不存在"
-      end
       File.join(PIN_2012_PATH,"apps/#{project_name}/log/#{Rails.env}.log")
     end
   end

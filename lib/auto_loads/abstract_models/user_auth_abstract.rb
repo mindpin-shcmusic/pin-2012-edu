@@ -1,5 +1,5 @@
-class UserAuthAbstract < ActiveRecord::Base
+class AuthAbstract < ActiveRecord::Base
   self.abstract_class = true
-  build_database_connection('pin-user-auth')
+  build_database_connection('pin-auth')
 end
 

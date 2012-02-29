@@ -8,4 +8,5 @@ module PathConfig
   REDIS_SERVICE_SH = File.join(SERVERS_SH_PATH,"redis_service.sh")
   RESQUE_WEB_SH = File.join(SERVERS_SH_PATH,"resque_web_service.sh")
 
+  PROJECTS = Dir.entries(File.join(PIN_2012_PATH,"apps")).delete_if{|app|app == "." || app == ".."}
 end

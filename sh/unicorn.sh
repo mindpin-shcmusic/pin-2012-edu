@@ -1,8 +1,14 @@
 
-pin_edu_2012_dir=`dirname $0`/..
+pin_2012_edu_dir=`dirname $0`/..
 
-user_auth_dir=$pin_edu_2012_dir/apps/pin-user-auth
-user_auth_pid=/web/2012/pids/unicorn-user-auth.pid
+pin_auth_dir=$pin_2012_edu_dir/apps/pin-auth
+pin_auth_pid=/web/2012/pids/unicorn-pin-auth.pid
+
+pin_admin_dir=$pin_2012_edu_dir/apps/pin-admin
+pin_admin_pid=/web/2012/pids/unicorn-pin-admin.pid
+
+pin_edu_sns_dir=$pin_2012_edu_dir/apps/pin-edu-sns
+pin_edu_sns_pid=/web/2012/pids/unicorn-pin-edu-sns.pid
 
 sh_dir=`dirname $0`
 . $sh_dir/function.sh
@@ -10,14 +16,24 @@ sh_dir=`dirname $0`
 rails_env=$(get_rails_env)
 
   case "$1" in
-    user)
-     cd $user_auth_dir
-     pid=$user_auth_pid
-     echo "user_auth_dir"
+    pin-auth)
+     cd $pin_auth_dir
+     pid=$pin_auth_pid
+     echo "pin_auth_dir"
+    ;;
+    pin-admin)
+     cd $pin_admin_dir
+     pid=$pin_admin_pid
+     echo "pin_admin_dir"
+    ;;
+    pin-edu-sns)
+     cd $pin_edu_sns_dir
+     pid=$pin_edu_sns_pid
+     echo "pin_edu_sns_dir"
     ;;
     *)
     echo "$1"
-    echo "tip:(user)"
+    echo "tip:(pin-auth|pin-admin|pin-edu-sns)"
     exit 5
     ;;
   esac

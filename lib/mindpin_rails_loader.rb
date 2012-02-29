@@ -40,6 +40,10 @@ class MindpinRailsLoader
     # 时区，国际化
     @config.time_zone = 'UTC'
     @config.i18n.default_locale = :cn
+    @config.encoding = "utf-8"
+    @config.filter_parameters += [:password]
+    @config.assets.enabled = true
+    @config.assets.version = '1.0'
   end
 
   # 加载补丁

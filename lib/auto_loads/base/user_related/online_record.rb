@@ -1,6 +1,6 @@
 require 'uuidtools'
 
-class OnlineRecord < UserAuthAbstract
+class OnlineRecord < AuthAbstract
   belongs_to :user
 
   def self.onlines

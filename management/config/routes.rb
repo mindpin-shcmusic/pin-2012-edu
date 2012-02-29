@@ -1,4 +1,4 @@
-Mindpin::Application.routes.draw do
+MindpinEduSns::Application.routes.draw do
   root :to => 'index#index'
 
   post '/operate_project' => 'index#operate_project'
