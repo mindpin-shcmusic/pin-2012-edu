@@ -2,18 +2,17 @@ module SessionsControllerMethods
   # 登录
   def new
     return redirect_back_or_default(root_url) if logged_in?
-    return render :layout=>'anonymous',:template=>'index/login'
+    return render :template=>'index/login'
   end
   
   def create
     self.current_user = User.authenticate2(params[:email], params[:password])
-    site = 'pin-user-auth'
     if logged_in?
       after_logged_in()
-      return redirect_to pin_url_for(site,'/')
+      redirect_to "/"
     else
       flash[:error]="邮箱/密码不正确"
-      return redirect_to pin_url_for(site,'/login')
+      redirect_to '/login'
     end
   end
   
@@ -28,7 +27,7 @@ module SessionsControllerMethods
       destroy_online_record(user)
     end
     
-    return redirect_to pin_url_for('pin-user-auth','/login')
+    return redirect_to "/login"
   end
   
 end

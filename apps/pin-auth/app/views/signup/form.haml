@@ -1,0 +1,20 @@
+-submit_url = "/signup_submit"
+
+=flash_info
+= form_for @user,:url=>submit_url do |f|
+  %div
+    %label 电子邮箱
+    = f.text_field :email,:maxlength=>50
+  %div
+    %label 用户名
+    = f.text_field :name,:maxlength=>50
+  %div
+    %label 密码
+    = f.password_field :password,:value=>'',:maxlength=>32
+  %div
+    %label 确认密码
+    = f.password_field :password_confirmation,:value=>'',:maxlength=>32
+  %div
+    =submit_tag "确认注册"
+%div  
+  %a{:href=>'/login'} <span>直接登录</span>
