@@ -32,7 +32,7 @@ module UserMethods
       :storage => :oss,
       :path => AVATAR_PATH,
       :url  => AVATAR_URL,
-      :default_url   => pin_url_for('pin-user-auth',"/images/default_avatars/:style.png"),
+      :default_url   => pin_url_for('pin-auth',"/images/default_avatars/:style.png"),
       :default_style => :normal
     
     # 校验部分

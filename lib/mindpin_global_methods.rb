@@ -78,14 +78,15 @@ end
 #############
 
 MINDPIN_DOMAINS = {
-  'pin-user-auth' => '2012.edu.mindpin.com'
+  'pin-auth'  => 'auth.yinyue.edu',
+  'pin-admin' => 'admin.yinyue.edu'
 }
 
 def pin_url_for(site_name, path = '')
   domain = MINDPIN_DOMAINS[site_name]
   raise "找不到名为为 #{site_name} 的 MINDPIN_DOMAINS 配置" if domain.blank?
   
-  prefix = Rails.env.production? ? 'http://' : 'http://'
+  prefix = Rails.env.production? ? 'http://' : 'http://dev.'
   site_url = "#{prefix}#{domain}"
   File.join(site_url, path)
 end

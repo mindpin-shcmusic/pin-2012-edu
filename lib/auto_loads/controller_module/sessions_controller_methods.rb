@@ -9,7 +9,7 @@ module SessionsControllerMethods
     self.current_user = User.authenticate2(params[:email], params[:password])
     if logged_in?
       after_logged_in()
-      redirect_to "/"
+      redirect_back_or_default("/")
     else
       flash[:error]="邮箱/密码不正确"
       redirect_to '/login'

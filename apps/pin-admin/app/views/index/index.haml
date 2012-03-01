@@ -1,0 +1,7 @@
+%div
+  -if logged_in?
+    ="欢迎你，#{current_user.name}"
+  -else
+    ="你现在未登录"
+=link_to "教师列表","/teachers"
+=link_to "课程列表","/courses"

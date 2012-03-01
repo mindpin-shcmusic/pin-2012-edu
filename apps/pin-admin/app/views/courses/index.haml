@@ -1,0 +1,18 @@
+%ul
+  -@courses.each do |course|
+    %li
+      %div
+        %div  名字 #{course.name}
+        %div 课程号 #{course.cid}    
+        %div 开课院系 #{course.location}    
+        %div 上课地点 #{course.cid}
+        -if course.teacher.blank?
+          %div 教师 未指定    
+        -else    
+          %div 教师 #{course.teacher.real_name}    
+        %div 其他描述 #{course.desc}
+        =link_to "查看详情","/courses/#{course.id}"
+=link_to "创建课程","courses/new"
+=link_to "首页","/"
+
+  
