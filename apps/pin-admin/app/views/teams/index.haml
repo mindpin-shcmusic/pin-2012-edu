@@ -1,0 +1,15 @@
+%ul
+  -@teams.each do |team|
+    %li
+      %div
+        %div  名字 #{team.name}
+        %div 班级号 #{team.cid}    
+        -if team.teacher.blank?
+          %div 教师 未指定    
+        -else    
+          %div 教师 #{team.teacher.real_name}    
+        =link_to "查看详情","/teams/#{team.id}"
+=link_to "创建班级","teams/new"
+=link_to "首页","/"
+
+  

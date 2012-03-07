@@ -1,0 +1,9 @@
+=flash[:error]
+=form_for @category do |f|
+  %div
+    %label 名字
+    =f.text_field :name
+  %div
+    =f.submit "创建"
+    
+    

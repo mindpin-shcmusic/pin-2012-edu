@@ -1,0 +1,9 @@
+=form_tag "/media_files",:multipart => true do
+  =file_field_tag "file"
+  =submit_tag "提交到OSS"
+  
+=form_tag "http://dev.www.uploadmediafile.com/upload",:multipart => true do
+  =file_field_tag "file"
+  =hidden_field_tag "creator_id",current_user.id
+  =submit_tag "提交到EDU"
+  

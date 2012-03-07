@@ -1,0 +1,10 @@
+=flash[:error]
+=form_for @student do |t|
+  %div
+    %label 真实姓名
+    =t.text_field :real_name
+  %div
+    %label 学生编号
+    =t.text_field :sid
+  %div
+    =t.submit "创建"

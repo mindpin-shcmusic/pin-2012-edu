@@ -1,0 +1,16 @@
+=flash[:error]
+=form_for @team do |f|
+  %div
+    %label 名字
+    =f.text_field :name
+  %div
+    %label 班级号
+    =f.text_field :cid
+  %div
+    %label 教师
+    =f.select(:teacher_id,Teacher.all.map{|teacher|[teacher.real_name,teacher.id]}.unshift(["不指定",""]))
+    =link_to "新建教师","/teachers/new"
+  %div
+    =f.submit "创建"
+    
+		
