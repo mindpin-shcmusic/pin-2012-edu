@@ -8,8 +8,21 @@ def match_auth_routes
   post '/signup_submit' => 'signup#form_submit'
 end
 
+# -- 设置 --
+def match_account_routes
+  # 基本信息
+  get  "/setting"                     => "setting#base"
+  put  "/setting"                     => "setting#base_submit"
+
+  # 头像设置
+  get  "/setting/avatared"               => 'setting#avatared'
+  post "/setting/avatared_submit_raw"    => 'setting#avatared_submit_raw'
+  post "/setting/avatared_submit_copper" => 'setting#avatared_submit_copper'
+end
+
 MindpinEduSns::Application.routes.draw do
   # ---------------- 首页和欢迎页面 ---------
   root :to => 'index#index'
   match_auth_routes
+  match_account_routes
 end

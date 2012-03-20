@@ -1,0 +1,25 @@
+-#use 上传用户头像
+-#see 用户设置->修改头像
+
+-htitle "头像设置 上传头像"
+
+.mside.grid_5
+  =render 'setting/parts/account_links'
+
+.main.grid_19.ll
+  .page-setting-base
+    .title 上传一张图片，然后选择要裁切的部分，系统会自动替您裁好！~
+    .form.aj-submit-form
+      .clearfix
+        = avatar current_user,:large
+        = avatar current_user,:medium
+        = avatar current_user,:normal
+        = avatar current_user,:tiny
+        = avatar current_user,:mini
+
+      =form_tag "/setting/avatared_submit_raw",:multipart=>true do
+        .field
+          %label 选择一张图片并上传
+          .ip=file_field_tag :logo
+        .field.sub
+          =submit_tag "上传图片"

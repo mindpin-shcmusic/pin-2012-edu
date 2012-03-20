@@ -34,7 +34,7 @@ module AuthenticatedSystem
       else
         store_location
         flash[:notice] = info
-        redirect_to pin_url_for('pin-auth','login'), :status=>302
+        redirect_to pin_url_for('auth','login'), :status=>302
       end
     end
 

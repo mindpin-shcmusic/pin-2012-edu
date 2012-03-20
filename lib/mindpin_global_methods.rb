@@ -78,8 +78,10 @@ end
 #############
 
 MINDPIN_DOMAINS = {
-  'pin-auth'  => 'auth.yinyue.edu',
-  'pin-admin' => 'admin.yinyue.edu'
+  'auth'  => 'auth.yinyue.edu',
+  'admin' => 'admin.yinyue.edu',
+  'ui'    => 'ui.yinyue.edu',
+  'sns'   => 'sns.yinyue.edu'
 }
 
 def pin_url_for(site_name, path = '')
