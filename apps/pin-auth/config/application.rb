@@ -11,5 +11,8 @@ module MindpinEduSns
     # load mindpin lib
     require "#{Rails.root}/../../lib/mindpin_rails_loader"
     MindpinRailsLoader.new(config).load
+    
+    config.assets.paths << Rails.root.join('..', 'pin-edu-sns', 'app', 'assets', 'stylesheets')
+    config.assets.paths << Rails.root.join('..', 'pin-edu-sns', 'app', 'assets', 'javascripts')
   end
 end

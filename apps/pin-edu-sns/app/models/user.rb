@@ -1,3 +1,3 @@
-class User < AuthAbstract
+class User < ActiveRecord::Base
   include UserMethods
 end

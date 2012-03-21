@@ -1,4 +1,5 @@
-class Team < ActiveRecord::Base
+class Team < BuildDatabaseAbstract
+  
   belongs_to :teacher
   
   has_many :team_students
@@ -6,4 +7,6 @@ class Team < ActiveRecord::Base
   
   validates :name, :presence => true
   validates :cid, :uniqueness => { :if => Proc.new { |team| !team.cid.blank? } }
+  
+  include TeamStatusLink::TeamMethods
 end

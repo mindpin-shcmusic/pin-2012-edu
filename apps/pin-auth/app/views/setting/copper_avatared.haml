@@ -1,9 +1,11 @@
 -#use 裁切上传的用户头像
 -#see 用户设置->修改头像
 
--htitle "头像设置 裁剪头像"
+-htitle '头像设置 裁剪头像'
+
 - content_for :css do
   = stylesheet_link_tag  '/jcrop/css/jquery.Jcrop.css'
+
 - content_for :javascripts do
   = javascript_include_tag '/jcrop/js/jquery.Jcrop.js'
   = javascript_include_tag '/javascripts/views/image_cut.js'
@@ -13,29 +15,24 @@
 
 - temp_image_url = "#{@temp_image_url}?#{randstr}"
 
-.mside.grid_5
-  =render 'setting/parts/account_links'
-
-.main.grid_19.ll
-  .page-copper-avatar
-    .old-img
-      .font14.bold 上传的原始图片
-      %img.img-preview{:src=>temp_image_url,:style=>"#{width}px;#{height}px;"}
+.page-copper-avatar
+  .old-img
+    .font14.bold 上传的原始图片
+    %img.img-preview{:src=>temp_image_url,:style=>"#{width}px;#{height}px;"}
 
     .cutted-img
-      .font14.bold 裁剪后的图片
-      %div{:style=>"width:100px;height:100px;overflow:hidden;"}
-        %img.preview-wrap{:src=>temp_image_url}
+    .font14.bold 裁剪后的图片
+    %div{:style=>"width:100px;height:100px;overflow:hidden;"}
+      %img.preview-wrap{:src=>temp_image_url}
 
     .form.aj-submit-form
-      = form_tag '/setting/avatared_submit_copper', :class=>'copper-form' do
-        = hidden_field_tag :x1,     100
-        = hidden_field_tag :y1,     100
-        = hidden_field_tag :width , 200
-        = hidden_field_tag :height, 200
+    = form_tag '/setting/avatared_submit_copper', :class=>'copper-form' do
+      = hidden_field_tag :x1,     100
+      = hidden_field_tag :y1,     100
+      = hidden_field_tag :width , 200
+      = hidden_field_tag :height, 200
 
         .field.sub
-          =submit_tag '保存更改'
-          = link_to '取消',pin_url_for('auth','/setting/avatared'),:class=>'middlebutton gray account-cancel'
-
+        =submit_tag '保存更改'
+        = link_to '取消',pin_url_for('auth','/setting/avatared'),:class=>'middlebutton gray account-cancel'
   

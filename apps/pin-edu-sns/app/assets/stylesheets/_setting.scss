@@ -1,0 +1,37 @@
+.page-header.setting{
+  position:relative;
+  .settings a.exit{
+    position:absolute;
+    background-color:#555;
+    height:32px;line-height:32px;
+    width:69px;text-align:center;top:9px;left:5px;
+    color:#fff;&:hover{color:#fff;text-decoration:none;};
+    box-shadow:inset 1px 1px 0 rgba(255,255,255,0.1), 2px 2px 5px rgba(0,0,0,0.15);
+    @include border-radius(4px);
+    @include transition(background-color ease-out .2s);
+    &:hover{
+      background-color:#777;
+    }
+  }
+}
+
+.page-nav.setting{
+  $links-margin:15px;padding-top:20px;
+  a.base-setting, a.avatar-setting{
+    display:block;
+    margin-left:$links-margin;margin-bottom:20px;
+  }
+}
+
+.page-setting{
+  .coppered-avatars{
+    margin-bottom:20px;
+    .avatar-img{
+      margin-right:10px;
+      box-shadow:1px 1px 2px rgba(black, 0.2);
+      overflow:hidden;
+      @include border-radius(2px);
+      border:solid 3px white;
+    }
+  }
+}

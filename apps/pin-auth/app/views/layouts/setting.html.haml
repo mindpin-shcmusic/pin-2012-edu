@@ -1,0 +1,36 @@
+-# MINDPIN 工程原型Layout
+
+:ruby
+  tstr = ((yield :title) || '').gsub("\n",'')
+  title = tstr.blank? ? 'MINDPIN shcmusic SNS 用户设置' : "#{tstr} - MINDPIN shcmusic SNS 用户设置"
+
+!!! 5
+%html{:lang=>"zh"}
+  %head
+    %meta{:charset=>"utf-8"}
+    %title=title
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application'
+    = yield :css
+    = yield :head
+
+  %body.echo.gray
+    .page-wrap
+      .page-container
+        .page-header.setting
+          .settings
+            %a.exit{:href=>pin_url_for('sns')} 退出设置
+          .title=title
+          .user
+            .current-user 欢迎你，#{current_user.name}
+            .logout=link_to '退出登录', '/logout'
+            
+        .page-nav.setting
+          %a.base-setting{:href=>'/setting'} 基本信息
+          %a.avatar-setting{:href=>'setting/avatared'} 设置头像
+          
+        .page-content
+          = yield
+
+    = javascript_include_tag :application
+    = yield :javascript

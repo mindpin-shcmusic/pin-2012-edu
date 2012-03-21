@@ -25,14 +25,14 @@ class SettingController <  ApplicationController
         @user.password_confirmation=params[:new_password_confirmation]
       end
 
-    @user.sign=params[:sign]
-    @user.name=params[:name]
+    @user.sign = params[:sign]
+    @user.name = params[:name]
     if @user.save
-      flash[:success]="用户 #{@user.email}（#{@user.name}）的信息已经成功修改"
+      flash[:success] = "用户 #{@user.email}（#{@user.name}）的信息已经成功修改"
     else
       flash[:error] = get_flash_error(@user)
     end
-    return redirect_to :action=>:base
+    return redirect_to :action => :base
   end
 
   def redirect_error_info(error)
@@ -40,6 +40,7 @@ class SettingController <  ApplicationController
     redirect_to :action=>:base
   end
 
+  # -------------- 头像部分
 
   # 头像
   def avatared;end
@@ -51,22 +52,22 @@ class SettingController <  ApplicationController
     @temp_image_size = adpater.temp_image_size
     @temp_image_url  = adpater.temp_image_url
 
-    return render :template=>"setting/copper_avatared"
-  rescue Exception=>ex
+    render :template=>'setting/copper_avatared'
+  rescue Exception => ex
     p ex.message
-    puts ex.backtrace*"\n"
-    flash[:error] = "图片上传失败"
-    redirect_to :action=>:avatared
+    puts ex.backtrace * "\n"
+    flash[:error] = '图片上传失败'
+    redirect_to :action => :avatared
   end
   
   # 修改头像 - 裁切原始头像并保存到云
   def avatared_submit_copper
     UserAvatarAdpater.copper_logo(current_user, params[:x1], params[:y1], params[:width], params[:height])
-    redirect_to :action=>:avatared
-  rescue Exception=>ex
+    redirect_to :action => :avatared
+  rescue Exception => ex
     p ex.message
-    puts ex.backtrace*"\n"
-    flash[:error] = "头像裁剪失败"
-    redirect_to :action=>:avatared
+    puts ex.backtrace * "\n"
+    flash[:error] = '头像裁剪失败'
+    redirect_to :action => :avatared
   end
 end

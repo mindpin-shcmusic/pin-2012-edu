@@ -10,7 +10,13 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120306093002) do
+ActiveRecord::Schema.define(:version => 20120320033621) do
+
+  create_table "categories", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "connect_users", :force => true do |t|
     t.integer  "user_id"
@@ -60,6 +66,14 @@ ActiveRecord::Schema.define(:version => 20120306093002) do
   add_index "online_records", ["key"], :name => "index_online_records_on_key"
   add_index "online_records", ["user_id"], :name => "index_online_records_on_user_id"
 
+  create_table "statuses", :force => true do |t|
+    t.text     "content"
+    t.integer  "creator_id"
+    t.integer  "repost_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "students", :force => true do |t|
     t.string   "real_name",  :default => "", :null => false
     t.string   "sid"
@@ -72,6 +86,13 @@ ActiveRecord::Schema.define(:version => 20120306093002) do
     t.string   "real_name",  :default => "", :null => false
     t.string   "tid"
     t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "team_status_links", :force => true do |t|
+    t.integer  "team_id"
+    t.integer  "status_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

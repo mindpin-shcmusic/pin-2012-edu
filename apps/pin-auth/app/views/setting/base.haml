@@ -6,32 +6,28 @@
 -name  = user.name
 -sign  = user.sign
 
--htitle "基本信息设置"
+-htitle '基本信息设置'
 
-.mside.grid_5
-  =render 'setting/parts/account_links'
-
-.main.grid_19
-  .page-setting-base
-    .title 基本信息设置
-    .form.base.aj-submit-form
-      = flash_info
-      = form_for user,:url=>"/setting", :html=>{:method=>:put} do |f|
-        .field
-          %label 电子邮件
-          .ip.mail=email
-        .field
-          %label 用户名
-          .ip=text_field_tag :name, name, :class=>'text'
-        .field
-          %label 签名档
-          .ip=text_area_tag :sign, sign, :class=>'text', :style=>'width:200px;'
-        .field
-          %label 现在的密码
-          .ip=password_field_tag :old_password,'',:class=>'text'
-        .field
-          %label 新密码
-          .ip.new-password=password_field_tag :new_password,'',:class=>'text'
-          .ip=password_field_tag :new_password_confirmation,'',:class=>'text'
-        .field.sub
-          =submit_tag "保存更改"
+.page-setting-base
+  .title 基本信息设置
+  .form.base.aj-submit-form
+    = flash_info
+    = form_for user,:url=>"/setting", :html=>{:method=>:put} do |f|
+      .field
+        %label 电子邮件
+        .ip.mail=email
+      .field
+        %label 用户名
+        .ip=text_field_tag :name, name, :class=>'text'
+      .field
+        %label 签名档
+        .ip=text_area_tag :sign, sign, :class=>'text', :style=>'width:200px;'
+      .field
+        %label 现在的密码
+        .ip=password_field_tag :old_password,'',:class=>'text'
+      .field
+        %label 新密码
+        .ip.new-password=password_field_tag :new_password,'',:class=>'text'
+        .ip=password_field_tag :new_password_confirmation,'',:class=>'text'
+      .field.sub
+        =submit_tag "保存更改"
