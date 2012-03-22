@@ -1,0 +1,30 @@
+-#use 用户基本信息设置
+-#see 用户设置->基本信息
+
+-user  = current_user
+-email = user.email
+-name  = user.name
+-sign  = user.sign
+
+-htitle '基本信息设置'
+
+.page-title 这里显示你的基本信息。你可以修改你的用户名和密码。
+
+.page-setting
+  = flash_info
+  = form_for user,:url=>"/setting", :html=>{:method=>:put} do |f|
+    .field
+      .mail.bold 你的电子邮箱是 #{email}
+    .field
+      %label 用户名
+      =text_field_tag :name, name
+    .field
+      %label 现在的密码
+      =password_field_tag :old_password, ''
+    .field
+      %label 新密码
+      =password_field_tag :new_password, ''
+    .field
+      =password_field_tag :new_password_confirmation, ''
+    .field
+      %a.form-submit-button{:href=>'javascript:;'} 保存更改

@@ -43,31 +43,32 @@ class SettingController <  ApplicationController
   # -------------- 头像部分
 
   # 头像
-  def avatared;end
+  def avatar;end
 
   # 修改头像 - 上传原始头像
-  def avatared_submit_raw
+  def avatar_submit_raw
     adpater = UserAvatarAdpater.new(current_user, params[:logo]).create_temp_file
     
     @temp_image_size = adpater.temp_image_size
     @temp_image_url  = adpater.temp_image_url
-
-    render :template=>'setting/copper_avatared'
   rescue Exception => ex
     p ex.message
-    puts ex.backtrace * "\n"
-    flash[:error] = '图片上传失败'
-    redirect_to :action => :avatared
+    puts ex.backtrace * '\n'
+    flash[:error] = '头像上传失败'
+    return redirect_to :action => :avatar
+  ensure
+    render :template => 'setting/crop_avatar'
   end
   
   # 修改头像 - 裁切原始头像并保存到云
-  def avatared_submit_copper
-    UserAvatarAdpater.copper_logo(current_user, params[:x1], params[:y1], params[:width], params[:height])
-    redirect_to :action => :avatared
+  def avatar_submit_crop
+    UserAvatarAdpater.crop_logo(current_user, params[:x], params[:y], params[:w], params[:h])
+    redirect_to :action => :avatar
   rescue Exception => ex
     p ex.message
-    puts ex.backtrace * "\n"
+    puts ex.backtrace * '\n'
     flash[:error] = '头像裁剪失败'
-    redirect_to :action => :avatared
+    return redirect_to :action => :avatar
   end
+  
 end

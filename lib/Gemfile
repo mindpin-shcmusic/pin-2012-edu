@@ -14,6 +14,8 @@ end
 
 gem 'jquery-rails'
 
+gem 'juggernaut','2.1.1'
+
 gem 'system_timer'
 
 gem 'haml'

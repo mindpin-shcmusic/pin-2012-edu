@@ -1,0 +1,61 @@
+-htitle '问题'
+
+.page-go-back
+  =link_to '返回问题列表', '/questions'
+
+.page-question-show
+  :ruby
+    title = @question.title
+    content = @question.content
+    answers = @question.answers
+    creator = @question.creator
+    created_at = @question.created_at.localtime
+  
+    answered = @question.is_answered_by(current_user)
+  
+  .question
+    .title=title
+    - @question.tags.each do |tag|
+      %div
+        %span=tag.name
+        =link_to "删除","/questions/#{@question.id}/remove_tag?tag_name=#{tag.name}",:method=>:delete
+    %div
+      =link_to "增加标签","/questions/#{@question.id}/add_tag"
+    .ct=content
+    .meta
+      .creator #{creator.name} 提问
+      .time=created_at
+    =render 'questions/parts/question_comments', :comments => @question.comments
+  
+  .answers
+    - answers.each do |answer|
+      :ruby
+        creator = answer.creator
+        created_at = answer.created_at.localtime
+        content = answer.content
+        
+      .answer{:'data-id'=>answer.id}
+        .ct=content
+        .meta
+          .creator=creator.name
+          .time=created_at
+        .ops
+          %a.vote-up{:href=>'javascript:;'} 赞成
+          .sum=answer.vote_sum || 0
+          %a.vote-down{:href=>'javascript:;'} 反对
+          
+        =render 'questions/parts/answer_comments', :comments => answer.comments
+
+
+  -if !answered
+    .answer-form
+      = form_for @answer, :url => { :controller => 'answers', :action => 'create' } do |f|
+        .field
+          = f.hidden_field :question_id, :value => @question.id
+          %label.need 我的回答
+          %textarea{:name=>'answer[content]'}
+          
+        .field
+          %a.form-submit-button{:href=>'javascript:;'} 回答
+  -else
+    .answered 我已经回答过这个问题了

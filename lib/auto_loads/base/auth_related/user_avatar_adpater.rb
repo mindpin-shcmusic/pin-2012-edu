@@ -36,7 +36,7 @@ class UserAvatarAdpater
 
   # -------------------------------------
   
-  def self.copper_logo(user, x1, y1, width, height)
+  def self.crop_logo(user, x1, y1, width, height)
     user_id_str = user.id.to_s
     temp_file_dir  = File.join(TEMP_FILE_BASE_DIR, user_id_str)
     temp_file_name = File.join(temp_file_dir, 'avatar_tmp')
@@ -48,12 +48,12 @@ class UserAvatarAdpater
     img.format = 'PNG'
 
     # 写第二个临时文件，裁切好的PNG文件
-    coppered_file_name = File.join(temp_file_dir, 'avatar_tmp_coppered.png')
-    img.write coppered_file_name
+    croped_file_name = File.join(temp_file_dir, 'avatar_tmp_croped.png')
+    img.write croped_file_name
 
     # 赋值给user.logo (保存到云)
-    coppered_file = File.new(coppered_file_name)
-    user.update_attributes(:logo=>coppered_file)
+    croped_file = File.new(croped_file_name)
+    user.update_attributes(:logo=>croped_file)
 
     # 移除临时文件
     FileUtils.rm(temp_file_name)

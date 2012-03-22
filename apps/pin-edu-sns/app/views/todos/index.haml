@@ -1,0 +1,25 @@
+=link_to "创建待办事项","/todos/new"
+%div 未完成的待办事项
+-@unexpired_todos.each do |todo|
+  %div
+    %span=todo.content
+    %span 期限 #{todo.date.blank? ? "无" : todo.date}
+    %span=link_to "完成","/todos/#{todo.id}/do_complete",:method=>:put
+%hr
+
+%div 过期的待办事项
+-@expired_todos.each do |todo|
+  %div
+    %span=todo.content
+    %span 期限 #{todo.date}
+    %span=link_to "完成","/todos/#{todo.id}/do_complete",:method=>:put
+  
+%hr
+  
+%div 已完成的待办事项
+-@completed_todos.each do |todo|
+  %div
+    %span=todo.content
+    %span 完成时间 #{todo.updated_at}
+
+		

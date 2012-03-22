@@ -1,0 +1,41 @@
+-htitle '投票'
+
+:ruby
+  title = @vote.title
+  has_voted = @vote.has_voted_by?(current_user)
+
+.page-go-back
+  =link_to '返回投票列表', '/votes'
+  
+.page-new-vote
+  = flash.now[:notice]
+
+.page-vote-show
+  .title=title
+  - @vote.tags.each do |tag|
+    %div
+      %span=tag.name
+      =link_to "删除","/votes/#{@vote.id}/remove_tag?tag_name=#{tag.name}",:method=>:delete
+  %div
+    =link_to "增加标签","/votes/#{@vote.id}/add_tag"
+  =form_for @vote_result, :url => {:controller=>"vote_results", :action => "create" } do |f|
+    = f.hidden_field :vote_id, :value => @vote.id
+    
+    .items
+      - @vote.vote_items.each do |l|
+        .item
+          - if @vote.is_single?
+            - if @vote.kind == 'IMAGE'
+              %img{:height => "50", :src => l.image.url, :width => "50"}
+            %input{:type=>'radio', :size=>30, :value =>l.id, :name=>'vote_result[vote_result_items_attributes][][vote_item_id]'}
+          - else
+            - if @vote.kind == 'IMAGE'
+              %img{:height => "50", :src => l.image.url, :width => "50"}
+            %input{:type=>'checkbox', :size=>30, :value =>l.id, :name=>'vote_result[vote_result_items_attributes][][vote_item_id]'}
+          = l.item_title
+    
+    - if false #has_voted
+      .has-voted 你已经投过票了，每个人只能投一次。
+    - else
+      .subm
+        %a.form-submit-button{:href=>'javascript:;'} 投票

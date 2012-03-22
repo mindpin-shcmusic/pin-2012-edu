@@ -15,9 +15,9 @@ def match_account_routes
   put  "/setting"                     => "setting#base_submit"
 
   # 头像设置
-  get  "/setting/avatared"               => 'setting#avatared'
-  post "/setting/avatared_submit_raw"    => 'setting#avatared_submit_raw'
-  post "/setting/avatared_submit_copper" => 'setting#avatared_submit_copper'
+  get  "/setting/avatar"              => 'setting#avatar'
+  post "/setting/avatar_submit_raw"   => 'setting#avatar_submit_raw'
+  post "/setting/avatar_submit_crop"  => 'setting#avatar_submit_crop'
 end
 
 MindpinEduSns::Application.routes.draw do

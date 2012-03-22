@@ -1,0 +1,13 @@
+=flash[:error]
+=form_for @todo do |f|
+  %div
+    %label 待办事项的内容
+  %div
+    =f.text_area :content
+  %div
+    %label 完成日期（可选）
+  %div
+    =f.text_field :date
+  %div
+    =f.submit "创建"
+  

@@ -1,4 +1,5 @@
 class User < AuthAbstract
   include UserMethods
-  has_one :teacher
+  include Student::UserMethods
+  include Teacher::UserMethods
 end

@@ -1,0 +1,4 @@
+%p= link_to '布置新作业', new_homework_path
+
+- @homeworks.each do |h|
+  %p= link_to h.title, homework_path(h)

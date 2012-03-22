@@ -1,0 +1,21 @@
+%p= link_to '我的作业列表', '/student'
+
+%div 作业标题
+%p= @homework.title
+
+%div 作业内容
+%p= @homework.content
+
+%div 学生提交内容
+%p= @student.content
+
+.page-new
+  = flash.now[:error]
+
+= form_for @homework_assign, :url => { :action => "create" } do |f|
+
+  %p 作业内容
+  = f.hidden_field :homework_id, :value => @homework.id
+  = f.text_area :content, :size => "60x12"
+
+  = f.submit "提交作业"

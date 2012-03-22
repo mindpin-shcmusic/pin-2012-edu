@@ -1,0 +1,17 @@
+%p= link_to '作业列表', homeworks_path
+
+.page-new
+  = flash.now[:error]
+
+= form_for @homework, :url => { :action => "create" }, :html => {:class => "assign_form"} do |f|
+  %p 作业标题
+  = f.text_field :title
+  
+  %p 作业内容
+  = f.text_area :content, :size => "60x12"
+  
+  %p 选择分配学生
+  .item
+    %input{:type=>'checkbox', :value => '2', :name=>'homework[homework_assigns_attributes][][creator_id]'} aaa
+    %input{:type=>'checkbox', :value => '3', :name=>'homework[homework_assigns_attributes][][creator_id]'} bbb
+  = f.submit "布置作业"

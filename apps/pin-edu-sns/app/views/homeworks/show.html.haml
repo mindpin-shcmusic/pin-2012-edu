@@ -1,0 +1,22 @@
+%p= link_to '作业列表', homeworks_path
+%p= link_to '布置新作业', new_homework_path
+
+%div 作业标题
+%p= @homework.title
+
+%div 作业内容
+%p= @homework.content
+
+
+- if @submitted_students.count > 0
+  %p 已交作业学生
+  %ul
+  - @submitted_students.each do |s|
+    %li= s.name
+    %p= s.homework_assigns.find_by_homework_id(@homework.id).content
+  
+  
+%p 未交作业学生
+%ul
+- @unsubmitted_students.each do |s|
+  %li= s.name

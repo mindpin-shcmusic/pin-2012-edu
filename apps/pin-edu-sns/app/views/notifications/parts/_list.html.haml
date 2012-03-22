@@ -1,0 +1,11 @@
+:css
+  .strong {
+    font-weight: bold;
+  }
+%ul
+  - notifications.each do |n|
+    <li
+    - unless n.is_read
+      class="strong"
+    >#{link_to "随机生成的通知列表 #{n.data}", notification_path(n)}
+    =link_to '删除', notification_path(n), :confirm => '确认删除?', :method => :delete, :class => 'delete'
