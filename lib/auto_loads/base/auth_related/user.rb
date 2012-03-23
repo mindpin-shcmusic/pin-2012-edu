@@ -1,5 +1,6 @@
-class User < ActiveRecord::Base
+class User < BuildDatabaseAbstract
   include UserMethods
+  # admin 模块
   include Student::UserMethods
   include Teacher::UserMethods
   # --- 教学活动

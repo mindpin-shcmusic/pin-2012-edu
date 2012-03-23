@@ -1,4 +1,4 @@
-class TeamStudent < ActiveRecord::Base
+class TeamStudent < BuildDatabaseAbstract
   belongs_to :team
   belongs_to :student
   

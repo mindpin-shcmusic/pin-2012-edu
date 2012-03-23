@@ -1,4 +1,4 @@
-#!/bin/sh
+#! /usr/bin/env bash
 
 function assert_process_from_name_not_exist(){
   local pid
@@ -24,10 +24,12 @@ function assert_process_from_pid_file_not_exist()
 
 function get_rails_env()
 {
-  if [ $HOST == "linux-edu" ];then
+  if [ "$HOST" == "linux-edu" ];then
     echo "development"
-  elif [ $HOST == "linux-mindpin" ];then
+  elif [ "$HOST" == "linux-mindpin" ];then
     echo "production"
+  elif [ "$hostname" == "linux-edu" ];then
+    echo "development"
   else
     echo "env HOST 必须是  linux-edu  或者 linux-mindpin"
     exit 5
@@ -38,4 +40,13 @@ function get_rails_env()
 function get_sh_dir_path()
 {
   echo $(cd "$(dirname "$0")"; pwd)
+}
+
+function command_status()
+{
+  if [ $? == 0 ];then
+    echo "success"
+  else
+    echo "fail"
+  fi
 }

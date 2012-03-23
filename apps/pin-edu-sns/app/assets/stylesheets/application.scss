@@ -134,8 +134,12 @@ body{
   }
   
   .page-content{
-    width:960px;
-    margin:20px 40px 0 110px;
+    position:absolute;
+    left:80px;top:51px;
+    bottom:0;right:0;
+    padding:20px 0 0 30px;
+    overflow-y:scroll;
+    
     table{
       border-spacing:0;
       border-collapse:collapse;

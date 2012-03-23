@@ -16,15 +16,15 @@ module ServersResqueWeb
     end
 
     def start_resque_web_service
-      Dir.chdir(SERVERS_SH_PATH){ `sh #{RESQUE_WEB_SH} start` }
+      Dir.chdir(SERVERS_SH_PATH){ `bash #{RESQUE_WEB_SH} start` }
     end
 
     def stop_resque_web_service
-      Dir.chdir(SERVERS_SH_PATH){ `sh #{RESQUE_WEB_SH} stop` }
+      Dir.chdir(SERVERS_SH_PATH){ `bash #{RESQUE_WEB_SH} stop` }
     end
 
     def restart_resque_web_service
-      Dir.chdir(SERVERS_SH_PATH){ `sh #{RESQUE_WEB_SH} restart` }
+      Dir.chdir(SERVERS_SH_PATH){ `bash #{RESQUE_WEB_SH} restart` }
     end
   end
 end

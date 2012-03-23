@@ -1,4 +1,4 @@
-class Course < ActiveRecord::Base
+class Course < BuildDatabaseAbstract
   belongs_to :teacher
   
   validates :name, :presence => true

@@ -22,6 +22,18 @@ class MindpinRailsLoader
     require 'will_paginate/array'
     
     require File.join(MINDPIN_LIB_PATH, 'mindpin_global_methods.rb')
+    
+    # --- 加载 mindpin_logic 配置
+    require File.join(MINDPIN_LIB_PATH, 'mindpin_logic_rule.rb')
+    ActiveRecord::Base.send :include, MindpinLogicRule
+    # --- 声明邮件服务配置
+    ActionMailer::Base.smtp_settings = {
+      :address        => "mail.mindpin.com",
+      :domain         => "mindpin.com",
+      :authentication => :plain,
+      :user_name      => "mindpin",
+      :password       => "m1ndp1ngoodmail"
+    }
   end
 
   private

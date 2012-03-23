@@ -1,4 +1,4 @@
-#! /bin/sh
+#! /usr/bin/env bash
 
 root_dir=`dirname $0`
 
@@ -6,19 +6,18 @@ processor_pid=/web/2012/pids/resque_web_service.pid
 
 log_file=/web/2012/logs/resque_web_service.log
 
-. /etc/rc.status
 . $root_dir/../function.sh
 case "$1" in
         start)
                 assert_process_from_pid_file_not_exist $processor_pid
                 echo "resque_web_service start"
-                resque-web -p 8282 --pid-file $processor_pid  1>> $log_file 2>> $log_file & 
-                rc_status -v
+                resque-web -p 8282 --pid-file $processor_pid  1>> $log_file 2>> $log_file
+                command_status
         ;;
         stop)
                 echo "resque_web_service stop"
                 kill -9 `cat $processor_pid`
-                rc_status -v
+                command_status
         ;;
         restart)
                 $0 stop

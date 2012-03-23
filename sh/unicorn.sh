@@ -1,3 +1,4 @@
+#! /usr/bin/env bash
 
 pin_2012_edu_dir=`dirname $0`/..
 
@@ -12,7 +13,6 @@ pin_edu_sns_pid=/web/2012/pids/unicorn-pin-edu-sns.pid
 
 sh_dir=`dirname $0`
 . $sh_dir/function.sh
-. /etc/rc.status
 rails_env=$(get_rails_env)
 
   case "$1" in
@@ -44,17 +44,17 @@ case "$2" in
         assert_process_from_pid_file_not_exist $pid
 	echo "start"
 	unicorn_rails -c config/unicorn.rb -D -E $rails_env
-	rc_status -v
+        command_status	
 	;;
 	stop)
 	echo "stop"
 	kill `cat $pid`
-	rc_status -v	
+	command_status	
 	;;
 	usr2_stop)
 	echo "usr2_stop"
         kill -USR2 `cat $pid`
-        rc_status -v
+        command_status
 	;;
 	restart)
 	echo "restart"

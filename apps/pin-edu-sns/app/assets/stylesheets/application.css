@@ -386,8 +386,13 @@ body {
       margin-left: 15px;
       margin-bottom: 20px; }
   body .page-content {
-    width: 960px;
-    margin: 20px 40px 0 110px; }
+    position: absolute;
+    left: 80px;
+    top: 51px;
+    bottom: 0;
+    right: 0;
+    padding: 20px 0 0 30px;
+    overflow-y: scroll; }
     body .page-content table {
       border-spacing: 0;
       border-collapse: collapse;
@@ -541,6 +546,6 @@ form .form-submit-button {
       font-size: 0;
       line-height: 0; }
       .page-setting .crop-avatars .original-img .box.crop, .page-setting .crop-avatars .crop-preview .box.crop {
-        width: 100px;
-        height: 100px;
+        width: 96px;
+        height: 96px;
         overflow: hidden; }

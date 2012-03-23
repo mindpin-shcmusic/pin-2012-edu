@@ -45,5 +45,3 @@ gem 'grit'
 gem 'rmagick', :require => 'RMagick'
 
 gem 'unicorn'
-# 自己写的
-gem 'pie-ui'

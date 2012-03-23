@@ -17,15 +17,15 @@ module ServersRedis
     end
 
     def start_redis_service
-      Dir.chdir(SERVERS_SH_PATH){ `sh #{REDIS_SERVICE_SH} start` }
+      Dir.chdir(SERVERS_SH_PATH){ `bash #{REDIS_SERVICE_SH} start` }
     end
 
     def stop_redis_service
-      Dir.chdir(SERVERS_SH_PATH){ `sh #{REDIS_SERVICE_SH} stop` }
+      Dir.chdir(SERVERS_SH_PATH){ `bash #{REDIS_SERVICE_SH} stop` }
     end
 
     def restart_redis_service
-      Dir.chdir(SERVERS_SH_PATH){ `sh #{REDIS_SERVICE_SH} restart` }
+      Dir.chdir(SERVERS_SH_PATH){ `bash #{REDIS_SERVICE_SH} restart` }
     end
 
     # 返回redis的状态

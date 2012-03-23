@@ -11,7 +11,7 @@ class ProjectManagement
       unicorn_sh = File.join(UNICORN_SH_PATH,"unicorn.sh")
       raise "不支持 #{operation} 操作" if !["start","stop","restart","usr2_stop"].include?(operation)
       Dir.chdir(UNICORN_SH_PATH) do
-        `sh #{unicorn_sh} #{project_name} #{operation}`
+        `bash #{unicorn_sh} #{project_name} #{operation}`
       end
     end
 

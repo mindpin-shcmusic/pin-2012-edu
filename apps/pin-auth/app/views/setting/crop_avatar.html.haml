@@ -20,7 +20,7 @@
   .crop-avatars
     .original-img
       .t 上传的原始图片
-      .box
+      .box{:style=>"#{width}px;#{height}px;"}
         %img{:src=>temp_image_url, :style=>"#{width}px;#{height}px;"}
   
     .crop-preview
