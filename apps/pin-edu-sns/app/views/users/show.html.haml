@@ -1,0 +1,122 @@
+-# 我参与的活动
+- unless @week_activities_data.blank? then
+  %p= @week_activities_data.count
+  -@week_activities_data.each_with_index do |hash,index|
+    %div{:class=>"fleft w100"}
+      %div=hash[:date]
+      %div 星期 #{index+1}
+      %div
+        -hash[:activities].each do |activity|
+          %div{:class=>"#{activity.creator == current_user ? "strong" : ""}"}
+            =link_to activity.title, "/activities/#{activity.id}"
+
+
+-# 我创建的媒体文件
+- unless @current_user_media_files.blank? then
+  %p= @current_user_media_files.count
+  -@current_user_media_files.each do |mf|
+    %div 文件名 #{mf.file_file_name}
+    %div 文件大小 #{mf.file_file_size}
+    %div 文件类型 #{mf.file_content_type}
+    %div 文件存储方式 #{mf.place}
+    %div 文件上传者 #{mf.creator.name}
+    %div 文件位置 #{mf.file.url}
+    
+    
+  
+    
+-# 我回答过的问题   
+- unless @answered_questions.blank? then
+  %p= @answered_questions.count
+  -@answered_questions.each do |question|
+    :ruby
+      creator = question.creator
+      answer_count = question.answers.count
+      created_at = question.created_at.localtime
+      title = question.title
+  
+    .question
+      .title=link_to title, question
+      .meta
+        .creator 由#{creator.name}提问
+        .answers-count #{answer_count}人回答
+        .time=created_at
+        
+        
+-# 我问过的问题        
+- unless @asked_questions.blank? then
+  %p= @asked_questions.count
+  -@asked_questions.each do |question|
+    :ruby
+      creator = question.creator
+      answer_count = question.answers.count
+      created_at = question.created_at.localtime
+      title = question.title
+  
+    .question
+      .title=link_to title, question
+      .meta
+        .creator 由#{creator.name}提问
+        .answers-count #{answer_count}人回答
+        .time=created_at
+        
+
+
+
+-# 我创建的投票列表    
+- unless @current_user_votes.blank? then 
+  %p= @current_user_votes.count      
+  %ul
+    -@current_user_votes.each do |vote|
+      :ruby
+        can_delete = (vote.creator == current_user)
+        has_voted = vote.has_voted_by?(current_user)
+        voted_users_count = vote.voted_users.count
+      
+      %li.vote
+        .ct
+          .title=link_to vote.title, vote
+          .limit=vote_select_limit_desc(vote)
+          .ops
+            -if can_delete
+              =link_to '删除', vote, :confirm => '确认删除?', :method => :delete, :class => 'delete'
+            =link_to '查看结果', "/votes/#{vote.id}/result", :class => 'see-result'
+        .meta
+          .creator 创建者:#{vote.creator.name}
+          .voted-users-count 参与人数:#{voted_users_count}
+          -if has_voted
+            .has-voted 我参与过了
+            
+            
+            
+            
+-# 参与过的投票过列表            
+- unless @voted_by_current_user.blank? then
+  %p= @voted_by_current_user.count        
+  %ul
+    -@voted_by_current_user.each do |v|
+
+      %li.vote
+        .ct
+          .title=link_to v.vote.title, v.vote
+          .limit=vote_select_limit_desc(v.vote)
+          .ops
+            =link_to '查看结果', "/votes/#{v.vote_id}/result", :class => 'see-result'
+        .meta
+          .creator 创建者:#{v.vote.creator.name}
+          .voted-users-count 参与人数:#{v.vote.voted_users.count}           
+            
+
+
+-# 如果是老师， 老师布置的作业
+- unless @teacher_homeworks.blank? then
+  - @teacher_homeworks.each do |h|
+    %p= link_to h.title, homework_path(h)       
+            
+
+-# 如果是学生， 学生被分配的作业
+- unless @student_homeworks.blank? then
+  - @student_homeworks.each do |h|
+    %p= link_to h.title, homework_path(h)   
+        
+

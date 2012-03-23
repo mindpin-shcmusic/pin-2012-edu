@@ -1,6 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
-function assert_process_from_name_not_exist(){
+function assert_process_from_name_not_exist()
+{
   local pid
   pid=$(ps aux|grep $1|grep -v grep|awk '{print $2}')
   if [ "$pid" ];then
@@ -24,13 +25,14 @@ function assert_process_from_pid_file_not_exist()
 
 function get_rails_env()
 {
-  if [ $HOST == "linux-edu" ];then
+  HOST="linux-edu"
+  if [ "$HOST" == "linux-edu" ];then
     echo "development"
-  elif [ $HOST == "linux-mindpin" ];then
+  elif [ "$HOST" == "linux-mindpin" ];then
     echo "production"
   else
-    echo "env HOST 必须是  linux-edu  或者 linux-mindpin"
-    exit 5
+    echo "development"
+    #exit 5
   fi
 }
 

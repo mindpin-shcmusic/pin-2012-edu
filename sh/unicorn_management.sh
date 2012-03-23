@@ -1,11 +1,11 @@
 
-
 dir=`dirname $0`/../management
 pid=/web/2012/pids/unicorn-management.pid
 
+
 sh_dir=`dirname $0`
 . $sh_dir/function.sh
-. /etc/rc.status
+#. /etc/init.d/rc.local
 rails_env=$(get_rails_env)
 sh_dir_path=$(get_sh_dir_path)
 cd $dir
@@ -14,17 +14,17 @@ case "$1" in
         assert_process_from_pid_file_not_exist $pid
 	echo "start"
 	unicorn_rails -c config/unicorn.rb -D -E $rails_env
-	rc_status -v
+	#do_start
 	;;
 	stop)
 	echo "stop"
 	kill `cat $pid`
-	rc_status -v	
+	#do_start	
 	;;
 	usr2_stop)
 	echo "usr2_stop"
         kill -USR2 `cat $pid`
-        rc_status -v
+        #do_start
 	;;
 	restart)
 	echo "restart"
