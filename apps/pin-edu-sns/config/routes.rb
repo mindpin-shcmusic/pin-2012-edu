@@ -1,4 +1,6 @@
 MindpinEduSns::Application.routes.draw do
+  get "users/show"
+
   root :to => 'index#index'
   
   resources :media_files do
@@ -6,6 +8,9 @@ MindpinEduSns::Application.routes.draw do
       post :create_by_edu
     end
   end
+  
+  # --- 用户
+  resources :users
   
   # --- 闲聊
   get '/teams/:team_id/statuses'     => 'statuses#index'

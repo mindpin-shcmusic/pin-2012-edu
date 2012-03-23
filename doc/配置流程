@@ -1,0 +1,82 @@
+#工程部署方式是  nginx + unicorn<br/>
+#开发坏境也是  nginx + unicorn 的方式运行
+
+##首先需要安装 nginx 和 unicorn<br/>
+##目前 nginx 用的 0.8.55 版本，unicorn 用的 4.1.1 版本<br/>
+
+###安装 nginx<br/>
+```
+  tar zxvf nginx-0.8.55.tar.gz
+  
+  cd nginx-0.8.55
+  
+  ./configure
+  
+  make
+  
+  make install
+```
+
+###安装 unicorn<br/>
+```
+  gem install unicorn --version=4.1.1
+```
+
+###nginx 配置<br/>
+  参考[这个文件](http://www.html5rocks.com/en)中，标注出来的部分
+
+
+工程路径要求
+    1 工程的根路径必须是  /web/2012/pin-2012-edu
+    2 在 /web/2012/ 目录下创建三个文件夹  logs pids sockets
+    
+工程的目录结构说明
+  apps 是 三个 rails 工程
+    |----- pin-admin    系统维护工程
+    |----- pin-auth     用户认证工程
+    |----- pin-edu-sns  业务逻辑工程
+  sh              一些管理脚本
+  lib             所有rails 工程都会用到的公共代码
+  management      管理各种服务（启动，暂停，重启，查看日志）的 rails 工程
+    
+  
+HOSTS 配置
+        给 hosts 文件增加几个域名映射
+          linux hosts 文件在 /etc/hosts
+        增加以下几个映射
+          127.0.0.1 dev.management.yinyue.edu 
+          127.0.0.1 dev.auth.yinyue.edu  
+          127.0.0.1 dev.admin.yinyue.edu 
+          127.0.0.1 dev.sns.yinyue.edu 
+          127.0.0.1 dev.ui.yinyue.edu
+
+
+
+安装依赖 gem
+      1 gem install echoe --version=4.6.3
+      
+      2
+      cd /web/2012/pin-2012-edu/
+      ./install_gems.sh ui
+      
+      3 删除 /web/2012/pin-2012-edu/lib/Gemfile.lock
+      
+      4
+      cd /web/2012/pin-2012-edu/lib
+      bundle install
+      
+创建数据库和数据表
+  /web/2012/pin-2012-edu/apps/pin-admin
+  /web/2012/pin-2012-edu/apps/pin-auth
+  /web/2012/pin-2012-edu/apps/pin-edu-sns
+  上边三个工程有migrate，三个工程用了同一个数据库
+  创建数据库
+    在以上三个工程的任意一个，运行 rake db:create
+  创建数据表
+    在这三个目录分别运行 rake db:migrate
+
+启动 management 工程
+  cd pin-2012-edu/sh
+  ./unicorn_management.sh start
+ 
+浏览器访问  dev.management.yinyue.edu
