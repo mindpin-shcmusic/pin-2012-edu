@@ -62,13 +62,4 @@ module DomUtilHelper
     end
   end
 
-  def flash_info
-    re = []
-    [:notice,:error,:success].each do |kind|
-      msg = flash[kind]
-      re << "<div class='flash-#{kind}'><span>#{msg}</span></div>" if !msg.blank?
-    end
-    re*''
-  end
-
 end
