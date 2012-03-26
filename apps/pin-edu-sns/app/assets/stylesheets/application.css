@@ -549,3 +549,12 @@ form .form-submit-button {
         width: 96px;
         height: 96px;
         overflow: hidden; }
+
+.page-votes {
+  background-color: white;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  width: 800px; }
+  .page-votes .vote {
+    padding: 10px; }
