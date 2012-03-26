@@ -19,4 +19,6 @@ class User < BuildDatabaseAbstract
   # --- 短消息
   include ShortMessage::UserMethods
   include ShortMessageReading::UserMethods
+  # --- 媒体文件
+  include MediaFile::UserMethods
 end
