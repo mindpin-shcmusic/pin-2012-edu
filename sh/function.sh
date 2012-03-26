@@ -28,7 +28,7 @@ function get_rails_env()
     echo "development"
   elif [ "$HOST" == "linux-mindpin" ];then
     echo "production"
-  elif [ "$hostname" == "linux-edu" ];then
+  elif [ "$HOSTNAME" == "box" ];then
     echo "development"
   else
     echo "env HOST 必须是  linux-edu  或者 linux-mindpin"

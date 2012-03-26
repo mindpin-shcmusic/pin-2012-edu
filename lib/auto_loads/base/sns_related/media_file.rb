@@ -23,4 +23,12 @@ class MediaFile < BuildDatabaseAbstract
   def _file_path
     "/:class/:attachment/#{self.uuid}/:style/:basename.:extension"
   end
+  
+  
+  # --- 给其他类扩展的方法
+  module UserMethods
+    def self.included(base)
+      base.has_many :media_files, :foreign_key => :creator_id
+    end
+  end
 end
