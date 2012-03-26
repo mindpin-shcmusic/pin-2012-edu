@@ -4,4 +4,5 @@ module MindpinHelperBase
   include DatetimeHelper
   include ButtonHelper
   include StatusPageHelper
+  include MindpinLayoutHelper
 end

@@ -1,3 +1,3 @@
 module ApplicationHelper
-  include AvatarHelper
+  include MindpinHelperBase
 end
