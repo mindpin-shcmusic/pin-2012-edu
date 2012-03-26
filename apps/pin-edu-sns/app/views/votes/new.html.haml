@@ -1,7 +1,9 @@
 -htitle '创建投票'
-  
-.page-go-back
-  =link_to '返回投票列表', '/votes'
+
+.page-title 发起新投票
+
+.page-votes-ops
+  %a.create{:href=>'/votes/new'} 发起新投票
 
 .page-new-vote
   = flash.now[:error]
