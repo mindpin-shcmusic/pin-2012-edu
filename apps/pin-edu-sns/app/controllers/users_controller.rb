@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
   def show
-    if current_user.id == params[:id] then
+    if current_user.id == params[:id].to_i then
       # 当前用户发起的投票
       @current_user_votes = current_user.votes.all
       
@@ -52,12 +52,12 @@ class UsersController < ApplicationController
       
       # 如果是老师，则显示创建的作业列表
       if other_user.is_teacher?
-        @teacher_homeworks = current_user.homeworks
+        @teacher_homeworks = other_user.homeworks
       end
       
       # 如果是学生，则显示被分配的作业列表
       if other_user.is_student?
-        @student_homeworks = current_user.homework_assigns
+        @student_homeworks = other_user.homework_assigns
       end
       
       render :action => 'show_other'
