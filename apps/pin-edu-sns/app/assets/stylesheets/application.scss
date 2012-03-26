@@ -20,6 +20,12 @@
           transition : $params;
 }
 
+@mixin transform($params){
+     -moz-transform : $params;
+  -webkit-transform : $params;
+          transform : $params;
+}
+
 // -----------------------------------------------
 html{
   overflow:hidden;
@@ -171,10 +177,8 @@ body{
   }
   
   a{
-    color:#006699;
-    &:hover{
-      color:#993300;
-    };
+    color:#0078B6;
+    &:hover{color:#0078B6;};
   }
 }
 
