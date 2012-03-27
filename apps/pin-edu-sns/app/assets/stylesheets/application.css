@@ -427,15 +427,25 @@ body {
 form .field {
   margin-bottom: 10px;
   overflow: visible; }
+  form .field:last-child {
+    margin-bottom: 0; }
   form .field label {
     display: block;
     line-height: 20px;
     height: 20px;
     margin-bottom: 5px; }
     form .field label.need::after {
-      content: "*";
-      color: red;
-      padding-left: 5px; }
+      content: "";
+      display: inline-block;
+      width: 5px;
+      height: 5px;
+      -moz-border-radius: 5px;
+      -webkit-border-radius: 5px;
+      border-radius: 5px;
+      background-color: #ff6666;
+      margin-left: 5px;
+      position: relative;
+      top: -2px; }
   form .field input[type=text], form .field input[type=password] {
     border: solid #bbb 1px;
     -moz-border-radius: 2px;
@@ -464,7 +474,8 @@ form .form-submit-button {
   font-size: 14px;
   color: white;
   box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3);
-  text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.2); }
+  text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.2);
+  margin-right: 5px; }
   form .form-submit-button:hover {
     color: white;
     text-decoration: none; }
@@ -479,6 +490,28 @@ form .form-submit-button {
     box-shadow: none;
     text-shadow: none;
     color: #cacaca; }
+form .form-cancel {
+  background: -moz-linear-gradient(-90deg, #888888, #666666);
+  background: -webkit-gradient(linear, 0% 0, 0% 100%, from(#888888), to(#666666));
+  border: 1px solid #555;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  display: inline-block;
+  height: 32px;
+  line-height: 32px;
+  padding: 0 10px;
+  font-size: 14px;
+  color: white;
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.3);
+  text-shadow: -1px -1px 0 rgba(0, 0, 0, 0.2); }
+  form .form-cancel:hover {
+    color: white;
+    text-decoration: none; }
+  form .form-cancel:hover {
+    background: -moz-linear-gradient(-90deg, #777777, #555555);
+    background: -webkit-gradient(linear, 0% 0, 0% 100%, from(#777777), to(#555555));
+    border-color: #444; }
 
 .page-auth-intro {
   margin: 20px 0; }
@@ -581,12 +614,12 @@ form .form-submit-button {
       border: solid 1px #5E8F1C; }
 
 .page-votes {
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
   background-color: white;
+  width: 800px;
   -moz-border-radius: 5px;
   -webkit-border-radius: 5px;
   border-radius: 5px;
-  width: 800px;
-  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
   margin-bottom: 20px; }
   .page-votes .vote {
     padding: 15px;
@@ -616,8 +649,6 @@ form .form-submit-button {
       float: right; }
       .page-votes .vote .ops .delete {
         display: block;
-        height: 18px;
-        width: 18px;
         border: solid 1px transparent;
         -moz-border-radius: 3px;
         -webkit-border-radius: 3px;
@@ -625,17 +656,24 @@ form .form-submit-button {
         font-size: 0px;
         line-height: 20em;
         overflow: hidden;
-        position: relative; }
+        position: relative;
+        height: 18px;
+        width: 18px; }
         .page-votes .vote .ops .delete::before, .page-votes .vote .ops .delete::after {
           content: "";
           display: block;
           position: absolute;
+          -moz-transition: background-color ease-in 0.1s;
+          -webkit-transition: background-color ease-in 0.1s;
+          transition: background-color ease-in 0.1s; }
+        .page-votes .vote .ops .delete:hover {
+          border: solid 1px #ccc;
+          background: -moz-linear-gradient(-90deg, white, #eeeeee);
+          background: -webkit-gradient(linear, 0% 0, 0% 100%, from(white), to(#eeeeee)); }
+        .page-votes .vote .ops .delete::before, .page-votes .vote .ops .delete::after {
           width: 2px;
           height: 14px;
-          background-color: #b1b1b1;
-          -moz-transition: background-color ease-out 0.1s;
-          -webkit-transition: background-color ease-out 0.1s;
-          transition: background-color ease-out 0.1s; }
+          background-color: #b1b1b1; }
         .page-votes .vote .ops .delete::before {
           -moz-transform: rotate(45deg);
           -webkit-transform: rotate(45deg);
@@ -648,12 +686,8 @@ form .form-submit-button {
           transform: rotate(-45deg);
           left: 8px;
           top: 2px; }
-        .page-votes .vote .ops .delete:hover {
-          border: solid 1px #ccc;
-          background: -moz-linear-gradient(-90deg, white, #eeeeee);
-          background: -webkit-gradient(linear, 0% 0, 0% 100%, from(white), to(#eeeeee)); }
-          .page-votes .vote .ops .delete:hover::before, .page-votes .vote .ops .delete:hover::after {
-            background-color: #000; }
+        .page-votes .vote .ops .delete:hover::before, .page-votes .vote .ops .delete:hover::after {
+          background-color: #000; }
     .page-votes .vote .ct {
       margin-left: 75px;
       margin-right: 80px; }
@@ -676,3 +710,120 @@ form .form-submit-button {
         line-height: 16px; }
     .page-votes .vote .meta {
       margin-left: 54px; }
+
+.page-new-vote {
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  width: 800px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  overflow: hidden; }
+  .page-new-vote form {
+    padding: 15px; }
+    .page-new-vote form .field input#vote_title {
+      width: 300px; }
+    .page-new-vote form .field select {
+      width: 115px; }
+    .page-new-vote form .field .item-list .item {
+      margin-bottom: 5px;
+      height: 32px; }
+      .page-new-vote form .field .item-list .item input[type=text] {
+        float: left;
+        margin-right: 5px;
+        width: 300px; }
+      .page-new-vote form .field .item-list .item a.delete {
+        float: left;
+        height: 32px;
+        line-height: 32px;
+        display: block;
+        border: solid 1px transparent;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        border-radius: 3px;
+        font-size: 0px;
+        line-height: 20em;
+        overflow: hidden;
+        position: relative;
+        width: 16px;
+        height: 16px;
+        top: 8px; }
+        .page-new-vote form .field .item-list .item a.delete::before, .page-new-vote form .field .item-list .item a.delete::after {
+          content: "";
+          display: block;
+          position: absolute;
+          -moz-transition: background-color ease-in 0.1s;
+          -webkit-transition: background-color ease-in 0.1s;
+          transition: background-color ease-in 0.1s; }
+        .page-new-vote form .field .item-list .item a.delete:hover {
+          border: solid 1px #ccc;
+          background: -moz-linear-gradient(-90deg, white, #eeeeee);
+          background: -webkit-gradient(linear, 0% 0, 0% 100%, from(white), to(#eeeeee)); }
+        .page-new-vote form .field .item-list .item a.delete::before, .page-new-vote form .field .item-list .item a.delete::after {
+          background-color: #999;
+          width: 2px;
+          height: 14px; }
+        .page-new-vote form .field .item-list .item a.delete::before {
+          -moz-transform: rotate(45deg);
+          -webkit-transform: rotate(45deg);
+          transform: rotate(45deg);
+          left: 7px;
+          top: 1px; }
+        .page-new-vote form .field .item-list .item a.delete::after {
+          -moz-transform: rotate(-45deg);
+          -webkit-transform: rotate(-45deg);
+          transform: rotate(-45deg);
+          left: 7px;
+          top: 1px; }
+        .page-new-vote form .field .item-list .item a.delete:hover::before, .page-new-vote form .field .item-list .item a.delete:hover::after {
+          background-color: #000; }
+    .page-new-vote form .field .item-list.min a.delete {
+      display: none; }
+    .page-new-vote form .field .add-new-item {
+      display: block;
+      border: solid 1px transparent;
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px;
+      border-radius: 3px;
+      font-size: 0px;
+      line-height: 20em;
+      overflow: hidden;
+      position: relative;
+      height: 21px;
+      width: 53px;
+      font-size: 12px;
+      line-height: 21px;
+      padding-left: 24px; }
+      .page-new-vote form .field .add-new-item::before, .page-new-vote form .field .add-new-item::after {
+        content: "";
+        display: block;
+        position: absolute;
+        -moz-transition: background-color ease-in 0.1s;
+        -webkit-transition: background-color ease-in 0.1s;
+        transition: background-color ease-in 0.1s; }
+      .page-new-vote form .field .add-new-item:hover {
+        border: solid 1px #ccc;
+        background: -moz-linear-gradient(-90deg, white, #eeeeee);
+        background: -webkit-gradient(linear, 0% 0, 0% 100%, from(white), to(#eeeeee)); }
+      .page-new-vote form .field .add-new-item::before, .page-new-vote form .field .add-new-item::after {
+        background-color: #49ca0d; }
+      .page-new-vote form .field .add-new-item::before {
+        width: 3px;
+        height: 13px;
+        top: 4px;
+        left: 9px; }
+      .page-new-vote form .field .add-new-item::after {
+        height: 3px;
+        width: 13px;
+        top: 9px;
+        left: 4px; }
+      .page-new-vote form .field .add-new-item:hover {
+        text-decoration: none; }
+        .page-new-vote form .field .add-new-item:hover::before, .page-new-vote form .field .add-new-item:hover::after {
+          background-color: #389A0A; }
+    .page-new-vote form .field.subm {
+      padding: 15px;
+      background-color: #f4f4f4;
+      margin: 15px -15px -15px -15px;
+      border-top: solid 1px #ddd; }

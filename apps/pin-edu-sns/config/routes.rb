@@ -27,7 +27,8 @@ MindpinEduSns::Application.routes.draw do
   end
   # --- 作业
   resources :homeworks, :student
-  # --- 投票
+  
+  # ------------------- 投票
   resources :votes do
     collection do
       get :byme
@@ -45,18 +46,10 @@ MindpinEduSns::Application.routes.draw do
     
     resources :comments
   end
-  
   get 'votes/new/:kind' => 'votes#new'
-  
-
-  resources :comments do
-    member do
-      get :reply
-      post :do_reply
-    end
-  end
-
   resources :vote_results
+  
+  
   # --- 问答
   resources :questions do
     collection do

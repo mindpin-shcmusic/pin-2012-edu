@@ -14,9 +14,11 @@ class VotesController < ApplicationController
 
   def new
     @vote = Vote.new
-    if params[:kind].upcase == Vote::KIND_IMAGE
-      render :action => 'new_image'
+    kind = (params[:kind] || 'text').upcase
+    if kind == Vote::KIND_IMAGE
+      return render :template => 'votes/new_image'
     end
+    render :template => 'votes/new_text'
   end
   
   # 创建投票
