@@ -16,7 +16,7 @@ class MediaFile < BuildDatabaseAbstract
     if place == PLACE_OSS
       "http://storage.aliyun.com/#{OssManager::CONFIG["bucket"]}/:class/:attachment/#{self.uuid}/:style/:basename.:extension"
     else
-      "http://dev.file.uploadmediafile.com/:class/:attachment/#{self.uuid}/:style/:basename.:extension"
+      "http://dev.file.yinyue.edu/:class/:attachment/#{self.uuid}/:style/:basename.:extension"
     end
   end
   

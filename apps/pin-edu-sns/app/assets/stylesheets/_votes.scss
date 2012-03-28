@@ -1,9 +1,5 @@
 @mixin vote-page-section{
-  box-shadow:1px 1px 2px rgba(0, 0, 0, 0.2);
-  background-color:white;
-  width:800px;
-  @include border-radius(5px);
-  margin-bottom:20px;
+  @include page-models-index;
 }
 
 @mixin hover-button{
@@ -24,13 +20,7 @@
 }
 
 .page-votes-ops{
-  overflow:hidden;
-  margin-bottom:10px;
-  @include border-radius(5px);
-  background-color:#f4f4f4;
-  width:800px - 15*2;
-  padding:15px;
-  box-shadow:1px 1px 2px rgba(0, 0, 0, 0.2);
+  @include page-ops;
   
   a.create{
     float:left;
@@ -60,10 +50,7 @@
     };
     
     .voted-users-count{
-      @include border-radius(4px);
-      width:60px;float:left;overflow:hidden;
-      .t{background-color:#E9F2D1;color:darken(#ABC272,10%);line-height:20px;text-align:center;}
-      .c{background-color:#F3F9DF;color:darken(#ABC272,20%);line-height:28px;text-align:center;font-size:16px;font-weight:bold;}
+      @include count-block-in-list;
     }
     .ops{
       float:right;
@@ -83,15 +70,8 @@
     .ct{
       margin-left:75px;
       margin-right:80px;
-      .title{
-        font-size:14px;font-weight:bold;line-height:16px;
-        margin-bottom:16px;
-        a{color:#444;&:hover{color:#444;text-decoration:none;}}
-      }
-      .creator{
-        color:#666;
-        a{color:darken(#A6C3CF,10%);}
-      }
+      .title{@include list-item-title;}
+      .creator{@include list-item-creator;}
       .limit{font-size:12px;line-height:16px;}
     }
     .meta{
@@ -102,16 +82,13 @@
 
 .page-new-vote{
   @include vote-page-section;
-  overflow:hidden;;
+  overflow:hidden;
+  
   form{
     padding:15px;
     .field{
-      input#vote_title{
-        width:300px;
-      }
-      select{
-        width:115px;
-      }
+      input#vote_title{width:300px;}
+      select{width:115px;}
       .item-list{
         .item{
           margin-bottom:5px;

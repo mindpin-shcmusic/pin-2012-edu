@@ -1,25 +1,57 @@
-=link_to "创建待办事项","/todos/new"
-%div 未完成的待办事项
--@unexpired_todos.each do |todo|
-  %div
-    %span=todo.content
-    %span 期限 #{todo.date.blank? ? "无" : todo.date}
-    %span=link_to "完成","/todos/#{todo.id}/do_complete",:method=>:put
-%hr
+-htitle '待办事项'
 
-%div 过期的待办事项
--@expired_todos.each do |todo|
-  %div
-    %span=todo.content
-    %span 期限 #{todo.date}
-    %span=link_to "完成","/todos/#{todo.id}/do_complete",:method=>:put
+.page-title 计划日历
+
+.page-date-calendar-ops
+  %a.prev-day{:href=>'javascript:;',:title=>'前一天'} 前一天
+  %a.next-day{:href=>'javascript:;',:title=>'后一天'} 后一天
+  %a.to-today{:href=>'javascript:;',:title=>'转到今天'} 转到今天
   
-%hr
+.page-date-calendar
+  :ruby
+    date = Time.now.localtime
+    weekday_strs = weekday_strs_arr(date)
+    today_weekday_str = weekday_str(date)
   
-%div 已完成的待办事项
--@completed_todos.each do |todo|
-  %div
-    %span=todo.content
-    %span 完成时间 #{todo.updated_at}
+  -5.times do |i|
+    :ruby
+      weekday_str = weekday_strs[i]
+      is_today = (today_weekday_str == weekday_str)
+      
+      klass = is_today ? 'today' : ''
+      
+    .day{:class=>klass}
+      .weekday=weekday_str
+      .date 2012年3月27日
+      .form
+        %input{:type=>:text}
+      .items
+        -16.times do
+          .holder
+
+.hide
+  =link_to "创建待办事项","/todos/new"
+  %div 未完成的待办事项
+  -@unexpired_todos.each do |todo|
+    %div
+      %span=todo.content
+      %span 期限 #{todo.date.blank? ? "无" : todo.date}
+      %span=link_to "完成","/todos/#{todo.id}/do_complete",:method=>:put
+  %hr
+  
+  %div 过期的待办事项
+  -@expired_todos.each do |todo|
+    %div
+      %span=todo.content
+      %span 期限 #{todo.date}
+      %span=link_to "完成","/todos/#{todo.id}/do_complete",:method=>:put
+    
+  %hr
+    
+  %div 已完成的待办事项
+  -@completed_todos.each do |todo|
+    %div
+      %span=todo.content
+      %span 完成时间 #{todo.updated_at}
 
 		

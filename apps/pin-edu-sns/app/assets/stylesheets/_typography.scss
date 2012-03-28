@@ -4,7 +4,7 @@ body {
   font-size:75%;
   background:#fff;color:#222;
   //font-family: "Microsoft Yahei","微软雅黑",Tahoma,Arial,Helvetica,STHeiti,sans-serif;
-  font-family:Tahoma,Arial,Helvetica,STHeiti,sans-serif;
+  @include base-font-family;
 }
 
 /*各级标题*/

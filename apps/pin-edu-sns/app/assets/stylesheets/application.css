@@ -57,7 +57,7 @@ a img {
   border: none; }
 
 a em {
-  font-family: "Microsoft Yahei","微软雅黑",Tahoma,Arial,Helvetica,STHeiti; }
+  font-family: Tahoma,Arial,Helvetica,STHeiti,sans-serif; }
 
 /*列表标签*/
 li ul, li ol {
@@ -83,7 +83,7 @@ dd {
 
 textarea {
   resize: none;
-  font-family: "Microsoft Yahei","微软雅黑",Tahoma,Arial,Helvetica,STHeiti; }
+  font-family: Tahoma,Arial,Helvetica,STHeiti,sans-serif; }
 
 /*基础字体设置*/
 html {
@@ -460,6 +460,20 @@ form .field {
     form .field input[type=text]:focus, form .field input[type=password]:focus {
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset, 0 0 8px rgba(82, 168, 236, 0.6);
       border: solid 1px rgba(82, 168, 236, 0.8); }
+  form .field textarea {
+    border: solid #bbb 1px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+    font-size: 12px;
+    line-height: 20px;
+    padding: 4px;
+    width: 300px;
+    height: 100px; }
+    form .field textarea:focus {
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset, 0 0 8px rgba(82, 168, 236, 0.6);
+      border: solid 1px rgba(82, 168, 236, 0.8); }
 form .form-submit-button {
   background: -moz-linear-gradient(-90deg, #dd4b39, #c53727);
   background: -webkit-gradient(linear, 0% 0, 0% 100%, from(#dd4b39), to(#c53727));
@@ -827,3 +841,231 @@ form .form-cancel {
       background-color: #f4f4f4;
       margin: 15px -15px -15px -15px;
       border-top: solid 1px #ddd; }
+
+.page-date-calendar-ops {
+  overflow: hidden;
+  margin-bottom: 10px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  background-color: #f4f4f4;
+  width: 770px;
+  padding: 15px;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  width: 974px;
+  overflow: hidden; }
+  .page-date-calendar-ops a.prev-day, .page-date-calendar-ops a.next-day, .page-date-calendar-ops a.to-today {
+    height: 32px;
+    width: 48px;
+    margin: -11px;
+    background-color: #eee;
+    position: relative;
+    font-size: 0px;
+    line-height: 20em;
+    overflow: hidden;
+    -moz-transition: all ease-in 0.1s;
+    -webkit-transition: all ease-in 0.1s;
+    transition: all ease-in 0.1s;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    border: solid 1px #ccc;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.1); }
+    .page-date-calendar-ops a.prev-day:before, .page-date-calendar-ops a.prev-day:after, .page-date-calendar-ops a.next-day:before, .page-date-calendar-ops a.next-day:after, .page-date-calendar-ops a.to-today:before, .page-date-calendar-ops a.to-today:after {
+      content: "";
+      display: block;
+      background-color: #999;
+      position: absolute;
+      -moz-transition: all ease-out 0.1s;
+      -webkit-transition: all ease-out 0.1s;
+      transition: all ease-out 0.1s; }
+    .page-date-calendar-ops a.prev-day:before, .page-date-calendar-ops a.next-day:before, .page-date-calendar-ops a.to-today:before {
+      width: 6px;
+      height: 16px; }
+    .page-date-calendar-ops a.prev-day:after, .page-date-calendar-ops a.next-day:after, .page-date-calendar-ops a.to-today:after {
+      width: 6px;
+      height: 16px; }
+    .page-date-calendar-ops a.prev-day:hover, .page-date-calendar-ops a.next-day:hover, .page-date-calendar-ops a.to-today:hover {
+      background-color: #444;
+      border: solid 1px #333; }
+      .page-date-calendar-ops a.prev-day:hover:before, .page-date-calendar-ops a.next-day:hover:before, .page-date-calendar-ops a.to-today:hover:before {
+        background-color: #f4f4f4; }
+      .page-date-calendar-ops a.prev-day:hover:after, .page-date-calendar-ops a.next-day:hover:after, .page-date-calendar-ops a.to-today:hover:after {
+        background-color: #f4f4f4; }
+  .page-date-calendar-ops a.prev-day {
+    float: left;
+    margin-right: 4px; }
+    .page-date-calendar-ops a.prev-day:before {
+      -moz-transform: rotate(45deg);
+      -webkit-transform: rotate(45deg);
+      transform: rotate(45deg);
+      top: 4px;
+      left: 19px; }
+    .page-date-calendar-ops a.prev-day:after {
+      -moz-transform: rotate(-45deg);
+      -webkit-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+      top: 12px;
+      left: 19px; }
+  .page-date-calendar-ops a.next-day {
+    float: left;
+    margin-left: 0;
+    margin-right: 0px; }
+    .page-date-calendar-ops a.next-day:before {
+      -moz-transform: rotate(-45deg);
+      -webkit-transform: rotate(-45deg);
+      transform: rotate(-45deg);
+      top: 4px;
+      right: 19px; }
+    .page-date-calendar-ops a.next-day:after {
+      -moz-transform: rotate(45deg);
+      -webkit-transform: rotate(45deg);
+      transform: rotate(45deg);
+      top: 12px;
+      right: 19px; }
+  .page-date-calendar-ops a.to-today {
+    float: left;
+    margin-left: 12px;
+    width: 80px;
+    font-size: 14px;
+    font-weight: bold;
+    line-height: 32px;
+    text-align: center;
+    color: #666; }
+    .page-date-calendar-ops a.to-today:hover {
+      color: #f1f1f1;
+      text-decoration: none; }
+    .page-date-calendar-ops a.to-today:before {
+      display: none; }
+    .page-date-calendar-ops a.to-today:after {
+      display: none; }
+
+.page-date-calendar {
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  width: 1004px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  overflow: hidden; }
+  .page-date-calendar .day {
+    width: 200px;
+    margin: 0;
+    padding: 10px 0;
+    float: left;
+    border-right: solid 1px #f4f4f4; }
+    .page-date-calendar .day:last-child {
+      border-right: none; }
+    .page-date-calendar .day .weekday {
+      font-weight: bold;
+      font-size: 18px;
+      text-align: center;
+      line-height: 40px;
+      height: 40px; }
+    .page-date-calendar .day .date {
+      font-size: 12px;
+      line-height: 24px;
+      height: 24px;
+      text-align: center;
+      color: #999;
+      margin-bottom: 5px; }
+    .page-date-calendar .day .form {
+      margin-left: 5px;
+      margin-bottom: 10px; }
+      .page-date-calendar .day .form input[type=text] {
+        border: solid #bbb 1px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        border-radius: 2px;
+        box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset;
+        font-size: 12px;
+        line-height: 24px;
+        padding: 0 4px;
+        width: 180px;
+        height: 24px; }
+        .page-date-calendar .day .form input[type=text]:focus {
+          box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset, 0 0 8px rgba(82, 168, 236, 0.6);
+          border: solid 1px rgba(82, 168, 236, 0.8); }
+    .page-date-calendar .day .items {
+      width: 190px;
+      margin-left: 5px;
+      margin-bottom: 15px; }
+      .page-date-calendar .day .items .holder {
+        height: 23px;
+        line-height: 23px;
+        border-bottom: 1px dotted #DDDDDD; }
+    .page-date-calendar .day.today {
+      background-color: #ffffe5;
+      border-top: solid 2px #CC0000;
+      padding-top: 8px; }
+      .page-date-calendar .day.today .weekday {
+        color: #c00; }
+      .page-date-calendar .day.today .date {
+        color: #ea9999; }
+
+.page-questions {
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  width: 800px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  margin-bottom: 20px; }
+  .page-questions .question {
+    padding: 15px;
+    overflow: hidden;
+    border-bottom: solid 1px #ddd; }
+    .page-questions .question:last-child {
+      border-bottom: none; }
+    .page-questions .question .answers-count {
+      -moz-border-radius: 4px;
+      -webkit-border-radius: 4px;
+      border-radius: 4px;
+      width: 60px;
+      float: left;
+      overflow: hidden; }
+      .page-questions .question .answers-count .t {
+        background-color: #E9F2D1;
+        color: #96b34e;
+        line-height: 20px;
+        text-align: center; }
+      .page-questions .question .answers-count .c {
+        background-color: #F3F9DF;
+        color: #78903e;
+        line-height: 28px;
+        text-align: center;
+        font-size: 16px;
+        font-weight: bold; }
+    .page-questions .question .ct {
+      margin-left: 75px; }
+      .page-questions .question .ct .title {
+        font-size: 14px;
+        font-weight: bold;
+        line-height: 16px;
+        margin-bottom: 16px; }
+        .page-questions .question .ct .title a {
+          color: #444; }
+          .page-questions .question .ct .title a:hover {
+            color: #444;
+            text-decoration: none; }
+      .page-questions .question .ct .creator {
+        color: #666; }
+        .page-questions .question .ct .creator a {
+          color: #85adbd; }
+
+.page-new-question {
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  width: 800px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  margin-bottom: 20px; }
+  .page-new-question form {
+    padding: 15px; }
+    .page-new-question form .field input#question_title {
+      width: 300px; }
+    .page-new-question form .field textarea {
+      width: 500px;
+      height: 160px; }
