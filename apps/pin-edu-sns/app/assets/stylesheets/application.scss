@@ -315,6 +315,22 @@ form{
   a{color:darken(#A6C3CF,10%);}
 }
 
+@mixin list-tags{
+  margin-left:75px;
+  height:24px;line-height:24px;
+  overflow:hidden;
+  
+  .tag{
+    float:left;
+    height:20px;line-height:20px;
+    background-color:#f1f1f1;
+    @include border-radius(3px);
+    border:solid 1px #ccc;
+    margin-right:6px;
+    padding:0 6px;
+  }
+}
+
 ///////////////////
 // 登录验证
 

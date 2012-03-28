@@ -16,6 +16,8 @@
       created_at = question.created_at.localtime
       title = question.title
   
+      tags = question.tags
+  
     .question
       .answers-count
         .t 回答次数
@@ -24,4 +26,6 @@
       .ct
         .title=link_to title, question
         .creator #{userlink creator} 提问
-
+        
+      .tags
+        =show_tags_in_list tags

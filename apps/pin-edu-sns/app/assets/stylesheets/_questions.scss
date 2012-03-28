@@ -13,10 +13,14 @@
     }
     
     .ct{
-      margin-left:75px;
+      margin-left:75px;margin-bottom:15px;
       
       .title{@include list-item-title;}
       .creator{@include list-item-creator;}
+    }
+    
+    .tags{
+      @include list-tags;
     }
   }
 }
