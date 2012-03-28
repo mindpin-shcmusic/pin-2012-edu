@@ -30,12 +30,12 @@
             .current-user 欢迎你，#{current_user.name}
             .logout=link_to '退出登录', '/logout'
         .page-nav
-          %a.avatar{:href=>'javascript:;'}=avatar current_user
-          %a.todos{:href=>'javascript:;'} 计划
-          %a.media-files{:href=>'javascript:;'} 资源
+          %a.avatar{:href=>"/users/#{current_user.id}"}=avatar current_user
+          %a.todos{:href=>'/todos'} 计划
+          %a.media-files{:href=>'/media_files'} 资源
           %a.discuss{:href=>'/votes'} 投票
-          %a.discuss{:href=>'javascript:;'} 问答
-          %a.short-messages{:href=>'javascript:;'} 私信
+          %a.discuss{:href=>'/questions'} 问答
+          %a.short-messages{:href=>'/short_messages'} 私信
           
         .page-content
           = yield

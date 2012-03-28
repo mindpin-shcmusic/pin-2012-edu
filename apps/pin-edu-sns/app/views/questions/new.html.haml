@@ -1,9 +1,8 @@
--htitle '提出问题'
+-htitle '提问'
   
-.page-go-back
-  =link_to '返回问题列表', '/questions'
+.page-title 提问
   
-.page-new-vote
+.page-new-question
   = flash.now[:error]
   
   = form_for @question, :url => { :action => "create" } do |f|
@@ -17,4 +16,5 @@
       
     .field
       %a.form-submit-button{:href=>'javascript:;'} 确定提问
+      %a.form-cancel{:href=>'/questions'} 取消返回
     

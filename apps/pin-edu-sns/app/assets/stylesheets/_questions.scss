@@ -1,0 +1,34 @@
+.page-questions{
+  @include page-models-index;
+  
+  .question{
+    padding:15px;overflow:hidden;
+    border-bottom:solid 1px #ddd;
+    &:last-child{
+      border-bottom:none;
+    };
+    
+    .answers-count{
+      @include count-block-in-list;
+    }
+    
+    .ct{
+      margin-left:75px;
+      
+      .title{@include list-item-title;}
+      .creator{@include list-item-creator;}
+    }
+  }
+}
+
+.page-new-question{
+  @include page-models-index;
+  
+  form{
+    padding:15px;
+    .field{
+      input#question_title{width:300px;}
+      textarea{width:500px;height:160px;}
+    }
+  }
+}

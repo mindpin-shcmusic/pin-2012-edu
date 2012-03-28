@@ -1,3 +1,27 @@
-=render 'questions/parts/nav'
-=render 'questions/parts/list', :questions => @questions
+-htitle '问答'
+
+:ruby
+  questions = @questions
+
+.page-title 提问和回答
+
+.page-votes-ops
+  %a.create{:href=>'/questions/new'} 我来提问
+
+.page-questions
+  -questions.each do |question|
+    :ruby
+      creator = question.creator
+      answers_count = question.answers.count
+      created_at = question.created_at.localtime
+      title = question.title
+  
+    .question
+      .answers-count
+        .t 回答次数
+        .c=answers_count
+        
+      .ct
+        .title=link_to title, question
+        .creator #{userlink creator} 提问
 
