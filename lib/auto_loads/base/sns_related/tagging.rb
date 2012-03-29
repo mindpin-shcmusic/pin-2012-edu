@@ -4,11 +4,13 @@ class Tagging < BuildDatabaseAbstract
   belongs_to :tag
   
   validates :tag, :creator, :model, :presence => true
-  
+
+=begin
   def add_tagging(creator, tag_name)
     tag = Tag.get(tag_name)
     Tagging.create(:creator_id => creator.id, :tag_id => tag.id)
   end
+=end
   
   def remove_tagging_by_each(model_type, model_id, tag_name)
     tag = Tag.get(tag_name)
@@ -29,7 +31,12 @@ class Tagging < BuildDatabaseAbstract
       base.send(:include,InstanceMethods)
     end
     module InstanceMethods
-      def add_tag(user,name)
+      def add_tag(user, name)
+        if name.include?(",")
+          errors.add(:base, '只能填入一个标签')
+          return false
+        end
+        
         tag = Tag.get(name)
         tagging = self.taggings.where(:tag_id=>tag.id).first
         if tagging.blank?

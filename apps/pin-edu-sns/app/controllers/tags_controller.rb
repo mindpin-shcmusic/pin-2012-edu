@@ -7,19 +7,16 @@ class TagsController < ApplicationController
       Vote.find(params[:model_id]) if params[:model_id]
     when "question"
       Question.find(params[:model_id]) if params[:model_id]
+    else
+      return false
     end
   end
   private :determine_model
   
   def add_tag
     @current_model = determine_model(params[:model_type], params[:model_id])
-    
-    # 先增加标签名
+
     @current_model.add_tag(current_user, params[:name])
-    
-    # 添加对象跟标签的关联
-    tagging = Tagging.new
-    tagging.add_tagging(current_user, params[:name])
     
     redirect_to @current_model
   end
