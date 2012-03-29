@@ -34,9 +34,6 @@ class TagsController < ApplicationController
       tag = tag.strip
       
       @current_model.add_tag(current_user, tag)
-      
-      tagging = Tagging.new
-      tagging.add_tagging(current_user, tag)
     end
     
     redirect_to @current_model
