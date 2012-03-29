@@ -1,0 +1,3 @@
+=form_tag "/tags/add_tag?model_type=#{params[:model_type]}&model_id=#{params[:model_id]}", :method=>:post do
+  =text_field_tag "name"
+  =submit_tag "增加"
