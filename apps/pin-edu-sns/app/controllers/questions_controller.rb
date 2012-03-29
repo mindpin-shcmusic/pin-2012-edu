@@ -18,6 +18,8 @@ class QuestionsController < ApplicationController
 
   def show
     @question = Question.find(params[:id])
+    
+    @tag_list = @question.tags.map {|tag| tag.name }.join(",")
     @answer = Answer.new
   end
   

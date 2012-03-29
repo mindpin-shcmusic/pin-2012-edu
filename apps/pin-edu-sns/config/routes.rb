@@ -1,7 +1,16 @@
 MindpinEduSns::Application.routes.draw do
-  get "users/show"
 
   root :to => 'index#index'
+  
+  resources :tags do
+    collection do
+      post :update_tags
+      delete :remove_tag
+      post :add_tag
+      get :create_tag
+      get :edit_tags
+    end
+  end
   
   resources :media_files do
     collection do

@@ -18,9 +18,14 @@
     - @question.tags.each do |tag|
       %div
         %span=tag.name
-        =link_to "删除","/questions/#{@question.id}/remove_tag?tag_name=#{tag.name}",:method=>:delete
+        =link_to "删除","/tags/remove_tag?model_type=question&model_id=#{@question.id}&tag=#{tag.name}",:method=>:delete
     %div
-      =link_to "增加标签","/questions/#{@question.id}/add_tag"
+      =link_to "增加标签","/tags/create_tag?model_type=question&model_id=#{@question.id}"
+    
+    %p
+      =link_to "编辑所有标签","/tags/edit_tags?model_type=question&model_id=#{@question.id}&tags_str=#{@tag_list}"
+
+    
     .ct=content
     .meta
       .creator #{creator.name} 提问
@@ -31,7 +36,7 @@
     - answers.each do |answer|
       :ruby
         creator = answer.creator
-        created_at = answer.created_at.localtime
+        created_at = answer.created_at
         content = answer.content
         
       .answer{:'data-id'=>answer.id}

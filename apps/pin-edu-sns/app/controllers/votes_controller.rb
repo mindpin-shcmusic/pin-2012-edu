@@ -37,6 +37,7 @@ class VotesController < ApplicationController
   def show
     return redirect_to votes_path if params[:id].blank?
 
+    @tag_list = @vote.tags.map {|tag| tag.name }.join(",")
     @vote_result = VoteResult.new
   end
   
