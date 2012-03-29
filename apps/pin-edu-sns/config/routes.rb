@@ -8,6 +8,7 @@ MindpinEduSns::Application.routes.draw do
       delete :remove_tag
       post :add_tag
       get :create_tag
+      get :edit_tags
     end
   end
   

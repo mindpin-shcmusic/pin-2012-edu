@@ -5,6 +5,17 @@ class Tagging < BuildDatabaseAbstract
   
   validates :tag, :creator, :model, :presence => true
   
+  def add_tagging(creator, tag_name)
+    tag = Tag.get(tag_name)
+    Tagging.create(:creator_id => creator.id, :tag_id => tag.id)
+  end
+  
+  def remove_tagging(model_type, model_id, tag_name)
+    tag = Tag.get(tag_name)
+    tagging = Tagging.where(:model_type => model_type, :model_id => model_id, :tag_id => tag.id).first
+    tagging.destroy if !tagging.blank?
+  end
+  
   module TaggableMethods
     def self.included(base)
       base.has_many :taggings,:as=>:model
@@ -29,6 +40,7 @@ class Tagging < BuildDatabaseAbstract
         end
         tag
       end
+      
     end
   end
 end

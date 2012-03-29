@@ -10,6 +10,7 @@
 .page-new-vote
   = flash.now[:notice]
 
+
 .page-vote-show
   .title=title
   - @vote.tags.each do |tag|
@@ -21,6 +22,8 @@
   =form_for @vote_result, :url => {:controller=>"vote_results", :action => "create" } do |f|
     = f.hidden_field :vote_id, :value => @vote.id
     
+    %p
+      =link_to "编辑所有标签","/tags/edit_tags?model_type=vote&model_id=#{@vote.id}&tags_str=#{@tag_list}"
     .items
       - @vote.vote_items.each do |l|
         .item
