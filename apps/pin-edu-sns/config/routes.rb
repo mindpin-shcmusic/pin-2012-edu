@@ -4,7 +4,7 @@ MindpinEduSns::Application.routes.draw do
   
   resources :tags do
     collection do
-      put :update_tags
+      post :update_tags
       delete :remove_tag
       post :add_tag
       get :create_tag

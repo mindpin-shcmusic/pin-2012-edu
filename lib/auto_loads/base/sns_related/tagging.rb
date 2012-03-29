@@ -10,11 +10,17 @@ class Tagging < BuildDatabaseAbstract
     Tagging.create(:creator_id => creator.id, :tag_id => tag.id)
   end
   
-  def remove_tagging(model_type, model_id, tag_name)
+  def remove_tagging_by_each(model_type, model_id, tag_name)
     tag = Tag.get(tag_name)
     tagging = Tagging.where(:model_type => model_type, :model_id => model_id, :tag_id => tag.id).first
     tagging.destroy if !tagging.blank?
   end
+  
+  def remove_tagging_by_model(model_type, model_id)
+    tagging = Tagging.where(:model_type => model_type, :model_id => model_id)
+    tagging.destroy_all if !tagging.blank?
+  end
+  
   
   module TaggableMethods
     def self.included(base)
