@@ -27,5 +27,6 @@
         .title=link_to title, question
         .creator #{userlink creator} 提问
         
-      .tags
+      .js-list-tags
         =show_tags_in_list tags
+        %a.edit{:href=>'javascript:;', :title=>'修改标签'} 修改

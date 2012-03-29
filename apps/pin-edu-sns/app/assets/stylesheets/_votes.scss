@@ -68,14 +68,15 @@
     }
     
     .ct{
-      margin-left:75px;
+      margin-left:75px;margin-bottom:15px;
       margin-right:80px;
       .title{@include list-item-title;}
       .creator{@include list-item-creator;}
       .limit{font-size:12px;line-height:16px;}
     }
-    .meta{
-      margin-left:54px;
+    
+    .js-list-tags{
+      @include list-tags;
     }
   }
 }

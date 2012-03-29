@@ -324,10 +324,57 @@ form{
     float:left;
     height:20px;line-height:20px;
     background-color:#f1f1f1;
-    @include border-radius(3px);
+    @include border-radius(3px 0 3px 0);
     border:solid 1px #ccc;
+    border-color:#eee #ccc #ccc #eee;
     margin-right:6px;
     padding:0 6px;
+  }
+  
+  .no-tag{
+    float:left;
+    height:20px;line-height:20px;
+    background-color:transparent;
+    border:solid 1px transparent;
+    margin-right:6px;
+    padding:0;
+    color:#aaa;
+  }
+  
+  .edit{
+    float:left;
+    color:#aaa;
+    height:20px;line-height:20px;border:solid 1px transparent;
+    position:relative;
+    overflow:hidden;font-size:0;line-height:20em;
+    width:20px;height:20px;
+    
+    &:hover{
+      border:solid 1px #ccc;
+      @include gradient(#fff,#eee);
+      @include border-radius(3px);
+      &:before{border-color:#555 transparent transparent transparent;}
+      &:after{background-color:#555;}
+    }
+    
+    $bdc:#999;
+    &:before{
+      content:"";
+      display:block;position:absolute;
+      left:2px;top:12px;
+      border-color:$bdc transparent transparent transparent;
+      border-style:solid;
+      border-width:4px 2px;
+      @include transform(rotate(45deg));
+    };
+    &:after{
+      content:"";
+      display:block;position:absolute;
+      left:9px;top:4px;
+      background-color:$bdc;
+      width:4px;height:10px;
+      @include transform(rotate(45deg));
+    }
   }
 }
 

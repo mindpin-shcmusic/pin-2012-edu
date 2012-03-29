@@ -19,7 +19,7 @@
       .creator{@include list-item-creator;}
     }
     
-    .tags{
+    .js-list-tags{
       @include list-tags;
     }
   }

@@ -704,6 +704,7 @@ form .form-cancel {
           background-color: #000; }
     .page-votes .vote .ct {
       margin-left: 75px;
+      margin-bottom: 15px;
       margin-right: 80px; }
       .page-votes .vote .ct .title {
         font-size: 14px;
@@ -722,8 +723,79 @@ form .form-cancel {
       .page-votes .vote .ct .limit {
         font-size: 12px;
         line-height: 16px; }
-    .page-votes .vote .meta {
-      margin-left: 54px; }
+    .page-votes .vote .js-list-tags {
+      margin-left: 75px;
+      height: 24px;
+      line-height: 24px;
+      overflow: hidden; }
+      .page-votes .vote .js-list-tags .tag {
+        float: left;
+        height: 20px;
+        line-height: 20px;
+        background-color: #f1f1f1;
+        -moz-border-radius: 3px 0 3px 0;
+        -webkit-border-radius: 3px 0 3px 0;
+        border-radius: 3px 0 3px 0;
+        border: solid 1px #ccc;
+        border-color: #eee #ccc #ccc #eee;
+        margin-right: 6px;
+        padding: 0 6px; }
+      .page-votes .vote .js-list-tags .no-tag {
+        float: left;
+        height: 20px;
+        line-height: 20px;
+        background-color: transparent;
+        border: solid 1px transparent;
+        margin-right: 6px;
+        padding: 0;
+        color: #aaa; }
+      .page-votes .vote .js-list-tags .edit {
+        float: left;
+        color: #aaa;
+        height: 20px;
+        line-height: 20px;
+        border: solid 1px transparent;
+        position: relative;
+        overflow: hidden;
+        font-size: 0;
+        line-height: 20em;
+        width: 20px;
+        height: 20px; }
+        .page-votes .vote .js-list-tags .edit:hover {
+          border: solid 1px #ccc;
+          background: -moz-linear-gradient(-90deg, white, #eeeeee);
+          background: -webkit-gradient(linear, 0% 0, 0% 100%, from(white), to(#eeeeee));
+          -moz-border-radius: 3px;
+          -webkit-border-radius: 3px;
+          border-radius: 3px; }
+          .page-votes .vote .js-list-tags .edit:hover:before {
+            border-color: #555 transparent transparent transparent; }
+          .page-votes .vote .js-list-tags .edit:hover:after {
+            background-color: #555; }
+        .page-votes .vote .js-list-tags .edit:before {
+          content: "";
+          display: block;
+          position: absolute;
+          left: 2px;
+          top: 12px;
+          border-color: #999999 transparent transparent transparent;
+          border-style: solid;
+          border-width: 4px 2px;
+          -moz-transform: rotate(45deg);
+          -webkit-transform: rotate(45deg);
+          transform: rotate(45deg); }
+        .page-votes .vote .js-list-tags .edit:after {
+          content: "";
+          display: block;
+          position: absolute;
+          left: 9px;
+          top: 4px;
+          background-color: #999999;
+          width: 4px;
+          height: 10px;
+          -moz-transform: rotate(45deg);
+          -webkit-transform: rotate(45deg);
+          transform: rotate(45deg); }
 
 .page-new-vote {
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
@@ -1054,22 +1126,79 @@ form .form-cancel {
         color: #666; }
         .page-questions .question .ct .creator a {
           color: #85adbd; }
-    .page-questions .question .tags {
+    .page-questions .question .js-list-tags {
       margin-left: 75px;
       height: 24px;
       line-height: 24px;
       overflow: hidden; }
-      .page-questions .question .tags .tag {
+      .page-questions .question .js-list-tags .tag {
         float: left;
         height: 20px;
         line-height: 20px;
         background-color: #f1f1f1;
-        -moz-border-radius: 3px;
-        -webkit-border-radius: 3px;
-        border-radius: 3px;
+        -moz-border-radius: 3px 0 3px 0;
+        -webkit-border-radius: 3px 0 3px 0;
+        border-radius: 3px 0 3px 0;
         border: solid 1px #ccc;
+        border-color: #eee #ccc #ccc #eee;
         margin-right: 6px;
         padding: 0 6px; }
+      .page-questions .question .js-list-tags .no-tag {
+        float: left;
+        height: 20px;
+        line-height: 20px;
+        background-color: transparent;
+        border: solid 1px transparent;
+        margin-right: 6px;
+        padding: 0;
+        color: #aaa; }
+      .page-questions .question .js-list-tags .edit {
+        float: left;
+        color: #aaa;
+        height: 20px;
+        line-height: 20px;
+        border: solid 1px transparent;
+        position: relative;
+        overflow: hidden;
+        font-size: 0;
+        line-height: 20em;
+        width: 20px;
+        height: 20px; }
+        .page-questions .question .js-list-tags .edit:hover {
+          border: solid 1px #ccc;
+          background: -moz-linear-gradient(-90deg, white, #eeeeee);
+          background: -webkit-gradient(linear, 0% 0, 0% 100%, from(white), to(#eeeeee));
+          -moz-border-radius: 3px;
+          -webkit-border-radius: 3px;
+          border-radius: 3px; }
+          .page-questions .question .js-list-tags .edit:hover:before {
+            border-color: #555 transparent transparent transparent; }
+          .page-questions .question .js-list-tags .edit:hover:after {
+            background-color: #555; }
+        .page-questions .question .js-list-tags .edit:before {
+          content: "";
+          display: block;
+          position: absolute;
+          left: 2px;
+          top: 12px;
+          border-color: #999999 transparent transparent transparent;
+          border-style: solid;
+          border-width: 4px 2px;
+          -moz-transform: rotate(45deg);
+          -webkit-transform: rotate(45deg);
+          transform: rotate(45deg); }
+        .page-questions .question .js-list-tags .edit:after {
+          content: "";
+          display: block;
+          position: absolute;
+          left: 9px;
+          top: 4px;
+          background-color: #999999;
+          width: 4px;
+          height: 10px;
+          -moz-transform: rotate(45deg);
+          -webkit-transform: rotate(45deg);
+          transform: rotate(45deg); }
 
 .page-new-question {
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);

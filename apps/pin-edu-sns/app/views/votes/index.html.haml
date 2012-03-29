@@ -16,6 +16,7 @@
       can_delete = (creator == current_user)
       has_voted = vote.has_voted_by?(current_user)
       voted_users_count = vote.voted_users.count
+      tags = vote.tags
     
     .vote
       .voted-users-count
@@ -28,3 +29,7 @@
       .ct
         .title=link_to vote.title, vote
         .creator #{userlink creator} 发起
+        
+      .js-list-tags
+        =show_tags_in_list tags
+        %a.edit{:href=>'javascript:;', :title=>'修改标签'} 修改
