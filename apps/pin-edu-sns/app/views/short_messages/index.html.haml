@@ -1,38 +1,39 @@
-.page-users-list
-  -User.where(['id <> ?', current_user.id]).limit(10).each do |user|
-    .user
-      %span.name=user.name
-      %a.send-message{:href=>"/short_messages/new?receiver_id=#{user.id}"} 发短消息
-      
+-htitle '站内短消息'
 
-%ul.page-message-exchanged-users
+.page-title 我的站内短消息
+
+.page-short-messages.grouped-by-user
   -@messages.each do |message|
     :ruby
       created_at = message.created_at.localtime
       content = message.content
       
-      i_am_sender = current_user == message.sender
-      i_am_receiver = current_user == message.receiver
+      i_am_sender   = (current_user == message.sender)
+      i_am_receiver = (current_user == message.receiver)
       
       if i_am_sender
         another_user = message.receiver
-        klass = 'to' 
+        klass = 'to'
       elsif i_am_receiver
         another_user = message.sender
         klass = 'from'
       end
       
-      exange_url = "/short_messages/exchange?receiver_id=#{another_user.id}"
+      exchange_url = "/short_messages/exchange?receiver_id=#{another_user.id}"
+      reply_url = "/short_messages/new?receiver_id=#{another_user.id}"
   
-    %li.message
+    .user-message{:class=>klass}
+      .avatar
+        =avatar another_user
       .ct
         -if i_am_sender
-          %span.user 发送给 #{message.receiver.name} :
+          %span.user 发送给 #{userlink another_user} :
         -elsif i_am_receiver
-          %span.user 来自 #{message.sender.name} :
-          
+          %span.user #{userlink another_user} :  
         %span.text=content
-        %span.at (#{created_at})
+        
+      .time=created_at
         
       .ops
-        =link_to "查看", exange_url
+        %a.reply{:href=>reply_url} 回复
+        %a.look{:href=>exchange_url} 查看 

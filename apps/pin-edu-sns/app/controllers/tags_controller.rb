@@ -1,14 +1,14 @@
 class TagsController < ApplicationController
-  # 判断当前是哪个model
+  # 根据传入的参数获取模型实例
   def determine_model(model_type, model_id)
     model_type = model_type.downcase
     case model_type
-    when "vote"
-      Vote.find(params[:model_id]) if params[:model_id]
-    when "question"
-      Question.find(params[:model_id]) if params[:model_id]
-    else
-      return false
+      when 'vote'
+        Vote.find(params[:model_id]) if params[:model_id]
+      when 'question'
+        Question.find(params[:model_id]) if params[:model_id]
+      else
+        return false
     end
   end
   private :determine_model
@@ -45,13 +45,6 @@ class TagsController < ApplicationController
     tagging = Tagging.new
     tagging.remove_tagging_by_each(params[:model_type], params[:model_id], params[:tag])
     redirect_to @current_model
-  end
-  
-  def create_tag
-  end
-  
-  def edit_tags
- 
   end
 
 end

@@ -4,9 +4,7 @@
   .question{
     padding:15px;overflow:hidden;
     border-bottom:solid 1px #ddd;
-    &:last-child{
-      border-bottom:none;
-    };
+    &:last-child{border-bottom:none;};
     
     .answers-count{
       @include count-block-in-list;

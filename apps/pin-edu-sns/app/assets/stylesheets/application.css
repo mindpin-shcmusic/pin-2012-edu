@@ -1215,3 +1215,169 @@ form .form-cancel {
     .page-new-question form .field textarea {
       width: 500px;
       height: 160px; }
+
+.page-short-messages.grouped-by-user {
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  width: 800px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  margin-bottom: 20px; }
+  .page-short-messages.grouped-by-user .user-message {
+    padding: 15px;
+    overflow: hidden;
+    border-bottom: solid 1px #ddd;
+    position: relative; }
+    .page-short-messages.grouped-by-user .user-message .avatar {
+      -moz-border-radius: 3px;
+      -webkit-border-radius: 3px;
+      border-radius: 3px;
+      float: left;
+      overflow: hidden;
+      font-size: 0;
+      line-height: 0; }
+      .page-short-messages.grouped-by-user .user-message .avatar img {
+        width: 48px;
+        height: 48px; }
+    .page-short-messages.grouped-by-user .user-message .ct {
+      margin-left: 65px;
+      line-height: 16px;
+      margin-bottom: 16px; }
+      .page-short-messages.grouped-by-user .user-message .ct span.user {
+        color: #666; }
+        .page-short-messages.grouped-by-user .user-message .ct span.user a {
+          color: #85adbd; }
+    .page-short-messages.grouped-by-user .user-message .time {
+      margin-left: 65px;
+      color: #aaa;
+      line-height: 16px;
+      height: 16px; }
+    .page-short-messages.grouped-by-user .user-message .ops {
+      position: absolute;
+      right: 15px;
+      bottom: 15px;
+      height: 16px;
+      line-height: 16px;
+      overflow: hidden; }
+      .page-short-messages.grouped-by-user .user-message .ops a {
+        float: left;
+        padding: 0 8px;
+        position: relative; }
+        .page-short-messages.grouped-by-user .user-message .ops a:after {
+          content: "";
+          width: 1px;
+          height: 11px;
+          right: 0;
+          top: 3px;
+          display: block;
+          position: absolute;
+          background-color: #ccc; }
+      .page-short-messages.grouped-by-user .user-message .ops a:last-child {
+        border: none;
+        padding-right: 0; }
+        .page-short-messages.grouped-by-user .user-message .ops a:last-child:after {
+          display: none; }
+.page-short-messages.exchanged .list-group {
+  overflow: hidden;
+  width: 800px;
+  padding-right: 5px; }
+  .page-short-messages.exchanged .list-group .g-sender-avatar {
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    float: left;
+    overflow: hidden;
+    font-size: 0;
+    line-height: 0;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    border: 3px solid white; }
+    .page-short-messages.exchanged .list-group .g-sender-avatar img {
+      width: 48px;
+      height: 48px; }
+  .page-short-messages.exchanged .list-group.from .g-sender-avatar {
+    float: left;
+    margin-right: 15px; }
+  .page-short-messages.exchanged .list-group.to .g-sender-avatar {
+    float: right; }
+  .page-short-messages.exchanged .list-group.to .g-messages {
+    margin-left: 69px;
+    background-color: #f7f7f7; }
+  .page-short-messages.exchanged .list-group .g-messages {
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    background-color: white;
+    width: 800px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    float: left;
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+    width: 662px;
+    margin-bottom: 15px; }
+    .page-short-messages.exchanged .list-group .g-messages .message {
+      padding: 15px;
+      overflow: hidden;
+      position: relative;
+      border-bottom: solid 1px #ddd; }
+      .page-short-messages.exchanged .list-group .g-messages .message:last-child {
+        border-bottom: none; }
+      .page-short-messages.exchanged .list-group .g-messages .message .ct {
+        line-height: 16px;
+        margin-bottom: 16px;
+        margin-right: 32px; }
+        .page-short-messages.exchanged .list-group .g-messages .message .ct span.user {
+          color: #666; }
+          .page-short-messages.exchanged .list-group .g-messages .message .ct span.user a {
+            color: #85adbd; }
+      .page-short-messages.exchanged .list-group .g-messages .message .time {
+        color: #aaa;
+        line-height: 16px;
+        height: 16px; }
+      .page-short-messages.exchanged .list-group .g-messages .message .ops {
+        position: absolute;
+        right: 15px;
+        top: 15px; }
+        .page-short-messages.exchanged .list-group .g-messages .message .ops .delete {
+          display: block;
+          border: solid 1px transparent;
+          -moz-border-radius: 3px;
+          -webkit-border-radius: 3px;
+          border-radius: 3px;
+          font-size: 0px;
+          line-height: 20em;
+          overflow: hidden;
+          position: relative;
+          height: 18px;
+          width: 18px; }
+          .page-short-messages.exchanged .list-group .g-messages .message .ops .delete::before, .page-short-messages.exchanged .list-group .g-messages .message .ops .delete::after {
+            content: "";
+            display: block;
+            position: absolute;
+            -moz-transition: background-color ease-in 0.1s;
+            -webkit-transition: background-color ease-in 0.1s;
+            transition: background-color ease-in 0.1s; }
+          .page-short-messages.exchanged .list-group .g-messages .message .ops .delete:hover {
+            border: solid 1px #ccc;
+            background: -moz-linear-gradient(-90deg, white, #eeeeee);
+            background: -webkit-gradient(linear, 0% 0, 0% 100%, from(white), to(#eeeeee)); }
+          .page-short-messages.exchanged .list-group .g-messages .message .ops .delete::before, .page-short-messages.exchanged .list-group .g-messages .message .ops .delete::after {
+            width: 2px;
+            height: 14px;
+            background-color: #b1b1b1; }
+          .page-short-messages.exchanged .list-group .g-messages .message .ops .delete::before {
+            -moz-transform: rotate(45deg);
+            -webkit-transform: rotate(45deg);
+            transform: rotate(45deg);
+            left: 8px;
+            top: 2px; }
+          .page-short-messages.exchanged .list-group .g-messages .message .ops .delete::after {
+            -moz-transform: rotate(-45deg);
+            -webkit-transform: rotate(-45deg);
+            transform: rotate(-45deg);
+            left: 8px;
+            top: 2px; }
+          .page-short-messages.exchanged .list-group .g-messages .message .ops .delete:hover::before, .page-short-messages.exchanged .list-group .g-messages .message .ops .delete:hover::after {
+            background-color: #000; }

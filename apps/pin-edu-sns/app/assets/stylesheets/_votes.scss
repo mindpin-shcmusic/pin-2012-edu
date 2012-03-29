@@ -45,9 +45,7 @@
   .vote{
     padding:15px;
     border-bottom:solid 1px #ddd;
-    &:last-child{
-      border-bottom:none;
-    };
+    &:last-child{border-bottom:none;};
     
     .voted-users-count{
       @include count-block-in-list;
@@ -55,15 +53,7 @@
     .ops{
       float:right;
       .delete{
-        @include hover-button;
-        height:18px;width:18px;
-        
-        &::before, &::after{width:2px;height:14px;background-color:#b1b1b1;};
-        &::before{@include transform(rotate(45deg));left:8px;top:2px;}
-        &::after{@include transform(rotate(-45deg));left:8px;top:2px;}
-        &:hover{
-          &::before, &::after{background-color:#000;}
-        }
+        @include list-ops-delete;
       }
     }
     

@@ -378,6 +378,18 @@ form{
   }
 }
 
+@mixin list-ops-delete{
+  @include hover-button;
+  height:18px;width:18px;
+  
+  &::before, &::after{width:2px;height:14px;background-color:#b1b1b1;};
+  &::before{@include transform(rotate(45deg));left:8px;top:2px;}
+  &::after{@include transform(rotate(-45deg));left:8px;top:2px;}
+  &:hover{
+    &::before, &::after{background-color:#000;}
+  }
+}
+
 ///////////////////
 // 登录验证
 
@@ -403,3 +415,4 @@ form{
 @import 'votes';
 @import 'todos';
 @import 'questions';
+@import 'short_messages';

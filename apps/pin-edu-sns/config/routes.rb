@@ -2,16 +2,16 @@ MindpinEduSns::Application.routes.draw do
 
   root :to => 'index#index'
   
+  # ---------- TAG
   resources :tags do
     collection do
       post :update_tags
       delete :remove_tag
       post :add_tag
-      get :create_tag
-      get :edit_tags
     end
   end
   
+  # ------------- 媒体文件
   resources :media_files do
     collection do
       post :create_by_edu
@@ -22,12 +22,14 @@ MindpinEduSns::Application.routes.draw do
   resources :users
   
   # --- 闲聊
-  get '/teams/:team_id/statuses'     => 'statuses#index'
-  post '/teams/:team_id/statuses'    => 'statuses#create'
-  get "/statuses/:id/repost"           => "statuses#repost"
-  post "/statuses/:id/repost"          => "statuses#do_repost"
+  get  '/teams/:team_id/statuses'  => 'statuses#index'
+  post '/teams/:team_id/statuses'  => 'statuses#create'
+  get  '/statuses/:id/repost'      => 'statuses#repost'
+  post '/statuses/:id/repost'      => 'statuses#do_repost'
+  
   # --- 教学活动
   resources :activities
+  
   # --- 待办事项
   resources :todos do
     member do
