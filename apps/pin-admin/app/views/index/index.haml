@@ -1,10 +1,23 @@
-%div
-  -if logged_in?
-    ="欢迎你，#{current_user.name}"
-  -else
-    ="你现在未登录"
-=link_to "教师列表","/teachers"
-=link_to "学生列表","/students"
-=link_to "课程列表","/courses"
-=link_to "班级列表","/teams"
-=link_to "分类列表","/categories"
+.page-title 系统数据概览
+
+.page-admin-stat
+  .data
+    .title 课程
+    .count=Course.count
+    =link_to "打开维护","/courses"
+  .data
+    .title 班级
+    .count=Team.count
+    =link_to "打开维护","/teams"
+  .data
+    .title 分类
+    .count=Category.count
+    =link_to "打开维护","/categories"
+  .data
+    .title 教师
+    .count=Teacher.count
+    =link_to "打开维护","/teachers"
+  .data
+    .title 学生
+    .count=Student.count
+    =link_to "打开维护","/students"

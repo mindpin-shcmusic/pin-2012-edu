@@ -76,19 +76,33 @@ def truncate_u(text, length = 30, truncate_string = "...")
 end
 
 #############
+MINDPIN_PRODUCTION_DOMAINS = {
+  'auth' => 'auth.shcmusic.mindpin.com',
+  'sns' => 'sns.shcmusic.mindpin.com',
+  'admin' => 'admin.shcmusic.mindpin.com',
+  'management' => 'management.shcmusic.mindpin.com',
+  'ui' => 'ui.shcmusic.mindpin.com'
+}
 
-MINDPIN_DOMAINS = {
-  'auth'  => 'auth.yinyue.edu',
-  'admin' => 'admin.yinyue.edu',
-  'ui'    => 'ui.yinyue.edu',
-  'sns'   => 'sns.yinyue.edu'
+MINDPIN_DEVELOPMENT_DOMAINS = {
+  'auth'  => 'dev.auth.yinyue.edu',
+  'sns'   => 'dev.sns.yinyue.edu',
+  'admin' => 'dev.admin.yinyue.edu',
+  'management' => 'dev.management.yinyue.edu',
+  'ui'    => 'dev.ui.yinyue.edu'
 }
 
 def pin_url_for(site_name, path = '')
-  domain = MINDPIN_DOMAINS[site_name]
-  raise "找不到名为为 #{site_name} 的 MINDPIN_DOMAINS 配置" if domain.blank?
-  
-  prefix = Rails.env.production? ? 'http://' : 'http://dev.'
-  site_url = "#{prefix}#{domain}"
+  if Rails.env.production?
+    _pin_url_for_env(MINDPIN_PRODUCTION_DOMAINS,site_name, path)
+  else
+    _pin_url_for_env(MINDPIN_DEVELOPMENT_DOMAINS,site_name, path)
+  end
+end
+
+def _pin_url_for_env(domains,site_name,path)
+  domain = domains[site_name]
+  raise "找不到名为 #{site_name} 的 MINDPIN_DOMAINS 配置" if domain.blank?
+  site_url = "http://#{domain}"
   File.join(site_url, path)
 end

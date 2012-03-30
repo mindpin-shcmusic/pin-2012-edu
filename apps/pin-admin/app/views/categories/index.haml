@@ -1,6 +1,10 @@
--@categories.each do |category|
-  =category.name
-  
-=link_to "创建分类","/categories/new"
+.page-title 数据分类维护
 
-=link_to "首页","/"
+.page-admin-ops
+  %a.create{:href=>'/categories/new'} 增加数据分类
+
+.page-admin-categories
+  -@categories.each do |category|
+    .category
+      .t=category.name
+      .c=0

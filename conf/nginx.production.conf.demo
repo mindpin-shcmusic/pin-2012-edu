@@ -1,0 +1,174 @@
+worker_processes  8;
+worker_cpu_affinity 00000001 00000010 00000100 00001000 00010000 00100000 01000000 10000000;
+worker_rlimit_nofile 204800;
+
+events {
+  use epoll;
+  worker_connections  204800;
+}
+
+http {
+  include      mime.types;
+  default_type application/octet-stream;
+
+  charset utf-8;
+
+  server_names_hash_bucket_size 128;
+  client_header_buffer_size     2k;
+  large_client_header_buffers   4 4k;
+  client_max_body_size          8m; # 最大允许上传尺寸
+
+  sendfile          on;
+  tcp_nopush        on;
+  tcp_nodelay       on;
+  keepalive_timeout 120;
+  send_timeout      120;
+
+  gzip              on;
+  gzip_buffers      4 32k;
+  gzip_min_length   1k;
+  gzip_comp_level   2;
+  gzip_http_version 1.1;
+  gzip_types        text/plain application/x-javascript text/css application/xml;
+
+
+
+  ##############################################
+  ##############################################
+  ######## 配置从这里开始 ######################
+  ##############################################
+  ##############################################
+
+  # MINDPIN PROJECTS
+  upstream shcmusic-pin-auth-server {
+    server unix:/web/2012/sockets/unicorn-pin-auth.sock fail_timeout=0;
+  }
+  upstream shcmusic-pin-admin-server {
+    server unix:/web/2012/sockets/unicorn-pin-admin.sock fail_timeout=0;
+  }
+  upstream shcmusic-pin-edu-sns-server {
+    server unix:/web/2012/sockets/unicorn-pin-edu-sns.sock fail_timeout=0;
+  }
+  # MANAGEMENT PROJECT
+  upstream shcmusic-management-server {
+    server unix:/web/2012/sockets/unicorn-management.sock fail_timeout=0;
+  }
+
+  # pin-auth
+  server {
+    listen 80;
+    server_name auth.shcmusic.mindpin.com;
+    root /web/2012/pin-2012-edu/apps/pin-auth/public;
+
+    location / {
+      proxy_pass_header Server;
+      proxy_set_header Host $http_host;
+      proxy_redirect off;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Scheme $scheme;
+      if ($request_uri ~* "\.(ico|css|js|gif|jpg|jpeg|png)\?[0-9A-Za-z]+$") {
+        expires max;
+        break;
+      }
+      if (!-f $request_filename) {
+        proxy_pass http://shcmusic-pin-auth-server;  
+      }
+    }
+  }
+
+  # pin-admin
+  server {
+    listen 80;
+    server_name admin.shcmusic.mindpin.com;
+    root /web/2012/pin-2012-edu/apps/pin-admin/public;
+
+    location / {
+      proxy_pass_header Server;
+      proxy_set_header Host $http_host;
+      proxy_redirect off;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Scheme $scheme;
+      if ($request_uri ~* "\.(ico|css|js|gif|jpg|jpeg|png)\?[0-9A-Za-z]+$") {
+        expires max;
+        break;
+      }
+      if (!-f $request_filename) {
+        proxy_pass http://shcmusic-pin-admin-server;
+      }
+    }
+  }
+  # pin-edu-sns
+  server {
+    listen 80;
+    server_name sns.shcmusic.mindpin.com;
+    root /web/2012/pin-2012-edu/apps/pin-edu-sns/public;
+
+    location / {
+      proxy_pass_header Server;
+      proxy_set_header Host $http_host;
+      proxy_redirect off;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Scheme $scheme;
+      if ($request_uri ~* "\.(ico|css|js|gif|jpg|jpeg|png)\?[0-9A-Za-z]+$") {
+        expires max;
+        break;
+      }
+      if (!-f $request_filename) {
+        proxy_pass http://shcmusic-pin-edu-sns-server;
+      }
+    }
+  }
+
+
+  # management 
+  server {
+    listen 80;
+    server_name management.shcmusic.mindpin.com;
+    root /web/2012/pin-2012-edu/management/public;
+
+    location / {
+      proxy_pass_header Server;
+      proxy_set_header Host $http_host;
+      proxy_redirect off;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Scheme $scheme;
+      if ($request_uri ~* "\.(ico|css|js|gif|jpg|jpeg|png)\?[0-9A-Za-z]+$") {
+        expires max;
+        break;
+      }
+      if (!-f $request_filename) {
+        proxy_pass http://shcmusic-management-server;
+      }
+    }
+  }
+
+  # 公共UI
+  server {
+    listen 80;
+    server_name ui.shcmusic.mindpin.com;
+    location / {
+      root /web/2012/;
+      if ($request_uri ~* "\.(ico|css|js|gif|jpg|jpeg|png)\?[0-9A-Za-z]+$") {
+        expires max;
+        break;
+      }
+    }
+
+    # 用户头像上传临时文件
+    location /upload_user_avatar_tempfile {
+      root /web/2012;
+    }
+  }
+
+  ##############################################
+  ##############################################
+  ######## 配置从这里结束 ######################
+  ##############################################
+  ##############################################
+
+}
+

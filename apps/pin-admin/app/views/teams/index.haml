@@ -1,15 +1,26 @@
-%ul
+.page-title 班级维护
+
+.page-admin-ops
+  %a.create{:href=>'teams/new'} 增加班级
+
+.page-admin-models.teams
   -@teams.each do |team|
-    %li
-      %div
-        %div  名字 #{team.name}
-        %div 班级号 #{team.cid}    
-        -if team.teacher.blank?
-          %div 教师 未指定    
-        -else    
-          %div 教师 #{team.teacher.real_name}    
-        =link_to "查看详情","/teams/#{team.id}"
-=link_to "创建班级","teams/new"
-=link_to "首页","/"
+    :ruby
+      teacher_name = team.teacher.blank? ? '未指定' : team.teacher.real_name
+    .model.team
+      .p
+        .t 名称 
+        .c=team.name
+      .p
+        .t 班级序号 
+        .c=team.cid
+      .p
+        .t 教师
+        .c=teacher_name
+      .p.l3
+        .t 其他描述 
+        .c
+
+      .detail=link_to "查看详情","/teams/#{team.id}"
 
   

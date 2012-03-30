@@ -1,0 +1,35 @@
+-# MINDPIN 工程原型Layout
+
+:ruby
+  tstr = ((yield :title) || '').gsub("\n",'')
+  title = tstr.blank? ? 'MINDPIN shcmusic SNS 系统管理' : "#{tstr} - MINDPIN shcmusic SNS 系统管理"
+
+!!! 5
+%html{:lang=>"zh"}
+  %head
+    %meta{:charset=>"utf-8"}
+    %title=title
+    = csrf_meta_tags
+    = stylesheet_link_tag 'application'
+    = yield :css
+    = yield :head
+
+  %body.echo.gray.admin
+    .page-wrap
+      .page-container
+        .page-header
+          .settings
+          .title=title
+        .page-nav
+          =link_to "概览","/"
+          =link_to "课程","/courses"
+          =link_to "班级","/teams"
+          =link_to "分类","/categories"
+          =link_to "教师","/teachers"
+          =link_to "学生","/students"
+          
+        .page-content
+          = yield
+
+    = javascript_include_tag :application
+    = yield :javascript

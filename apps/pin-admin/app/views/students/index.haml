@@ -1,7 +1,23 @@
-%ul
+.page-title 学生维护
+
+.page-admin-ops
+  %a.create{:href=>'students/new'} 增加学生
+
+.page-admin-models.students
   -@students.each do |student|
-    %li 学生姓名 #{student.real_name} 学生编号 #{student.sid}
-=link_to "创建学生","/students/new"
-=link_to "首页","/"
+    .model.teacher
+      .avatar
+        =avatar User.new, :medium
+      .p
+        .t 学生姓名
+        .c=student.real_name
+      .p
+        .t 学生编号 
+        .c=student.sid
+      .p.l3
+        .t 其他信息 
+        .c
+
+      .detail=link_to "查看详情","/students/#{student.id}"
   
-		
+    
