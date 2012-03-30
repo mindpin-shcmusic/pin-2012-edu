@@ -34,3 +34,97 @@
     }
   }
 }
+
+@mixin question-comments{
+  margin-top:20px;
+  .comment{
+    background-color:#efefef;
+    @include border-radius(4px);
+    padding:10px;margin-bottom:3px;
+    
+    .c-avatar{
+      float:left;font-size:0;line-height:0;margin-right:5px;
+      img{width:16px;height:16px;@include border-radius(2px);}
+    }
+    .c-name{
+      margin-left:24px;line-height:16px;height:16px;
+    }
+    .c-ct{
+      margin-left:24px;
+    }
+  }
+  .form{
+    overflow:hidden;
+    input[type=text]{
+      float:left;
+      width:759px;
+      border:dashed 1px #DDDDDD;
+      @include border-radius(3px);
+      box-shadow:none;
+    }
+    a.form-submit-button{
+      float:left;height:30px;line-height:30px;
+      margin-left:4px;margin-right:0;
+    }
+  }
+}
+
+.page-question-show{
+  .question{
+    @include page-models-index;
+    padding:15px;width:800px - 30;
+    
+    .js-list-tags{
+      @include list-tags;
+      margin-left:0;
+    }
+    
+    .ct{
+      font-size:14px;margin-top:20px;margin-bottom:20px;
+    }
+    
+    .meta{
+      height:16px;line-height:16px;
+      .c-avatar{
+        float:left;font-size:0;line-height:0;margin-right:5px;
+        img{width:16px;height:16px;@include border-radius(2px);}
+      }
+      .creator{@include list-item-creator;}
+      .time{color:#aaa;}
+    }
+    
+    .comments{@include question-comments;}
+  }
+  
+  .answers{
+    @include page-models-index;
+    .answer{
+      padding:15px;overflow:hidden;
+      border-bottom:solid 1px #ddd;
+      &:last-child{border-bottom:none;};
+      
+      position:relative;
+      
+      .ct{
+        font-size:14px;margin-bottom:20px;
+      }
+      
+      .meta{
+        height:16px;line-height:16px;
+        .c-avatar{
+          float:left;font-size:0;line-height:0;margin-right:5px;
+          img{width:16px;height:16px;@include border-radius(2px);}
+        }
+        .creator{@include list-item-creator;}
+        .time{color:#aaa;}
+      }
+      
+      .ops{
+        position:absolute;
+        right:15px;top:15px;
+      }
+      
+      .comments{@include question-comments;}
+    }
+  }
+}

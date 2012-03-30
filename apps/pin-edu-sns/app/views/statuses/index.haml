@@ -5,15 +5,14 @@
   %div=text_area_tag "content"
   %div=submit_tag "发送"
   
-%div
+.statuses
   -@statuses.each do |status|
-    %div
-      %span=status.creator.name
+    :ruby
+      creator = status.creator
+    .status
+      .avatar=avatar creator
       %span ：
       %span=status.content
       -if !status.repost.blank?
         %span (转发 ：#{status.repost.creator.name} : #{status.repost.content})
       %span=link_to "转发","/statuses/#{status.id}/repost"
-    
-  
-		

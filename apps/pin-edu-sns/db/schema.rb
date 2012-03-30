@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120321020935) do
+ActiveRecord::Schema.define(:version => 20120330060739) do
 
   create_table "activities", :force => true do |t|
     t.string   "title"
@@ -45,6 +45,12 @@ ActiveRecord::Schema.define(:version => 20120321020935) do
     t.datetime "updated_at"
   end
 
+  create_table "categories", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "comments", :force => true do |t|
     t.integer  "model_id"
     t.string   "model_type"
@@ -66,6 +72,17 @@ ActiveRecord::Schema.define(:version => 20120321020935) do
     t.boolean  "oauth_invalid"
     t.boolean  "syn_from_connect"
     t.string   "last_syn_message_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "courses", :force => true do |t|
+    t.string   "name",       :default => "", :null => false
+    t.string   "cid"
+    t.string   "department"
+    t.string   "location"
+    t.integer  "teacher_id"
+    t.text     "desc"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -99,6 +116,7 @@ ActiveRecord::Schema.define(:version => 20120321020935) do
     t.integer  "creator_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "category_id"
   end
 
   create_table "notifications", :force => true do |t|
@@ -157,6 +175,14 @@ ActiveRecord::Schema.define(:version => 20120321020935) do
     t.datetime "updated_at"
   end
 
+  create_table "students", :force => true do |t|
+    t.string   "real_name",  :default => "", :null => false
+    t.string   "sid"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "taggings", :force => true do |t|
     t.integer  "tag_id"
     t.integer  "creator_id"
@@ -172,9 +198,32 @@ ActiveRecord::Schema.define(:version => 20120321020935) do
     t.datetime "updated_at"
   end
 
+  create_table "teachers", :force => true do |t|
+    t.string   "real_name",  :default => "", :null => false
+    t.string   "tid"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "team_status_links", :force => true do |t|
     t.integer  "team_id"
     t.integer  "status_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "team_students", :force => true do |t|
+    t.integer  "team_id"
+    t.integer  "student_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "teams", :force => true do |t|
+    t.string   "name",       :default => "", :null => false
+    t.string   "cid"
+    t.integer  "teacher_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

@@ -1,9 +1,20 @@
-=form_tag "/media_files",:multipart => true do
-  =file_field_tag "file"
-  =submit_tag "提交到OSS"
+=flash[:error]
+=form_for @media_file, :url=>"/media_files",:multipart => true do |f|
+  %div
+    %label 选择文件
+  %div
+    =f.file_field :file
+  %idv
+    %label 分类
+  %div
+    =f.select(:category_id,Category.all.map{|category|[category.name,category.id]}.unshift(["不指定",""]))
+  %div
+    =f.submit "创建"
   
-=form_tag "http://dev.www.uploadmediafile.com/upload",:multipart => true do
-  =file_field_tag "file"
-  =hidden_field_tag "creator_id",current_user.id
-  =submit_tag "提交到EDU"
+  
+-# 上传到内网的文件上传方式，先隐藏掉  
+-#=form_tag "http://dev.www.uploadmediafile.com/upload",:multipart => true do
+-#  =file_field_tag "file"
+-#  =hidden_field_tag "creator_id",current_user.id
+-#  =submit_tag "提交到EDU"
   

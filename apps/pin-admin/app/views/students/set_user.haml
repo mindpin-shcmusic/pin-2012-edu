@@ -1,0 +1,9 @@
+=form_for @student,:url=>"/students/#{@student.id}/do_set_user",:method=>:put do |f|
+  %div
+    %lable 绑定用户
+  %div
+    -users = User.no_role
+    =f.select(:user_id,users.map{|user|[user.name,user.id]})
+  %div
+    =f.submit "绑定"
+    

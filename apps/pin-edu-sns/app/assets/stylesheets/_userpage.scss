@@ -1,0 +1,69 @@
+.page-userpage{
+  .header{
+    overflow:hidden;
+    padding-bottom:20px;
+    .avatar{
+      @include border-radius(2px);float:left;
+      overflow:hidden;font-size:0;line-height:0;
+      img{width:96px;height:96px;}
+      
+      box-shadow:1px 1px 2px rgba(0, 0, 0, 0.2);
+      border:3px solid white;
+      
+      margin-right:5px;
+    }
+    
+    .meta{
+      @include border-radius(2px);float:left;
+      overflow:hidden;height:76px;width:667px;
+      box-shadow:1px 1px 2px rgba(0, 0, 0, 0.2);
+      border:3px solid #fff;
+      background-color:#f7f7f7;
+      
+      padding:10px;
+      
+      .name{
+        font-size:14px;font-weight:bold;
+      }
+    }
+  }
+  
+  .userpage-statuses{
+    form{
+      @include page-models-index;
+      width:770px;
+      margin-bottom:10px;padding:15px;
+      textarea#content{width:500px;height:80px;}
+    }
+    
+    .statuses{
+      @include page-models-index;
+      
+      .status{
+        padding:15px;
+        border-bottom:solid 1px #ddd;
+        &:last-child{border-bottom:none;};
+        
+        overflow:hidden;
+        
+        .avatar{
+          @include border-radius(2px);float:left;
+          overflow:hidden;font-size:0;line-height:0;
+          img{width:32px;height:32px;}
+        }
+        .ct{
+          margin-left:50px;
+          font-size:14px;
+          @include list-item-creator;
+          
+          .repost{
+            margin-top:10px;
+            @include border-radius(4px);
+            padding:10px;
+            background-color:#Eee;
+          }
+        }
+      }
+    }
+  }
+}

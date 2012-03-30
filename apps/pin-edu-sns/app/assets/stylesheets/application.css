@@ -384,7 +384,24 @@ body {
     body .page-nav a.todos, body .page-nav a.media-files, body .page-nav a.discuss, body .page-nav a.short-messages {
       display: block;
       margin-left: 15px;
-      margin-bottom: 20px; }
+      margin-bottom: 20px;
+      font-size: 14px;
+      position: relative;
+      padding-left: 16px; }
+      body .page-nav a.todos:before, body .page-nav a.media-files:before, body .page-nav a.discuss:before, body .page-nav a.short-messages:before {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 8px;
+        height: 8px;
+        -moz-border-radius: 8px;
+        -webkit-border-radius: 8px;
+        border-radius: 8px;
+        background-color: #999;
+        top: 7px;
+        left: 2px; }
+      body .page-nav a.todos:hover:before, body .page-nav a.media-files:hover:before, body .page-nav a.discuss:hover:before, body .page-nav a.short-messages:hover:before {
+        background-color: #FFFFE5; }
   body .page-content {
     position: absolute;
     left: 80px;
@@ -1455,6 +1472,241 @@ body.admin .page-nav {
       width: 500px;
       height: 160px; }
 
+.page-question-show .question {
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  width: 800px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  padding: 15px;
+  width: 770px; }
+  .page-question-show .question .js-list-tags {
+    margin-left: 75px;
+    height: 24px;
+    line-height: 24px;
+    overflow: hidden;
+    margin-left: 0; }
+    .page-question-show .question .js-list-tags .tag {
+      float: left;
+      height: 20px;
+      line-height: 20px;
+      background-color: #f1f1f1;
+      -moz-border-radius: 3px 0 3px 0;
+      -webkit-border-radius: 3px 0 3px 0;
+      border-radius: 3px 0 3px 0;
+      border: solid 1px #ccc;
+      border-color: #eee #ccc #ccc #eee;
+      margin-right: 6px;
+      padding: 0 6px; }
+    .page-question-show .question .js-list-tags .no-tag {
+      float: left;
+      height: 20px;
+      line-height: 20px;
+      background-color: transparent;
+      border: solid 1px transparent;
+      margin-right: 6px;
+      padding: 0;
+      color: #aaa; }
+    .page-question-show .question .js-list-tags .edit {
+      float: left;
+      color: #aaa;
+      height: 20px;
+      line-height: 20px;
+      border: solid 1px transparent;
+      position: relative;
+      overflow: hidden;
+      font-size: 0;
+      line-height: 20em;
+      width: 20px;
+      height: 20px; }
+      .page-question-show .question .js-list-tags .edit:hover {
+        border: solid 1px #ccc;
+        background: -moz-linear-gradient(-90deg, white, #eeeeee);
+        background: -webkit-gradient(linear, 0% 0, 0% 100%, from(white), to(#eeeeee));
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        border-radius: 3px; }
+        .page-question-show .question .js-list-tags .edit:hover:before {
+          border-color: #555 transparent transparent transparent; }
+        .page-question-show .question .js-list-tags .edit:hover:after {
+          background-color: #555; }
+      .page-question-show .question .js-list-tags .edit:before {
+        content: "";
+        display: block;
+        position: absolute;
+        left: 2px;
+        top: 12px;
+        border-color: #999999 transparent transparent transparent;
+        border-style: solid;
+        border-width: 4px 2px;
+        -moz-transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg); }
+      .page-question-show .question .js-list-tags .edit:after {
+        content: "";
+        display: block;
+        position: absolute;
+        left: 9px;
+        top: 4px;
+        background-color: #999999;
+        width: 4px;
+        height: 10px;
+        -moz-transform: rotate(45deg);
+        -webkit-transform: rotate(45deg);
+        transform: rotate(45deg); }
+  .page-question-show .question .ct {
+    font-size: 14px;
+    margin-top: 20px;
+    margin-bottom: 20px; }
+  .page-question-show .question .meta {
+    height: 16px;
+    line-height: 16px; }
+    .page-question-show .question .meta .c-avatar {
+      float: left;
+      font-size: 0;
+      line-height: 0;
+      margin-right: 5px; }
+      .page-question-show .question .meta .c-avatar img {
+        width: 16px;
+        height: 16px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        border-radius: 2px; }
+    .page-question-show .question .meta .creator {
+      color: #666; }
+      .page-question-show .question .meta .creator a {
+        color: #85adbd; }
+    .page-question-show .question .meta .time {
+      color: #aaa; }
+  .page-question-show .question .comments {
+    margin-top: 20px; }
+    .page-question-show .question .comments .comment {
+      background-color: #efefef;
+      -moz-border-radius: 4px;
+      -webkit-border-radius: 4px;
+      border-radius: 4px;
+      padding: 10px;
+      margin-bottom: 3px; }
+      .page-question-show .question .comments .comment .c-avatar {
+        float: left;
+        font-size: 0;
+        line-height: 0;
+        margin-right: 5px; }
+        .page-question-show .question .comments .comment .c-avatar img {
+          width: 16px;
+          height: 16px;
+          -moz-border-radius: 2px;
+          -webkit-border-radius: 2px;
+          border-radius: 2px; }
+      .page-question-show .question .comments .comment .c-name {
+        margin-left: 24px;
+        line-height: 16px;
+        height: 16px; }
+      .page-question-show .question .comments .comment .c-ct {
+        margin-left: 24px; }
+    .page-question-show .question .comments .form {
+      overflow: hidden; }
+      .page-question-show .question .comments .form input[type=text] {
+        float: left;
+        width: 759px;
+        border: dashed 1px #DDDDDD;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        border-radius: 3px;
+        box-shadow: none; }
+      .page-question-show .question .comments .form a.form-submit-button {
+        float: left;
+        height: 30px;
+        line-height: 30px;
+        margin-left: 4px;
+        margin-right: 0; }
+.page-question-show .answers {
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  width: 800px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  margin-bottom: 20px; }
+  .page-question-show .answers .answer {
+    padding: 15px;
+    overflow: hidden;
+    border-bottom: solid 1px #ddd;
+    position: relative; }
+    .page-question-show .answers .answer:last-child {
+      border-bottom: none; }
+    .page-question-show .answers .answer .ct {
+      font-size: 14px;
+      margin-bottom: 20px; }
+    .page-question-show .answers .answer .meta {
+      height: 16px;
+      line-height: 16px; }
+      .page-question-show .answers .answer .meta .c-avatar {
+        float: left;
+        font-size: 0;
+        line-height: 0;
+        margin-right: 5px; }
+        .page-question-show .answers .answer .meta .c-avatar img {
+          width: 16px;
+          height: 16px;
+          -moz-border-radius: 2px;
+          -webkit-border-radius: 2px;
+          border-radius: 2px; }
+      .page-question-show .answers .answer .meta .creator {
+        color: #666; }
+        .page-question-show .answers .answer .meta .creator a {
+          color: #85adbd; }
+      .page-question-show .answers .answer .meta .time {
+        color: #aaa; }
+    .page-question-show .answers .answer .ops {
+      position: absolute;
+      right: 15px;
+      top: 15px; }
+    .page-question-show .answers .answer .comments {
+      margin-top: 20px; }
+      .page-question-show .answers .answer .comments .comment {
+        background-color: #efefef;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+        border-radius: 4px;
+        padding: 10px;
+        margin-bottom: 3px; }
+        .page-question-show .answers .answer .comments .comment .c-avatar {
+          float: left;
+          font-size: 0;
+          line-height: 0;
+          margin-right: 5px; }
+          .page-question-show .answers .answer .comments .comment .c-avatar img {
+            width: 16px;
+            height: 16px;
+            -moz-border-radius: 2px;
+            -webkit-border-radius: 2px;
+            border-radius: 2px; }
+        .page-question-show .answers .answer .comments .comment .c-name {
+          margin-left: 24px;
+          line-height: 16px;
+          height: 16px; }
+        .page-question-show .answers .answer .comments .comment .c-ct {
+          margin-left: 24px; }
+      .page-question-show .answers .answer .comments .form {
+        overflow: hidden; }
+        .page-question-show .answers .answer .comments .form input[type=text] {
+          float: left;
+          width: 759px;
+          border: dashed 1px #DDDDDD;
+          -moz-border-radius: 3px;
+          -webkit-border-radius: 3px;
+          border-radius: 3px;
+          box-shadow: none; }
+        .page-question-show .answers .answer .comments .form a.form-submit-button {
+          float: left;
+          height: 30px;
+          line-height: 30px;
+          margin-left: 4px;
+          margin-right: 0; }
+
 .page-short-messages.grouped-by-user {
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
   background-color: white;
@@ -1620,3 +1872,109 @@ body.admin .page-nav {
             top: 2px; }
           .page-short-messages.exchanged .list-group .g-messages .message .ops .delete:hover::before, .page-short-messages.exchanged .list-group .g-messages .message .ops .delete:hover::after {
             background-color: #000; }
+
+.page-userpage .header {
+  overflow: hidden;
+  padding-bottom: 20px; }
+  .page-userpage .header .avatar {
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    float: left;
+    overflow: hidden;
+    font-size: 0;
+    line-height: 0;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    border: 3px solid white;
+    margin-right: 5px; }
+    .page-userpage .header .avatar img {
+      width: 96px;
+      height: 96px; }
+  .page-userpage .header .meta {
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    border-radius: 2px;
+    float: left;
+    overflow: hidden;
+    height: 76px;
+    width: 667px;
+    box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+    border: 3px solid #fff;
+    background-color: #f7f7f7;
+    padding: 10px; }
+    .page-userpage .header .meta .name {
+      font-size: 14px;
+      font-weight: bold; }
+.page-userpage .userpage-statuses form {
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  width: 800px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  width: 770px;
+  margin-bottom: 10px;
+  padding: 15px; }
+  .page-userpage .userpage-statuses form textarea#content {
+    width: 500px;
+    height: 80px; }
+.page-userpage .userpage-statuses .statuses {
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  background-color: white;
+  width: 800px;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  border-radius: 5px;
+  margin-bottom: 20px; }
+  .page-userpage .userpage-statuses .statuses .status {
+    padding: 15px;
+    border-bottom: solid 1px #ddd;
+    overflow: hidden; }
+    .page-userpage .userpage-statuses .statuses .status:last-child {
+      border-bottom: none; }
+    .page-userpage .userpage-statuses .statuses .status .avatar {
+      -moz-border-radius: 2px;
+      -webkit-border-radius: 2px;
+      border-radius: 2px;
+      float: left;
+      overflow: hidden;
+      font-size: 0;
+      line-height: 0; }
+      .page-userpage .userpage-statuses .statuses .status .avatar img {
+        width: 32px;
+        height: 32px; }
+    .page-userpage .userpage-statuses .statuses .status .ct {
+      margin-left: 50px;
+      font-size: 14px;
+      color: #666; }
+      .page-userpage .userpage-statuses .statuses .status .ct a {
+        color: #85adbd; }
+      .page-userpage .userpage-statuses .statuses .status .ct .repost {
+        margin-top: 10px;
+        -moz-border-radius: 4px;
+        -webkit-border-radius: 4px;
+        border-radius: 4px;
+        padding: 10px;
+        background-color: #Eee; }
+
+.page-media-files {
+  overflow: hidden;
+  width: 800px; }
+  .page-media-files .media-file {
+    float: left;
+    width: 160px;
+    height: 160px; }
+    .page-media-files .media-file .img img {
+      max-width: 120px;
+      max-height: 120px;
+      border: solid 4px #fff;
+      -moz-border-radius: 2px;
+      -webkit-border-radius: 2px;
+      border-radius: 2px;
+      box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); }
+    .page-media-files .media-file .name {
+      padding-left: 4px;
+      font-weight: bold;
+      text-shadow: ellipsis;
+      overflow: hidden; }

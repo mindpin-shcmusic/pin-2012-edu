@@ -1,35 +1,31 @@
 -htitle '问题'
 
-.page-go-back
-  =link_to '返回问题列表', '/questions'
+:ruby
+  title = @question.title
+  content = @question.content
+  answers = @question.answers
+  creator = @question.creator
+  created_at = @question.created_at.localtime
+
+  answered = @question.is_answered_by(current_user)
+  
+  tags = @question.tags
+  
+.page-title=title
 
 .page-question-show
-  :ruby
-    title = @question.title
-    content = @question.content
-    answers = @question.answers
-    creator = @question.creator
-    created_at = @question.created_at.localtime
-  
-    answered = @question.is_answered_by(current_user)
-  
   .question
-    .title=title
-    - @question.tags.each do |tag|
-      %div
-        %span=tag.name
-        =link_to "删除","/tags/remove_tag?model_type=question&model_id=#{@question.id}&tag=#{tag.name}",:method=>:delete
-    %div
-      =link_to "增加标签","/tags/create_tag?model_type=question&model_id=#{@question.id}"
-    
-    %p
-      =link_to "编辑所有标签","/tags/edit_tags?model_type=question&model_id=#{@question.id}&tags_str=#{@tag_list}"
-
-    
+    .js-list-tags
+      =show_tags_in_list tags
+      %a.edit{:href=>'javascript:;', :title=>'修改标签'} 修改
+      
     .ct=content
+    
     .meta
-      .creator #{creator.name} 提问
-      .time=created_at
+      .c-avatar=avatar creator,:mini
+      %span.creator #{userlink creator} 提问
+      %span , 
+      %span.time=created_at
     =render 'questions/parts/question_comments', :comments => @question.comments
   
   .answers
@@ -42,14 +38,17 @@
       .answer{:'data-id'=>answer.id}
         .ct=content
         .meta
-          .creator=creator.name
-          .time=created_at
+          .c-avatar=avatar creator,:mini
+          %span.creator #{userlink creator} 回答
+          %span , 
+          %span.time=created_at
+          
         .ops
           %a.vote-up{:href=>'javascript:;'} 赞成
           .sum=answer.vote_sum || 0
           %a.vote-down{:href=>'javascript:;'} 反对
           
-        =render 'questions/parts/answer_comments', :comments => answer.comments
+        =render 'questions/parts/answer_comments', :comments=>answer.comments, :answer=>answer
 
 
   -if !answered

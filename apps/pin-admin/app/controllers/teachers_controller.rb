@@ -25,4 +25,13 @@ class TeachersController < ApplicationController
   
   def show
   end
+
+  def set_user
+  end
+
+  def do_set_user
+    @teacher.user_id = params[:teacher][:user_id]
+    @teacher.save
+    redirect_to "/teachers/#{@teacher.id}"
+  end
 end

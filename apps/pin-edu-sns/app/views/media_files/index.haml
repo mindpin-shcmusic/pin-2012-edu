@@ -1,7 +1,11 @@
--@media_files.each do |mf|
-  %div 文件名 #{mf.file_file_name}
-  %div 文件大小 #{mf.file_file_size}
-  %div 文件类型 #{mf.file_content_type}
-  %div 文件存储方式 #{mf.place}
-  %div 文件上传者 #{mf.creator.name}
-  %div 文件位置 #{mf.file.url}
+.page-title 我的资源
+
+.page-votes-ops
+  %a.create{:href=>'/media_files/new'} 添加资源
+
+.page-media-files
+  -@media_files.each do |mf|
+    .media-file
+      .img
+        %img{:src=>mf.file.url}
+      .name=mf.file_file_name

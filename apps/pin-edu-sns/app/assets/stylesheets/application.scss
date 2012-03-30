@@ -140,6 +140,18 @@ body{
     a.todos, a.media-files, a.discuss, a.short-messages{
       display:block;
       margin-left:$links-margin;margin-bottom:20px;
+      font-size:14px;position:relative;
+      padding-left:16px;
+      &:before{
+        content:"";
+        display:block;position:absolute;
+        width:8px;height:8px;@include border-radius(8px);
+        background-color:#999;
+        top:7px;left:2px;
+      };
+      &:hover{
+        &:before{background-color:#FFFFE5;}
+      }
     }
   }
   
@@ -417,3 +429,5 @@ form{
 @import 'todos';
 @import 'questions';
 @import 'short_messages';
+@import 'userpage';
+@import 'media_files';

@@ -1,16 +1,15 @@
 .comments
   -comments.each do |comment|
+    :ruby
+      creator = comment.creator
+  
     .comment
-      -if comment.reply_comment.blank?
-        %span.text #{comment.creator.name} : #{comment.content}
-      -else
-        %span.text #{comment.creator.name} 回复 #{comment.reply_user.name} : #{comment.content}
-
-      =link_to "回复","/question_comments/#{comment.id}/reply"
+      .c-avatar=avatar creator,:mini
+      .c-name
+        #{creator.name}：#{comment.content}
+      
   .form
     =form_for Comment.new, :url=>"/questions/#{@question.id}/question_comments" do |f|
       .field
-        %label 评论内容
-        =f.text_area :content
-      .field
-        %a.form-submit-button{:href=>'javascript:;'} 确定
+        =f.text_field :content
+        %a.form-submit-button.hide{:href=>'javascript:;'} 确定

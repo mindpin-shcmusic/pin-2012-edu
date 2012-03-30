@@ -8,6 +8,11 @@ class Teacher < BuildDatabaseAbstract
     def self.included(base)
       base.has_one :teacher
       base.send(:include,InstanceMethod)
+      base.send(:extend,ClassMethod)
+      base.scope  :student_role,
+        :joins=>"inner join students on students.user_id = users.id"
+      base.scope  :teacher_role,
+        :joins=>"inner join teachers on teachers.user_id = users.id"
     end
     
     module InstanceMethod
@@ -21,5 +26,12 @@ class Teacher < BuildDatabaseAbstract
         self.name
       end
     end
+    
+    module ClassMethod
+      def no_role
+        self.all-self.student_role-self.teacher_role
+      end
+    end
+    
   end
 end
