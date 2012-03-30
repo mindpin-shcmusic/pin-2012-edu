@@ -11,7 +11,7 @@ body.admin{
   .page-nav{
     background-color:#506FA7;
     border-color:#32508D;
-    a{display:block;margin-top:20px;margin-left:15px;}
+    a{display:block;margin-top:20px;margin-left:15px;font-size:14px;}
   }
 }
 
@@ -95,8 +95,9 @@ body.admin{
     .p{
       float:left;
       margin-right:1px;
-      width:80px;
-      &.l3{width:120px;}
+      width:80px;position:relative;
+      
+      &.l3{width:160px;}
       
       overflow:hidden;
       @include border-radius(3px);
@@ -104,6 +105,12 @@ body.admin{
         color:#777;
       }
       .c{background-color:#f7f7f7;line-height:30px;height:30px;padding:0 6px;}
+      .ava{
+        position:absolute;font-size:0;line-height:0;
+        right:5px;bottom:5px;width:20px;height:20px;
+        @include border-radius(2px);overflow:hidden;
+        img{width:20px;height:20px;}
+      }
     }
     .detail{
       position:absolute;
@@ -146,4 +153,13 @@ body.admin{
       padding:0 10px;
     }
   }
+}
+
+.page-admin-form{
+  width:500px;
+  @include border-radius(6px);
+  box-shadow:1px 1px 2px rgba(0, 0, 0, 0.2);
+  border:solid 3px #eee;
+  padding:10px;margin-right:20px;margin-bottom:20px;
+  background-color:#fff;
 }

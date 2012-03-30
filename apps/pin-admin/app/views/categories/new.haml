@@ -1,9 +1,12 @@
-=flash[:error]
-=form_for @category do |f|
-  %div
-    %label 名字
-    =f.text_field :name
-  %div
-    =f.submit "创建"
+.page-title 创建数据分类
+
+.page-admin-form
+  =flash[:error]
+  =form_for @category do |f|
+    .field
+      %label 分类名称
+      =f.text_field :name
+    .field
+      %a.form-submit-button{:href=>'javascript:;'} 确定创建
     
     

@@ -547,7 +547,8 @@ body.admin .page-nav {
   body.admin .page-nav a {
     display: block;
     margin-top: 20px;
-    margin-left: 15px; }
+    margin-left: 15px;
+    font-size: 14px; }
 
 .page-admin-stat {
   width: 900px; }
@@ -671,12 +672,13 @@ body.admin .page-nav {
       float: left;
       margin-right: 1px;
       width: 80px;
+      position: relative;
       overflow: hidden;
       -moz-border-radius: 3px;
       -webkit-border-radius: 3px;
       border-radius: 3px; }
       .page-admin-models .model .p.l3 {
-        width: 120px; }
+        width: 160px; }
       .page-admin-models .model .p .t {
         background-color: #f1f1f1;
         line-height: 24px;
@@ -688,6 +690,21 @@ body.admin .page-nav {
         line-height: 30px;
         height: 30px;
         padding: 0 6px; }
+      .page-admin-models .model .p .ava {
+        position: absolute;
+        font-size: 0;
+        line-height: 0;
+        right: 5px;
+        bottom: 5px;
+        width: 20px;
+        height: 20px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        border-radius: 2px;
+        overflow: hidden; }
+        .page-admin-models .model .p .ava img {
+          width: 20px;
+          height: 20px; }
     .page-admin-models .model .detail {
       position: absolute;
       top: 10px;
@@ -743,6 +760,18 @@ body.admin .page-nav {
     line-height: 48px;
     height: 48px;
     padding: 0 10px; }
+
+.page-admin-form {
+  width: 500px;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+  border: solid 3px #eee;
+  padding: 10px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  background-color: #fff; }
 
 .page-header.setting {
   position: relative; }
