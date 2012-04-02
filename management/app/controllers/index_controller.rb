@@ -1,7 +1,7 @@
 class IndexController < ApplicationController
   before_filter :admin_authenticate,:except=>[:login,:do_login]
   def admin_authenticate
-    if session[:management] != "admin"
+    if session[:management] != "admin" && Rails.env != "development"
       redirect_to "/login"
     end
   end
