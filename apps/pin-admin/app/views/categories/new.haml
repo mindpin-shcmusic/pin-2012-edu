@@ -6,7 +6,6 @@
     .field
       %label 分类名称
       =f.text_field :name
+      =hidden_field_tag :parent_id, params[:parent_id]
     .field
       %a.form-submit-button{:href=>'javascript:;'} 确定创建
-    
-    

@@ -8,3 +8,5 @@
     .category
       .t=category.name
       .c=0
+      %a{:href=>"/categories/new?parent_id=#{category.id}"} 增加子数据分类
+      = recursive_categories(category)

@@ -1,0 +1,15 @@
+// Place all the styles related to the categories controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.page-admin-categories {
+  .category, .child_category {
+    width:auto;
+    max-width:640px;
+    float:none;
+    display:block;
+  }
+
+  .child_category {
+    margin:16px 16px;
+  }
+}

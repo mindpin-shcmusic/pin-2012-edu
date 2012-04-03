@@ -11,3 +11,4 @@ database.yml
 dump.rdb
 Gemfile.lock
 lib/Gemfile.lock
+*DS_Store
