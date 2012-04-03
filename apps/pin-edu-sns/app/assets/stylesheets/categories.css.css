@@ -1,0 +1,7 @@
+.page-admin-categories .category, .page-admin-categories .child_category {
+  width: auto;
+  max-width: 640px;
+  float: none;
+  display: block; }
+.page-admin-categories .child_category {
+  margin: 16px 16px; }

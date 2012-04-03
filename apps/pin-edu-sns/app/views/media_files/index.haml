@@ -2,10 +2,55 @@
 
 .page-votes-ops
   %a.create{:href=>'/media_files/new'} 添加资源
+  %a.create{:href => "/media_files?uncategorized=true"} 未分类
+  %a.create{:href=>'/media_files'} 资源首页
 
-.page-media-files
-  -@media_files.each do |mf|
-    .media-file
-      .img
-        %img{:src=>mf.file.url}
-      .name=mf.file_file_name
+.page-sns-categories
+  .lv1
+    %ul.categories-list
+      - if c1
+        = rcl(c1, "naved")
+        - if c2
+          = rcl(c2, "naved")
+          - if c3
+            = rcl(c3, "naved")
+      - else 
+        - @level1_categories.each do |c|
+          = rcl(c)
+      .clearfix
+
+  - if !c2
+    .lv2
+      - if c1
+        %ul.categories_list
+          - c1.children.each do |c|
+            = rcl(c, "float")
+          .clearfix          
+      - else
+        - @level1_categories.each do |c|
+          %ul.categories-list.float
+            - c.children.each do |c|
+              = rcl(c)
+        .clearfix
+
+  - if (c1 || c2) && !c3
+    .lv3
+      - if c1 && c1.descendants.where(:depth => 2).any? && !c2
+        %ul.categories-list
+          - c1.descendants.where(:depth => 2).each do |c|
+            = rcl(c, "float")
+          .clearfix
+
+      - if c2 && c2.children.any?
+        %ul.categories-list
+          - c2.children.each do |c|
+            = rcl(c, "float")
+          .clearfix
+
+- if mfs && mfs.any?
+  .page-media-files
+    - mfs.each do |mf|
+      .media-file
+        .img
+          %img{:src=>mf.file.url}
+            .name=mf.file_file_name

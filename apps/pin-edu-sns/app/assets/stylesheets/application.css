@@ -436,11 +436,6 @@ body {
     body a:hover {
       color: #0078B6; }
 
-.page-title {
-  font-size: 16px;
-  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.75);
-  margin-bottom: 20px; }
-
 form .field {
   margin-bottom: 10px;
   overflow: visible; }
@@ -543,6 +538,11 @@ form .form-cancel {
     background: -moz-linear-gradient(-90deg, #777777, #555555);
     background: -webkit-gradient(linear, 0% 0, 0% 100%, from(#777777), to(#555555));
     border-color: #444; }
+
+.page-title {
+  font-size: 16px;
+  text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.75);
+  margin-bottom: 20px; }
 
 .page-auth-intro {
   margin: 20px 0; }

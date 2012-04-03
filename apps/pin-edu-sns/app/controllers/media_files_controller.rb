@@ -1,7 +1,7 @@
 class MediaFilesController < ApplicationController
   before_filter :login_required, :except => [:create_by_edu]
   def index
-    @media_files = MediaFile.order('created_at DESC').all
+    @level1_categories = Category.roots
   end
 
   def new
@@ -11,11 +11,10 @@ class MediaFilesController < ApplicationController
   def create
     @media_file = MediaFile.new(:category_id=>params[:media_file][:category_id],:file=>params[:media_file][:file],:place=>MediaFile::PLACE_OSS,:creator=>current_user,:uuid=>UUIDTools::UUID.random_create.to_s)
     if @media_file.save
-      return redirect_to "/media_files"
+      redirect_to "/media_files"
+    else
+      render :template => "media_files/new"
     end
-    error = @media_file.errors.first
-    flash[:error] = "#{error[0]} #{error[0]}"
-    redirect_to "/media_files/new"
   end
   
   def create_by_edu

@@ -1,0 +1,112 @@
+// 编写各页面过程中抽取出的mixin，如果开新工程，以下内容可清空
+
+@mixin page-ops{
+  overflow:hidden;
+  margin-bottom:10px;
+  @include border-radius(5px);
+  background-color:#f4f4f4;
+  width:800px - 15*2;
+  padding:15px;
+  box-shadow:1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+@mixin page-models-index{
+  box-shadow:1px 1px 2px rgba(0, 0, 0, 0.2);
+  background-color:white;
+  width:800px;
+  @include border-radius(5px);
+  margin-bottom:20px;
+}
+
+@mixin count-block-in-list{
+  @include border-radius(4px);
+  width:60px;float:left;overflow:hidden;
+  .t{background-color:#E9F2D1;color:darken(#ABC272,10%);line-height:20px;text-align:center;}
+  .c{background-color:#F3F9DF;color:darken(#ABC272,20%);line-height:28px;text-align:center;font-size:16px;font-weight:bold;}
+}
+
+@mixin list-item-title{
+  font-size:14px;font-weight:bold;line-height:16px;
+  margin-bottom:16px;
+  a{color:#444;&:hover{color:#444;text-decoration:none;}}
+}
+
+@mixin list-item-creator{
+  color:#666;
+  a{color:darken(#A6C3CF,10%);}
+}
+
+@mixin list-tags{
+  margin-left:75px;
+  height:24px;line-height:24px;
+  overflow:hidden;
+  
+  .tag{
+    float:left;
+    height:20px;line-height:20px;
+    background-color:#f1f1f1;
+    @include border-radius(3px 0 3px 0);
+    border:solid 1px #ccc;
+    border-color:#eee #ccc #ccc #eee;
+    margin-right:6px;
+    padding:0 6px;
+  }
+  
+  .no-tag{
+    float:left;
+    height:20px;line-height:20px;
+    background-color:transparent;
+    border:solid 1px transparent;
+    margin-right:6px;
+    padding:0;
+    color:#aaa;
+  }
+  
+  .edit{
+    float:left;
+    color:#aaa;
+    height:20px;line-height:20px;border:solid 1px transparent;
+    position:relative;
+    overflow:hidden;font-size:0;line-height:20em;
+    width:20px;height:20px;
+    
+    &:hover{
+      border:solid 1px #ccc;
+      @include gradient(#fff,#eee);
+      @include border-radius(3px);
+      &:before{border-color:#555 transparent transparent transparent;}
+      &:after{background-color:#555;}
+    }
+    
+    $bdc:#999;
+    &:before{
+      content:"";
+      display:block;position:absolute;
+      left:2px;top:12px;
+      border-color:$bdc transparent transparent transparent;
+      border-style:solid;
+      border-width:4px 2px;
+      @include transform(rotate(45deg));
+    };
+    &:after{
+      content:"";
+      display:block;position:absolute;
+      left:9px;top:4px;
+      background-color:$bdc;
+      width:4px;height:10px;
+      @include transform(rotate(45deg));
+    }
+  }
+}
+
+@mixin list-ops-delete{
+  @include hover-button;
+  height:18px;width:18px;
+  
+  &::before, &::after{width:2px;height:14px;background-color:#b1b1b1;};
+  &::before{@include transform(rotate(45deg));left:8px;top:2px;}
+  &::after{@include transform(rotate(-45deg));left:8px;top:2px;}
+  &:hover{
+    &::before, &::after{background-color:#000;}
+  }
+}
