@@ -1,0 +1,52 @@
+.page-title 我的资源
+
+.page-votes-ops
+  %a.create{:href=>'/media_files/new'} 添加资源
+  %a.create{:href => "/media_files?uncategorized=true"} 未分类
+  %a.create{:href=>'/media_files'} 资源首页
+  %a.create{:href=>'/media_files?index_alt=true'} 资源首页(导航2)
+
+.page-sns-categories
+  .lv1
+    %ul.categories-list
+      - if c1
+        = rcl(c1, "naved-alt", "float") do
+          %ul.categories-list.drop-down
+            - @level1_categories.delete_if{|c| c == c1}.each do |c|
+              = rcl(c)
+        - if c2
+          = rcl(c2, "naved-alt", "float") do
+            %ul.categories-list.drop-down
+              - c1.children.delete_if{|c| c == c2}.each do |c|
+                = rcl(c)
+          - if c3
+            = rcl(c3, "naved-alt", "float") do
+              %ul.categories-list.drop-down
+                - c2.children.delete_if{|c| c == c3}.each do |c|
+                  = rcl(c)
+      - else 
+        - @level1_categories.each do |c|
+          = rcl(c, "float")
+      .clearfix
+
+  - if c1 && !c2
+    .lv2
+      %ul.categories_list
+        - c1.children.each do |c|
+          = rcl(c, "float")
+        .clearfix          
+
+  - if c2 && !c3
+    .lv3
+      %ul.categories-list
+        - c2.children.each do |c|
+          = rcl(c, "float")
+        .clearfix
+
+- if mfs && mfs.any?
+  .page-media-files
+    - mfs.each do |mf|
+      .media-file
+        .img
+          %img{:src=>mf.file.url}
+            .name=mf.file_file_name

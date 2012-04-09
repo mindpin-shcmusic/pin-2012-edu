@@ -8,11 +8,11 @@ module MediaFileHelper
     end
   end
 
-  def media_files
+  def show_media_files
     return media_files_list(cur_c) if cur_c
     MediaFile.all unless params[:uncategorized] || cur_c
   end
-  alias :mfs :media_files
+  alias :mfs :show_media_files
 
   def current_level1_category
     cur_c.root if cur_c
@@ -43,9 +43,18 @@ module MediaFileHelper
   end
   alias :cur_lv :current_level
 
-  def render_category_li category, *classes
+  def render_category_li category, *classes, &b
+    if block_given?
+      dropdown = capture(&b)
+    else
+      dropdown = ""
+    end
+    url_media_files = params[:index_alt] ?
+    media_files_url(:category_id => category.id, :index_alt => true) :
+    media_files_url(:category_id => category.id)
     content_tag :li, :class => [:category, classes] do
-      link_to category.name, "/media_files?category_id=#{category.id}"
+      link_to(category.name, url_media_files)+
+      dropdown
     end
   end
   alias :rcl :render_category_li

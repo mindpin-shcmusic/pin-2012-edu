@@ -4,19 +4,20 @@
   %a.create{:href=>'/media_files/new'} 添加资源
   %a.create{:href => "/media_files?uncategorized=true"} 未分类
   %a.create{:href=>'/media_files'} 资源首页
+  %a.create{:href=>'/media_files?index_alt=true'} 资源首页(导航2)
 
 .page-sns-categories
   .lv1
     %ul.categories-list
       - if c1
-        = rcl(c1, "naved")
+        = rcl(c1, "naved", "float")
         - if c2
-          = rcl(c2, "naved")
+          = rcl(c2, "naved", "float")
           - if c3
-            = rcl(c3, "naved")
+            = rcl(c3, "naved", "float")
       - else 
         - @level1_categories.each do |c|
-          = rcl(c)
+          = rcl(c, "float")
       .clearfix
 
   - if !c2

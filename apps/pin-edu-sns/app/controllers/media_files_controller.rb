@@ -2,6 +2,9 @@ class MediaFilesController < ApplicationController
   before_filter :login_required, :except => [:create_by_edu]
   def index
     @level1_categories = Category.roots
+    if params[:index_alt]
+      render :template => "media_files/index_alt"
+    end
   end
 
   def new

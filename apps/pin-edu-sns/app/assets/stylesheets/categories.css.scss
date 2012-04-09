@@ -22,10 +22,26 @@
   content:">";
 }
 
+.naved-alt:after {
+  content:"v >";
+}
+
 .page-sns-categories div ul.categories-list {
   padding:0;
   margin:0;
   min-width:160px;
+}
+
+ul.categories-list.drop-down {
+  position:absolute;
+  left:-99999999px;
+  background:blue;
+  a {color:#fff;}
+}
+
+li.naved-alt:hover ul.categories-list.drop-down {
+  left:0;
+  top:26px;
 }
 
 .page-sns-categories {
@@ -44,7 +60,6 @@
     min-width:144px;
   }
   .lv1 li.category {
-    float:left;
     position:relative;
   }
 }
