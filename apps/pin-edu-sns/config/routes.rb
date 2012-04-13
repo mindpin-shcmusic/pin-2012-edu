@@ -14,7 +14,13 @@ MindpinEduSns::Application.routes.draw do
   # ------------- 媒体文件
   resources :media_files do
     collection do
+      get :new_psu
       post :create_by_edu
+      post :encode_complete
+      get :lifei_list
+    end
+    member do
+      get :lifei_info
     end
   end
   

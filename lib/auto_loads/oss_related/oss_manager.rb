@@ -13,7 +13,15 @@ class OssManager
   end
 
   def self.upload_file(file, save_path, content_type)
-    OSS.upload_file(CONFIG["bucket"], file, save_path, content_type)
+    begin
+      OSS.upload_file(CONFIG["bucket"], file, save_path, content_type)
+    rescue ::Oss::NoSuchBucketError => ex
+      self.create_bucket
+      self.set_bucket_to_public
+      retry
+    rescue ::Oss::ResponseError => ex
+      raise
+    end
   end
 
   def self.delete_file(save_path)
@@ -35,5 +43,4 @@ class OssManager
   def self.file_exists?(save_path)
     OSS.file_exists?(CONFIG["bucket"],save_path)
   end
-
 end

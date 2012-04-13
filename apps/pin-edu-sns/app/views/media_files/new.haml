@@ -1,24 +1,22 @@
-=form_for @media_file, :url=>"/media_files",:multipart => true do |f|
+- content_for :css do
+  = stylesheet_link_tag "media_file"
+
+.drop-zone 请把需要的文件拖拽到窗口内
+
+=form_for @media_file, :url=>"http://dev.uploadmediafile.yinyue.edu/upload",:multipart => true do |f|
   - if @media_file.errors.messages.any?
     %div
       - @media_file.errors.messages.each_value do |msg|
         .error_msg= msg
-  %div
+  .files_select
     %label 选择文件
-  %div
-    =f.file_field :file
-  %idv
-    %label 分类
-  %div
-    =f.select :category_id, nested_set_options(Category) {|i| "#{'--' * i.level} #{i.name}"}, {:include_blank => true}
+    =file_field_tag :file, :multiple => true
+    =hidden_field_tag "creator_id",current_user.id
 
-  %div
-    =f.submit "创建"
-  
-  
--# 上传到内网的文件上传方式，先隐藏掉  
--#=form_tag "http://dev.www.uploadmediafile.com/upload",:multipart => true do
--#  =file_field_tag "file"
--#  =hidden_field_tag "creator_id",current_user.id
--#  =submit_tag "提交到EDU"
-  
+.hidden.categories
+  =form_for @media_file do |f|
+    =f.select :category_id, nested_set_options(Category) {|i| "#{'--' * i.level} #{i.name}"}, {:include_blank => true}
+    =f.submit "提交"
+
+%ul.files_list
+

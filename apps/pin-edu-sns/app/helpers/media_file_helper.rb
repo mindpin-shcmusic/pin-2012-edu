@@ -1,15 +1,15 @@
 module MediaFileHelper
-  def media_files_list(c)
+  def media_files_list(c=nil)
     category = c if c
     if params[:uncategorized]
       uncategorized_media_files
     else
-      own_and_descendants_media_files(c)
+      own_and_descendants_media_files(category)
     end
   end
 
   def show_media_files
-    return media_files_list(cur_c) if cur_c
+    return media_files_list(cur_c)
     MediaFile.all unless params[:uncategorized] || cur_c
   end
   alias :mfs :show_media_files
@@ -69,6 +69,6 @@ private
   end
 
   def uncategorized_media_files
-    MediaFile.where(:creator_id => nil)
+    MediaFile.where(:category_id => nil)
   end
 end

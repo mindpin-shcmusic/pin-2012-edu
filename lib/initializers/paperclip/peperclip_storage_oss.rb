@@ -19,34 +19,19 @@ module Paperclip
         else
           false
         end
+      rescue
+        false
       end
 
       def to_file style_name = default_style
         return @queued_for_write[style_name] if @queued_for_write[style_name]
-        filename = path(style_name)
-        extname  = File.extname(filename)
-        basename = File.basename(filename, extname)
-        file = Tempfile.new([basename, extname])
-        file.binmode
-        body = OssManager.get_file_body(path(style_name))
-        file.write(body)
-        file.rewind
-        return file
+         OssManager.get_file(path(style_name))
       end
 
       def flush_writes
         @queued_for_write.each do |style, file|
           log("saving #{path(style)}")
-          begin
-            OssManager.upload_file(file,path(style),content_type)
-          rescue ::Oss::NoSuchBucketError => ex
-            OssManager.create_bucket
-            OssManager.set_bucket_to_public
-            retry
-          rescue ::Oss::ResponseError => ex
-            raise
-          end
-
+          OssManager.upload_file(file,path(style),content_type)
         end
         
         after_flush_writes # allows attachment to clean up temp files

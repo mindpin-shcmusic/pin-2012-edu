@@ -63,11 +63,14 @@ class Oss
   def get_file(bucket,save_path)
     body = get_file_body(bucket,save_path)
     return nil if body.blank?
-    file = Tempfile.new("lala.jpg")
+    
+    extname  = File.extname(save_path)
+    basename = File.basename(save_path, extname)
+    file = Tempfile.new([basename, extname])
     file.binmode
     file.write(body)
     file.rewind
-    file
+    return file
   end
 
   def get_file_body(bucket,save_path)
@@ -83,6 +86,7 @@ class Oss
       when "200"
         r.body
       else
+        p r.body
         raise Oss::ResponseError,r.code
       end
     end

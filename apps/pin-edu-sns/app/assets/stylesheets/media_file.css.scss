@@ -1,0 +1,61 @@
+.drop-zone {
+  width:632px;
+  height:100px;
+  border:4px dashed #ccc;
+  text-align:center;
+  color:#aaa;
+  font-size:20px;
+  font-weight:bold;
+  padding-top:60px;
+}
+
+.files_select, .category_select {
+  width:608px;
+  padding:16px;
+  background:#aaa;
+  color:#fff;
+}
+
+.files_list {
+  width:640px;
+}
+
+.file_type {
+  float:right;
+}
+
+.file {
+  margin:16px 0;
+  position:relative;
+}
+
+.progress-wrapper {
+  background:#ccc;
+  margin-top:4px;
+}
+
+.progress {
+  height:4px;
+  width:0;
+  background:#000;
+}
+
+.clearfix {
+  clear:both;
+}
+
+.status {
+  display:none;
+  text-align:center;
+  padding:4px 8px;
+  min-width:64px;
+  background:blue;
+  color:white;
+  position:absolute;
+  top:0;
+  left:32%;
+}
+
+.hidden {
+  display:none;
+}
