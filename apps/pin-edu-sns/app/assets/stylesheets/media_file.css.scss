@@ -16,17 +16,21 @@
   color:#fff;
 }
 
-.files_list {
+.files-list {
   width:640px;
 }
 
-.file_type {
+.file-type {
   float:right;
 }
 
 .file {
   margin:16px 0;
   position:relative;
+
+  span {
+    padding:0 8px;
+  }
 }
 
 .progress-wrapper {

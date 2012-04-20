@@ -15,8 +15,8 @@
 
 .hidden.categories
   =form_for @media_file do |f|
+    =f.label :category_id, "选择分类"
     =f.select :category_id, nested_set_options(Category) {|i| "#{'--' * i.level} #{i.name}"}, {:include_blank => true}
     =f.submit "提交"
 
-%ul.files_list
-
+%ul.files-list
