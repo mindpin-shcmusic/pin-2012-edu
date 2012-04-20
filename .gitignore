@@ -6,7 +6,6 @@ vendor/bundle/*
 
 .project
 
-database.yml
 
 dump.rdb
 Gemfile.lock
