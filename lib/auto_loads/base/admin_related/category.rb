@@ -12,7 +12,7 @@ class Category < BuildDatabaseAbstract
       return false unless self.save
       self.move_to_child_of(parent)
       if self.depth > 2
-        raise ActiveRecord::Rollback, "鍒嗙被涓嶈兘瓒呰繃涓夌骇"
+        raise ActiveRecord::Rollback, "分类不能超过三级"
       else
         true
       end
