@@ -468,7 +468,8 @@ form .field {
     line-height: 30px;
     padding: 0 4px;
     width: 200px;
-    height: 30px; }
+    height: 30px;
+    font-family: Tahoma,Arial,Helvetica,STHeiti,sans-serif; }
     form .field input[type=text]:focus, form .field input[type=password]:focus {
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset, 0 0 8px rgba(82, 168, 236, 0.6);
       border: solid 1px rgba(82, 168, 236, 0.8); }
@@ -482,7 +483,8 @@ form .field {
     line-height: 20px;
     padding: 4px;
     width: 300px;
-    height: 100px; }
+    height: 100px;
+    font-family: Tahoma,Arial,Helvetica,STHeiti,sans-serif; }
     form .field textarea:focus {
       box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1) inset, 0 0 8px rgba(82, 168, 236, 0.6);
       border: solid 1px rgba(82, 168, 236, 0.8); }
@@ -543,13 +545,6 @@ form .form-cancel {
   font-size: 16px;
   text-shadow: 1px 1px 0 rgba(255, 255, 255, 0.75);
   margin-bottom: 20px; }
-
-.page-auth-intro {
-  margin: 20px 0; }
-  .page-auth-intro .p {
-    padding-bottom: 10px;
-    margin-bottom: 10px;
-    border-bottom: solid 1px #eee; }
 
 body.admin .page-header {
   background-color: #e9edf5; }
@@ -789,6 +784,157 @@ body.admin .page-nav {
   margin-right: 20px;
   margin-bottom: 20px;
   background-color: #fff; }
+
+body.auth {
+  background: url(auth/body-bg.png);
+  color: white;
+  text-shadow: 0 0 3px black; }
+  body.auth a {
+    color: white; }
+    body.auth a:hover {
+      color: white;
+      background-color: rgba(255, 255, 255, 0.3);
+      -moz-border-radius: 2px;
+      -webkit-border-radius: 2px;
+      border-radius: 2px;
+      text-decoration: none; }
+  body.auth .page-wallpaper {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0; }
+  body.auth .page-content {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    left: 0;
+    top: 0;
+    padding: 0;
+    margin: 0; }
+
+.page-login {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 700px;
+  height: 400px; }
+  .page-login form {
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    font-size: 14px; }
+    .page-login form::before {
+      content: "";
+      display: block;
+      width: 621px;
+      height: 95px;
+      background: url(allimg.png) no-repeat 0px 0px;
+      margin-bottom: 28px; }
+    .page-login form .fields {
+      overflow: hidden;
+      margin-bottom: 7px; }
+      .page-login form .fields .field.name, .page-login form .fields .field.password {
+        float: left;
+        margin-right: 6px;
+        position: relative;
+        text-shadow: none; }
+        .page-login form .fields .field.name label, .page-login form .fields .field.password label {
+          position: absolute;
+          font-size: 14px;
+          font-weight: bold;
+          color: #43474B;
+          padding: 6px 12px;
+          top: 1px;
+          left: 2px;
+          height: 24px;
+          line-height: 24px;
+          pointer-events: none; }
+        .page-login form .fields .field.name input[type=text], .page-login form .fields .field.name input[type=password], .page-login form .fields .field.password input[type=text], .page-login form .fields .field.password input[type=password] {
+          border: solid 1px rgba(255, 255, 255, 0.5);
+          background-color: #25282b;
+          color: #aaa;
+          font-weight: bold;
+          font-size: 14px;
+          padding: 6px 12px;
+          height: 24px;
+          line-height: 24px;
+          width: 240px; }
+          .page-login form .fields .field.name input[type=text]:focus, .page-login form .fields .field.name input[type=password]:focus, .page-login form .fields .field.password input[type=text]:focus, .page-login form .fields .field.password input[type=password]:focus {
+            box-shadow: none;
+            background-color: #16181A; }
+      .page-login form .fields .field.subm {
+        float: left; }
+        .page-login form .fields .field.subm a.form-submit-ajax-button {
+          -moz-border-radius: 2px;
+          -webkit-border-radius: 2px;
+          border-radius: 2px;
+          background: -moz-linear-gradient(-90deg, #fda034, #ff8201);
+          background: -webkit-gradient(linear, 0% 0, 0% 100%, from(#fda034), to(#ff8201));
+          border: solid 1px rgba(255, 255, 255, 0.3);
+          height: 36px;
+          line-height: 36px;
+          font-weight: bold;
+          width: 80px;
+          padding: 0 16px 0 0;
+          text-align: center;
+          margin: 0;
+          position: relative;
+          text-shadow: 0 0 3px black;
+          display: inline-block; }
+          .page-login form .fields .field.subm a.form-submit-ajax-button:hover {
+            background: -moz-linear-gradient(-90deg, #fda034, #fda034);
+            background: -webkit-gradient(linear, 0% 0, 0% 100%, from(#fda034), to(#fda034)); }
+          .page-login form .fields .field.subm a.form-submit-ajax-button:before {
+            content: "";
+            position: absolute;
+            width: 0;
+            height: 0;
+            right: 8px;
+            top: 10px;
+            border: solid 8px transparent;
+            border-left-color: white; }
+      .page-login form .fields .field.signup {
+        float: left;
+        width: 266px;
+        margin-right: 6px; }
+      .page-login form .fields .field.remember {
+        float: left;
+        margin-right: 28px; }
+        .page-login form .fields .field.remember input[type=checkbox] {
+          position: relative;
+          top: 1px; }
+      .page-login form .fields .field.forgot {
+        float: left; }
+      .page-login form .fields .login-errors {
+        padding: 12px 12px;
+        font-size: 12px;
+        -moz-border-radius: 2px;
+        -webkit-border-radius: 2px;
+        border-radius: 2px;
+        background-color: rgba(0, 0, 0, 0.4);
+        color: white;
+        position: relative;
+        height: 16px;
+        line-height: 16px;
+        border: solid 1px rgba(255, 255, 255, 0.3); }
+        .page-login form .fields .login-errors::before {
+          content: "!";
+          display: inline-block;
+          width: 16px;
+          height: 16px;
+          line-height: 16px;
+          background-color: rgba(255, 51, 51, 0.8);
+          -moz-border-radius: 2px;
+          -webkit-border-radius: 2px;
+          border-radius: 2px;
+          color: white;
+          text-align: center;
+          font-weight: bold;
+          margin-right: 6px;
+          box-shadow: 0 0 2px black; }
 
 .page-header.setting {
   position: relative; }

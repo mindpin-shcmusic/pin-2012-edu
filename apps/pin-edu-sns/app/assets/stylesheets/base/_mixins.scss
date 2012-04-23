@@ -2,6 +2,10 @@
   font-family:Tahoma,Arial,Helvetica,STHeiti,sans-serif;
 }
 
+@mixin form-font-family{
+  @include base-font-family;
+}
+
 // ----------------- 常用的函数
 
 @mixin gradient($from, $to){

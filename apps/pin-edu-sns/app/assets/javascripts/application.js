@@ -6,15 +6,6 @@
 //
 //= require jquery
 //= require jquery_ujs
+//= require ./util/pie
+//= require ./util/form
 //= require_tree .
-
-// 一些表单的基本事件绑定
-
-jQuery(document).ready(function(){
-  jQuery('form a.form-submit-button').click(function(){
-    var elm = jQuery(this);
-    if(elm.hasClass('disabled')) return;
-    
-    jQuery(this).closest('form').submit();
-  })
-});

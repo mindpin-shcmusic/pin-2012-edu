@@ -11,8 +11,8 @@ class HomeworksController < ApplicationController
     return redirect_to @homework if @homework.save
 
     error = @homework.errors.first
-	  flash.now[:error] = "#{error[0]} #{error[1]}"
-	  render :action => :new
+    flash.now[:error] = "#{error[0]} #{error[1]}"
+    render :action => :new
   end
 
   def new

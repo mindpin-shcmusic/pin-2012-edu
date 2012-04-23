@@ -22,27 +22,10 @@
 
 @import 'useful/doms';
 
-// -------- 登录验证
-
-.page-login{
-}
-
-.page-signup{
-  @extend .page-login;
-}
-
-.page-auth-intro{
-  margin:20px 0;
-  .p{
-    padding-bottom:10px;
-    margin-bottom:10px;
-    border-bottom:solid 1px #eee;
-  }
-}
-
 // -------- 以下是各个模块的CSS
 
 @import 'admin';
+@import 'auth';
 @import 'setting';
 @import 'votes';
 @import 'todos';
