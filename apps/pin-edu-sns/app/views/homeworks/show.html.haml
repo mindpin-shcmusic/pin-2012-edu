@@ -1,3 +1,7 @@
+:ruby
+  teacher_attachements_count = @homework.homework_teacher_attachements.count
+  student_attachements_count = @homework.homework_student_upload_requirements.count
+
 %p= link_to '作业列表', homeworks_path
 %p= link_to '布置新作业', new_homework_path
 
@@ -7,16 +11,40 @@
 %div 作业内容
 %p= @homework.content
 
+%div 截止时间
+%p
+  = @homework.deadline.strftime("%Y-%m-%d %H:%M:%S")
+  - if Time.now < @homework.deadline
+    = '未过期'
+  - else
+    = '已过期'
 
-- if @submitted_students.count > 0
-  %p 已交作业学生
-  %ul
-  - @submitted_students.each do |s|
-    %li= s.name
-    %p= s.homework_assigns.find_by_homework_id(@homework.id).content
-  
-  
-%p 未交作业学生
-%ul
-- @unsubmitted_students.each do |s|
-  %li= s.name
+%div 
+  提交物
+  = teacher_attachements_count
+  - @homework.homework_teacher_attachements.each do |attachement|
+    = attachement.attachement_file_name
+  %div
+    %a{:href => "/homeworks/#{@homework.id}/download_teacher_zip"} Zip包全部下载
+
+
+
+%div
+  - @homework.homework_assigns.each do |h|
+    - uploaded_count = h.student.user.uploaded_count_of_homework(@homework)
+    %p
+      %a{:href => "/homeworks/#{h.homework_id}/student/#{h.student.user_id}"} 
+        =h.student.real_name
+    = uploaded_count
+    %span /
+    = student_attachements_count
+    
+    - if uploaded_count == student_attachements_count
+      %span 完成
+    - else
+      %span 未完成
+      
+    - if h.has_finished
+      %span 已签
+    - else 
+      %span 未签

@@ -11,6 +11,8 @@ class User < BuildDatabaseAbstract
   # --- 作业
   include Homework::UserMethods
   include HomeworkAssign::UserMethods
+  include HomeworkStudentUploadRequirement::UserMethods
+  include HomeworkStudentUpload::UserMethods
   # --- 投票
   include Vote::UserMethods
   # --- 问答

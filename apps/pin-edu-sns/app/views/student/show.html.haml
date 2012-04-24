@@ -3,11 +3,59 @@
 %div 作业标题
 %p= @homework.title
 
+%div 截止时间
+%p= @homework.deadline.strftime("%Y-%m-%d %H:%M:%S")
+
+%p
+  提交物:
+  = @homework.homework_teacher_attachements.count
+  要求附件:
+  - @homework.homework_teacher_attachements.each do |h|
+    = h.attachement_file_name
+
+%div
+  %a{:href => "to_do"} Zip包全部下载
+
+%div
+  - @homework.homework_student_upload_requirements.each do |h|
+    %p= h.title
+    - if current_user.is_upload_homework_attachement?(h)
+      = '已提交'
+      再次上传
+      :javascript
+        $(function() {
+          $("#dropbox_#{h.id}, #multiple_#{h.id}").html5Uploader({
+            name: "homework_student_upload[attachement]",
+            postUrl: '/student/upload_homework_attachement_again?attachement_id=#{h.id}',
+          });
+        });
+      %div{:id => "dropbox_#{h.id}"}
+      %input{:id => "multiple_#{h.id}", :multiple => "", :type => "file", :name => "homework_student_upload[attachement]"}/
+      - homework_student_upload = h.upload_of_user(current_user)
+      %a{:href => "#{homework_student_upload.attachement.url}"} 下载
+    - else
+      = '未提交'
+      上传
+      :javascript
+        $(function() {
+          $("#dropbox_#{h.id}, #multiple_#{h.id}").html5Uploader({
+            name: "homework_student_upload[attachement]",
+            postUrl: '/student/upload_homework_attachement?attachement_id=#{h.id}',
+          });
+        });
+      %div{:id => "dropbox_#{h.id}"}
+      %input{:id => "multiple_#{h.id}", :multiple => "", :type => "file", :name => "homework_student_upload[attachement]"}/
+    
+%div
+  %a{:href => "to_do"} Zip包全部下载
+
+
 %div 作业内容
 %p= @homework.content
 
+
 %div 学生提交内容
-%p= @student.content
+%p= @student_assign.content
 
 .page-new
   = flash.now[:error]

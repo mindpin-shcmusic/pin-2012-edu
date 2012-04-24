@@ -43,8 +43,24 @@ MindpinEduSns::Application.routes.draw do
     end
   end
   # --- 作业
-  resources :homeworks, :student
-  
+  resources :homeworks do
+    collection do
+      post :create_teacher_attachement
+    end
+    
+    member do
+      get 'student/:user_id' => 'homeworks#student'
+      get :download_teacher_zip
+    end
+  end
+
+  resources :student do
+    collection do
+      post :upload_homework_attachement
+      post :upload_homework_attachement_again
+    end
+  end
+
   # ------------------- 投票
   resources :votes do
     collection do

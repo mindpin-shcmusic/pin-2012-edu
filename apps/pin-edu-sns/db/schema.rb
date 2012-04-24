@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120411100028) do
+ActiveRecord::Schema.define(:version => 20120413015331) do
 
   create_table "activities", :force => true do |t|
     t.string   "title"
@@ -92,13 +92,44 @@ ActiveRecord::Schema.define(:version => 20120411100028) do
   end
 
   create_table "homework_assigns", :force => true do |t|
-    t.integer  "creator_id"
+    t.integer  "student_id"
     t.integer  "homework_id"
     t.text     "content"
     t.boolean  "is_submit",    :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.datetime "submitted_at"
+    t.boolean  "has_finished", :default => false
+  end
+
+  create_table "homework_student_upload_requirements", :force => true do |t|
+    t.integer  "creator_id"
+    t.integer  "homework_id"
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "homework_student_uploads", :force => true do |t|
+    t.integer  "creator_id"
+    t.integer  "attachement_id"
+    t.string   "attachement_file_name"
+    t.string   "attachement_content_type"
+    t.integer  "attachement_file_size"
+    t.datetime "attachement_updated_at"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "homework_teacher_attachements", :force => true do |t|
+    t.integer  "creator_id"
+    t.integer  "homework_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "attachement_file_name"
+    t.string   "attachement_content_type"
+    t.integer  "attachement_file_size"
+    t.datetime "attachement_updated_at"
   end
 
   create_table "homeworks", :force => true do |t|
@@ -107,6 +138,8 @@ ActiveRecord::Schema.define(:version => 20120411100028) do
     t.text     "content"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "course_id"
+    t.datetime "deadline"
   end
 
   create_table "media_files", :force => true do |t|
