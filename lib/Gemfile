@@ -24,11 +24,9 @@ gem 'haml'
 gem 'redis'
 
 gem 'memcache-client', '~> 1.8.5', :require => 'memcache'
-gem 'ap'
 
 gem 'will_paginate', '~> 3.0.2'
 gem 'nokogiri'
-gem 'oauth'
 gem 'uuidtools', :require => 'uuidtools'
 gem 'responds_to_parent'
 gem 'rubyzip', '0.9.4', :require => 'zip/zip'
@@ -38,7 +36,6 @@ gem 'resque'
 gem 'paperclip', '~> 2.4'
 gem 'paperclip-meta'
 
-gem 'weibo'
 
 gem 'coderay'
 gem 'haml-coderay'

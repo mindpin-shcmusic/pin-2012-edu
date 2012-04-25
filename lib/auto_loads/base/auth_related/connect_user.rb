@@ -1,2 +1,0 @@
-class ConnectUser < BuildDatabaseAbstract
-end
