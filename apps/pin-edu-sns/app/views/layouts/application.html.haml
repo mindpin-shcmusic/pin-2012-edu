@@ -34,8 +34,6 @@
           %a.avatar{:href=>"/users/#{current_user.id}"}=avatar current_user
           %a.todos{:href=>'/todos'} 计划
           %a.media-files{:href=>'/media_files'} 资源
-          %a.discuss{:href=>'/questions'} 问答
-          %a.short-messages{:href=>'/short_messages'} 私信
           
         .page-content
           = yield

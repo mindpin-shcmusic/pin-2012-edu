@@ -54,10 +54,4 @@ MindpinEduSns::Application.routes.draw do
 
   # --- 通知
   resources :notifications
-  # --- 短消息
-  resources :short_messages do
-    collection do
-      get 'exchange'
-    end
-  end
 end
