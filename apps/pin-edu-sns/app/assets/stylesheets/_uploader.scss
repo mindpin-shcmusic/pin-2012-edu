@@ -1,6 +1,7 @@
 .page-media-file-uploader{
   .upload-drop-area{
     border-bottom:solid 1px #bdbdbd;
+    border-right:solid 1px #bdbdbd;
     background-color:#FFFAE8;
     padding:24px;
     position:relative;
@@ -16,17 +17,19 @@
         display:block;
         height:36px;line-height:36px;
         width:98px;
-        @include gradient(#DD4B39, #C53727);
-        border:1px solid #B0281A;
+        //@include gradient(#DD4B39, #C53727);
+        //@include gradient(#FB7748, #FB4404);
+        @include gradient(#fda034, #FF8201);
+        border:1px solid rgba(black, 0.2);
         @include border-radius(3px);
         color:white;text-align: center;
         text-shadow:0 -1px 1px rgba(black, 0.3);
         font-size:14px;font-weight: bold;
-        &:hover{
-          @include gradient(#DB3F2C, #B83324);
-          border-color:#952216;
-          text-decoration:none;
-        }
+        // &:hover{
+        //   @include gradient(#FB7748, #FB7748);
+        //   border-color:#952216;
+        //   text-decoration:none;
+        // }
       }
       input[type=file]{
         position:absolute;
@@ -68,7 +71,38 @@
     .file{
       padding:12px 24px;
       border-bottom:solid 1px #bdbdbd;
+      border-right:solid 1px #bdbdbd;
       @include numfont;
+      @include transition(all ease-in .2s);
+
+      &.error{
+        background-color:#333;
+        $c1 : white;
+        $c2 : #ccc;
+        //background-color:mix(#DC4A38, white, 10%);
+        //$c1:#B0281A;
+        //$c2:mix(white, #B0281A, 20%);
+        .meta{
+          .name{color:$c2;};
+          .size{color:$c2;};
+        }
+        .bar{
+          background:#999;
+          //box-shadow:none;
+          .percent{display:none;}
+          .p{
+            background:rgba(black, 0.6);
+            //&:before{display:none;}
+          }
+        }
+        .stat{
+          display:none;
+        }
+        .error-info{
+          display:block;
+          color:$c1;font-weight:bold;
+        }
+      }
 
       .meta{
         overflow:hidden;
@@ -80,8 +114,10 @@
         .size{float:left;color:#444;}
       }
       .bar{
-        height:16px;@include border-radius(5px);
-        @include gradient(rgba(black, 0.3), rgba(black, 0.2));
+        height:16px;
+        @include border-radius(5px);
+        //@include gradient(rgba(black, 0.3), rgba(black, 0.2));
+        background-color:#bbb;
         position:relative;
         margin-bottom:4px;
         overflow:hidden;
@@ -110,7 +146,7 @@
             content:"";
             display:block;
             height:8px;
-            @include gradient(rgba(white, 0.5), rgba(white, 0.2));
+            @include gradient(rgba(white, 0.2), rgba(white, 0.1));
             @include border-radius(4px);
           }
         }
@@ -120,6 +156,9 @@
         color:#666;
         .speed{float:left;margin-right:12px;}
         .remaining-time{float:left;}
+      }
+      .error-info{
+        display:none;
       }
     }
   }

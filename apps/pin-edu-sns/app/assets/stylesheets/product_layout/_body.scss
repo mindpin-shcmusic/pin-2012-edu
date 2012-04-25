@@ -25,10 +25,10 @@ body{
   .page-container{
     height:100%;
     margin:0 auto;
-    background-color:#ececec;
+    background-color:#F8F8F8;
 
     position:relative;
-    &:after{
+    &:before{
       content:"";
       position:absolute;
       height:100%;
@@ -46,10 +46,13 @@ body{
     .page-nav{
       position:fixed;
       width:238px;
-      background-color:#FFF8ED;
-      border:solid 1px #FCDFBE;
+      //background-color:#FFF8ED;
+      //border:solid 1px #FCDFBE;
       //background-color:#FFFAE8;
       //border:solid 1px #bdbdbd;
+      background-color:#ECECEC;
+      border:solid 1px #bdbdbd;
+
       border-top:none;border-bottom:none;
       height:100%;
       
@@ -91,21 +94,22 @@ body{
           img{width:96px;height:96px;@include border-radius(3px);}
           padding:3px;
           border:dashed 1px #bdbdbd;
+          background-color:rgba(white, 0.6);
         }
         .name{
-          margin-left:112px;font-size:14px;
+          margin-left:116px;font-size:14px;
           margin-bottom:7px;
           a{color:#333;}
         }
         .setting{
-          margin-left:112px;
+          margin-left:116px;
         }
       }
 
       .sp{
         height:0;
-        border-top:solid 1px #FCDFBE;
-        //border-top:solid 1px #eee;
+        //border-top:solid 1px #FCDFBE;
+        border-top:solid 1px #C6C6C6;
         border-bottom:solid 1px white;
         margin:6px 12px;
       }
