@@ -2,7 +2,26 @@
   font-family:Tahoma,Arial,Helvetica,STHeiti,sans-serif;
 }
 
-// ----------------- ³£ÓÃµÄº¯Êý
+@mixin form-font-family{
+  @include base-font-family;
+}
+
+@mixin number-font-family{
+  //font-family:helvetica,'Helvetica Neue',arial,"liberation sans",freesans,sans-serif;
+  font-family:Arial,Liberation Sans,DejaVu Sans,sans-serif;
+}
+
+@mixin numfont{
+  @include number-font-family;
+}
+
+@mixin allimg($x, $y){
+  $xx : 0px - $x;
+  $yy : 0px - $y;
+  background:url(allimg.png) no-repeat $xx $yy;
+}
+
+// ----------------- å¸¸ç”¨çš„å‡½æ•°
 
 @mixin gradient($from, $to){
   background : -moz-linear-gradient(-90deg,$from,$to);

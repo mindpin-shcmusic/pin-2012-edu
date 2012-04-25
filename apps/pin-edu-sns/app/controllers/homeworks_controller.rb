@@ -18,7 +18,7 @@ class HomeworksController < ApplicationController
         end
       end
       
-      # æŠŠå®¶åº­ä½œä¸šåˆ†é…ç»™ç­çº§é‡Œçš„å­¦ç”Ÿ
+      # °Ñ¼ÒÍ¥×÷Òµ·ÖÅä¸ø°à¼¶ÀïµÄÑ§Éú
       teams = params[:teams]
       unless teams.blank?
         teams.each do |team_id|
@@ -26,7 +26,7 @@ class HomeworksController < ApplicationController
                    
           team.students.each do |student|
             
-            # å¦‚æžœå­¦ç”Ÿæ²¡æœ‰è¢«åˆ†é…åˆ°ä½œä¸š
+            # Èç¹ûÑ§ÉúÃ»ÓÐ±»·ÖÅäµ½×÷Òµ
             unless @homework.has_assigned(student)
               HomeworkAssign.create(:student => student, :homework => @homework) 
             end
@@ -53,13 +53,13 @@ class HomeworksController < ApplicationController
     @homework = Homework.new
     @homework_student_upload_requirement = HomeworkStudentUploadRequirement.new
     
-    # æ‰€æœ‰è¯¾ç¨‹
+    # ËùÓÐ¿Î³Ì
     @courses = Course.all
     
-    # ç­çº§åˆ—è¡¨
+    # °à¼¶ÁÐ±í
     @teams = Team.all
     
-    # å­¦ç”Ÿåˆ—è¡¨
+    # Ñ§ÉúÁÐ±í
     @students = Student.all
   end
 
@@ -79,7 +79,7 @@ class HomeworksController < ApplicationController
   end
   
   
-  # è€å¸ˆæŸ¥çœ‹å…·ä½“æŸä¸€å­¦ç”Ÿä½œä¸šé¡µé¢
+  # ÀÏÊ¦²é¿´¾ßÌåÄ³Ò»Ñ§Éú×÷ÒµÒ³Ãæ
   def student
     @homework = Homework.find(params[:id])
     @student = User.find(params[:user_id])
@@ -88,7 +88,7 @@ class HomeworksController < ApplicationController
   def download_teacher_zip
     homework = Homework.find(params[:id])
     
-    # ç”Ÿæˆè€å¸ˆä¸Šä¼ çš„é™„ä»¶åŽ‹ç¼©åŒ…
+    # Éú³ÉÀÏÊ¦ÉÏ´«µÄ¸½¼þÑ¹Ëõ°ü
     homework.build_teacher_attachements_zip(homework.creator)
     
     render :file => "/web/2012/homework_teacher_attachements/homework_teacher#{homework.creator.id}_#{homework.id}.zip", :content_type => 'application/zip', :status => :ok

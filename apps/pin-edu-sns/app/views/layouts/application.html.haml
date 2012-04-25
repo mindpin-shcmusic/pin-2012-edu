@@ -1,42 +1,56 @@
--# MINDPIN 工程原型Layout
-
 :ruby
-  tstr = ((yield :title) || '').gsub("\n",'')
-  title = tstr.blank? ? 'MINDPIN shcmusic SNS 原型集成' : "#{tstr} - MINDPIN shcmusic SNS 原型集成"
+  app_name = 'MINDPIN SHCMUSIC-APRIL'
+  yield_title = (yield :title) || ''
+  t_str = yield_title.gsub("\n",'')
+
+  title = t_str.blank? ? app_name : "#{t_str} - #{app_name}"
 
 !!! 5
-%html{:lang=>"zh"}
+%html{:lang=>'zh'}
   %head
-    %meta{:charset=>"utf-8"}
+    %meta{:charset=>'utf-8'}
     %title=title
     = csrf_meta_tags
-    = stylesheet_link_tag 'application'
-    = stylesheet_link_tag 'categories'
+    = stylesheet_link_tag :application
     = yield :css
     = yield :head
 
-  %body.echo.gray
-    .page-wrap
-      .page-container
-        .page-header
-          .settings
-            %a.setting{:href=>'javascript:;'} 设置
-            %ul.items
-              %li=link_to '设置基本信息', pin_url_for('auth', '/setting')
-              %li=link_to '设置头像', pin_url_for('auth', '/setting/avatar')
-              %li=link_to '退出登录', pin_url_for('auth', '/logout')
-            
-          .title=title
-          .user
-            .current-user 欢迎你，#{current_user.name}
-            .logout=link_to '退出登录', '/logout'
-        .page-nav
-          %a.avatar{:href=>"/users/#{current_user.id}"}=avatar current_user
-          %a.todos{:href=>'/todos'} 计划
-          %a.media-files{:href=>'/media_files'} 资源
-          
-        .page-content
-          = yield
+  %body.echo
+    .page-container.col4{:style=>'display:none;'}
+      .page-nav
+        %a.home{:href=>'/'} SHCMUSIC 多媒体
+        .user-info
+          .avatar=avatar_link current_user, :medium
+          .name=userlink current_user
+          .setting
+            %a{:href=>pin_url_for('auth', '/setting')} [打开用户设置]
+
+        .items
+          .sp
+          %a.item.upload{:href=>'/'} 上传资源
+          %a.item.mine{:href=>'javascript:;'} 我的资源
+          .sp
+          %a.item.video{:href=>'javascript:;'} 视频
+          %a.item.audio{:href=>'javascript:;'} 音乐
+          %a.item.image{:href=>'javascript:;'} 图片
+          %a.item.ppt{:href=>'javascript:;'} 课件
+          %a.item.others{:href=>'javascript:;'} 其他
+          .sp
+
+      .page-header
+        .settings.hide
+          %a.setting{:href=>'javascript:;'} 设置
+          %ul.items
+            %li=link_to '设置基本信息', pin_url_for('auth', '/setting')
+            %li=link_to '设置头像', pin_url_for('auth', '/setting/avatar')
+            %li=link_to '退出登录', pin_url_for('auth', '/logout')
+
+        .user
+          .current-user 欢迎你，#{current_user.name}
+          .logout=link_to '退出登录', pin_url_for('auth', '/logout')
+
+      .page-content
+        = yield
 
     = javascript_include_tag :application
     = yield :javascript

@@ -1,18 +1,31 @@
 module SessionsControllerMethods
   # 登录
   def new
-    return redirect_back_or_default(root_url) if logged_in?
+    return redirect_back_or_default(pin_url_for('sns')) if logged_in?
     return render :template=>'index/login'
   end
   
   def create
     self.current_user = User.authenticate2(params[:email], params[:password])
+
+    # ajax 登录
+    if request.xhr?
+      if logged_in?
+        after_logged_in()
+        render :status=>200, :json=>{:result=>'ok', :redirect_to=>pin_url_for('sns')}
+      else
+        render :status=>403, :text=>'登录失败：邮箱/密码不正确'
+      end
+      return
+    end
+
+    # 普通登录
     if logged_in?
       after_logged_in()
-      redirect_back_or_default("/")
+      redirect_back_or_default(pin_url_for('sns'))
     else
-      flash[:error]="邮箱/密码不正确"
-      redirect_to '/login'
+      flash[:error]='登录失败：邮箱/密码不正确'
+      redirect_to pin_url_for('auth')
     end
   end
   

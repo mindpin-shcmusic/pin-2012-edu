@@ -14,5 +14,6 @@ module MindpinEduSns
     
     config.assets.paths << Rails.root.join('..', 'pin-edu-sns', 'app', 'assets', 'stylesheets')
     config.assets.paths << Rails.root.join('..', 'pin-edu-sns', 'app', 'assets', 'javascripts')
+    config.assets.paths << Rails.root.join('..', 'pin-edu-sns', 'app', 'assets', 'images')
   end
 end

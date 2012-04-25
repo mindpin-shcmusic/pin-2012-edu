@@ -9,41 +9,35 @@
 
 @import 'product_layout/body'; //nav content a
 @import 'product_layout/form'; //form
+@import 'product_layout/table'; //table
 
 // -------- 基本通用文档要素
 
 .page-title{
-  font-size:16px;//font-weight:bold;
+  font-size:14px;
   text-shadow:1px 1px 0 rgba(#fff, 0.75);
-  margin-bottom:20px;
+  padding:12px;
+  border-bottom:solid 1px #bdbdbd;
 }
+
+.col1{width:240px;}
+.col2{width:480px;}
+.push1{margin-left:240px;}
+.push2{margin-left:480px;}
+
+@mixin col1{width:240px;}
+@mixin col2{width:480px;}
 
 // -------- 各种本项目专用的mixin，基本都是迭代时抽取的
 
 @import 'useful/doms';
 
-// -------- 登录验证
-
-.page-login{
-}
-
-.page-signup{
-  @extend .page-login;
-}
-
-.page-auth-intro{
-  margin:20px 0;
-  .p{
-    padding-bottom:10px;
-    margin-bottom:10px;
-    border-bottom:solid 1px #eee;
-  }
-}
-
 // -------- 以下是各个模块的CSS
 
 @import 'admin';
+@import 'auth';
 @import 'setting';
 @import 'todos';
 @import 'userpage';
 @import 'media_files';
+@import 'uploader';
