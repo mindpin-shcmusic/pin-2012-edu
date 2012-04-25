@@ -3,8 +3,6 @@ class User < BuildDatabaseAbstract
   # admin 模块
   include Student::UserMethods
   include Teacher::UserMethods
-  # --- 待办事项
-  include Todo::UserMethods
   # --- 作业
   include Homework::UserMethods
   include HomeworkAssign::UserMethods

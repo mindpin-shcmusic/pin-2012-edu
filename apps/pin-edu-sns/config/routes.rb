@@ -18,12 +18,6 @@ MindpinEduSns::Application.routes.draw do
   # --- 用户
   resources :users
   
-  # --- 待办事项
-  resources :todos do
-    member do
-      put :do_complete
-    end
-  end
   # --- 作业
   resources :homeworks do
     collection do
