@@ -61,28 +61,6 @@ MindpinEduSns::Application.routes.draw do
     end
   end
 
-  # ------------------- 投票
-  resources :votes do
-    collection do
-      get :byme
-      get :has_voted
-    end
-    
-    member do
-      get :voted_users
-      get :result
-      
-      get :add_tag
-      post :do_add_tag
-      delete :remove_tag
-    end
-    
-    resources :comments
-  end
-  get 'votes/new/:kind' => 'votes#new'
-  resources :vote_results
-  
-  
   # --- 问答
   resources :questions do
     collection do

@@ -4,11 +4,6 @@ class UsersController < ApplicationController
     
     @statuses = Status.all
 
-#    # 用户发起的投票
-#    @votes = @user.votes
-#    
-#    # 用户参与过的投票
-#    @voted_votes = @user.vote_results
 #    
 #    # 当前用户发起的问题
 #    @asked_questions = @user.asked_questions

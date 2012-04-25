@@ -3,8 +3,6 @@ class TagsController < ApplicationController
   def determine_model(model_type, model_id)
     model_type = model_type.downcase
     case model_type
-      when 'vote'
-        Vote.find(params[:model_id]) if params[:model_id]
       when 'question'
         Question.find(params[:model_id]) if params[:model_id]
       else
