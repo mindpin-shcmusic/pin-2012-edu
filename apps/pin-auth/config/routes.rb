@@ -22,7 +22,7 @@ end
 
 MindpinEduSns::Application.routes.draw do
   # ---------------- 首页和欢迎页面 ---------
-  root :to => 'index#index'
+  root :to => 'sessions#new'
   match_auth_routes
   match_account_routes
 end

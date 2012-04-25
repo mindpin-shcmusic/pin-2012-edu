@@ -11,11 +11,8 @@ class Category < BuildDatabaseAbstract
     self.transaction do
       return false unless self.save
       self.move_to_child_of(parent)
-      if self.depth > 2
-        raise ActiveRecord::Rollback, "·ÖÀà²»ÄÜ³¬¹ýÈý¼¶"
-      else
-        true
-      end
+      raise ActiveRecord::Rollback, "åˆ†ç±»æœ€å¤§ä¸èƒ½è¶…è¿‡ä¸‰çº§" if self.depth > 2
+      true
     end
   end
 

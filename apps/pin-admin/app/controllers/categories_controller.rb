@@ -11,13 +11,12 @@ class CategoriesController < ApplicationController
   
   def create
     @category = Category.new(params[:category])
-    if !params[:parent_id]
+
+    if params[:parent_id].blank?
       @category.save
-      return redirect_to "/categories"
     else
       @category.save_as_child_of(Category.find(params[:parent_id]))
-      return redirect_to "/categories"
     end
-    render :action => 'new'
+    redirect_to "/categories"
   end
 end

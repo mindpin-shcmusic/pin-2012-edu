@@ -5,9 +5,9 @@ module CategoryHelper
         category.children.map do |c|
           content_tag :div, :class => [:category, :child_category] do
             content_tag(:div, c.name, :class => :t)+
-            content_tag(:div, count(c), :class => :c)+
+            content_tag(:div, categories_or_media_file_count(c), :class => :c)+
             if !c.has_max_depth?
-              link_to("Ôö¼Ó×ÓÊı¾İ·ÖÀà", new_category_path(:parent_id => c.id))
+              link_to("å¢åŠ å­æ•°æ®åˆ†ç±»", new_category_path(:parent_id => c.id))
             end+
             recursive_categories(c)
           end
@@ -16,11 +16,11 @@ module CategoryHelper
     end
   end
 
-  def count(category)
+  def categories_or_media_file_count(category)
     if category.leaf?
-      "×ÊÔ´Êı #{category.media_files.count}"
+      "æ–‡ä»¶æ•° #{category.media_files.count}"
     else
-      "×ÓÀàÊı #{category.descendants.count}"
+      "å­åˆ†ç±»æ•° #{category.descendants.count}"
     end
   end
 end
