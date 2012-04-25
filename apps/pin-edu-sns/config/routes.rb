@@ -2,15 +2,6 @@ MindpinEduSns::Application.routes.draw do
 
   root :to => 'index#index'
   
-  # ---------- TAG
-  resources :tags do
-    collection do
-      post :update_tags
-      delete :remove_tag
-      post :add_tag
-    end
-  end
-  
   # ------------- 媒体文件
   resources :media_files do
     collection do
@@ -61,37 +52,6 @@ MindpinEduSns::Application.routes.draw do
     end
   end
 
-  # --- 问答
-  resources :questions do
-    collection do
-      get :byme
-      get :answered
-    end
-    
-    member do
-      get :add_tag
-      post :do_add_tag
-      delete :remove_tag
-    end
-    
-    resources :question_comments
-  end
-  
-  resources :answers do
-    member do
-      post :vote_up
-      post :vote_down
-    end
-    
-    resources :answer_comments
-  end
-  
-  resources :question_comments, :answer_comments do
-    member do
-      get :reply
-      post :do_reply
-    end
-  end
   # --- 通知
   resources :notifications
   # --- 短消息

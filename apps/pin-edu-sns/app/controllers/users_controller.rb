@@ -4,13 +4,6 @@ class UsersController < ApplicationController
     
     @statuses = Status.all
 
-#    
-#    # 当前用户发起的问题
-#    @asked_questions = @user.asked_questions
-#    
-#    # 当前用户回答过的问题
-#    @answered_questions = @user.answered_questions
-#    
 #    # 用户活动
 #    @week_activities_data = @user.the_week_activities_data
 #    
