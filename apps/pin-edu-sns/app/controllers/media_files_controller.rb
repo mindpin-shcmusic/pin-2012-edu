@@ -1,14 +1,18 @@
 class MediaFilesController < ApplicationController
-  before_filter :login_required, :except => [:create_by_edu,:encode_complete,:file_merge_complete]
+  before_filter :login_required, :except => [:create_by_edu, :encode_complete, :file_merge_complete]
 
-  # 我的资源
+  # 鎴戠殑璧勬簮
   def mine
-    #@media_files = MediaFile.all
-    @media_files = current_user.media_files.paginate(:per_page=>50, :page=>1)
-
-    # 当前筛选的category
+    @kind = params[:kind]
     category_id = params[:category_id]
     @current_category = category_id.blank? ? nil : Category.find(category_id)
+
+    @media_files = current_user.media_files.with_kind(@kind).paginate(:per_page=>50, :page=>1)
+
+    if request.headers['X-PJAX']
+      render :layout => false
+    end
+
   end
 
 
@@ -83,6 +87,5 @@ class MediaFilesController < ApplicationController
     @media_file.save
     render :text=>"success"
   end
-
 
 end

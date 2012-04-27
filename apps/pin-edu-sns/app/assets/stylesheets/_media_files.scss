@@ -21,6 +21,30 @@
       }
     }
 
+    &[data-kind=video]{
+      .meta-box .cover{
+        position:relative;
+        &:before{
+          content:"";
+          position:absolute;
+          top:0;bottom:0;
+          left:0;right:0;
+          border-top:solid 18px rgba(black, 0.8);
+          border-bottom:solid 18px rgba(black, 0.8);
+          pointer-events:none;
+        }
+        &:after{
+          content:"";
+          position:absolute;
+          top:6px;bottom:6px;
+          left:0;right:0;
+          border-top:dashed 6px rgba(white, 0.6);
+          border-bottom:dashed 6px rgba(white, 0.6);
+          pointer-events:none;
+        }
+      }
+    }
+
     .meta-box{
       position:absolute;
       width:$box-w;height:$box-h;

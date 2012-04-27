@@ -7,5 +7,5 @@
 -if @media_file.is_video?
   .video-encode-status 转换状态：#{@media_file.video_encode_status}
 -if @media_file.encode_success?
-  =raw video_tag @media_file.flv_url
+  =raw video_tag @media_file
   

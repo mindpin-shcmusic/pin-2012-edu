@@ -1,6 +1,3 @@
-// Place all the styles related to the categories controller here.
-// They will automatically be included in application.css.
-// You can use Sass (SCSS) here: http://sass-lang.com/
 .page-admin-categories {
   .category, .child_category {
     width:auto;
@@ -80,20 +77,34 @@ li.naved-alt:hover ul.categories-list.drop-down {
   color:white;
 }
 
+////////////////////
+
 .page-categories-breadcrumb-bar{
   border-right:solid 1px #bdbdbd;
   border-bottom:solid 1px #bdbdbd;
   padding:12px;
-  //background-color:#FFFAE8;
+  background-color:#DFE8F5;
 
   $rc:3px;
-  $parent-color:#060D18;
-  $current-color:#3A80F0;
-  $hover-color:lighten(#3A80F0, 10%);
+  $parent-color:#090D14;
+  $current-color:#5E88CB;
+  $children-color:darken($current-color, 30%);
+  $hover-color:lighten($current-color, 10%);
 
   .breadcrumb-categories{
     overflow:hidden;
     border-bottom:solid 4px $current-color;
+    position:relative;
+    //padding-bottom:6px;
+
+    // &:after{
+    //   content:"";
+    //   display:block;
+    //   height:6px;
+    //   @include gradient($current-color, $children-color);
+    //   position:absolute;
+    //   bottom:0;left:0;right:0;
+    // }
 
     .category{
       float:left;
@@ -176,9 +187,9 @@ li.naved-alt:hover ul.categories-list.drop-down {
       height:32px;line-height:32px;
       @include border-radius(0 0 $rc $rc);
       color:white;
-      background-color:#295AA7;
+      background-color:$children-color;
       padding:0 12px;
-      margin:0 3px 0 0;
+      margin:0 2px 0 0;
 
       &:hover{
         background-color:$hover-color;
