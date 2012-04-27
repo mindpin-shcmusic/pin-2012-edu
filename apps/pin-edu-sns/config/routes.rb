@@ -12,6 +12,7 @@ MindpinEduSns::Application.routes.draw do
     end
     member do
       get :lifei_info
+      post :file_merge_complete
     end
   end
   

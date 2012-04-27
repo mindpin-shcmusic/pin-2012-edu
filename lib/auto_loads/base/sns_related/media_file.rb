@@ -1,4 +1,3 @@
-require "uuidtools"
 class MediaFile < BuildDatabaseAbstract
   belongs_to :category
   belongs_to :creator,:class_name=>"User",:foreign_key=>"creator_id"
@@ -10,7 +9,7 @@ class MediaFile < BuildDatabaseAbstract
   FAILURE = "FAILURE"
   
   validates :place, :presence => true, :inclusion => [PLACE_OSS,PLACE_EDU]
-  validates :creator, :uuid,:file_file_name, :presence => true
+  validates :creator,:file_file_name, :presence => true
   validate :category_should_be_leafy_or_nil
   
   has_attached_file :file,
@@ -44,18 +43,45 @@ class MediaFile < BuildDatabaseAbstract
   
   def _file_url
     if place == PLACE_OSS
-      "http://storage.aliyun.com/#{OssManager::CONFIG["bucket"]}/:class/:attachment/#{self.uuid}/:style/:basename.:extension"
+      "http://storage.aliyun.com/#{OssManager::CONFIG["bucket"]}/:class/:attachment/#{self.id}/:style/:basename.:extension"
     else
-      "http://dev.file.yinyue.edu/:class/:attachment/#{self.uuid}/:style/:basename.:extension"
+      "http://dev.file.yinyue.edu/:class/:attachment/#{self.id}/:style/:basename.:extension"
     end
   end
   
   def _file_path
-    "/:class/:attachment/#{self.uuid}/:style/:basename.:extension"
+    "/:class/:attachment/#{self.id}/:style/:basename.:extension"
   end
-  
-  
-  
+
+  CONTENT_KINDS = [:video, :audio, :image, :document]
+  CONTENT_TYPES = {}
+  CONTENT_TYPES[:video] = ['avi', 'rm', 'rmvb', 'mp4', 'ogv', 'm4v', 'flv', 'mpeg']
+  CONTENT_TYPES[:audio] = ['mp3', 'wma', 'm4a', 'wav', 'ogg']
+  CONTENT_TYPES[:image] = ['jpeg', 'x-bmp', 'png', 'png', 'svg']
+  CONTENT_TYPES[:document] = ['xls', 'pdf', 'doc', 'ppt']
+
+  def content_kind
+    case self.file_content_type.match(/.*\/(.*)/)[1]
+    when *CONTENT_TYPES[:video]
+      :video
+    when *CONTENT_TYPES[:audio]
+      :audio
+    when *CONTENT_TYPES[:image]
+      :image
+    when *CONTENT_TYPES[:document]
+      :document
+    end
+  end
+
+  CONTENT_KINDS.each do |kind|
+    _kind = kind.to_s.pluralize.to_sym
+    _types = CONTENT_TYPES[kind].map do |type|
+      '%' + type
+    end
+
+    scope _kind, where((['file_content_type LIKE ?'] * _types.size).join(' OR '), *_types)
+  end
+
   # --- 给其他类扩展的方法
   module UserMethods
     def self.included(base)
