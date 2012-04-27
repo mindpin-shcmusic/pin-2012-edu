@@ -1,0 +1,191 @@
+// Place all the styles related to the categories controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.page-admin-categories {
+  .category, .child_category {
+    width:auto;
+    max-width:640px;
+    float:none;
+    display:block;
+  }
+
+  .child_category {
+    margin:16px 16px;
+  }
+}
+
+.float {
+  float:left;
+}
+
+.naved:after {
+  content:">";
+}
+
+.naved-alt:after {
+  content:"v >";
+}
+
+.page-sns-categories div ul.categories-list {
+  padding:0;
+  margin:0;
+  min-width:160px;
+}
+
+ul.categories-list.drop-down {
+  position:absolute;
+  left:-99999999px;
+  background:blue;
+  a {color:#fff;}
+}
+
+li.naved-alt:hover ul.categories-list.drop-down {
+  left:0;
+  top:26px;
+}
+
+.page-sns-categories {
+  max-width:800px;
+  .lv1 {
+    background:#888;
+  }
+  .lv2 {
+    background:#aaa;
+  }
+  .lv3 {
+    background:#ccc;
+  }
+  li.category {
+    padding:4px 8px;
+    min-width:144px;
+  }
+  .lv1 li.category {
+    position:relative;
+  }
+}
+
+.highlighted-category {
+  background:#000;
+
+  a{
+    color:#fff;
+  }
+}
+
+.clearfix {clear:both;}
+
+.error_msg {
+  width:640px;
+  background:red;
+  color:white;
+}
+
+.page-categories-breadcrumb-bar{
+  border-right:solid 1px #bdbdbd;
+  border-bottom:solid 1px #bdbdbd;
+  padding:12px;
+  //background-color:#FFFAE8;
+
+  $rc:3px;
+  $parent-color:#060D18;
+  $current-color:#3A80F0;
+  $hover-color:lighten(#3A80F0, 10%);
+
+  .breadcrumb-categories{
+    overflow:hidden;
+    border-bottom:solid 4px $current-color;
+
+    .category{
+      float:left;
+      height:32px;line-height:32px;
+      color:white;
+      background-color:$parent-color;
+      padding:0 12px;
+      margin:0 11px 0 0;
+      position:relative;
+
+      &:before{
+        content:"";
+        display:block;
+        border-top:solid 16px transparent;
+        border-left:solid 8px $parent-color;
+        border-right:solid 8px transparent;
+        border-bottom:solid 16px transparent;
+        position:absolute;
+        right:-16px;
+      }
+
+      .arr{
+        $c:$parent-color;
+        &:before{
+          content:"";
+          display:block;
+          border-top:solid 8px $c;
+          border-left:solid 4px transparent;
+          border-right:solid 4px $c;
+          border-bottom:solid 8px transparent;
+          position:absolute;
+          left:-8px;
+        }
+        &:after{
+          content:"";
+          display:block;
+          border-top:solid 8px transparent;
+          border-left:solid 4px transparent;
+          border-right:solid 4px $c;
+          border-bottom:solid 8px $c;
+          position:absolute;
+          left:-8px;bottom:0px;
+        }
+      }
+
+      &:hover{
+        background-color:$hover-color;
+        text-decoration:none;
+        &:before{border-color:transparent transparent transparent $hover-color;}
+        .arr:before{border-color:$hover-color $hover-color transparent transparent;}
+        .arr:after{border-color:transparent $hover-color $hover-color transparent;}
+      }
+
+      &.home{
+        @include border-radius($rc 0 0 0);
+        &:hover{
+          background-color:$hover-color;
+          text-decoration:none;
+          &:before{border-color:transparent transparent transparent $hover-color;}
+        }
+      }
+
+      &:last-child{
+        &:before{display:none;}
+        @include border-radius(0 $rc 0 0);
+
+        $bgc:$current-color;
+        background-color:$bgc;
+        .arr:before{border-color:$bgc $bgc transparent transparent;}
+        .arr:after{border-color:transparent $bgc $bgc transparent;}
+
+        &.home{@include border-radius($rc $rc 0 0);}
+      }
+    }
+  }
+  .next-level-categories{
+    overflow:hidden;
+    .category{
+      float:left;
+      height:32px;line-height:32px;
+      @include border-radius(0 0 $rc $rc);
+      color:white;
+      background-color:#295AA7;
+      padding:0 12px;
+      margin:0 3px 0 0;
+
+      &:hover{
+        background-color:$hover-color;
+        text-decoration:none;
+        &:before{border-color:transparent transparent transparent $hover-color;}
+      }
+
+    }
+  }
+}

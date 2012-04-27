@@ -1,3 +1,9 @@
+/*
+ * @author ben7th
+ * @useage 
+ *   声明媒资系统登录页面的前端行为
+ */
+
 // 登录页面背景
 pie.load(function(){
   var wallpaper_box_elm = jQuery('body.auth .page-wallpaper');

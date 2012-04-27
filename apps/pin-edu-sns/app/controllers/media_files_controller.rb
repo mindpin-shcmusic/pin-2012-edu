@@ -1,7 +1,20 @@
 class MediaFilesController < ApplicationController
   before_filter :login_required, :except => [:create_by_edu,:encode_complete]
+
+  # 我的资源
+  def mine
+    #@media_files = MediaFile.all
+    @media_files = current_user.media_files.paginate(:per_page=>50, :page=>1)
+
+    # 当前筛选的category
+    category_id = params[:category_id]
+    @current_category = category_id.blank? ? nil : Category.find(category_id)
+  end
+
+
   def index
     @level1_categories = Category.roots
+    # @current_category = Category.find(params[:category_id]) if params[:category_id]
     if params[:index_alt]
       render :template => "media_files/index_alt"
     end

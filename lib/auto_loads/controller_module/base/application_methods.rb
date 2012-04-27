@@ -3,7 +3,7 @@ module ApplicationMethods
     # 拦截ie6的访问
     base.before_filter :hold_ie6
     # 捕捉一些特定异常
-    base.around_filter :catch_some_exception
+    # base.around_filter :catch_some_exception 开发时先注掉了
     # 修正IE浏览器请求头问题
     base.before_filter :fix_ie_accept
     # 对错误显示友好的页面

@@ -28,7 +28,7 @@ module UserMethods
         :normal => '48x48#',
         :tiny   => '32x32#',
         :mini   => '24x24#'
-    },
+      },
       :storage => :oss,
       :path => AVATAR_PATH,
       :url  => AVATAR_URL,
