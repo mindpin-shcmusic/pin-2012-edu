@@ -1,5 +1,3 @@
-.page-title 上传并管理媒体资源
-
 :ruby
   creator_id = current_user.id
   new_upload_url = 'http://192.168.1.28/new_upload'
@@ -30,6 +28,7 @@
         .remaining-time
           %span.t 剩余时间:
           %span.data 00:32:32
-
+      .error-info
+        文件上传出错
 
   .uploading-files-list

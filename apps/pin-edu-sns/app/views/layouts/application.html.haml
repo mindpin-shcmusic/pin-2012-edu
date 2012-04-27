@@ -28,7 +28,7 @@
         .items
           .sp
           %a.item.upload{:href=>'/'} 上传资源
-          %a.item.mine{:href=>'javascript:;'} 我的资源
+          %a.item.mine{:href=>'/media_files/mine'} 我的资源
           .sp
           %a.item.video{:href=>'javascript:;'} 视频
           %a.item.audio{:href=>'javascript:;'} 音乐
@@ -47,7 +47,7 @@
 
         .user
           .current-user 欢迎你，#{current_user.name}
-          .logout=link_to '退出登录', pin_url_for('auth', '/logout')
+          %a.logout{:href=>pin_url_for('auth', '/logout'), :title=>'退出登录'} 退出登录
 
       .page-content
         = yield

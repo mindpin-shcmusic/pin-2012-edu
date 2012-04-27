@@ -1,6 +1,0 @@
--# 上传到内网的文件上传方式，先隐藏掉  
-=form_tag "http://dev.uploadmediafile.yinyue.edu/upload",:multipart => true do
-  =file_field_tag "file"
-  =hidden_field_tag "creator_id",current_user.id
-  =submit_tag "提交到PSU"
-		

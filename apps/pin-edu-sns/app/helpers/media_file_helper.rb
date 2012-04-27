@@ -1,4 +1,29 @@
 module MediaFileHelper
+
+  def media_file_cover_src(media_file)
+    # 用 file_content_type 判断文件类型
+    # content_type = media_file.file_content_type
+    # prefix = content_type.split('/')
+
+    # case prefix
+    # when 'image'
+      # 图片
+      return media_file.file.url(:small)
+    # when 'audio'
+    #   # 音频
+    #   return pin_url_for('sns', '/assets/covers/audio.small.png')
+    # end
+
+    # case content_type
+    # when 'application/mp4'
+    #   # 视频
+    #   return pin_url_for('sns', '/assets/covers/video.small.png')
+    # end
+
+  end
+
+  # -----
+
   def media_files_list(c=nil)
     category = c if c
     if params[:uncategorized]

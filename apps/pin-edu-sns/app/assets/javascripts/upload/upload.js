@@ -17,6 +17,10 @@ pie.load(function(){
 
     var _this = this;
 
+    this.show_error = function(){
+      this.elm.addClass('error');
+    }
+
     this.start_upload = function(){
       jQuery.ajax({
         url  : this.NEW_UPLOAD_URL,
@@ -31,7 +35,7 @@ pie.load(function(){
           _this.upload_blob();
         },
         error : function(){
-          pie.log('上传出错啦');
+          _this.show_error();
         }
       })
     }
@@ -70,6 +74,7 @@ pie.load(function(){
           _this.upload_blob();
         } else {
           pie.log('blob上传出错:' + status);
+          _this.show_error();
         }
       }
 
