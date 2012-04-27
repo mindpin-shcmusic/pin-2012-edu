@@ -48,54 +48,77 @@ class MediaFile < BuildDatabaseAbstract
   # ----------------
 
   def is_video?
-    VideoUtil.is_video?(File.basename(self.file_file_name))
+    :video == self.content_kind
   end
   
-  def flv_path
-    if is_video?
-      origin_path = self.file.path
-      "#{origin_path}.flv"
-    end
-  end
-  
-  def flv_url
-    tmps = flv_path.split("/")
+  def swf_player_url
+    tmps = "#{self.file.path}.flv".split("/")
     tmps.shift
     "http://dev.file.yinyue.edu/player.swf?type=http&file=#{tmps*"\/"}"
   end
   
   def encode_success?
-    self.video_encode_status == SUCCESS
+    SUCCESS == self.video_encode_status
   end
   
   CONTENT_TYPES = {
-    :videos    => ['avi', 'rm', 'rmvb', 'mp4', 'ogv', 'm4v', 'flv', 'mpeg'].map{|x| file_content_type(x)},
-    :audios    => ['mp3', 'wma', 'm4a', 'wav', 'ogg'].map{|x| file_content_type(x)},
-    :images    => ['jpeg', 'x-bmp', 'png', 'png', 'svg'].map{|x| file_content_type(x)},
-    :documents => ['xls', 'pdf', 'doc', 'ppt'].map{|x| file_content_type(x)}
+    :video    => [
+        'avi', 'rm',  'rmvb', 'mp4', 
+        'ogv', 'm4v', 'flv', 'mpeg',
+        '3gp'
+      ].map{|x| file_content_type(x)}.uniq,
+    :audio    => [
+        'mp3', 'wma', 'm4a',  'wav', 
+        'ogg'
+      ].map{|x| file_content_type(x)}.uniq,
+    :image    => [
+        'jpg', 'jpeg', 'bmp', 'png', 
+        'png', 'svg',  'tif', 'gif'
+      ].map{|x| file_content_type(x)}.uniq,
+    :document => [
+        'pdf', 'xls', 'doc', 'ppt'
+      ].map{|x| file_content_type(x)}.uniq
   }
 
   def content_kind
     case self.file_content_type
-    when *CONTENT_TYPES[:videos]
+    when *CONTENT_TYPES[:video]
       :video
-    when *CONTENT_TYPES[:audios]
+    when *CONTENT_TYPES[:audio]
       :audio
-    when *CONTENT_TYPES[:images]
+    when *CONTENT_TYPES[:image]
       :image
-    when *CONTENT_TYPES[:documents]
+    when *CONTENT_TYPES[:document]
       :document
     end
   end
 
-  [:videos, :audios, :images, :documents].each do |kind|
-    types = CONTENT_TYPES[kind]
-    count = types.length
+  scope :with_kind, lambda {|kind|
 
-    condition_str = ['?']*count*','
+    if kind.blank?
+      return where('1 = 1')
+    end
 
-    scope kind, where("file_content_type IN (#{condition_str})", *types)
-  end
+    if [:video, :audio, :image, :document].include? kind.to_sym
+      types = CONTENT_TYPES[kind.to_sym]
+      count = types.length
+      condition_str = ['?']*count*','
+
+      return where("file_content_type IN (#{condition_str})", *types)
+    end
+
+    if :other == kind.to_sym
+      all = CONTENT_TYPES[:video] + 
+            CONTENT_TYPES[:audio] + 
+            CONTENT_TYPES[:image] + 
+            CONTENT_TYPES[:document]
+
+      count = all.length
+      condition_str = ['?']*count*','
+
+      return where("file_content_type NOT IN (#{condition_str})", *all)
+    end
+  }
 
   # --- 给其他类扩展的方法
   module UserMethods
