@@ -8,11 +8,11 @@ MindpinEduSns::Application.routes.draw do
       get  :mine # 我的资源
       get  :new_psu
       post :create_by_edu
-      post :encode_complete
       get  :lifei_list
     end
     member do
       get :lifei_info
+      post :encode_complete
       post :file_merge_complete
     end
   end
