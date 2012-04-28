@@ -54,7 +54,9 @@ class MediaFile < BuildDatabaseAbstract
   def swf_player_url
     tmps = "#{self.file.path}.flv".split("/")
     tmps.shift
-    "http://dev.file.yinyue.edu/player.swf?type=http&file=#{tmps*"\/"}"
+
+    flv_url = File.join("http://dev.file.yinyue.edu",tmps*'/')
+    "http://dev.sns.yinyue.edu/player.swf?type=http&file=#{flv_url}"
   end
   
   def encode_success?
