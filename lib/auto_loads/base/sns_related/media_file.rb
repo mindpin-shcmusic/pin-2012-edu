@@ -121,6 +121,24 @@ class MediaFile < BuildDatabaseAbstract
       return where("file_content_type NOT IN (#{condition_str})", *all)
     end
   }
+  
+  # 建立RSS文档
+  def self.build_rss_feed(media_data)
+    builder = Nokogiri::XML::Builder.new do |xml|
+      xml.rss('version' => '2.0') do
+        xml.medias {
+          media_data.each do |o|
+            xml.file {
+              xml.title   o.place
+              xml.desc  o.desc
+              xml.created_at     o.created_at
+            }
+          end
+        }
+      end
+    end
+    builder.to_xml
+  end
 
   # --- 给其他类扩展的方法
   module UserMethods
