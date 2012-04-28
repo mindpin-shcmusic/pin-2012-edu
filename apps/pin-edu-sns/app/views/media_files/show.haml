@@ -1,4 +1,3 @@
-    
 .page-media-files-info
   .file-name 文件名称：#{@media_file.entry_file_name}
   .file-size 文件大小：#{@media_file.entry_file_size}
@@ -8,4 +7,19 @@
   .video-encode-status 转换状态：#{@media_file.video_encode_status}
 -if @media_file.encode_success?
   =raw video_tag @media_file
-  
+
+.page-media-file-comments
+  - @media_file.comments.each do |comment|
+    .media-file-comment
+      .comment-creator=comment.creator.name + ':'
+      .comment-content=comment.content
+      =link_to '回复',"/comments/#{comment.id}/reply"
+
+
+.page-media-file-comment-form
+  =form_for @media_file.comments.build,:url => '/comments', :remote => true do |f|
+    =f.label '内容'
+    =f.text_area :content
+    =f.hidden_field :model_id, :value => @media_file.id
+    =f.hidden_field :model_type, :value => @media_file.class.to_s
+    =f.submit '评论'

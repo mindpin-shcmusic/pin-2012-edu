@@ -52,7 +52,7 @@ class MediaFile < BuildDatabaseAbstract
   end
   
   def swf_player_url
-    tmps = "#{self.file.path}.flv".split("/")
+    tmps = "#{self.entry.path}.flv".split("/")
     tmps.shift
 
     flv_url = File.join("http://dev.file.yinyue.edu",tmps*'/')
@@ -128,4 +128,6 @@ class MediaFile < BuildDatabaseAbstract
       base.has_many :media_files, :foreign_key => :creator_id
     end
   end
+
+  include Comment::CommentableMethods
 end
