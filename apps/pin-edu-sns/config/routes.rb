@@ -9,6 +9,7 @@ MindpinEduSns::Application.routes.draw do
       get  :new_psu
       post :create_by_edu
       get  :lifei_list
+      get  :rss
     end
     member do
       get :lifei_info

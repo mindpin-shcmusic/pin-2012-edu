@@ -1,3 +1,5 @@
+require 'open-uri'
+require 'nokogiri'
 class MediaFilesController < ApplicationController
   before_filter :login_required, :except => [:create_by_edu, :encode_complete, :file_merge_complete]
 
@@ -86,6 +88,13 @@ class MediaFilesController < ApplicationController
     @media_file.file_merged = true
     @media_file.save
     render :text=>"success"
+  end
+  
+  
+  def rss
+    media_data = MediaFile.all
+    @feed = MediaFile.build_rss_feed(media_data)
+    render :layout => false
   end
 
 end
