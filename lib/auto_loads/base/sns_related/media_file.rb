@@ -13,7 +13,7 @@ class MediaFile < BuildDatabaseAbstract
   default_scope order("created_at DESC")
   
   validates :place, :presence => true, :inclusion => [PLACE_OSS,PLACE_EDU]
-  validates :creator,:file_file_name, :presence => true
+  validates :creator,:entry_file_name, :presence => true
 
   validate  :category_should_be_leafy_or_nil
   def category_should_be_leafy_or_nil
@@ -24,7 +24,7 @@ class MediaFile < BuildDatabaseAbstract
 
   # -----------------------  
 
-  has_attached_file :file,
+  has_attached_file :entry,
     :styles => {
       :large => '460x340#',
       :small => '220x140#'
@@ -83,7 +83,7 @@ class MediaFile < BuildDatabaseAbstract
   }
 
   def content_kind
-    case self.file_content_type
+    case self.entry_content_type
     when *CONTENT_TYPES[:video]
       :video
     when *CONTENT_TYPES[:audio]
@@ -106,7 +106,7 @@ class MediaFile < BuildDatabaseAbstract
       count = types.length
       condition_str = ['?']*count*','
 
-      return where("file_content_type IN (#{condition_str})", *types)
+      return where("entry_content_type IN (#{condition_str})", *types)
     end
 
     if :other == kind.to_sym
@@ -118,7 +118,7 @@ class MediaFile < BuildDatabaseAbstract
       count = all.length
       condition_str = ['?']*count*','
 
-      return where("file_content_type NOT IN (#{condition_str})", *all)
+      return where("entry_content_type NOT IN (#{condition_str})", *all)
     end
   }
 

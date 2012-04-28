@@ -4,7 +4,7 @@ module MediaFileHelper
 
     case media_file.content_kind
     when :image
-      return media_file.file.url(:small)
+      return media_file.entry.url(:small)
     when :audio
       return pin_url_for('sns', '/assets/covers/audio.small.png')
     when :video

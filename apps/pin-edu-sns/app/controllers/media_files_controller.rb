@@ -55,10 +55,10 @@ class MediaFilesController < ApplicationController
   def create_by_edu
     video_encode_status = params[:video_encode_status]||""
     @media_file = MediaFile.new(
-      :file_file_name=>params[:name],
-      :file_content_type=>params[:type],
-      :file_file_size=>params[:size],
-      :file_updated_at=>Time.now,
+      :entry_file_name=>params[:name],
+      :entry_content_type=>params[:type],
+      :entry_file_size=>params[:size],
+      :entry_updated_at=>Time.now,
       :place=>MediaFile::PLACE_EDU,
       :video_encode_status=>video_encode_status,
       :creator_id=>params[:creator_id])

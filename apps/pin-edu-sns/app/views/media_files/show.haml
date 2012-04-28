@@ -1,7 +1,7 @@
     
 .page-media-files-info
-  .file-name 文件名称：#{@media_file.file_file_name}
-  .file-size 文件大小：#{@media_file.file_file_size}
+  .file-name 文件名称：#{@media_file.entry_file_name}
+  .file-size 文件大小：#{@media_file.entry_file_size}
   - if @media_file.category
     .file-size 文件分类：#{@media_file.category.name}  
 -if @media_file.is_video?
