@@ -29,22 +29,12 @@ class MediaFile < BuildDatabaseAbstract
       :large => '460x340#',
       :small => '220x140#'
     },
-    :storage =>  :oss,
-    :path => lambda { |attachment| attachment.instance._attachment_file_path },
-    :url  => lambda { |attachment| attachment.instance._attachment_file_url }
+    :url => lambda { |attachment| attachment.instance._attachment_file_url }
 
   def _attachment_file_url
-    if place == PLACE_OSS
-      "http://storage.aliyun.com/#{OssManager::CONFIG["bucket"]}/:class/:attachment/#{self.id}/:style/:basename.:extension"
-    else
-      "http://dev.file.yinyue.edu/:class/:attachment/#{self.id}/:style/:basename.:extension"
-    end
+    File.join(R::PSUS_ASSET_SITE, "/:class/:attachment/#{self.id}/:style/:basename.:extension")
   end
   
-  def _attachment_file_path
-    "/:class/:attachment/#{self.id}/:style/:basename.:extension"
-  end
-
   # ----------------
 
   def is_video?
@@ -52,11 +42,8 @@ class MediaFile < BuildDatabaseAbstract
   end
   
   def swf_player_url
-    tmps = "#{self.entry.path}.flv".split("/")
-    tmps.shift
-
-    flv_url = File.join("http://dev.file.yinyue.edu",tmps*'/')
-    "http://dev.sns.yinyue.edu/player.swf?type=http&file=#{flv_url}"
+    flv_url = entry.url.gsub(/\?.*/,".flv")
+    "/player.swf?type=http&file=#{flv_url}"
   end
   
   def encode_success?

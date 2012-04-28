@@ -33,7 +33,7 @@
   -@media_files.each do |media_file|
     :ruby
       cover_src = media_file_cover_src media_file
-      title = truncate_u media_file.entry_file_name, 10
+      title = truncate_u media_file.real_file_name, 10
       kind = media_file.content_kind
       id = media_file.id
 
