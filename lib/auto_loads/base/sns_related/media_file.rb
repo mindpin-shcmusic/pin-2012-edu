@@ -51,10 +51,11 @@ class MediaFile < BuildDatabaseAbstract
     :video == self.content_kind
   end
   
-  def swf_player_url
-    tmps = "#{self.file.path}.flv".split("/")
+  def flv_file_url
+    tmps = "#{self.file.path}.flv".split('/')
     tmps.shift
-    "http://dev.file.yinyue.edu/player.swf?type=http&file=#{tmps*"\/"}"
+
+    File.join("http://dev.file.yinyue.edu", tmps*'/')
   end
   
   def encode_success?
