@@ -19,4 +19,5 @@ module EmbedHelper
     ~.html_safe
 
   end
+
 end

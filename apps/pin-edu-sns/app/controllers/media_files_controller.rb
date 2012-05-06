@@ -2,7 +2,8 @@ class MediaFilesController < ApplicationController
   before_filter :login_required,
                 :except => [
                   :create_by_edu, :encode_complete,
-                  :file_merge_complete
+                  :file_merge_complete,
+                  :file_copy_complete
                 ]
 
   # 我的资源
@@ -88,9 +89,23 @@ class MediaFilesController < ApplicationController
 
   def file_merge_complete
     @media_file = MediaFile.find(params[:id])
-    @media_file.file_merged = true
-    @media_file.save
+    @media_file.file_merge_complete(params[:md5])
     render :text=>"success"
+  end
+
+  def file_copy_complete
+    @media_file = MediaFile.find(params[:id])
+    @media_file.file_copy_complete(params[:copy_media_file_id])
+    render :text=>"success"
+  end
+
+  def check_md5
+    media_file = MediaFile.unscoped.order("id asc").where(%`
+        md5 = ? and file_merged = 1 and 
+        (video_encode_status is null or video_encode_status = '' or video_encode_status = ?)
+        `,params[:md5],"SUCCESS").first
+    res = media_file.blank? ? "" : media_file.id.to_s
+    render :text=>res
   end
 
 end

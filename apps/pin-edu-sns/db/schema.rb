@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120428185557) do
+ActiveRecord::Schema.define(:version => 20120504133607) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -121,7 +121,7 @@ ActiveRecord::Schema.define(:version => 20120428185557) do
   create_table "media_files", :force => true do |t|
     t.string   "entry_file_name"
     t.string   "entry_content_type"
-    t.integer  "entry_file_size"
+    t.integer  "entry_file_size",     :limit => 8
     t.datetime "entry_updated_at"
     t.string   "place"
     t.text     "desc"
@@ -132,6 +132,7 @@ ActiveRecord::Schema.define(:version => 20120428185557) do
     t.datetime "updated_at"
     t.boolean  "file_merged"
     t.string   "real_file_name"
+    t.string   "md5"
   end
 
   add_index "media_files", ["category_id"], :name => "index_media_files_on_category_id"

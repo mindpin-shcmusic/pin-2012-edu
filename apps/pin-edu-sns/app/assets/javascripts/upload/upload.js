@@ -9,19 +9,34 @@ pie.load(function(){
     this.NEW_UPLOAD_URL = file_uploader_elm.domdata('new-upload-url');
     this.SEND_BLOB_URL  = file_uploader_elm.domdata('send-blob-url');
     this.CREATOR_ID     = file_uploader_elm.domdata('creator-id');
-    
+    this.MD5_QUERY_URL  = file_uploader_elm.domdata('md5-query-url');
+    this.INFORM_PSU_URL = file_uploader_elm.domdata('inform-psu-url');
+    this.MD5            = '';
+    this.EXISTING_MEDIA_FILE_ID;
+    this.MEDIA_FILE_ID;
+
     this.file = file;
     this.elm  = file_uploader_elm.find('.progress-bar-sample .file').clone();
 
     this.uploaded_byte = 0;
+    this.read_byte = 0;
 
     var _this = this;
 
-    this.show_error = function(){
+    this.show_error = function(msg){
+      msg = msg || '';
       this.elm.addClass('error');
+      this.elm.find('.error-info').append(msg);
     }
 
     this.start_upload = function(){
+      if (this.file.size === 0) {
+        this.show_error('请不要上传0大小文件')
+        return;
+      }
+
+      this.get_md5();
+
       jQuery.ajax({
         url  : this.NEW_UPLOAD_URL,
         type : 'POST',
@@ -31,8 +46,8 @@ pie.load(function(){
           'creator_id' : this.CREATOR_ID
         },
         success : function(res){
-          _this.uploaded_byte = ~~res;
-          _this.upload_blob();
+          _this.uploaded_byte = parseInt(res);
+          _this.inform_or_upload();
         },
         error : function(){
           _this.show_error();
@@ -51,27 +66,42 @@ pie.load(function(){
       return form_data;
     }
 
-    // 上传文件段
-    this.upload_blob = function() {
-      if (this.uploaded_byte >= this.file.size) {
+    this.inform_or_upload = function () {
+      if (this.is_uploading_finished()) {
         pie.log('上传完毕');
 
         this.set_progress('100.00');
         return;
       }
 
+      if (this.EXISTING_MEDIA_FILE_ID) {
+        this.inform_psu_exist();
+      } else {
+        this.upload_blob();
+      }
+    }
+
+    // 上传文件段
+    this.upload_blob = function() {
       var xhr = new XMLHttpRequest;
 
       xhr.open('POST', this.SEND_BLOB_URL, true);
 
       xhr.onload = function(evt) {
+        pie.log('开始上传blob');
         var status = xhr.status;
 
         if (status >= 200 && status < 300 || status === 304) {
           var res = jQuery.string(xhr.responseText).evalJSON();
 
-          _this.uploaded_byte = ~~res.saved_size;
-          _this.upload_blob();
+          _this.uploaded_byte = parseInt(res.saved_size);
+          _this.MEDIA_FILE_ID = res.media_file_id;
+
+          pie.log('比较已上传，文件本身的大小',
+                  _this.uploaded_byte,
+                  _this.file.size,
+                  _this.is_uploading_finished());
+          _this.inform_or_upload();
         } else {
           pie.log('blob上传出错:' + status);
           _this.show_error();
@@ -93,9 +123,116 @@ pie.load(function(){
       xhr.send(this._get_form_data());
     }
 
+    this.get_md5 = function() {
+      var file_reader = new FileReader;
+      var chunks = Math.ceil(file.size / _this.BLOB_SIZE);
+      var spark = new SparkMD5();
+
+      file_reader.onload = function(evt) {
+        spark.appendBinary(evt.target.result);
+
+        if (_this.read_byte < _this.file.size) {
+          next_blob();
+        } else {
+          _this.MD5 = spark.end();
+          pie.log('获得MD5值为: ', _this.MD5);
+
+          _this.elm.find('.md5').text('MD5: ' + _this.MD5);
+
+          _this.query_md5();
+        }
+      }
+
+      file_reader.onprogress = function(evt) {
+        // 增加进度显示
+        var loaded = evt.loaded;
+        var total  = evt.total;
+
+        var read_byte = _this.read_byte + loaded;
+        var file_size = _this.file.size;
+
+        var percent_read = (read_byte * 100 / file_size).toFixed(2);
+
+        percent_read = percent_read >= 100 ? 100 : percent_read;
+
+        _this.elm.find('.md5-percent')
+          .text('(' + percent_read + '%)');
+      }
+
+      var next_blob = function() {
+        file_reader.readAsBinaryString(_this.slice_file(_this.read_byte));
+        _this.read_byte += _this.BLOB_SIZE;
+      }
+
+      next_blob();
+    }
+
+    this.is_uploading_finished = function() {
+      return this.uploaded_byte >= this.file.size
+    }
+
+    this.query_md5 = function() {
+      if (this.MD5) {
+        jQuery.ajax({
+          url  : this.MD5_QUERY_URL,
+          type : 'GET',
+          data : {
+            'md5' : this.MD5
+          },
+          success : function(res){ //返回应该是一个字符串，media_file_id或空
+            // 根据返回来判断是否同md5的media_file已存在
+            // 如果已存在就告知psu服务器inform_psu_exist
+            //
+            // 如果未存在就什么也不作
+            pie.log('query md5 res: ', res);
+            _this.EXISTING_MEDIA_FILE_ID = parseInt(res);
+
+            pie.log('看看有没有existing_mid', _this.EXISTING_MEDIA_FILE_ID)
+            pie.log('url', _this.MD5_QUERY_URL);
+            pie.log('res', res);
+          },
+          error : function(){
+            _this.show_error();
+          }
+        });
+      } else {
+        pie.log('MD5值未算出！');
+      }
+    }
+
+    this.inform_psu_exist = function() {
+      this.set_progress('100.00');
+      jQuery.ajax({
+        url  : this.INFORM_PSU_URL,
+        type : 'POST',
+        data : {
+          'media_file_id' : this.EXISTING_MEDIA_FILE_ID,
+          'file_name'     : this.file.name,
+          'file_size'     : this.file.size,
+          'creator_id'    : this.CREATOR_ID
+        },
+        success : function(res){ //返回应该是一个字符串，新的media_file_id
+          pie.log('inform返回: ', arguments);
+
+          _this.MEDIA_FILE_ID = parseInt(res);
+        },
+        error : function(){
+          _this.show_error();
+        }
+      });
+    }
+
     this.get_blob = function(){
-      File.prototype.mindpin_slice = File.prototype.webkitSlice || File.prototype.mozSlice;
-      return this.file.mindpin_slice(this.uploaded_byte, this.uploaded_byte + this.BLOB_SIZE);
+      return this.slice_file(this.uploaded_byte);
+    }
+
+    this.slice_file = function(start_byte) {
+      File.prototype.mindpin_slice = File.prototype.slice ||
+                                     File.prototype.webkitSlice ||
+                                     File.prototype.mozSlice;
+
+      return this.file.mindpin_slice(start_byte,
+                                     start_byte + this.BLOB_SIZE);
     }
 
     this.get_size_str = function(){

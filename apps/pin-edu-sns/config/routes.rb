@@ -9,16 +9,22 @@ MindpinEduSns::Application.routes.draw do
       get  :new_psu
       post :create_by_edu
       get  :lifei_list
+      get  :check_md5
     end
     member do
       get :lifei_info
       post :encode_complete
       post :file_merge_complete
+      post :file_copy_complete
     end
   end
   
   # --- 用户
   resources :users
+
+  # --- 评论
+  resources :comments,
+            :only => [:create]
   
   # --- 作业
   resources :homeworks do
