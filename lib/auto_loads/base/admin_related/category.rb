@@ -7,6 +7,21 @@ class Category < BuildDatabaseAbstract
 
   default_scope order("created_at ASC")
 
+  def media_file_count
+    self.media_files.count
+  end
+
+  def media_files
+    _ids = self.self_and_descendants.map do |category|
+      category.id
+    end
+    MediaFile.where("category_id in (?)", _ids)
+  end
+
+  def media_files_with_user(user)
+    self.media_files.where("creator_id = ?", user.id)
+  end
+
   def save_as_child_of(parent)
     self.transaction do
       return false unless self.save

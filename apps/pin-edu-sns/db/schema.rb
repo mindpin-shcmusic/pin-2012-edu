@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120504133607) do
+ActiveRecord::Schema.define(:version => 20120509100520) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -133,6 +133,7 @@ ActiveRecord::Schema.define(:version => 20120504133607) do
     t.boolean  "file_merged"
     t.string   "real_file_name"
     t.string   "md5"
+    t.text     "description"
   end
 
   add_index "media_files", ["category_id"], :name => "index_media_files_on_category_id"

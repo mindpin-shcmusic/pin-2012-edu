@@ -10,12 +10,14 @@ MindpinEduSns::Application.routes.draw do
       post :create_by_edu
       get  :lifei_list
       get  :check_md5
+      get  :search
     end
     member do
       get :lifei_info
       post :encode_complete
       post :file_merge_complete
       post :file_copy_complete
+      post :edit_description
     end
   end
   
