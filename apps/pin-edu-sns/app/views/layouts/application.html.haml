@@ -30,12 +30,22 @@
           %a.item.upload{:href=>'/'} 上传资源
           %a.item.mine{:href=>'/media_files/mine', :'data-pjax'=>'.page-content'} 我的资源
           .sp
-          %a.item.video{:href=>'/media_files/mine?kind=video', :'data-pjax'=>'.page-content'} 视频
-          %a.item.audio{:href=>'/media_files/mine?kind=audio', :'data-pjax'=>'.page-content'} 音频
-          %a.item.image{:href=>'/media_files/mine?kind=image', :'data-pjax'=>'.page-content'} 图片
-          %a.item.document{:href=>'/media_files/mine?kind=document', :'data-pjax'=>'.page-content'} 文档
-          %a.item.other{:href=>'/media_files/mine?kind=other', :'data-pjax'=>'.page-content'} 其他
-          .sp
+          .hide
+            %a.item.video{:href=>'/media_files/mine?kind=video', :'data-pjax'=>'.page-content'} 视频
+            %a.item.audio{:href=>'/media_files/mine?kind=audio', :'data-pjax'=>'.page-content'} 音频
+            %a.item.image{:href=>'/media_files/mine?kind=image', :'data-pjax'=>'.page-content'} 图片
+            %a.item.document{:href=>'/media_files/mine?kind=document', :'data-pjax'=>'.page-content'} 文档
+            %a.item.other{:href=>'/media_files/mine?kind=other', :'data-pjax'=>'.page-content'} 其他
+            .sp
+
+          :ruby
+            root_categories = Category.roots
+            
+          -root_categories.each do |category|
+            :ruby
+              filter_url = pin_url_for('sns', "media_files/mine?category_id=#{category.id}")
+
+            %a.item.category{:href=>filter_url, :'data-pjax'=>'.page-content'}=category.name
 
       .page-header
         .settings.hide

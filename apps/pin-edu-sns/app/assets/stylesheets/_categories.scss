@@ -82,10 +82,11 @@ li.naved-alt:hover ul.categories-list.drop-down {
 .page-categories-breadcrumb-bar{
   border-right:solid 1px #bdbdbd;
   border-bottom:solid 1px #bdbdbd;
-  padding:12px;
-  background-color:#DFE8F5;
+  padding:1px;
+  //background-color:#DFE8F5;
+  background-color: #f8f8f8;
 
-  $rc:3px;
+  $rc:2px;
   $parent-color:#090D14;
   $current-color:#5E88CB;
   $children-color:darken($current-color, 30%);
@@ -93,7 +94,6 @@ li.naved-alt:hover ul.categories-list.drop-down {
 
   .breadcrumb-categories{
     overflow:hidden;
-    border-bottom:solid 4px $current-color;
     position:relative;
     //padding-bottom:6px;
 
@@ -112,8 +112,9 @@ li.naved-alt:hover ul.categories-list.drop-down {
       color:white;
       background-color:$parent-color;
       padding:0 12px;
-      margin:0 11px 0 0;
+      margin:0 10px 0 0;
       position:relative;
+      font-size:14px;
 
       &:before{
         content:"";
@@ -159,7 +160,7 @@ li.naved-alt:hover ul.categories-list.drop-down {
       }
 
       &.home{
-        @include border-radius($rc 0 0 0);
+        @include border-radius($rc 0 0 $rc);
         &:hover{
           background-color:$hover-color;
           text-decoration:none;
@@ -169,34 +170,15 @@ li.naved-alt:hover ul.categories-list.drop-down {
 
       &:last-child{
         &:before{display:none;}
-        @include border-radius(0 $rc 0 0);
+        @include border-radius(0 $rc $rc 0);
 
         $bgc:$current-color;
         background-color:$bgc;
         .arr:before{border-color:$bgc $bgc transparent transparent;}
         .arr:after{border-color:transparent $bgc $bgc transparent;}
 
-        &.home{@include border-radius($rc $rc 0 0);}
+        &.home{@include border-radius($rc $rc $rc $rc);}
       }
-    }
-  }
-  .next-level-categories{
-    overflow:hidden;
-    .category{
-      float:left;
-      height:32px;line-height:32px;
-      @include border-radius(0 0 $rc $rc);
-      color:white;
-      background-color:$children-color;
-      padding:0 12px;
-      margin:0 2px 0 0;
-
-      &:hover{
-        background-color:$hover-color;
-        text-decoration:none;
-        &:before{border-color:transparent transparent transparent $hover-color;}
-      }
-
     }
   }
 }

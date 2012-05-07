@@ -361,9 +361,9 @@ body {
           -moz-border-radius: 2px;
           -webkit-border-radius: 2px;
           border-radius: 2px;
-          padding: 3px;
-          border: dashed 1px #bdbdbd;
-          background-color: rgba(255, 255, 255, 0.6); }
+          border: solid 2px white;
+          background-color: rgba(255, 255, 255, 0.6);
+          box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2); }
           body .page-container .page-nav .user-info .avatar img {
             width: 96px;
             height: 96px;
@@ -401,6 +401,8 @@ body {
           -webkit-border-radius: 3px;
           border-radius: 3px;
           background-color: rgba(255, 102, 0, 0.04); }
+        body .page-container .page-nav .items a.item.category {
+          font-weight: normal; }
     body .page-container .page-header {
       background-color: #ececec;
       border-right: solid 1px #bdbdbd;
@@ -1681,11 +1683,10 @@ li.naved-alt:hover ul.categories-list.drop-down {
 .page-categories-breadcrumb-bar {
   border-right: solid 1px #bdbdbd;
   border-bottom: solid 1px #bdbdbd;
-  padding: 12px;
-  background-color: #DFE8F5; }
+  padding: 1px;
+  background-color: #f8f8f8; }
   .page-categories-breadcrumb-bar .breadcrumb-categories {
     overflow: hidden;
-    border-bottom: solid 4px #5e88cb;
     position: relative; }
     .page-categories-breadcrumb-bar .breadcrumb-categories .category {
       float: left;
@@ -1694,8 +1695,9 @@ li.naved-alt:hover ul.categories-list.drop-down {
       color: white;
       background-color: #090d14;
       padding: 0 12px;
-      margin: 0 11px 0 0;
-      position: relative; }
+      margin: 0 10px 0 0;
+      position: relative;
+      font-size: 14px; }
       .page-categories-breadcrumb-bar .breadcrumb-categories .category:before {
         content: "";
         display: block;
@@ -1734,18 +1736,18 @@ li.naved-alt:hover ul.categories-list.drop-down {
         .page-categories-breadcrumb-bar .breadcrumb-categories .category:hover .arr:after {
           border-color: transparent #85a4d7 #85a4d7 transparent; }
       .page-categories-breadcrumb-bar .breadcrumb-categories .category.home {
-        -moz-border-radius: 3px 0 0 0;
-        -webkit-border-radius: 3px 0 0 0;
-        border-radius: 3px 0 0 0; }
+        -moz-border-radius: 2px 0 0 2px;
+        -webkit-border-radius: 2px 0 0 2px;
+        border-radius: 2px 0 0 2px; }
         .page-categories-breadcrumb-bar .breadcrumb-categories .category.home:hover {
           background-color: #85a4d7;
           text-decoration: none; }
           .page-categories-breadcrumb-bar .breadcrumb-categories .category.home:hover:before {
             border-color: transparent transparent transparent #85a4d7; }
       .page-categories-breadcrumb-bar .breadcrumb-categories .category:last-child {
-        -moz-border-radius: 0 3px 0 0;
-        -webkit-border-radius: 0 3px 0 0;
-        border-radius: 0 3px 0 0;
+        -moz-border-radius: 0 2px 2px 0;
+        -webkit-border-radius: 0 2px 2px 0;
+        border-radius: 0 2px 2px 0;
         background-color: #5e88cb; }
         .page-categories-breadcrumb-bar .breadcrumb-categories .category:last-child:before {
           display: none; }
@@ -1754,24 +1756,6 @@ li.naved-alt:hover ul.categories-list.drop-down {
         .page-categories-breadcrumb-bar .breadcrumb-categories .category:last-child .arr:after {
           border-color: transparent #5e88cb #5e88cb transparent; }
         .page-categories-breadcrumb-bar .breadcrumb-categories .category:last-child.home {
-          -moz-border-radius: 3px 3px 0 0;
-          -webkit-border-radius: 3px 3px 0 0;
-          border-radius: 3px 3px 0 0; }
-  .page-categories-breadcrumb-bar .next-level-categories {
-    overflow: hidden; }
-    .page-categories-breadcrumb-bar .next-level-categories .category {
-      float: left;
-      height: 32px;
-      line-height: 32px;
-      -moz-border-radius: 0 0 3px 3px;
-      -webkit-border-radius: 0 0 3px 3px;
-      border-radius: 0 0 3px 3px;
-      color: white;
-      background-color: #23406d;
-      padding: 0 12px;
-      margin: 0 2px 0 0; }
-      .page-categories-breadcrumb-bar .next-level-categories .category:hover {
-        background-color: #85a4d7;
-        text-decoration: none; }
-        .page-categories-breadcrumb-bar .next-level-categories .category:hover:before {
-          border-color: transparent transparent transparent #85a4d7; }
+          -moz-border-radius: 2px 2px 2px 2px;
+          -webkit-border-radius: 2px 2px 2px 2px;
+          border-radius: 2px 2px 2px 2px; }
