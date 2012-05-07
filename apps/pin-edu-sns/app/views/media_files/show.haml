@@ -16,18 +16,8 @@
     });
 
 
-.page-media-file-comments
-  - @media_file.comments.each do |comment|
-    .media-file-comment{:data => {:creator_id => "#{comment.creator_id}", :comment_id => "#{comment.id}"}, :id => "#{comment.id}"}
-      .comment-creator=comment.creator.name + ':'
-      - if comment.reply_comment_id
-        %a.comment-reply-to{:href => "##{comment.reply_comment_id}"} 回复评论#{comment.reply_comment_id}道
-      .comment-content=comment.content
-      %a.comment-reply{:href => '#'} 回复
-
-
 .page-media-file-comment-form
-  =form_for @media_file.comments.build,:url => '/comments' do |f|
+  =form_for Comment.new do |f|
     =f.label '内容'
     =f.text_area :content
     =f.hidden_field :creator_id, :value => current_user.id
@@ -36,6 +26,16 @@
     =f.hidden_field :reply_comment_id, :value => ''
     =f.hidden_field :reply_comment_user_id, :value => ''
     =f.submit '评论'
+
+
+.page-media-file-comments
+  - @media_file.comments.each do |comment|
+    .media-file-comment{:data => {:creator_id => "#{comment.creator_id}", :comment_id => "#{comment.id}"}, :id => "comment-#{comment.id}"}
+      .comment-creator=comment.creator.name + ':'
+      - if comment.reply_comment_id
+        %a.comment-reply-to{:href => "#comment-#{comment.reply_comment_id}"} 回复评论#{comment.reply_comment_id}道
+      .comment-content=comment.content
+      %a.comment-reply{:href => '#'} 回复
 
 
 - content_for :javascript do
@@ -51,4 +51,4 @@
       jQuery('#comment_reply_comment_user_id').attr('value', creator_id);
 
       jQuery('#comment_content').focus();
-    })
+    });

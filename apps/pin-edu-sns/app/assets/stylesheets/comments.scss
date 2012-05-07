@@ -1,0 +1,24 @@
+.page-media-file-comments {
+  overflow:auto;
+  height:600px;
+  width:280px;
+  position:absolute;
+  top:240px;
+  right:0px;
+
+  .media-file-comment {
+    width:280px;
+    padding:4px;
+  }
+
+  .media-file-comment-form {
+    label, input, textarea {
+      display:block;
+      margin:8px 0;
+    }
+
+    textarea {
+      height:40px;
+    }
+  }
+}

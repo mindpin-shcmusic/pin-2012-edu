@@ -117,4 +117,15 @@ class MediaFilesController < ApplicationController
     render :text=>res
   end
 
+  def edit_description
+    @media_file = MediaFile.find(params[:id])
+    @media_file.description = params[:description]
+    @media_file.save
+    render :text=>"success"
+  end
+
+  def search
+    @media_file = MediaFile.find(569.upto(602).to_a)
+  end
+
 end

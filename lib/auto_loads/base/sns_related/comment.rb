@@ -27,6 +27,8 @@ class Comment < BuildDatabaseAbstract
   before_validation :set_reply_comment_user_id,
                     :on => :create
 
+  default_scope order('created_at desc')
+
   def set_reply_comment_user_id
     if !self.reply_comment_id.blank?
       self.reply_comment_user_id = reply_comment.creator_id
