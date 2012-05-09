@@ -40,6 +40,10 @@ class MediaFile < BuildDatabaseAbstract
   def is_video?
     :video == self.content_kind
   end
+
+  def is_audio?
+    :audio == self.content_kind
+  end
   
   def flv_file_url
     entry.url.gsub(/\?.*/,".flv")
@@ -47,6 +51,20 @@ class MediaFile < BuildDatabaseAbstract
   
   def encode_success?
     SUCCESS == self.video_encode_status
+  end
+
+  def file_merge_complete(md5)
+    self.file_merged = true
+    self.md5 = md5
+    self.save
+  end
+
+  def file_copy_complete(copy_media_file_id)
+    copy_media_file = MediaFile.find(copy_media_file_id)
+    self.md5 = copy_media_file.md5
+    self.file_merged = true
+    self.video_encode_status = copy_media_file.video_encode_status
+    self.save
   end
   
   CONTENT_TYPES = {

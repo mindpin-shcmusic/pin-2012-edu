@@ -3,8 +3,10 @@
 
   new_upload_url = File.join(R::PSUS_UPLOAD_SITE, '/new_upload')
   send_blob_url  = File.join(R::PSUS_UPLOAD_SITE, '/upload_blob')
+  md5_query_url  = '/media_files/check_md5'
+  inform_psu_url = File.join(R::PSUS_UPLOAD_SITE, '/copy_media_file')
 
-.page-media-file-uploader{:'data-creator-id'=>creator_id, :'data-new-upload-url'=>new_upload_url, :'data-send-blob-url'=>send_blob_url}
+.page-media-file-uploader{:'data-creator-id'=>creator_id, :'data-new-upload-url'=>new_upload_url, :'data-send-blob-url'=>send_blob_url, :'data-md5-query-url' => md5_query_url, :'data-inform-psu-url' => inform_psu_url}
   .upload-drop-area
     .upload-btn-box
       %a.upload-btn{:href=>'javascript:;'} 打开文件
@@ -19,6 +21,9 @@
       .meta
         .name on_your_mark.rmvb
         .size (65.5MB)
+        .md5  MD5: 计算中……
+        .md5-percent 16%
+
       .bar
         .percent 26.8%
         .p{:style=>'width:26.8%;'}
@@ -30,10 +35,11 @@
           %span.t 剩余时间:
           %span.data 00:32:32
       .error-info
-        文件上传出错
+        文件上传出错 
       .ops.running.hide
         %a.pause{:href=>'javascript:;', :title=>'暂停上传'} 暂停
         %a.start{:href=>'javascript:;', :title=>'开始上传'} 运行
         %a.close{:href=>'javascript:;', :title=>'取消上传'} 关闭
 
   .uploading-files-list
+

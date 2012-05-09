@@ -5,8 +5,16 @@
     .file-size 文件分类：#{@media_file.category.name}  
 -if @media_file.is_video?
   .video-encode-status 转换状态：#{@media_file.video_encode_status}
--if @media_file.encode_success?
-  =raw video_tag @media_file
+  -if @media_file.encode_success?
+    =raw video_tag @media_file
+-elsif @media_file.is_audio? && @media_file.file_merged
+  =javascript_include_tag "/audiojs/audio.min.js"
+  %audio{:src=>@media_file.entry.url,:preload=>"auto"}
+  :javascript
+    audiojs.events.ready(function() {
+      audiojs.createAll();
+    });
+
 
 .page-media-file-comments
   - @media_file.comments.each do |comment|

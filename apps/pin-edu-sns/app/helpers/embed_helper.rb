@@ -14,4 +14,5 @@ module EmbedHelper
       :wmode            => 'opaque'
     }
   end
+
 end
