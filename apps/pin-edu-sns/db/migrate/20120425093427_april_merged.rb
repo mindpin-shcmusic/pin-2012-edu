@@ -41,7 +41,7 @@ class AprilMerged < ActiveRecord::Migration
     create_table "media_files", :force => true do |t|
       t.string   "file_file_name"
       t.string   "file_content_type"
-      t.integer  "file_file_size"
+      t.integer  "file_file_size", :limit=>8
       t.datetime "file_updated_at"
       t.string   "uuid"
       t.string   "place"
