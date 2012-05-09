@@ -1,44 +1,39 @@
 -htitle '我的资源'
 
-:ruby
-  current_category = @current_category
-
-  home_url = pin_url_for('sns', 'media_files/mine')
-
-  breadcrumb_categories = current_category.blank? ? [] : current_category.ancestors + [current_category]
-  next_level_categories = current_category.blank? ? Category.roots : current_category.children
-
-
-.page-categories-breadcrumb-bar.mine
-
-  .breadcrumb-categories
-    %a.category.home{:href=>'javascript:;', :'data-url'=>home_url}
-      .name HOME 
-    -breadcrumb_categories.each do |category|
-      :ruby
-        filter_url = "#{home_url}?category_id=#{category.id}"
-      %a.category{:href=>'javascript:;', :'data-url'=>filter_url}
-        .arr
-        .name=category.name
-        
-  .next-level-categories
-    -next_level_categories.each do |category|
-      :ruby
-        filter_url = "#{home_url}?category_id=#{category.id}"
-      %a.category{:href=>'javascript:;', :'data-url'=>filter_url}
-        .name=category.name
-
+=render 'mine_breadcrumb_bar', :current_category=>@current_category
 
 .page-media-files.mine
   -@media_files.each do |media_file|
     :ruby
       cover_src = media_file_cover_src media_file
-      title = truncate_u media_file.file_file_name, 10
+      title = truncate_u media_file.real_file_name, 10
       kind = media_file.content_kind
       id = media_file.id
+      creator_name = media_file.creator.name
+      creator_avatar_src = media_file.creator.logo.url
+      uploaded_at = media_file.created_at
 
-    %a.media-file{:href=>'javascript:;', :'data-kind'=>kind, :'data-id'=>id}
+    %a.media-file{:href=>'javascript:;', :'data-kind'=>kind, :'data-id'=>id, |
+      :'data-title'=>title, |
+      :'data-uploaded-at'=>uploaded_at, |
+      :'data-creator-name'=>creator_name, |
+      :'data-creator-avatar-src'=>creator_avatar_src}
       .meta-box
         .cover{:'data-src'=>cover_src}
         .title=title
       .detail-box
+
+.page-media-file-show-wrapper{:style=>'display:none;'}
+  .box
+    .header
+      .hbox
+        .avatar
+        .title
+        .meta
+          %span.creator-name
+          %span 上传于
+          %span.uploaded-at
+
+      %a.close{:href=>'javascript:;'}
+    .bd
+      .cover

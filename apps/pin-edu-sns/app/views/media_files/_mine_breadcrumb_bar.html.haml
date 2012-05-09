@@ -1,0 +1,23 @@
+:ruby
+  home_url = pin_url_for('sns', 'media_files/mine')
+
+  breadcrumb_categories = current_category.blank? ? [] : current_category.ancestors + [current_category]
+  next_level_categories = current_category.blank? ? Category.roots : current_category.children
+
+.page-categories-breadcrumb-bar.mine
+  .breadcrumb-categories
+    %a.category.home{:href=>'javascript:;', :'data-url'=>home_url}
+      .name HOME 
+    -breadcrumb_categories.each do |category|
+      :ruby
+        filter_url = "#{home_url}?category_id=#{category.id}"
+      %a.category{:href=>'javascript:;', :'data-url'=>filter_url}
+        .arr
+        .name=category.name
+        
+  .next-level-categories
+    -next_level_categories.each do |category|
+      :ruby
+        filter_url = "#{home_url}?category_id=#{category.id}"
+      %a.category{:href=>'javascript:;', :'data-url'=>filter_url}
+        .name=category.name

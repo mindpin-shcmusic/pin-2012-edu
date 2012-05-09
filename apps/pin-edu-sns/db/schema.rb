@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120426193152) do
+ActiveRecord::Schema.define(:version => 20120428185557) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -119,10 +119,10 @@ ActiveRecord::Schema.define(:version => 20120426193152) do
   add_index "homeworks", ["creator_id"], :name => "index_homeworks_on_creator_id"
 
   create_table "media_files", :force => true do |t|
-    t.string   "file_file_name"
-    t.string   "file_content_type"
-    t.integer  "file_file_size"
-    t.datetime "file_updated_at"
+    t.string   "entry_file_name"
+    t.string   "entry_content_type"
+    t.integer  "entry_file_size"
+    t.datetime "entry_updated_at"
     t.string   "place"
     t.text     "desc"
     t.integer  "creator_id"
@@ -131,6 +131,7 @@ ActiveRecord::Schema.define(:version => 20120426193152) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "file_merged"
+    t.string   "real_file_name"
   end
 
   add_index "media_files", ["category_id"], :name => "index_media_files_on_category_id"

@@ -15,6 +15,8 @@ pie.load(function(){
 
     this.uploaded_byte = 0;
 
+    this.last_refreshed_time = null;
+
     var _this = this;
 
     this.show_error = function(){
@@ -56,21 +58,21 @@ pie.load(function(){
       if (this.uploaded_byte >= this.file.size) {
         pie.log('上传完毕');
 
-        this.set_progress('100.00');
+        this.set_progress(100);
         return;
       }
 
+      this.last_refreshed_time = new Date();
+
       var xhr = new XMLHttpRequest;
-
       xhr.open('POST', this.SEND_BLOB_URL, true);
-
       xhr.onload = function(evt) {
         var status = xhr.status;
 
         if (status >= 200 && status < 300 || status === 304) {
           var res = jQuery.string(xhr.responseText).evalJSON();
 
-          _this.uploaded_byte = ~~res.saved_size;
+          _this.uploaded_byte = parseInt(res.saved_size); // 数字会很大，不能用 ~~ 方法
           _this.upload_blob();
         } else {
           pie.log('blob上传出错:' + status);
@@ -85,9 +87,17 @@ pie.load(function(){
         var uploaded_byte = _this.uploaded_byte + loaded;
         var file_size     = _this.file.size
 
+        // 计算上传百分比
         var percent_uploaded = (uploaded_byte * 100 / file_size).toFixed(2);
-
         _this.set_progress(percent_uploaded);
+
+        // 计算上传速度
+        var new_time = new Date();
+        var time_delta = new_time - _this.last_refreshed_time;
+        var size_delta = loaded;
+
+        _this.last_refreshed_time = new_time;
+        _this.set_speed(size_delta / time_delta);
       }
 
       xhr.send(this._get_form_data());
@@ -105,6 +115,9 @@ pie.load(function(){
     }
 
     this.set_progress = function(percent){
+      //var p = parseFloat(percent);
+      //if(p > 100) p = 100;
+
       this.elm
         .find('.bar .percent')
           .html(percent + ' %')
@@ -115,9 +128,11 @@ pie.load(function(){
     }
 
     this.set_speed = function(speed){
+      var s = parseFloat(speed).toFixed(2);
+
       this.elm
         .find('.speed .data')
-          .html( speed + 'KB/s')
+          .html( s + 'KB/s')
         .end()
         .find('.remaining-time .data')
           .html( '--:--:--' )

@@ -13,7 +13,7 @@ class MediaFile < BuildDatabaseAbstract
   default_scope order("created_at DESC")
   
   validates :place, :presence => true, :inclusion => [PLACE_OSS,PLACE_EDU]
-  validates :creator,:file_file_name, :presence => true
+  validates :creator,:entry_file_name, :presence => true
 
   validate  :category_should_be_leafy_or_nil
   def category_should_be_leafy_or_nil
@@ -24,27 +24,17 @@ class MediaFile < BuildDatabaseAbstract
 
   # -----------------------  
 
-  has_attached_file :file,
+  has_attached_file :entry,
     :styles => {
       :large => '460x340#',
       :small => '220x140#'
     },
-    :storage =>  :oss,
-    :path => lambda { |attachment| attachment.instance._attachment_file_path },
-    :url  => lambda { |attachment| attachment.instance._attachment_file_url }
+    :url => lambda { |attachment| attachment.instance._attachment_file_url }
 
   def _attachment_file_url
-    if place == PLACE_OSS
-      "http://storage.aliyun.com/#{OssManager::CONFIG["bucket"]}/:class/:attachment/#{self.id}/:style/:basename.:extension"
-    else
-      "http://dev.file.yinyue.edu/:class/:attachment/#{self.id}/:style/:basename.:extension"
-    end
+    File.join(R::PSUS_ASSET_SITE, "/:class/:attachment/#{self.id}/:style/:basename.:extension")
   end
   
-  def _attachment_file_path
-    "/:class/:attachment/#{self.id}/:style/:basename.:extension"
-  end
-
   # ----------------
 
   def is_video?
@@ -52,10 +42,7 @@ class MediaFile < BuildDatabaseAbstract
   end
   
   def flv_file_url
-    tmps = "#{self.file.path}.flv".split('/')
-    tmps.shift
-
-    File.join("http://dev.file.yinyue.edu", tmps*'/')
+    entry.url.gsub(/\?.*/,".flv")
   end
   
   def encode_success?
@@ -67,7 +54,7 @@ class MediaFile < BuildDatabaseAbstract
         'avi', 'rm',  'rmvb', 'mp4', 
         'ogv', 'm4v', 'flv', 'mpeg',
         '3gp'
-      ].map{|x| file_content_type(x)}.uniq,
+      ].map{|x| file_content_type(x)}.uniq - ['application/octet-stream'],
     :audio    => [
         'mp3', 'wma', 'm4a',  'wav', 
         'ogg'
@@ -82,7 +69,7 @@ class MediaFile < BuildDatabaseAbstract
   }
 
   def content_kind
-    case self.file_content_type
+    case self.entry_content_type
     when *CONTENT_TYPES[:video]
       :video
     when *CONTENT_TYPES[:audio]
@@ -105,7 +92,7 @@ class MediaFile < BuildDatabaseAbstract
       count = types.length
       condition_str = ['?']*count*','
 
-      return where("file_content_type IN (#{condition_str})", *types)
+      return where("entry_content_type IN (#{condition_str})", *types)
     end
 
     if :other == kind.to_sym
@@ -117,7 +104,7 @@ class MediaFile < BuildDatabaseAbstract
       count = all.length
       condition_str = ['?']*count*','
 
-      return where("file_content_type NOT IN (#{condition_str})", *all)
+      return where("entry_content_type NOT IN (#{condition_str})", *all)
     end
   }
 
@@ -127,4 +114,6 @@ class MediaFile < BuildDatabaseAbstract
       base.has_many :media_files, :foreign_key => :creator_id
     end
   end
+
+  include Comment::CommentableMethods
 end

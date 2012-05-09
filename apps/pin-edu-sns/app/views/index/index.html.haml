@@ -1,7 +1,8 @@
 :ruby
   creator_id = current_user.id
-  new_upload_url = 'http://192.168.1.28/new_upload'
-  send_blob_url  = 'http://192.168.1.28/upload_blob'
+
+  new_upload_url = File.join(R::PSUS_UPLOAD_SITE, '/new_upload')
+  send_blob_url  = File.join(R::PSUS_UPLOAD_SITE, '/upload_blob')
 
 .page-media-file-uploader{:'data-creator-id'=>creator_id, :'data-new-upload-url'=>new_upload_url, :'data-send-blob-url'=>send_blob_url}
   .upload-drop-area
@@ -30,5 +31,9 @@
           %span.data 00:32:32
       .error-info
         文件上传出错
+      .ops.running.hide
+        %a.pause{:href=>'javascript:;', :title=>'暂停上传'} 暂停
+        %a.start{:href=>'javascript:;', :title=>'开始上传'} 运行
+        %a.close{:href=>'javascript:;', :title=>'取消上传'} 关闭
 
   .uploading-files-list

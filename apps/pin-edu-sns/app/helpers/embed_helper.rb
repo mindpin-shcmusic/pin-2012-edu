@@ -13,18 +13,5 @@ module EmbedHelper
       :type             => 'application/x-shockwave-flash',
       :wmode            => 'opaque'
     }
-
-# <embed
-#   flashvars="file=/data/bbb.mp4&autostart=true"
-#   allowfullscreen="true"
-#   allowscripaccess="always"
-#   id="player1"
-#   name="player1"
-#   src="player.swf"
-#   width="480"
-#   height="270"
-# />
-
-
   end
 end

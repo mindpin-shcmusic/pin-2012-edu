@@ -69,9 +69,10 @@
 
   .uploading-files-list, .progress-bar-sample{
     .file{
-      padding:12px 24px;
+      padding:12px 84px 12px 24px;
       border-bottom:solid 1px #bdbdbd;
       border-right:solid 1px #bdbdbd;
+      position:relative;
       @include numfont;
       @include transition(all ease-in .2s);
 
@@ -115,13 +116,12 @@
       }
       .bar{
         height:16px;
-        @include border-radius(5px);
+        @include border-radius(3px);
         //@include gradient(rgba(black, 0.3), rgba(black, 0.2));
         background-color:#bbb;
         position:relative;
         margin-bottom:4px;
         overflow:hidden;
-        padding:2px;
         box-shadow:0 0 2px rgba(black, 0.6) inset;
 
         .percent{
@@ -140,14 +140,12 @@
           $c2 : lighten(#1071D1, 10%);
 
           @include gradient($c1, $c2);
-          @include border-radius(4px);
           box-shadow:0 0 2px rgba(black, 0.6) inset;
           &:before{
             content:"";
             display:block;
             height:8px;
             @include gradient(rgba(white, 0.2), rgba(white, 0.1));
-            @include border-radius(4px);
           }
         }
       }
@@ -159,6 +157,93 @@
       }
       .error-info{
         display:none;
+      }
+      .ops{
+        position:absolute;
+        top:33px;right:24px;
+        overflow:hidden;
+
+        &.running{
+          a.pause{display:block;}
+          a.start{display:none;}
+        }
+
+        &.pause{
+          a.pause{display:none;}
+          a.start{display:block;}
+        }
+
+        a{
+          float:left;
+          width:24px;height:24px;
+          @include border-radius(2px);
+          //margin-right:3px;
+          overflow:hidden;
+          border:solid 1px transparent;
+          line-height:20em;
+          position:relative;
+          //background-color:#fff;
+
+          &:hover{
+            border:1px solid #ADADAD;
+            @include gradient(white, #F3F3F3);
+          }
+
+          &.pause{
+            &:before{
+              content:"";
+              height:14px;width:3px;
+              @include border-radius(4px);
+              background-color:#666;
+              position:absolute;
+              top:5px;left:7px;
+              //box-shadow:0 0 1px black inset;
+            }
+            &:after{
+              content:"";
+              height:14px;width:3px;
+              @include border-radius(4px);
+              background-color:#666;
+              position:absolute;
+              top:5px;right:7px;
+              //box-shadow:0 0 1px black inset;
+            }
+          }
+
+          &.start{
+            &:before{
+              content:"";
+              border-top:solid 7px transparent;
+              border-left:solid 12px #666;
+              border-right:solid 12px transparent;
+              border-bottom:solid 7px transparent;
+              position:absolute;
+              top:5px;left:6px;
+            }
+          }
+
+          &.close{
+            &:before{
+              content:"";
+              height:17px;width:3px;
+              //@include border-radius(2px);
+              background-color:#666;
+              position:absolute;
+              top:4px;left:11px;
+              @include transform(rotate(45deg));
+            }
+            &:after{
+              content:"";
+              height:17px;width:3px;
+              //@include border-radius(2px);
+              background-color:#666;
+              position:absolute;
+              top:4px;left:11px;
+              @include transform(rotate(-45deg));
+            }
+          }
+
+        }
       }
     }
   }

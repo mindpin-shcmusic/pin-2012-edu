@@ -1,5 +1,9 @@
 class MediaFilesController < ApplicationController
-  before_filter :login_required, :except => [:create_by_edu, :encode_complete, :file_merge_complete]
+  before_filter :login_required,
+                :except => [
+                  :create_by_edu, :encode_complete,
+                  :file_merge_complete
+                ]
 
   # 我的资源
   def mine
@@ -29,7 +33,12 @@ class MediaFilesController < ApplicationController
   end
   
   def create
-    @media_file = MediaFile.create(:category_id=>nil,:file=>params[:files],:place=>MediaFile::PLACE_OSS,:creator=>current_user)
+    @media_file = MediaFile.create(
+      :category_id => nil,
+      :file        => params[:files],
+      :place       => MediaFile::PLACE_OSS,
+      :creator     => current_user
+    )
     redirect_to @media_file
   rescue ActiveRecord::RecordInvalid => e
     respond_to do |format|
@@ -41,6 +50,10 @@ class MediaFilesController < ApplicationController
 
   def show
     @media_file = MediaFile.find(params[:id])
+    if request.xhr?
+      render :partial=>'show_box', :locals=>{ :media_file => @media_file }
+      return
+    end
   end
 
   def update
@@ -55,13 +68,14 @@ class MediaFilesController < ApplicationController
   def create_by_edu
     video_encode_status = params[:video_encode_status]||""
     @media_file = MediaFile.new(
-      :file_file_name=>params[:name],
-      :file_content_type=>params[:type],
-      :file_file_size=>params[:size],
-      :file_updated_at=>Time.now,
-      :place=>MediaFile::PLACE_EDU,
-      :video_encode_status=>video_encode_status,
-      :creator_id=>params[:creator_id])
+      :entry_file_name     => params[:entry_file_name],
+      :real_file_name      => params[:real_file_name],
+      :entry_content_type  => params[:entry_content_type],
+      :entry_file_size     => params[:entry_file_size],
+      :entry_updated_at    => Time.now,
+      :place               => MediaFile::PLACE_EDU,
+      :video_encode_status => video_encode_status,
+      :creator_id          => params[:creator_id])
       
     if @media_file.save
 #      return render :text=>pin_url_for("sns","/media_files/#{@media_file.id}")
