@@ -21,8 +21,10 @@ def match_account_routes
 end
 
 MindpinEduSns::Application.routes.draw do
-  # ---------------- 首页和欢迎页面 ---------
-  root :to => 'sessions#new'
-  match_auth_routes
-  match_account_routes
+  scope $APP_RELATIVE_ROOT do
+    # ---------------- 首页和欢迎页面 ---------
+    root :to => 'sessions#new'
+    match_auth_routes
+    match_account_routes
+  end
 end

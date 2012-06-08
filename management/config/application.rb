@@ -13,6 +13,8 @@ if defined?(Bundler)
   # Bundler.require(:default, :assets, Rails.env)
 end
 
+$APP_RELATIVE_ROOT = '/management'
+
 module MindpinEduSns
   class Application < Rails::Application
     config.encoding = "utf-8"
@@ -22,5 +24,8 @@ module MindpinEduSns
 
     config.autoload_paths += Dir["#{Rails.root}/lib/**/"]
     config.time_zone = 'UTC'
+
+    config.assets.prefix = File.join($APP_RELATIVE_ROOT, 'assets')
+    # http://edgeguides.rubyonrails.org/configuring.html#configuring-assets
   end
 end

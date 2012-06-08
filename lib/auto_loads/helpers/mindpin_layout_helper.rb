@@ -17,5 +17,10 @@ module MindpinLayoutHelper
     end
     re*''
   end
+
+  def path_for(path)
+    route_base_scope = $APP_RELATIVE_ROOT
+    File.join(route_base_scope, path)
+  end
   
 end

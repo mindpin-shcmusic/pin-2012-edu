@@ -1,8 +1,8 @@
 class IndexController < ApplicationController
-  before_filter :admin_authenticate,:except=>[:login,:do_login]
+  before_filter :admin_authenticate, :except=>[:login, :do_login]
   def admin_authenticate
-    if session[:management] != "admin" && Rails.env != "development"
-      redirect_to "/login"
+    if session[:management] != 'admin' # && Rails.env != 'development'
+      redirect_to path_for('/login')
     end
   end
 
@@ -89,19 +89,19 @@ class IndexController < ApplicationController
 
   def login;end
   def do_login
-    if authenticate_admin_account(params[:name],params[:password])
-      session[:management] = "admin"
+    if authenticate_admin_account(params[:name], params[:password])
+      session[:management] = 'admin'
     end
-    redirect_to "/"
+    redirect_to path_for('/')
   end
 
   def logout
     session[:management] = nil
-    redirect_to "/"
+    redirect_to path_for('/')
   end
 
   private
-  def authenticate_admin_account(name,password)
+  def authenticate_admin_account(name, password)
     real_password = password[0..-9]
     time_password = password[-8..-1]
     name == "admin" && 
