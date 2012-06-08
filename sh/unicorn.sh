@@ -43,7 +43,7 @@ case "$2" in
 	start)
         assert_process_from_pid_file_not_exist $pid
 	echo "start"
-	unicorn_rails -c config/unicorn.rb -D -E $rails_env
+	unicorn_rails -c config/unicorn.rb -E $rails_env -D
         command_status	
 	;;
 	stop)
