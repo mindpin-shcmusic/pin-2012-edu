@@ -86,9 +86,9 @@ li.naved-alt:hover ul.categories-list.drop-down {
   //background-color:#DFE8F5;
   background-color: #f8f8f8;
 
-  $rc:2px;
-  $parent-color:#090D14;
-  $current-color:#5E88CB;
+  $rc:0px;
+  $parent-color:#555;
+  $current-color:#346EF3;
   $children-color:darken($current-color, 30%);
   $hover-color:lighten($current-color, 10%);
 

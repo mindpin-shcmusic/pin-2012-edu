@@ -5,12 +5,12 @@
 
 .page-categories-breadcrumb-bar.mine
   .breadcrumb-categories
-    %a.category.home{:href=>'javascript:;', :'data-url'=>home_url}
-      .name 全部资源
+    %a.category.home{:href=>home_url}
+      .name 我的全部资源
     -breadcrumb_categories.each do |category|
       :ruby
         filter_url = "#{home_url}?category_id=#{category.id}"
 
-      %a.category{:href=>'javascript:;', :'data-url'=>filter_url}
+      %a.category{:href=>filter_url}
         .arr
         .name=category.name

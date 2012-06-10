@@ -40,20 +40,20 @@ pie.load(function(){
     })
   });
 
-  jQuery('.next-level-categories a.category').live('click', function(){
-    var url = jQuery(this).domdata('url');
+  // jQuery('.next-level-categories a.category').live('click', function(){
+  //   var url = jQuery(this).domdata('url');
 
-    jQuery.ajax({
-      url : url,
-      beforeSend: function(xhr){
-        xhr.setRequestHeader('X-PJAX', 'true')
-      },
-      success : function(data){
-        jQuery('.page-content').html(data);
-        history.pushState(null, jQuery(data).filter('title').text(), url);
-      }
-    })
-  });
+  //   jQuery.ajax({
+  //     url : url,
+  //     beforeSend: function(xhr){
+  //       xhr.setRequestHeader('X-PJAX', 'true')
+  //     },
+  //     success : function(data){
+  //       jQuery('.page-content').html(data);
+  //       history.pushState(null, jQuery(data).filter('title').text(), url);
+  //     }
+  //   })
+  // });
 
 })
 

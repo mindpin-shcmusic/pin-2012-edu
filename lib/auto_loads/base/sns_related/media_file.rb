@@ -10,7 +10,7 @@ class MediaFile < BuildDatabaseAbstract
   belongs_to :category
   belongs_to :creator, :class_name=>"User", :foreign_key=>"creator_id"
 
-  default_scope order("created_at DESC")
+  default_scope order("id DESC")
   
   validates :place, :presence => true, :inclusion => [PLACE_OSS,PLACE_EDU]
   validates :creator,:entry_file_name, :presence => true
@@ -43,6 +43,10 @@ class MediaFile < BuildDatabaseAbstract
 
   def is_audio?
     :audio == self.content_kind
+  end
+
+  def is_image?
+    :image == self.content_kind
   end
   
   def flv_file_url

@@ -1,7 +1,8 @@
 class MediaFilesController < ApplicationController
   before_filter :login_required,
                 :except => [
-                  :create_by_edu, :encode_complete,
+                  :create_by_edu, 
+                  :encode_complete,
                   :file_merge_complete,
                   :file_copy_complete
                 ]
@@ -12,7 +13,11 @@ class MediaFilesController < ApplicationController
     category_id = params[:category_id]
     @current_category = category_id.blank? ? nil : Category.find(category_id)
 
-    @media_files = current_user.media_files.with_kind(@kind).paginate(:per_page=>50, :page=>1)
+    @media_files = (category_id.blank? ? MediaFile.all : @current_category.media_files).paginate(:per_page=>100, :page=>1)
+
+    if @kind
+      @media_files = MediaFile.with_kind(@kind)
+    end
 
     if request.headers['X-PJAX']
       render :layout => false
@@ -125,7 +130,8 @@ class MediaFilesController < ApplicationController
   end
 
   def search
-    @media_file = MediaFile.find(569.upto(602).to_a)
+    @media_files = MediaFile.find(569.upto(602).to_a)
+    render :mine
   end
 
 end

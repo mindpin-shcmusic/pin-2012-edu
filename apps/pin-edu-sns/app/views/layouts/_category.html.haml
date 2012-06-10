@@ -1,0 +1,11 @@
+:ruby
+  children = category.children
+  filter_url = pin_url_for('sns', "media_files/mine?category_id=#{category.id}")
+  klass = (category == @current_category) ? 'current' : ''
+
+.category{:'data-id'=>category.id}
+  %a.item{:href=>filter_url, :class=>klass}
+    ="#{category.name} (#{category.media_file_count})"
+  .children
+    -category.children.each do |child|
+      =render 'layouts/category', :category=>child

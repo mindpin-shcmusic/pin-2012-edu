@@ -123,6 +123,11 @@ body{
       }
 
       .items{
+        position:absolute;
+        top:177px - 6px;bottom:0;
+        left:0;right:0;
+        overflow-y:scroll;
+
         a.item{
           display:block;
           margin:0 12px;
@@ -130,15 +135,29 @@ body{
           font-size:12px;font-weight:bold;
           height:20px;line-height:20px;
           color:#333;
-          @include transition(all ease-in .2s);
+          @include border-radius(3px);
+
+          @include transition(all ease-in .1s);
           &:hover{
-            color:#f60;
-            @include border-radius(3px);
-            background-color:rgba(#f60, 0.04); 
+            color:#346EF3;
+            background-color:rgba(#346EF3, 0.1); 
           }
 
-          &.category{
+        }
+
+        .category{
+          a.item{
             font-weight:normal;
+            &.current{
+              background-color:#346EF3;
+              color:white;
+            }
+          }
+          .children{
+            a.item{padding-left:36px;}
+            .children{
+              a.item{padding-left:60px;}
+            }
           }
         }
       }

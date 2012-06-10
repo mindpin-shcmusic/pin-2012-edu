@@ -51,13 +51,13 @@ class SettingController <  ApplicationController
     
     @temp_image_size = adpater.temp_image_size
     @temp_image_url  = adpater.temp_image_url
+
+    render :template => 'setting/crop_avatar'
   rescue Exception => ex
     p ex.message
     puts ex.backtrace * '\n'
-    flash[:error] = '头像上传失败'
-    return redirect_to :action => :avatar
-  ensure
-    render :template => 'setting/crop_avatar'
+    flash[:error] = ex.to_json
+    redirect_to :action => :avatar
   end
   
   # 修改头像 - 裁切原始头像并保存到云
@@ -67,7 +67,7 @@ class SettingController <  ApplicationController
   rescue Exception => ex
     p ex.message
     puts ex.backtrace * '\n'
-    flash[:error] = '头像裁剪失败'
+    flash[:error] = ex
     return redirect_to :action => :avatar
   end
   

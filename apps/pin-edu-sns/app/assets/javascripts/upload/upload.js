@@ -36,7 +36,8 @@ pie.load(function(){
         return;
       }
 
-      this.get_md5();
+      //this.get_md5(); 演示时先注掉了
+      this.last_refreshed_time = new Date();
 
       jQuery.ajax({
         url  : this.NEW_UPLOAD_URL,
@@ -123,10 +124,15 @@ pie.load(function(){
         // 计算上传速度
         var new_time = new Date();
         var time_delta = new_time - _this.last_refreshed_time;
-        var size_delta = loaded;
 
-        _this.last_refreshed_time = new_time;
-        _this.set_speed(size_delta / time_delta);
+        //pie.log(new_time, 2, _this.last_refreshed_time)
+
+        if(time_delta > 500){
+          var size_delta = loaded;
+
+          _this.last_refreshed_time = new_time;
+          _this.set_speed(size_delta / time_delta);
+        }
       }
 
       xhr.send(this._get_form_data());
@@ -212,7 +218,7 @@ pie.load(function(){
     this.set_speed = function(speed){
       this.elm
         .find('.speed .data')
-          .html( speed + 'KB/s')
+          .html( speed.toFixed(2) + 'KB/s')
         .end()
         .find('.remaining-time .data')
           .html( '--:--:--' )

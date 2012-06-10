@@ -1,11 +1,14 @@
-worker_processes  8;
+# === CPU分配和基本事件处理 ===
+worker_processes 8;
 worker_cpu_affinity 00000001 00000010 00000100 00001000 00010000 00100000 01000000 10000000;
 worker_rlimit_nofile 204800;
 
 events {
   use epoll;
-  worker_connections  204800;
+  worker_connections 204800;
 }
+
+# === HTTP基本参数 ===
 
 http {
   include      mime.types;
@@ -16,7 +19,7 @@ http {
   server_names_hash_bucket_size 128;
   client_header_buffer_size     2k;
   large_client_header_buffers   4 4k;
-  client_max_body_size          8m; # 最大允许上传尺寸
+  client_max_body_size          8m; # 单次请求数据最大允许上传尺寸
 
   sendfile          on;
   tcp_nopush        on;
@@ -32,14 +35,13 @@ http {
   gzip_types        text/plain application/x-javascript text/css application/xml;
 
 
+  ##############################################
+  ##############################################
+  ######## 具体服务配置从这里开始 ##############
+  ##############################################
+  ##############################################
 
-  ##############################################
-  ##############################################
-  ######## 配置从这里开始 ######################
-  ##############################################
-  ##############################################
-
-  # MINDPIN PROJECTS
+  # === UNICORN Servers
   upstream shcmusic-pin-auth-server {
     server unix:/web/2012/sockets/unicorn-pin-auth.sock fail_timeout=0;
   }
@@ -49,15 +51,16 @@ http {
   upstream shcmusic-pin-edu-sns-server {
     server unix:/web/2012/sockets/unicorn-pin-edu-sns.sock fail_timeout=0;
   }
-  # MANAGEMENT PROJECT
+
+  # === Management Server
   upstream shcmusic-management-server {
     server unix:/web/2012/sockets/unicorn-management.sock fail_timeout=0;
   }
 
-  # pin-auth
+  # === 登陆验证服务，pin-auth
   server {
     listen 80;
-    server_name auth.shcmusic.mindpin.com;
+    server_name dev.auth.yinyue.edu;
     root /web/2012/pin-2012-edu/apps/pin-auth/public;
 
     location / {
@@ -77,10 +80,10 @@ http {
     }
   }
 
-  # pin-admin
+  # === 后台管理服务，pin-admin
   server {
     listen 80;
-    server_name admin.shcmusic.mindpin.com;
+    server_name dev.admin.yinyue.edu;
     root /web/2012/pin-2012-edu/apps/pin-admin/public;
 
     location / {
@@ -99,10 +102,11 @@ http {
       }
     }
   }
-  # pin-edu-sns
+
+  # === 主WEB服务，pin-edu-sns
   server {
     listen 80;
-    server_name sns.shcmusic.mindpin.com;
+    server_name dev.sns.yinyue.edu;
     root /web/2012/pin-2012-edu/apps/pin-edu-sns/public;
 
     location / {
@@ -123,10 +127,10 @@ http {
   }
 
 
-  # management 
+  # === 服务管理WEB界面，management 
   server {
     listen 80;
-    server_name management.shcmusic.mindpin.com;
+    server_name dev.management.yinyue.edu;
     root /web/2012/pin-2012-edu/management/public;
 
     location / {
@@ -146,27 +150,27 @@ http {
     }
   }
 
-  # 公共UI
-  server {
-    listen 80;
-    server_name ui.shcmusic.mindpin.com;
-    location / {
-      root /web/2012/;
-      if ($request_uri ~* "\.(ico|css|js|gif|jpg|jpeg|png)\?[0-9A-Za-z]+$") {
-        expires max;
-        break;
-      }
-    }
-
-    # 用户头像上传临时文件
-    location /upload_user_avatar_tempfile {
-      root /web/2012;
-    }
-  }
+  # # 公共UI
+  # server {
+  #   listen 80;
+  #   server_name ui.shcmusic.mindpin.com;
+  #   location / {
+  #     root /web/2012/;
+  #     if ($request_uri ~* "\.(ico|css|js|gif|jpg|jpeg|png)\?[0-9A-Za-z]+$") {
+  #       expires max;
+  #       break;
+  #     }
+  #   }
+  #
+  #   # 用户头像上传临时文件
+  #   location /upload_user_avatar_tempfile {
+  #     root /web/2012;
+  #   }
+  # }
 
   ##############################################
   ##############################################
-  ######## 配置从这里结束 ######################
+  ######## 具体服务配置到这里结束 ##############
   ##############################################
   ##############################################
 

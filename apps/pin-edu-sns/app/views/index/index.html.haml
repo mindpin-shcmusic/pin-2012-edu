@@ -21,8 +21,9 @@
       .meta
         .name on_your_mark.rmvb
         .size (65.5MB)
-        .md5  MD5: 计算中……
-        .md5-percent 16%
+        .hide
+          .md5  MD5: 计算中……
+          .md5-percent 16%
 
       .bar
         .percent 26.8%
@@ -36,7 +37,7 @@
           %span.data 00:32:32
       .error-info
         文件上传出错 
-      .ops.running.hide
+      .ops.running
         %a.pause{:href=>'javascript:;', :title=>'暂停上传'} 暂停
         %a.start{:href=>'javascript:;', :title=>'开始上传'} 运行
         %a.close{:href=>'javascript:;', :title=>'取消上传'} 关闭

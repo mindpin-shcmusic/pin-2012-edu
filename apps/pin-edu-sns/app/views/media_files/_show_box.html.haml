@@ -12,14 +12,20 @@
 .cover
   -if media_file.is_video? && media_file.encode_success?
     =video_tag media_file
-  -elsif @media_file.is_audio? && @media_file.file_merged
-    %audio{:src=>@media_file.entry.url,:preload=>"auto"}
-    :javascript
-      audiojs.events.ready(function() {
-        audiojs.createAll();
-      });
+  -elsif media_file.is_audio? && media_file.file_merged
+    %embed{:src=>media_file.entry.url, :width=>'640px', :height=>'400px'}
+  -elsif media_file.is_image?
+    %img{:src=>media_file.entry.url(:large), :width=>'640px', :height=>'400px'}
 
-.page-media-file-comments
+-if media_file.is_video? && media_file.encode_success?
+  .screenshots
+    -1.upto 6 do |i|
+      -arr = media_file.entry.url.split('original')
+      -arr.pop
+      -src = arr.push("/screenshot_#{i}.jpg").join('original')
+      %img{:src=>src}
+
+.page-media-file-comments.hide
 
   .media-file-comment-form
     =form_for Comment.new do |f|
