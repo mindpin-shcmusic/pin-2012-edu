@@ -37,7 +37,7 @@
           = link_to notifications_path,
                     :class => 'item' do
             通知
-            .notification-unread-count{:style => "#{Notification.any_unread?(current_user) ? nil : 'display:none;'}"}= Notification.unread(current_user).count
+            .notification-unread-count{:style => display_notification_notifier} notification_count(current_user)
 
           .sp
           %a.item.upload{:href=>'/'} 上传资源
@@ -76,6 +76,13 @@
       .page-content
         = yield
 
-    .notification-notifier{:style => "#{Notification.any_unread?(current_user) ? nil : 'display:none;'}"} 未读通知 #{Notification.unread(current_user).count}条
+    .notifier{:style => display_notifier}
+      .notification-notifier{:style => display_notification_notifier, :'data-count' => notification_count(current_user)}
+        .content #{notification_count(current_user)}条未读通知
+      .message-notifier{:style => display_message_notifier, :'data-count' => message_count(current_user)}
+        .content #{message_count(current_user)}条提示消息
+        = link_to '查看',
+                  UserTipMessage.url(current_user),
+                  :class => 'link'
     = javascript_include_tag :application, 'http://192.168.1.19:8080/application.js'
     = yield :javascript
