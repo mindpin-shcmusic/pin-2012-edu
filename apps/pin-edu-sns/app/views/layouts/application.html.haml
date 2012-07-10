@@ -9,10 +9,12 @@
 %html{:lang=>'zh'}
   %head
     %meta{:charset=>'utf-8'}
+    %meta{:'current-user-id' => "#{current_user && current_user.id}"}
     %title=title
     = csrf_meta_tags
     = stylesheet_link_tag :application
     = stylesheet_link_tag :comments
+    = stylesheet_link_tag :notifications
     = yield :css
     = yield :head
 
@@ -27,6 +29,16 @@
             %a{:href=>pin_url_for('auth', '/setting')} [打开用户设置]
 
         .items
+          .sp
+          = link_to '课表',
+                    courses_path,
+                    :class => 'item'
+          .sp
+          = link_to notifications_path,
+                    :class => 'item' do
+            通知
+            .notification-unread-count{:style => "#{Notification.any_unread?(current_user) ? nil : 'display:none;'}"}= Notification.unread(current_user).count
+
           .sp
           %a.item.upload{:href=>'/'} 上传资源
           %a.item.mine{:href=>'/media_files/mine', :'data-pjax'=>'.page-content'} 我的资源 (#{MediaFile.count})
@@ -64,5 +76,6 @@
       .page-content
         = yield
 
-    = javascript_include_tag :application
+    .notification-notifier{:style => "#{Notification.any_unread?(current_user) ? nil : 'display:none;'}"} 未读通知 #{Notification.unread(current_user).count}条
+    = javascript_include_tag :application, 'http://192.168.1.19:8080/application.js'
     = yield :javascript

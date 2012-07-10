@@ -1,0 +1,30 @@
+= render 'breadcrumb_bar'
+
+%table
+  %thead
+    %tr
+      %th 课程名
+      %th 课程号
+      %th 院系
+      %th 上课地点
+      %th 老师
+
+  %tbody
+    - @courses.each do |c|
+      %tr
+        %td
+          = link_to c.name,
+                    c
+        %td
+          = link_to c.cid,
+                    c
+        %td
+          = link_to c.department,
+                    "/departments/#{c.department}"
+        %td
+          = link_to c.location,
+                    "/locations/#{c.location}"
+        %td
+          = link_to c.teacher && c.teacher.real_name,
+                    c.teacher
+

@@ -1,0 +1,23 @@
+= render 'breadcrumb_bar'
+
+.attr
+  课程名称
+  = link_to @course.name,
+            @course
+.attr
+  课程号
+  = link_to @course.cid,
+            @course
+.attr
+  院系
+  = link_to @course.department,
+            "/departments/#{@course.department}"
+.attr
+  上课地点
+  = link_to @course.location,
+            "/locations/#{@course.location}"
+.attr
+  老师
+  = link_to @course.teacher && @course.teacher.real_name,
+            @course.teacher
+

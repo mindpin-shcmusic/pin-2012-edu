@@ -1,0 +1,11 @@
+.page-categories-breadcrumb-bar.mine
+  .breadcrumb-categories
+    = link_to courses_path,
+              :class => 'category home' do
+      .name 全部课程
+
+    - if @course
+      = link_to @course,
+                :class => 'category' do
+        .arr
+        .name= @course.name

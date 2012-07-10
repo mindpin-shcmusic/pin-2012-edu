@@ -42,5 +42,17 @@ MindpinEduSns::Application.routes.draw do
   # 老师查看某一学生作业路由
   get 'homeworks/:homework_id/student/:user_id' => 'homeworks#student'
 
+
   resources :homeworks, :student
+
+  resources :courses, :teachers
+  resources :notifications do
+    collection do
+      post :read_all
+    end
+
+    member do
+      put :read
+    end
+  end
 end

@@ -10,4 +10,6 @@ class User < BuildDatabaseAbstract
   include HomeworkStudentUpload::UserMethods
   # --- 媒体文件
   include MediaFile::UserMethods
+  # --- 通知
+  include Notification::UserMethods
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120509100520) do
+ActiveRecord::Schema.define(:version => 20120709064946) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -138,6 +138,14 @@ ActiveRecord::Schema.define(:version => 20120509100520) do
 
   add_index "media_files", ["category_id"], :name => "index_media_files_on_category_id"
   add_index "media_files", ["creator_id"], :name => "index_media_files_on_creator_id"
+
+  create_table "notifications", :force => true do |t|
+    t.text     "content"
+    t.integer  "receiver_id"
+    t.boolean  "read",        :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "online_records", :force => true do |t|
     t.integer  "user_id"

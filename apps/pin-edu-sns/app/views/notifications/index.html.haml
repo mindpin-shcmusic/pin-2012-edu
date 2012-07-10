@@ -1,0 +1,28 @@
+%h1 全部通知
+= link_to '全部标记为已读',
+          read_all_notifications_path,
+          :method => :post,
+          :remote => true
+
+.notifications
+  .notification.empty{:style => 'display:none;'}
+    .content
+    .time 时间 
+    = link_to notifications_path + '/',
+              :class  => 'remove',
+              :method => :delete,
+              :remote => true  do
+      删除
+
+
+  - @notifications.each do |notification|
+    .notification{:class => "#{notification.read ? 'read' : nil}"}
+      .content= notification.content
+      .time 时间 #{notification.created_at}
+      = link_to notification,
+                :class  => 'remove',
+                :method => :delete,
+                :remote => true  do
+        删除
+
+= will_paginate @notifications
