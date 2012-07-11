@@ -37,7 +37,7 @@
           = link_to notifications_path,
                     :class => 'item' do
             通知
-            .notification-unread-count{:style => display_notification_notifier} notification_count(current_user)
+            .notification-unread-count{:style => display_notification_notifier}= notification_count(current_user)
 
           .sp
           %a.item.upload{:href=>'/'} 上传资源

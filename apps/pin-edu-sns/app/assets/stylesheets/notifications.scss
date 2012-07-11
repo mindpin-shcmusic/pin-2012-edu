@@ -1,12 +1,13 @@
 .notification-unread-count {
-  width:28px;
+  border-radius:4px;
   height:8px;
-  padding:8px 0;
+  width:16px;
+  padding:8px 4px;
   line-height:10px;
   position:relative;
   text-align:center;
   left:160px;
-  top:-20px;
+  top:-22px;
   background-color:red;
   color:white;
 }

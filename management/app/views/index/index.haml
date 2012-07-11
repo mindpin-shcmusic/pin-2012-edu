@@ -26,5 +26,6 @@
   %tbody
     %tr=render :partial=>'index/parts/server_stat', :locals=>{:server_name=>'redis_service'}
     %tr=render :partial=>'index/parts/server_stat', :locals=>{:server_name=>'resque_web_service'}
+    %tr=render :partial=>'index/parts/server_stat', :locals=>{:server_name=>'juggernaut_service'}
 
 =link_to '退出登录', path_for('/logout')
