@@ -79,10 +79,10 @@
     .notifier{:style => display_notifier}
       .notification-notifier{:style => display_notification_notifier, :'data-count' => notification_count(current_user)}
         .content #{notification_count(current_user)}条未读通知
-      .message-notifier{:style => display_message_notifier, :'data-count' => message_count(current_user)}
-        .content #{message_count(current_user)}条提示消息
+      .comment-message-notifier{:style => display_comment_message_notifier, :'data-count' => comment_message_count(current_user)}
+        .content #{comment_message_count(current_user)}条未读评论
         = link_to '查看',
-                  UserTipMessage.url(current_user),
+                  UserCommentTipMessage.url(current_user),
                   :class => 'link'
     = javascript_include_tag :application, 'http://192.168.1.19:8080/application.js'
     = yield :javascript

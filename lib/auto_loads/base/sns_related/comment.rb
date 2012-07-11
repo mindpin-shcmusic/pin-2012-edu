@@ -1,4 +1,6 @@
 class Comment < BuildDatabaseAbstract
+  after_create :notify_user
+
   belongs_to :model,
              :polymorphic => true
 
@@ -42,4 +44,13 @@ class Comment < BuildDatabaseAbstract
     end
   end
   
+  def notify_user
+    receiver = self.model.creator
+    UserCommentTipMessage.create(receiver, self.content)
+
+    reply_receiver = self.reply_user
+    if reply_receiver && (reply_receiver != receiver)
+      UserCommentTipMessage.create(reply_receiver, self.content)
+    end
+  end
 end

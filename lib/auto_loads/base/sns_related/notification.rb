@@ -31,7 +31,7 @@ class Notification < ActiveRecord::Base
 
   def self.notify_count(user)
     Juggernaut.publish "notification-count-user-#{user.id}",
-                       {:notifications => self.unread(user).count}
+                       {:count => self.unread(user).count}
   end
 
   def self.notify_read_all(user)

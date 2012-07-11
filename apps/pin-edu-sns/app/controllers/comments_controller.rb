@@ -6,4 +6,9 @@ class CommentsController < ApplicationController
     @comment.save
     redirect_to MediaFile.find(@comment.model_id)
   end
+
+  def inbox
+    @comment_messages = UserCommentTipMessage.all(current_user)
+    UserCommentTipMessage.clear(current_user)
+  end
 end

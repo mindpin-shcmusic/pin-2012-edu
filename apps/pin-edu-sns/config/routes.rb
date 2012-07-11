@@ -26,7 +26,12 @@ MindpinEduSns::Application.routes.draw do
 
   # --- 评论
   resources :comments,
-            :only => [:create]
+            :only => [:create] do
+
+    collection do
+      get :inbox
+    end
+  end
   
   # --- 作业
   resources :homeworks do

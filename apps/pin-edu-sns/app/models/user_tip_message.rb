@@ -1,16 +1,20 @@
 class UserTipMessage < RedisTip
   class << self
-    def send(user, message_str)
-      instance.lpush message_list_name(user), message_str
+    def create(user, message_str)
+      instance.lpush key(user), message_str
       notify_count(user)
     end
 
+    def all(user)
+      instance.lrange key(user), 0, -1
+    end
+
     def count(user)
-      instance.llen message_list_name(user)
+      instance.llen key(user)
     end
 
     def clear(user)
-      instance.del message_list_name(user)
+      instance.del key(user)
       notify_count(user)
     end
 
@@ -18,14 +22,18 @@ class UserTipMessage < RedisTip
       "/users/#{user.id}/message_list"
     end
 
-    private
+    protected
 
     def notify_count(user)
-      Juggernaut.publish "message-count-user-#{user.id}",
-                         {:messages => count(user)}
+      Juggernaut.publish channel(user),
+                         {:count => count(user)}
     end
 
-    def message_list_name(user)
+    def channel(user)
+      "message-count-user-#{user.id}"
+    end
+
+    def key(user)
       "utm:#{user.id}"
     end
   end
