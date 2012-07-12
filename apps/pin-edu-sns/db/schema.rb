@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120709064946) do
+ActiveRecord::Schema.define(:version => 20120711091629) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -156,6 +156,17 @@ ActiveRecord::Schema.define(:version => 20120709064946) do
 
   add_index "online_records", ["key"], :name => "index_online_records_on_key"
   add_index "online_records", ["user_id"], :name => "index_online_records_on_user_id"
+
+  create_table "short_messages", :force => true do |t|
+    t.integer  "sender_id"
+    t.integer  "receiver_id"
+    t.text     "content"
+    t.boolean  "receiver_read", :default => false
+    t.boolean  "sender_hide",   :default => false
+    t.boolean  "receiver_hide", :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "students", :force => true do |t|
     t.string   "real_name",  :default => "", :null => false

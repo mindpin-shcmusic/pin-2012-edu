@@ -33,6 +33,13 @@ MindpinEduSns::Application.routes.draw do
     end
   end
   
+  resources :short_messages do
+    collection do
+      get :inbox
+      get :outbox
+    end
+  end
+
   # --- 作业
   resources :homeworks do
     collection do

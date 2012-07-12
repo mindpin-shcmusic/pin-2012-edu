@@ -34,6 +34,10 @@
                     courses_path,
                     :class => 'item'
           .sp
+          = link_to '站内信',
+                    inbox_short_messages_path,
+                    :class => 'item'
+          .sp
           = link_to notifications_path,
                     :class => 'item' do
             通知
@@ -84,5 +88,5 @@
         = link_to '查看',
                   UserCommentTipMessage.url(current_user),
                   :class => 'link'
-    = javascript_include_tag :application, 'http://192.168.1.19:8080/application.js'
+    = javascript_include_tag 'http://192.168.1.19:8080/application.js', :application
     = yield :javascript

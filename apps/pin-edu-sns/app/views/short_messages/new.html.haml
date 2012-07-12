@@ -1,0 +1,10 @@
+%h1 站内信
+
+= form_for @message do |f|
+  = f.label :receiver_id, '选择收件人'
+  = f.select :receiver_id,
+             options_from_collection_for_select(User.all, 'id', 'name', :selected => @message.receiver_id)
+
+  = f.label :content, '内容'
+  = f.text_area :content
+  = f.submit

@@ -11,4 +11,5 @@
 //= require ./util/jquery.pie.domdata
 //= require ./util/pie.image_in_box
 //= require ./util/form
+//= require notifiers
 //= require_tree .

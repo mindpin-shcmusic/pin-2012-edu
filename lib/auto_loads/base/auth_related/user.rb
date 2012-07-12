@@ -12,4 +12,6 @@ class User < BuildDatabaseAbstract
   include MediaFile::UserMethods
   # --- 通知
   include Notification::UserMethods
+  # --- 站内信
+  include ShortMessage::UserMethods
 end
