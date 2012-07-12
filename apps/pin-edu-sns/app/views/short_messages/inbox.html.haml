@@ -2,7 +2,28 @@
 = link_to '发件箱', outbox_short_messages_path
 = link_to '写站内信', new_short_message_path
 
-%ul
+%ul.short-messages
+  %li.short-message.empty
+    .content
+    = link_to nil,
+              users_path,
+              :class => 'sender'
+
+    = link_to '回复',
+              new_short_message_path,
+              :class => 'reply'
+
+    = link_to '标记已读',
+              short_messages_path,
+              :method => :put,
+              :remote => true,
+              :class  => 'read'
+
+    = link_to '删除',
+              short_messages_path
+              :method => :delete,
+              :class  => 'remove'
+
   - @messages.each do |message|
     %li.short-message
       .content= message.content
@@ -16,8 +37,10 @@
       = link_to '标记已读',
                 read_short_message_path(message, :sender => false),
                 :method => :put,
-                :remote => true
+                :remote => true,
+                :class  => 'read'
 
       = link_to '删除',
                 short_message_path(message, :sender => false),
-                :method => :delete
+                :method => :delete,
+                :class  => 'remove'

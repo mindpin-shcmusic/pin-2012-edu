@@ -13,7 +13,6 @@ $ ->
   comment_message_notifier.subscribe jug, "comment-message-count-user-#{USER_ID}"
 
   jug.subscribe "notification-read-all-user-#{USER_ID}", (data)->
-    console.log data
     $('.notifications .notification').addClass 'read'
 
   jug.subscribe "incoming-notification-user-#{USER_ID}", (data)->

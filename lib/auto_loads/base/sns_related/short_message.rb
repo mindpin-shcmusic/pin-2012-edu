@@ -36,6 +36,7 @@ class ShortMessage < ActiveRecord::Base
     self.update_attribute :sender_hide, true
     self.class.notify_count(sender)
   end
+
   def self.any_unread?(user)
     self.unread(user).any? ? true : false
   end
