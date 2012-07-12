@@ -1,17 +1,6 @@
-class Notify
-  def after_create(record)
-    record.class.notify_count(record.receiver)
-    record.publish(record.receiver)
-  end
-
-  def after_destroy(record)
-    record.class.notify_count(record.receiver)
-  end
-end
-
 class Notification < ActiveRecord::Base
-  after_create  ::Notify.new
-  after_destroy ::Notify.new
+  after_create  Notify.new
+  after_destroy Notify.new
 
   belongs_to :receiver,
              :class_name  => 'User',

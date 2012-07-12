@@ -34,6 +34,10 @@ MindpinEduSns::Application.routes.draw do
   end
   
   resources :short_messages do
+    member do
+      put :read
+    end
+
     collection do
       get :inbox
       get :outbox

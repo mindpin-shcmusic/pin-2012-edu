@@ -71,6 +71,10 @@ $ ->
     update_text: ->
       @$content.text "#{this.get_count()}条未读通知"
 
+  class ShortMessageNotifier extends Notifier
+    update_text: ->
+      @$content.text "#{this.get_count()}条未读站内信"
+
   class Subscriber
     constructor: (@juggernaut, @channel, @notifier)->
       subscribe @juggernaut, @channel, @notifier
@@ -91,11 +95,15 @@ $ ->
           console.log '>>>>', notifier.get_count()
           notifier.hide_container() #需要确保在所有notifier以及counter的count都set后再运行...
 
+  USER_ID = $('meta[current-user-id]').attr 'current-user-id'
+
   names =
     Counter               : Counter
     Notifier              : Notifier
     NotificationNotifier  : NotificationNotifier
     CommentMessageNotifier: CommentMessageNotifier
+    ShortMessageNotifier  : ShortMessageNotifier
     Subscriber            : Subscriber
+    USER_ID               : USER_ID
 
   jQuery.extend window, names

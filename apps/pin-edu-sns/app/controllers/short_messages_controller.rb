@@ -24,7 +24,9 @@ class ShortMessagesController < ApplicationController
 
   def read
     @message = ShortMessage.find params[:id]
-    @message.update_attribute :receiver_read, true
+    @message.read!
+
+    render :text => 'ok'
   end
 
   def destroy
@@ -32,11 +34,11 @@ class ShortMessagesController < ApplicationController
 
     case params[:sender]
     when 'true'
-      @message.update_attribute :sender_hide, true
+      @message.sender_hide!
+      redirect_to :action => :outbox
     when 'false'
-      @message.update_attribute :receiver_hide, true
+      @message.receiver_hide!
+      redirect_to :action => :inbox
     end
-
-    redirect_to :action => :inbox
   end
 end

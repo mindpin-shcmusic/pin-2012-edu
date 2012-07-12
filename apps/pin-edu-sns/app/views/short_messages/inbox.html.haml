@@ -1,4 +1,5 @@
 %h1 收件箱
+= link_to '发件箱', outbox_short_messages_path
 = link_to '写站内信', new_short_message_path
 
 %ul
@@ -11,6 +12,11 @@
 
       = link_to '回复',
                 new_short_message_path(:receiver_id => message.sender.id)
+
+      = link_to '标记已读',
+                read_short_message_path(message, :sender => false),
+                :method => :put,
+                :remote => true
 
       = link_to '删除',
                 short_message_path(message, :sender => false),

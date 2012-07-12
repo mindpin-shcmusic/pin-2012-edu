@@ -1,0 +1,15 @@
+%h1 发件箱
+= link_to '收件箱', inbox_short_messages_path
+= link_to '写站内信', new_short_message_path
+
+%ul
+  - @messages.each do |message|
+    %li.short-message
+      .content= message.content
+      = link_to message.receiver.name,
+                message.receiver,
+                :class => 'sender'
+
+      = link_to '删除',
+                short_message_path(message, :sender => true),
+                :method => :delete

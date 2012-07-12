@@ -2,10 +2,17 @@ module ApplicationHelper
   include MindpinHelperBase
 
   def display_notifier
-    if any_notifiction? || any_comment_message?
+    if any_notifiction?     ||
+       any_comment_message? ||
+       any_short_message?
+
       return
     end
     'display:none;'
+  end
+
+  def display_short_message_notifier
+    display any_short_message?
   end
 
   def display_notification_notifier
@@ -20,6 +27,10 @@ module ApplicationHelper
     Notification.unread(user).count
   end
 
+  def short_message_count(user)
+    ShortMessage.unread(user).count
+  end
+
   def comment_message_count(user)
     UserCommentTipMessage.count(user)
   end
@@ -31,6 +42,10 @@ module ApplicationHelper
       return
     end
     'display:none;'
+  end
+
+  def any_short_message?
+    ShortMessage.any_unread?(current_user)
   end
 
   def any_comment_message?
