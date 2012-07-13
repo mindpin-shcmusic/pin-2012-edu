@@ -1,0 +1,10 @@
+=form_tag "/admin/teams/#{@team.id}/set_students",:method=>:put do |f|
+  -student_ids = @team.student_ids
+  -Student.all.each do |student|
+    %span
+      =check_box_tag("student_ids[]",student.id,student_ids.include?(student.id))
+      %label=student.real_name
+  %div
+    =submit_tag "确定"
+  
+		

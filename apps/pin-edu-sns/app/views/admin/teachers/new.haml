@@ -1,0 +1,13 @@
+.page-title 创建教师
+
+.page-admin-form
+  =flash[:error]
+  =form_for [:admin,@teacher] do |t|
+    .field
+      %label 真实姓名
+      =t.text_field :real_name
+    .field
+      %label 教师编号
+      =t.text_field :tid
+    .field
+      %a.form-submit-button{:href=>'javascript:;'} 确定创建

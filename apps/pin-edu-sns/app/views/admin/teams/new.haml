@@ -1,0 +1,19 @@
+.page-title 创建班级
+
+.page-admin-form
+  =flash[:error]
+  =form_for [:admin,@team] do |f|
+    .field
+      %label 名字
+      =f.text_field :name
+    .field
+      %label 班级号
+      =f.text_field :cid
+    .field
+      %label 教师
+      =f.select(:teacher_id,Teacher.all.map{|teacher|[teacher.real_name,teacher.id]}.unshift(["不指定",""]))
+      =link_to "新建教师","/admin/teachers/new"
+    .field
+      %a.form-submit-button{:href=>'javascript:;'} 确定创建
+    
+		
