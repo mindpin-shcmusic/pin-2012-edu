@@ -26,7 +26,7 @@
           .avatar=avatar_link current_user, :medium
           .name=userlink current_user
           .setting
-            %a{:href=>pin_url_for('auth', '/setting')} [打开用户设置]
+            %a{:href=>'/auth/setting'} [打开用户设置]
 
         .items
           .sp
@@ -71,13 +71,13 @@
         .settings.hide
           %a.setting{:href=>'javascript:;'} 设置
           %ul.items
-            %li=link_to '设置基本信息', pin_url_for('auth', '/setting')
-            %li=link_to '设置头像', pin_url_for('auth', '/setting/avatar')
-            %li=link_to '退出登录', pin_url_for('auth', '/logout')
+            %li=link_to '设置基本信息', pin_url_for('auth', '/auth/setting')
+            %li=link_to '设置头像', pin_url_for('auth', '/auth/setting/avatar')
+            %li=link_to '退出登录', pin_url_for('auth', '/auth/logout')
 
         .user
           .current-user 欢迎你，#{current_user.name}
-          %a.logout{:href=>pin_url_for('auth', '/logout'), :title=>'退出登录'} 退出登录
+          %a.logout{:href=>'/auth/logout', :title=>'退出登录'} 退出登录
 
       .page-content
         = yield

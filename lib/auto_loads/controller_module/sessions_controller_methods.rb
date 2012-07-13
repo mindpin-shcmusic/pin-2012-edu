@@ -2,7 +2,7 @@ module SessionsControllerMethods
   # 登录
   def new
     return redirect_back_or_default(pin_url_for('sns')) if logged_in?
-    return render :template=>'index/login'
+    return render :template=>'auth/index/login'
   end
   
   def create
@@ -40,7 +40,7 @@ module SessionsControllerMethods
       destroy_online_record(user)
     end
     
-    return redirect_to "/login"
+    return redirect_to "/auth/login"
   end
   
 end
