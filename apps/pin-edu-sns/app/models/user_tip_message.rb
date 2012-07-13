@@ -1,4 +1,6 @@
 class UserTipMessage < RedisTip
+  include Notifying
+
   class << self
     def create(user, message_str)
       instance.lpush key(user), message_str
@@ -22,16 +24,11 @@ class UserTipMessage < RedisTip
       "/users/#{user.id}/message_list"
     end
 
-    protected
-
     def notify_count(user)
-      Juggernaut.publish channel(user),
-                         {:count => count(user)}
+      super user, {:count => count(user)}
     end
 
-    def channel(user)
-      "message-count-user-#{user.id}"
-    end
+    protected
 
     def key(user)
       "utm:#{user.id}"

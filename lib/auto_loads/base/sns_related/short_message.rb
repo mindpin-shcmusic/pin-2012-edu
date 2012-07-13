@@ -1,4 +1,6 @@
 class ShortMessage < ActiveRecord::Base
+  include Notifying
+
   after_create Notify.new
 
   belongs_to :sender,
@@ -16,11 +18,8 @@ class ShortMessage < ActiveRecord::Base
 
   validate   :not_the_same_user
 
-  scope      :for_user,
-             lambda {|user| where :receiver_id => user.id}
-
   scope      :unread,
-             lambda {|user| for_user(user).where(:receiver_read => false, :receiver_hide => false)}
+             lambda {|user| unread_collection(user, :receiver_read => false, :receiver_hide => false)}
 
   def read!
     self.update_attribute :receiver_read, true
@@ -34,20 +33,20 @@ class ShortMessage < ActiveRecord::Base
 
   def sender_hide!
     self.update_attribute :sender_hide, true
-    self.class.notify_count(sender)
   end
 
-  def self.any_unread?(user)
-    self.unread(user).any? ? true : false
+  class << self
+    def any_unread?(user)
+      self.unread(user).any? ? true : false
+    end
+
+    def notify_count(user)
+      super user, {:count => self.unread(user).count}
+    end
   end
 
-  def self.channel(user)
-    "short-message-count-#{user.id}"
-  end
-
-  def self.notify_count(user)
-    Juggernaut.publish channel(user),
-                       {:count => self.unread(user).count}
+  def publish(user)
+    super user, content
   end
 
   module UserMethods

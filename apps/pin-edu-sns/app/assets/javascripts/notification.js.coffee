@@ -10,12 +10,12 @@ $ ->
 
   notification_notifier.subscribe    jug, "notification-count-user-#{USER_ID}"
 
-  comment_message_notifier.subscribe jug, "comment-message-count-user-#{USER_ID}"
+  comment_message_notifier.subscribe jug, "user-comment-tip-message-count-user-#{USER_ID}"
 
   jug.subscribe "notification-read-all-user-#{USER_ID}", (data)->
     $('.notifications .notification').addClass 'read'
 
-  jug.subscribe "incoming-notification-user-#{USER_ID}", (data)->
+  jug.subscribe "notification-publish-user-#{USER_ID}", (data)->
     make_notification data
 
   make_notification = (obj)->

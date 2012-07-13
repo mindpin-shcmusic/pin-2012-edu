@@ -1,4 +1,6 @@
 class Notification < ActiveRecord::Base
+  include Notifying
+
   after_create  Notify.new
   after_destroy Notify.new
 
@@ -8,38 +10,33 @@ class Notification < ActiveRecord::Base
 
   default_scope order('created_at DESC')
 
-  scope      :for_user,
-             lambda {|user| where :receiver_id => user.id}
-
   scope      :unread,
-             lambda {|user| for_user(user).where :read => false}
+             lambda {|user| unread_collection(user, :read => false)}
 
-  def self.any_unread?(user)
-    self.unread(user).any? ? true : false
-  end
+  class << self
+    def any_unread?(user)
+      self.unread(user).any? ? true : false
+    end
 
-  def self.notify_count(user)
-    Juggernaut.publish "notification-count-user-#{user.id}",
-                       {:count => self.unread(user).count}
-  end
+    def notify_count(user)
+      super user,
+            {:count => unread(user).count}
+    end
 
-  def self.notify_read_all(user)
-    Juggernaut.publish "notification-read-all-user-#{user.id}",
-                       {:all => true}
-  end
+    def notify_read_all(user)
+      Juggernaut.publish "notification-read-all-user-#{user.id}",
+                         {:all => true}
+    end
 
-  def self.read_all!(user)
-    unread(user).update_all(:read => true)
-    notify_count(user)
-    notify_read_all(user)
+    def read_all!(user)
+      unread(user).update_all(:read => true)
+      notify_count(user, {:count => unread(user).count})
+      notify_read_all(user)
+    end
   end
 
   def publish(user)
-    Juggernaut.publish "incoming-notification-user-#{user.id}",
-                       {:content    => content,
-                        :read       => read,
-                        :created_at => created_at,
-                        :id         => id}
+    super user, attributes
   end
 
   private

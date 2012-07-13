@@ -6,10 +6,6 @@ class UserCommentTipMessage < UserTipMessage
 
     protected
 
-    def channel(user)
-      "comment-message-count-user-#{user.id}"
-    end
-
     def key(user)
       "utm:cmt:#{user.id}"
     end

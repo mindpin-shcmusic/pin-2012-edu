@@ -5,7 +5,7 @@ $ ->
                                        short_message_notifier)
   $short_message_el      = $ '.short-message.empty'
 
-  short_message_notifier.subscribe jug, "short-message-count-#{USER_ID}"
+  short_message_notifier.subscribe jug, "short-message-count-user-#{USER_ID}"
 
   make_short_message = (obj)->
     $el        = $short_message_el.clone()
