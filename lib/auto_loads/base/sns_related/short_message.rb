@@ -18,9 +18,6 @@ class ShortMessage < ActiveRecord::Base
 
   validate   :not_the_same_user
 
-  scope      :unread,
-             lambda {|user| unread_collection(user, :receiver_read => false, :receiver_hide => false)}
-
   def read!
     self.update_attribute :receiver_read, true
     self.class.notify_count(receiver)
@@ -40,8 +37,14 @@ class ShortMessage < ActiveRecord::Base
       self.unread(user).any? ? true : false
     end
 
-    def notify_count(user)
-      super user, {:count => self.unread(user).count}
+    protected
+
+    def unread_conditions
+      {:receiver_read => false, :receiver_hide => false}
+    end
+
+    def unread_count(user)
+      unread(user).count
     end
   end
 

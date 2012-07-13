@@ -12,12 +12,16 @@ module Notifying
       where :receiver_id => user.id
     end
 
-    protected
-
-    def notify_count(user, count)
-      Juggernaut.publish count_channel(user),
-                         count
+    def unread(user)
+      for_user(user).where unread_conditions
     end
+
+    def notify_count(user)
+      Juggernaut.publish count_channel(user),
+                         {:count => unread_count(user)}
+    end
+
+    protected
 
     def count_channel(user)
       make_channel(user, 'count')
@@ -35,8 +39,12 @@ module Notifying
       "#{channel_base}-#{channel_identifier}-user-#{user.id}"
     end
 
-    def unread_collection(user, conditions)
-      for_user(user).where conditions
+    def unread_conditions
+      {}
+    end
+
+    def unread_count(user)
+      0
     end
   end
 

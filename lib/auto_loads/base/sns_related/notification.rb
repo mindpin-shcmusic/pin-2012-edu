@@ -10,29 +10,32 @@ class Notification < ActiveRecord::Base
 
   default_scope order('created_at DESC')
 
-  scope      :unread,
-             lambda {|user| unread_collection(user, :read => false)}
-
   class << self
     def any_unread?(user)
       self.unread(user).any? ? true : false
     end
 
-    def notify_count(user)
-      super user,
-            {:count => unread(user).count}
-    end
-
     def notify_read_all(user)
-      Juggernaut.publish "notification-read-all-user-#{user.id}",
+      Juggernaut.publish make_channel(user, 'read-all'),
                          {:all => true}
     end
 
     def read_all!(user)
       unread(user).update_all(:read => true)
-      notify_count(user, {:count => unread(user).count})
+      notify_count(user)
       notify_read_all(user)
     end
+
+    protected
+
+    def unread_count(user)
+      unread(user).count
+    end
+
+    def unread_conditions
+      {:read => false}
+    end
+
   end
 
   def publish(user)
