@@ -1,9 +1,10 @@
 :ruby
   has_started = ProjectManagement.start?(project_name)
-  status_klass = has_started ? 'up' : 'down'
-  status_text  = has_started ? '正在运行' : '已关闭'
-
   pid = ProjectManagement.pid_count(project_name) if has_started
+
+  status_klass = has_started ? 'up' : 'down'
+  status_text  = has_started ? "正在运行 pid:#{pid}" : '已关闭'
+
 
   usr2_path  = operate_project_path(:operate=>'usr2_stop', :project=>project_name)
   stop_path  = operate_project_path(:operate=>'stop', :project=>project_name)
@@ -17,9 +18,8 @@
     .status-text=status_text
 
   -if has_started
-    .pid pid = #{pid}
     .ops
-      =link_to 'USR2重置', usr2_path, :method=>:post
+      =link_to 'usr2重置', usr2_path, :method=>:post
       =link_to '停止进程', stop_path, :method=>:post
   -else
     .ops

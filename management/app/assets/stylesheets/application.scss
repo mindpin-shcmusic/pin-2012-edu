@@ -20,7 +20,6 @@ body.echo{
     font-weight:bold;
     font-size:16px;
     height:50px;line-height:50px;
-    margin-bottom:10px;
     border-bottom:solid 1px #EEEEEE;
   }
 }
@@ -29,6 +28,12 @@ body.echo{
   height:50px;line-height:50px;
   font-size:14px;
   color:#999;
+}
+
+.page-logout{
+  @include mini-button-close;
+  float:none;display:inline-block;
+  margin:20px 0 10px 0;
 }
 
 @import 'management';

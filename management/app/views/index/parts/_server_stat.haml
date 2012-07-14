@@ -1,27 +1,29 @@
 :ruby
-  state     = ServerManagement.state(server_name)
-  has_start = ServerManagement.start?(server_name)
-  pid       = ServerManagement.pid_count(server_name) if has_start
+  has_started = ServerManagement.start?(server_name)
+  pid       = ServerManagement.pid_count(server_name) if has_started
 
-  state_klass = has_start ? 'running' : 'closed'
+  status_klass = has_started ? 'up' : 'down'
+  status_text  = has_started ? "正在运行 pid:#{pid}" : '已关闭'
 
-%td.bold=server_name
-%td{:class=>state_klass}=state
-%td=pid if has_start
-%td=link_to file_size(ServerManagement.log_size(server_name)), server_log_path(:server_name=>server_name)
-%td=jtime(ServerManagement.log_mtime(server_name))
-%td
-  -if has_start
-    =link_to '停止', operate_server_path(:operate=>'stop', :server=>server_name), :method=>:post
-    -case server_name
-      -when 'redis_service'
-        =link_to '查看状态', path_for('redis_stats'),       :method=>:get
-        =link_to '重置全部', path_for('redis_flushall'),    :method=>:post
-        =link_to '重置缓存', path_for('redis_cache_flush'), :method=>:post
-        =link_to '重置提示', path_for('redis_tip_flush'),   :method=>:post
-        =link_to '重置队列', path_for('redis_queue_flush'), :method=>:post
-      -when 'resque_web_service'
-        -link_url = Rails.env.development? ? "http://management.2012.edu.mindpin.com:8282/overview" : "http://management.2012.edu.mindpin.com:8282/overview"
-        =link_to "查看状态", link_url,:target=>"_blank"
+  stop_path  = operate_server_path(:operate=>'stop', :server=>server_name)
+  start_path = operate_server_path(:operate=>'start', :server=>server_name)
+
+  resque_url = "http://#{request.host}:8282/overview"
+
+.item
+  .status-icon{:class=>status_klass}
+
+  .meta
+    .name=server_name
+    .status-text=status_text
+
+  -if has_started
+    .ops
+      -case server_name
+        -when 'resque_web_service'
+          =link_to '管理', resque_url, :target=>'_blank'
+
+      =link_to '停止进程', stop_path, :method=>:post
   -else
-    =link_to "开启",operate_server_path(:operate=>"start",:server=>server_name),:method=>:post
+    .ops
+      =link_to '启动进程', start_path, :method=>:post

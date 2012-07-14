@@ -1,20 +1,10 @@
-= flash_info
+.hide = flash_info
 
 .page-management-items
   = render 'index/parts/project_stat', :project_name=>'pin-edu-sns'
 
-%table
-  %thead
-    %tr
-      %th SERVICE
-      %th 状态
-      %th PID
-      %th 日志大小
-      %th 日志更新时间
-      %th 操作
-  %tbody
-    %tr=render :partial=>'index/parts/server_stat', :locals=>{:server_name=>'redis_service'}
-    %tr=render :partial=>'index/parts/server_stat', :locals=>{:server_name=>'resque_web_service'}
-    %tr=render :partial=>'index/parts/server_stat', :locals=>{:server_name=>'juggernaut_service'}
+  = render 'index/parts/server_stat', :server_name=>'redis_service'
+  = render 'index/parts/server_stat', :server_name=>'resque_web_service'
+  = render 'index/parts/server_stat', :server_name=>'juggernaut_service'
 
-=link_to '退出登录', path_for('/logout')
+%a.page-logout{:href=>path_for('/logout')} 退出控制台

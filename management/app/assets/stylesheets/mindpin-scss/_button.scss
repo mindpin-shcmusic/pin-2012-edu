@@ -1,4 +1,4 @@
-@mixin common-mini-button{
+@mixin mini-button{
   float:left;
 
   height:22px;line-height:22px;
@@ -17,5 +17,18 @@
     border-color:#518cc6 #518cc6 #2a65a0;
     text-shadow:-1px -1px 0 rgba(black, 0.3);
     color:white;
+  };
+}
+
+@mixin mini-button-close{
+  @include mini-button;
+  @include gradient(#666, #444);
+  color:white;
+  text-shadow:-1px -1px 0 rgba(black, 0.3);
+  border-color:#444 #444 #333;
+
+  &:hover{text-decoration:none;
+    @include gradient(#555, #333);
+    border-color:#333 #333 #222;
   };
 }
