@@ -1,13 +1,15 @@
 .bundle
 .sass-cache/*
-log/*.log
-tmp/
-vendor/bundle/*
 .project
-dump.rdb
-Gemfile.lock
+
+*.log
 *DS_Store
 *.bak
 .fseventsd
 
 database.yml
+dump.rdb
+Gemfile.lock
+
+tmp/
+vendor/bundle/*
