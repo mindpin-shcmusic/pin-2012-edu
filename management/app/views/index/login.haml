@@ -1,9 +1,7 @@
-=form_tag path_for('/do_login') do
-  %div
-    %label 用户名
-    =text_field_tag :name
-  %div
-    %label 密码
+= form_tag path_for('/do_login'), :class=>'page-login-form', :'data-enter-to-submit'=>true do
+  =hidden_field_tag :name, 'admin'
+  .field.placeholder
+    %label 管理员动态密码
     =password_field_tag :password
-  %div
-    =submit_tag "登录"
+  .field.submit
+    %a.form-submit-button{:href=>'javascript:;'} 登录

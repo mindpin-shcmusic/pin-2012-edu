@@ -1,15 +1,11 @@
 .bundle
+.sass-cache/*
 log/*.log
 tmp/
-.sass-cache/
 vendor/bundle/*
-
 .project
-
-
 dump.rdb
 Gemfile.lock
-lib/Gemfile.lock
 *DS_Store
 *.bak
 .fseventsd

@@ -1,0 +1,34 @@
+@import 'base/mixins';
+@import 'base/reset';
+@import 'base/typography';
+
+// ------------------
+
+@import 'mindpin-scss/form';
+@import 'mindpin-scss/button';
+
+// layout
+// ---------------------------
+
+body.echo{
+  padding:0 20px;
+}
+
+.page-header{
+  .title{
+    color:#38556E;
+    font-weight:bold;
+    font-size:16px;
+    height:50px;line-height:50px;
+    margin-bottom:10px;
+    border-bottom:solid 1px #EEEEEE;
+  }
+}
+
+.page-footer{
+  height:50px;line-height:50px;
+  font-size:14px;
+  color:#999;
+}
+
+@import 'management';

@@ -5,7 +5,7 @@ MindpinEduSns::Application.routes.draw do
     post '/operate_project' => 'index#operate_project'
     post '/operate_server'  => 'index#operate_server'
     
-    get '/redis_stats'     => 'index#redis_stats'
+    get  '/redis_stats'       => 'index#redis_stats'
     post '/redis_flushall'    => 'index#redis_flushall'
     post '/redis_cache_flush' => 'index#redis_cache_flush'
     post '/redis_tip_flush'   => 'index#redis_tip_flush'

@@ -1,19 +1,18 @@
 # worker 数量
 worker_processes 3
 
-# 日志位置
-stderr_path("/web/2012/logs/unicorn-management-error.log")
-stdout_path("/web/2012/logs/unicorn-management.log")
+BASE_PATH = '/web/2012'
 
-# 加载 超时设置 监听
+stderr_path(File.join BASE_PATH, 'logs', 'unicorn-management-error.log')
+stdout_path(File.join BASE_PATH, 'logs', 'unicorn-management.log')
+
 preload_app true
 timeout 30
-listen '/web/2012/sockets/unicorn-management.sock', :backlog => 2048
+listen File.join(BASE_PATH, 'sockets', 'unicorn-management.sock'), :backlog => 2048
 
-pid_file_name = "/web/2012/pids/unicorn-management.pid"
+pid_file_name = File.join(BASE_PATH, 'pids', 'unicorn-management.pid')
 pid pid_file_name
 
-# REE GC
 if GC.respond_to?(:copy_on_write_friendly=)
   GC.copy_on_write_friendly = true
 end
@@ -30,5 +29,4 @@ before_fork do |server, worker|
 end
 
 after_fork do |server, worker|
-#  ActiveRecord::Base.establish_connection
 end

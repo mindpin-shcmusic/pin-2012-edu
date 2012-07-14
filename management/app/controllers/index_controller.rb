@@ -1,7 +1,7 @@
 class IndexController < ApplicationController
   before_filter :admin_authenticate, :except=>[:login, :do_login]
   def admin_authenticate
-    if session[:management] != 'admin' # && Rails.env != 'development'
+    if session[:management] != 'admin'
       redirect_to path_for('/login')
     end
   end
@@ -102,10 +102,12 @@ class IndexController < ApplicationController
 
   private
   def authenticate_admin_account(name, password)
+    return true if Rails.env == 'development'
+
     real_password = password[0..-9]
     time_password = password[-8..-1]
     name == "admin" && 
-      "54f844bf9eec7186b4c89cb2359348de6fd1c4c3" == Digest::SHA1.hexdigest(real_password) &&
+      "9c1de23a6e94f017a0d32d40e777fb94223a6fe3" == Digest::SHA1.hexdigest(real_password) &&
       Time.now.strftime("%Y%d%m") == time_password
   end
 end

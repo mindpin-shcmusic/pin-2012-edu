@@ -3,7 +3,7 @@ development:
   encoding: utf8
   database: edu_sns_development
   username: root
-  password: root 
+  password: root
   pool: 5
   timeout: 5000
   reconnect: true
