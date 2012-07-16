@@ -1,4 +1,4 @@
-class Tag < BuildDatabaseAbstract
+class Tag < ActiveRecord::Base
   validates :name, :presence => true
   
   def self.get(name)

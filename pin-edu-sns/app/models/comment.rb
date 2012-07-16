@@ -1,4 +1,4 @@
-class Comment < BuildDatabaseAbstract
+class Comment < ActiveRecord::Base
   after_create :notify_user
 
   belongs_to :model,

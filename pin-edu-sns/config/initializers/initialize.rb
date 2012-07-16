@@ -1,1 +1,0 @@
-MindpinRailsLoader.load_initializers

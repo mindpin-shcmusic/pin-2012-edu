@@ -1,4 +1,4 @@
-class Team < BuildDatabaseAbstract
+class Team < ActiveRecord::Base
   
   belongs_to :teacher
   

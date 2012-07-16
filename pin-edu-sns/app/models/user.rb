@@ -1,4 +1,4 @@
-class User < BuildDatabaseAbstract
+class User < ActiveRecord::Base
   include UserMethods
   # admin 模块
   include Student::UserMethods

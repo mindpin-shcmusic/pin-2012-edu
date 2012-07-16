@@ -1,6 +1,6 @@
 require 'uuidtools'
 
-class OnlineRecord < BuildDatabaseAbstract
+class OnlineRecord < ActiveRecord::Base
   belongs_to :user
 
   def self.onlines

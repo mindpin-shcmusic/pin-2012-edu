@@ -1,4 +1,4 @@
-class Teacher < BuildDatabaseAbstract
+class Teacher < ActiveRecord::Base
   belongs_to :user
   
   validates :real_name, :presence => true

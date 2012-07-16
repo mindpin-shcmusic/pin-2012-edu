@@ -1,4 +1,4 @@
-class MediaFile < BuildDatabaseAbstract
+class MediaFile < ActiveRecord::Base
 
   PLACE_OSS = "oss"
   PLACE_EDU = "edu"

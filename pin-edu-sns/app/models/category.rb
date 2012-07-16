@@ -1,4 +1,4 @@
-class Category < BuildDatabaseAbstract
+class Category < ActiveRecord::Base
   acts_as_nested_set
 
   has_many :media_files

@@ -1,4 +1,4 @@
-class Student < BuildDatabaseAbstract
+class Student < ActiveRecord::Base
   belongs_to :user
 
   has_many :homework_assigns
