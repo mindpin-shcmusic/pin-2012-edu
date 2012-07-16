@@ -1,8 +1,7 @@
 class MindpinRailsLoader
   MINDPIN_LIB_PATH   = File.dirname(File.expand_path(__FILE__)) # ~ pin-edu-2012/lib
-  MINDPIN_PATH       = File.join(MINDPIN_LIB_PATH, '..')
 
-  MINDPIN_APPS_PATH = File.join(MINDPIN_PATH, 'apps')
+  EDU_SNS_PATH = File.expand_path("../../",__FILE__)
 
   # ------------------
 

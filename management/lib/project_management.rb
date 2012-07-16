@@ -61,7 +61,7 @@ class ProjectManagement
     end
 
     def find_log_file_path_by_project_name(project_name)
-      File.join(PIN_2012_PATH,"apps/#{project_name}/log/#{Rails.env}.log")
+      File.join(PIN_2012_PATH,"#{project_name}/log/#{Rails.env}.log")
     end
   end
 end

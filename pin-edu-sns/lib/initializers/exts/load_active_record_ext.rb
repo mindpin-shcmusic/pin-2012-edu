@@ -26,12 +26,11 @@ module PieActiveRecordExt
 
     module ClassMethods
       require "yaml"
-      SITES_PATH = MindpinRailsLoader::MINDPIN_APPS_PATH
 
       # options中可以添加 table_name 这个参数  来满足下面这种情况：
       # class name 有时候会和表名取不一样的。应该允许用户指定连接哪一个表
       def build_database_connection(project_name, options={})
-        database = YAML.load_file(File.join(SITES_PATH, project_name, 'config/database.yml'))[Rails.env]
+        database = YAML.load_file(File.join(MindpinRailsLoader::EDU_SNS_PATH, 'config/database.yml'))[Rails.env]
         
         establish_connection(database)
 

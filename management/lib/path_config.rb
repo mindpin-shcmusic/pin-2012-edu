@@ -9,5 +9,5 @@ module PathConfig
   RESQUE_WEB_SH = File.join(SERVERS_SH_PATH,"resque_web_service.sh")
   JUGGERNAUT_SH = File.join(SERVERS_SH_PATH,"juggernaut_service.sh")
 
-  PROJECTS = Dir.entries(File.join(PIN_2012_PATH,"apps")).delete_if{|app|app == "." || app == ".."}
+  PROJECTS = ["pin-edu-sns"]
 end

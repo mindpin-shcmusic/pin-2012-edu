@@ -2,13 +2,7 @@
 
 pin_2012_edu_dir=`dirname $0`/..
 
-pin_auth_dir=$pin_2012_edu_dir/apps/pin-auth
-pin_auth_pid=/web/2012/pids/unicorn-pin-auth.pid
-
-pin_admin_dir=$pin_2012_edu_dir/apps/pin-admin
-pin_admin_pid=/web/2012/pids/unicorn-pin-admin.pid
-
-pin_edu_sns_dir=$pin_2012_edu_dir/apps/pin-edu-sns
+pin_edu_sns_dir=$pin_2012_edu_dir/pin-edu-sns
 pin_edu_sns_pid=/web/2012/pids/unicorn-pin-edu-sns.pid
 
 sh_dir=`dirname $0`
@@ -16,16 +10,6 @@ sh_dir=`dirname $0`
 rails_env=$(get_rails_env)
 
   case "$1" in
-    pin-auth)
-     cd $pin_auth_dir
-     pid=$pin_auth_pid
-     echo "pin_auth_dir"
-    ;;
-    pin-admin)
-     cd $pin_admin_dir
-     pid=$pin_admin_pid
-     echo "pin_admin_dir"
-    ;;
     pin-edu-sns)
      cd $pin_edu_sns_dir
      pid=$pin_edu_sns_pid
@@ -33,7 +17,7 @@ rails_env=$(get_rails_env)
     ;;
     *)
     echo "$1"
-    echo "tip:(pin-auth|pin-admin|pin-edu-sns)"
+    echo "tip:(pin-edu-sns)"
     exit 5
     ;;
   esac
