@@ -100,7 +100,7 @@
 }
 
 @mixin list-ops-delete{
-  @include hover-button;
+  //@include hover-button;
   height:18px;width:18px;
   
   &::before, &::after{width:2px;height:14px;background-color:#b1b1b1;};

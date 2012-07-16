@@ -1,10 +1,27 @@
 %h1 站内信
+:ruby
+  select_options = options_from_collection_for_select(User.all, 'id', 'name', :selected => @message.receiver_id)
 
 = form_for @message do |f|
   = f.label :receiver_id, '选择收件人'
-  = f.select :receiver_id,
-             options_from_collection_for_select(User.all, 'id', 'name', :selected => @message.receiver_id)
+  = f.select :receiver_id, select_options
+             
 
   = f.label :content, '内容'
   = f.text_area :content
   = f.submit
+
+
+.page-user-selector
+  .main-box
+    .list
+      :ruby
+        user = current_user
+      .user
+        .avatar=avatar user
+        .name=user.name
+        .sid=randstr
+    .letters
+      -'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').each do |letter|
+        %a{:href=>'javascript', :class=>"letter letter-#{letter}"}=letter
+  .tabs

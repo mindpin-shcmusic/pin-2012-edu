@@ -40,6 +40,20 @@ ActiveRecord::Schema.define(:version => 20120711091629) do
   add_index "comments", ["reply_comment_id"], :name => "index_comments_on_reply_comment_id"
   add_index "comments", ["reply_comment_user_id"], :name => "index_comments_on_reply_comment_user_id"
 
+  create_table "connect_users", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "connect_type"
+    t.string   "connect_id"
+    t.string   "oauth_token"
+    t.string   "oauth_token_secret"
+    t.text     "account_detail"
+    t.boolean  "oauth_invalid"
+    t.boolean  "syn_from_connect"
+    t.string   "last_syn_message_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "courses", :force => true do |t|
     t.string   "name",       :default => "", :null => false
     t.string   "cid"

@@ -84,7 +84,7 @@ body{
           display:block;
           position:absolute;
           width:44px;height:32px;
-          @include allimg(0, 96);
+          //@include allimg(0, 96);
           top:4px;left:8px;
         }
       }
