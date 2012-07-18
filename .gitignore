@@ -13,3 +13,14 @@ Gemfile.lock
 
 tmp/
 vendor/bundle/*
+
+
+db/*.sqlite3
+log/*.pid
+config/development.sphinx.conf
+.powenv
+.rvmrc
+public/system/*
+coverage/
+.idea/*
+*DS_*

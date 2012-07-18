@@ -6,6 +6,15 @@ gem 'json'
 gem 'therubyracer'
 gem 'awesome_nested_set'
 
+gem 'thinking-sphinx', '2.0.10'
+gem 'rmmseg-cpp'
+gem 'redis-namespace'
+gem 'redis-search', :path => 'vendor/redis-search'
+gem 'streamio-ffmpeg'
+gem 'rcov', :platform => :mri_18
+gem 'simplecov', :platform => :mri_19
+gem 'spork', '~> 0.9.2'
+
 group :assets do
   gem 'sass-rails',   '~> 3.1.5'
   gem 'coffee-rails', '~> 3.1.1'
@@ -26,7 +35,7 @@ gem 'rubyzip', '0.9.4', :require => 'zip/zip'
 gem 'resque'
 
 # paperclip
-gem 'paperclip', '~> 2.4'
+gem 'paperclip', '~> 2.7'
 gem 'paperclip-meta'
 
 gem 'coderay'

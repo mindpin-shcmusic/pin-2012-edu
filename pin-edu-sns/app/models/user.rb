@@ -14,4 +14,10 @@ class User < ActiveRecord::Base
   include Notification::UserMethods
   # --- 站内信
   include ShortMessage::UserMethods
+
+  ##
+  has_many  :media_resources, :foreign_key  => 'creator_id'
+  include MediaShare::UserMethods
+  include PublicResource::UserMethods
+  include RedisSearch::UserMethods
 end

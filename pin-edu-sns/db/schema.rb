@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120711091629) do
+ActiveRecord::Schema.define(:version => 20120718084004) do
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -66,6 +66,20 @@ ActiveRecord::Schema.define(:version => 20120711091629) do
   end
 
   add_index "courses", ["teacher_id"], :name => "index_courses_on_teacher_id"
+
+  create_table "file_entities", :force => true do |t|
+    t.string   "attach_file_name"
+    t.string   "attach_content_type"
+    t.integer  "attach_file_size"
+    t.datetime "attach_updated_at"
+    t.string   "md5"
+    t.boolean  "merged",              :default => false
+    t.string   "video_encode_status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "file_entities", ["md5"], :name => "index_file_entities_on_md5"
 
   create_table "homework_assigns", :force => true do |t|
     t.integer  "student_id"
@@ -153,6 +167,35 @@ ActiveRecord::Schema.define(:version => 20120711091629) do
   add_index "media_files", ["category_id"], :name => "index_media_files_on_category_id"
   add_index "media_files", ["creator_id"], :name => "index_media_files_on_creator_id"
 
+  create_table "media_resources", :force => true do |t|
+    t.integer  "file_entity_id"
+    t.string   "name"
+    t.boolean  "is_dir",         :default => false
+    t.integer  "dir_id",         :default => 0
+    t.integer  "creator_id"
+    t.datetime "fileops_time"
+    t.boolean  "is_removed",     :default => false
+    t.integer  "files_count",    :default => 0
+    t.boolean  "delta",          :default => true,  :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "media_resources", ["creator_id"], :name => "index_media_resources_on_creator_id"
+  add_index "media_resources", ["dir_id"], :name => "index_media_resources_on_dir_id"
+  add_index "media_resources", ["file_entity_id"], :name => "index_media_resources_on_file_entity_id"
+  add_index "media_resources", ["fileops_time"], :name => "index_media_resources_on_fileops_time"
+  add_index "media_resources", ["name"], :name => "index_media_resources_on_name"
+
+  create_table "media_shares", :force => true do |t|
+    t.integer  "media_resource_id"
+    t.integer  "creator_id"
+    t.integer  "receiver_id"
+    t.boolean  "delta",             :default => true, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "notifications", :force => true do |t|
     t.text     "content"
     t.integer  "receiver_id"
@@ -171,6 +214,17 @@ ActiveRecord::Schema.define(:version => 20120711091629) do
   add_index "online_records", ["key"], :name => "index_online_records_on_key"
   add_index "online_records", ["user_id"], :name => "index_online_records_on_user_id"
 
+  create_table "public_resources", :force => true do |t|
+    t.integer  "creator_id"
+    t.integer  "media_resource_id"
+    t.integer  "file_entity_id"
+    t.string   "kind"
+    t.string   "name"
+    t.boolean  "delta",             :default => true, :null => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "short_messages", :force => true do |t|
     t.integer  "sender_id"
     t.integer  "receiver_id"
@@ -178,6 +232,19 @@ ActiveRecord::Schema.define(:version => 20120711091629) do
     t.boolean  "receiver_read", :default => false
     t.boolean  "sender_hide",   :default => false
     t.boolean  "receiver_hide", :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "slice_temp_files", :force => true do |t|
+    t.integer  "creator_id"
+    t.string   "entry_file_name"
+    t.string   "entry_content_type"
+    t.integer  "entry_file_size",    :limit => 8
+    t.datetime "entry_updated_at"
+    t.integer  "saved_size",         :limit => 8
+    t.boolean  "merged"
+    t.string   "real_file_name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

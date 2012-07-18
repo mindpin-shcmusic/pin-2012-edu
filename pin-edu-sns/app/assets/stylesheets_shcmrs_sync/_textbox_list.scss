@@ -1,0 +1,139 @@
+.mindpin-textbox-list { 
+  font-size:12px; 
+  cursor:text;
+
+  $height:24px;
+
+  .bits{
+    overflow:hidden; 
+    margin:0; 
+    border:1px solid #999;
+    height:$height;
+    padding:3px;
+
+    .bit{
+      list-style-type:none; 
+      float:left; 
+      display:block; 
+      padding:0; 
+      margin:0; 
+      cursor:default;
+
+      &.editable{
+        height:$height;
+        line-height:$height;
+
+        .input{
+          border:none; 
+          height:$height;
+          line-height:$height;
+          padding:0;
+          &:focus{outline:0;}
+          float:left;
+          display:block;
+          @include border-radius(3px);
+        }
+      }
+
+      &.box{
+        position:relative; 
+        height:$height - 2px;
+        line-height:$height - 2px;
+        padding:0 5px;
+        margin:0 3px 0 0;
+        @include border-radius(3px);
+        border:1px solid #CAD8F3; 
+        background:#DEE7F8; 
+        cursor:default; 
+
+        &.hover{
+          background:#BBCEF1; 
+          border-color:#6D95E0; 
+        }
+        &.focus{
+          background:#598BEC; 
+          border-color:#598BEC; 
+          color:#fff;
+          text-shadow:-1px -1px rgba(black, 0.3);
+        }
+      }
+    }
+  }
+
+  .results{
+    width:400px;
+    margin-top:2px;
+    border:solid 1px #ccc;
+
+    .autocomplete-result.user{
+      overflow:hidden;
+      cursor:pointer;
+      border-bottom:1px solid #ccc;
+      &:last-child{
+        border-bottom:none;
+      }
+
+      height:36px;
+
+      background-color:white;
+      //@include transition(all ease-out .1s);
+      &:hover{
+        background-color:#eee;
+      }
+      &.focus{
+        background-color:#CFE981;
+        // .name{color:white;}
+        // .email{color:rgba(white, 0.8);}
+      }
+
+      padding-top:4px;
+
+      .avatar{
+        width:32px;height:32px;
+        img{width:32px;height:32px;display:block;background-color:black;}
+        float:left;
+        margin-left:4px;
+        overflow:hidden;
+      }
+      .name{
+        font-size: 12px;
+        font-weight: bold;
+        height: 16px;
+        line-height: 16px;
+        margin-left: 44px;
+      }
+      .email{
+        color: #999999;
+        font-size: 12px;
+        height: 16px;
+        line-height: 16px;
+        margin-left: 44px;
+      }
+    }
+  }
+}
+
+// .textboxlist-bit-box-deletable { 
+//   padding-right: 15px; 
+// }
+// .textboxlist-bit-box-deletebutton { 
+//   position: absolute; 
+//   right: 4px; 
+//   top: 6px; 
+//   display: block; 
+//   width: 7px; 
+//   height: 7px; 
+//   font-size: 1px; 
+//   background: url('close.gif'); 
+// }
+// .textboxlist-bit-box-deletebutton:hover { 
+//   border: none; 
+//   background-position: 7px; 
+//   text-decoration: none; 
+// }
+// .textboxlist-bit-box-focus { 
+
+// }
+// .textboxlist-bit-box-focus .textboxlist-bit-box-deletebutton { 
+//   background-position: bottom; 
+// }
