@@ -4,12 +4,13 @@
   t_str = yield_title.gsub("\n",'')
 
   title = t_str.blank? ? app_name : "#{t_str} - #{app_name}"
+  current_user = logged_in? ? current_user : User.new
 
 !!! 5
 %html{:lang=>'zh'}
   %head
     %meta{:charset=>'utf-8'}
-    %meta{:'current-user-id' => "#{current_user && current_user.id}"}
+    %meta{:'current-user-id' => "#{current_user.id}"}
     %title=title
     = csrf_meta_tags
     = stylesheet_link_tag :application
@@ -35,13 +36,15 @@
           = link_to inbox_short_messages_path,
                     :class => 'item' do
             站内信
-            .short-message-unread-count{:style => display_short_message_notifier}= short_message_count(current_user)
+            - if logged_in?
+              .short-message-unread-count{:style => display_short_message_notifier}= short_message_count(current_user)
 
           .sp
           = link_to notifications_path,
                     :class => 'item' do
             通知
-            .notification-unread-count{:style => display_notification_notifier}= notification_count(current_user)
+            - if logged_in?
+              .notification-unread-count{:style => display_notification_notifier}= notification_count(current_user)
 
           .sp
           %a.item.upload{:href=>'/'} 上传资源
@@ -80,25 +83,26 @@
       .page-content
         = yield
 
-    .notifier{:style => display_notifier}
+    - if logged_in?
+      .notifier{:style => display_notifier}
 
-      .notification-notifier{:style => display_notification_notifier, :'data-count' => notification_count(current_user)}
-        .content #{notification_count(current_user)}条未读通知
-        = link_to '查看',
-                  notifications_path,
-                  :class => 'link'
+        .notification-notifier{:style => display_notification_notifier, :'data-count' => notification_count(current_user)}
+          .content #{notification_count(current_user)}条未读通知
+          = link_to '查看',
+                    notifications_path,
+                    :class => 'link'
 
-      .comment-message-notifier{:style => display_comment_message_notifier, :'data-count' => comment_message_count(current_user)}
-        .content #{comment_message_count(current_user)}条未读评论
-        = link_to '查看',
-                  UserCommentTipMessage.url(current_user),
-                  :class => 'link'
+        .comment-message-notifier{:style => display_comment_message_notifier, :'data-count' => comment_message_count(current_user)}
+          .content #{comment_message_count(current_user)}条未读评论
+          = link_to '查看',
+                    UserCommentTipMessage.url(current_user),
+                    :class => 'link'
 
-      .short-message-notifier{:style => display_short_message_notifier, :'data-count' => short_message_count(current_user)}
-        .content #{short_message_count(current_user)}条未读站内信
-        = link_to '查看',
-                  inbox_short_messages_path,
-                  :class => 'link'
+        .short-message-notifier{:style => display_short_message_notifier, :'data-count' => short_message_count(current_user)}
+          .content #{short_message_count(current_user)}条未读站内信
+          = link_to '查看',
+                    inbox_short_messages_path,
+                    :class => 'link'
 
     = javascript_include_tag 'http://192.168.1.19:8080/application.js', :application
     = yield :javascript

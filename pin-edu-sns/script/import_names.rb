@@ -7,7 +7,9 @@ names.each do |name|
   i += 1
   pinyin = Pinyin.t(name, '')
 
-  User.create :name     => name,
-              :password => "#{pinyin}#{i}#{pinyin.reverse}",
-              :email    => "#{pinyin}#{i}@#{pinyin}.fake"
+  User.create :name                  => name,
+              :password              => '1234',
+              :password_confirmation => '1234',
+              :email                 => "#{pinyin}#{i}@#{pinyin}.fake"
+
 end
