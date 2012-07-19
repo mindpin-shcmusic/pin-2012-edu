@@ -14,7 +14,7 @@ module AuthenticatedSystem
     def current_user
       @current_user ||= (
         login_from_session || login_from_cookie
-      ) unless @current_user == false
+      ) unless false == @current_user
     end
 
     # 设定指定对象为当前会话用户对象，并将基本信息传入session保存
@@ -58,9 +58,7 @@ module AuthenticatedSystem
     # Called from #current_user.  First attempt to login by the user id stored in the session.
     def login_from_session
       begin
-        self.current_user = User.find(session[:user_id]) if session[:user_id]
-      rescue MemCache::MemCacheError=>ex
-        raise MemCache::MemCacheError, ex.message
+        return User.find(session[:user_id]) if session[:user_id]
       rescue Exception=>ex
         nil
       end
@@ -74,8 +72,8 @@ module AuthenticatedSystem
     # 被 current_user 方法调用 如果登录时勾选了 记住我，此方法会生效
     def login_from_cookie
       if cookies[remember_me_cookie_key]
-        user = User.authenticate_cookies_token(cookies[remember_me_cookie_key])
-        self.current_user = user if user
+        user = User.authenticate_remember_me_cookie_token(cookies[remember_me_cookie_key])
+        return user if !user.blank?
       end
     end
   

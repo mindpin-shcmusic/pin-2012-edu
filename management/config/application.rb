@@ -17,6 +17,7 @@ $APP_RELATIVE_ROOT = '/management'
 
 module MindpinEduSns
   class Application < Rails::Application
+    config.logger = ActiveSupport::BufferedLogger.new("/MINDPIN_MRS_DATA/logs/rails-management-#{Rails.env}.log")
     config.encoding = 'utf-8'
     config.filter_parameters += [:password]
     config.assets.enabled = true

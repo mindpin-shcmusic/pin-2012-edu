@@ -1,4 +1,4 @@
-$ ->
+pie.load ->
   class Counter
     collection = []
     id_maker  = 0
@@ -87,15 +87,13 @@ $ ->
           notifier.counter.display()
 
         if notifier.get_count() > 0
-          notifier.$el.parent().show()
+          notifier.$el.parent().fadeIn()
           notifier.update_text()
           notifier.fade_in()
         else
           notifier.fade_out()
           console.log '>>>>', notifier.get_count()
           notifier.hide_container() #需要确保在所有notifier以及counter的count都set后再运行...
-
-  USER_ID = $('meta[current-user-id]').attr 'current-user-id'
 
   names =
     Counter               : Counter
@@ -104,6 +102,6 @@ $ ->
     CommentMessageNotifier: CommentMessageNotifier
     ShortMessageNotifier  : ShortMessageNotifier
     Subscriber            : Subscriber
-    USER_ID               : USER_ID
+    USER_ID               : window.USER_INFO.id
 
   jQuery.extend window, names

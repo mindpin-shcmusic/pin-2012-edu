@@ -2,9 +2,9 @@
 
 root_dir=`dirname $0`
 
-processor_pid=/web/2012/pids/juggernaut_service.pid
+processor_pid=/MINDPIN_MRS_DATA/pids/juggernaut_service.pid
 
-log_file=/web/2012/logs/juggernaut_service.log
+log_file=/MINDPIN_MRS_DATA/logs/juggernaut_service.log
 
 . $root_dir/../function.sh
 case "$1" in

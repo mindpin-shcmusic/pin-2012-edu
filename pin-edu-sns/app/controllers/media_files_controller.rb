@@ -84,7 +84,6 @@ class MediaFilesController < ApplicationController
       :creator_id          => params[:creator_id])
       
     if @media_file.save
-#      return render :text=>pin_url_for("sns","/media_files/#{@media_file.id}")
       return render :json => @media_file
     end
     render :text=>@media_file.errors.first[1],:status=>422  

@@ -3,7 +3,7 @@
 pin_2012_edu_dir=`dirname $0`/..
 
 pin_edu_sns_dir=$pin_2012_edu_dir/pin-edu-sns
-pin_edu_sns_pid=/web/2012/pids/unicorn-pin-edu-sns.pid
+pin_edu_sns_pid=/MINDPIN_MRS_DATA/pids/unicorn-pin-edu-sns.pid
 
 sh_dir=`dirname $0`
 . $sh_dir/function.sh

@@ -40,12 +40,12 @@ http {
 
   # === Management Server
   upstream shcmusic-management-server {
-    server unix:/web/2012/sockets/unicorn-management.sock fail_timeout=0;
+    server unix:/MINDPIN_MRS_DATA/sockets/unicorn-management.sock fail_timeout=0;
   }
 
   # === App Server
   upstream shcmusic-pin-edu-sns-server {
-    server unix:/web/2012/sockets/unicorn-pin-edu-sns.sock fail_timeout=0;
+    server unix:/MINDPIN_MRS_DATA/sockets/unicorn-pin-edu-sns.sock fail_timeout=0;
   }
 
   # ========================================
@@ -66,6 +66,12 @@ http {
 
       if ($request_uri ~* "\.(ico|css|js|gif|jpe?g|png)\?[0-9A-Za-z]+$") { expires max; break; }
       if (!-f $request_filename) { proxy_pass http://shcmusic-management-server; }
+    }
+
+    # Juggernaut
+    location /juggernaut {
+      rewrite ^/juggernaut/(.*)$ /$1 break;
+      proxy_pass http://localhost:8080/;
     }
 
     # === 主应用, app

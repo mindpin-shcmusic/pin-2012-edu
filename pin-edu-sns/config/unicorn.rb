@@ -2,15 +2,15 @@
 worker_processes 3
 
 # 日志位置
-stderr_path("/web/2012/logs/unicorn-pin-edu-sns-error.log")
-stdout_path("/web/2012/logs/unicorn-pin-edu-sns.log")
+stderr_path("/MINDPIN_MRS_DATA/logs/unicorn-pin-edu-sns-error.log")
+stdout_path("/MINDPIN_MRS_DATA/logs/unicorn-pin-edu-sns.log")
 
 # 加载 超时设置 监听
 preload_app true
 timeout 60
-listen '/web/2012/sockets/unicorn-pin-edu-sns.sock', :backlog => 2048
+listen '/MINDPIN_MRS_DATA/sockets/unicorn-pin-edu-sns.sock', :backlog => 2048
 
-pid_file_name = "/web/2012/pids/unicorn-pin-edu-sns.pid"
+pid_file_name = "/MINDPIN_MRS_DATA/pids/unicorn-pin-edu-sns.pid"
 pid pid_file_name
 
 # REE GC
