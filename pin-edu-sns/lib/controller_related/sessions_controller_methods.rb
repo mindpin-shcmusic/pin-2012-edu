@@ -6,7 +6,7 @@ module SessionsControllerMethods
   end
   
   def create
-    self.current_user = User.authenticate2(params[:email], params[:password])
+    self.current_user = User.authenticate(params[:email], params[:password])
 
     # ajax 登录
     if request.xhr?

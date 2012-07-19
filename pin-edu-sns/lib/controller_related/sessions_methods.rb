@@ -20,12 +20,12 @@ module SessionsMethods
 
   def create_remember_me_cookie_token
     if params[:remember_me]
-      cookies[remember_me_cookie_key] = current_user.create_cookies_token(30)
+      cookies[remember_me_cookie_key] = current_user.create_remember_me_cookie_token(30)
     end
   end
 
-  def update_last_login_time()
-    current_user.update_attributes(:last_login_time=>Time.now)
+  def update_last_login_time
+    current_user.update_attributes(:last_login_time => Time.now)
   end
 
   def reset_session_with_online_key
@@ -43,8 +43,6 @@ module SessionsMethods
   end
 
   def destroy_online_record(user)
-    if user.online_record
-      user.online_record.destroy
-    end
+    user.online_record.destroy if user.online_record
   end
 end
