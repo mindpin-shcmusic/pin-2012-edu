@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 dir=`dirname $0`/../management
-pid=/web/2012/pids/unicorn-management.pid
+pid=/MINDPIN_MRS_DATA/pids/unicorn-management.pid
 sh_dir=`dirname $0`
 . $sh_dir/function.sh
 rails_env=$(get_rails_env)

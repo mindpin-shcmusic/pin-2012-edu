@@ -39,17 +39,17 @@ http {
 
   # MINDPIN PROJECTS
   upstream pin-auth-server {
-    server unix:/web/2012/sockets/unicorn-pin-auth.sock fail_timeout=0;
+    server unix:/MINDPIN_MRS_DATA/sockets/unicorn-pin-auth.sock fail_timeout=0;
   }
   upstream pin-admin-server {
-    server unix:/web/2012/sockets/unicorn-pin-admin.sock fail_timeout=0;
+    server unix:/MINDPIN_MRS_DATA/sockets/unicorn-pin-admin.sock fail_timeout=0;
   }
   upstream pin-edu-sns-server {
-    server unix:/web/2012/sockets/unicorn-pin-edu-sns.sock fail_timeout=0;
+    server unix:/MINDPIN_MRS_DATA/sockets/unicorn-pin-edu-sns.sock fail_timeout=0;
   }
   # MANAGEMENT PROJECT
   upstream management-server {
-    server unix:/web/2012/sockets/unicorn-management.sock fail_timeout=0;
+    server unix:/MINDPIN_MRS_DATA/sockets/unicorn-management.sock fail_timeout=0;
   }
 
   # pin-auth

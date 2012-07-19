@@ -40,12 +40,12 @@ http {
 
   # === Management Server
   upstream shcmusic-management-server {
-    server unix:/web/2012/sockets/unicorn-management.sock fail_timeout=0;
+    server unix:/MINDPIN_MRS_DATA/sockets/unicorn-management.sock fail_timeout=0;
   }
 
   # === App Server
   upstream shcmusic-pin-edu-sns-server {
-    server unix:/web/2012/sockets/unicorn-pin-edu-sns.sock fail_timeout=0;
+    server unix:/MINDPIN_MRS_DATA/sockets/unicorn-pin-edu-sns.sock fail_timeout=0;
   }
 
   # ========================================

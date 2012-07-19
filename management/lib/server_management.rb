@@ -64,11 +64,11 @@ class ServerManagement
       if !Servers.include?(server_name)
         raise "#{server_name} 这个 server_name 没有日志"
       end
-      "/web/2012/logs/#{server_name}.log"
+      "/MINDPIN_MRS_DATA/logs/#{server_name}.log"
     end
 
     def find_pid_file_path_by_server_name(server_name)
-      return "/web/2012/pids/#{server_name}.pid"
+      return "/MINDPIN_MRS_DATA/pids/#{server_name}.pid"
     end
   end
 end
