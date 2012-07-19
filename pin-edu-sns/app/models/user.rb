@@ -16,8 +16,10 @@ class User < ActiveRecord::Base
   include ShortMessage::UserMethods
 
   ##
-  has_many  :media_resources, :foreign_key  => 'creator_id'
+  include MediaResource::UserMethods
   include MediaShare::UserMethods
   include PublicResource::UserMethods
   include RedisSearch::UserMethods
+  include MediaShareRule::UserMethods
+  include Achievement::UserMethods
 end
