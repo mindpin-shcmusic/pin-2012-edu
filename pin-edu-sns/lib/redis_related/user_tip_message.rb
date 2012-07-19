@@ -25,7 +25,7 @@ class UserTipMessage < RedisTip
     end
 
     def notify_count(user)
-      super user, {:count => count(user)}
+      count(user)
     end
 
     protected

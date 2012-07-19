@@ -54,6 +54,13 @@ ActiveRecord::Schema.define(:version => 20120718084004) do
     t.datetime "updated_at"
   end
 
+  create_table "course_students", :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "student_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "courses", :force => true do |t|
     t.string   "name",       :default => "", :null => false
     t.string   "cid"
@@ -186,6 +193,14 @@ ActiveRecord::Schema.define(:version => 20120718084004) do
   add_index "media_resources", ["file_entity_id"], :name => "index_media_resources_on_file_entity_id"
   add_index "media_resources", ["fileops_time"], :name => "index_media_resources_on_fileops_time"
   add_index "media_resources", ["name"], :name => "index_media_resources_on_name"
+
+  create_table "media_share_rules", :force => true do |t|
+    t.integer  "creator_id"
+    t.integer  "media_resource_id"
+    t.text     "expression"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "media_shares", :force => true do |t|
     t.integer  "media_resource_id"
