@@ -110,5 +110,5 @@
           email : #{current_user.email.to_json}
         }
 
-    = javascript_include_tag 'http://192.168.1.38:8080/application.js', :application
+    = javascript_include_tag '/juggernaut/application.js', :application
     = yield :javascript
