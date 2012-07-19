@@ -5,12 +5,12 @@ Rails.application.config.secret_token = 'bbd4cd952a4dc5a511f7eed224b7a5dc71ef9b5
 case Rails.env
   when 'production'
     Rails.application.config.session_store :cookie_store, {
-      :domain => 'yinyue.edu',
+      # :domain => 'yinyue.edu',
       :key    => '_mindpin_edu_session'
     }
   when 'development'
     Rails.application.config.session_store :cookie_store, {
-      :domain => 'yinyue.edu',
+      # :domain => 'yinyue.edu',
       :key    => '_mindpin_edu_session_devel'
     }
 end

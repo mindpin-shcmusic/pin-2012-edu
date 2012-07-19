@@ -1,4 +1,4 @@
-$ ->
+pie.load ->
   jug                      = new Juggernaut
   notification_notifier    = new NotificationNotifier('.notification-notifier')
   comment_message_notifier = new CommentMessageNotifier('.comment-message-notifier')
@@ -7,8 +7,6 @@ $ ->
 
   $('.remove').live 'click', ->
     $(this).parent().fadeOut()
-
-  notification_notifier.subscribe    jug, "notification-count-user-#{USER_ID}"
 
   comment_message_notifier.subscribe jug, "user-comment-tip-message-count-user-#{USER_ID}"
 

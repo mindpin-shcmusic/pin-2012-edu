@@ -13,7 +13,7 @@ module UserAvatarMethods
       :storage => :oss,
       :path => AVATAR_PATH,
       :url  => AVATAR_URL,
-      :default_url   => pin_url_for('auth',"/images/default_avatars/:style.png"),
+      :default_url   => '/default_avatars/:style.png',
       :default_style => :normal
   end
 end

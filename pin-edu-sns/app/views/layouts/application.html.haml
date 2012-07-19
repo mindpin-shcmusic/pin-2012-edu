@@ -4,13 +4,11 @@
   t_str = yield_title.gsub("\n",'')
 
   title = t_str.blank? ? app_name : "#{t_str} - #{app_name}"
-  current_user = logged_in? ? current_user : User.new
 
 !!! 5
 %html{:lang=>'zh'}
   %head
     %meta{:charset=>'utf-8'}
-    %meta{:'current-user-id' => "#{current_user.id}"}
     %title=title
     = csrf_meta_tags
     = stylesheet_link_tag :application
@@ -72,9 +70,9 @@
         .settings.hide
           %a.setting{:href=>'javascript:;'} 设置
           %ul.items
-            %li=link_to '设置基本信息', pin_url_for('auth', '/auth/setting')
-            %li=link_to '设置头像', pin_url_for('auth', '/auth/setting/avatar')
-            %li=link_to '退出登录', pin_url_for('auth', '/auth/logout')
+            %li=link_to '设置基本信息', '/auth/setting'
+            %li=link_to '设置头像', '/auth/setting/avatar'
+            %li=link_to '退出登录', '/auth/logout'
 
         .user
           .current-user 欢迎你，#{current_user.name}
@@ -104,5 +102,13 @@
                     inbox_short_messages_path,
                     :class => 'link'
 
-    = javascript_include_tag 'http://192.168.1.19:8080/application.js', :application
+    -if logged_in?
+      :javascript
+        window.USER_INFO = {
+          id : #{current_user.id},
+          name : #{current_user.name.to_json},
+          email : #{current_user.email.to_json}
+        }
+
+    = javascript_include_tag 'http://192.168.1.38:8080/application.js', :application
     = yield :javascript

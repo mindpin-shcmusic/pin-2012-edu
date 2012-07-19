@@ -1,4 +1,4 @@
-$ ->
+pie.load ->
   class MediaShareNotifier extends Notifier
     update_text: ->
       @$content.text "#{this.get_count()}个新文件分享"

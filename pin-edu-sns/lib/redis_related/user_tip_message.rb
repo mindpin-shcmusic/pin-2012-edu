@@ -24,14 +24,14 @@ class UserTipMessage < RedisTip
       "/users/#{user.id}/message_list"
     end
 
-    def notify_count(user)
-      count(user)
-    end
-
     protected
 
     def key(user)
       "utm:#{user.id}"
+    end
+  
+    def unread_count(user) 
+      count(user)
     end
   end
 end

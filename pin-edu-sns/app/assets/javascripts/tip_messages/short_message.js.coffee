@@ -1,4 +1,4 @@
-$ ->
+pie.load ->
   jug                    = new Juggernaut
   short_message_notifier = new ShortMessageNotifier('.short-message-notifier')
   unread_count           = new Counter('.short-message-unread-count',

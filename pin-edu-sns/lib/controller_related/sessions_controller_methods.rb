@@ -1,7 +1,7 @@
 module SessionsControllerMethods
   # 登录
   def new
-    return redirect_back_or_default(pin_url_for('sns')) if logged_in?
+    return redirect_back_or_default('/') if logged_in?
     return render :template=>'auth/index/login'
   end
   
@@ -12,7 +12,7 @@ module SessionsControllerMethods
     if request.xhr?
       if logged_in?
         after_logged_in()
-        render :status=>200, :json=>{:result=>'ok', :redirect_to=>pin_url_for('sns')}
+        render :status=>200, :json=>{:result=>'ok', :redirect_to=>"/"}
       else
         render :status=>403, :text=>'登录失败：邮箱/密码不正确'
       end
@@ -22,10 +22,10 @@ module SessionsControllerMethods
     # 普通登录
     if logged_in?
       after_logged_in()
-      redirect_back_or_default(pin_url_for('sns'))
+      redirect_back_or_default('/')
     else
       flash[:error]='登录失败：邮箱/密码不正确'
-      redirect_to pin_url_for('auth')
+      redirect_to '/'
     end
   end
   
