@@ -1,10 +1,10 @@
 .page-login
   =form_tag('/auth/login') do
     .fields
-      .field.name
+      .field.name.placeholder
         %label 用户名 / 电子邮箱
         =text_field_tag :email
-      .field.password
+      .field.password.placeholder
         %label 密码
         =password_field_tag :password
       .field.subm
