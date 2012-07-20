@@ -62,7 +62,7 @@ class MediaShareRule < ActiveRecord::Base
     achievement = Achievement.find_or_initialize_by_user_id(self.creator.id)
     achievement.share_rate = rate
     achievement.save
-    UserShareRateTipMessage.notify_share_rank achievement.creator
+    UserShareRateTipMessage.notify_share_rank achievement.user
   end
 
   module UserMethods
@@ -80,6 +80,29 @@ class MediaShareRule < ActiveRecord::Base
         total_count  = self.media_resources.count
 
         shared_count / total_count.to_f * 100
+      end
+    end
+  end
+
+  module MediaResourceMethods
+    def self.included(base)
+      base.has_one :media_share_rule
+
+      base.send    :include,
+                   InstanceMethods
+    end
+
+    module InstanceMethods
+      def share_to(options)
+        rule = MediaShareRule.new
+        rule.media_resource = self
+        rule.creator = self.creator
+        rule.build_expression(options)
+        rule.save
+      end
+
+      def share_to_expression(expression_string)
+        share_to(JSON.parse expression_string, :symbolize_names => true)
       end
     end
   end

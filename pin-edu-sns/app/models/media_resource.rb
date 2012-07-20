@@ -16,7 +16,7 @@ class MediaResource < ActiveRecord::Base
              :foreign_key => 'dir_id',
              :conditions  => {:is_dir => true}
 
-  has_one    :media_share_rule
+
 
   validates  :name,
              :uniqueness  => {
@@ -265,6 +265,7 @@ class MediaResource < ActiveRecord::Base
 
   include MediaShare::MediaResourceMethods
   include PublicResource::MediaResourceMethods
+  include MediaShareRule::MediaResourceMethods
 
   # -------------- 这段需要放在最后，否则因为类加载顺序，会有警告信息
   # 设置全文索引字段
