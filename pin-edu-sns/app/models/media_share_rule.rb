@@ -62,6 +62,7 @@ class MediaShareRule < ActiveRecord::Base
     achievement = Achievement.find_or_initialize_by_user_id(self.creator.id)
     achievement.share_rate = rate
     achievement.save
+    UserShareRateTipMessage.notify_share_rank achievement.creator
   end
 
   module UserMethods
