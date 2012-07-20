@@ -1,12 +1,11 @@
 #! /usr/bin/env bash
 
-pin_2012_edu_dir=`dirname $0`/..
+. $EDU_PROJECT_PATH/sh/function.sh
+MINDPIN_MRS_DATA_PATH=$(get_mindpin_mrs_data_path)
 
-pin_edu_sns_dir=$pin_2012_edu_dir/pin-edu-sns
-pin_edu_sns_pid=/MINDPIN_MRS_DATA/pids/unicorn-pin-edu-sns.pid
+pin_edu_sns_dir=$EDU_PROJECT_PATH/pin-edu-sns
+pin_edu_sns_pid=$MINDPIN_MRS_DATA_PATH/pids/unicorn-pin-edu-sns.pid
 
-sh_dir=`dirname $0`
-. $sh_dir/function.sh
 rails_env=$(get_rails_env)
 
   case "$1" in

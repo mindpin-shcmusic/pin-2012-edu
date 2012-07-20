@@ -15,9 +15,10 @@ end
 
 $APP_RELATIVE_ROOT = '/management'
 
+MINDPIN_MRS_DATA_PATH = `ruby $EDU_PROJECT_PATH/parse_property.rb MINDPIN_MRS_DATA_PATH`
 module MindpinEduSns
   class Application < Rails::Application
-    config.logger = ActiveSupport::BufferedLogger.new("/MINDPIN_MRS_DATA/logs/rails-management-#{Rails.env}.log")
+    config.logger = ActiveSupport::BufferedLogger.new("#{MINDPIN_MRS_DATA_PATH}/logs/rails-management-#{Rails.env}.log")
     config.encoding = 'utf-8'
     config.filter_parameters += [:password]
     config.assets.enabled = true

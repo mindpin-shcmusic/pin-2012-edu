@@ -1,16 +1,16 @@
 # worker 数量
 worker_processes 3
 
-BASE_PATH = '/MINDPIN_MRS_DATA'
+MINDPIN_MRS_DATA_PATH = `ruby $EDU_PROJECT_PATH/parse_property.rb MINDPIN_MRS_DATA_PATH`
 
-stderr_path(File.join BASE_PATH, 'logs', 'unicorn-management-error.log')
-stdout_path(File.join BASE_PATH, 'logs', 'unicorn-management.log')
+stderr_path(File.join MINDPIN_MRS_DATA_PATH, 'logs', 'unicorn-management-error.log')
+stdout_path(File.join MINDPIN_MRS_DATA_PATH, 'logs', 'unicorn-management.log')
 
 preload_app true
 timeout 30
-listen File.join(BASE_PATH, 'sockets', 'unicorn-management.sock'), :backlog => 2048
+listen File.join(MINDPIN_MRS_DATA_PATH, 'sockets', 'unicorn-management.sock'), :backlog => 2048
 
-pid_file_name = File.join(BASE_PATH, 'pids', 'unicorn-management.pid')
+pid_file_name = File.join(MINDPIN_MRS_DATA_PATH, 'pids', 'unicorn-management.pid')
 pid pid_file_name
 
 if GC.respond_to?(:copy_on_write_friendly=)

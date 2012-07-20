@@ -1,17 +1,17 @@
 #! /usr/bin/env bash
 
-root_dir=`dirname $0`
+. $EDU_PROJECT_PATH/sh/function.sh
+MINDPIN_MRS_DATA_PATH=$(get_mindpin_mrs_data_path)
+REDIS_SERVER_PATH=$(redis_server_path)
 
-processor_pid=/MINDPIN_MRS_DATA/pids/redis_service.pid
+processor_pid=$MINDPIN_MRS_DATA_PATH/pids/redis_service.pid
+log_file=$MINDPIN_MRS_DATA_PATH/logs/redis_service.log
 
-log_file=/MINDPIN_MRS_DATA/logs/redis_service.log
-
-. $root_dir/../function.sh
 case "$1" in
         start)
                 assert_process_from_pid_file_not_exist $processor_pid
                 echo "redis_service start"
-                cd $root_dir/../../../redis-2.2.8
+                cd $REDIS_SERVER_PATH
                 ./src/redis-server 1>> $log_file 2>> $log_file & 
                 command_status
                 echo $! > $processor_pid

@@ -7,7 +7,7 @@ module ServerJuggernaut
     include PathConfig
 
     def juggernaut_service_state
-      pid_file_path = "/MINDPIN_MRS_DATA/pids/juggernaut_service.pid"
+      pid_file_path = "/#{MINDPIN_MRS_DATA_PATH}/pids/juggernaut_service.pid"
       ManagementUtil.check_process_by_pid_file(pid_file_path)
     end
 
