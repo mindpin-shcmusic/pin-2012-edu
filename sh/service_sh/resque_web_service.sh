@@ -1,12 +1,11 @@
 #! /usr/bin/env bash
 
-root_dir=`dirname $0`
+. $EDU_PROJECT_PATH/sh/function.sh
+MINDPIN_MRS_DATA_PATH=$(get_mindpin_mrs_data_path)
 
-processor_pid=/MINDPIN_MRS_DATA/pids/resque_web_service.pid
+processor_pid=$MINDPIN_MRS_DATA_PATH/pids/resque_web_service.pid
+log_file=$MINDPIN_MRS_DATA_PATH/logs/resque_web_service.log
 
-log_file=/MINDPIN_MRS_DATA/logs/resque_web_service.log
-
-. $root_dir/../function.sh
 case "$1" in
         start)
                 assert_process_from_pid_file_not_exist $processor_pid

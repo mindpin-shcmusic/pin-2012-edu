@@ -1,16 +1,17 @@
 # worker 数量
 worker_processes 3
 
+MINDPIN_MRS_DATA_PATH = `ruby $EDU_PROJECT_PATH/parse_property.rb MINDPIN_MRS_DATA_PATH`
 # 日志位置
-stderr_path("/MINDPIN_MRS_DATA/logs/unicorn-pin-edu-sns-error.log")
-stdout_path("/MINDPIN_MRS_DATA/logs/unicorn-pin-edu-sns.log")
+stderr_path("/#{MINDPIN_MRS_DATA_PATH}/logs/unicorn-pin-edu-sns-error.log")
+stdout_path("/#{MINDPIN_MRS_DATA_PATH}/logs/unicorn-pin-edu-sns.log")
 
 # 加载 超时设置 监听
 preload_app true
 timeout 60
-listen '/MINDPIN_MRS_DATA/sockets/unicorn-pin-edu-sns.sock', :backlog => 2048
+listen "/#{MINDPIN_MRS_DATA_PATH}/sockets/unicorn-pin-edu-sns.sock", :backlog => 2048
 
-pid_file_name = "/MINDPIN_MRS_DATA/pids/unicorn-pin-edu-sns.pid"
+pid_file_name = "/#{MINDPIN_MRS_DATA_PATH}/pids/unicorn-pin-edu-sns.pid"
 pid pid_file_name
 
 # REE GC

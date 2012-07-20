@@ -6,9 +6,10 @@ if defined?(Bundler)
   Bundler.require(:default, :assets, Rails.env)
 end
 
+MINDPIN_MRS_DATA_PATH = `ruby $EDU_PROJECT_PATH/parse_property.rb MINDPIN_MRS_DATA_PATH`
 module MindpinEduSns
   class Application < Rails::Application
-    config.logger = ActiveSupport::BufferedLogger.new("/MINDPIN_MRS_DATA/logs/rails-edu-sns-#{Rails.env}.log")
+    config.logger = ActiveSupport::BufferedLogger.new("/#{MINDPIN_MRS_DATA_PATH}/logs/rails-edu-sns-#{Rails.env}.log")
     # 当前工程的lib
     config.autoload_paths += Dir["#{Rails.root}/lib/**/"]
 
