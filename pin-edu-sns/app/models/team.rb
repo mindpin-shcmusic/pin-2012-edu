@@ -7,4 +7,8 @@ class Team < ActiveRecord::Base
   
   validates :name, :presence => true
   validates :cid, :uniqueness => { :if => Proc.new { |team| !team.cid.blank? } }
+
+  def get_users
+    [students, teacher].flatten.map(&:user)
+  end
 end
