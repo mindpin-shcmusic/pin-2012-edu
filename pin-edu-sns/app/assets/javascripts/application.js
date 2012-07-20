@@ -12,7 +12,7 @@
 //= require ./util/jquery.pie.path_join
 //= require ./util/pie.image_in_box
 //= require ./util/form
-//= require notifier
+//= require ./tip_messages/notifier
 //= require_tree .
 
 // show

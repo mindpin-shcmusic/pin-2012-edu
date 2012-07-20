@@ -1,7 +1,13 @@
 pie = {};
 
 pie.load = function(func){
-  jQuery(document).ready(func);
+  jQuery(function(){
+    try{
+      func();
+    }catch(e){
+      console.log("错误: " + e)
+    }
+  });
 };
 
 // firefox/chrome/safari控制台方法代理

@@ -1,7 +1,7 @@
 # worker 数量
 worker_processes 3
 
-BASE_PATH = '/web/2012'
+BASE_PATH = '/MINDPIN_MRS_DATA'
 
 stderr_path(File.join BASE_PATH, 'logs', 'unicorn-management-error.log')
 stdout_path(File.join BASE_PATH, 'logs', 'unicorn-management.log')

@@ -7,7 +7,7 @@ module ServersResqueWeb
     include PathConfig
 
     def resque_web_service_state
-      pid_file_path = "/web/2012/pids/resque_web_service.pid"
+      pid_file_path = "/MINDPIN_MRS_DATA/pids/resque_web_service.pid"
       ManagementUtil.check_process_by_pid_file(pid_file_path)
     end
 

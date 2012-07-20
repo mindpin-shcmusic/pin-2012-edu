@@ -2,9 +2,9 @@
 
 root_dir=`dirname $0`
 
-processor_pid=/web/2012/pids/resque_web_service.pid
+processor_pid=/MINDPIN_MRS_DATA/pids/resque_web_service.pid
 
-log_file=/web/2012/logs/resque_web_service.log
+log_file=/MINDPIN_MRS_DATA/logs/resque_web_service.log
 
 . $root_dir/../function.sh
 case "$1" in

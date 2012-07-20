@@ -6,13 +6,13 @@ module MediaFileHelper
     when :image
       return media_file.entry.url(:small)
     when :audio
-      return pin_url_for('sns', '/assets/covers/audio.small.png')
+      return '/assets/covers/audio.small.png'
     when :video
-      return pin_url_for('sns', '/assets/covers/video.small.png')
+      return '/assets/covers/video.small.png'
     when :document
-      return pin_url_for('sns', '/assets/covers/document.small.png')
+      return '/assets/covers/document.small.png'
     else
-      return pin_url_for('sns', '/assets/covers/normal.small.png')
+      return '/assets/covers/normal.small.png'
     end
 
   end
