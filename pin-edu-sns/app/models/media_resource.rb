@@ -16,6 +16,8 @@ class MediaResource < ActiveRecord::Base
              :foreign_key => 'dir_id',
              :conditions  => {:is_dir => true}
 
+
+
   validates  :name,
              :uniqueness  => {
                :case_sensitive => false,
@@ -176,6 +178,15 @@ class MediaResource < ActiveRecord::Base
     return "#{self.dir.path}/#{self.name}"
   end
 
+  def shared?
+    media_share_rule ? true : false
+  end
+
+  def shared_to?(user)
+    user.received_media_shares.where(:media_resource_id => self.id).any? ||
+    self.media_share_rule.get_receiver_ids.include?(user.id)
+  end
+
   def self.delta(creator, cursor, limit = 100)
     with_exclusive_scope do
       delta_media_resources = creator.media_resources.where('fileops_time > ?', cursor || 0).limit(limit)
@@ -254,6 +265,7 @@ class MediaResource < ActiveRecord::Base
 
   include MediaShare::MediaResourceMethods
   include PublicResource::MediaResourceMethods
+  include MediaShareRule::MediaResourceMethods
 
   # -------------- 这段需要放在最后，否则因为类加载顺序，会有警告信息
   # 设置全文索引字段
@@ -267,5 +279,12 @@ class MediaResource < ActiveRecord::Base
     has created_at, updated_at
 
     set_property :delta => true
+  end
+
+  module UserMethods
+    def self.included(base)
+      base.has_many :media_resources,
+                    :foreign_key => 'creator_id'
+    end
   end
 end
