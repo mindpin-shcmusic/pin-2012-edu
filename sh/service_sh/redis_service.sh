@@ -1,8 +1,12 @@
 #! /usr/bin/env bash
 
-. $EDU_PROJECT_PATH/sh/function.sh
-MINDPIN_MRS_DATA_PATH=$(get_mindpin_mrs_data_path)
-REDIS_SERVER_PATH=$(redis_server_path)
+current_path=`cd "$(dirname "$0")"; pwd`
+edu_project_path=$current_path/../..
+
+. $current_path/../function.sh
+
+MINDPIN_MRS_DATA_PATH=`ruby $edu_project_path/parse_property.rb MINDPIN_MRS_DATA_PATH`
+REDIS_SERVER_PATH=`ruby $edu_project_path/parse_property.rb REDIS_SERVER_PATH`
 
 processor_pid=$MINDPIN_MRS_DATA_PATH/pids/redis_service.pid
 log_file=$MINDPIN_MRS_DATA_PATH/logs/redis_service.log

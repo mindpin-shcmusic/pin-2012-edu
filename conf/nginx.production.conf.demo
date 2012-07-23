@@ -39,6 +39,7 @@ http {
   # ========================================
 
   # === Management Server
+  ##### /MINDPIN_MRS_DATA 这个路径，和 pin-2012-edu/property.yaml 中的 MINDPIN_MRS_DATA_PATH 对应
   upstream shcmusic-management-server {
     server unix:/MINDPIN_MRS_DATA/sockets/unicorn-management.sock fail_timeout=0;
   }
@@ -49,7 +50,7 @@ http {
   }
 
   # ========================================
-
+  ##### /web/2012/pin-2012-edu 这个路径，和 edu 工程路径相对应
   server {
     listen 80;
 

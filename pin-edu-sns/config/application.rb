@@ -6,7 +6,9 @@ if defined?(Bundler)
   Bundler.require(:default, :assets, Rails.env)
 end
 
-MINDPIN_MRS_DATA_PATH = `ruby $EDU_PROJECT_PATH/parse_property.rb MINDPIN_MRS_DATA_PATH`
+edu_project_path = File.expand_path("../../../",__FILE__)
+
+MINDPIN_MRS_DATA_PATH = `ruby #{edu_project_path}/parse_property.rb MINDPIN_MRS_DATA_PATH`
 module MindpinEduSns
   class Application < Rails::Application
     config.logger = ActiveSupport::BufferedLogger.new("/#{MINDPIN_MRS_DATA_PATH}/logs/rails-edu-sns-#{Rails.env}.log")
