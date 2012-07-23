@@ -51,7 +51,7 @@ class MediaShareRule < ActiveRecord::Base
   private
 
   def get_courses_or_team_receiver_ids(team_or_course)
-    team_or_course.find(expression[team_or_course.to_string.tableize.to_sym]).map {|org| [org.teacher, org.students]}.flatten.map(&:user_id)
+    team_or_course.find(expression[team_or_course.to_s.tableize.to_sym]).map(&:get_users).flatten.map(&:id).sort
   end
 
   def enqueue_build_share
@@ -59,11 +59,10 @@ class MediaShareRule < ActiveRecord::Base
   end
 
   def update_achievement
-    rate = self.creator.share_rate
-
     achievement = Achievement.find_or_initialize_by_user_id(self.creator.id)
-    achievement.share_rate = rate
+    achievement.share_rate = self.creator.share_rate
     achievement.save
+
     UserShareRateTipMessage.notify_share_rank achievement.user
   end
 
