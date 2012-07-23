@@ -19,43 +19,37 @@ describe MediaShareRule do
     end
   end
 
-  describe '#get_courses_receiver_ids' do
-    it 'should return all participating users\' ids' do
-      users    = 1.upto(4).map {FactoryGirl.create(:user)}
-      teacher  = FactoryGirl.create(:teacher, :user => users[3] )
-      course   = FactoryGirl.create(:course, :teacher => teacher)
-      course.students = users[0, 3].map {|user| FactoryGirl.create(:student, :user => user)}
-      user_ids = users.map(&:id)
-      
-      resource = FactoryGirl.create :media_resource,
-                                    :creator => teacher.user
+  context 'courses and teams user ids fetchers' do
+    before do
+      @users    = 1.upto(4).map {FactoryGirl.create(:user)}
+      @teacher  = FactoryGirl.create(:teacher, :user => @users[3] )
+      @user_ids = @users.map(&:id)
+      resource  = FactoryGirl.create :media_resource,
+                                     :creator => @teacher.user
 
-      rule     = FactoryGirl.build :media_share_rule,
-                                   :media_resource => resource,
-                                   :creator => teacher.user
-      rule.build_expression(:courses => [Course.first.id])
-
-      rule.get_courses_receiver_ids.should eq user_ids.sort
+      @rule     = FactoryGirl.build :media_share_rule,
+                                    :media_resource => resource,
+                                    :creator => @teacher.user
     end
-  end
 
-  describe '#get_teams_receiver_ids' do
-    it 'should return all participating users\' ids' do
-      users    = 1.upto(4).map {FactoryGirl.create(:user)}
-      teacher  = FactoryGirl.create(:teacher, :user => users[3] )
-      team     = FactoryGirl.create(:team, :teacher => teacher)
-      team.students = users[0, 3].map {|user| FactoryGirl.create(:student, :user => user)}
-      user_ids = users.map(&:id)
+    describe '#get_courses_receiver_ids' do
+      it 'should return all participating users\' ids' do
+        course = FactoryGirl.create(:course, :teacher => @teacher)
+        course.students = @users[0, 3].map {|user| FactoryGirl.create(:student, :user => user)}
       
-      resource = FactoryGirl.create :media_resource,
-                                    :creator => teacher.user
+        @rule.build_expression(:courses => [Course.first.id])
+        @rule.get_courses_receiver_ids.should eq @user_ids.sort
+      end
+    end
 
-      rule     = FactoryGirl.build :media_share_rule,
-                                   :media_resource => resource,
-                                   :creator => teacher.user
-      rule.build_expression(:teams => [Team.first.id])
+    describe '#get_teams_receiver_ids' do
+      it 'should return all participating users\' ids' do
+        team = FactoryGirl.create(:team, :teacher => @teacher)
+        team.students = @users[0, 3].map {|user| FactoryGirl.create(:student, :user => user)}
 
-      rule.get_teams_receiver_ids.should eq user_ids.sort
+        @rule.build_expression(:teams => [Team.first.id])
+        @rule.get_teams_receiver_ids.should eq @user_ids.sort
+      end
     end
   end
 
