@@ -20,7 +20,7 @@ log/*.pid
 config/development.sphinx.conf
 .powenv
 .rvmrc
-public/system/*
+pin-edu-sns/public/system/*
 coverage/
 .idea/*
 *DS_*
