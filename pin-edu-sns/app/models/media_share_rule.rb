@@ -9,9 +9,9 @@ class MediaShareRule < ActiveRecord::Base
              :foreign_key => 'creator_id'
 
   def build_expression(options = {})
-    options[:users] ||= []
+    options[:users]   ||= []
     options[:courses] ||= []
-    options[:teams] ||= []
+    options[:teams]   ||= []
 
     self.expression = options.to_json
   end
@@ -21,18 +21,16 @@ class MediaShareRule < ActiveRecord::Base
     exp && JSON.parse(exp, :symbolize_names => true)
   end
 
+  def get_courses_receiver_ids
+    get_courses_or_team_receiver_ids Course
+  end
+
+  def get_teams_receiver_ids
+    get_courses_or_team_receiver_ids Team
+  end
+
   def get_receiver_ids
-    direct_ids = expression[:users]
-
-    course_user_ids = expression[:courses].map {|cid|
-      Course.find cid
-    }.map {|course| [course.teacher, course.students]}.flatten.map(&:user_id)
-
-    team_user_ids = expression[:teams].map {|tid|
-      Team.find tid
-    }.map {|team| [team.teacher, team.students]}.flatten.map(&:user_id)
-
-    user_ids = (direct_ids + course_user_ids + team_user_ids).flatten.compact.uniq
+    user_ids = (expression[:users] + get_courses_receiver_ids + get_teams_receiver_ids).flatten.compact.uniq
     user_ids.delete(self.media_resource.creator.id)
 
     user_ids
@@ -51,6 +49,10 @@ class MediaShareRule < ActiveRecord::Base
   end
 
   private
+
+  def get_courses_or_team_receiver_ids(team_or_course)
+    team_or_course.find(expression[team_or_course.to_string.tableize.to_sym]).map {|org| [org.teacher, org.students]}.flatten.map(&:user_id)
+  end
 
   def enqueue_build_share
     BuildMediaShareResqueQueue.enqueue(self.id)
