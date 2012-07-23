@@ -1,12 +1,15 @@
 #! /usr/bin/env bash
 
-. $EDU_PROJECT_PATH/sh/function.sh
-MINDPIN_MRS_DATA_PATH=$(get_mindpin_mrs_data_path)
+current_path=`cd "$(dirname "$0")"; pwd`
+edu_project_path=$current_path/..
+pin_edu_sns_dir=$edu_project_path/pin-edu-sns
 
-pin_edu_sns_dir=$EDU_PROJECT_PATH/pin-edu-sns
+. $current_path/function.sh
+
+MINDPIN_MRS_DATA_PATH=`ruby $edu_project_path/parse_property.rb MINDPIN_MRS_DATA_PATH`
+rails_env=`ruby $edu_project_path/parse_property.rb RAILS_ENV` 
+
 pin_edu_sns_pid=$MINDPIN_MRS_DATA_PATH/pids/unicorn-pin-edu-sns.pid
-
-rails_env=$(get_rails_env)
 
   case "$1" in
     pin-edu-sns)

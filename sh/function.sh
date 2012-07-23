@@ -22,14 +22,9 @@ fi
 fi
 }
 
-function get_rails_env()
-{
-  echo -n `ruby $EDU_PROJECT_PATH/parse_property.rb RAILS_ENV` 
-}
-
 function get_sh_dir_path()
 {
-echo $(cd "$(dirname "$0")"; pwd)
+echo -n $(cd "$(dirname "$0")"; pwd)
 }
 
 function command_status()
@@ -39,14 +34,4 @@ echo "success"
 else
 echo "fail"
 fi
-}
-
-function get_mindpin_mrs_data_path()
-{
-  echo -n `ruby $EDU_PROJECT_PATH/parse_property.rb MINDPIN_MRS_DATA_PATH`
-}
-
-function redis_server_path()
-{
-  echo -n `ruby $EDU_PROJECT_PATH/parse_property.rb REDIS_SERVER_PATH` 
 }

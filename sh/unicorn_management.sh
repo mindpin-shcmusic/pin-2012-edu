@@ -1,18 +1,16 @@
 #! /usr/bin/env bash
 
-if [ -z $EDU_PROJECT_PATH ];then
-	echo "没有设置 EDU_PROJECT_PATH 环境变量"
-	exit 5
-fi
+current_path=`cd "$(dirname "$0")"; pwd`
+edu_project_path=$current_path/..
 
-. $EDU_PROJECT_PATH/sh/function.sh
-MINDPIN_MRS_DATA_PATH=$(get_mindpin_mrs_data_path)
+. $current_path/function.sh
+
+MINDPIN_MRS_DATA_PATH=`ruby $edu_project_path/parse_property.rb MINDPIN_MRS_DATA_PATH`
+rails_env=`ruby $edu_project_path/parse_property.rb RAILS_ENV` 
 
 pid=$MINDPIN_MRS_DATA_PATH/pids/unicorn-management.pid
-sh_dir_path=$EDU_PROJECT_PATH/sh
-rails_env=$(get_rails_env)
 
-cd $EDU_PROJECT_PATH/management
+cd $edu_project_path/management
 
 case "$1" in
 	start)
@@ -33,9 +31,9 @@ case "$1" in
 		;;
 	restart)
 		echo "restart"
-		$sh_dir_path/`basename $0` stop
+		$current_path/`basename $0` stop
 		sleep 1
-		$sh_dir_path/`basename $0` start
+		$current_path/`basename $0` start
 		;;
 	*)
 		echo "tip:(start|stop|restart|usr2_stop)"
