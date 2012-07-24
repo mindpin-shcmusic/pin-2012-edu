@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 class MediaResource < ActiveRecord::Base
-
+  acts_as_taggable
   # --------
 
   belongs_to :file_entity
@@ -54,6 +54,7 @@ class MediaResource < ActiveRecord::Base
   scope :root_res, where(:dir_id => 0)
   scope :ops_order, order('fileops_time ASC')
   scope :web_order, order('is_dir DESC, name ASC')
+  scope :of_creator, lambda{|user| where(:creator_id => user.id)}
 
   def is_file?
     !is_dir?
