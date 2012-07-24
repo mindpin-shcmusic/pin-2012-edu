@@ -1,7 +1,9 @@
 # worker 数量
 worker_processes 3
 
-MINDPIN_MRS_DATA_PATH = `ruby $EDU_PROJECT_PATH/parse_property.rb MINDPIN_MRS_DATA_PATH`
+edu_project_path = File.expand_path("../../../",__FILE__)
+
+MINDPIN_MRS_DATA_PATH = `ruby #{edu_project_path}/parse_property.rb MINDPIN_MRS_DATA_PATH`
 
 stderr_path(File.join MINDPIN_MRS_DATA_PATH, 'logs', 'unicorn-management-error.log')
 stdout_path(File.join MINDPIN_MRS_DATA_PATH, 'logs', 'unicorn-management.log')

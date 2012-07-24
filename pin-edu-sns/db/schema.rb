@@ -10,11 +10,11 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120719092614) do
+ActiveRecord::Schema.define(:version => 20120723033452) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
-    t.string   "share_rate"
+    t.float    "share_rate", :default => 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
   end

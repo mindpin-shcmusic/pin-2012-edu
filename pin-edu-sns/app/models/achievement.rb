@@ -10,10 +10,6 @@ class Achievement < ActiveRecord::Base
     end
 
     module InstanceMethods
-      def share_rate
-        self.achievement.share_rate
-      end
-
       def share_rank
         return 0 unless self.achievement
         Achievement.order('share_rate desc').index(self.achievement) + 1
