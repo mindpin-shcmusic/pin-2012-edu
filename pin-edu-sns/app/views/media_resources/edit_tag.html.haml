@@ -1,0 +1,5 @@
+.page-media-resource-edit-tag
+  %form{:action => File.join('/file_attr', @media_resource.path,'update_tag'), :method => "post", :name => ""}
+    .field
+      %input{:name => "tag", :type => "text", :value => @media_resource.tag_list*","}
+      %a.form-submit-button{:href=>'javascript:;'} 确定

@@ -29,15 +29,20 @@
       url = File.join('/file', resource.path)
       time = resource.fileops_time.localtime
       share_url = "/media_shares/new?resource_path=/file#{resource.path}"
+      edit_tag_url = File.join("/file_attr", resource.path,"edit_tag")
 
     .media-resource{:class => klass}
       = link_to resource.name, url, :class=>'link'
       = link_to '删除', url, :method=>'delete', :confirm=>'确定吗？', :class=>'delete'
       = link_to '共享给其他人', share_url, :class=>'share'
+      = link_to '编辑标签', edit_tag_url, :class=>"edit_tag"
       - if !resource.is_public?
         %a.put-public{:href=>'javascript:;', 'data-id' => resource.id} 添加到公共资源库
       - else
         .is-public 已经添加到公共资源
+      |
+      - resource.tag_list.each do |tag_name|
+        = link_to tag_name, "/tags/#{tag_name}"
 
       .time.quiet=time
       .size.quiet=media_resource_size_str(resource)

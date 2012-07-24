@@ -46,6 +46,8 @@ gem 'rmagick', :require => 'RMagick'
 
 gem 'unicorn'
 
+gem 'acts-as-taggable-on', '~> 2.3.1'
+
 group :test, :development do
   gem 'rspec-rails'
 end

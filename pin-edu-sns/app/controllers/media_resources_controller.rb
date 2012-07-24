@@ -62,4 +62,17 @@ class MediaResourcesController < ApplicationController
 
   end
 
+  def edit_tag
+    resource_path = "/#{params[:path]}"
+    @media_resource = MediaResource.get(current_user, resource_path)
+  end
+
+  def update_tag
+    resource_path = "/#{params[:path]}"
+    @media_resource = MediaResource.get(current_user, resource_path)
+    @media_resource.tag_list = params[:tag]
+    @media_resource.save
+    redirect_to File.join('/file',File.dirname(resource_path))
+  end
+
 end
