@@ -14,7 +14,7 @@ module SessionsControllerMethods
         after_logged_in()
         render :status=>200, :json=>{:result=>'ok', :redirect_to=>"/"}
       else
-        render :status=>403, :text=>'登录失败：邮箱/密码不正确'
+        render :status=>401, :text=>'登录失败：邮箱/密码不正确'
       end
       return
     end
