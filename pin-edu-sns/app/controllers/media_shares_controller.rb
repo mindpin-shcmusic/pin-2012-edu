@@ -1,13 +1,9 @@
 class MediaSharesController < ApplicationController
   def new
     resource_path = params[:resource_path].sub('/file', '')
-
     @current_dir = MediaResource.get(current_user, resource_path)
-
     @users = User.where("id != ?", current_user.id)
-
     @shared_receivers = @current_dir.shared_receivers
-
   end
 
   def create
