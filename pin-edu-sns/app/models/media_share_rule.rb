@@ -51,7 +51,7 @@ class MediaShareRule < ActiveRecord::Base
   private
 
   def get_courses_or_team_receiver_ids(team_or_course)
-    team_or_course.find(expression[team_or_course.to_s.tableize.to_sym]).map(&:get_users).flatten.map(&:id).sort
+    team_or_course.find(expression[team_or_course.to_s.tableize.to_sym]).map(&:get_user_ids).flatten.sort
   end
 
   def enqueue_build_share
@@ -95,8 +95,7 @@ class MediaShareRule < ActiveRecord::Base
 
     module InstanceMethods
       def share_to(options)
-        rule = MediaShareRule.new
-        rule.media_resource = self
+        rule = MediaShareRule.find_or_initialize_by_media_resource_id(self.id)
         rule.creator = self.creator
         rule.build_expression(options)
         rule.save
