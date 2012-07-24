@@ -72,9 +72,10 @@ describe MediaShareRule do
         @rule.get_receiver_ids.should eq recipent_ids.sort
       end
     end
+
   end
 
-  context 'private after_create callbacks' do
+  context 'private after_save callbacks' do
     before do
       @user = FactoryGirl.create :user
       resource = FactoryGirl.create :media_resource, :creator => @user
@@ -101,5 +102,7 @@ describe MediaShareRule do
         rule.save
       end
     end
+
   end
+
 end

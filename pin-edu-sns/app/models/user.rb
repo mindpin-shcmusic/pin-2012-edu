@@ -22,6 +22,8 @@ class User < ActiveRecord::Base
   include RedisSearch::UserMethods
   include MediaShareRule::UserMethods
   include Achievement::UserMethods
+  include Course::UserMethods
+  include Team::UserMethods
 
   ###
   include UserAvatarMethods

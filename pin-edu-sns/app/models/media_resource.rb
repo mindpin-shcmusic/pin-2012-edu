@@ -184,9 +184,7 @@ class MediaResource < ActiveRecord::Base
   end
 
   def shared_to?(user)
-    return false if media_share_rule.nil?
-    user.received_media_shares.where(:media_resource_id => self.id).any? ||
-    self.media_share_rule.get_receiver_ids.include?(user.id)
+    user.received_media_shares.where(:media_resource_id => self.id).any?
   end
 
   def self.delta(creator, cursor, limit = 100)

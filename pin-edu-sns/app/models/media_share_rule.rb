@@ -1,6 +1,6 @@
 class MediaShareRule < ActiveRecord::Base
-  after_create :enqueue_build_share
-  after_create :update_achievement
+  after_save :enqueue_build_share
+  after_save :update_achievement
 
   belongs_to :media_resource
 
@@ -9,6 +9,8 @@ class MediaShareRule < ActiveRecord::Base
              :foreign_key => 'creator_id'
 
   def build_expression(options = {})
+    options.assert_valid_keys :users, :courses, :teams
+
     options[:users]   ||= []
     options[:courses] ||= []
     options[:teams]   ||= []
@@ -30,7 +32,7 @@ class MediaShareRule < ActiveRecord::Base
   end
 
   def get_receiver_ids
-    user_ids = (expression[:users] + get_courses_receiver_ids + get_teams_receiver_ids).flatten.compact.uniq
+    user_ids = (expression[:users] + get_courses_receiver_ids + get_teams_receiver_ids).flatten.compact.map(&:to_i).uniq
     user_ids.delete(self.media_resource.creator.id)
 
     user_ids
@@ -41,10 +43,10 @@ class MediaShareRule < ActiveRecord::Base
   end
 
   def build_share
-    get_receivers.each {|user|
-      MediaShare.create :creator        => self.media_resource.creator,
-                        :media_resource => self.media_resource,
-                        :receiver       => user
+    get_receivers.each {|receiver|
+      share = MediaShare.find_or_initialize_by_media_resource_id_and_receiver_id self.media_resource.id, receiver.id
+      share.creator = self.creator
+      share.save
     }
   end
 
@@ -97,6 +99,7 @@ class MediaShareRule < ActiveRecord::Base
       def share_to(options)
         rule = MediaShareRule.find_or_initialize_by_media_resource_id(self.id)
         rule.creator = self.creator
+
         rule.build_expression(options)
         rule.save
       end

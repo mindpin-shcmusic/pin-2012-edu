@@ -15,4 +15,16 @@ class Team < ActiveRecord::Base
   def get_users
     User.find get_user_ids
   end
+
+  module UserMethods
+    def self.included(base)
+      base.send :include, InstanceMethods
+    end
+
+    module InstanceMethods
+      def teams
+        Team.joins(:teacher, :students).where('teachers.user_id = :id or students.user_id = :id', :id => self.id)
+      end
+    end
+  end
 end
