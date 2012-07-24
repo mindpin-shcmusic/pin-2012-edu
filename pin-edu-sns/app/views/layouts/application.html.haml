@@ -82,7 +82,7 @@
             %li=link_to '退出登录', '/auth/logout'
 
         .user
-          .current-user 欢迎你，#{current_user.name}
+          .current-user 欢迎你，#{current_user && current_user.name}
           %a.logout{:href=>'/auth/logout', :title=>'退出登录'} 退出登录
 
       .page-content
