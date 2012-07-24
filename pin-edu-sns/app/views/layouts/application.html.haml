@@ -47,6 +47,11 @@
                 .content= notification_count(current_user)
 
           .sp
+          %a.item.public-resource{:href=>'/public_resources'} 公共资源
+          %a.item.media-resource{:href=>'/file'} 我的个人文件夹
+          %a.item.share{:href=>'/media_shares/mine'} 我收到的共享
+
+          .sp
           %a.item.upload{:href=>'/'} 上传资源
           %a.item.mine{:href=>'/media_files/mine', :'data-pjax'=>'.page-content'} 我的资源 (#{MediaFile.count})
           .sp

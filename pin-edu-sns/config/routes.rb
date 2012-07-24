@@ -135,7 +135,7 @@ MindpinEduSns::Application.routes.draw do
     end
   end
 
-  ####
+  # --------------------
 
   # web
   get    '/file'       => 'media_resources#index'

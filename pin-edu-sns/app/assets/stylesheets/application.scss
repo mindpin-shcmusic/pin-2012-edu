@@ -45,3 +45,51 @@
 @import 'comments';
 @import 'notifications';
 @import 'short_messages';
+
+// --------------
+
+body.shcmrs-sync{
+  .page-header{
+    display:none;
+    @include gradient(#1C8FDF, #1C86D1);
+    box-shadow:0 0 5px black inset;
+    $h:60px;
+    height:$h;line-height:$h;
+    .title{
+      color:white;
+      font-size:16px;
+      font-weight:bold;
+      padding:0 40px;
+      text-shadow:1px 1px 2px black;
+    }
+  }
+
+  .page-sidebar{
+    position:fixed;
+    z-index:100;
+    top:0;bottom:0;
+    left:0;width:225px;
+    background-color:#0F639F;
+    padding-top:70px;
+
+    a{
+      height:70px;line-height:70px;
+      font-weight:bold;
+      color:white;
+      display:block;
+      padding:0 20px;
+      text-align:right;
+      font-size:14px;
+      &:hover{
+        color:white;
+        background-color:#0B73BD;
+        text-decoration:none;
+      }
+      &.current{
+        background-color:#4A96CC;
+      }
+    }
+  }
+}
+
+@import 'app-css/media_resources';

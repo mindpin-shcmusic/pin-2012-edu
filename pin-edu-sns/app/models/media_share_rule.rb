@@ -1,5 +1,5 @@
 class MediaShareRule < ActiveRecord::Base
-  after_commit :enqueue_build_share
+  after_create :enqueue_build_share
   after_create :update_achievement
 
   belongs_to :media_resource
