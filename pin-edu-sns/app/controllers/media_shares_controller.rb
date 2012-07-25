@@ -1,26 +1,23 @@
+# -*- coding: utf-8 -*-
 class MediaSharesController < ApplicationController
   def new
     resource_path = params[:resource_path].sub('/file', '')
     @current_dir = MediaResource.get(current_user, resource_path)
     @users = User.where("id != ?", current_user.id)
     @shared_receivers = @current_dir.shared_receivers
+
+    @courses = Course.all
+    @teams   = Team.all
   end
 
   def create
     media_resource = MediaResource.find(params[:media_resource_id])
 
-    MediaShare.destroy_all(:media_resource_id => media_resource.id)
+    # MediaShare.destroy_all(:media_resource_id => media_resource.id)
 
-    params[:receivers].each do |receiver_id|
-      MediaShare.create(
-        :creator => current_user,
-        :receiver_id => receiver_id,
-        :media_resource => media_resource
-      )
-    end
+    media_resource.share_to_expression params[:receivers].to_json
 
     redirect_to params[:resource_path].split(/\//)[0..-2].join('/')
-
   end
 
   def mine

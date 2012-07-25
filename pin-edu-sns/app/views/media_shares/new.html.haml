@@ -1,14 +1,30 @@
 = form_tag "/media_shares?resource_path=#{params[:resource_path]}", :method => 'post', :class => 'create' do
   = hidden_field_tag :media_resource_id, @current_dir.blank? ? '/' : @current_dir.id
+  .h1 用户
   %ul
     - @users.each do |user|
       %li
         - if @current_dir.shared_to?(user)
-          = check_box_tag 'receivers[]', user.id, true, {:id => "user_#{user.id}"}
+          = check_box_tag 'receivers[users][]', user.id, true, {:id => "user_#{user.id}"}
         - else
-          = check_box_tag 'receivers[]', user.id, false, {:id => "user_#{user.id}"}
+          = check_box_tag 'receivers[users][]', user.id, false, {:id => "user_#{user.id}"}
 
         = user.name
+
+    - if current_user
+      .h1 课程
+      %ul 
+        - current_user.courses.each do |course|
+          %li
+            = check_box_tag 'receivers[courses][]', course.id, false
+            = course.name
+
+      .h1 小组
+      %ul 
+        - current_user.teams.each do |team|
+          %li
+            = check_box_tag 'receivers[teams][]', team.id, false
+            = team.name
 
   = submit_tag "共享"
 

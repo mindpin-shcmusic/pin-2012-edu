@@ -8,8 +8,5 @@ class BuildMediaShareResqueQueue
 
   def self.perform(media_share_rule_id)
     MediaShareRule.find(media_share_rule_id).build_share
-  rescue Exception => ex
-    p ex.message
-    puts ex.backtrace*"\n"
   end
 end
