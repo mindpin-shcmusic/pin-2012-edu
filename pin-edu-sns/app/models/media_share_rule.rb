@@ -1,4 +1,5 @@
 class MediaShareRule < ActiveRecord::Base
+  attr_reader :deleting
   after_save :enqueue_build_share
   after_save :update_achievement
 
@@ -15,36 +16,43 @@ class MediaShareRule < ActiveRecord::Base
     options[:courses] ||= []
     options[:teams]   ||= []
 
+    @deleting = persisted? ? deleting_receiver_ids(options) : []
+    
     self.expression = options.to_json
   end
 
   def expression
     exp = read_attribute(:expression)
-    exp && JSON.parse(exp, :symbolize_names => true)
+    exp && JSON.parse(exp, :symbolize_names => true).reduce({}) do |sanitized, (k, v)|
+      sanitized[k] = v.map(&:to_i)
+      sanitized
+    end
   end
 
-  def get_courses_receiver_ids
-    get_courses_or_team_receiver_ids Course
-  end
+  def expression_receiver_ids
+    user_ids = (expression[:users]                  +
+                courses_or_teams_receiver_ids(Team) +
+                courses_or_teams_receiver_ids(Course)).flatten.compact.uniq
 
-  def get_teams_receiver_ids
-    get_courses_or_team_receiver_ids Team
-  end
-
-  def get_receiver_ids
-    user_ids = (expression[:users] + get_courses_receiver_ids + get_teams_receiver_ids).flatten.compact.map(&:to_i).uniq
     user_ids.delete(self.media_resource.creator.id)
 
     user_ids
   end
 
-  def get_receivers
-    User.find get_receiver_ids
+  def expression_receivers
+    User.find expression_receiver_ids
   end
 
-  def build_share
-    get_receivers.each {|receiver|
-      share = MediaShare.find_or_initialize_by_media_resource_id_and_receiver_id self.media_resource.id, receiver.id
+  def deleting_receivers
+    User.find deleting_receiver_ids
+  end
+
+  def build_share(deleting_ids)
+    MediaShare.where('id in (?)', self.deleting_ids).delete_all
+
+    expression_receivers.each {|receiver|
+      share = MediaShare.find_or_initialize_by_media_resource_id_and_receiver_id self.media_resource.id,
+                                                                                 receiver.id
       share.creator = self.creator
       share.save
     }
@@ -52,12 +60,17 @@ class MediaShareRule < ActiveRecord::Base
 
   private
 
-  def get_courses_or_team_receiver_ids(team_or_course)
+  def deleting_receiver_ids(options)
+    return [] if expression.nil?
+    ArrayDiff.deleted(expression_receiver_ids, options[:users].map(&:to_i))
+  end
+
+  def courses_or_teams_receiver_ids(team_or_course)
     team_or_course.find(expression[team_or_course.to_s.tableize.to_sym]).map(&:get_user_ids).flatten.sort
   end
 
   def enqueue_build_share
-    BuildMediaShareResqueQueue.enqueue(self.id)
+    BuildMediaShareResqueQueue.enqueue(self.id, self.deleting)
   end
 
   def update_achievement
