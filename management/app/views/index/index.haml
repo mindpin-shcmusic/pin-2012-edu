@@ -6,5 +6,12 @@
   = render 'index/parts/server_stat', :server_name=>'redis_service'
   = render 'index/parts/server_stat', :server_name=>'resque_web_service'
   = render 'index/parts/server_stat', :server_name=>'juggernaut_service'
+  = render 'index/parts/server_stat', :server_name=>'thinking_sphinx_service'
+
+  = render 'index/parts/resque_queue_worker_stat', :queue_name=>'build_media_share_resque_queue'
+  = render 'index/parts/resque_queue_worker_stat', :queue_name=>'file_entity_video_encode_resque_queue'
+  = render 'index/parts/resque_queue_worker_stat', :queue_name=>'merge_slice_temp_file_resque_queue'
+
+
 
 %a.page-logout{:href=>path_for('/logout')} 退出控制台

@@ -1,11 +1,12 @@
 class ServerManagement
 
   # 包含的server
-  Servers = ['redis_service','resque_web_service','juggernaut_service']
+  Servers = ['redis_service','resque_web_service','juggernaut_service','thinking_sphinx_service']
   
   include ServersRedis
   include ServersResqueWeb
   include ServerJuggernaut
+  include ServerThinkingSphinx
   
 
   class << self
@@ -68,6 +69,9 @@ class ServerManagement
     end
 
     def find_pid_file_path_by_server_name(server_name)
+      if server_name == "thinking_sphinx_service"
+        return thinking_sphinx_service_pid_file
+      end
       return "/#{MINDPIN_MRS_DATA_PATH}/pids/#{server_name}.pid"
     end
   end

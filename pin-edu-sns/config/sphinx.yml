@@ -4,4 +4,20 @@ development:
   charset_dictpath: /usr/local/mmseg3/etc
   ngram_len: 0
 
-  searchd_file_path: /web/sphinx
+  searchd_file_path: /MINDPIN_MRS_DATA/sphinx
+
+  searchd_log_file: /MINDPIN_MRS_DATA/logs/searchd.log
+  query_log_file: /MINDPIN_MRS_DATA/logs/searchd.query.log
+  pid_file: /MINDPIN_MRS_DATA/pids/sphinx_searchd.pid
+
+production:
+  charset_type: zh_cn.utf-8
+  bin_path: /usr/local/coreseek/bin
+  charset_dictpath: /usr/local/mmseg3/etc
+  ngram_len: 0
+
+  searchd_file_path: /MINDPIN_MRS_DATA/sphinx
+
+  searchd_log_file: /MINDPIN_MRS_DATA/logs/searchd.log
+  query_log_file: /MINDPIN_MRS_DATA/logs/searchd.query.log
+  pid_file: /MINDPIN_MRS_DATA/pids/sphinx_searchd.pid

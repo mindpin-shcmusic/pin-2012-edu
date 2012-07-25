@@ -4,6 +4,8 @@ MindpinEduSns::Application.routes.draw do
 
     post '/operate_project' => 'index#operate_project'
     post '/operate_server'  => 'index#operate_server'
+    post '/operate_resque_queue_worker'  => 'index#operate_resque_queue_worker'
+    
     
     get  '/redis_stats'       => 'index#redis_stats'
     post '/redis_flushall'    => 'index#redis_flushall'
