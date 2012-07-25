@@ -1,0 +1,22 @@
+:ruby
+  has_started = ResqueQueueWorkerManagement.start?(queue_name)
+  pid       = ResqueQueueWorkerManagement.pid_count(queue_name)
+  status_klass = has_started ? 'up' : 'down'
+  status_text  = has_started ? "正在运行 pid:#{pid}" : '已关闭'
+
+  stop_path  = operate_resque_queue_worker_path(:operate=>"stop",:queue=>queue_name)
+  start_path = operate_resque_queue_worker_path(:operate=>"start",:queue=>queue_name)
+
+.item
+  .status-icon{:class=>status_klass}
+
+  .meta
+    .name=queue_name
+    .status-text=status_text
+
+  -if has_started
+    .ops
+      =link_to '停止进程', stop_path, :method=>:post
+  -else
+    .ops
+      =link_to '启动进程', start_path, :method=>:post

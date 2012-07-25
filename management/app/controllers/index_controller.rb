@@ -26,6 +26,15 @@ class IndexController < ApplicationController
     redirect_to :action=>:index
   end
 
+  def operate_resque_queue_worker
+    ResqueQueueWorkerManagement.operate(params[:queue],params[:operate])
+    flash[:notice] = "操作成功"
+    redirect_to :action=>:index
+  rescue Exception=>ex
+    flash[:notice] = ex.message
+    redirect_to :action=>:index
+  end
+
   def redis_stats
     begin
       @stats = ServerManagement.check_redis_stats
