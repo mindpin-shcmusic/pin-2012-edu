@@ -13,8 +13,6 @@ class MediaSharesController < ApplicationController
   def create
     media_resource = MediaResource.find(params[:media_resource_id])
 
-    # MediaShare.destroy_all(:media_resource_id => media_resource.id)
-
     media_resource.share_to_expression params[:receivers].to_json
 
     redirect_to params[:resource_path].split(/\//)[0..-2].join('/')

@@ -15,19 +15,23 @@ module FactoryMethods
     }
   end
 
-  def make_a_course(number)
-    make_a_course_or_team :course, number
+  def make_courses(number, student_number = 4)
+    1.upto(number).map {make_a_course}
   end
 
-  def make_a_team(number)
-    make_a_course_or_team :team, number
+  def make_a_course(student_number)
+    make_a_course_or_team :course, student_number
+  end
+
+  def make_a_team(student_number)
+    make_a_course_or_team :team, student_number
   end
 
   private
 
-  def make_a_course_or_team(type, number)
+  def make_a_course_or_team(type, student_number)
     FactoryGirl.create type,
                        :teacher  => make_teachers(1)[0],
-                       :students => make_students(number)
+                       :students => make_students(student_number)
   end
 end
