@@ -17,6 +17,8 @@ class MediaShareRule < ActiveRecord::Base
     options[:teams]   ||= []
 
     @deleting = persisted? ? deleting_receiver_ids(options) : []
+
+    delete_share
     
     self.expression = options.to_json
   end
@@ -47,9 +49,11 @@ class MediaShareRule < ActiveRecord::Base
     User.find deleting_receiver_ids
   end
 
-  def build_share(deleting_ids)
-    MediaShare.where('id in (?)', self.deleting_ids).delete_all
+  def delete_share
+    MediaShare.where('media_resource_id = ? and receiver_id in (?)', self.media_resource_id, self.deleting).delete_all
+  end
 
+  def build_share
     expression_receivers.each {|receiver|
       share = MediaShare.find_or_initialize_by_media_resource_id_and_receiver_id self.media_resource.id,
                                                                                  receiver.id
@@ -70,7 +74,7 @@ class MediaShareRule < ActiveRecord::Base
   end
 
   def enqueue_build_share
-    BuildMediaShareResqueQueue.enqueue(self.id, self.deleting)
+    BuildMediaShareResqueQueue.enqueue(self.id)
   end
 
   def update_achievement
