@@ -1,6 +1,5 @@
 class SliceTempFilesController < ApplicationController
   before_filter :login_required
-  layout 'shcmrs_sync'
 
   def new_upload
     file_name = params[:file_name]

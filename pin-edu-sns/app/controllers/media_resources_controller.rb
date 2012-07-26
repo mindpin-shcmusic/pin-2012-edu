@@ -2,7 +2,6 @@
 
 class MediaResourcesController < ApplicationController
   before_filter :login_required
-  layout 'shcmrs_sync'
 
   def index
     @dir = nil
