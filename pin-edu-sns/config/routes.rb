@@ -154,6 +154,8 @@ MindpinEduSns::Application.routes.draw do
   post '/upload_blob'              => 'slice_temp_files#upload_blob'
   get  '/new_upload_page' => 'slice_temp_files#new_upload_page'
 
+  get '/media_resources/:id' => 'media_resources#show'
+
   resources :media_shares do
     collection do
       get :mine

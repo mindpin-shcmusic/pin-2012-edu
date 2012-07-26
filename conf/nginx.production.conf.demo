@@ -77,7 +77,7 @@ http {
 
     # === 主应用, app
     location / {
-      root /web/2012/pin-2012-edu/apps/pin-auth/public;
+      root /web/2012/pin-2012-edu/pin-edu-sns/public;
 
       proxy_pass_header Server;
       proxy_set_header Host $http_host;

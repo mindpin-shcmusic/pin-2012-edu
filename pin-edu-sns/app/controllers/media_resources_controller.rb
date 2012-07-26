@@ -74,4 +74,8 @@ class MediaResourcesController < ApplicationController
     redirect_to File.join('/file',File.dirname(resource_path))
   end
 
+  def show
+    render :partial=>'show_box', :locals=>{ :media_resource => MediaResource.find(params[:id]) }
+  end
+
 end

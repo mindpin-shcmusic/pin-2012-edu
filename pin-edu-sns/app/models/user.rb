@@ -15,8 +15,10 @@ class User < ActiveRecord::Base
   # --- 站内信
   include ShortMessage::UserMethods
 
-  ##
-  include MediaResource::UserMethods
+  # 如果该声明放在 MediaResource::UserMethods 上 会导致引用出现异常
+  # 只能在这里声明了 fushang318
+  has_many :media_resources,
+                    :foreign_key => 'creator_id'
   include MediaShare::UserMethods
   include PublicResource::UserMethods
   include RedisSearch::UserMethods

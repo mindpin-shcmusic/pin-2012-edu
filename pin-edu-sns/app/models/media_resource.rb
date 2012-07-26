@@ -268,6 +268,7 @@ class MediaResource < ActiveRecord::Base
   include PublicResource::MediaResourceMethods
   include MediaShareRule::MediaResourceMethods
 
+
   # -------------- 这段需要放在最后，否则因为类加载顺序，会有警告信息
   # 设置全文索引字段
   define_index do
@@ -280,12 +281,5 @@ class MediaResource < ActiveRecord::Base
     has created_at, updated_at
 
     set_property :delta => true
-  end
-
-  module UserMethods
-    def self.included(base)
-      base.has_many :media_resources,
-                    :foreign_key => 'creator_id'
-    end
   end
 end
