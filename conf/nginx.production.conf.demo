@@ -75,6 +75,12 @@ http {
       proxy_pass http://localhost:8080/;
     }
 
+    # attachments
+    ##### /MINDPIN_MRS_DATA 这个路径，和 pin-2012-edu/property.yaml 中的 MINDPIN_MRS_DATA_PATH 对应
+    location /attachments {
+      root /MINDPIN_MRS_DATA;
+    }
+
     # === 主应用, app
     location / {
       root /web/2012/pin-2012-edu/pin-edu-sns/public;
