@@ -6,9 +6,9 @@ if defined?(Bundler)
   Bundler.require(:default, :assets, Rails.env)
 end
 
-edu_project_path = File.expand_path("../../../",__FILE__)
+EDU_PROJECT_PATH = File.expand_path("../../../",__FILE__)
 
-MINDPIN_MRS_DATA_PATH = `ruby #{edu_project_path}/parse_property.rb MINDPIN_MRS_DATA_PATH`
+MINDPIN_MRS_DATA_PATH = `ruby #{EDU_PROJECT_PATH}/parse_property.rb MINDPIN_MRS_DATA_PATH`
 module MindpinEduSns
   class Application < Rails::Application
     # 设置 acts-as-taggable-on 的分隔符

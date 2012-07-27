@@ -53,6 +53,8 @@ module ApplicationMethods
   def catch_template_exception
     yield
   rescue ActionView::TemplateError=>ex
+    p ex
+    puts ex.backtrace*"\n"
     if Rails.env.development?
       raise ex
     else
