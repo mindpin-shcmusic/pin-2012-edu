@@ -36,4 +36,12 @@ module MediaResourceHelper
     return "#{s} GB"
   end
 
+
+  def media_resource_cover_src(media_resource)
+    if media_resource.is_dir?
+      return '/assets/covers/normal.small.png'
+    end
+    return '/assets/covers/audio.small.png'
+  end
+
 end

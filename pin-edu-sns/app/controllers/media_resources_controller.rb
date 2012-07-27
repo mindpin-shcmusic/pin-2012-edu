@@ -2,7 +2,6 @@
 
 class MediaResourcesController < ApplicationController
   before_filter :login_required
-  layout 'shcmrs_sync'
 
   def index
     @dir = nil
@@ -73,6 +72,10 @@ class MediaResourcesController < ApplicationController
     @media_resource.tag_list = params[:tag]
     @media_resource.save
     redirect_to File.join('/file',File.dirname(resource_path))
+  end
+
+  def show
+    render :partial=>'show_box', :locals=>{ :media_resource => MediaResource.find(params[:id]) }
   end
 
 end

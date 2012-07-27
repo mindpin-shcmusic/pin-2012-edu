@@ -35,6 +35,14 @@ class FileEntity < ActiveRecord::Base
     :video == self.content_kind
   end
 
+  def is_audio?
+    :audio == self.content_kind
+  end
+
+  def is_image?
+    :image == self.content_kind
+  end
+
   CONTENT_TYPES = {
     :video    => [
         'avi', 'rm',  'rmvb', 'mp4', 

@@ -16,7 +16,7 @@
     - media_resource_navs_dirs(@current_dir).each do |dir|
       %span= link_to dir.name, File.join('/file', dir.path)
 
-.page-media-resource-list
+.page-media-resources
   - resources = @media_resources
 
   - if resources.blank?
@@ -25,24 +25,39 @@
 
   - resources.each do |resource|
     :ruby
-      klass = resource.is_dir? ? 'dir' : 'file'
-      url = File.join('/file', resource.path)
-      time = resource.fileops_time.localtime
-      share_url = "/media_shares/new?resource_path=/file#{resource.path}"
-      edit_tag_url = File.join("/file_attr", resource.path,"edit_tag")
+      cover_src = media_resource_cover_src(resource)
+      title = truncate_u resource.name, 10
+      creator_name = resource.creator.name
+      creator_avatar_src = resource.creator.logo.url
+      uploaded_at = resource.created_at
+      is_dir = resource.is_dir?
+      resource_url = File.join('/file', resource.path)
 
-    .media-resource{:class => klass}
-      = link_to resource.name, url, :class=>'link'
-      = link_to '删除', url, :method=>'delete', :confirm=>'确定吗？', :class=>'delete'
-      = link_to '共享给其他人', share_url, :class=>'share'
-      = link_to '编辑标签', edit_tag_url, :class=>"edit_tag"
-      - if !resource.is_public?
-        %a.put-public{:href=>'javascript:;', 'data-id' => resource.id} 添加到公共资源库
-      - else
-        .is-public 已经添加到公共资源
-      |
-      - resource.tag_list.each do |tag_name|
-        = link_to tag_name, "/tags/#{tag_name}"
+    %a.media-resource{:href=>'javascript:;', |
+      :'data-id'=> resource.id, |
+      :'data-resource-url'=> resource_url, |
+      :'data-title'=>title, |
+      :'data-uploaded-at'=>uploaded_at, |
+      :'data-creator-name'=>creator_name, |
+      :'data-creator-avatar-src'=>creator_avatar_src, |
+      :'data-is-dir'=> is_dir.to_s}
+      .meta-box
+        .cover{:'data-src'=>cover_src}
+        .title=title
+      .detail-box
 
-      .time.quiet=time
-      .size.quiet=media_resource_size_str(resource)
+
+.page-media-resource-show-wrapper{:style=>'display:none;'}
+  .box
+    .header
+      .hbox
+        .avatar
+        .title
+        .meta
+          %span.creator-name
+          %span 上传于
+          %span.uploaded-at
+
+      %a.close{:href=>'javascript:;'}
+    .bd
+      .cover
