@@ -7,7 +7,7 @@ class Admin::TeachersController < ApplicationController
   end
   
   def index
-    @teachers = Teacher.all
+    @teachers = Teacher.paginated(params[:page])
   end
   
   def new
@@ -24,6 +24,11 @@ class Admin::TeachersController < ApplicationController
     redirect_to "/admin/teachers/new"
   end
   
+  def destroy
+    @teacher.remove
+    redirect_to :action => :index
+  end
+
   def show
   end
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120723093024) do
+ActiveRecord::Schema.define(:version => 20120730021346) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(:version => 20120723093024) do
     t.integer  "depth"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_removed", :default => false
   end
 
   add_index "categories", ["parent_id"], :name => "index_categories_on_parent_id"
@@ -69,7 +70,7 @@ ActiveRecord::Schema.define(:version => 20120723093024) do
   end
 
   create_table "courses", :force => true do |t|
-    t.string   "name",       :default => "", :null => false
+    t.string   "name",       :default => "",    :null => false
     t.string   "cid"
     t.string   "department"
     t.string   "location"
@@ -77,6 +78,7 @@ ActiveRecord::Schema.define(:version => 20120723093024) do
     t.text     "desc"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_removed", :default => false
   end
 
   add_index "courses", ["teacher_id"], :name => "index_courses_on_teacher_id"
@@ -272,11 +274,12 @@ ActiveRecord::Schema.define(:version => 20120723093024) do
   end
 
   create_table "students", :force => true do |t|
-    t.string   "real_name",  :default => "", :null => false
+    t.string   "real_name",  :default => "",    :null => false
     t.string   "sid"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_removed", :default => false
   end
 
   add_index "students", ["user_id"], :name => "index_students_on_user_id"
@@ -299,11 +302,12 @@ ActiveRecord::Schema.define(:version => 20120723093024) do
   end
 
   create_table "teachers", :force => true do |t|
-    t.string   "real_name",  :default => "", :null => false
+    t.string   "real_name",  :default => "",    :null => false
     t.string   "tid"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_removed", :default => false
   end
 
   add_index "teachers", ["user_id"], :name => "index_teachers_on_user_id"
@@ -319,11 +323,12 @@ ActiveRecord::Schema.define(:version => 20120723093024) do
   add_index "team_students", ["team_id"], :name => "index_team_students_on_team_id"
 
   create_table "teams", :force => true do |t|
-    t.string   "name",       :default => "", :null => false
+    t.string   "name",       :default => "",    :null => false
     t.string   "cid"
     t.integer  "teacher_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_removed", :default => false
   end
 
   add_index "teams", ["teacher_id"], :name => "index_teams_on_teacher_id"

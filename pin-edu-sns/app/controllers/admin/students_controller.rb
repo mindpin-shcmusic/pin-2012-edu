@@ -7,7 +7,7 @@ class Admin::StudentsController < ApplicationController
   end
   
   def index
-    @students = Student.all
+    @students = Student.paginated(params[:page])
   end
   
   def new
@@ -22,6 +22,11 @@ class Admin::StudentsController < ApplicationController
     error = @student.errors.first
     flash[:error] = "#{error[0]} #{error[1]}"
     redirect_to "/admin/students/new"
+  end
+  
+  def destroy
+    @student.remove
+    redirect_to :action => :index
   end
   
   def show

@@ -7,7 +7,7 @@ class Admin::TeamsController < ApplicationController
   end
   
   def index
-    @teams = Team.all
+    @teams = Team.paginated(params[:page])
   end
   
   def new
@@ -23,6 +23,11 @@ class Admin::TeamsController < ApplicationController
     error = @team.errors.first
     flash[:error] = "#{error[0]} #{error[1]}"
     redirect_to "/admin/teams/new"
+  end
+  
+  def destroy
+    @team.remove
+    redirect_to :action => :index
   end
   
   def show

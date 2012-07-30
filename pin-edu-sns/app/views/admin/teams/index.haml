@@ -23,5 +23,6 @@
         .c
 
       .detail=link_to "查看详情","/admin/teams/#{team.id}"
-
+      .remove=link_to '删除', admin_team_path(team), :method => :delete
   
+= will_paginate @teams

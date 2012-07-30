@@ -4,6 +4,9 @@ class Teacher < ActiveRecord::Base
   validates :real_name, :presence => true
   validates :tid, :uniqueness => { :if => Proc.new { |teacher| !teacher.tid.blank? } }
   
+  include Removable
+  include Paginated
+
   module UserMethods
     def self.included(base)
       base.has_one :teacher

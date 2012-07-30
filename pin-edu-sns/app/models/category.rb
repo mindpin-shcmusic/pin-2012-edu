@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Category < ActiveRecord::Base
   acts_as_nested_set
 
@@ -34,4 +35,7 @@ class Category < ActiveRecord::Base
   def has_max_depth?
     self.depth & self.depth >= 2 
   end
+
+  include Removable
+
 end

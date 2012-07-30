@@ -15,6 +15,9 @@ class Course < ActiveRecord::Base
     User.find get_user_ids
   end
 
+  include Removable
+  include Paginated
+
   module UserMethods
     def self.included(base)
       base.send :include, InstanceMethods

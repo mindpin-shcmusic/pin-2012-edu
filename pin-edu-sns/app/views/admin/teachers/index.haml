@@ -19,5 +19,6 @@
         .c
 
       .detail=link_to "查看详情","/admin/teachers/#{teacher.id}"
-  
-		
+      .remove=link_to '删除', admin_teacher_path(teacher), :method => :delete
+
+= will_paginate @teachers
