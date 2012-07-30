@@ -9,5 +9,5 @@
       .t=category.name
       .c=categories_or_media_file_count(category)
       %a{:href=>"/admin/categories/new?parent_id=#{category.id}"} 增加子数据分类
-      .remove=link_to '删除', admin_category_path(category), :method => :delete  
+      .remove=link_to '删除', admin_category_path(category), :method => :delete, :confirm => '确定要删除？'
       = recursive_categories(category)

@@ -19,6 +19,6 @@
         .c
 
       .detail=link_to "查看详情","/admin/students/#{student.id}"
-      .remove=link_to '删除', admin_student_path(student), :method => :delete  
+      .remove=link_to '删除', admin_student_path(student), :method => :delete, :confirm => '确定要删除？'
 
 = will_paginate @students

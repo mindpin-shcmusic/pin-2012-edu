@@ -29,6 +29,6 @@
         .t 其他描述 
         .c=course.desc
       .detail=link_to "查看详情","/admin/courses/#{course.id}"
-      .remove=link_to '删除', admin_course_path(course), :method => :delete
+      .remove=link_to '删除', admin_course_path(course), :method => :delete, :confirm => '确定要删除？'
   
 = will_paginate @courses
