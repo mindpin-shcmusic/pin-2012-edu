@@ -29,4 +29,10 @@ class Course < ActiveRecord::Base
       end
     end
   end
+
+  define_index do
+    indexes name, :sortable => true
+
+    where('is_removed = 0')
+  end
 end

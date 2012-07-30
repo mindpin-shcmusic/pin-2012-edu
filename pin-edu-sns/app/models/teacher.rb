@@ -37,4 +37,10 @@ class Teacher < ActiveRecord::Base
     end
     
   end
+
+  define_index do
+    indexes real_name, :sortable => true
+
+    where('is_removed = 0')
+  end
 end

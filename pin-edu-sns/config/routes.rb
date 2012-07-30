@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 # -- 用户认证相关 --
 def match_auth_routes
   get  '/login'  => 'sessions#new'
@@ -35,17 +36,26 @@ MindpinEduSns::Application.routes.draw do
         get :set_user
         put :do_set_user
       end
+      collection do
+        get :search
+      end
     end
     resources :courses do
       member do
         get :select_teacher
         put :set_teacher
       end
+      collection do
+        get :search
+      end
     end
     resources :students do
       member do
         get :set_user
         put :do_set_user
+      end
+      collection do
+        get :search
       end
     end
     resources :teams do
@@ -55,9 +65,16 @@ MindpinEduSns::Application.routes.draw do
         get :select_students
         put :set_students
       end
+      collection do
+        get :search
+      end
     end
     
-    resources :categories
+    resources :categories do
+      collection do
+        get :search
+      end
+    end
     
     root :to=>"index#index"
   end

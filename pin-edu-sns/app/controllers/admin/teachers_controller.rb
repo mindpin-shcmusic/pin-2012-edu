@@ -10,6 +10,12 @@ class Admin::TeachersController < ApplicationController
     @teachers = Teacher.paginated(params[:page])
   end
   
+  def search
+    @result = Teacher.search params[:q]
+
+    render :partial => 'teacher_list', :locals => {:teachers => @result}, :layout => false
+  end
+
   def new
     @teacher = Teacher.new
   end

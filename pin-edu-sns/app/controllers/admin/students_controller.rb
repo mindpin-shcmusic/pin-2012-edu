@@ -14,6 +14,12 @@ class Admin::StudentsController < ApplicationController
     @student = Student.new
   end
   
+  def search
+    @result = Student.search params[:q]
+
+    render :partial => 'student_list', :locals => {:students => @result}, :layout => false
+  end
+
   def create
     @student = Student.new(params[:student])
     if @student.save

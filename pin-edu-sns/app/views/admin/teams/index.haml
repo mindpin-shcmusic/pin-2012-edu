@@ -1,28 +1,11 @@
 .page-title 班级维护
 
+= render 'admin/shared/search_field', :search_path => search_admin_teams_path
+
 .page-admin-ops
   %a.create{:href=>'/admin/teams/new'} 增加班级
 
 .page-admin-models.teams
-  -@teams.each do |team|
-    :ruby
-      teacher_name = team.teacher.blank? ? '未指定' : team.teacher.real_name
-    .model.team
-      .p
-        .t 名称 
-        .c=team.name
-      .p
-        .t 班级序号 
-        .c=team.cid
-      .p
-        .t 教师
-        .c=teacher_name
-        .ava=avatar User.new, :mini
-      .p.l3
-        .t 其他描述 
-        .c
+  = render 'team_list', :teams => @teams
 
-      .detail=link_to "查看详情","/admin/teams/#{team.id}"
-      .remove=link_to '删除', admin_team_path(team), :method => :delete, :confirm => '确定要删除？'
-  
 = will_paginate @teams
