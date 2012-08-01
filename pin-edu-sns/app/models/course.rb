@@ -15,6 +15,9 @@ class Course < ActiveRecord::Base
     User.find get_user_ids
   end
 
+  include Removable
+  include Paginated
+
   module UserMethods
     def self.included(base)
       base.send :include, InstanceMethods
@@ -25,5 +28,11 @@ class Course < ActiveRecord::Base
         Course.joins(:teacher, :students).where('teachers.user_id = :id or students.user_id = :id', :id => self.id)
       end
     end
+  end
+
+  define_index do
+    indexes name, :sortable => true
+
+    where('is_removed = 0')
   end
 end

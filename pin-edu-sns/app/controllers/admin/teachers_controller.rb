@@ -7,9 +7,15 @@ class Admin::TeachersController < ApplicationController
   end
   
   def index
-    @teachers = Teacher.all
+    @teachers = Teacher.paginated(params[:page])
   end
   
+  def search
+    @result = Teacher.search params[:q]
+
+    render :partial => 'teacher_list', :locals => {:teachers => @result}, :layout => false
+  end
+
   def new
     @teacher = Teacher.new
   end
@@ -24,6 +30,11 @@ class Admin::TeachersController < ApplicationController
     redirect_to "/admin/teachers/new"
   end
   
+  def destroy
+    @teacher.remove
+    redirect_to :action => :index
+  end
+
   def show
   end
 

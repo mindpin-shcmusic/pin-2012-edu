@@ -20,4 +20,10 @@ class Admin::CategoriesController < ApplicationController
     end
     redirect_to "/admin/categories"
   end
+
+  def destroy
+    Category.find(params[:id]).remove
+    redirect_to :action => :index
+  end
+  
 end

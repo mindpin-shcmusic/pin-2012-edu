@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 module CategoryHelper
   def recursive_categories(category)
     if category.children.any?
@@ -7,7 +8,7 @@ module CategoryHelper
             content_tag(:div, c.name, :class => :t)+
             content_tag(:div, categories_or_media_file_count(c), :class => :c)+
             if !c.has_max_depth?
-              link_to("增加子数据分类", new_category_path(:parent_id => c.id))
+              link_to("增加子数据分类", new_admin_category_path(:parent_id => c.id))
             end+
             recursive_categories(c)
           end

@@ -49,8 +49,6 @@ class MediaResource < ActiveRecord::Base
 
   # --------
 
-  default_scope where(:is_removed => false)
-  scope :removed, where(:is_removed => true)
   scope :root_res, where(:dir_id => 0)
   scope :ops_order, order('fileops_time ASC')
   scope :web_order, order('is_dir DESC, name ASC')
@@ -267,6 +265,7 @@ class MediaResource < ActiveRecord::Base
   include MediaShare::MediaResourceMethods
   include PublicResource::MediaResourceMethods
   include MediaShareRule::MediaResourceMethods
+  include Removable
 
 
   # -------------- 这段需要放在最后，否则因为类加载顺序，会有警告信息

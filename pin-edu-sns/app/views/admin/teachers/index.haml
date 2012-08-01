@@ -1,23 +1,11 @@
 .page-title 教师维护
 
+= render 'admin/shared/search_field', :search_path => search_admin_students_path
+
 .page-admin-ops
   %a.create{:href=>'/admin/teachers/new'} 增加教师
 
 .page-admin-models.teachers
-  -@teachers.each do |teacher|
-    .model.teacher
-      .avatar
-        =avatar User.new, :medium
-      .p
-        .t 教师姓名
-        .c=teacher.real_name
-      .p
-        .t 教师编号 
-        .c=teacher.tid
-      .p.l3
-        .t 其他信息 
-        .c
+  = render 'teacher_list', :teachers => @teachers
 
-      .detail=link_to "查看详情","/admin/teachers/#{teacher.id}"
-  
-		
+= will_paginate @teachers

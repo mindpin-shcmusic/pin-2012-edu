@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Student < ActiveRecord::Base
   belongs_to :user
 
@@ -28,6 +29,9 @@ class Student < ActiveRecord::Base
   validates :real_name, :presence=>true
   validates :sid, :uniqueness => { :if => Proc.new { |student| !student.sid.blank? } }
   
+  include Removable
+  include Paginated
+
   module UserMethods
     def self.included(base)
       base.has_one :student
@@ -39,5 +43,11 @@ class Student < ActiveRecord::Base
         !self.student.blank?
       end
     end
+  end
+
+  define_index do
+    indexes real_name, :sortable => true
+
+    where('is_removed = 0')
   end
 end

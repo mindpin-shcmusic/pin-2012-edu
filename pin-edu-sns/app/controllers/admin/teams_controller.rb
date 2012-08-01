@@ -7,9 +7,15 @@ class Admin::TeamsController < ApplicationController
   end
   
   def index
-    @teams = Team.all
+    @teams = Team.paginated(params[:page])
   end
   
+  def search
+    @result = Team.search params[:q]
+
+    render :partial => 'team_list', :locals => {:teams => @result}, :layout => false
+  end
+
   def new
     @team = Team.new
   end
@@ -23,6 +29,11 @@ class Admin::TeamsController < ApplicationController
     error = @team.errors.first
     flash[:error] = "#{error[0]} #{error[1]}"
     redirect_to "/admin/teams/new"
+  end
+  
+  def destroy
+    @team.remove
+    redirect_to :action => :index
   end
   
   def show
