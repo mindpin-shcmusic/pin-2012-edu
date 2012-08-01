@@ -10,16 +10,17 @@
 ### END INIT INFO
 
 NGINX_BIN=/usr/local/nginx/sbin/nginx
+NGINX_PID_FILE=/usr/local/nginx/logs/nginx.pid
 
 case "$1" in
 
   start)
-    startproc $NGINX_BIN
+    $NGINX_BIN
     echo "nginx started"
     ;;
 
   stop)
-    killproc $NGINX_BIN
+    kill -INT `cat $NGINX_PID_FILE`
     echo "nginx stoped"
     ;;
 
