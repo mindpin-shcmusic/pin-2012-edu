@@ -116,7 +116,7 @@ class IndexController < ApplicationController
     real_password = password[0..-9]
     time_password = password[-8..-1]
     name == "admin" && 
-      "9c1de23a6e94f017a0d32d40e777fb94223a6fe3" == Digest::SHA1.hexdigest(real_password) &&
+      "cd5ea73cd58f827fa78eef7197b8ee606c99b2e6" == Digest::SHA1.hexdigest(real_password) &&
       Time.now.strftime("%Y%d%m") == time_password
   end
 end
