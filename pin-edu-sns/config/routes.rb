@@ -141,7 +141,15 @@ MindpinEduSns::Application.routes.draw do
 
   resources :homeworks, :student
 
-  resources :courses, :teachers
+  resources :teachers
+  resources :courses do
+    member do
+      get :upload_image_page
+      post :upload_image
+      get :select_cover_page
+      post :select_cover
+    end
+  end
   resources :notifications do
     collection do
       post :read_all

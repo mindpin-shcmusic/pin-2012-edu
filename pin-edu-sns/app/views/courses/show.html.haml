@@ -20,4 +20,10 @@
   老师
   = link_to @course.teacher && @course.teacher.real_name,
             @course.teacher
+.attr
+  = link_to "上传图片","/courses/#{@course.id}/upload_image_page"
+
+
+
+
 
