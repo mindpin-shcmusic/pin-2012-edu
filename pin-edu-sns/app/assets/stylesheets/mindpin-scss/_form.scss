@@ -1,0 +1,151 @@
+form{
+  .flash-info{
+    margin-bottom:10px;
+    &:before{
+      content:">>";
+      margin-right:7px;
+    }
+
+    &.error{
+      color:red;
+    }
+  }
+
+  .field{
+    margin-bottom:10px;
+    @include floatfix;
+    &:last-child{margin-bottom:0;}
+    
+    label{
+      display:block;
+      line-height:20px;height:20px;
+      margin-bottom:5px;
+      font-size:14px;
+    }
+
+    &.need:not(.placeholder) label{
+      &:after{
+        content:"(必填)";
+        display:inline-block;
+        font-size:12px;
+        color:#FFBD00;
+        margin-left:5px;
+      };
+    }
+
+
+    input[type=text], input[type=password], textarea{
+      border:solid #ccc 1px;
+      box-shadow:0 0px 2px rgba(white, 0.3) inset, 0 0 5px rgba(white, 0.6);
+      font-size:14px;
+      padding:0 7px;
+      width:240px;
+      background-color:white;
+      color:#444;
+      @include base-font;
+
+      &:focus{
+        box-shadow:0 0px 2px rgba(white, 0.3) inset, 0 0 5px rgba(#52A8EC, 0.6);
+        border:solid 1px rgba(#52A8EC, 0.8);
+      }
+    }
+
+    input[type=text], input[type=password]{
+      height:20px;line-height:20px;
+      padding-top:5px;
+      padding-bottom:5px;
+    }
+
+    textarea{
+      width:640px;height:300px;padding:7px;
+      line-height:20px;
+    }
+
+    &.submit{
+      overflow:hidden;
+      .draft-status-notice{
+        height:40px;line-height:40px;
+        float:left;
+        margin-top:10px;
+        margin-left:20px;
+        color:#999;
+      }
+    }
+
+    &.placeholder{
+      position:relative;
+      label{
+        position:absolute;
+        top:6px;left:9px;
+        color:#999;
+        cursor:text;
+        pointer-events:none;
+      }
+    }
+
+    .pie-j-checkbox{
+      overflow:hidden;
+      padding:7px 0 0;
+      span.c{
+        display:block;
+        float:left;
+        width:18px;height:18px;
+        overflow:hidden;
+        background:url(mindpin-js-imgs/j.checkbox.png) 0 0 no-repeat;
+        cursor:pointer;
+        &.checked{
+          background:url(mindpin-js-imgs/j.checkbox.png) -26px 0 no-repeat;
+        }
+
+        input[type=checkbox]{visibility:hidden;}
+      }
+      a.text{
+        float:left;
+        margin-left:5px;
+        height:18px;line-height:18px;
+      }
+    }
+  }
+
+  // -------
+
+  .base-button{
+    height : 38px;
+    line-height : 38px;
+    padding : 0 24px;
+    box-shadow : none;
+    text-shadow : 0 0 2px black;
+    border : 1px solid rgba(black, 0.3);
+
+    font-size:14px;
+    color:white;&:hover{color:white;text-decoration:none;};
+    margin-right:10px;margin-top:10px;
+
+    display:inline-block;float:left;
+    @include border-radius(3px);
+
+    &.disabled{
+      @include gradient(#fbfbfb, #f4f4f4);
+      border:solid 1px #ccc;
+      box-shadow:none;
+      text-shadow:none;
+      color:#cacaca;
+    }
+  }
+
+  .form-submit-button{
+    @extend .base-button;
+    @include gradient(#87C221, #6F9A1F);
+    &:hover{
+      @include gradient(lighten(#87C221, 10%), lighten(#6F9A1F, 10%));
+    }
+  }
+  
+  .form-cancel-button, .form-button{
+    @extend .base-button;
+    @include gradient(#666, #555);
+    &:hover{
+      @include gradient(lighten(#666, 10%), lighten(#555, 10%));
+    }
+  }
+}
