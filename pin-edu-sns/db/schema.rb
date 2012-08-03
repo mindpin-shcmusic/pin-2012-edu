@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120730021346) do
+ActiveRecord::Schema.define(:version => 20120802022742) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -82,6 +82,14 @@ ActiveRecord::Schema.define(:version => 20120730021346) do
   end
 
   add_index "courses", ["teacher_id"], :name => "index_courses_on_teacher_id"
+
+  create_table "courses_images", :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "file_entity_id"
+    t.string   "kind"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "file_entities", :force => true do |t|
     t.string   "attach_file_name"

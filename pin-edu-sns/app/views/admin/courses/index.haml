@@ -2,10 +2,15 @@
 
 = render 'admin/shared/search_field', :search_path => search_admin_courses_path
 
+.page-list-style
+  展示方式:
+  = link_to '列表', admin_courses_path
+  = link_to '网格', admin_courses_path(:is_grid => true)
+
 .page-admin-ops
   %a.create{:href=>'/admin/courses/new'} 增加课程
 
 .page-admin-models.courses
-  = render 'course_list', :courses => @courses
+  = render 'course_list', :courses => @courses, :is_grid => params[:is_grid]
   
 = will_paginate @courses
