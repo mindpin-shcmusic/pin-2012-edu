@@ -1,4 +1,3 @@
-# -*- coding: utf-8 -*-
 module MindpinUtilHelper
   def self.included(base)
     base.send(:include, LayoutMethods)
@@ -50,13 +49,13 @@ module MindpinUtilHelper
       klass = ['avatar-img', style]*' '
 
       if user.blank?
-        alt = '未知用户'
-        src = User.new.logo.url(style)
-        meta = 'unknown-user'
+        alt   = '未知用户'
+        src   = User.new.logo.url(style)
+        meta  = 'unknown-user'
       else
-        alt = user.name
-        src = user.logo.url(style)
-        meta = dom_id(user)
+        alt   = user.name
+        src   = user.logo.url(style)
+        meta  = dom_id(user)
       end
       
       image_tag(src, :alt=>alt, :class=>klass, :'data-meta'=>meta)
@@ -65,7 +64,7 @@ module MindpinUtilHelper
     end
   
     def avatar_link(user, style = :normal)
-      href = user.blank? ? 'javascript:;' : "/users/#{user.id}"
+      href  = user.blank? ? 'javascript:;' : "/users/#{user.id}"
       title = user.blank? ? '未知用户' : user.name
       
       link_to href, :title=>title do
@@ -101,10 +100,10 @@ module MindpinUtilHelper
       default_value = options[:default] || ''
 
       # %form.page-search-bar{:action=>url, :method=>'get', :'data-enter-to-submit'=>true}
-      # .field.placeholder.need
-      # %label 输入搜索内容
-      # %input{:name=>'query', :type=>'text', :value => query || ''}
-      # %a.go{:href=>'javascript:;'} 搜索
+      #   .field.placeholder.need
+      #     %label 输入搜索内容
+      #     %input{:name=>'query', :type=>'text', :value => query || ''}
+      #     %a.go{:href=>'javascript:;'} 搜索
 
       form_tag url, :method=>:get, :class=>'page-search-bar', :'data-enter-to-submit'=>true do
         content_tag :div, :class=>'field placeholder need' do
@@ -152,11 +151,11 @@ module MindpinUtilHelper
       klass = options[:class] || ''
       klass = [klass, 'auto-fit-image'] * ' '
 
-      content_tag :div, '',
-                  :class => klass,
+      content_tag :div, '', 
+                  :class => klass, 
                   :style => style,
-                  :'data-src' => src,
-                  :'data-alt' => alt,
+                  :'data-src' => src, 
+                  :'data-alt' => alt, 
                   :'data-meta' => options[:'data-meta']
     end
   end
@@ -182,7 +181,7 @@ module MindpinUtilHelper
         seconds = (current_time - time).to_i
         
         return '片刻前' if seconds < 0
-        return "#{seconds}秒前" if seconds < 60
+        return "#{seconds}秒前" if seconds < 60        
         return "#{seconds/60}分钟前" if seconds < 3600
         return time.strftime('%H:%M') if seconds < 86400 && current_time.day == time.day
         return time.strftime("#{time.month}月#{time.day}日 %H:%M") if current_time.year == time.year

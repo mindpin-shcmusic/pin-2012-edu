@@ -1,20 +1,25 @@
 // fonts
 // -----------
-@mixin base-font-family{
-  font-family: "Microsoft Yahei", "微软雅黑", Tahoma, Arial, Helvetica, STHeiti, sans-serif;
+@mixin base-font{
+  font-family: "Microsoft YaHei", "微软雅黑", tahoma, arial, simsun, "宋体";
 }
 
-@mixin number-font-family{
-  font-family: "Microsoft Yahei", "微软雅黑", Arial, Liberation Sans, DejaVu Sans, sans-serif;
+@mixin number-font{
+  font-family: tahoma, arial, simsun, "宋体";
 }
 
-@mixin numfont{
-  @include number-font-family;
+// 用于子元素全部是浮动元素的容器，修正高度
+@mixin floatfix{
+  &:after{content:"";display:block;clear:both;font-size:0;line-height:0;}
+}
+
+// 强制自动换行
+@mixin wordwarp{
+  word-wrap:break-word;word-break:break-all;//white-space:pre-wrap; 会导致多出空行的问题
 }
 
 // mixins
-// ---------
-
+// -----------
 @mixin gradient($from, $to){
   background : -moz-linear-gradient(-90deg, $from, $to);
   background : -webkit-gradient(linear, 0% 0%, 0% 100%, from($from), to($to));
@@ -41,13 +46,4 @@
      -moz-transform : $params;
   -webkit-transform : $params;
           transform : $params;
-}
-
-// ------------
-
-@mixin lighten-gradient($from, $to, $percent){
-  $f : lighten($from, $percent);
-  $t : lighten($to, $percent);
-  background : -moz-linear-gradient(-90deg, $f, $t);
-  background : -webkit-gradient(linear, 0% 0, 0% 100%, from($f), to($t));
 }

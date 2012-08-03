@@ -1,5 +1,10 @@
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '我的文件夹'
+
+- content_for :topbar do
+  = jsearchbar '/file_search'
+
 .page-media-resource-head
-  =render 'media_resources/parts/search_bar'
   =render 'media_resources/parts/forms'
 
 .page-media-resource-nav
@@ -43,8 +48,7 @@
       :'data-is-dir'=> is_dir.to_s}
       .meta-box
         .cover{:'data-src'=>cover_src}
-        .title=title
-      .detail-box
+        .title= title
 
 
 .page-media-resource-show-wrapper{:style=>'display:none;'}

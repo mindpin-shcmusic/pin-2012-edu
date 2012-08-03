@@ -1,123 +1,42 @@
 :ruby
-  app_name = 'MINDPIN SHCMUSIC-APRIL'
-  yield_title = (yield :title) || ''
-  t_str = yield_title.gsub("\n",'')
-
-  title = t_str.blank? ? app_name : "#{t_str} - #{app_name}"
+  tstr = ((yield :title) || '').gsub("\n",'')
+  title = tstr.blank? ? 'SHCMRS' : "#{tstr} - SHCMRS"
 
 !!! 5
 %html{:lang=>'zh'}
   %head
     %meta{:charset=>'utf-8'}
-    %title=title
+    %title= title
     = csrf_meta_tags
-    = stylesheet_link_tag :application
-    = yield :css
-    = yield :head
+    = stylesheet_link_tag 'application'
 
-  %body.echo
-    .page-container.col4{:style=>'display:none;'}
-      .page-nav
-        %a.home{:href=>'/'} SHCMUSIC 多媒体
-        .user-info
-          .avatar=avatar_link current_user, :medium
-          .name=user_link current_user
-          .setting
-            %a{:href=>'/auth/setting'} [打开用户设置]
+  %body.echo.gray
+    .page-sider
+      - if logged_in?
+        .current-user
+          .name>
+            %span> 你好，
+            %span>= user_link current_user
+          .avatar= avatar_link current_user, :medium
+        .links
+          %a.link.media-resources{:href=>'/file'} 我的文件夹
+          %a.link.received-shares{:href=>'/media_shares/mine'} 收到的共享
+          %a.link.public-resources{:href=>'/public_resources'} 公共资源库
+        .links
+          %a.link.courses{:href=>'/courses'} 课表
+          %a.link.short-messages{:href=>inbox_short_messages_path} 站内信
+          %a.link.notifications{:href=>notifications_path} 通知
 
-        .items
-          .sp
-          = link_to '课表',
-                    courses_path,
-                    :class => 'item'
-          .sp
-          = link_to inbox_short_messages_path,
-                    :class => 'item' do
-            站内信
-            - if logged_in?
-              .short-message-unread-count{:style => display_short_message_notifier}
-                .content= short_message_count(current_user)
+    .page-topbar
+      .page-breadcrumb
+        = yield :breadcrumb
+      = yield :topbar
 
-          .sp
-          = link_to notifications_path,
-                    :class => 'item' do
-            通知
-            - if logged_in?
-              .notification-unread-count{:style => display_notification_notifier}
-                .content= notification_count(current_user)
+    .page-content
+      = yield
 
-          .sp
-          %a.item.public-resource{:href=>'/public_resources'} 公共资源
-          %a.item.media-resource{:href=>'/file'} 我的个人文件夹
-          %a.item.share{:href=>'/media_shares/mine'} 我收到的共享
+    = render 'layouts/parts/current_user_js_info'
 
-          .sp
-          %a.item.upload{:href=>'/'} 上传资源
-          %a.item.mine{:href=>'/media_files/mine', :'data-pjax'=>'.page-content'} 我的资源 (#{MediaFile.count})
-          .sp
-          .aaa
-            %a.item.video{:href=>'/media_files/mine?kind=video', :'data-pjax'=>'.page-content'} 视频
-            %a.item.audio{:href=>'/media_files/mine?kind=audio', :'data-pjax'=>'.page-content'} 音频
-            %a.item.image{:href=>'/media_files/mine?kind=image', :'data-pjax'=>'.page-content'} 图片
-            %a.item.document{:href=>'/media_files/mine?kind=document', :'data-pjax'=>'.page-content'} 文档
-            %a.item.other{:href=>'/media_files/mine?kind=other', :'data-pjax'=>'.page-content'} 其他
-            .sp
-
-          %a.item.other{:href=>'/media_files/search', :'data-pjax'=>'.page-content'} 标签：自然风光
-          .sp
-
-
-          :ruby
-            root_categories = Category.roots
-            
-          -root_categories.each do |category|
-            =render 'layouts/category', :category=>category
-              
-      .page-header
-        .settings.hide
-          %a.setting{:href=>'javascript:;'} 设置
-          %ul.items
-            %li=link_to '设置基本信息', '/auth/setting'
-            %li=link_to '设置头像', '/auth/setting/avatar'
-            %li=link_to '退出登录', '/auth/logout'
-
-        .user
-          .current-user 欢迎你，#{current_user && current_user.name}
-          %a.logout{:href=>'/auth/logout', :title=>'退出登录'} 退出登录
-
-      .page-content
-        = yield
-
-    - if logged_in?
-      .share-rate-notifier{:style => 'display:none'}
-      .notifier{:style => display_notifier}
-
-        .notification-notifier{:style => display_notification_notifier, :'data-data' => notification_count(current_user)}
-          .content #{notification_count(current_user)}条未读通知
-          = link_to '查看',
-                    notifications_path,
-                    :class => 'link'
-
-        .comment-message-notifier{:style => display_comment_message_notifier, :'data-data' => comment_message_count(current_user)}
-          .content #{comment_message_count(current_user)}条未读评论
-          = link_to '查看',
-                    UserCommentTipMessage.url(current_user),
-                    :class => 'link'
-
-        .short-message-notifier{:style => display_short_message_notifier, :'data-data' => short_message_count(current_user)}
-          .content #{short_message_count(current_user)}条未读站内信
-          = link_to '查看',
-                    inbox_short_messages_path,
-                    :class => 'link'
-
-    -if logged_in?
-      :javascript
-        window.USER_INFO = {
-          id : #{current_user.id},
-          name : #{current_user.name.to_json},
-          email : #{current_user.email.to_json}
-        }
-
-    //= javascript_include_tag 'http://192.168.1.19:8080/application.js', :application
-    = javascript_include_tag '/juggernaut/application.js', :application
+    = javascript_include_tag '/juggernaut/application.js'
+    = javascript_include_tag 'application'
     = yield :javascript
