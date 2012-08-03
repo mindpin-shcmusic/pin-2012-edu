@@ -1,3 +1,5 @@
+= jimage @course.cover, :width => '100', :height => '100'
+
 %div  名字 #{@course.name}
 %div 课程号 #{@course.cid}    
 %div 开课院系 #{@course.location}    
@@ -8,7 +10,11 @@
   %div 
     %span 教师未指定
     =link_to "指定教师","/admin/courses/#{@course.id}/select_teacher"
-  
+
+- if current_user == @course.teacher.user
+  .upload-image= link_to '上传课程图片', upload_image_page_course_path(@course)
+  .select-cover= link_to '选择课程封面图片', select_cover_page_course_path(@course)
+
 %div 其他描述 #{@course.desc}
 =link_to "首页","/admin"
 =link_to "课程列表","/admin/courses"

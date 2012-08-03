@@ -80,6 +80,19 @@ body.admin{
 
 .page-admin-models{
   @include page-models-index;
+  .course {
+    width:160px;
+    height:128px;
+    display:inline-block;
+    padding:4px;
+    margin:8px 0 8px 8px;
+    border:1px solid #ccc;
+
+    .cover{
+      overflow:hidden;
+    }
+  }
+
   .model{
     padding:10px 15px;
     border-bottom:solid 1px #ddd;
