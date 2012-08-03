@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Course < ActiveRecord::Base
   belongs_to :teacher
 
@@ -9,6 +10,14 @@ class Course < ActiveRecord::Base
 
   has_many :courses_images
   has_many :file_entities, :through=> :courses_images
+
+  def cover
+    self.cover_courses_image ? self.cover_courses_image.file_entity.attach.url : self.default_cover
+  end
+
+  def default_cover
+    User.new.logo.url(:large)
+  end
 
   def get_user_ids
     [students, teacher].flatten.map(&:user_id).sort
