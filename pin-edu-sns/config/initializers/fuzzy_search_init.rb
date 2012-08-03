@@ -1,7 +1,6 @@
 begin
-  redis = Redis.new
-  redis.select(4)
-  store = Redis::Namespace.new 'shc:redis_search', :redis => redis
+  redis_search = RedisSearch.instance
+  store = Redis::Namespace.new 'shc:redis_search', :redis => redis_search
 
   Redis::Search.configure do |config|
     config.redis = store

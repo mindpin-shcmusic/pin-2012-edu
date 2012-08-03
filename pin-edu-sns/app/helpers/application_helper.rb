@@ -1,6 +1,4 @@
 module ApplicationHelper
-  include MindpinHelperBase
-
   def display_notifier
     if any_notifiction?     ||
        any_comment_message? ||

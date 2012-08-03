@@ -1,96 +1,25 @@
+// basic css，don't change
+// -----------------
 @import 'base/mixins';
-
-// --------
-
 @import 'base/reset';
 @import 'base/typography';
 
-// --------
+// page-doms, edit it if you need
+// ------------------
+@import 'mindpin-scss/form';
+@import 'mindpin-scss/button';
+@import 'mindpin-scss/image';
+@import 'mindpin-scss/search';
+@import 'mindpin-scss/comment';
+@import 'mindpin-scss/breadcrumb';
+@import 'mindpin-scss/overlay';
+@import 'mindpin-scss/coderay';
 
-@import 'product_layout/body'; //nav content a
-@import 'product_layout/form'; //form
-@import 'product_layout/table'; //table
 
-// -------- 基本通用文档要素
+// this app
+// ------------------
+@import 'app-css/base/override';
+@import 'app-css/base/layout';
+// @import 'app-css/base/mixins';
 
-.page-title{
-  font-size:14px;
-  text-shadow:1px 1px 0 rgba(#fff, 0.75);
-  padding:12px;
-  border-bottom:solid 1px #bdbdbd;
-  border-right:solid 1px #bdbdbd;
-}
-
-.col1{width:240px;}
-.col2{width:480px;}
-.push1{margin-left:240px;}
-.push2{margin-left:480px;}
-
-@mixin col1{width:240px;}
-@mixin col2{width:480px;}
-
-// -------- 各种本项目专用的mixin，基本都是迭代时抽取的
-
-@import 'useful/doms';
-
-// -------- 以下是各个模块的CSS
-
-@import 'admin';
-@import 'auth';
-@import 'setting';
-@import 'userpage';
-@import 'media_files';
-@import 'uploader';
-@import 'categories';
-@import 'comments';
-@import 'notifications';
-@import 'short_messages';
-@import 'upload-box';
-
-// --------------
-
-body.shcmrs-sync{
-  .page-header{
-    display:none;
-    @include gradient(#1C8FDF, #1C86D1);
-    box-shadow:0 0 5px black inset;
-    $h:60px;
-    height:$h;line-height:$h;
-    .title{
-      color:white;
-      font-size:16px;
-      font-weight:bold;
-      padding:0 40px;
-      text-shadow:1px 1px 2px black;
-    }
-  }
-
-  .page-sidebar{
-    position:fixed;
-    z-index:100;
-    top:0;bottom:0;
-    left:0;width:225px;
-    background-color:#0F639F;
-    padding-top:70px;
-
-    a{
-      height:70px;line-height:70px;
-      font-weight:bold;
-      color:white;
-      display:block;
-      padding:0 20px;
-      text-align:right;
-      font-size:14px;
-      &:hover{
-        color:white;
-        background-color:#0B73BD;
-        text-decoration:none;
-      }
-      &.current{
-        background-color:#4A96CC;
-      }
-    }
-  }
-}
-
-@import 'app-css/new_media_resources';
+@import 'app-css/media_resources';

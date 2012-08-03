@@ -39,7 +39,7 @@ module MediaResourceHelper
 
   def media_resource_cover_src(media_resource)
     if media_resource.is_dir?
-      return '/assets/covers/normal.small.png'
+      return '/assets/covers/folder.small.png'
     end
     return '/assets/covers/audio.small.png'
   end

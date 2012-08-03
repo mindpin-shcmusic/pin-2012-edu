@@ -163,20 +163,20 @@ MindpinEduSns::Application.routes.draw do
   # --------------------
 
   # web
-  get    '/file'       => 'media_resources#index'
+  get    '/file' => 'media_resources#index'
   get    '/file/*path' => 'media_resources#file', :format => false
 
   put    '/file_put/*path' => 'media_resources#upload_file'
   post   '/file/create_folder' => 'media_resources#create_folder'
   delete '/file/*path' => 'media_resources#destroy'
 
-  get    '/file_share/*path'       => 'media_resources#share'
+  get    '/file_share/*path' => 'media_resources#share'
 
-  get    '/file_attr/*path/edit_tag'     => 'media_resources#edit_tag'
-  post   '/file_attr/*path/update_tag'   => 'media_resources#update_tag'
+  get    '/file_attr/*path/edit_tag' => 'media_resources#edit_tag'
+  post   '/file_attr/*path/update_tag' => 'media_resources#update_tag'
 
-  post '/new_upload'               => 'slice_temp_files#new_upload'
-  post '/upload_blob'              => 'slice_temp_files#upload_blob'
+  post '/new_upload' => 'slice_temp_files#new_upload'
+  post '/upload_blob' => 'slice_temp_files#upload_blob'
   get  '/new_upload_page' => 'slice_temp_files#new_upload_page'
 
   get '/media_resources/:id' => 'media_resources#show'
@@ -213,10 +213,10 @@ MindpinEduSns::Application.routes.draw do
     end
   end
 
-  get    '/public_resources/user/:id/file/*path' => 'public_resources#dir'
-  get    '/public_resources/user/:id/index_file/:file_entity_id' => 'public_resources#index_file'
-  put    '/public_resources/upload/*path' => 'public_resources#upload'
-  get    '/user_complete_search' => 'index#user_complete_search'
+  get '/public_resources/user/:id/file/*path' => 'public_resources#dir'
+  get '/public_resources/user/:id/index_file/:file_entity_id' => 'public_resources#index_file'
+  put '/public_resources/upload/*path' => 'public_resources#upload'
+  get '/user_complete_search' => 'index#user_complete_search'
 
   get '/tags/:tag_name' => 'tags#show'
 end

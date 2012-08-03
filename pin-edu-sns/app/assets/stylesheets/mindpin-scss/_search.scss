@@ -1,5 +1,6 @@
 form.page-search-bar{
-  overflow:hidden;
+
+  @include floatfix;
 
   .field{
     float:left;

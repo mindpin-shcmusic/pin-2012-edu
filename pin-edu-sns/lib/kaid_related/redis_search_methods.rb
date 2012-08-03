@@ -1,4 +1,4 @@
-module RedisSearch
+module RedisSearchMethods
   module Base
     def self.included(base)
       base.send :include, Redis::Search
