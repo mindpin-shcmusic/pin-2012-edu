@@ -6,7 +6,7 @@ module EmbedHelper
       :allowfullscreen  => 'true',
       :allowscripaccess => 'always',
       :src              => '/player.swf',
-      :flashvars        => "file=#{file_entry.attach_flv_url}",
+      :flashvars        => "provider=http&file=#{file_entry.attach_flv_url}",
 
       :pluginspage      => 'http://get.adobe.com/cn/flashplayer/',
       :quality          => 'high',
