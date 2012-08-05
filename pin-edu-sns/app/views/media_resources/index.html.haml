@@ -9,17 +9,6 @@
     %a.create-folder-button{:href=>'javascript:;'} 新建文件夹
     %a.upload-file-button{:href=>'javascript:;'} 上传文件
 
-    .create-folder-box{:style=>'display:none;', :'data-default-name'=>'新建文件夹'}
-      .form-title 新建文件夹
-      = form_tag '/file/create_folder', :method => 'post' do
-        = hidden_field_tag :current_path, @current_dir.blank? ? '/' : @current_dir.path
-        .field.need
-          %label 文件夹：
-          = text_field_tag :folder
-        .field.submit
-          %a.form-submit-button.stop{:href=>'javascript:;'} 确定
-          %a.form-cancel-button{:href=>'javascript:;'} 取消
-
   .page-media-resource-nav
     .go-parent-dir
       - if @current_dir.blank?
@@ -33,6 +22,17 @@
       %span= link_to '根目录', '/file'
       - media_resource_navs_dirs(@current_dir).each do |dir|
         %span= link_to dir.name, File.join('/file', dir.path)
+
+.page-create-folder-box{:style=>'display:none;', :'data-default-name'=>'新建文件夹'}
+  .form-title 新建文件夹
+  = form_tag '/file/create_folder', :method => 'post' do
+    = hidden_field_tag :current_path, @current_dir.blank? ? '/' : @current_dir.path
+    .field.need
+      %label 文件夹：
+      = text_field_tag :folder
+    .field.submit
+      %a.form-submit-button.stop{:href=>'javascript:;'} 确定
+      %a.form-cancel-button{:href=>'javascript:;'} 取消
 
 = render 'media_resources/parts/resources', :resources=>@media_resources
 

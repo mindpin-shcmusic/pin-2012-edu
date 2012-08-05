@@ -51,21 +51,20 @@
 
 # 我的文件夹 -> 创建文件夹
 pie.load ->
+  $box = jQuery('.page-create-folder-box')
+
   jQuery(document).delegate '.page-media-resource-head a.create-folder-button', 'click', ->
-    $box = jQuery(this).closest('.page-media-resource-head').find('.create-folder-box')
     default_name = $box.data('default-name')
     pie.show_page_overlay()
     $box
       .delay(200).fadeIn(200)
       .find('form input[name=folder]').val(default_name)
 
-  jQuery(document).delegate '.page-media-resource-head .create-folder-box .form-cancel-button', 'click', ->
-    $box = jQuery(this).closest('.create-folder-box')
+  jQuery(document).delegate '.page-create-folder-box .form-cancel-button', 'click', ->
     $box.fadeOut 200, ->
       pie.hide_page_overlay()
 
-  jQuery(document).delegate '.page-media-resource-head .create-folder-box .form-submit-button', 'click', ->
-    $box = jQuery(this).closest('.create-folder-box')
+  jQuery(document).delegate '.page-create-folder-box .form-submit-button', 'click', ->
     $form = $box.find('form')
     if pie.is_form_all_need_filled($form)
       url = $form.attr('action')
