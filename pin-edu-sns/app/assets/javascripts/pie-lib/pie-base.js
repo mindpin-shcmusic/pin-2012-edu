@@ -49,8 +49,8 @@ Date.prototype.getFormatValue = function(fmt){
 pie.show_page_overlay = function(){
   var overlay_elm = jQuery('<div class="page-overlay"></div>');
   overlay_elm
-    .css('height', jQuery(document).height())
-    .css('width', jQuery(document).width())
+    //.css('height', jQuery(document).height())
+    //.css('width', jQuery(document).width())
     .css('opacity', 0.6)
     .hide().fadeIn(200)
     .appendTo(jQuery(document.body))

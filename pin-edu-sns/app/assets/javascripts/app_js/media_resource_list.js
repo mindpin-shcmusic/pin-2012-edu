@@ -6,9 +6,7 @@
 // 列表lazyload
 pie.load(function(){
   var lazy_load = function(){
-
     jQuery('.page-media-resources .media-resource .cover:not(.-img-loaded-)').each(function(){
-      console.log("cover")
       var elm = jQuery(this);
       if(elm.is_in_screen()){
         elm.load_fit_image();
@@ -20,6 +18,7 @@ pie.load(function(){
   lazy_load();
   jQuery(window).bind('scroll', lazy_load);
   jQuery(document).on('pjax:complete', lazy_load);
+  jQuery(document).on('ajax:create-folder', lazy_load);
 })
 
 // 点击列表项

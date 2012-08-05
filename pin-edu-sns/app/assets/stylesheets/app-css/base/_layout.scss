@@ -7,6 +7,7 @@ body{
     box-shadow:0 0 5px #ddd;
     padding-top:60px;
     border-right:solid 1px #ddd;
+    z-index:9;
 
     .current-user{
       padding:20px 10px 0;
@@ -44,6 +45,7 @@ body{
     height:50px;
     background-color:rgba(#333, 0.8);
     padding-left:240px + 20px;
+    z-index:10;
   }
   .page-content{
     margin-top:60px;

@@ -1,4 +1,24 @@
 class FileEntity < ActiveRecord::Base
+
+  CONTENT_TYPES = {
+    :video    => [
+        'avi', 'rm',  'rmvb', 'mp4', 
+        'ogv', 'm4v', 'flv', 'mpeg',
+        '3gp'
+      ].map{|x| file_content_type(x)}.uniq - ['application/octet-stream'],
+    :audio    => [
+        'mp3', 'wma', 'm4a',  'wav', 
+        'ogg'
+      ].map{|x| file_content_type(x)}.uniq,
+    :image    => [
+        'jpg', 'jpeg', 'bmp', 'png', 
+        'png', 'svg',  'tif', 'gif'
+      ].map{|x| file_content_type(x)}.uniq,
+    :document => [
+        'pdf', 'xls', 'doc', 'ppt'
+      ].map{|x| file_content_type(x)}.uniq
+  }
+
   has_many :media_resources
 
   has_attached_file :attach,
@@ -45,7 +65,21 @@ class FileEntity < ActiveRecord::Base
     :image == self.content_kind
   end
 
+  # 获取资源种类
   def content_kind
-    content_type_kind(self.attach_content_type)
+    self.class.content_kind(self.attach_content_type)
+  end
+
+  def self.content_kind(type)
+    case type
+    when *CONTENT_TYPES[:video]
+      :video
+    when *CONTENT_TYPES[:audio]
+      :audio
+    when *CONTENT_TYPES[:image]
+      :image
+    when *CONTENT_TYPES[:document]
+      :document
+    end
   end
 end

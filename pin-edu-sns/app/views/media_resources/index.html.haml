@@ -4,51 +4,37 @@
 - content_for :topbar do
   = jsearchbar '/file_search'
 
-.page-media-resource-head
-  =render 'media_resources/parts/forms'
+.page-media-resource-fixed
+  .page-media-resource-head
+    %a.create-folder-button{:href=>'javascript:;'} 新建文件夹
+    %a.upload-file-button{:href=>'javascript:;'} 上传文件
 
-.page-media-resource-nav
-  .go-parent-dir
-    - if @current_dir.blank?
-      %span.quiet 上一级
-    - else
-      :ruby
-        url = @current_dir.dir.blank? ? '/file' : File.join('/file', @current_dir.dir.path)
-      %a{:href => url} 上一级
+    .create-folder-box{:style=>'display:none;', :'data-default-name'=>'新建文件夹'}
+      .form-title 新建文件夹
+      = form_tag '/file/create_folder', :method => 'post' do
+        = hidden_field_tag :current_path, @current_dir.blank? ? '/' : @current_dir.path
+        .field.need
+          %label 文件夹：
+          = text_field_tag :folder
+        .field.submit
+          %a.form-submit-button.stop{:href=>'javascript:;'} 确定
+          %a.form-cancel-button{:href=>'javascript:;'} 取消
 
-  .navs
-    %span= link_to '根目录', '/file'
-    - media_resource_navs_dirs(@current_dir).each do |dir|
-      %span= link_to dir.name, File.join('/file', dir.path)
+  .page-media-resource-nav
+    .go-parent-dir
+      - if @current_dir.blank?
+        %span.quiet 上一级
+      - else
+        :ruby
+          url = @current_dir.dir.blank? ? '/file' : File.join('/file', @current_dir.dir.path)
+        %a{:href => url} 上一级
 
-.page-media-resources
-  - resources = @media_resources
+    .navs
+      %span= link_to '根目录', '/file'
+      - media_resource_navs_dirs(@current_dir).each do |dir|
+        %span= link_to dir.name, File.join('/file', dir.path)
 
-  - if resources.blank?
-    .media-resource-blank.quiet
-      该目录下没有资源
-
-  - resources.each do |resource|
-    :ruby
-      cover_src = media_resource_cover_src(resource)
-      title = truncate_u resource.name, 10
-      creator_name = resource.creator.name
-      creator_avatar_src = resource.creator.logo.url
-      uploaded_at = resource.created_at
-      is_dir = resource.is_dir?
-      resource_url = File.join('/file', resource.path)
-
-    %a.media-resource{:href=>'javascript:;', |
-      :'data-id'=> resource.id, |
-      :'data-resource-url'=> resource_url, |
-      :'data-title'=>title, |
-      :'data-uploaded-at'=>uploaded_at, |
-      :'data-creator-name'=>creator_name, |
-      :'data-creator-avatar-src'=>creator_avatar_src, |
-      :'data-is-dir'=> is_dir.to_s}
-      .meta-box
-        .cover{:'data-src'=>cover_src}
-        .title= title
+= render 'media_resources/parts/resources', :resources=>@media_resources
 
 
 .page-media-resource-show-wrapper{:style=>'display:none;'}
