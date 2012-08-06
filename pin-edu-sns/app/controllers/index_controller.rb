@@ -2,6 +2,9 @@ class IndexController < ApplicationController
   before_filter :login_required
   
   def index
+    if current_user.is_admin?
+      return redirect_to "/admin"
+    end
     redirect_to '/file'
   end
 

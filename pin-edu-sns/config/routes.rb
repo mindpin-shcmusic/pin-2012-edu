@@ -170,8 +170,6 @@ MindpinEduSns::Application.routes.draw do
   post   '/file/create_folder' => 'media_resources#create_folder'
   delete '/file/*path' => 'media_resources#destroy'
 
-  get    '/file_share/*path' => 'media_resources#share'
-
   get    '/file_attr/*path/edit_tag' => 'media_resources#edit_tag'
   post   '/file_attr/*path/update_tag' => 'media_resources#update_tag'
 
