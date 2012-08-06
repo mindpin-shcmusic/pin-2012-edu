@@ -1,9 +1,17 @@
-=form_for @teacher,:url=>"/admin/teachers/#{@teacher.id}/do_set_user",:method=>:put do |f|
-  %div
-    %lable 绑定用户
-  %div
-    -users = User.no_role
-    =f.select(:user_id,users.map{|user|[user.name,user.id]})
-  %div
-    =f.submit "绑定"
-    
+.info 教师需要一个用户账号来登录系统，请设置以下信息来创建教师对应的用户账号
+=flash_info
+=form_for User.new,:url=>"/admin/teachers/#{@teacher.id}/do_set_user",:method=>:put do |f|
+  .field
+    %label 电子邮箱
+    = f.text_field :email,:maxlength=>50
+  .field
+    %label 用户名
+    = f.text_field :name,:maxlength=>50
+  .field
+    %label 密码
+    = f.password_field :password,:value=>'',:maxlength=>32
+  .field
+    %label 确认密码
+    = f.password_field :password_confirmation,:value=>'',:maxlength=>32
+  .field
+    %a.form-submit-button{:href=>'javascript:;'} 创建
