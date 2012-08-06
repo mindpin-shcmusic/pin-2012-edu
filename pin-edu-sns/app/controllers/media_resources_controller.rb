@@ -63,7 +63,7 @@ class MediaResourcesController < ApplicationController
     resource_path = URI.decode(request.fullpath).sub('/file', '')
     MediaResource.get(current_user, resource_path).remove
 
-    redirect_to :back
+    render :text => 'ok'
   end
 
   # 搜索当前登录用户资源
