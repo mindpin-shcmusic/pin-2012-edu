@@ -12,9 +12,9 @@
       uploaded_at = resource.created_at
       is_dir = resource.is_dir?
       resource_url = File.join('/file', resource.path)
+      show_url = File.join('/file_show', resource.path)
 
       share_url = "/media_shares/new?resource_path=/file#{resource.path}"
-      share_url = "/file_share#{resource.path}"
 
     .media-resource{:href=>'javascript:;', |
       :'data-id' => resource.id, |
@@ -29,11 +29,12 @@
         .detail
           .fname= title
           .ftime= jtime uploaded_at
-          .link.open
-            - if is_dir
-              = link_to '打开文件夹', resource_url
-            - else
-              = link_to '下载资源', resource_url
+          
+          - if is_dir
+            .link.open= link_to '打开文件夹', resource_url
+          - else
+            .link.open= link_to '打开查看', show_url
+            .link.open= link_to '下载资源', resource_url
 
           .link.share= link_to '共享给他人', share_url
           .link.delete= link_to '删除资源', 'javascript:;'
