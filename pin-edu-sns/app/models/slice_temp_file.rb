@@ -81,13 +81,7 @@ class SliceTempFile < ActiveRecord::Base
   # TODO 重构
   def merge_slice_files
     # 合并文件片段
-    File.open(file_path, 'w') { |f|
-      Dir[File.join(blob_dir, 'blob.*')].sort { |a, b|
-        a.split('.')[-1].to_i <=> b.split('.')[-1].to_i
-      }.each { |blob_path|
-        File.open(blob_path, 'r') { |blob_f| f << blob_f.read }
-      }
-    }
+    `cd #{blob_dir};ls blob* |sort -n -k 2 -t.|xargs cat > #{file_path}`
     self.merged = true
     self.save
   end

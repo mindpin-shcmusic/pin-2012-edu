@@ -22,9 +22,8 @@ class FileEntity < ActiveRecord::Base
   has_many :media_resources
 
   has_attached_file :attach,
-                    :styles => {
-                      :large => '460x340#',
-                      :small => '220x140#'
+                    :styles => lambda {|attach|
+                      attach.instance.is_image? ? {:large => '460x340#', :small => '220x140#'}  : {}
                     },
                     :path => R::FILE_ENTITY_ATTACHED_PATH,
                     :url  => R::FILE_ENTITY_ATTACHED_URL
