@@ -48,6 +48,8 @@ gem 'unicorn'
 
 gem 'acts-as-taggable-on', '~> 2.3.1'
 
+gem 'rails-dev-tweaks', '~> 0.6.1'
+
 group :test, :development do
   gem 'rspec-rails'
 end

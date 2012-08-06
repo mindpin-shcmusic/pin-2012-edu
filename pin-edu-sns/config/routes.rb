@@ -154,7 +154,7 @@ MindpinEduSns::Application.routes.draw do
   get    '/file_attr/*path/edit_tag' => 'media_resources#edit_tag'
   post   '/file_attr/*path/update_tag' => 'media_resources#update_tag'
 
-  get 'file_show/*path' => 'media_resources#show_file', :format => false
+  get  'file_show/*path' => 'media_resources#file_show', :format => false
 
   post '/new_upload' => 'slice_temp_files#new_upload'
   post '/upload_blob' => 'slice_temp_files#upload_blob'

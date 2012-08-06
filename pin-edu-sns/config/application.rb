@@ -32,5 +32,15 @@ module MindpinEduSns
     require 'will_paginate/array'
     
     require File.join(Rails.root, 'lib/mindpin_global_methods.rb')
+
+    config.dev_tweaks.autoload_rules do
+      keep :all
+
+      skip '/favicon.ico'
+      skip :assets
+      skip :xhr
+      keep :forced
+    end
+
   end
 end
