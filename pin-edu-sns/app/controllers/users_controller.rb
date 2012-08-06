@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find_by_id(params[:id])
     
-    @statuses = Status.all
+    # @statuses = Status.all
 
 #    # 用户活动
 #    @week_activities_data = @user.the_week_activities_data

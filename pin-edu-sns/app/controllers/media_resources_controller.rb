@@ -34,15 +34,29 @@ class MediaResourcesController < ApplicationController
     render :text=>200
   end
 
+  # for ajax
   def create_folder
     if params[:folder].match(/^([A-Za-z0-9一-龥\-\_\.]+)$/)
       resource_path = File.join(params[:current_path], params[:folder])
-      MediaResource.create_folder(current_user, resource_path)
-    else
-      flash[:error] = '输入的目录名不合法'
+      resource = MediaResource.create_folder(current_user, resource_path)
+
+      if resource.blank?
+        return render :status => 401,
+                      :text => '文件夹创建失败'
+      end
+
+      return render :partial => 'media_resources/parts/resources',
+                    :locals => {
+                      :resources => [resource]
+                    }
     end
 
-    redirect_to :back
+    render :status => 401,
+           :text => '文件夹名不符合规范'
+
+  rescue MediaResource::RepeatedlyCreateFolderError
+    render :status => 401,
+           :text => '文件夹名重复'
   end
 
   def destroy

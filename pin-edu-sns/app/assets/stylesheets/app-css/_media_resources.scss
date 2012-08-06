@@ -1,14 +1,127 @@
+.page-media-resource-fixed{
+  position:fixed;
+  top:0px;
+  left:240px;right:0;
+  z-index:8;
+  padding:80px 20px 0 20px;
+  background-color:#eee;
+  background:url(bodybg.gif);
+  box-shadow:0 1px 2px rgba(black, 0.07);
+}
+
+.page-media-resource-head{
+  @include floatfix;
+  margin:-20px -20px 0 -20px;
+  padding:20px;
+  background-color:rgba(white, 0.6);
+
+  .create-folder-button, .upload-file-button{
+    @include mini-button;
+    float:left;margin-right:20px;
+  }
+  .create-folder-button{
+    @include gradient(#2079C1, #1F659A);
+    &:hover{
+      @include gradient(lighten(#2079C1, 10%), lighten(#1F659A, 10%));
+    }
+  }
+}
+
+.page-media-resource-nav{
+  background-color:rgba(black, 0.05);
+  border-top:solid 1px #ddd;
+  border-bottom:solid 1px #ccc;
+  height:50px;line-height:50px;
+  margin:0 -20px;
+  padding:0 20px;
+
+  .go-parent-dir, .go-back{
+    float:left;
+    padding-right:11px;
+    border-right:solid 1px #ccc;
+    margin-right:11px;
+    padding-left:11px;
+  }
+  .navs{
+    float:left;
+    a{
+      color:#666;
+      &:hover{color:#333;}
+    }
+
+    span{
+      float:left;
+      &:after{
+        content:'>';
+        padding:0 10px;
+        color:#b2b2b2;
+      }
+      &:last-child{
+        &:after{display:none;}
+      }
+    }
+  }
+  .detail{
+    float:left;
+  }
+}
+
+.page-create-folder-box{
+  position:fixed;
+  height:200px;
+  width:300px;
+  top:50%;left:50%;
+  margin-top:-200px;
+  margin-left:-200px;
+  z-index:10003;
+  box-shadow:0 1px 2px rgba(black, 0.07);
+  background-color:rgba(white, 0.95);
+
+  .form-title{
+    height:32px;line-height:32px;
+    background-color:rgba(black, 0.05);
+    margin:3px;
+    border:solid 1px #ddd;
+    padding:0 14px;
+    color:#666;
+  }
+  form{
+    padding:20px;
+  }
+}
+
+.page-upload-box{
+  position:fixed;
+  height:400px;
+  width:640px;
+  top:50%;left:50%;
+  margin-top:-200px;
+  margin-left:-320px;
+  z-index:10003;
+  box-shadow:0 1px 2px rgba(black, 0.07);
+  background-color:rgba(white, 0.95);
+
+  .form-title{
+    height:32px;line-height:32px;
+    background-color:rgba(black, 0.05);
+    margin:3px;
+    border:solid 1px #ddd;
+    padding:0 14px;
+    color:#666;
+  }
+}
+
+// ----------
+
 .page-media-resources{
   @include floatfix;
+  margin-top:124px;
 
   .media-resource-blank{
     height:28px;line-height:28px;
     padding:11px;
     border-bottom:solid 1px #E5E5E5;
   }
-
-  $box-w:239px;
-  $box-h:199px;
 
   a.media-resource{
     @include floatfix;
@@ -25,11 +138,33 @@
       box-shadow:0 1px 2px rgba(black, 0.07);
       padding:10px;
       background-color:white;
+      position:relative;
 
       .cover{
         width:200px;height:150px;
         overflow:hidden;
         background-color:#eee;
+      }
+
+      .detail{
+        background-color:rgba(white, 0.95);
+        opacity:0;
+        @include transition(all ease-in .2s);
+        position:absolute;
+        width:180px;height:130px;padding:10px;
+        top:10px;left:10px;
+        color:#888;
+        overflow:hidden;
+        .fname{
+          color:#444;font-size:14px;font-weight:bold;line-height:1.2em;
+          margin-bottom:4px;
+        }
+        .ftime{font-size:12px;}
+      }
+      &:hover{
+        .detail{
+          opacity:1;
+        }
       }
 
       .title{
@@ -156,86 +291,5 @@
         }
       }
     }
-  }
-}
-
-.page-media-resource-head{
-  overflow:hidden;
-  margin-bottom:20px;
-
-  .page-media-resources-forms{
-    float:left;
-
-    form{float:left;}
-
-    form.upload-file{
-      border-right:solid 2px #E5E5E5;
-      padding-right:20px;
-      margin-right:20px;
-      height:30px;line-height:30px;
-    }
-
-    form.create-folder{
-      border-right:solid 2px #E5E5E5;
-      padding-right:20px;
-      margin-right:20px;
-      height:30px;line-height:30px;
-    }
-
-    .received-shares{
-      border-right:solid 2px #E5E5E5;
-      padding-right:20px;
-      margin-right:20px;
-    }
-
-    .received-shares, .logout{
-      font-size:14px;
-      float:left;
-      margin-right:20px;
-      height:30px;line-height:30px;
-    }
-  }
-
-  .page-media-resource-search{
-    float:right;
-    height:30px;line-height:30px;
-  }
-}
-
-.page-media-resource-nav{
-  background-color:rgba(black, 0.05);
-  border:solid 1px #ddd;
-  @include border-radius(6px);
-  height:50px;line-height:50px;
-  margin-bottom:20px;
-
-  .go-parent-dir, .go-back{
-    float:left;
-    padding-right:11px;
-    border-right:solid 1px #ccc;
-    margin-right:11px;
-    padding-left:11px;
-  }
-  .navs{
-    float:left;
-    a{
-      color:#666;
-      &:hover{color:#333;}
-    }
-
-    span{
-      float:left;
-      &:after{
-        content:'>';
-        padding:0 10px;
-        color:#b2b2b2;
-      }
-      &:last-child{
-        &:after{display:none;}
-      }
-    }
-  }
-  .detail{
-    float:left;
   }
 }

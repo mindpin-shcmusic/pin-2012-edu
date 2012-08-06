@@ -5,6 +5,7 @@ class IndexController < ApplicationController
     if current_user.is_admin?
       return redirect_to "/admin"
     end
+    redirect_to '/file'
   end
 
   def user_complete_search

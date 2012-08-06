@@ -37,6 +37,6 @@
 
     = render 'layouts/parts/current_user_js_info'
 
-    = javascript_include_tag '/juggernaut/application.js'
+    = javascript_include_tag "http://#{request.host}/juggernaut/application.js"
     = javascript_include_tag 'application'
     = yield :javascript

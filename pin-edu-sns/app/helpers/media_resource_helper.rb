@@ -41,7 +41,15 @@ module MediaResourceHelper
     if media_resource.is_dir?
       return '/assets/covers/folder.small.png'
     end
-    return '/assets/covers/audio.small.png'
+
+    file_entity = media_resource.file_entity
+    return 'x' if file_entity.blank?
+
+    case file_entity.content_kind
+    when :image
+      return File.join('http://', request.host, file_entity.attach.url(:small))
+    else "x"
+    end
   end
 
 end
