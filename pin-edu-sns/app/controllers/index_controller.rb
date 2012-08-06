@@ -2,6 +2,7 @@ class IndexController < ApplicationController
   before_filter :login_required
   
   def index
+    redirect_to '/file'
   end
 
   def user_complete_search

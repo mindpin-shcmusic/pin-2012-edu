@@ -1,54 +1,3 @@
-# jQuery ->
-# 	$upload_form = jQuery('.page-media-resources-forms form.upload-file')
-
-# 	if $upload_form.length > 0
-# 		$upload_form.find('input[type=file]').change ->
-# 			value = jQuery(this).val().replace(/// \\ ///g, '/')
-# 			arr = value.split('/')
-# 			filename = arr[arr.length - 1]
-
-# 			current_path = $upload_form.find('input[name=current_path]').val()
-# 			resource_path = 
-# 				if current_path == '/' 
-# 				then "/#{filename}" 
-# 				else "#{current_path}/#{filename}"
-
-# 			action = "/file_put#{resource_path}"
-
-# 			$upload_form.attr('action', action)
-# 			console.log(action)
-
-
-# jQuery ->
-#   jQuery('.page-media-resource-list .media-resource a.put-public').live 'click', ->
-#     elm = jQuery(this)
-#     id = elm.data('id')
-
-#     jQuery.ajax({
-#       type: 'POST',
-#       url : '/public_resources/share/',
-#       data: {resource_id: id},
-#       success : ->
-#         elm.remove()
-#     })
-
-# pie.load ->
-#   $upload_link = jQuery('.page-media-resources-forms .upload-link')
-#   $upload_box = jQuery('.upload-box')
-#   $uploader = jQuery('.page-media-file-uploader')
-
-#   $upload_link.click ->
-#     #pie.show_page_overlay()
-#     $uploader.data('current-path', $upload_link.data('path'))
-#     $upload_box.slideDown()
-
-#     jQuery('body').click (e)->
-#       #pie.hide_page_overlay()
-#       console.log 
-#       if !$(e.target).closest('.upload-box').length && $(e.target).attr('class') != 'upload-link'
-#         $uploader.data('path', null)
-#         $upload_box.slideUp()
-
 # 我的文件夹 -> 创建文件夹
 pie.load ->
   $box = jQuery('.page-create-folder-box')
@@ -80,3 +29,31 @@ pie.load ->
 
           $box.fadeOut 200, ->
             pie.hide_page_overlay()
+
+
+# 我的文件夹 -> 上传文件
+pie.load ->
+  $upload_box = jQuery('.page-upload-box')
+
+  jQuery(document).delegate '.page-media-resource-head a.upload-file-button', 'click', ->
+    pie.show_page_overlay()
+    $uploader = jQuery('.page-media-file-uploader')
+    $upload_box.delay(200).fadeIn(200)
+
+  jQuery(document).delegate '.page-upload-box a.form-cancel-button', 'click', ->
+    $upload_box.fadeOut 200, ->
+      pie.hide_page_overlay()
+
+
+# jQuery ->
+#   jQuery('.page-media-resource-list .media-resource a.put-public').live 'click', ->
+#     elm = jQuery(this)
+#     id = elm.data('id')
+
+#     jQuery.ajax({
+#       type: 'POST',
+#       url : '/public_resources/share/',
+#       data: {resource_id: id},
+#       success : ->
+#         elm.remove()
+#     })

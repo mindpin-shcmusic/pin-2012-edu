@@ -6,6 +6,7 @@
   padding:80px 20px 0 20px;
   background-color:#eee;
   background:url(bodybg.gif);
+  box-shadow:0 1px 2px rgba(black, 0.07);
 }
 
 .page-media-resource-head{
@@ -29,7 +30,7 @@
 .page-media-resource-nav{
   background-color:rgba(black, 0.05);
   border-top:solid 1px #ddd;
-  border-bottom:solid 1px #ddd;
+  border-bottom:solid 1px #ccc;
   height:50px;line-height:50px;
   margin:0 -20px;
   padding:0 20px;
@@ -86,6 +87,27 @@
   }
   form{
     padding:20px;
+  }
+}
+
+.page-upload-box{
+  position:fixed;
+  height:400px;
+  width:640px;
+  top:50%;left:50%;
+  margin-top:-200px;
+  margin-left:-320px;
+  z-index:10003;
+  box-shadow:0 1px 2px rgba(black, 0.07);
+  background-color:rgba(white, 0.95);
+
+  .form-title{
+    height:32px;line-height:32px;
+    background-color:rgba(black, 0.05);
+    margin:3px;
+    border:solid 1px #ddd;
+    padding:0 14px;
+    color:#666;
   }
 }
 
