@@ -88,8 +88,12 @@ class MediaResourcesController < ApplicationController
     redirect_to File.join('/file',File.dirname(resource_path))
   end
 
-  def show
-    render :partial=>'show_box', :locals=>{ :media_resource => MediaResource.find(params[:id]) }
+  def show_file
+    #render :partial=>'show_box', :locals=>{ :media_resource => MediaResource.find(params[:id]) }
+    resource_path = URI.decode(request.fullpath).sub('/file_show', '')
+
+    @media_resource = MediaResource.get(current_user, resource_path)
+
   end
 
 end

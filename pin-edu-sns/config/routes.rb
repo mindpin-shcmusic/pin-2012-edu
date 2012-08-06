@@ -82,25 +82,6 @@ MindpinEduSns::Application.routes.draw do
 
   root :to => 'index#index'
   
-  # ------------- 媒体文件
-  resources :media_files do
-    collection do
-      get  :mine # 我的资源
-      get  :new_psu
-      post :create_by_edu
-      get  :lifei_list
-      get  :check_md5
-      get  :search
-    end
-    member do
-      get :lifei_info
-      post :encode_complete
-      post :file_merge_complete
-      post :file_copy_complete
-      post :edit_description
-    end
-  end
-  
   # --- 用户
   resources :users
 
@@ -172,6 +153,8 @@ MindpinEduSns::Application.routes.draw do
 
   get    '/file_attr/*path/edit_tag' => 'media_resources#edit_tag'
   post   '/file_attr/*path/update_tag' => 'media_resources#update_tag'
+
+  get 'file_show/*path' => 'media_resources#show_file', :format => false
 
   post '/new_upload' => 'slice_temp_files#new_upload'
   post '/upload_blob' => 'slice_temp_files#upload_blob'
