@@ -23,7 +23,7 @@ class Admin::StudentsController < ApplicationController
   def create
     @student = Student.new(params[:student])
     if @student.save
-      return redirect_to "/admin/students/#{@student.id}"
+      return redirect_to "/admin/students/#{@student.id}/set_user"
     end
     error = @student.errors.first
     flash[:error] = "#{error[0]} #{error[1]}"
@@ -42,7 +42,13 @@ class Admin::StudentsController < ApplicationController
   end
 
   def do_set_user
-    @student.user_id = params[:student][:user_id]
+    user = User.new(params[:user])
+    if !user.save
+      error = user.errors.first
+      flash[:error] = "#{error[0]} #{error[1]}"
+      return redirect_to "/admin/students/#{@student.id}/set_user"
+    end
+    @student.user_id = user.id
     @student.save
     redirect_to "/admin/students/#{@student.id}"
   end
