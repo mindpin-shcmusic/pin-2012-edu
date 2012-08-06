@@ -19,63 +19,16 @@ pie.load ->
 
 # 点击列表项
 pie.load ->
-  # 打开一个 980x700 的浮动dom，使之垂直水平都居中
-  # 并且随着 window resize 调整位置
+  
+  # delete
+  jQuery(document).delegate '.page-media-resources .media-resource .link.delete a', 'click', ->
+    $resource = jQuery(this).closest('.media-resource')
+    url = $resource.data('resource-url')
 
-  _is_same_file = (input_id, $wrapper)->
-    last_loaded_id = $wrapper.data('last-loaded-id');
-    $wrapper.data('last-loaded-id', input_id);    
-
-    # TODO 如果上一次打开的是同一个文件，则不重新渲染
-    return (input_id == last_loaded_id)
-
-
-
-  jQuery('.page-media-resources a.media-resource').live 'click', ->
-    is_dir = jQuery(this).data('is-dir')
-    resource_url = jQuery(this).data('resource-url')
-
-    if is_dir
-      return window.location = resource_url
-
-    # var id = jQuery(this).data('id');
-    # var wrapper_elm = jQuery('.page-media-resource-show-wrapper');
-
-    # var is_same_file = _is_same_file(id, wrapper_elm);
-
-    # wrapper_elm
-    #   .show();
-
-    # if(is_same_file){
-    #   // TODO ...
-    #   return;
-    # }
-
-    # var bd_elm = wrapper_elm.find('.bd');
-    # bd_elm.empty();
-
-    # var media_resource_elm = jQuery(this).closest('.media-resource');
-
-    # var creator_avatar_src = media_resource_elm.data('creator-avatar-src');
-    # wrapper_elm.find('.avatar').html(jQuery('<img />').attr('src', creator_avatar_src));
-
-    # var title = media_resource_elm.data('title');
-    # wrapper_elm.find('.title').html(title);
-
-    # var creator_name = media_resource_elm.data('creator-name');
-    # wrapper_elm.find('.creator-name').html(creator_name);
-
-    # var uploaded_at = media_resource_elm.data('uploaded-at');
-    # wrapper_elm.find('.uploaded-at').html(uploaded_at);
-
-    # jQuery.ajax({
-    #   url  : '/media_resources/' + id,
-    #   type : 'GET',
-    #   success : function(data){
-    #     bd_elm.html(data);
-    #   }
-    # })
-
-  # jQuery('.page-media-resource-show-wrapper a.close').live('click', function(){
-  #   jQuery('.page-media-resource-show-wrapper').hide();
-  # })
+    jQuery(this).confirm_dialog '确定要删除吗', ->
+      jQuery.ajax
+        url: url
+        type: 'DELETE'
+        success: (res)->
+          $resource.fadeOut 400, ->
+            $resource.remove()

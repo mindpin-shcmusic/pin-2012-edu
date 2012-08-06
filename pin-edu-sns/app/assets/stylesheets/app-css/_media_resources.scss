@@ -123,7 +123,7 @@
     border-bottom:solid 1px #E5E5E5;
   }
 
-  a.media-resource{
+  .media-resource{
     @include floatfix;
     display:block;
     float:left;
@@ -131,7 +131,7 @@
     margin-bottom:30px;
 
     position:relative;
-    @include transition(all ease-in .1s);
+    // @include transition(all ease-in .1s);
 
     .meta-box{
       @include border-radius(3px);
@@ -159,7 +159,9 @@
           color:#444;font-size:14px;font-weight:bold;line-height:1.2em;
           margin-bottom:4px;
         }
-        .ftime{font-size:12px;}
+        .ftime{font-size:12px;margin-bottom:6px;}
+
+        .link{font-size:14px;}
       }
       &:hover{
         .detail{
