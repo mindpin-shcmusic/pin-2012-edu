@@ -1,0 +1,22 @@
+:ruby
+  file_entity = resource.file_entity
+
+- if !file_entity.blank?
+  .preview
+    - if file_entity.is_video? && file_entity.video_encode_status?
+      = video_tag file_entity
+
+      .video-screenshots
+        - 1.upto 6 do |i|
+          :ruby
+            arr = file_entity.attach.url.split('original')
+            arr.pop
+            src = arr.push("/screenshot_#{i}.jpg").join('original')
+
+          jimage src
+
+    - elsif file_entity.is_audio? && file_entity.merged?
+      %embed{:src=>file_entity.attach.url, :width=>'640px', :height=>'400px'}
+
+    - elsif file_entity.is_image?
+      = jimage file_entity.attach.url, :width=>640, :height=>400

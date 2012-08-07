@@ -1,0 +1,14 @@
+:ruby
+  share_path = URI.decode(new_media_share_path(:resource_path => resource.path))
+  share_public_path = URI.decode(share_public_resources_path(:resource_id => resource.id))
+
+.share-state
+  .share= link_to '共享给其他人', share_path
+
+  .public-resource
+    - if resource.is_public?
+      .added 已经加入公共资源库
+      .add-public{:style=>'display:none;'}= link_to '加入公共资源库', 'javascript:;', :data=>{:url=>share_public_path}
+    - else
+      .added{:style=>'display:none;'} 已经加入公共资源库
+      .add-public= link_to '加入公共资源库', 'javascript:;', :data=>{:url=>share_public_path}

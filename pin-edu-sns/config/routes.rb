@@ -32,10 +32,6 @@ MindpinEduSns::Application.routes.draw do
   ###
   namespace :admin do
     resources :teachers do
-      member do
-        get :set_user
-        put :do_set_user
-      end
       collection do
         get :search
       end
@@ -50,10 +46,6 @@ MindpinEduSns::Application.routes.draw do
       end
     end
     resources :students do
-      member do
-        get :set_user
-        put :do_set_user
-      end
       collection do
         get :search
       end
@@ -85,12 +77,13 @@ MindpinEduSns::Application.routes.draw do
   # --- 用户
   resources :users
 
-  # --- 评论
-  resources :comments,
-            :only => [:create] do
+  # ----------------------
 
+  # 所有类型的评论都在这里，不单独定义
+  resources :comments do
     collection do
-      get :inbox
+      get 'show_model_comments'
+      get 'received' # 我收到的评论
     end
   end
   

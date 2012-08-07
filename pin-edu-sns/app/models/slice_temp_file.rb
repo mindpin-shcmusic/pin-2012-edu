@@ -55,9 +55,30 @@ class SliceTempFile < ActiveRecord::Base
   end
 
   def build_file_entity
-    file_entity = FileEntity.create(:merged => false)
-    MergeSliceTempFileResqueQueue.enqueue(self.id, file_entity.id)
-    file_entity
+    if 1 == blob_count
+      file = self.get_merged_file
+      FileEntity.create(:merged => true, :attach => file)
+    else
+      file_entity = FileEntity.create(:merged => false)
+      MergeSliceTempFileResqueQueue.enqueue(self.id, file_entity.id)
+      file_entity
+    end
+  end
+
+  def merge_on_queue(file_entity_id)
+    file = self.get_merged_file
+
+    file_entity = FileEntity.find(file_entity_id)
+    file_entity.attach = file
+    file_entity.merged = true
+    file_entity.save
+
+    self.remove_files
+    self.destroy
+    
+    if file_entity.is_video?
+      FileEntityVideoEncodeResqueQueue.enqueue(file_entity_id)
+    end
   end
 
   private
@@ -78,10 +99,18 @@ class SliceTempFile < ActiveRecord::Base
     dir
   end
 
+  def blob_count
+    `cd #{blob_dir};ls blob* |wc -l`.to_i
+  end
+
   # TODO 重构
   def merge_slice_files
     # 合并文件片段
-    `cd #{blob_dir};ls blob* |sort -n -k 2 -t.|xargs cat > #{file_path}`
+    if 1 == blob_count
+      `cd #{blob_dir};mv blob.0 #{file_path}`
+    else
+      `cd #{blob_dir};ls blob* |sort -n -k 2 -t.|xargs cat > #{file_path}`
+    end
     self.merged = true
     self.save
   end

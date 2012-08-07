@@ -295,3 +295,72 @@
     }
   }
 }
+
+.page-media-resource{
+  .head{
+    @include floatfix;
+    margin-bottom:20px;
+
+    .avatar{
+      float:left;
+    }
+    .resource-name{
+      margin-left:68px;
+      font-size:19px;font-weight:bold;
+      height:21px;line-height:21px;
+    }
+    .user{
+      margin-left:68px;
+      font-size:12px;
+      height:20px;line-height:20px;
+      margin-top:6px;
+      .u-name{font-weight:bold;}
+    }
+  }
+
+  .preview{
+    width:640px;height:400px;
+    padding:20px;
+    box-shadow:0 1px 2px rgba(0, 0, 0, 0.07);
+    @include border-radius(3px);
+    background-color:#fff;
+    margin-bottom:20px;
+  }
+
+  .share-state{
+    @include floatfix;
+
+    .share {
+      @include floatfix;
+      float:left;
+      margin-bottom:20px;
+      margin-right:20px;
+
+      a{
+        @include mini-button;
+      }
+    }
+
+    .public-resource{
+      @include floatfix;
+      float:left;
+      margin-bottom:20px;
+      margin-right:20px;
+      .added{
+        float:left;
+        background-color:rgba(black, 0.05);
+        color:#333;
+        border:solid 1px #ddd;
+        height:30px;line-height:30px;
+        padding:0 14px;
+      }
+      .add-public{
+        a{
+          @include mini-button;
+          @include gradient(#FDA034, #FF8201);
+          &:hover{@include gradient(lighten(#FDA034, 10%), lighten(#FF8201, 10%));}
+        }
+      }
+    }
+  }
+}

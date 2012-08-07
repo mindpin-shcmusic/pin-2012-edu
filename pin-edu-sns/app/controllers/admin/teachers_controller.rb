@@ -18,12 +18,13 @@ class Admin::TeachersController < ApplicationController
 
   def new
     @teacher = Teacher.new
+    @teacher.build_user
   end
   
   def create
     @teacher = Teacher.new(params[:teacher])
     if @teacher.save
-      return redirect_to "/admin/teachers/#{@teacher.id}/set_user"
+      return redirect_to "/admin/teachers/#{@teacher.id}"
     end
     error = @teacher.errors.first
     flash[:error] = "#{error[0]} #{error[1]}"
@@ -38,18 +39,4 @@ class Admin::TeachersController < ApplicationController
   def show
   end
 
-  def set_user
-  end
-
-  def do_set_user
-    user = User.new(params[:user])
-    if !user.save
-      error = user.errors.first
-      flash[:error] = "#{error[0]} #{error[1]}"
-      return redirect_to "/admin/teachers/#{@teacher.id}/set_user"
-    end
-    @teacher.user_id = user.id
-    @teacher.save
-    redirect_to "/admin/teachers/#{@teacher.id}"
-  end
 end

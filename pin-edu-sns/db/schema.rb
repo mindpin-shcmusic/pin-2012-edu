@@ -41,6 +41,7 @@ ActiveRecord::Schema.define(:version => 20120807060309) do
     t.integer  "reply_comment_user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "receiver_id"
   end
 
   add_index "comments", ["creator_id"], :name => "index_comments_on_creator_id"
