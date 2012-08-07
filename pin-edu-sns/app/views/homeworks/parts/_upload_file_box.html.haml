@@ -1,0 +1,41 @@
+.page-upload-box{:style=>'display:none;'}
+  .form-title 上传文件
+  .page-attachment-uploader{:'data-new-upload-url'=> '/new_upload', |
+    :'data-send-blob-url'=>'/upload_blob', |
+    :'data-file-put-url' => create_teacher_attachment_homeworks_path}
+
+    .upload-drop-area
+      .upload-btn-box
+        %a.upload-btn{:href=>'javascript:;'} 打开文件
+        = file_field_tag :file, :multiple => true
+      .desc 上传电脑上的文件。
+      %a.form-cancel-button{:href=>'javascript:;'} 关闭
+      
+      .tip 
+        %span.t1 请把想要上传的文件拖拖拽到这里
+        %span.t2 你正在拖放文件，松开鼠标按键，开始上传
+
+    .progress-bar-sample.hide
+      .file{:'data-name'=>'', :'data-size'=>''}
+        .bar
+          .percent 26%
+          .p{:style=>'width:26.8%;'}
+        .meta
+          .name on_your_mark.rmvb
+          .size (65.5MB)
+          .hide
+            .md5  MD5: 计算中……
+            .md5-percent 16%
+        .stat
+          .speed 
+            %span.t 上传速度:
+            %span.data 32KB/s
+          .remaining-time
+            %span.t 剩余时间:
+            %span.data 00:32:32
+        .error-info
+          文件上传出错 
+        .ops.running
+          %a.close{:href=>'javascript:;', :title=>'取消上传'} 关闭
+
+    .uploading-files-list

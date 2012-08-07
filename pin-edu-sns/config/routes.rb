@@ -101,7 +101,7 @@ MindpinEduSns::Application.routes.draw do
   # --- 作业
   resources :homeworks do
     collection do
-      post :create_teacher_attachement
+      post :create_teacher_attachment
     end
     
     member do

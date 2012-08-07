@@ -3,48 +3,47 @@
 .page-new
   = flash.now[:error]
 
+.home-attachment-uploader
+  = render 'homeworks/parts/upload_file_box', :current_dir=>@current_dir
+.hidden.attachment-ids= hidden_field_tag 'teacher_attachment_ids[]'
+
 = form_for @homework, :url => { :action => "create" }, :html => {:class => "assign_form", :multipart => true} do |f|
   = flash_info
-  .field
+
+  .field.need
     %label 作业标题
     = f.text_field :title
   
-  .field
+  .field.need
     %label 作业内容
     = f.text_area :content, :size => "60x12"
   
   .field
+    %label 请选择课程
     = f.select :course_id, @courses.collect {|item| [item.name, item.id]}, {}, {:class => 'courses-selector'}
   
-  .field.placeholder
+  .field.need
     %label 请选择日期
     = f.text_field :deadline, :class => 'auto-kal'
   
   .field  
+    %label 请选择要布置作业的班级
     //%a#show-students{:href => "javascript:void(0);"} +
-    = select_tag :teams, options_from_collection_for_select(@teams, :id, :name), :multiple => true, :class => 'students-selector', :style => 'width:640px;', :data => {:placeholder => '请选择要布置作业的班级'}
+    = select_tag :teams, options_from_collection_for_select(@teams, :id, :name), :multiple => true, :class => 'students-selector', :style => 'width:360px;', :data => {:placeholder => '请选择要布置作业的班级'}
   
-  %p 
-    老师作业附件
-    #teacher-attachements{:style => "display: none;"}
-    %a#add-teacher-attachement-field{:href => "javascript:"} 添加+
-    #dropbox
-    %div{:id => "teacher-attachement-fields"}
-      %input.multiple{:multiple => "", :type => "file", :name => "homework_teacher_attachement[attachement]"}/
+  .field
+    %label 老师作业附件
+    = link_to '上传', 'javascript:;', :class => 'upload-teacher-homework-attachment-button'
+    //= file_field_tag :teacher_attachments, :multiple => true
     
-  %div
-    学生作业提交物
+  .field
+    %label 学生作业提交物
+
     %a.add-student-attachement-field{:href => "javascript:;"} 添加+
-    
     %div{:id => "student-attachement-fields"}
-      %p
-        %input{:type=>'text', :size=>30, :name=>'homework[homework_student_upload_requirements_attributes][][title]'}
-        %a.delete{:href => "javascript:void(0);"} x
-      %p
-        %input{:type=>'text', :size=>30, :name=>'homework[homework_student_upload_requirements_attributes][][title]'}
-        %a.delete{:href => "javascript:void(0);"} x
     
-  = f.submit "布置作业"
+  .field.submit
+    = jfsubmit "布置作业"
   
 
 

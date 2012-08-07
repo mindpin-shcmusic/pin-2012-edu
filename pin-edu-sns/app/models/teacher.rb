@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Teacher < ActiveRecord::Base
   belongs_to :user
   
@@ -19,7 +20,6 @@ class Teacher < ActiveRecord::Base
   
   include Removable
   include Paginated
-  include HomeworkAttachment::OwnerMethods
 
   module UserMethods
     def self.included(base)

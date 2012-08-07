@@ -1,6 +1,6 @@
 # -*- coding: gb2312 -*-
 class HomeworksController < ApplicationController
-  before_filter :pre_load_teacher, :except => [:show]
+  before_filter :pre_load_teacher, :except => [:show, :index]
   before_filter :login_required
 
   def pre_load_teacher
@@ -45,12 +45,12 @@ class HomeworksController < ApplicationController
     redirect_to '/homeworks/new'
   end
   
-  def create_teacher_attachement
-    @homework_teacher_attachement = HomeworkTeacherAttachement.create( params[:homework_teacher_attachement] )
-    render :text => @homework_teacher_attachement.id
+  def create_teacher_attachment
+    file_entity = SliceTempFile.find(params[:slice_temp_file_id]).build_file_entity
+    @homework_teacher_attachment = HomeworkTeacherAttachment.create(:creator => current_user, :name =>params[:file_name], :file_entity => file_entity)
+    render :text => @homework_teacher_attachment.id
   end
   
-
   def new
     @homework = Homework.new
     @homework_student_upload_requirement = HomeworkStudentUploadRequirement.new
@@ -70,8 +70,10 @@ class HomeworksController < ApplicationController
       @homeworks = current_user.deadline_teacher_homeworks
     elsif params[:status] == 'undeadline'
       @homeworks = current_user.undeadline_teacher_homeworks
-    else
+    elsif current_user.is_teacher?
       @homeworks = current_user.homeworks
+    elsif current_user.is_student?
+      @homeworks = current_user.student_homeworks
     end
   end
   
@@ -91,9 +93,9 @@ class HomeworksController < ApplicationController
     homework = Homework.find(params[:id])
     
     # 生成老师上传的附件压缩包
-    homework.build_teacher_attachements_zip(homework.creator)
+    homework.build_teacher_attachments_zip(homework.creator)
     
-    render :file => "/web/2012/homework_teacher_attachements/homework_teacher#{homework.creator.id}_#{homework.id}.zip", :content_type => 'application/zip', :status => :ok
+    render :file => "/MINDPIN_MRS_DATA/attachments/homework_attachments/homework_teacher#{homework.creator.id}_#{homework.id}.zip", :content_type => 'application/zip', :status => :ok
   end
 
 end
