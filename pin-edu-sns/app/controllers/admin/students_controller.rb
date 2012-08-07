@@ -12,6 +12,7 @@ class Admin::StudentsController < ApplicationController
   
   def new
     @student = Student.new
+    @student.build_user
   end
   
   def search
@@ -23,7 +24,7 @@ class Admin::StudentsController < ApplicationController
   def create
     @student = Student.new(params[:student])
     if @student.save
-      return redirect_to "/admin/students/#{@student.id}/set_user"
+      return redirect_to "/admin/students/#{@student.id}"
     end
     error = @student.errors.first
     flash[:error] = "#{error[0]} #{error[1]}"
@@ -36,20 +37,5 @@ class Admin::StudentsController < ApplicationController
   end
   
   def show
-  end
-
-  def set_user
-  end
-
-  def do_set_user
-    user = User.new(params[:user])
-    if !user.save
-      error = user.errors.first
-      flash[:error] = "#{error[0]} #{error[1]}"
-      return redirect_to "/admin/students/#{@student.id}/set_user"
-    end
-    @student.user_id = user.id
-    @student.save
-    redirect_to "/admin/students/#{@student.id}"
   end
 end

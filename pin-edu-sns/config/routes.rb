@@ -32,10 +32,6 @@ MindpinEduSns::Application.routes.draw do
   ###
   namespace :admin do
     resources :teachers do
-      member do
-        get :set_user
-        put :do_set_user
-      end
       collection do
         get :search
       end
@@ -50,10 +46,6 @@ MindpinEduSns::Application.routes.draw do
       end
     end
     resources :students do
-      member do
-        get :set_user
-        put :do_set_user
-      end
       collection do
         get :search
       end

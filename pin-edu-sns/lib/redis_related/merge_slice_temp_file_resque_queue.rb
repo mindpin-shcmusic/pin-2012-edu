@@ -9,19 +9,7 @@ class MergeSliceTempFileResqueQueue
   
   def self.perform(slice_temp_file_id, file_entity_id)
     slice_temp_file = SliceTempFile.find(slice_temp_file_id)
-    file = slice_temp_file.get_merged_file
-
-    file_entity = FileEntity.find(file_entity_id)
-    file_entity.attach = file
-    file_entity.merged = true
-    file_entity.save
-
-    slice_temp_file.remove_files
-    slice_temp_file.destroy
-    
-    if file_entity.is_video?
-      FileEntityVideoEncodeResqueQueue.enqueue(file_entity_id)
-    end
+    slice_temp_file.merge_on_queue(file_entity_id)
   rescue Exception => ex
     p ex.message
     puts ex.backtrace*"\n"

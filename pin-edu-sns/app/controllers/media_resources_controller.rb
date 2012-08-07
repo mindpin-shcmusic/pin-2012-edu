@@ -26,11 +26,8 @@ class MediaResourcesController < ApplicationController
 
   def upload_file
     slice_temp_file = SliceTempFile.find(params[:slice_temp_file_id])
-    unmerged_file_entity = slice_temp_file.build_file_entity
-    
     resource_path = URI.decode(request.fullpath).sub('/file_put', '')
-    MediaResource.put_unmerged(current_user, resource_path, unmerged_file_entity)
-
+    MediaResource.put_slice_temp_file(current_user, resource_path, slice_temp_file)
     render :text=>200
   end
 
