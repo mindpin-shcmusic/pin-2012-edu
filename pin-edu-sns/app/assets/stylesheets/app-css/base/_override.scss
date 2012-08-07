@@ -56,4 +56,62 @@ body{
       }
     }
   }
+
+  .page-comments{
+    form{
+      margin-bottom:20px;
+      .field.content{
+        textarea{
+          width:500px;
+          height:160px;
+        }
+      }
+      .field.submit{
+        a.form-submit-button{
+          height:24px;line-height:24px;
+          padding:0 14px;
+          margin-top:0;
+        }
+      }
+    }
+
+    .comments{
+      .comment{
+        .cmain{
+          .cdata{
+            background-color:rgba(black, 0.05);
+            @include border-radius(3px);
+            border:solid 1px #ddd;
+            
+            .meta{
+              @include floatfix;
+              .name{
+                height:16px;line-height:16px;
+                font-size:12px;float:left;padding-right:30px;
+              }
+              .ops{
+                height:16px;line-height:16px;
+                font-size:12px;float:right;
+              } 
+            }
+            .ctext{
+              color:#333;
+              margin-top:10px;
+              span.time{padding-left:7px;color:#666;}
+            }
+          }
+        }
+      }
+    }
+  }
+
+  form{
+    .field{
+      &.need:not(.placeholder) label{
+        &:after{
+          color:#aa0000;
+        };
+      }
+    }
+  }
 }

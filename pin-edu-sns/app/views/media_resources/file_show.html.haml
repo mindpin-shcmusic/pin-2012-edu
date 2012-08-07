@@ -2,30 +2,21 @@
 - hbreadcrumb '我的文件夹', '/file'
 - hbreadcrumb '查看资源详情'
 
+:ruby
+  creator = @media_resource.creator
+  resource_name = truncate_u @media_resource.name, 16
+  created_at = @media_resource.created_at
+
 .page-media-resource
+  .head
+    .avatar= avatar creator
+    .resource-name= resource_name
+    .user #{user_link creator} 上传，#{jtime created_at}
 
-  .share
-    = link_to '分享该资源', URI.decode(new_media_share_path(:resource_path =>@media_resource.path))
-  .edit
+  = render 'media_resources/parts/resource_preview', :resource=>@media_resource
+  = render 'media_resources/parts/resource_share_state', :resource=>@media_resource
+
+  .edit.hide
     = render :template => 'media_resources/edit_tag'
-  .public-resource
-    - if @media_resource.is_public?
-      公共资源
-    - else
-      = link_to '添加到公共资源', 'javascript:;', :data => {:url => URI.decode(share_public_resources_path(:resource_id => @media_resource.id))}
 
-  .preview
-    -if @media_resource.file_entity.is_video? && @media_resource.file_entity.video_encode_status?
-      =video_tag @media_resource.file_entity
-    -elsif @media_resource.file_entity.is_audio? && @media_resource.file_entity.merged?
-      %embed{:src=>@media_resource.file_entity.attach.url, :width=>'640px', :height=>'400px'}
-    -elsif @media_resource.file_entity.is_image?
-      %img{:src=>@media_resource.file_entity.attach.url, :width=>'640px', :height=>'400px'}
-
-    -if @media_resource.file_entity.is_video? && @media_resource.file_entity.video_encode_status?
-      .screenshots
-        -1.upto 6 do |i|
-          -arr = @media_resource.file_entity.attach.url.split('original')
-          -arr.pop
-          -src = arr.push("/screenshot_#{i}.jpg").join('original')
-          %img{:src=>src}
+= jcomments @media_resource

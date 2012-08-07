@@ -48,6 +48,8 @@ module MediaResourceHelper
     case file_entity.content_kind
     when :image
       return File.join('http://', request.host, file_entity.attach.url(:small))
+    when :audio
+      return '/assets/covers/audio.small.png'
     else "x"
     end
   end
