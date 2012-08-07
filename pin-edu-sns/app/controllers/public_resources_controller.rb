@@ -8,14 +8,11 @@ class PublicResourcesController < ApplicationController
   end
 
   # 分享到公共资源
+  # for ajax
   def share
-    resource_id = params[:resource_id]
-    current_resource = MediaResource.find(resource_id)
-
+    current_resource = MediaResource.find(params[:resource_id])
     public_resource_id = current_resource.share_public
-
-    render :text => public_resource_id
-
+    render :text => 'ok'
   end
 
   # 上传到公共资源 

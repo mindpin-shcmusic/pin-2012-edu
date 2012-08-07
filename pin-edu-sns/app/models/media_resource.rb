@@ -266,6 +266,7 @@ class MediaResource < ActiveRecord::Base
   include MediaShare::MediaResourceMethods
   include PublicResource::MediaResourceMethods
   include MediaShareRule::MediaResourceMethods
+  include Comment::CommentableMethods
   include Removable
 
 

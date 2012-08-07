@@ -44,16 +44,14 @@ pie.load ->
     $upload_box.fadeOut 200, ->
       pie.hide_page_overlay()
 
-
-# jQuery ->
-#   jQuery('.page-media-resource-list .media-resource a.put-public').live 'click', ->
-#     elm = jQuery(this)
-#     id = elm.data('id')
-
-#     jQuery.ajax({
-#       type: 'POST',
-#       url : '/public_resources/share/',
-#       data: {resource_id: id},
-#       success : ->
-#         elm.remove()
-#     })
+# 资源查看 -> 分享资源到公共资源库
+pie.load ->
+  jQuery(document).delegate '.page-media-resource .public-resource a', 'click', ->
+    jQuery.ajax
+      type: 'POST'
+      url : jQuery(this).data('url')
+      success: (res)=>
+        $state = jQuery(this).closest('.share-state')
+        $state
+          .find('.add-public').hide().end()
+          .find('.added').show()
