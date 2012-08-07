@@ -28,6 +28,20 @@ class Student < ActiveRecord::Base
   
   validates :real_name, :presence=>true
   validates :sid, :uniqueness => { :if => Proc.new { |student| !student.sid.blank? } }
+  validates :user, :presence => true
+
+  validate do |student|
+    if !student.user_id.blank?
+      students = Student.find_all_by_user_id(student.user_id)
+      teachers = Teacher.find_all_by_user_id(student.user_id)
+      other_students = students-[student]
+      if !other_students.blank? || !teachers.blank?
+        errors.add(:user, "该用户账号已经被其他教师或者学生绑定")
+      end
+    end
+  end
+
+  accepts_nested_attributes_for :user
   
   include Removable
   include Paginated
