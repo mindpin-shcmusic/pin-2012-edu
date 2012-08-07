@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120802022742) do
+ActiveRecord::Schema.define(:version => 20120807060309) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -118,6 +118,15 @@ ActiveRecord::Schema.define(:version => 20120802022742) do
 
   add_index "homework_assigns", ["homework_id"], :name => "index_homework_assigns_on_homework_id"
   add_index "homework_assigns", ["student_id"], :name => "index_homework_assigns_on_student_id"
+
+  create_table "homework_attachments", :force => true do |t|
+    t.integer  "creator_id"
+    t.integer  "homework_id"
+    t.integer  "file_entity_id"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "homework_student_upload_requirements", :force => true do |t|
     t.integer  "creator_id"

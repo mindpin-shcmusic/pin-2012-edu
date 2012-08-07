@@ -8,8 +8,6 @@ class User < ActiveRecord::Base
   include HomeworkAssign::UserMethods
   include HomeworkStudentUploadRequirement::UserMethods
   include HomeworkStudentUpload::UserMethods
-  # --- 媒体文件
-  include MediaFile::UserMethods
   # --- 通知
   include Notification::UserMethods
   # --- 站内信
@@ -19,6 +17,7 @@ class User < ActiveRecord::Base
   # 只能在这里声明了 fushang318
   has_many :media_resources,
                     :foreign_key => 'creator_id'
+  include HomeworkAttachment::UserMethods
   include MediaShare::UserMethods
   include PublicResource::UserMethods
   include RedisSearchMethods::UserMethods

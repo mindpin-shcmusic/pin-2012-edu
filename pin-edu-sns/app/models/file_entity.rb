@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class FileEntity < ActiveRecord::Base
 
   CONTENT_TYPES = {
@@ -20,6 +21,7 @@ class FileEntity < ActiveRecord::Base
   }
 
   has_many :media_resources
+  has_many :homework_attachment
 
   has_attached_file :attach,
                     :styles => lambda {|attach|

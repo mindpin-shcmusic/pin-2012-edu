@@ -1,5 +1,7 @@
+# -*- coding: gb2312 -*-
 class HomeworksController < ApplicationController
   before_filter :pre_load_teacher, :except => [:show]
+  before_filter :login_required
 
   def pre_load_teacher
     return redirect_to '/' unless current_user.is_teacher?
@@ -28,7 +30,7 @@ class HomeworksController < ApplicationController
             
             # 如果学生没有被分配到作业
             unless @homework.has_assigned(student)
-              HomeworkAssign.create(:student => student, :homework => @homework) 
+              HomeworkAssign.create(:student => student, :homework => @homework, :creator => current_user) 
             end
             
           end
@@ -81,7 +83,7 @@ class HomeworksController < ApplicationController
   
   # 老师查看具体某一学生作业页面
   def student
-    @homework = Homework.find(params[:id])
+    @homework = Homework.find(params[:homework_id])
     @student = User.find(params[:user_id])
   end
   

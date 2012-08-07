@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Homework < ActiveRecord::Base
   # --- 模型关联
   belongs_to :creator,
@@ -37,7 +38,7 @@ class Homework < ActiveRecord::Base
   
   # 学生是否被分配
   def has_assigned(student)
-    self.homework_assigns.where(:student_id => student.id).exists?
+    self.homework_assigns.where(:student_id => student.id).any?
   end
   
   

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class HomeworkTeacherAttachement < ActiveRecord::Base
   # --- 模型关联
   belongs_to :homework
