@@ -9,6 +9,8 @@ class FileEntityVideoEncodeResqueQueue
   
   def self.perform(file_entity_id)
     file_entity = FileEntity.find(file_entity_id)
+    return if file_entity.video_encode_success?
+    
     origin_file_path = file_entity.attach.path
     flv_path = file_entity.attach_flv_path
     encode_is_success = VideoUtil.encode_to_flv(origin_file_path,flv_path)
