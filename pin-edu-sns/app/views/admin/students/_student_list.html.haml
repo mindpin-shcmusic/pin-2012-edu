@@ -1,16 +1,17 @@
-- students.each do |student|
-  .model.teacher
-    .avatar
-      =avatar User.new, :medium
-    .p
-      .t 学生姓名
-      .c=student.real_name
-    .p
-      .t 学生编号 
-      .c=student.sid
-    .p.l3
-      .t 其他信息 
-      .c
+.attrs.ava
+  .t2 学生姓名
+  .t2 学生编号
+  .t2 用户名
+  .t2 用户邮箱
 
-    .detail=link_to "查看详情","/admin/students/#{student.id}"
-    .remove=link_to '删除', admin_student_path(student), :method => :delete, :confirm => '确定要删除？'
+- students.each do |student|
+  .model.student
+    .avatar= avatar student.user, :tiny
+    .t2= student.real_name
+    .t2= student.sid
+    .t2= student.user.name
+    .t2= student.user.email
+
+    .ops
+      %a.remove{:href=>'javascript:;'} 删除
+      %a.detail{:href=>"/admin/students/#{student.id}"} 查看详情

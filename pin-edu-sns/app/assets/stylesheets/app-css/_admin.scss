@@ -51,7 +51,7 @@
 .page-admin-models{
   .attrs{
     @include floatfix;
-    margin-bottom:10px;
+    margin-bottom:3px;
     border:solid 1px #ddd;
     background-color:rgba(black, 0.05);
     padding:10px;
@@ -82,7 +82,7 @@
     border:solid 1px #ddd;
     position:relative;
     background-color:rgba(black, 0.05);
-    margin-bottom:10px;
+    margin-bottom:3px;
 
     .avatar{
       float:left;
