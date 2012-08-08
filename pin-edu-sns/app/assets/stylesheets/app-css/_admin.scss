@@ -117,22 +117,29 @@
   .grid.course{
     float:left;
     margin-right:20px;
-    margin-bottom:20px;
-    background-color:white;
-    box-shadow:0 1px 2px rgba(0,0,0,0.07);
-    padding:10px;
-    @include border-radius(3px);
+    margin-bottom:30px;
 
-    .cover{
-      width:160px;height:96px;
+    .box{
+      background-color:white;
+      box-shadow:0 1px 2px rgba(0,0,0,0.07);
+      padding:10px;
       margin-bottom:10px;
+
+      @include border-radius(3px);
+
+      .cover{
+        width:160px;height:96px;
+        margin-bottom:5px;
+      }
+      .name{
+        height:20px;line-height:20px;
+        overflow:hidden;
+        width:160px;
+      }
     }
-    .name{
-      height:20px;line-height:20px;
-      margin-bottom:10px;
-      overflow:hidden;
-    }
+
     .teacher{
+      padding:0 10px;
       height:24px;line-height:24px;
       .ava{
         float:left;margin-right:4px;

@@ -3,20 +3,22 @@
   - courses.each do |course|
     :ruby
       name = truncate_u course.name, 10
+      teacher = course.teacher
 
     .grid.course
-      .cover
-        = link_to admin_course_path(course) do
-          = jimage course.cover, :width => 160, :height => 96
+      .box
+        .cover
+          = link_to admin_course_path(course) do
+            = jimage course.cover, :width => 160, :height => 96
 
-      .name= link_to name, admin_course_path(course)
+        .name= link_to name, admin_course_path(course)
 
       .teacher
-        - if course.teacher.blank?
+        - if teacher.blank?
           %span.c.quiet 未指定教师
         - else
-          .ava= avatar course.teacher.user, :mini
-          %span.c= course.teacher.real_name
+          .ava= avatar teacher.user, :mini
+          %span.c= link_to teacher.real_name, admin_teacher_path(teacher)
 
 - else
 
