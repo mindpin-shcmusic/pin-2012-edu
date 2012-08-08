@@ -7,16 +7,15 @@
   .t3 备注
 
 - courses.each do |course|
-  :ruby
-    teacher_name = course.teacher.blank? ? '未指定' : course.teacher.real_name
-    
+
   - if is_grid == 'true'
+  
     .course
       .cover
         = link_to admin_course_path(course) do
           = jimage course.cover, :width => 160, :height => 96
       .name= course.name
-      .teacher= teacher_name
+      .teacher= course.teacher.real_name
 
   - else
 
@@ -26,8 +25,11 @@
       .t2= course.department
       .t2= course.location
       .t2
-        .ava= avatar User.new, :mini
-        .c= teacher_name
+        - if course.teacher.blank?
+          %span.c 未指定
+        - else
+          .ava= avatar User.new, :mini
+          %span.c= course.teacher.real_name
       .t3= course.desc
 
       .ops
