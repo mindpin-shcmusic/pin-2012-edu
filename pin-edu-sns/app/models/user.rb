@@ -19,7 +19,6 @@ class User < ActiveRecord::Base
                     :foreign_key => 'creator_id'
   include MediaShare::UserMethods
   include PublicResource::UserMethods
-  include RedisSearchMethods::UserMethods
   include MediaShareRule::UserMethods
   include Achievement::UserMethods
   include Course::UserMethods
