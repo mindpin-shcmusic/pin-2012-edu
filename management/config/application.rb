@@ -30,5 +30,15 @@ module MindpinEduSns
     config.i18n.default_locale = 'zh-CN'
 
     config.assets.prefix = File.join($APP_RELATIVE_ROOT, 'assets')
+
+    config.dev_tweaks.autoload_rules do
+      keep :all
+
+      skip '/favicon.ico'
+      skip :assets
+      skip :xhr
+      keep :forced
+    end
+
   end
 end
