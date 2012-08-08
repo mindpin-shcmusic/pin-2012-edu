@@ -46,6 +46,14 @@
   a.create{
     @include mini-button;
   }
+
+  .list-style{
+    float:left;
+    margin-left:20px;
+    height:32px;line-height:32px;
+    @include floatfix;
+    .desc{float:left;margin-right:10px;}
+  }
 }
 
 .page-admin-models{
@@ -94,11 +102,18 @@
     .t3{width:160px;float:left;}
     .t, .t2, .t3{
       height:32px;line-height:32px;
+      overflow:hidden;
+
       &:empty{
         &:before{
           content:"--";
           color:#999;
         }
+      }
+      .ava{
+        float:left;
+        margin-top:4px;
+        margin-right:4px;
       }
     }
 
