@@ -16,9 +16,6 @@ class Teacher < ActiveRecord::Base
   end
 
   accepts_nested_attributes_for :user
-  
-  include Removable
-  include Paginated
 
   module UserMethods
     def self.included(base)
@@ -50,6 +47,9 @@ class Teacher < ActiveRecord::Base
     end
     
   end
+
+  include ModelRemovable
+  include Paginated
 
   define_index do
     indexes real_name, :sortable => true

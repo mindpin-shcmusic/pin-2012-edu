@@ -36,6 +36,6 @@ class Category < ActiveRecord::Base
     self.depth & self.depth >= 2 
   end
 
-  include Removable
+  include ModelRemovable
 
 end

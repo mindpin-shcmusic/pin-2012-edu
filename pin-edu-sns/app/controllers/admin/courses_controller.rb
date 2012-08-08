@@ -31,9 +31,10 @@ class Admin::CoursesController < ApplicationController
     redirect_to "/admin/courses/new"
   end
 
+  # for ajax
   def destroy
     @course.remove
-    redirect_to :action => :index
+    render :text => 'ok'
   end
   
   def show

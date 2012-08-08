@@ -267,7 +267,7 @@ class MediaResource < ActiveRecord::Base
   include PublicResource::MediaResourceMethods
   include MediaShareRule::MediaResourceMethods
   include Comment::CommentableMethods
-  include Removable
+  include ModelRemovable
 
 
   # -------------- 这段需要放在最后，否则因为类加载顺序，会有警告信息

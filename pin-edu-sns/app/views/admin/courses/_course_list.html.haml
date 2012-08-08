@@ -33,5 +33,6 @@
       .t3= course.desc
 
       .ops
-        %a.remove{:href=>'javascript:;'} 删除
+        - remove_url = admin_course_path(course)
+        %a.remove{:href=>'javascript:;', :'data-url'=>remove_url} 删除
         %a.detail{:href=>"/admin/courses/#{course.id}"} 查看详情

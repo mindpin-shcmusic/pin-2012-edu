@@ -16,8 +16,6 @@ class Team < ActiveRecord::Base
     User.find get_user_ids
   end
 
-  include Removable
-  include Paginated
 
   module UserMethods
     def self.included(base)
@@ -30,6 +28,9 @@ class Team < ActiveRecord::Base
       end
     end
   end
+
+  include ModelRemovable
+  include Paginated
 
   define_index do
     indexes name, :sortable => true
