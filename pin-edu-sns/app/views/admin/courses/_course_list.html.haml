@@ -1,34 +1,44 @@
-.attrs
-  .t3 名称
-  .t2 课序号
-  .t2 开课院系
-  .t2 上课地点
-  .t2 教师
-  .t3 备注
+- if is_grid == 'true'
 
-- courses.each do |course|
+  - courses.each do |course|
+    :ruby
+      name = truncate_u course.name, 10
 
-  - if is_grid == 'true'
-  
-    .course
+    .grid.course
       .cover
         = link_to admin_course_path(course) do
           = jimage course.cover, :width => 160, :height => 96
-      .name= course.name
-      .teacher= course.teacher.real_name
 
-  - else
+      .name= link_to name, admin_course_path(course)
 
-    .model
+      .teacher
+        - if course.teacher.blank?
+          %span.c.quiet 未指定教师
+        - else
+          .ava= avatar course.teacher.user, :mini
+          %span.c= course.teacher.real_name
+
+- else
+
+  .attrs
+    .t3 名称
+    .t2 课序号
+    .t2 开课院系
+    .t2 上课地点
+    .t2 教师
+    .t3 备注
+
+  - courses.each do |course|
+    .model.course
       .t3= truncate_u course.name, 8
       .t2= course.cid
       .t2= course.department
       .t2= course.location
       .t2
         - if course.teacher.blank?
-          %span.c 未指定
+          %span.c.quiet 未指定
         - else
-          .ava= avatar User.new, :mini
+          .ava= avatar course.teacher.user, :mini
           %span.c= course.teacher.real_name
       .t3= course.desc
 

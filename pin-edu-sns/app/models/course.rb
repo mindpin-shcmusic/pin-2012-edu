@@ -16,7 +16,7 @@ class Course < ActiveRecord::Base
   end
 
   def default_cover
-    User.new.logo.url(:large)
+    '/assets/covers/course.small.jpg'
   end
 
   def get_user_ids
