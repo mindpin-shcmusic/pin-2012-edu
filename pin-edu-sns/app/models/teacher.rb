@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Teacher < ActiveRecord::Base
   belongs_to :user
   

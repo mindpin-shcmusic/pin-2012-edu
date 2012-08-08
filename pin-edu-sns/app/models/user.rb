@@ -17,9 +17,9 @@ class User < ActiveRecord::Base
   # 只能在这里声明了 fushang318
   has_many :media_resources,
                     :foreign_key => 'creator_id'
+
   include MediaShare::UserMethods
   include PublicResource::UserMethods
-  include RedisSearchMethods::UserMethods
   include MediaShareRule::UserMethods
   include Achievement::UserMethods
   include Course::UserMethods

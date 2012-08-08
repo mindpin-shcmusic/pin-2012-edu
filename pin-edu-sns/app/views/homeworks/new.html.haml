@@ -1,238 +1,49 @@
-= content_for :javascript do
-  :javascript
-
-    // 删除班级标签
-    function del_team(id) {
-      $('#del-a-team' + id).remove();
-
-      // 把临时列表保存的插入到班级列表之前
-      var team = $('#team-temp-list').html();
-      team = team.replace('<div>', '<div id="team-current-' + id + '">');
-      $('#confirm-teams').before(team);
-
-      // 清空临时班级列表
-      $('#team-temp-list').html('');
-    }
-
-    // 删除学生标签
-    function del_student(id) {
-      $('#del-a-student' + id).remove();
-
-      // 把临时列表保存的插入到班级列表之前
-      var student = $('#student-temp-list').html();
-      student = student.replace('<div>', '<div id="student-current-' + id + '">');
-      $('#confirm-students').before(student);
-
-      // 清空临时班级列表
-      $('#student-temp-list').html('');
-    }
-
-
-    jQuery(document).ready(function(){
-      $('#homework_deadline').datepicker({
-          showSecond: true,
-          changeMonth: true,
-          changeYear: true,
-          timeFormat: 'hh:mm:ss',
-          dateFormat: 'yy-mm-dd'
-      });
-      // $('#homework_deadline').datepicker('option', $.datepicker.regional['zh-CN']);
-
-      // 上传老师附件
-      jQuery('.multiple').live('click', function(){
-        jQuery("#dropbox, .multiple").html5Uploader({
-          name: "homework_teacher_attachement[attachement]",
-          postUrl: '/homeworks/create_teacher_attachement',
-          onSuccess: function(e, file, data){
-            // console.log(data);
-            var attachements = '<input type="text" name="teacher_attachements[]" value="' + data + '" value="">';
-            $('#teacher-attachements').append(attachements);
-          }
-        });
-      })
-
-
-      // 添加学生附件表单
-      jQuery('#add-student-attachement-field').click(function(){
-        var attachement_field = "<input type='text' size='30' name='homework[homework_student_upload_requirements_attributes][][title]'>";
-        var del_field = "<a href='javascript:void(0);' class='delete'>x</a>";
-        $('#student-attachement-fields').append("<p>" + attachement_field + del_field + "</p>");
-      })
-
-      // 删除表单
-      jQuery('a.delete').live('click', function(){
-        $(this).parent().remove();
-      })
-
-      // 添加老师附件表单
-      jQuery('#add-teacher-attachement-field').click(function(){
-        var attachement_field = '<input type="file" name="homework_teacher_attachement[attachement]" multiple="" class="multiple">';
-        var del_field = "<a href='javascript:void(0);' class='delete'>x</a>";
-        $('#teacher-attachement-fields').append("<p>" + attachement_field + del_field + "</p>");
-      })
-
-      // 班级列表
-      jQuery('#team-by').click(function(){
-        // 显示班级列表
-        $('#team-list').show();
-
-        // 隐藏学生列表
-        $('#student-list').hide();
-
-      })
-
-
-      // 确定选择的班级列表
-      jQuery('#confirm-teams').click(function(){
-        $('#student-block').hide();
-        var selected = new Array();
-        $('#team-list input:checked').each(function() {
-
-            var value = $(this).attr('value');
-            var name = $(this).attr('name');
-
-            if($("#del-a-team" + value).length == 0) {
-              var delete_name = "<a href='javascript:' onclick='del_team(" + value + ")'>x</a>";
-              var input_string = "<span id='del-a-team" + value + "'>" + name + delete_name + 
-                                 "<input type='hidden' value='" + value + "' name='teams[]' /></span>";
-              $('#selected-teams').append(input_string);
-            }
-
-            // 用于临时存放，如果删除班级标签时，可以随时拿出来
-            $('#team-temp-list').append('<div>' + $("#team-current-" + value).html() + '</div>');
-
-            $('#team-current-' + value).remove();
-        });
-
-      })
-
-
-      // 学生列表
-      jQuery('#student-by').click(function(){
-        // 隐藏班级列表
-        $('#team-list').hide();
-
-        // 显示学生列表
-        $('#student-list').show();
-
-      })
-
-
-      // 主要用于重新显示学生列表
-      jQuery('#show-students').click(function(){
-        // 先隐藏班级
-        $('#team-list').hide();
-
-        // 整个学生块先显示出来
-        $('#student-block').show();
-
-        // 学生列表显示出来
-        $('#student-list').show();
-
-        // 把分类显示出来
-        $('#category-by').show();
-
-      })
-
-      // 确定选择的学生列表
-      jQuery('#confirm-students').click(function(){
-        $('#student-block').hide();
-        var selected = new Array();
-        $('#student-list input:checked').each(function() {
-            // selected.push($(this).attr('value'));
-
-            var value = $(this).attr('value');
-            var name = $(this).attr('name');
-
-            if($("#del-a-student" + value).length == 0) {
-              var delete_name = "<a href='javascript:' onclick='del_student(" + value + ")'>x</a>";
-              var input_string = "<span id='del-a-student" + value + "'>" + name + delete_name + "<input type='hidden' value='" + value + "' name='homework[homework_assigns_attributes][][student_id]' /></span>";
-              $('#selected-students').append(input_string);
-            }
-
-            // 用于临时存放，如果删除学生标签时，可以随时拿出来
-            $('#student-temp-list').append('<div>' + $("#student-current-" + value).html() + '</div>');
-
-            $('#student-current-' + value).remove();
-        });
-      })
-
-    });
-  
-
 %p= link_to '作业列表', homeworks_path
 
 .page-new
   = flash.now[:error]
 
-= form_for @homework, :url => { :action => "create" }, :html => {:class => "assign_form", :multipart => true} do |f|
-  %p 作业标题
-  = f.text_field :title
-  
-  %p 作业内容
-  = f.text_area :content, :size => "60x12"
-  
-  %p 隶属课程
-  = f.select :course_id, @courses.collect {|item| [item.name, item.id]}
-  
-  %p 截止日期
-  = f.text_field :deadline
-  
-  %p 
-    选择分配学生
-    %a#show-students{:href => "javascript:void(0);"} +
-  
-  %p
-    #selected-teams
-    #selected-students   
-  
-  #student-block{:style => "display: none;"}
+.home-attachment-uploader
+  = render 'homeworks/parts/upload_file_box', :current_dir=>@current_dir
+.hidden.attachment-ids= hidden_field_tag 'teacher_attachment_ids[]'
 
-    %p#category-by{:style => "display: none;"}
-      %span#team-by 按班级 
-      %span#student-by 按学生
-    
-    #team-temp-list{:style => "display: none;"}
-    #team-list{:style => "display: none;"}
-      -@teams.each do |team|
-        %div{:id => "team-current-#{team.id}"}
-          %input{:type=>'checkbox', :value => "#{team.id}", :name=>"#{team.name}"} 
-          #{team.name} (#{team.team_students.count})
-          
-      %input#confirm-teams{:name => "confirm_btn", :type => "button", :value => "确定"}/
-    
-    #student-temp-list{:style => "display: none;"}
-    #student-list
-      -@students.each do |student|
-        %div{:id => "student-current-#{student.id}"}
-          %input{:type=>'checkbox', :value => student.id, :name=>"#{student.real_name}"} 
-          #{student.real_name}
-      
-      %input#confirm-students{:name => "confirm_btn", :type => "button", :value => "确定"}/
+= form_for @homework, :url => { :action => "create" }, :html => {:class => "assign_form", :multipart => true} do |f|
+  = flash_info
+
+  .field.need
+    %label 作业标题
+    = f.text_field :title
   
+  .field.need
+    %label 作业内容
+    = f.text_area :content, :size => "60x12"
   
+  .field
+    %label 请选择课程
+    = f.select :course_id, @courses.collect {|item| [item.name, item.id]}, {}, {:class => 'courses-selector'}
   
-  %p 
-    老师作业附件
-    #teacher-attachements{:style => "display: none;"}
-    %a#add-teacher-attachement-field{:href => "javascript:"} 添加+
-    #dropbox
-    %div{:id => "teacher-attachement-fields"}
-      %input.multiple{:multiple => "", :type => "file", :name => "homework_teacher_attachement[attachement]"}/
+  .field.need
+    %label 请选择日期
+    = f.text_field :deadline, :class => 'auto-kal'
+  
+  .field  
+    %label 请选择要布置作业的班级
+    //%a#show-students{:href => "javascript:void(0);"} +
+    = select_tag :teams, options_from_collection_for_select(@teams, :id, :name), :multiple => true, :class => 'students-selector', :style => 'width:360px;', :data => {:placeholder => '请选择要布置作业的班级'}
+  
+  .field
+    %label 老师作业附件
+    = link_to '上传', 'javascript:;', :class => 'upload-teacher-homework-attachment-button'
+    //= file_field_tag :teacher_attachments, :multiple => true
     
-  %div
-    学生作业提交物
-    %a#add-student-attachement-field{:href => "javascript:"} 添加+
-    
+  .field
+    %label 学生作业提交物
+
+    %a.add-student-attachement-field{:href => "javascript:;"} 添加+
     %div{:id => "student-attachement-fields"}
-      %p
-        %input{:type=>'text', :size=>30, :name=>'homework[homework_student_upload_requirements_attributes][][title]'}
-        %a.delete{:href => "javascript:void(0);"} x
-      %p
-        %input{:type=>'text', :size=>30, :name=>'homework[homework_student_upload_requirements_attributes][][title]'}
-        %a.delete{:href => "javascript:void(0);"} x
     
-  = f.submit "布置作业"
+  .field.submit
+    = jfsubmit "布置作业"
   
 
 

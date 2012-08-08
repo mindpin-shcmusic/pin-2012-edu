@@ -1,6 +1,6 @@
 :ruby
-  teacher_attachements_count = @homework.homework_teacher_attachements.count
-  student_attachements_count = @homework.homework_student_upload_requirements.count
+  teacher_attachments_count = @homework.homework_teacher_attachments.count
+  student_attachments_count = @homework.homework_student_upload_requirements.count
 
 %p= link_to '作业列表', homeworks_path
 %p= link_to '布置新作业', new_homework_path
@@ -21,9 +21,9 @@
 
 %div 
   提交物
-  = teacher_attachements_count
-  - @homework.homework_teacher_attachements.each do |attachement|
-    = attachement.attachement_file_name
+  = teacher_attachments_count
+  - @homework.homework_teacher_attachments.each do |attachment|
+    = attachment.attachment_file_name
   %div
     %a{:href => "/homeworks/#{@homework.id}/download_teacher_zip"} Zip包全部下载
 
@@ -37,9 +37,9 @@
         =h.student.real_name
     = uploaded_count
     %span /
-    = student_attachements_count
+    = student_attachments_count
     
-    - if uploaded_count == student_attachements_count
+    - if uploaded_count == student_attachments_count
       %span 完成
     - else
       %span 未完成

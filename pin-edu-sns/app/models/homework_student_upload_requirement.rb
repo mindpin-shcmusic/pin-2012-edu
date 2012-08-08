@@ -7,7 +7,7 @@ class HomeworkStudentUploadRequirement < ActiveRecord::Base
 
   has_many :homework_student_uploads,
            :class_name => 'HomeworkStudentUpload',
-           :foreign_key => 'attachement_id'
+           :foreign_key => 'requirement_id'
   
   def upload_of_user(user)
     self.homework_student_uploads.where(:creator_id => user.id).first
