@@ -1,35 +1,34 @@
--# MINDPIN 工程原型Layout
-
 :ruby
   tstr = ((yield :title) || '').gsub("\n",'')
-  title = tstr.blank? ? 'MINDPIN shcmusic SNS 基础数据维护' : "#{tstr} - MINDPIN shcmusic SNS 基础数据维护"
+  title = tstr.blank? ? 'SHCMRS ADMIN' : "#{tstr} - SHCMRS ADMIN"
 
 !!! 5
-%html{:lang=>"zh"}
+%html{:lang=>'zh'}
   %head
-    %meta{:charset=>"utf-8"}
-    %title=title
+    %meta{:charset=>'utf-8'}
+    %title= title
     = csrf_meta_tags
     = stylesheet_link_tag 'application'
-    = yield :css
-    = yield :head
 
-  %body.echo.gray.admin
-    .page-wrap
-      .page-container
-        .page-header
-          .settings
-          .title=title
-        .page-nav
-          =link_to "概览","/admin"
-          =link_to "课程","/admin/courses"
-          =link_to "班级","/admin/teams"
-          =link_to "分类","/admin/categories"
-          =link_to "教师","/admin/teachers"
-          =link_to "学生","/admin/students"
-          
-        .page-content
-          = yield
+  %body.echo.gray
+    .page-sider
+      - if logged_in?
+        .links
+          %a.link.index{:href=>'/admin'} 概览
+          %a.link.teachers{:href=>'/admin/teachers'} 教师
+          %a.link.students{:href=>'/admin/students'} 学生
+          %a.link.teams{:href=>'/admin/teams'} 班级
+          %a.link.courses{:href=>'/admin/courses'} 课程
+          %a.link.categories{:href=>'/admin/categories'} 分类数据
 
-    = javascript_include_tag :application
+    .page-topbar
+      .page-breadcrumb
+        = yield :breadcrumb
+      = yield :topbar
+
+    .page-content
+      = yield
+
+    = render 'layouts/parts/current_user_js_info'
+    = javascript_include_tag 'application'
     = yield :javascript

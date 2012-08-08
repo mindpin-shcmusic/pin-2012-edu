@@ -8,8 +8,6 @@ class User < ActiveRecord::Base
   include HomeworkAssign::UserMethods
   include HomeworkStudentUploadRequirement::UserMethods
   include HomeworkStudentUpload::UserMethods
-  # --- 媒体文件
-  include MediaFile::UserMethods
   # --- 通知
   include Notification::UserMethods
   # --- 站内信
