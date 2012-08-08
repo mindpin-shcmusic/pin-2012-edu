@@ -27,7 +27,7 @@ class Admin::TeamsController < ApplicationController
     end
     
     error = @team.errors.first
-    flash[:error] = "#{error[0]} #{error[1]}"
+    flash[:error] = error[1]
     redirect_to "/admin/teams/new"
   end
   

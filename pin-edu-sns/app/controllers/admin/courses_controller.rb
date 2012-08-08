@@ -27,7 +27,7 @@ class Admin::CoursesController < ApplicationController
     end
     
     error = @course.errors.first
-    flash[:error] = "#{error[0]} #{error[1]}"
+    flash[:error] = error[1]
     redirect_to "/admin/courses/new"
   end
 
