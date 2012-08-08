@@ -20,7 +20,6 @@ class User < ActiveRecord::Base
 
   include MediaShare::UserMethods
   include PublicResource::UserMethods
-  include RedisSearchMethods::UserMethods
   include MediaShareRule::UserMethods
   include Achievement::UserMethods
   include Course::UserMethods

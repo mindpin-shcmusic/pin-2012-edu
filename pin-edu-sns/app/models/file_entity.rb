@@ -43,6 +43,7 @@ class FileEntity < ActiveRecord::Base
 
   ##################
   class EncodeStatus
+    ENCODEING = "ENCODING"
     SUCCESS  = "SUCCESS"
     FAILURE  = "FAILURE"
   end
@@ -83,5 +84,25 @@ class FileEntity < ActiveRecord::Base
     when *CONTENT_TYPES[:document]
       :document
     end
+  end
+
+  def video_encoding?
+    is_video? && video_encode_status == FileEntity::EncodeStatus::ENCODEING
+  end
+
+  def video_encode_success?
+    is_video? && video_encode_status == FileEntity::EncodeStatus::SUCCESS
+  end
+
+  def video_encode_failure?
+    is_video? && video_encode_status == FileEntity::EncodeStatus::FAILURE
+  end
+
+  def into_video_encode_queue
+    return if self.video_encode_success?
+
+    self.video_encode_status = FileEntity::EncodeStatus::ENCODEING
+    self.save
+    FileEntityVideoEncodeResqueQueue.enqueue(self.id)
   end
 end

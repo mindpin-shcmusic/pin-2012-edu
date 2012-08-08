@@ -1,6 +1,10 @@
-.page-title 教师维护
+- htitle '教师维护'
 
-= render 'admin/shared/search_field', :search_path => search_admin_students_path
+- hbreadcrumb '基础数据管理', '/admin'
+- hbreadcrumb '教师维护'
+
+- content_for :topbar do
+  = jsearchbar search_admin_teachers_path
 
 .page-admin-ops
   %a.create{:href=>'/admin/teachers/new'} 增加教师
@@ -8,4 +12,4 @@
 .page-admin-models.teachers
   = render 'teacher_list', :teachers => @teachers
 
-= will_paginate @teachers
+.page-paginate= will_paginate @teachers

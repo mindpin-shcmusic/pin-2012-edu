@@ -40,3 +40,25 @@
     @include gradient(lighten(#666, 10%), lighten(#555, 10%));
   }
 }
+
+@mixin mini-button-black{
+  @include base-mini-button;
+  @include gradient(#666, #555);
+  border-color:rgba(black, 0.3);
+  height:30px;line-height:30px;
+  padding:0 14px;
+  &:hover{
+    @include gradient(lighten(#666, 10%), lighten(#555, 10%));
+  }
+}
+
+@mixin mini-button-red{
+  @include base-mini-button;
+  @include gradient(#dc6b5b, #c74137);
+  border-color:rgba(black, 0.3);
+  height:30px;line-height:30px;
+  padding:0 14px;
+  &:hover{
+    @include gradient(lighten(#dc6b5b, 10%), lighten(#c74137, 10%));
+  }
+}
