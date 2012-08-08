@@ -21,9 +21,10 @@ class Admin::CategoriesController < ApplicationController
     redirect_to "/admin/categories"
   end
 
+  # for ajax
   def destroy
     Category.find(params[:id]).remove
-    redirect_to :action => :index
+    render :text => 'ok'
   end
   
 end

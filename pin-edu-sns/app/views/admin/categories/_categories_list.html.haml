@@ -1,0 +1,11 @@
+- categories.each do |category|
+  .category
+    .meta
+      .name= category.name
+      .ops
+        %a.add-child{:href=>"/admin/categories/new?parent_id=#{category.id}"} 增加子分类
+        - remove_url = admin_category_path(category)
+        %a.remove{:href=>'javascript:;', :'data-url'=>remove_url} 删除
+
+    .children
+      = render 'categories_list', :categories => category.children

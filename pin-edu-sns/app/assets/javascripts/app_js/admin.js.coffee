@@ -21,10 +21,23 @@ pie.load ->
     $model = jQuery(this).closest('.model')
 
     if url
-      $model.confirm_dialog '确定要删除吗', =>
+      jQuery(this).confirm_dialog '确定要删除吗', =>
         jQuery.ajax
           url: url
           type: 'DELETE'
           success: (res)=>
             $model.fadeOut 200, ->
               $model.remove()
+
+  jQuery(document).delegate '.page-admin-categories .category .ops a.remove', 'click', ->
+    url = jQuery(this).data('url')
+    $category = jQuery(this).closest('.category')
+
+    if url
+      jQuery(this).confirm_dialog '确定要删除吗', =>
+        jQuery.ajax
+          url: url
+          type: 'DELETE'
+          success: (res)=>
+            $category.fadeOut 200, ->
+              $category.remove()
