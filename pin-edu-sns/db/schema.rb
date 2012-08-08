@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120802022742) do
+ActiveRecord::Schema.define(:version => 20120808092145) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -133,30 +133,27 @@ ActiveRecord::Schema.define(:version => 20120802022742) do
 
   create_table "homework_student_uploads", :force => true do |t|
     t.integer  "creator_id"
-    t.integer  "attachement_id"
-    t.string   "attachement_file_name"
-    t.string   "attachement_content_type"
-    t.integer  "attachement_file_size"
-    t.datetime "attachement_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "homework_id"
+    t.integer  "file_entity_id"
+    t.string   "name"
+    t.integer  "requirement_id"
   end
 
   add_index "homework_student_uploads", ["creator_id"], :name => "index_homework_student_uploads_on_creator_id"
 
-  create_table "homework_teacher_attachements", :force => true do |t|
+  create_table "homework_teacher_attachments", :force => true do |t|
     t.integer  "creator_id"
     t.integer  "homework_id"
-    t.string   "attachement_file_name"
-    t.string   "attachement_content_type"
-    t.integer  "attachement_file_size"
-    t.datetime "attachement_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "file_entity_id"
+    t.string   "name"
   end
 
-  add_index "homework_teacher_attachements", ["creator_id"], :name => "index_homework_teacher_attachements_on_creator_id"
-  add_index "homework_teacher_attachements", ["homework_id"], :name => "index_homework_teacher_attachements_on_homework_id"
+  add_index "homework_teacher_attachments", ["creator_id"], :name => "index_homework_teacher_attachements_on_creator_id"
+  add_index "homework_teacher_attachments", ["homework_id"], :name => "index_homework_teacher_attachements_on_homework_id"
 
   create_table "homeworks", :force => true do |t|
     t.integer  "creator_id"

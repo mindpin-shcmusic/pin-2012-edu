@@ -27,3 +27,4 @@ coverage/
 *~
 pin-edu-sns/public/assets/*
 .rspec
+*\#*
