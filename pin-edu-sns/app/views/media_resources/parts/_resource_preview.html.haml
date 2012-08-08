@@ -1,22 +1,26 @@
 :ruby
   file_entity = resource.file_entity
 
-- if !file_entity.blank?
-  .preview
-    - if file_entity.is_video? && file_entity.video_encode_status?
-      = video_tag file_entity
 
-      .video-screenshots
-        - 1.upto 6 do |i|
-          :ruby
-            arr = file_entity.attach.url.split('original')
-            arr.pop
-            src = arr.push("/screenshot_#{i}.jpg").join('original')
-
-          jimage src
-
-    - elsif file_entity.is_audio? && file_entity.merged?
-      %embed{:src=>file_entity.attach.url, :width=>'640px', :height=>'400px'}
-
-    - elsif file_entity.is_image?
-      = jimage file_entity.attach.url, :width=>640, :height=>400
+.preview
+  - if !file_entity.blank?
+    -if !file_entity.merged?
+      .merging 文件正在合并中
+    -else
+      -if file_entity.is_audio?
+        %embed{:src=>file_entity.attach.url, :width=>'640px', :height=>'400px'}
+      -elsif file_entity.is_image?
+        = jimage file_entity.attach.url, :width=>640, :height=>400
+      -elsif file_entity.is_video?
+        -if file_entity.video_encode_success?
+          =video_tag file_entity
+          .video-screenshots
+            -1.upto 6 do |i|
+              -arr = file_entity.attach.url.split('original')
+              -arr.pop
+              -src = arr.push("/screenshot_#{i}.jpg").join('original')
+              =jimage src
+        -elsif file_entity.video_encoding?
+          .encoeding 正在转码中
+        -elsif file_entity.video_encode_failure?
+          %span= link_to "重新转码", File.join('/file_attr', resource.path,"re_encode"),:method=>:post

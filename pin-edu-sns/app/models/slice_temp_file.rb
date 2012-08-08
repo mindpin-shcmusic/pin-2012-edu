@@ -77,7 +77,7 @@ class SliceTempFile < ActiveRecord::Base
     self.destroy
     
     if file_entity.is_video?
-      FileEntityVideoEncodeResqueQueue.enqueue(file_entity_id)
+      file_entity.into_video_encode_queue
     end
   end
 
