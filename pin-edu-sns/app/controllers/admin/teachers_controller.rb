@@ -31,9 +31,10 @@ class Admin::TeachersController < ApplicationController
     redirect_to "/admin/teachers/new"
   end
   
+  # for ajax
   def destroy
     @teacher.remove
-    redirect_to :action => :index
+    render :text => 'ok'
   end
 
   def show

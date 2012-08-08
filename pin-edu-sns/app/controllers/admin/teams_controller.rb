@@ -31,9 +31,10 @@ class Admin::TeamsController < ApplicationController
     redirect_to "/admin/teams/new"
   end
   
+  # for ajax
   def destroy
     @team.remove
-    redirect_to :action => :index
+    render :text => 'ok'
   end
   
   def show
