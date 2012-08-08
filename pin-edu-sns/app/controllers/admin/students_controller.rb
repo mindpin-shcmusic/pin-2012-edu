@@ -27,7 +27,7 @@ class Admin::StudentsController < ApplicationController
       return redirect_to "/admin/students/#{@student.id}"
     end
     error = @student.errors.first
-    flash[:error] = "#{error[0]} #{error[1]}"
+    flash[:error] = error[1]
     redirect_to "/admin/students/new"
   end
   
