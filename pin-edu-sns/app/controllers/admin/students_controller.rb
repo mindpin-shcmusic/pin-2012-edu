@@ -50,4 +50,16 @@ class Admin::StudentsController < ApplicationController
     @result = Student.search params[:q]
     render :partial => 'student_list', :locals => {:students => @result}, :layout => false
   end
+
+  def import_from_csv_page
+  end
+
+  def import_from_csv
+    Student.import_from_csv(params[:csv_file])
+    redirect_to "/admin/students"
+  rescue Exception=>ex
+    flash[:error] = ex.message
+    redirect_to "/admin/students/import_from_csv_page"
+  end
+
 end

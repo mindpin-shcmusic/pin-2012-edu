@@ -41,3 +41,7 @@ pie.load ->
           success: (res)=>
             $category.fadeOut 200, ->
               $category.remove()
+
+# 构建form中的 select 控件
+pie.load ->
+  jQuery('.page-admin-form .field select').chosen()

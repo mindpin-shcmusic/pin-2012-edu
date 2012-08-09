@@ -38,6 +38,25 @@ class Student < ActiveRecord::Base
 
   accepts_nested_attributes_for :user
 
+  def self.import_from_csv(file)
+    ActiveRecord::Base.transaction do
+      parse_csv_file(file) do |row,index|
+        student = Student.new(
+          :real_name => row[0], :sid => row[1],
+          :user_attributes => {
+            :name => row[2],
+            :email => row[3],
+            :password => row[4],
+            :password_confirmation => row[4]
+          })
+        if !student.save
+          message = student.errors.first[1]
+          raise "第 #{index+1} 行解析出错,可能的错误原因 #{message} ,请修改后重新导入"
+        end
+      end
+    end
+  end
+
   module UserMethods
     def self.included(base)
       base.has_one :student

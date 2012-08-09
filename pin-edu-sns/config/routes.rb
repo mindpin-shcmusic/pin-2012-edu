@@ -45,17 +45,19 @@ MindpinEduSns::Application.routes.draw do
       end
       collection do
         get :search
+        get :import_from_csv_page
+        post :import_from_csv
       end
     end
     resources :students do
       collection do
         get :search
+        get :import_from_csv_page
+        post :import_from_csv
       end
     end
     resources :teams do
       member do
-        get :select_teacher
-        put :set_teacher
         get :select_students
         put :set_students
       end

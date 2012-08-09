@@ -48,4 +48,15 @@ class Admin::CoursesController < ApplicationController
     @course.save
     redirect_to "/admin/courses/#{@course.id}"
   end
+
+  def import_from_csv_page
+  end
+
+  def import_from_csv
+    Course.import_from_csv(params[:csv_file])
+    redirect_to "/admin/courses"
+  rescue Exception=>ex
+    flash[:error] = ex.message
+    redirect_to "/admin/courses/import_from_csv_page"
+  end
 end
