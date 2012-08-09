@@ -9,6 +9,8 @@
 .page-admin-ops
   %a.create{:href=>'/admin/students/new'} 增加学生
 
+.page-paginate= will_paginate @students
+
 .page-admin-models.students
   = render 'student_list', :students => @students
 

@@ -45,6 +45,11 @@
 
   a.create{
     @include mini-button;
+    margin-right:20px;
+  }
+
+  a.import{
+    @include mini-button-blue;
   }
 
   .list-style{
@@ -57,6 +62,9 @@
 }
 
 .page-admin-models{
+  @include floatfix;
+  margin-bottom:20px;
+
   .attrs{
     @include floatfix;
     margin-bottom:3px;
@@ -69,19 +77,6 @@
     .t{width:80px;float:left;}
     .t2{width:120px;float:left;}
     .t3{width:160px;float:left;}
-  }
-
-  .course {
-    width:160px;
-    height:128px;
-    display:inline-block;
-    padding:4px;
-    margin:8px 0 8px 8px;
-    border:1px solid #ccc;
-
-    .cover{
-      overflow:hidden;
-    }
   }
 
   .model{
@@ -120,37 +115,163 @@
     .ops{
       position:absolute;
       top:10px;right:10px;
-      .remove{@include mini-button-red;margin-right:10px;}
+      .remove{@include mini-button-red;margin-right:10px;display:none;}
+      .edit{@include mini-button-black;margin-right:10px;display:none;}
       .detail{@include mini-button-black;}
+    }
+
+    &:hover{
+      .ops{
+        .remove, .edit{display:block;}
+      }
+      background-color:rgba(white, 0.5);
+    }
+  }
+
+  .grid.course{
+    float:left;
+    margin-right:20px;
+    margin-bottom:30px;
+
+    .box{
+      background-color:white;
+      box-shadow:0 1px 2px rgba(0,0,0,0.07);
+      padding:10px;
+      margin-bottom:10px;
+
+      @include border-radius(3px);
+
+      .cover{
+        width:160px;height:96px;
+        margin-bottom:5px;
+      }
+      .name{
+        height:20px;line-height:20px;
+        overflow:hidden;
+        width:160px;
+      }
+    }
+
+    .teacher{
+      padding:0 10px;
+      height:24px;line-height:24px;
+      .ava{
+        float:left;margin-right:4px;
+      }
+      .quiet{color:#ccc;}
     }
   }
 }
 
 .page-admin-categories{
+  background-color:rgba(black, 0.05);
+  padding:10px;
+
   .category{
-    width:100px;
-    @include border-radius(6px);
-    box-shadow:1px 1px 2px rgba(0, 0, 0, 0.2);
-    border:solid 3px #eee;
-    padding:10px;margin-right:20px;margin-bottom:20px;
-    float:left;background-color:#F7F7F7;
-    .t{
-      font-size:14px;line-height:24px;height:24px;
-      background-color:#eee;padding:0 10px;
-      @include border-radius(3px);
+    .meta{
+      @include floatfix;
+      padding:0 16px;
+      height:32px;line-height:32px;
+      position:relative;
+
+      .name{
+        font-size:16px;
+        float:left;
+        margin-right:20px;
+      }
+      .ops{
+        float:left;
+      }
+
+      &:before{
+        content:"";
+        display:block;
+        position:absolute;
+        left:-5px;
+        top:12px;
+        @include border-radius(10px);
+        width:6px;height:6px;
+        border:solid 3px lighten(#86C120, 40%);
+        background-color:darken(#86C120, 20%);
+      }
     }
-    .c{
-      font-size:24px;font-weight:bold;line-height:48px;height:48px;
-      padding:0 10px;
+    .children{
+      padding-left:28px;
+      border-left:solid 2px #ccc;
     }
   }
 }
 
 .page-admin-form{
   width:500px;
-  @include border-radius(6px);
-  box-shadow:1px 1px 2px rgba(0, 0, 0, 0.2);
-  border:solid 3px #eee;
+  @include border-radius(3px);
+  box-shadow:0 1px 2px rgba(0,0,0,0.07);
   padding:10px;margin-right:20px;margin-bottom:20px;
   background-color:#fff;
+}
+
+.page-admin-form-info{
+  width:500px;
+  @include border-radius(3px);
+  padding:9px;margin-right:20px;margin-bottom:10px;
+  background-color:rgba(black, 0.05);
+  border:solid 1px #ddd;
+  @include floatfix;
+  .desc{
+    margin-bottom:10px;
+  }
+  a.download{
+    @include mini-button-black;
+  }
+}
+
+.page-admin-model-show{
+  width:500px;
+  @include border-radius(3px);
+  box-shadow:0 1px 2px rgba(0,0,0,0.07);
+  padding:10px;margin-right:20px;margin-bottom:20px;
+  background-color:#fff;
+
+  .field{
+    padding-bottom:10px;
+    margin-bottom:10px;
+    border-bottom:solid 1px #eee;
+    &:last-child{
+      border:none;
+    }
+
+    &.avatar{
+      float:left;
+      border:none;
+    }
+    label{
+      color:#999;
+    }
+    .v{
+      font-size:16px;
+      height:24px;line-height:24px;
+      min-width:1px;
+      &:empty{
+        &:before{
+          content:"--";
+        }
+      }
+    }
+  }
+
+  .data{
+    margin-left:116px;
+  }
+}
+
+.page-admin-go-back{
+  @include floatfix;
+  a{@include mini-button-black;}
+  float:left;margin-right:10px;
+}
+
+.page-admin-edit{
+  @include floatfix;
+  a{@include mini-button;}
+  float:left;margin-right:10px;
 }

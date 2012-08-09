@@ -21,12 +21,7 @@ class Student < ActiveRecord::Base
 
   
   # --- 校验方法
-  validates :real_name, :presence=>true
-  validates :sid, :uniqueness => {
-    :if => Proc.new { |student| !student.sid.blank? }
-  }
-  
-  validates :real_name, :presence=>true
+  validates :real_name, :presence => true
   validates :sid, :uniqueness => { :if => Proc.new { |student| !student.sid.blank? } }
   validates :user, :presence => true
 
@@ -42,9 +37,6 @@ class Student < ActiveRecord::Base
   end
 
   accepts_nested_attributes_for :user
-  
-  include Removable
-  include Paginated
 
   module UserMethods
     def self.included(base)
@@ -58,6 +50,9 @@ class Student < ActiveRecord::Base
       end
     end
   end
+
+  include ModelRemovable
+  include Paginated
 
   define_index do
     indexes real_name, :sortable => true

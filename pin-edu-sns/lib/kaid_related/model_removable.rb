@@ -1,6 +1,6 @@
 require 'active_support/concern'
 
-module Removable
+module ModelRemovable
   extend ActiveSupport::Concern
 
   included do

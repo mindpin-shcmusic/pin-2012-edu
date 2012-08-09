@@ -1,0 +1,55 @@
+cn:
+  will_paginate:
+    previous_label: 上一页
+    next_label: 下一页
+    page_gap: "&hellip;"
+
+  activerecord:
+    errors:
+      models:
+        teacher:
+          attributes:
+            real_name:
+              blank: 教师 真实姓名 不能为空
+            tid:
+              taken: 教师编号 已被使用
+        student:
+          attributes:
+            real_name:
+              blank: 学生 真实姓名 不能为空
+            sid:
+              taken: 学生编号 已被使用
+        team:
+          attributes:
+            name:
+              blank: 班级 名称 不能为空
+            cid:
+              taken: 班级序号 已被使用
+        course:
+          attributes:
+            name: 
+              blank: 课程 名称 不能为空
+            cid:
+              taken: 课序号 已被使用
+        category:
+          attributes:
+            name:
+              blank: 分类名称 不能为空
+              taken: 分类名称 已被使用
+        user:
+          attributes:
+            name:
+              too_short: 用户名 最少需要 2 位字符
+              too_long: 用户名 最长允许 20 位字符
+              invalid: 用户名 只允许含有 数字，英文字符，中文字符
+              blank:  用户名 不能为空
+              taken: 用户名 已被使用
+            email:
+              invalid: 邮箱 格式不符合要求
+              blank: 邮箱 不能为空
+              taken: 邮箱 已被使用
+            password:
+              confirmation: 确认密码 和 密码 不相同
+              too_short: 密码 最少需要 4 位字符
+              too_long: 密码 最长允许 32 为字符
+              blank: 密码 不能为空

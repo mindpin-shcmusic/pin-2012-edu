@@ -16,7 +16,7 @@ class Course < ActiveRecord::Base
   end
 
   def default_cover
-    User.new.logo.url(:large)
+    '/assets/covers/course.small.jpg'
   end
 
   def get_user_ids
@@ -47,9 +47,6 @@ class Course < ActiveRecord::Base
     courses_image.update_attributes(:kind=>CoursesImage::Kind::COVER)
   end
 
-  include Removable
-  include Paginated
-
   module UserMethods
     def self.included(base)
       base.send :include, InstanceMethods
@@ -67,4 +64,7 @@ class Course < ActiveRecord::Base
 
     where('is_removed = 0')
   end
+
+  include ModelRemovable
+  include Paginated
 end

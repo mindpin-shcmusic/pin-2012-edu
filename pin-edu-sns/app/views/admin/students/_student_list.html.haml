@@ -13,5 +13,7 @@
     .t2= student.user.email
 
     .ops
-      %a.remove{:href=>'javascript:;'} 删除
-      %a.detail{:href=>"/admin/students/#{student.id}"} 查看详情
+      - remove_url = admin_student_path(student)
+      %a.remove{:href=>'javascript:;', :'data-url'=>remove_url} 删除
+      %a.edit{:href=>"/admin/students/#{student.id}/edit"} 编辑
+      %a.detail{:href=>"/admin/students/#{student.id}"} 详情

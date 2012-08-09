@@ -18,12 +18,18 @@ class Admin::CategoriesController < ApplicationController
     else
       @category.save_as_child_of(Category.find(params[:parent_id]))
     end
+    if @category.id.blank?
+      error = @category.errors.first
+      flash[:error] = error[1]
+      return redirect_to "/admin/categories/new"
+    end
     redirect_to "/admin/categories"
   end
 
+  # for ajax
   def destroy
     Category.find(params[:id]).remove
-    redirect_to :action => :index
+    render :text => 'ok'
   end
   
 end

@@ -1,0 +1,34 @@
+- htitle '教师维护'
+
+- hbreadcrumb '基础数据管理', '/admin'
+- hbreadcrumb '教师维护', '/admin/teachers'
+- hbreadcrumb '修改教师信息'
+
+.page-admin-form
+  = flash_info
+  = form_for [:admin, @teacher] do |t|
+    .field.need
+      %label 真实姓名
+      = t.text_field :real_name
+
+    .field.need
+      %label 教师编号
+      = t.text_field :tid
+
+    = t.fields_for :user do |user_f|
+      .field.need
+        %label 电子邮箱
+        = user_f.text_field :email, :maxlength=>50
+      .field.need
+        %label 用户名
+        = user_f.text_field :name, :maxlength=>50
+      .field.need
+        %label 密码
+        = user_f.password_field :password, :value=>'', :maxlength=>32
+      .field.need
+        %label 确认密码
+        = user_f.password_field :password_confirmation, :value=>'', :maxlength=>32
+
+    .field.submit
+      = jfsubmit '确定'
+      = jfcancel '取消'

@@ -1,13 +1,10 @@
-.page-title 数据分类维护
+- htitle '资源分类维护'
+
+- hbreadcrumb '基础数据管理', '/admin'
+- hbreadcrumb '资源分类维护'
 
 .page-admin-ops
-  %a.create{:href=>'/admin/categories/new'} 增加数据分类
+  %a.create{:href=>'/admin/categories/new'} 增加资源分类
 
 .page-admin-categories
-  -@level1_categories.each do |category|
-    .category
-      .t=category.name
-      .c=categories_or_media_file_count(category)
-      %a{:href=>"/admin/categories/new?parent_id=#{category.id}"} 增加子数据分类
-      .remove=link_to '删除', admin_category_path(category), :method => :delete, :confirm => '确定要删除？'
-      = recursive_categories(category)
+  = render 'categories_list', :categories => @level1_categories

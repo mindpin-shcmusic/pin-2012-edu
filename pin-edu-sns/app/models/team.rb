@@ -16,8 +16,17 @@ class Team < ActiveRecord::Base
     User.find get_user_ids
   end
 
-  include Removable
-  include Paginated
+  def self.import_from_csv(file)
+    ActiveRecord::Base.transaction do
+      parse_csv_file(file) do |row,index|
+        team = Team.new(:name => row[0],:cid => row[1])
+        if !team.save
+          message = team.errors.first[1]
+          raise "第 #{index+1} 行解析出错,可能的错误原因 #{message} ,请修改后重新导入"
+        end
+      end
+    end
+  end
 
   module UserMethods
     def self.included(base)
@@ -30,6 +39,9 @@ class Team < ActiveRecord::Base
       end
     end
   end
+
+  include ModelRemovable
+  include Paginated
 
   define_index do
     indexes name, :sortable => true

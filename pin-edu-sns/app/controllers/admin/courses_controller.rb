@@ -27,13 +27,14 @@ class Admin::CoursesController < ApplicationController
     end
     
     error = @course.errors.first
-    flash[:error] = "#{error[0]} #{error[1]}"
+    flash[:error] = error[1]
     redirect_to "/admin/courses/new"
   end
 
+  # for ajax
   def destroy
     @course.remove
-    redirect_to :action => :index
+    render :text => 'ok'
   end
   
   def show

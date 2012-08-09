@@ -1,0 +1,30 @@
+- htitle '教师维护'
+
+- hbreadcrumb '基础数据管理', '/admin'
+- hbreadcrumb '教师维护', '/admin/teachers'
+- hbreadcrumb @teacher.real_name
+
+.page-admin-model-show
+  .field.avatar
+    = avatar @teacher.user, :medium
+
+  .data
+    .field.name
+      %label 教师姓名
+      .v= @teacher.real_name
+
+    .field.tid
+      %label 教师编号 
+      .v= @teacher.tid
+
+    .field.user
+      %label 对应用户
+      .v= @teacher.user.name
+
+    .field.email
+      %label 对应邮箱
+      .v= @teacher.user.email
+
+.page-admin-go-back= link_to '返回列表页', '/admin/teachers'
+.page-admin-edit= link_to '编辑修改', "/admin/teachers/#{@teacher.id}/edit"
+		

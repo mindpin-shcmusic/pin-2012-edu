@@ -27,13 +27,14 @@ class Admin::TeamsController < ApplicationController
     end
     
     error = @team.errors.first
-    flash[:error] = "#{error[0]} #{error[1]}"
+    flash[:error] = error[1]
     redirect_to "/admin/teams/new"
   end
   
+  # for ajax
   def destroy
     @team.remove
-    redirect_to :action => :index
+    render :text => 'ok'
   end
   
   def show
@@ -55,5 +56,16 @@ class Admin::TeamsController < ApplicationController
     student_ids = params[:student_ids]||[]
     @team.student_ids = student_ids
     redirect_to "/admin/teams/#{@team.id}"
+  end
+
+  def import_from_csv_page
+  end
+
+  def import_from_csv
+    Team.import_from_csv(params[:csv_file])
+    redirect_to "/admin/teams"
+  rescue Exception=>ex
+    flash[:error] = ex.message
+    redirect_to "/admin/teams/import_from_csv_page"
   end
 end

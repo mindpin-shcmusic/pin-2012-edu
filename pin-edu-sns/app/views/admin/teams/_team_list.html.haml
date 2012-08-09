@@ -8,13 +8,13 @@
     .t2= team.name
     .t2= team.cid
     .t2
-      .t2
-        - if team.teacher.blank?
-          %span.c 未指定
-        - else
-          .ava= avatar User.new, :mini
-          %span.c= team.teacher.real_name
+      - if team.teacher.blank?
+        %span.c 未指定
+      - else
+        .ava= avatar User.new, :mini
+        %span.c= team.teacher.real_name
 
-      .ops
-        %a.remove{:href=>'javascript:;'} 删除
-        %a.detail{:href=>"/admin/teams/#{team.id}"} 查看详情
+    .ops
+      - remove_url = admin_team_path(team)
+      %a.remove{:href=>'javascript:;', :'data-url'=>remove_url} 删除
+      %a.detail{:href=>"/admin/teams/#{team.id}"} 查看详情

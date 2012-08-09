@@ -30,6 +30,7 @@ module MindpinEduSns
 
     require 'digest/sha1'
     require 'will_paginate/array'
+    require 'csv'
     
     require File.join(Rails.root, 'lib/mindpin_global_methods.rb')
 
