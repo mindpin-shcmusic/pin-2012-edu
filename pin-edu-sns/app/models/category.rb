@@ -2,40 +2,29 @@
 class Category < ActiveRecord::Base
   acts_as_nested_set
 
-  has_many :media_files
-
-  validates :name, :presence => true, :uniqueness => true
-
+  validates :name, :presence => true
   default_scope order("created_at ASC")
-
-  def media_file_count
-    self.media_files.count
-  end
-
-  def media_files
-    _ids = self.self_and_descendants.map do |category|
-      category.id
-    end
-    MediaFile.where("category_id in (?)", _ids)
-  end
-
-  def media_files_with_user(user)
-    self.media_files.where("creator_id = ?", user.id)
-  end
-
-  def save_as_child_of(parent)
-    self.transaction do
-      return false unless self.save
-      self.move_to_child_of(parent)
-      raise ActiveRecord::Rollback, "分类最大不能超过三级" if self.depth > 2
-      true
-    end
-  end
-
-  def has_max_depth?
-    self.depth & self.depth >= 2 
-  end
 
   include ModelRemovable
 
+  def self.import_from_yaml(file)
+    text = file.read
+    text = text.gb2312_to_utf8 if !text.utf8?
+    hash = YAML.load(text)
+    ActiveRecord::Base.transaction do
+      categories = _import_from_yaml_by_hash(hash)
+      categories.each{|c|c.move_to_root}
+    end
+  end
+
+  def self._import_from_yaml_by_hash(child_hash)
+    return [] if child_hash.blank?
+
+    child_hash.map do |parent_name,child_name_hash|
+      categories = self._import_from_yaml_by_hash(child_name_hash)
+      parent_category = Category.create(:name=>parent_name)
+      categories.each{|c|c.move_to_child_of(parent_category)}
+      parent_category
+    end
+  end
 end

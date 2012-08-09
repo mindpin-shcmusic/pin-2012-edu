@@ -13,10 +13,9 @@ class Admin::CategoriesController < ApplicationController
   def create
     @category = Category.new(params[:category])
 
-    if params[:parent_id].blank?
-      @category.save
-    else
-      @category.save_as_child_of(Category.find(params[:parent_id]))
+    @category.save
+    if !params[:parent_id].blank?
+      @category.move_to_child_of(Category.find(params[:parent_id]))
     end
     if @category.id.blank?
       error = @category.errors.first
@@ -32,4 +31,17 @@ class Admin::CategoriesController < ApplicationController
     render :text => 'ok'
   end
   
+  def import_from_yaml_page
+  end
+
+  def import_from_yaml
+    Category.import_from_yaml(params[:yaml_file])
+    redirect_to "/admin/categories"
+  rescue Exception=>ex
+    puts ex.message
+    puts ex.backtrace*"\n"
+    flash[:error] = "YAML 文件格式有错误"
+    redirect_to "/admin/categories/import_from_yaml_page"
+  end
+
 end
