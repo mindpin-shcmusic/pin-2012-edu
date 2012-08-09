@@ -14,12 +14,6 @@ class Admin::StudentsController < ApplicationController
     @student = Student.new
     @student.build_user
   end
-  
-  def search
-    @result = Student.search params[:q]
-
-    render :partial => 'student_list', :locals => {:students => @result}, :layout => false
-  end
 
   def create
     @student = Student.new(params[:student])
@@ -38,5 +32,22 @@ class Admin::StudentsController < ApplicationController
   end
   
   def show
+  end
+
+  def edit
+  end
+
+  def update
+    if @student.update_attributes params[:student]
+      return redirect_to "/admin/students/#{@student.id}"
+    end
+    error = @student.errors.first
+    flash[:error] = error[1]
+    redirect_to "/admin/students/#{@student.id}/edit"
+  end
+
+  def search
+    @result = Student.search params[:q]
+    render :partial => 'student_list', :locals => {:students => @result}, :layout => false
   end
 end

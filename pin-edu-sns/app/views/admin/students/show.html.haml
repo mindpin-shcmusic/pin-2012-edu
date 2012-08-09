@@ -1,0 +1,30 @@
+- htitle '学生维护'
+
+- hbreadcrumb '基础数据管理', '/admin'
+- hbreadcrumb '学生维护', '/admin/students'
+- hbreadcrumb @student.real_name
+
+.page-admin-model-show
+  .field.avatar
+    = avatar @student.user, :medium
+
+  .data
+    .field.name
+      %label 学生姓名
+      .v= @student.real_name
+
+    .field.sid
+      %label 学生编号 
+      .v= @student.sid
+
+    .field.user
+      %label 对应用户
+      .v= @student.user.name
+
+    .field.email
+      %label 对应邮箱
+      .v= @student.user.email
+
+.page-admin-go-back= link_to '返回列表页', '/admin/students'
+.page-admin-edit= link_to '编辑修改', "/admin/students/#{@student.id}/edit"
+		
