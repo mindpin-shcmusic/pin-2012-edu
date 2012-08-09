@@ -47,6 +47,20 @@ class Course < ActiveRecord::Base
     courses_image.update_attributes(:kind=>CoursesImage::Kind::COVER)
   end
 
+  def self.import_from_csv(file)
+    ActiveRecord::Base.transaction do
+      parse_csv_file(file) do |row,index|
+        course = Course.new(
+        :name => row[0], :cid => row[1], :department => row[2],
+        :location => row[3], :desc => row[4])
+        if !course.save
+          message = course.errors.first[1]
+          raise "第 #{index+1} 行解析出错,可能的错误原因 #{message} ,请修改后重新导入"
+        end
+      end
+    end
+  end
+
   module UserMethods
     def self.included(base)
       base.send :include, InstanceMethods

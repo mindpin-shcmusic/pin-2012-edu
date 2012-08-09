@@ -45,6 +45,8 @@ MindpinEduSns::Application.routes.draw do
       end
       collection do
         get :search
+        get :import_from_csv_page
+        post :import_from_csv
       end
     end
     resources :students do
