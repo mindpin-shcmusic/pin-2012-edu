@@ -56,7 +56,7 @@ class Admin::TeamsController < ApplicationController
   end
   
   def set_students
-    student_ids = params[:student_ids]||[]
+    student_ids = params[:student_ids].split(',')
     @team.student_ids = student_ids
     redirect_to "/admin/teams/#{@team.id}"
   end

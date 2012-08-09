@@ -1,10 +1,40 @@
-=form_tag "/admin/teams/#{@team.id}/set_students",:method=>:put do |f|
-  -student_ids = @team.student_ids
-  -Student.all.each do |student|
-    %span
-      =check_box_tag("student_ids[]",student.id,student_ids.include?(student.id))
-      %label=student.real_name
-  %div
-    =submit_tag "确定"
+- htitle '班级维护'
+
+- hbreadcrumb '基础数据管理', '/admin'
+- hbreadcrumb '班级维护', '/admin/teams'
+- hbreadcrumb @team.name, "/admin/teams/#{@team.id}"
+- hbreadcrumb '分配学生'
+
+.page-admin-students-selector
+  %form.search.hide
+    .field
+      %input{:type=>'text'}
+    .desc
+      小提示：可以输入中文或拼音来快速查找
+
+  .selector
+    .list
+      - student_ids = @team.student_ids
+      - Student.all.each do |student|
+        - selected = student_ids.include?(student.id)
+        .student{:class=>selected ? 'selected' : '', :'data-id'=>student.id}
+          .name= student.real_name
+  .result
+    .list
+      - @team.students.each do |student|
+        - selected = student_ids.include?(student.id)
+        .student{:class=>selected ? 'selected' : '', :'data-id'=>student.id}
+          .name= student.real_name
+    .count
+      %span 已经分配
+      %span.c= student_ids.count
+      %span 人
+
+  .ops
+    = form_tag "/admin/teams/#{@team.id}/set_students",:method=>:put do |f|
+      %input.ids{:name=>:student_ids, :type=>'hidden', :value=>student_ids*','}
+      .field.submit
+        = jfsubmit '确定'
+        = jfcancel '取消'
   
 		
