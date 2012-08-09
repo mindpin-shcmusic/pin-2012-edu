@@ -58,6 +58,7 @@
 
 .page-admin-models{
   @include floatfix;
+  margin-bottom:20px;
 
   .attrs{
     @include floatfix;
@@ -109,8 +110,16 @@
     .ops{
       position:absolute;
       top:10px;right:10px;
-      .remove{@include mini-button-red;margin-right:10px;}
+      .remove{@include mini-button-red;margin-right:10px;display:none;}
+      .edit{@include mini-button-black;margin-right:10px;display:none;}
       .detail{@include mini-button-black;}
+    }
+
+    &:hover{
+      .ops{
+        .remove, .edit{display:block;}
+      }
+      background-color:rgba(white, 0.5);
     }
   }
 
@@ -190,9 +199,59 @@
 
 .page-admin-form{
   width:500px;
-  @include border-radius(6px);
-  box-shadow:1px 1px 2px rgba(0, 0, 0, 0.2);
-  border:solid 3px #eee;
+  @include border-radius(3px);
+  box-shadow:0 1px 2px rgba(0,0,0,0.07);
   padding:10px;margin-right:20px;margin-bottom:20px;
   background-color:#fff;
+}
+
+.page-admin-model-show{
+  width:500px;
+  @include border-radius(3px);
+  box-shadow:0 1px 2px rgba(0,0,0,0.07);
+  padding:10px;margin-right:20px;margin-bottom:20px;
+  background-color:#fff;
+
+  .field{
+    padding-bottom:10px;
+    margin-bottom:10px;
+    border-bottom:solid 1px #eee;
+    &:last-child{
+      border:none;
+    }
+
+    &.avatar{
+      float:left;
+      border:none;
+    }
+    label{
+      color:#999;
+    }
+    .v{
+      font-size:16px;
+      height:24px;line-height:24px;
+      min-width:1px;
+      &:empty{
+        &:before{
+          content:"--";
+        }
+      }
+    }
+  }
+
+  .data{
+    margin-left:116px;
+  }
+}
+
+.page-admin-go-back{
+  @include floatfix;
+  a{@include mini-button-black;}
+  float:left;margin-right:10px;
+}
+
+.page-admin-edit{
+  @include floatfix;
+  a{@include mini-button;}
+  float:left;margin-right:10px;
 }

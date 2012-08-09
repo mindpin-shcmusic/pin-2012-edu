@@ -9,12 +9,6 @@ class Admin::TeachersController < ApplicationController
   def index
     @teachers = Teacher.paginated(params[:page])
   end
-  
-  def search
-    @result = Teacher.search params[:q]
-
-    render :partial => 'teacher_list', :locals => {:teachers => @result}, :layout => false
-  end
 
   def new
     @teacher = Teacher.new
@@ -38,6 +32,23 @@ class Admin::TeachersController < ApplicationController
   end
 
   def show
+  end
+
+  def edit
+  end
+
+  def update
+    if @teacher.update_attributes params[:teacher]
+      return redirect_to "/admin/teachers/#{@teacher.id}"
+    end
+    error = @teacher.errors.first
+    flash[:error] = error[1]
+    redirect_to "/admin/teachers/#{@teacher.id}/edit"
+  end
+
+  def search
+    @result = Teacher.search params[:q]
+    render :partial => 'teacher_list', :locals => {:teachers => @result}, :layout => false
   end
 
 end

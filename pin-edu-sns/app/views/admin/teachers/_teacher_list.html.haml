@@ -15,4 +15,5 @@
     .ops
       - remove_url = admin_teacher_path(teacher)
       %a.remove{:href=>'javascript:;', :'data-url'=>remove_url} 删除
-      %a.detail{:href=>"/admin/teachers/#{teacher.id}"} 查看详情
+      %a.edit{:href=>"/admin/teachers/#{teacher.id}/edit"} 编辑
+      %a.detail{:href=>"/admin/teachers/#{teacher.id}"} 详情
