@@ -108,7 +108,10 @@ class HomeworksController < ApplicationController
   end
 
   def update
-    
+    @homework = Homework.find(params[:id])
+    @homework.update_attributes(params[:homework])
+    return redirect_to @homework if @homework.save
+    redirect_to :back
   end
 
   # 老师查看具体某一学生作业页面
