@@ -3,7 +3,8 @@
   student_attachments_count = @homework.homework_student_upload_requirements.count
 
 %p= link_to '作业列表', homeworks_path
-%p= link_to '布置新作业', new_homework_path
+- if current_user.is_teacher?
+  %p= link_to '布置新作业', new_homework_path
 
 %div 作业标题
 %p= @homework.title
@@ -20,31 +21,54 @@
     = '已过期'
 
 %div 
-  提交物
+  教师上传附件
   = teacher_attachments_count
   - @homework.homework_teacher_attachments.each do |attachment|
-    = attachment.attachment_file_name
+    .attachment-name= attachment.name
   %div
     %a{:href => "/homeworks/#{@homework.id}/download_teacher_zip"} Zip包全部下载
 
+.student-upload-requirements{:'data-upload-url' => create_student_upload_homeworks_path}
+  %h3 学生作业提交物
+  - @homework.homework_student_upload_requirements.each do |requirement|
+    .upload-requirement
+      %h4.title= requirement.title
+      - if current_user.is_upload_homework_attachment?(requirement)
+        .requirement-submited
+          该项已提交:
+          %span.file-name= current_user.upload_for_requirement(requirement).name
+      %span.status 上传中...
+      - if current_user.is_student?
+        .upload-progress
+          .bar
+        = form_for HomeworkStudentUpload.new, :url => create_student_upload_homeworks_path, :html => {:multipart => true} do |f|
+          = f.hidden_field :homework_id, :value => @homework.id
+          = f.hidden_field :requirement_id, :value => requirement.id
+          = f.hidden_field :creator_id, :value => current_user.id
+          = file_field_tag :attachment, :style => 'display:none;'
+          .field.submit
+            = link_to '上传', 'javascript:;', :class => 'form-submit-button'
 
+- if current_user.is_student?
+  .a
 
-%div
-  - @homework.homework_assigns.each do |h|
-    - uploaded_count = h.student.user.uploaded_count_of_homework(@homework)
-    %p
-      %a{:href => "/homeworks/#{h.homework_id}/student/#{h.student.user_id}"} 
-        =h.student.real_name
-    = uploaded_count
-    %span /
-    = student_attachments_count
-    
-    - if uploaded_count == student_attachments_count
-      %span 完成
-    - else
-      %span 未完成
-      
-    - if h.has_finished
-      %span 已签
-    - else 
-      %span 未签
+- if current_user.is_teacher?
+  %div
+    - @homework.homework_assigns.each do |h|
+      - uploaded_count = h.student.user.uploaded_count_of_homework(@homework)
+      %p
+        %a{:href => "/homeworks/#{h.homework_id}/student/#{h.student.user_id}"} 
+          =h.student.real_name
+      = uploaded_count
+      %span /
+      = student_attachments_count
+
+      - if uploaded_count == student_attachments_count
+        %span 完成
+      - else
+        %span 未完成
+
+      - if h.has_finished
+        %span 已签
+      - else 
+        %span 未签

@@ -1,9 +1,9 @@
 - if current_user.is_teacher?
   %p= link_to '布置新作业', new_homework_path
 
-  %p
-    %a{:href => homeworks_path(:status => 'undeadline')} 未过期
-    %a{:href => homeworks_path(:status => 'deadline')} 已过期
+%p
+  %a{:href => homeworks_path(:status => 'undeadline')} 未过期
+  %a{:href => homeworks_path(:status => 'deadline')} 已过期
 
 - @homeworks.each do |h|
   %p= link_to h.title, homework_path(h)

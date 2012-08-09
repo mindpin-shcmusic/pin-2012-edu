@@ -34,6 +34,8 @@ MindpinEduSns::Application.routes.draw do
     resources :teachers do
       collection do
         get :search
+        get :import_from_csv_page
+        post :import_from_csv
       end
     end
     resources :courses do
@@ -43,11 +45,15 @@ MindpinEduSns::Application.routes.draw do
       end
       collection do
         get :search
+        get :import_from_csv_page
+        post :import_from_csv
       end
     end
     resources :students do
       collection do
         get :search
+        get :import_from_csv_page
+        post :import_from_csv
       end
     end
     resources :teams do
@@ -102,6 +108,7 @@ MindpinEduSns::Application.routes.draw do
   resources :homeworks do
     collection do
       post :create_teacher_attachment
+      post :create_student_upload
     end
     
     member do

@@ -51,4 +51,15 @@ class Admin::TeachersController < ApplicationController
     render :partial => 'teacher_list', :locals => {:teachers => @result}, :layout => false
   end
 
+  def import_from_csv_page
+  end
+
+  def import_from_csv
+    Teacher.import_from_csv(params[:csv_file])
+    redirect_to "/admin/teachers"
+  rescue Exception=>ex
+    flash[:error] = ex.message
+    redirect_to "/admin/teachers/import_from_csv_page"
+  end
+
 end

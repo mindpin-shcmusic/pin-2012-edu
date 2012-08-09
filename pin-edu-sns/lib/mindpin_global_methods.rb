@@ -93,3 +93,13 @@ def get_randstr_filename(uploaded_filename)
 
   return "#{randstr}#{ext_name.blank? ? "" : ext_name }".strip
 end
+
+def parse_csv_file(file)
+  rows = CSV::parse(file.read)
+  is_utf8 = rows[0].join(",").utf8?
+  rows.each_with_index do |row,index|
+    next if index == 0
+    row = row.map{|v|(v || "").gb2312_to_utf8} if !is_utf8
+    yield row,index
+  end
+end
