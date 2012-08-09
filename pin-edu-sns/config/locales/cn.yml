@@ -18,19 +18,19 @@ cn:
             real_name:
               blank: 学生 真实姓名 不能为空
             sid:
-              taken: 学生编码 已被使用
+              taken: 学生编号 已被使用
         team:
           attributes:
             name:
-              blank: 班级 名字 不能为空
+              blank: 班级 名称 不能为空
             cid:
-              taken: 班级号 已被使用
+              taken: 班级序号 已被使用
         course:
           attributes:
             name: 
-              blank: 课程 名字 不能为空
+              blank: 课程 名称 不能为空
             cid:
-              taken: 课程号 已被使用
+              taken: 课序号 已被使用
         category:
           attributes:
             name:

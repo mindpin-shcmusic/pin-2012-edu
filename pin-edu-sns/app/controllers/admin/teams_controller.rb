@@ -57,4 +57,15 @@ class Admin::TeamsController < ApplicationController
     @team.student_ids = student_ids
     redirect_to "/admin/teams/#{@team.id}"
   end
+
+  def import_from_csv_page
+  end
+
+  def import_from_csv
+    Team.import_from_csv(params[:csv_file])
+    redirect_to "/admin/teams"
+  rescue Exception=>ex
+    flash[:error] = ex.message
+    redirect_to "/admin/teams/import_from_csv_page"
+  end
 end
