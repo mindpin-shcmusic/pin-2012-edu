@@ -17,4 +17,5 @@
     .ops
       - remove_url = admin_team_path(team)
       %a.remove{:href=>'javascript:;', :'data-url'=>remove_url} 删除
-      %a.detail{:href=>"/admin/teams/#{team.id}"} 查看详情
+      %a.edit{:href=>"/admin/teams/#{team.id}/edit"} 编辑
+      %a.detail{:href=>"/admin/teams/#{team.id}"} 详情
