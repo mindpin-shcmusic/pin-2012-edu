@@ -16,6 +16,21 @@ class Team < ActiveRecord::Base
     User.find get_user_ids
   end
 
+  def self.import_from_csv(file)
+    ActiveRecord::Base.transaction do
+      rows = CSV::parse(file.read)
+      is_utf8 = rows[0].join(",").utf8?
+      rows.each_with_index do |row,index|
+        next if index == 0
+        row = row.map{|v|v.gb2312_to_utf8} if !is_utf8
+        team = Team.new(:name => row[0],:cid => row[1])
+        if !team.save
+          message = team.errors.first[1]
+          raise "第 #{index+1} 行解析出错,可能的错误原因 #{message} ,请修改后重新导入"
+        end
+      end
+    end
+  end
 
   module UserMethods
     def self.included(base)
