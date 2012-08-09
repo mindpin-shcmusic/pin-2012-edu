@@ -36,6 +36,18 @@ class Admin::CoursesController < ApplicationController
     @course.remove
     render :text => 'ok'
   end
+
+  def edit
+  end
+
+  def update
+    if @course.update_attributes params[:course]
+      return redirect_to "/admin/courses/#{@course.id}"
+    end
+    error = @course.errors.first
+    flash[:error] = error[1]
+    redirect_to "/admin/courses/#{@course.id}/edit"
+  end
   
   def show
   end

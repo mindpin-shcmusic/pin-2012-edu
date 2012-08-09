@@ -1,8 +1,12 @@
-.page-title 创建课程
+- htitle '课程维护'
+
+- hbreadcrumb '基础数据管理', '/admin'
+- hbreadcrumb '课程维护', '/admin/courses'
+- hbreadcrumb '增加课程'
 
 .page-admin-form
-  =flash[:error]
-  =form_for [:admin,@course] do |f|
+  = flash_info
+  = form_for [:admin,@course] do |f|
     .field
       %label 名字
       =f.text_field :name

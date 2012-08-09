@@ -1,0 +1,32 @@
+- htitle '课程维护'
+
+- hbreadcrumb '基础数据管理', '/admin'
+- hbreadcrumb '课程维护', '/admin/courses'
+- hbreadcrumb '修改课程信息'
+
+.page-admin-form
+  = flash_info
+  = form_for [:admin,@course] do |f|
+    .field
+      %label 名字
+      =f.text_field :name
+    .field
+      %label 课程号
+      =f.text_field :cid
+    .field
+      %label 开课院系
+      =f.text_field :department
+    .field
+      %label 上课地点
+      =f.text_field :location
+    .field
+      %label 教师
+      =f.select(:teacher_id,Teacher.all.map{|teacher|[teacher.real_name,teacher.id]}.unshift(["不指定",""]))
+      =link_to "新建教师","/admin/teachers/new"
+    .field
+      %label 备注
+      =f.text_area :desc
+    .field
+      %a.form-submit-button{:href=>'javascript:;'} 确定修改
+    
+    

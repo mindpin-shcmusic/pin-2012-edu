@@ -20,23 +20,24 @@
   - else
     = '已过期'
 
-%div 
-  教师上传附件
-  = teacher_attachments_count
-  - @homework.homework_teacher_attachments.each do |attachment|
-    .attachment-name= attachment.name
+- if teacher_attachments_count > 0
+  %h3 教师上传附件
+  .count 数量: #{teacher_attachments_count}
+  %h4 附件列表
+  %ul.teacher-attachment-list
+    - @homework.homework_teacher_attachments.each do |attachment|
+      %li.attachment-name= attachment.name
   %div
-    %a{:href => "/homeworks/#{@homework.id}/download_teacher_zip"} Zip包全部下载
+    %a{:href => "/homeworks/#{@homework.id}/download_teacher_zip"} Zip包下载
 
 .student-upload-requirements{:'data-upload-url' => create_student_upload_homeworks_path}
   %h3 学生作业提交物
   - @homework.homework_student_upload_requirements.each do |requirement|
     .upload-requirement
       %h4.title= requirement.title
-      - if current_user.is_upload_homework_attachment?(requirement)
-        .requirement-submited
-          该项已提交:
-          %span.file-name= current_user.upload_for_requirement(requirement).name
+      .requirement-submited{:class => current_user.is_uploaded_for_requirement?(requirement) && '' || 'hide'}
+        该项已提交:
+        %span.file-name= current_user.is_uploaded_for_requirement?(requirement) && current_user.upload_for_requirement(requirement).name || ''
       %span.status 上传中...
       - if current_user.is_student?
         .upload-progress
