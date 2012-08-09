@@ -1,6 +1,6 @@
 # -*- coding: gb2312 -*-
 class HomeworksController < ApplicationController
-  before_filter :pre_load_teacher, :except => [:show, :index, :student, :create_student_upload]
+  before_filter :pre_load_teacher, :except => [:show, :index, :student, :create_student_upload, :download_teacher_zip]
   before_filter :login_required
 
   def pre_load_teacher
@@ -76,9 +76,6 @@ class HomeworksController < ApplicationController
     
     # 班级列表
     @teams = Team.all
-    
-    # 学生列表
-    @students = Student.all
   end
 
   def index
@@ -97,8 +94,23 @@ class HomeworksController < ApplicationController
   def show
     @homework = Homework.find(params[:id])
   end
-  
-  
+
+  def edit
+    @homework = Homework.find(params[:id])
+    @homework_student_upload_requirements = HomeworkStudentUploadRequirement.where(:homework_id => @homework.id)
+    @teacher_attachments = HomeworkTeacherAttachment.where(:homework_id => @homework.id)
+
+    # 所有课程
+    @courses = Course.all
+    
+    # 班级列表
+    @teams = Team.all
+  end
+
+  def update
+    
+  end
+
   # 老师查看具体某一学生作业页面
   def student
     unless (current_user.is_teacher? || current_user.id == params[:user_id].to_i)
@@ -114,7 +126,21 @@ class HomeworksController < ApplicationController
     # 生成老师上传的附件压缩包
     homework.build_teacher_attachments_zip(homework.creator)
     
-    render :file => "/MINDPIN_MRS_DATA/attachments/homework_attachments/homework_teacher#{homework.creator.id}_#{homework.id}.zip", :content_type => 'application/zip', :status => :ok
+    send_file "/MINDPIN_MRS_DATA/attachments/homework_attachments/homework_teacher#{homework.creator.id}_#{homework.id}.zip"
   end
 
+  def download_student_zip
+    homework = Homework.find(params[:homework_id])
+    student = User.find(params[:user_id])
+    homework.build_student_uploads_zip(student)
+    send_file "/MINDPIN_MRS_DATA/attachments/homework_attachments/homework_student#{student.id}_#{homework.id}.zip"
+  end
+
+  def set_finished
+    homework = Homework.find(params[:homework_id])
+    student = User.find(params[:user_id]).student
+
+    homework.set_finished_for!(student)
+    render :text => 'set finished!'
+  end
 end

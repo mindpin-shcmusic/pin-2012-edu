@@ -53,11 +53,12 @@
   }
 
   .list-style{
+    @include floatfix;
     float:left;
     margin-left:20px;
     height:32px;line-height:32px;
-    @include floatfix;
     .desc{float:left;margin-right:10px;}
+    a{float:left;margin-right:10px;}
   }
 }
 
@@ -208,6 +209,14 @@
   box-shadow:0 1px 2px rgba(0,0,0,0.07);
   padding:10px;margin-right:20px;margin-bottom:20px;
   background-color:#fff;
+
+  form{
+    .field{
+      select{
+        width:256px;
+      }
+    }
+  }
 }
 
 .page-admin-form-info{
@@ -238,6 +247,8 @@
     border-bottom:solid 1px #eee;
     &:last-child{
       border:none;
+      padding-bottom:0;
+      margin-bottom:0;
     }
 
     &.avatar{
@@ -261,6 +272,30 @@
 
   .data{
     margin-left:116px;
+  }
+
+  .field.student{
+    height:24px;line-height:24px;
+    @include floatfix;
+    .avatar{
+      float:left;margin-right:10px;
+    }
+    .name{
+      float:left;margin-right:10px;
+    }
+    .show{
+      float:right;
+    }
+  }
+
+  .field.students-count{
+    position:relative;
+    .assign{
+      position:absolute;
+      top:0px;right:0px;
+      @include floatfix;
+      a{@include mini-button-blue;}
+    }
   }
 }
 

@@ -39,14 +39,17 @@ class Admin::TeamsController < ApplicationController
   
   def show
   end
-  
-  def select_teacher
+
+  def edit
   end
-  
-  def set_teacher
-    @team.teacher = Teacher.find(params[:team][:teacher_id])
-    @team.save
-    redirect_to "/admin/teams/#{@team.id}"
+
+  def update
+    if @team.update_attributes params[:team]
+      return redirect_to "/admin/teams/#{@team.id}"
+    end
+    error = @team.errors.first
+    flash[:error] = error[1]
+    redirect_to "/admin/teams/#{@team.id}/edit"
   end
   
   def select_students

@@ -1,0 +1,23 @@
+- htitle '班级维护'
+
+- hbreadcrumb '基础数据管理', '/admin'
+- hbreadcrumb '班级维护', '/admin/teams'
+- hbreadcrumb '修改班级信息'
+
+.page-admin-form
+  = flash_info
+  = form_for [:admin,@team] do |f|
+    - teacher_hash = Teacher.all.map{|teacher|[teacher.real_name, teacher.id]}.unshift(['不指定',''])
+
+    .field.need
+      %label 班级名
+      = f.text_field :name
+    .field.need
+      %label 班级编号
+      = f.text_field :cid
+    .field
+      %label 教师
+      = f.select(:teacher_id, teacher_hash)
+    .field.submit
+      = jfsubmit '确定'
+      = jfcancel '取消'

@@ -28,7 +28,7 @@ class HomeworkStudentUpload < ActiveRecord::Base
       end
 
       # 学生是否提交作业附件
-      def is_upload_homework_attachment?(requirement)
+      def is_uploaded_for_requirement?(requirement)
         !self.upload_for_requirement(requirement).nil?
       end
       

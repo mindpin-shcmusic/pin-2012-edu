@@ -58,8 +58,6 @@ MindpinEduSns::Application.routes.draw do
     end
     resources :teams do
       member do
-        get :select_teacher
-        put :set_teacher
         get :select_students
         put :set_students
       end
@@ -119,10 +117,10 @@ MindpinEduSns::Application.routes.draw do
       get :download_teacher_zip
     end
   end
-  get 'homeworks/:id/:download_teacher_zip' => 'homeworks#download_teacher_zip'
   # 老师查看某一学生作业路由
   get 'homeworks/:homework_id/student/:user_id' => 'homeworks#student'
-
+  get 'homeworks/:homework_id/student/:user_id/download_student_zip' => 'homeworks#download_student_zip'
+  put 'homeworks/:homework_id/student/:user_id/set_finished' => 'homeworks#set_finished'
 
   resources :homeworks, :student
 
