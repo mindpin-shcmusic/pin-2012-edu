@@ -1,6 +1,6 @@
 # -*- coding: gb2312 -*-
 class HomeworksController < ApplicationController
-  before_filter :pre_load_teacher, :except => [:show, :index, :student, :create_student_upload]
+  before_filter :pre_load_teacher, :except => [:show, :index, :student, :create_student_upload, :download_teacher_zip]
   before_filter :login_required
 
   def pre_load_teacher
@@ -114,7 +114,14 @@ class HomeworksController < ApplicationController
     # 生成老师上传的附件压缩包
     homework.build_teacher_attachments_zip(homework.creator)
     
-    render :file => "/MINDPIN_MRS_DATA/attachments/homework_attachments/homework_teacher#{homework.creator.id}_#{homework.id}.zip", :content_type => 'application/zip', :status => :ok
+    send_file "/MINDPIN_MRS_DATA/attachments/homework_attachments/homework_teacher#{homework.creator.id}_#{homework.id}.zip"
   end
 
+
+  def download_student_zip
+    homework = Homework.find(params[:homework_id])
+    student = User.find(params[:user_id])
+    homework.build_student_uploads_zip(student)
+    send_file "/MINDPIN_MRS_DATA/attachments/homework_attachments/homework_student#{student.id}_#{homework.id}.zip"
+  end
 end

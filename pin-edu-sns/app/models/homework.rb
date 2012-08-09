@@ -43,25 +43,24 @@ class Homework < ActiveRecord::Base
   
   # 老师创建作业时生成的附件压缩包
   def build_teacher_attachments_zip(user)
-    zipfile_name = "/MINDPIN_MRS_DATA/attachments/homework_attachments/homework_teacher#{user.id}_#{self.id}.zip"
-    Zip::ZipFile.open(zipfile_name, Zip::ZipFile::CREATE) do |zipfile|
-      self.homework_teacher_attachments.each do |file|
-        unless zipfile.find_entry(file.file_entity.attach_file_name)
-          zipfile.add(file.file_entity.attach_file_name, file.file_entity.attach.path)
+    path = "/MINDPIN_MRS_DATA/attachments/homework_attachments/homework_teacher#{user.id}_#{self.id}.zip"
+    Zip::ZipFile.open(path, Zip::ZipFile::CREATE) do |zip|
+      self.homework_teacher_attachments.each do |attachment|
+        unless zip.find_entry(attachment.name)
+          zip.add(attachment.name, attachment.file_entity.attach.path)
         end
       end
     end
   end
   
   # 压缩学生提交的附件
-  def build_student_attachments_zip(user, homework_student_upload, old_file = '')
-    # homework_id = homework_student_upload.homework_student_upload_requirement.homework.id
+  def build_student_uploads_zip(user)#, homework_student_upload, old_file = '')
     homework_id = self.id
-    zipfile_name = "/web/2012/homework_student_uploads/homework_student#{user.id}_#{homework_id}.zip"
-    Zip::ZipFile.open(zipfile_name, Zip::ZipFile::CREATE) do |zipfile|
-      zipfile.remove(old_file) if zipfile.find_entry(old_file) && old_file != ''
-      zipfile.add(homework_student_upload.attachment_file_name,
-                  homework_student_upload.attachment.path)
+    path = "/MINDPIN_MRS_DATA/attachments/homework_attachments/homework_student#{user.id}_#{self.id}.zip"
+    Zip::ZipFile.open(path, Zip::ZipFile::CREATE) do |zip|
+      self.homework_student_uploads.where(:creator_id => user.id).each do |upload|
+        zip.add(upload.name, upload.file_entity.attach.path)
+      end
     end
   end
   

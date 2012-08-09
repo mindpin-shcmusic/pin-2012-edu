@@ -41,3 +41,4 @@ pie.load ->
     $request.success (res)=>
       console.log $container.find('.file-name').text(res)
       $container.find('.status').text('上传完毕')
+      $container.find('.requirement-submited').removeClass('hide')

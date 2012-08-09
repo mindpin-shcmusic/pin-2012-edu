@@ -23,14 +23,12 @@
   - @homework.homework_student_upload_requirements.each do |attachment|
     %p
       = attachment.title
-      - if @student.is_upload_homework_attachment?(attachment)
+      - if @student.is_uploaded_for_requirement?(attachment)
         - current_upload = attachment.upload_of_user(@student)
         %span 已提交
         %a{:href => "#{current_upload.file_entity.attach.url}"} 下载
       - else
         %span 未提交
         
-- if current_user
-
 %p
-  %a{:href => ""} 以zip下载
+  %a{:href => "/homeworks/#{@homework.id}/student/#{@student.id}/download_student_zip"} zip包下载
