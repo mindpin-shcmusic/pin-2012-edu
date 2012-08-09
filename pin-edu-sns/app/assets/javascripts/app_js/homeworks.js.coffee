@@ -1,4 +1,6 @@
 pie.load ->
+  $upload_box = jQuery('.page-upload-box')
+
   jQuery('.students-selector, .courses-selector').chosen()
   jQuery('.add-student-attachement-field').click ->
     attachement_field = "<input type='text' size='30' name='homework[homework_student_upload_requirements_attributes][][title]'>"
@@ -10,8 +12,6 @@ pie.load ->
     $(this).parent().remove()
 
 
-  $upload_box = jQuery('.page-upload-box')
-
   jQuery('a.upload-teacher-homework-attachment-button').click ->
     pie.show_page_overlay()
     $upload_box.delay(200).fadeIn(200)
@@ -19,3 +19,12 @@ pie.load ->
   jQuery('.page-upload-box a.form-cancel-button').click ->
     $upload_box.fadeOut 200, ->
       pie.hide_page_overlay()
+
+  jQuery('.set-finished a').click ->
+    $request = $.ajax
+      url  : $(this).data('url')
+      type : 'PUT'
+
+    $request.success =>
+      $(this).parent().fadeOut()
+      $('.student-home-work-status .signed').removeClass('hide').hide().fadeIn()

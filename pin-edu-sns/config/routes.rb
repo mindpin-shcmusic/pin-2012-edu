@@ -118,6 +118,7 @@ MindpinEduSns::Application.routes.draw do
   # 老师查看某一学生作业路由
   get 'homeworks/:homework_id/student/:user_id' => 'homeworks#student'
   get 'homeworks/:homework_id/student/:user_id/download_student_zip' => 'homeworks#download_student_zip'
+  put 'homeworks/:homework_id/student/:user_id/set_finished' => 'homeworks#set_finished'
 
   resources :homeworks, :student
 

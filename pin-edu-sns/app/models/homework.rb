@@ -33,7 +33,7 @@ class Homework < ActiveRecord::Base
   validates :title, :content, :presence => true
   
   def assigned_by_student(student)
-    self.homework_assigns.where(:student_id => student.id).first
+    self.homework_assigns.find_by_student_id(student.id)
   end
   
   # 学生是否被分配
@@ -41,6 +41,15 @@ class Homework < ActiveRecord::Base
     self.homework_assigns.where(:student_id => student.id).any?
   end
   
+  def has_finished_for?(student)
+    raise "学生#{student.id}没有被分配作业#{self.id}" unless self.has_assigned(student)
+    self.assigned_by_student(student).has_finished
+  end
+
+  def set_finished_for!(student)
+    self.assigned_by_student(student).update_attribute :has_finished, true
+  end
+
   # 老师创建作业时生成的附件压缩包
   def build_teacher_attachments_zip(user)
     path = "/MINDPIN_MRS_DATA/attachments/homework_attachments/homework_teacher#{user.id}_#{self.id}.zip"

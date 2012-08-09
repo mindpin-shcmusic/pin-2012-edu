@@ -8,13 +8,16 @@
   
 %h1 学生:#{@student.student.real_name} 作业:#{@homework.title} 完成情况
 
+= link_to '返回作业描述页面', @homework
+
 %div 作业内容
 %p= @homework.content
 
-%p
+.student-home-work-status
   = uploaded_count.to_s + "/" + student_attachments_count.to_s
   - if uploaded_count == student_attachments_count
     %span 完成
+    %span.signed{:class => @homework.has_finished_for?(@student.student) ? '' : 'hide'} 已签收
   - else
     %span 未完成
     
@@ -29,6 +32,11 @@
         %a{:href => "#{current_upload.file_entity.attach.url}"} 下载
       - else
         %span 未提交
-        
+
 %p
   %a{:href => "/homeworks/#{@homework.id}/student/#{@student.id}/download_student_zip"} zip包下载
+
+- unless @homework.has_finished_for?(@student.student)
+  .set-finished
+    %h3 验收作业
+    = link_to '标记为已验收', 'javascript:;', :data => {:url => "/homeworks/#{@homework.id}/student/#{@student.id}/set_finished"}
