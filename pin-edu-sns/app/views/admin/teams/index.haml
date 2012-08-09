@@ -8,7 +8,7 @@
 
 .page-admin-ops
   %a.create{:href=>'/admin/teams/new'} 增加班级
-  %a.import{:href=>'/admin/teams/import_from_csv_page'} 导入班级
+  %a.import{:href=>'/admin/teams/import_from_csv_page'} 批量导入班级
 
 .page-admin-models.teams
   = render 'team_list', :teams => @teams
