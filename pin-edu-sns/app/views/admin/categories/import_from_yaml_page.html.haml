@@ -1,0 +1,18 @@
+- htitle '资源分类维护'
+
+- hbreadcrumb '基础数据管理', '/admin'
+- hbreadcrumb '资源分类维护'
+- hbreadcrumb '批量导入资源分类数据'
+
+.page-admin-form-info
+  .desc 请先下载 YAML 示例文件，按照给定格式填充数据，然后上传导入
+  %a.download{:href=>'/yaml_demo/categories.yaml'} 下载示例文件
+
+.page-admin-form
+  = flash_info
+  = form_tag "/admin/categories/import_from_yaml",:method=>:post,:multipart => true do
+    .field
+      %label 选择 YAML 文件
+      = file_field_tag :yaml_file
+    .field
+      =jfsubmit '确定导入'

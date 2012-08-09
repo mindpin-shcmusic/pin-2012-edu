@@ -71,6 +71,8 @@ MindpinEduSns::Application.routes.draw do
     resources :categories do
       collection do
         get :search
+        get :import_from_yaml_page
+        post :import_from_yaml
       end
     end
     

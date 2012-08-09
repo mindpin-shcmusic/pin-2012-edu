@@ -5,6 +5,7 @@
 
 .page-admin-ops
   %a.create{:href=>'/admin/categories/new'} 增加资源分类
+  %a.import{:href=>'/admin/categories/import_from_yaml_page'} 批量导入资源分类
 
 .page-admin-categories
   = render 'categories_list', :categories => @level1_categories
