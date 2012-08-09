@@ -102,6 +102,7 @@ MindpinEduSns::Application.routes.draw do
   resources :homeworks do
     collection do
       post :create_teacher_attachment
+      post :create_student_upload
     end
     
     member do

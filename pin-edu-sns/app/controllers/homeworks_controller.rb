@@ -1,6 +1,6 @@
 # -*- coding: gb2312 -*-
 class HomeworksController < ApplicationController
-  before_filter :pre_load_teacher, :except => [:show, :index]
+  before_filter :pre_load_teacher, :except => [:show, :index, :student, :create_student_upload]
   before_filter :login_required
 
   def pre_load_teacher
@@ -37,6 +37,12 @@ class HomeworksController < ApplicationController
         end
       end
       
+      params[:teacher_attachment_ids].each do |id|
+        attach = HomeworkTeacherAttachment.find(id)
+        attach.homework = @homework
+        attach.save
+      end
+
       return redirect_to @homework
     end
     
@@ -51,6 +57,16 @@ class HomeworksController < ApplicationController
     render :text => @homework_teacher_attachment.id
   end
   
+  def create_student_upload
+    upload = HomeworkStudentUpload.find_or_initialize_by_creator_id_and_requirement_id(params[:homework_student_upload][:creator_id], params[:homework_student_upload][:requirement_id])
+    upload.update_attributes params[:homework_student_upload]
+    upload.name = params[:file_name]
+    upload.file_entity = upload.file_entity || FileEntity.new
+    upload.file_entity.update_attributes :attach => params[:attachment], :merged => true
+    upload.save
+    render :text => upload.name
+  end
+
   def new
     @homework = Homework.new
     @homework_student_upload_requirement = HomeworkStudentUploadRequirement.new
@@ -67,9 +83,9 @@ class HomeworksController < ApplicationController
 
   def index
     if params[:status] == 'deadline'
-      @homeworks = current_user.deadline_teacher_homeworks
+      @homeworks = current_user.deadline_homeworks
     elsif params[:status] == 'undeadline'
-      @homeworks = current_user.undeadline_teacher_homeworks
+      @homeworks = current_user.undeadline_homeworks
     elsif current_user.is_teacher?
       @homeworks = current_user.homeworks
     elsif current_user.is_student?
@@ -85,6 +101,9 @@ class HomeworksController < ApplicationController
   
   # 老师查看具体某一学生作业页面
   def student
+    unless (current_user.is_teacher? || current_user.id == params[:user_id].to_i)
+      return redirect_to '/'
+    end
     @homework = Homework.find(params[:homework_id])
     @student = User.find(params[:user_id])
   end

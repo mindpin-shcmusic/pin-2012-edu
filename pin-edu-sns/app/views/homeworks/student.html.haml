@@ -1,36 +1,36 @@
 :ruby
   # 学生应该提交的附件数量
-  student_attachements_count = @homework.homework_student_upload_requirements.count
+  student_attachments_count = @homework.homework_student_upload_requirements.count
   
   # 学生已经提交的附件数量
   uploaded_count = @student.uploaded_count_of_homework(@homework)
   
   
-%div 作业标题
-%p= @homework.title
+%h1 学生:#{@student.student.real_name} 作业:#{@homework.title} 完成情况
 
 %div 作业内容
 %p= @homework.content
 
 %p
-  = @student.name
-  = uploaded_count.to_s + "/" + student_attachements_count.to_s
-  - if uploaded_count == student_attachements_count
+  = uploaded_count.to_s + "/" + student_attachments_count.to_s
+  - if uploaded_count == student_attachments_count
     %span 完成
   - else
     %span 未完成
     
 %div
   提交物情况
-  - @homework.homework_student_upload_requirements.each do |attachement|
+  - @homework.homework_student_upload_requirements.each do |attachment|
     %p
-      = attachement.title
-      - if @student.is_upload_homework_attachement?(attachement)
-        - current_upload = attachement.upload_of_user(@student)
+      = attachment.title
+      - if @student.is_upload_homework_attachment?(attachment)
+        - current_upload = attachment.upload_of_user(@student)
         %span 已提交
-        %a{:href => "#{current_upload.attachement.url}"} 下载
+        %a{:href => "#{current_upload.file_entity.attach.url}"} 下载
       - else
         %span 未提交
         
+- if current_user
+
 %p
   %a{:href => ""} 以zip下载
