@@ -22,7 +22,7 @@ class Team < ActiveRecord::Base
       is_utf8 = rows[0].join(",").utf8?
       rows.each_with_index do |row,index|
         next if index == 0
-        row = row.map{|v|v.gb2312_to_utf8} if !is_utf8
+        row = row.map{|v|(v || "").gb2312_to_utf8} if !is_utf8
         team = Team.new(:name => row[0],:cid => row[1])
         if !team.save
           message = team.errors.first[1]
