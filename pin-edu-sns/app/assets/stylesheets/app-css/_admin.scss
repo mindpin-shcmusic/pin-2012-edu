@@ -45,6 +45,11 @@
 
   a.create{
     @include mini-button;
+    margin-right:20px;
+  }
+
+  a.import{
+    @include mini-button-blue;
   }
 
   .list-style{
@@ -203,6 +208,21 @@
   box-shadow:0 1px 2px rgba(0,0,0,0.07);
   padding:10px;margin-right:20px;margin-bottom:20px;
   background-color:#fff;
+}
+
+.page-admin-form-info{
+  width:500px;
+  @include border-radius(3px);
+  padding:9px;margin-right:20px;margin-bottom:10px;
+  background-color:rgba(black, 0.05);
+  border:solid 1px #ddd;
+  @include floatfix;
+  .desc{
+    margin-bottom:10px;
+  }
+  a.download{
+    @include mini-button-black;
+  }
 }
 
 .page-admin-model-show{
