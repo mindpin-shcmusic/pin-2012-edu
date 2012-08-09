@@ -22,7 +22,7 @@ class Homework < ActiveRecord::Base
            :conditions => ['is_submit = ?', true]
   
   # 学生附件
-  has_many :homework_student_upload_requirements
+  has_many :homework_student_uploads
   
   # 老师创建作业时上传的附件
   has_many :homework_teacher_attachments
@@ -40,7 +40,6 @@ class Homework < ActiveRecord::Base
   def has_assigned(student)
     self.homework_assigns.where(:student_id => student.id).any?
   end
-  
   
   # 老师创建作业时生成的附件压缩包
   def build_teacher_attachments_zip(user)
@@ -101,6 +100,30 @@ class Homework < ActiveRecord::Base
     end
     
     module InstanceMethods
+      def deadline_homeworks
+        if self.is_teacher?
+          deadline_teacher_homeworks
+        elsif self.is_student?
+          deadline_student_homeworks
+        end
+      end
+
+      def undeadline_homeworks
+        if self.is_teacher?
+          undeadline_teacher_homeworks
+        elsif self.is_student?
+          undeadline_student_homeworks
+        end
+      end
+
+      def deadline_student_homeworks
+        self.student_homeworks.where('deadline <= ?', Time.now)
+      end
+
+      def undeadline_student_homeworks
+        self.student_homeworks.where('deadline > ?', Time.now)
+      end
+
       def student_homeworks
         raise "#User-#{self.id}: 该用户不是学生" unless self.is_student?
         Homework.joins(:homework_assigns).where('homework_assigns.student_id = ?', self.student.id)

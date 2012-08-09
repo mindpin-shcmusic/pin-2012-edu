@@ -10,6 +10,7 @@ class HomeworkStudentUpload < ActiveRecord::Base
              :foreign_key => 'requirement_id'
 
   belongs_to :file_entity
+  belongs_to :homework
 
   # --- 给其他类扩展的方法
   module UserMethods
@@ -22,9 +23,13 @@ class HomeworkStudentUpload < ActiveRecord::Base
     end
     
     module InstanceMethods
+      def upload_for_requirement(requirement)
+        self.homework_student_uploads.find_by_requirement_id(requirement.id)
+      end
+
       # 学生是否提交作业附件
-      def is_upload_homework_attachment?(attachment)
-        self.homework_student_uploads.where(:requirement_id => attachment.id).exists?
+      def is_upload_homework_attachment?(requirement)
+        !self.upload_for_requirement(requirement).nil?
       end
       
       # 学生上传作业提交物的数量
