@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120809091357) do
+ActiveRecord::Schema.define(:version => 20120810053100) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -261,6 +261,7 @@ ActiveRecord::Schema.define(:version => 20120809091357) do
     t.boolean  "delta",             :default => true, :null => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "category_id"
   end
 
   create_table "short_messages", :force => true do |t|
