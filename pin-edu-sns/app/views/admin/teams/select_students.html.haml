@@ -6,9 +6,9 @@
 - hbreadcrumb '分配学生'
 
 .page-admin-students-selector
-  %form.search.hide
+  %form.search
     .field
-      %input{:type=>'text'}
+      %input.search{:type=>'text'}
     .desc
       小提示：可以输入中文或拼音来快速查找
 
@@ -17,13 +17,13 @@
       - student_ids = @team.student_ids
       - Student.all.each do |student|
         - selected = student_ids.include?(student.id)
-        .student{:class=>selected ? 'selected' : '', :'data-id'=>student.id}
+        .student{:class=>selected ? 'selected' : '', :'data-id'=>student.id, :'data-name'=>student.real_name}
           .name= student.real_name
   .result
     .list
       - @team.students.each do |student|
         - selected = student_ids.include?(student.id)
-        .student{:class=>selected ? 'selected' : '', :'data-id'=>student.id}
+        .student{:class=>selected ? 'selected' : '', :'data-id'=>student.id, :'data-name'=>student.real_name}
           .name= student.real_name
     .count
       %span 已经分配
