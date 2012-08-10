@@ -46,13 +46,13 @@ class HomeworksController < ApplicationController
 
   def new
     @homework = Homework.new
-    @homework_student_upload_requirement = HomeworkStudentUploadRequirement.new
+    @homework_student_upload_requirement = HomeworkRequirement.new
     
     # 所有课程
     @courses = Course.all
     
     # 班级列表
-    @teams = Team.all
+    @teams = Team.where(:teacher_id => current_user.id)
   end
 
   def index
@@ -67,14 +67,13 @@ class HomeworksController < ApplicationController
     end
   end
   
-  
   def show
     @homework = Homework.find(params[:id])
   end
 
   def edit
     @homework = Homework.find(params[:id])
-    @homework_student_upload_requirements = HomeworkStudentUploadRequirement.where(:homework_id => @homework.id)
+    @homework_student_upload_requirements = HomeworkRequirement.where(:homework_id => @homework.id)
     @teacher_attachments = HomeworkTeacherAttachment.where(:homework_id => @homework.id)
 
     # 所有课程
@@ -83,7 +82,7 @@ class HomeworksController < ApplicationController
     # 班级列表
     @teams = Team.all
     @selected_teams = @homework.homework_assign_rule.expression[:teams].map(&:to_i)
-    @requirements = HomeworkStudentUploadRequirement.where(:homework_id => @homework.id)
+    @requirements = HomeworkRequirement.where(:homework_id => @homework.id)
   end
 
   def update
@@ -149,7 +148,7 @@ class HomeworksController < ApplicationController
   end
 
   def destroy_requirement
-    HomeworkStudentUploadRequirement.find(params[:id]).destroy
+    HomeworkRequirement.find(params[:id]).destroy
     render :text => 'requirement destroyed!'
   end
 end

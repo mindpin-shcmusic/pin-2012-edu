@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120810053100) do
+ActiveRecord::Schema.define(:version => 20120810063454) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -128,7 +128,7 @@ ActiveRecord::Schema.define(:version => 20120810053100) do
   add_index "homework_assigns", ["homework_id"], :name => "index_homework_assigns_on_homework_id"
   add_index "homework_assigns", ["student_id"], :name => "index_homework_assigns_on_student_id"
 
-  create_table "homework_student_upload_requirements", :force => true do |t|
+  create_table "homework_requirements", :force => true do |t|
     t.integer  "creator_id"
     t.integer  "homework_id"
     t.string   "title"
@@ -136,8 +136,8 @@ ActiveRecord::Schema.define(:version => 20120810053100) do
     t.datetime "updated_at"
   end
 
-  add_index "homework_student_upload_requirements", ["creator_id"], :name => "index_homework_student_upload_requirements_on_creator_id"
-  add_index "homework_student_upload_requirements", ["homework_id"], :name => "index_homework_student_upload_requirements_on_homework_id"
+  add_index "homework_requirements", ["creator_id"], :name => "index_homework_student_upload_requirements_on_creator_id"
+  add_index "homework_requirements", ["homework_id"], :name => "index_homework_student_upload_requirements_on_homework_id"
 
   create_table "homework_student_uploads", :force => true do |t|
     t.integer  "creator_id"

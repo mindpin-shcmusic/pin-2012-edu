@@ -1,6 +1,6 @@
 :ruby
   # 学生应该提交的附件数量
-  student_attachments_count = @homework.homework_student_upload_requirements.count
+  student_attachments_count = @homework.homework_requirements.count
   
   # 学生已经提交的附件数量
   uploaded_count = @student.uploaded_count_of_homework(@homework)
@@ -23,7 +23,7 @@
     
 %div
   提交物情况
-  - @homework.homework_student_upload_requirements.each do |attachment|
+  - @homework.homework_requirements.each do |attachment|
     %p
       = attachment.title
       - if @student.is_uploaded_for_requirement?(attachment)

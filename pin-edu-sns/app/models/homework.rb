@@ -6,8 +6,8 @@ class Homework < ActiveRecord::Base
              :foreign_key => 'creator_id'
 
   has_many :homework_assigns
-  has_many :homework_student_upload_requirements
-  accepts_nested_attributes_for :homework_student_upload_requirements
+  has_many :homework_requirements
+  accepts_nested_attributes_for :homework_requirements
   
   # 未提交作业学生
   has_many :unsubmitted_students,

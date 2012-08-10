@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
   include Homework::UserMethods
   include HomeworkAssign::UserMethods
   include HomeworkAssignRule::UserMethods
-  include HomeworkStudentUploadRequirement::UserMethods
+  include HomeworkRequirement::UserMethods
   include HomeworkStudentUpload::UserMethods
   # --- 通知
   include Notification::UserMethods
