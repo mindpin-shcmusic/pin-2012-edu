@@ -138,4 +138,5 @@ class Homework < ActiveRecord::Base
       end
     end
   end
+  include HomeworkAssignRule::HomeworkMethods
 end

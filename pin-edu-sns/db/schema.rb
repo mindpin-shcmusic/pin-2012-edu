@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120808092145) do
+ActiveRecord::Schema.define(:version => 20120809091357) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -105,6 +105,14 @@ ActiveRecord::Schema.define(:version => 20120808092145) do
   end
 
   add_index "file_entities", ["md5"], :name => "index_file_entities_on_md5"
+
+  create_table "homework_assign_rules", :force => true do |t|
+    t.integer  "creator_id"
+    t.integer  "homework_id"
+    t.text     "expression"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "homework_assigns", :force => true do |t|
     t.integer  "student_id"

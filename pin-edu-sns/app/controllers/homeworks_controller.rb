@@ -10,37 +10,14 @@ class HomeworksController < ApplicationController
   def create
     @homework = current_user.homeworks.build(params[:homework])
     if @homework.save
-      teacher_attachements = params[:teacher_attachements]
-      unless teacher_attachements.blank?
-        teacher_attachements.each do |attachement_id|
-          homework_teacher_attachement = HomeworkTeacherAttachement.find(attachement_id)
-          homework_teacher_attachement.homework = @homework
-          homework_teacher_attachement.creator = current_user
-          homework_teacher_attachement.save
-        end
-      end
+      @homework.share_to_expression({:teams => params[:teams]}.to_json)
       
-      # 把家庭作业分配给班级里的学生
-      teams = params[:teams]
-      unless teams.blank?
-        teams.each do |team_id|
-          team = Team.find(team_id)
-                   
-          team.students.each do |student|
-            
-            # 如果学生没有被分配到作业
-            unless @homework.has_assigned(student)
-              HomeworkAssign.create(:student => student, :homework => @homework, :creator => current_user) 
-            end
-            
-          end
+      if params[:teacher_attachment_ids]
+        params[:teacher_attachment_ids].each do |id|
+          attach = HomeworkTeacherAttachment.find(id)
+          attach.homework = @homework
+          attach.save
         end
-      end
-      
-      params[:teacher_attachment_ids].each do |id|
-        attach = HomeworkTeacherAttachment.find(id)
-        attach.homework = @homework
-        attach.save
       end
 
       return redirect_to @homework
@@ -105,11 +82,30 @@ class HomeworksController < ApplicationController
     
     # 班级列表
     @teams = Team.all
+    @selected_teams = @homework.homework_assign_rule.expression[:teams].map(&:to_i)
+    @requirements = HomeworkStudentUploadRequirement.where(:homework_id => @homework.id)
   end
 
   def update
     @homework = Homework.find(params[:id])
     @homework.update_attributes(params[:homework])
+    if @homework.save
+      @homework.share_to_expression({:teams => params[:teams]}.to_json)
+      
+      if params[:teacher_attachment_ids]
+        params[:teacher_attachment_ids].each do |id|
+          attach = HomeworkTeacherAttachment.find(id)
+          attach.homework = @homework
+          attach.save
+        end
+      end
+
+      return redirect_to @homework
+    end
+    
+    error = @homework.errors.first
+    flash.now[:error] = "#{error[0]} #{error[1]}"
+    redirect_to '/homeworks/new'
     return redirect_to @homework if @homework.save
     redirect_to :back
   end
@@ -145,5 +141,15 @@ class HomeworksController < ApplicationController
 
     homework.set_finished_for!(student)
     render :text => 'set finished!'
+  end
+
+  def destroy_teacher_attachment
+    HomeworkTeacherAttachment.find(params[:id]).destroy
+    render :text => 'attachment destroyed!'
+  end
+
+  def destroy_requirement
+    HomeworkStudentUploadRequirement.find(params[:id]).destroy
+    render :text => 'requirement destroyed!'
   end
 end

@@ -4,7 +4,8 @@
 
 %p= link_to '作业列表', homeworks_path
 - if current_user.is_teacher?
-  %p= link_to '布置新作业', new_homework_path
+  = link_to '布置新作业', new_homework_path
+  = link_to '修改该作业概述', edit_homework_path
 
 %div 作业标题
 %p= @homework.title
