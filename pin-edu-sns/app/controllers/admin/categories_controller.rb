@@ -27,7 +27,7 @@ class Admin::CategoriesController < ApplicationController
 
   # for ajax
   def destroy
-    Category.find(params[:id]).remove
+    Category.find(params[:id]).remove_tree
     render :text => 'ok'
   end
   
