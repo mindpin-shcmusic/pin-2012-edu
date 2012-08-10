@@ -1,5 +1,7 @@
+# -*- coding: undecided -*-
 class HomeworkAssignRule < ActiveRecord::Base
   attr_accessor :deleting
+  after_save :enqueue_build_assign
 
   belongs_to :homework
 
@@ -45,7 +47,7 @@ class HomeworkAssignRule < ActiveRecord::Base
 
   def build_assign
     expression_assignees.each {|assignee|
-      assign = HomeworkAssign.find_or_initialize_by_homework_id_and_student_id self.media_resource.id,
+      assign = HomeworkAssign.find_or_initialize_by_homework_id_and_student_id self.homework.id,
                                                                                assignee.id
       assign.creator = self.creator
       assign.save
@@ -56,11 +58,19 @@ class HomeworkAssignRule < ActiveRecord::Base
 
   def deleting_assignee_ids(options)
     return [] if expression.nil?
-    deleted_teams = ArrayDiff.deleted(expression[:teams], options[:teamss].map(&:to_i))
+    deleted_team_ids = ArrayDiff.deleted(expression[:teams], options[:teams].map(&:to_i))
+    Team.find(deleted_team_ids).map(&:students).flatten.map(&:id)
   end
 
   def enqueue_build_assign
     BuildHomeworkAssignResqueQueue.enqueue(self.id)
+  end
+
+  module UserMethods
+    def self.included(base)
+      base.has_many :homework_assign_rules,
+                    :foreign_key => 'creator_id'
+    end
   end
 
   module HomeworkMethods

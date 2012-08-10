@@ -20,6 +20,26 @@ pie.load ->
     $upload_box.fadeOut 200, ->
       pie.hide_page_overlay()
 
+  jQuery('.uploaded-teacher-attachments .attachment a').click ->
+    console.log $(this).data('destroy-url')
+    $(this).confirm_dialog '确定删除么？', =>
+      $request = $.ajax
+        url  : $(this).data('destroy-url')
+        type : 'DELETE'
+
+      $request.success =>
+        $(this).parent().hide()
+
+  jQuery('.added-requirements .requirement a').click ->
+    console.log $(this).data('destroy-url')
+    $(this).confirm_dialog '确定删除么？', =>
+      $request = $.ajax
+        url  : $(this).data('destroy-url')
+        type : 'DELETE'
+
+      $request.success =>
+        $(this).parent().hide()
+
   jQuery('.set-finished a').click ->
     $request = $.ajax
       url  : $(this).data('url')
