@@ -42,6 +42,10 @@ MindpinEduSns::Application.routes.draw do
       member do
         get :select_teacher
         put :set_teacher
+        get :upload_image_page
+        post :upload_image
+        get :select_cover_page
+        post :select_cover
       end
       collection do
         get :search
@@ -127,14 +131,7 @@ MindpinEduSns::Application.routes.draw do
   resources :homeworks, :student
 
   resources :teachers
-  resources :courses do
-    member do
-      get :upload_image_page
-      post :upload_image
-      get :select_cover_page
-      post :select_cover
-    end
-  end
+  resources :courses
   resources :notifications do
     collection do
       post :read_all
