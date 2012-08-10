@@ -3,7 +3,7 @@ pie.load ->
 
   jQuery('.students-selector, .courses-selector').chosen()
   jQuery('.add-student-attachement-field').click ->
-    attachement_field = "<input type='text' size='30' name='homework[homework_student_upload_requirements_attributes][][title]'>"
+    attachement_field = "<input type='text' size='30' name='homework[homework_requirements_attributes][][title]'>"
     del_field = "<a href='javascript:void(0)' class='delete'>x</a>"
     $('#student-attachement-fields').append("<p>" + attachement_field + del_field + "</p>")
 
