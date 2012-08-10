@@ -1,6 +1,6 @@
 .page-upload-corses-image-forms
   = flash[:error]
-  = form_tag "/courses/#{@course.id}/upload_image", :method => 'post', :class => 'create-corses-image', :multipart => true do
+  = form_tag "/admin/courses/#{@course.id}/upload_image", :method => 'post', :class => 'create-corses-image', :multipart => true do
     = file_field_tag :file
     %a.form-submit-button 上传图片
 
@@ -19,4 +19,4 @@
     .image
       %img{:src=>@course.cover_courses_image.file_entity.attach.url}
 .page-course-select-cover
-  = link_to "选择封面","/courses/#{@course.id}/select_cover_page"
+  = link_to "选择封面","/admin/courses/#{@course.id}/select_cover_page"

@@ -1,6 +1,6 @@
 :ruby
   teacher_attachments_count = @homework.homework_teacher_attachments.count
-  student_attachments_count = @homework.homework_student_upload_requirements.count
+  student_attachments_count = @homework.homework_requirements.count
 
 %p= link_to '作业列表', homeworks_path
 - if current_user.is_teacher?
@@ -33,7 +33,7 @@
 
 .student-upload-requirements{:'data-upload-url' => create_student_upload_homeworks_path}
   %h3 学生作业提交物
-  - @homework.homework_student_upload_requirements.each do |requirement|
+  - @homework.homework_requirements.each do |requirement|
     .upload-requirement
       %h4.title= requirement.title
       .requirement-submited{:class => current_user.is_uploaded_for_requirement?(requirement) && '' || 'hide'}

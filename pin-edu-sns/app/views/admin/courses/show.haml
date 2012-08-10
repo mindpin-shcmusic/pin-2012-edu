@@ -30,9 +30,9 @@
     .v= @course.desc
 
   .field.upload-image
-    = link_to '上传课程图片', upload_image_page_course_path(@course)
+    = link_to '上传课程图片', "/admin/courses/#{@course.id}/upload_image_page"
   .field.select-cover
-    = link_to '选择课程封面图片', select_cover_page_course_path(@course)
+    = link_to '选择课程封面图片', "/admin/courses/#{@course.id}/select_cover_page"
 
 - students = @course.students
 .page-admin-model-show

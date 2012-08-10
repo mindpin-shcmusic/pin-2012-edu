@@ -27,4 +27,11 @@ class Category < ActiveRecord::Base
       parent_category
     end
   end
+
+  def remove_tree
+    self.children.each do |category|
+      category.remove_tree
+    end
+    self.remove
+  end
 end

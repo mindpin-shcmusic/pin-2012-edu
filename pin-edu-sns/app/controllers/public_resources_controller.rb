@@ -17,7 +17,11 @@ class PublicResourcesController < ApplicationController
 
   # 上传到公共资源 
   def upload
-    PublicResource.upload_by_user(current_user, params[:file])
+    if params[:file].blank?
+      flash[:error] = "先选择一个文件上传"
+    else
+      PublicResource.upload_by_user(current_user, params[:file])
+    end
 
     redirect_to :back
   end

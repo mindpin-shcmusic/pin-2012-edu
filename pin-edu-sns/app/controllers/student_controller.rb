@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class StudentController < ApplicationController
   def index
     if params[:status] == 'deadline'
@@ -44,7 +45,7 @@ class StudentController < ApplicationController
   
   # 学生重新上传作业附件
   def upload_homework_attachement_again
-    homework_student_upload_requirement = HomeworkStudentUploadRequirement.find(params[:attachement_id])
+    homework_student_upload_requirement = HomeworkRequirement.find(params[:attachement_id])
     @homework_student_upload = homework_student_upload_requirement.upload_of_user(current_user)
     old_file = @homework_student_upload.attachement_file_name;
     @homework_student_upload.attachement = params[:homework_student_upload][:attachement]
