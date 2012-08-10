@@ -1,20 +1,51 @@
-= jimage @course.cover, :width => '100', :height => '100'
+- htitle '课程维护'
 
-%div  名字 #{@course.name}
-%div 课程号 #{@course.cid}    
-%div 开课院系 #{@course.location}    
-%div 上课地点 #{@course.cid}
--if @course.teacher
-  %div 教师 #{@course.teacher.real_name}    
--else
-  %div 
-    %span 教师未指定
-    =link_to "指定教师","/admin/courses/#{@course.id}/select_teacher"
+- hbreadcrumb '基础数据管理', '/admin'
+- hbreadcrumb '课程维护', '/admin/courses'
+- hbreadcrumb @course.name
 
-.upload-image= link_to '上传课程图片', upload_image_page_course_path(@course)
-.select-cover= link_to '选择课程封面图片', select_cover_page_course_path(@course)
+.page-admin-model-show
+  .field.image
+    = jimage @course.cover, :width => 160, :height => 96
+  .field.name
+    %label 课程名
+    .v= @course.name
+  .field.cid
+    %label 课程编号
+    .v= @course.cid
+  .field.department
+    %label 开课院系
+    .v= @course.department
+  .field.location
+    %label 上课地点
+    .v= @course.location
+  .field.teacher
+    %label 教师
+    - if @course.teacher.blank?
+      .v.quiet 未指定
+    - else
+      .v= @course.teacher.real_name
+  .field.desc
+    %label 备注
+    .v= @course.desc
 
-%div 其他描述 #{@course.desc}
-=link_to "首页","/admin"
-=link_to "课程列表","/admin/courses"
-		
+  .field.upload-image
+    = link_to '上传课程图片', upload_image_page_course_path(@course)
+  .field.select-cover
+    = link_to '选择课程封面图片', select_cover_page_course_path(@course)
+
+- students = @course.students
+.page-admin-model-show
+  .field.students-count
+    %label 课程学生名单
+    .v 总共 #{students.count} 个学生
+    .assign= link_to "给班级指定学生", "/admin/courses/#{@course.id}/select_students"
+
+  - students.each do |student|
+    .field.student
+      .avatar= avatar student.user, :mini
+      .name= student.real_name
+      .show= link_to '查看信息', [:admin, student]
+
+.page-admin-go-back= link_to '返回列表页', '/admin/courses'
+.page-admin-edit= link_to '编辑修改', "/admin/courses/#{@course.id}/edit"
