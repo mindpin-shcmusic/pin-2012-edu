@@ -5,21 +5,28 @@ class Homework < ActiveRecord::Base
              :class_name => 'User',
              :foreign_key => 'creator_id'
 
-  has_many :homework_assigns
+  belongs_to :course
+
   has_many :homework_requirements
   accepts_nested_attributes_for :homework_requirements
-  
-  # 未提交作业学生
-  has_many :unsubmitted_students,
+
+  has_many :homework_assigns
+
+  has_many :assigned_students,
            :through => :homework_assigns,
-           :source => :creator,
-           :conditions => ['is_submit = ?', false]
+           :source => :student
   
-  # 已提交作业学生
+  # 没有提交作业的学生
+  has_many :not_submitted_students,
+           :through => :homework_assigns,
+           :source => :student,
+           :conditions => ['homework_assigns.is_submit = ?', false]
+  
+  # 已经提交作业的学生
   has_many :submitted_students,
            :through => :homework_assigns,
-           :source => :creator,
-           :conditions => ['is_submit = ?', true]
+           :source => :student,
+           :conditions => ['homework_assigns.is_submit = ?', true]
   
   # 学生附件
   has_many :homework_student_uploads
@@ -31,6 +38,7 @@ class Homework < ActiveRecord::Base
   
   # --- 校验方法
   validates :title, :content, :presence => true
+  validates :course, :presence => true
   
   def assigned_by_student(student)
     self.homework_assigns.find_by_student_id(student.id)

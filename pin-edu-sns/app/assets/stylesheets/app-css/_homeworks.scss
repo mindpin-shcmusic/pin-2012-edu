@@ -1,0 +1,10 @@
+.page-homeworks{
+  .ops{
+    overflow:hidden;
+    margin-bottom:20px;
+
+    a.new-homework{
+      @include mini-button;
+    }
+  }
+}

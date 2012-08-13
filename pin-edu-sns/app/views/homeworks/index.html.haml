@@ -1,12 +1,33 @@
-- if current_user.is_teacher?
-  %p= link_to '布置新作业', new_homework_path
+- htitle '作业'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '作业'
 
-%p
-  %a{:href => homeworks_path(:status => 'undeadline')} 未过期
-  %a{:href => homeworks_path(:status => 'deadline')} 已过期
+.page-homeworks
+  - if current_user.is_teacher?
+    .ops
+      %a.new-homework{:href=>new_homework_path} 布置新作业
 
-- @homeworks.each do |h|
-  %p= link_to h.title, homework_path(h)
-  %p
-    截止时间
-    =h.deadline.strftime("%Y-%m-%d %H:%M:%S")
+  .tabs
+    %a{:href => homeworks_path(:status => 'undeadline')} 未过期
+    %a{:href => homeworks_path(:status => 'deadline')} 已过期
+
+  .homeworks
+    - @homeworks.each do |homework|
+      :ruby
+        title = homework.title
+        deadline = homework.deadline.strftime('%Y-%m-%d')
+        has_attach = !homework.homework_teacher_attachments.blank?
+        course = homework.course
+
+        assigned_students = homework.assigned_students
+        submitted_students = homework.submitted_students
+
+      .homework
+        .title= link_to title, homework
+        .time
+          %span 截止时间
+          %span= deadline
+        .attach= has_attach ? '有附件' : '没有附件'
+        .course= course.cover
+        .assign-count 分配给 #{assigned_students.count} 个学生
+        .submit-count 已经有 #{submitted_students.count} 人提交
