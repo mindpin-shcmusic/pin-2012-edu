@@ -1,0 +1,9 @@
+- categories.each do |category|
+  -children = category.children
+  - if children.blank?
+    %li=category.name
+  - else
+    %li{:class=>"expandable"}
+      .name=category.name
+      %ul{:style=>"display:none;"}
+        = render "media_resources/parts/category_list",:categories=>children
