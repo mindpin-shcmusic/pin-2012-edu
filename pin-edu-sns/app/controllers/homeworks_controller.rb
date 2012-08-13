@@ -51,7 +51,7 @@ class HomeworksController < ApplicationController
     @requirements ||=[]
 
     # 所有课程
-    @courses = Course.all
+    @courses = Course.where(:teacher_id => current_user.id)
     
     # 班级列表
     @teams = Team.where(:teacher_id => current_user.id)
@@ -79,10 +79,10 @@ class HomeworksController < ApplicationController
     @teacher_attachments = HomeworkTeacherAttachment.where(:homework_id => @homework.id)
 
     # 所有课程
-    @courses = Course.all
+    @courses = Course.where(:teacher_id => current_user.id)
     
     # 班级列表
-    @teams = Team.all
+    @teams = Team.where(:teacher_id => current_user.id)
     @selected_teams = @homework.homework_assign_rule.expression[:teams].map(&:to_i)
     @requirements = HomeworkRequirement.where(:homework_id => @homework.id)
   end
