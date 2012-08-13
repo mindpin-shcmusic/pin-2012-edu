@@ -5,7 +5,6 @@ class User < ActiveRecord::Base
   include Teacher::UserMethods
   # --- 作业
   include Homework::UserMethods
-  include HomeworkAssign::UserMethods
   include HomeworkAssignRule::UserMethods
   include HomeworkRequirement::UserMethods
   include HomeworkStudentUpload::UserMethods
@@ -17,7 +16,7 @@ class User < ActiveRecord::Base
   # 如果该声明放在 MediaResource::UserMethods 上 会导致引用出现异常
   # 只能在这里声明了 fushang318
   has_many :media_resources,
-                    :foreign_key => 'creator_id'
+           :foreign_key => 'creator_id'
 
   include MediaShare::UserMethods
   include PublicResource::UserMethods

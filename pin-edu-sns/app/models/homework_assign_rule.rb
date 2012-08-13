@@ -49,7 +49,6 @@ class HomeworkAssignRule < ActiveRecord::Base
     expression_assignees.each {|assignee|
       assign = HomeworkAssign.find_or_initialize_by_homework_id_and_student_id self.homework.id,
                                                                                assignee.id
-      assign.creator = self.creator
       assign.save
     }
   end
