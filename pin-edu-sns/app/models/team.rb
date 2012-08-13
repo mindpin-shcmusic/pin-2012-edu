@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Team < ActiveRecord::Base
   
   belongs_to :teacher
@@ -34,8 +35,12 @@ class Team < ActiveRecord::Base
     end
 
     module InstanceMethods
-      def teams
-        Team.joins(:teacher, :students).where('teachers.user_id = :id or students.user_id = :id', :id => self.id)
+      def student_team
+        Team.joins(:students).where('students.user_id = ?', self.id).first
+      end
+
+      def teacher_teams
+        Team.where(:teacher_id => self.id)
       end
     end
   end

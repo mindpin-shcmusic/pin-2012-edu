@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class PublicResource < ActiveRecord::Base
   belongs_to :file_entity
   belongs_to :media_resource
@@ -28,6 +29,10 @@ class PublicResource < ActiveRecord::Base
                     :conditions => lambda { "kind = 'UPLOAD'" }
 
  
+      base.has_many :public_resources,
+                    :class_name  => 'User',
+                    :foreign_key => 'creator_id'
+
       base.send(:include, InstanceMethods)
     end
 

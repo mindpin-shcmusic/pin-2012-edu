@@ -19,6 +19,10 @@ class Student < ActiveRecord::Base
            :source => :homework,
            :conditions => ['homeworks.deadline <= ?', Time.now]
 
+  has_many :course_students
+  has_many :courses,
+           :through => :course_students
+                    
   
   # --- 校验方法
   validates :real_name, :presence => true
