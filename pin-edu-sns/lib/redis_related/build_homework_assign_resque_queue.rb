@@ -2,11 +2,11 @@ class BuildHomeworkAssignResqueQueue
   QUEUE_NAME = :build_homework_assign_resque_queue
   @queue = QUEUE_NAME
 
-  def self.enqueue(homework_id)
-    Resque.enqueue(BuildHomeworkAssignResqueQueue, homework_id)
+  def self.enqueue(rule_id)
+    Resque.enqueue(BuildHomeworkAssignResqueQueue, rule_id)
   end
 
-  def self.perform(homework_id)
-    HomeworkAssignRule.find(homework_id).build_assign
+  def self.perform(rule_id)
+    HomeworkAssignRule.find(rule_id).build_assign
   end
 end

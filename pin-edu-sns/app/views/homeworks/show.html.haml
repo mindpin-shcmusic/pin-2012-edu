@@ -51,9 +51,6 @@
           .field.submit
             = link_to '上传', 'javascript:;', :class => 'form-submit-button'
 
-- if current_user.is_student?
-  .a
-
 - if current_user.is_teacher?
   %div
     - @homework.homework_assigns.each do |h|
@@ -74,3 +71,6 @@
         %span 已签
       - else 
         %span 未签
+
+- if logged_in?
+  = jcomments @homework

@@ -47,7 +47,9 @@ class HomeworksController < ApplicationController
   def new
     @homework = Homework.new
     @homework_student_upload_requirement = HomeworkRequirement.new
-    
+    @teacher_attachments ||= []
+    @requirements ||=[]
+
     # ËùÓÐ¿Î³Ì
     @courses = Course.all
     
