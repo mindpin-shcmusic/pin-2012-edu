@@ -1,8 +1,20 @@
 class PublicResource < ActiveRecord::Base
+  class Kind
+    UPLOAD = "UPLOAD"
+    LINK = "LINK"
+  end
   belongs_to :file_entity
   belongs_to :media_resource
   belongs_to :creator, :class_name  => 'User', :foreign_key => 'creator_id'
   belongs_to :category
+
+  def is_upload?
+    self.kind == PublicResource::Kind::UPLOAD
+  end
+
+  def is_share?
+    self.kind == PublicResource::Kind::LINK
+  end
 
 
   def self.upload_by_user(user, file)
@@ -11,7 +23,7 @@ class PublicResource < ActiveRecord::Base
       :creator => user,
       :file_entity => file_entity,
       :name => file_entity.attach_file_name,
-      :kind => 'UPLOAD'
+      :kind => PublicResource::Kind::UPLOAD
     )
   end
 
@@ -21,11 +33,11 @@ class PublicResource < ActiveRecord::Base
     def self.included(base)
       base.has_many :shared_public_resources, 
                     :class_name => 'PublicResource', :foreign_key => :creator_id,
-                    :conditions => lambda { "kind = 'LINK'" }
+                    :conditions => lambda { "kind = '#{PublicResource::Kind::LINK}'" }
 
       base.has_many :uploaded_public_resources, 
                     :class_name => 'PublicResource', :foreign_key => :creator_id,
-                    :conditions => lambda { "kind = 'UPLOAD'" }
+                    :conditions => lambda { "kind = '#{PublicResource::Kind::UPLOAD}'" }
 
  
       base.send(:include, InstanceMethods)
@@ -60,7 +72,7 @@ class PublicResource < ActiveRecord::Base
           :creator => self.creator,
           :media_resource => self,
           :name => self.name,
-          :kind => 'LINK'
+          :kind => PublicResource::Kind::LINK
         )
 
         public_resource.id

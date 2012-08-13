@@ -1,0 +1,10 @@
+- categories.each do |category|
+  - resources = PublicResource.where(:category_id=>category.id)
+  - if !resources.blank?
+    - resources.each do |resource|
+      = resource.name
+  .category
+    = category.name
+  .children
+    = render 'category_list', :categories => category.children
+

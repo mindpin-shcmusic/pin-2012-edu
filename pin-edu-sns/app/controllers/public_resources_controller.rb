@@ -1,10 +1,6 @@
 class PublicResourcesController < ApplicationController
   # 公共资源列表
   def index
-    @shared_resources = current_user.shared_public_resources
-
-    @uploaded_resources = current_user.uploaded_public_resources
-
   end
 
   # 分享到公共资源

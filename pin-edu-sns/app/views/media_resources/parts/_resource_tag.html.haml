@@ -1,0 +1,12 @@
+.tag-list
+  .title{:style=>"float:left;"}
+    标签:
+  .values{:style=>"float:left;",:"data-value"=>@media_resource.tag_list.join(",")}
+    - @media_resource.tag_list.each do |tag_name|
+      = link_to tag_name, "/tags/#{tag_name}"
+  = link_to "修改", 'javascript:;',:style=>"font-size:12px;",:class=>"edit-tag-form-button"
+.edit-tag-form.hide
+  = text_field_tag :tag, @media_resource.tag_list * ",",:class=>"tag_names",:'data-url'=> File.join('/file_attr', @media_resource.path,'update_tag')
+  = link_to '确定', 'javascript:;', :class => 'submit'
+  = link_to '取消', 'javascript:;', :class => 'cancel'
+      
