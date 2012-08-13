@@ -139,4 +139,5 @@ class Homework < ActiveRecord::Base
     end
   end
   include HomeworkAssignRule::HomeworkMethods
+  include Comment::CommentableMethods
 end
