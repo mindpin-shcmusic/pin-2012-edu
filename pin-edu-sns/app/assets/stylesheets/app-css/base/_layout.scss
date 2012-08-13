@@ -46,6 +46,21 @@ body{
     background-color:rgba(#333, 0.8);
     padding-left:240px + 20px;
     z-index:10;
+
+    a.logout{
+      float:right;
+      margin-top:13px;
+      margin-right:20px;
+      height:24px;line-height:24px;
+      background-color:rgba(white, 0.3);
+      color:white;
+      @include border-radius(3px);
+      padding:0 10px;
+      &:hover{
+        background-color:rgba(white, 0.4);
+      }
+    }
+
   }
   .page-content{
     margin-top:60px;
