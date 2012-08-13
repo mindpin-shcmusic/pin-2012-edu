@@ -156,6 +156,10 @@ MindpinEduSns::Application.routes.draw do
   get    '/file_attr/*path/edit_tag' => 'media_resources#edit_tag'
   post   '/file_attr/*path/update_tag' => 'media_resources#update_tag'
   post   '/file_attr/*path/re_encode'  => 'media_resources#re_encode'
+  get    '/tags/:tag_name'             => 'media_resources#tag_resources'
+  get    '/tags/:tag_name/mine'        => 'media_resources#tag_resources_mine'
+  get    '/tags/:tag_name/public'      => 'media_resources#tag_resources_public'
+  get    '/tags/:tag_name/shared'      => 'media_resources#tag_resources_shared'
 
   get  'file_show/*path' => 'media_resources#file_show', :format => false
 

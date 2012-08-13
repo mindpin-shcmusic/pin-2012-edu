@@ -46,7 +46,7 @@ pie.load ->
 
 # 资源查看 -> 分享资源到公共资源库
 pie.load ->
-  jQuery(document).delegate '.page-media-resource .public-resource a', 'click', ->
+  jQuery(document).delegate '.page-media-resource .public-resource .add-public a', 'click', ->
     jQuery.ajax
       type: 'POST'
       url : jQuery(this).data('url')
@@ -54,4 +54,5 @@ pie.load ->
         $state = jQuery(this).closest('.share-state')
         $state
           .find('.add-public').hide().end()
-          .find('.added').show()
+          .find('.added').show().end()
+          .find('.set-category').show()

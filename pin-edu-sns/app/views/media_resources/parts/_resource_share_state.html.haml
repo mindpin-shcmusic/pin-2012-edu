@@ -9,6 +9,11 @@
     - if resource.is_public?
       .added 已经加入公共资源库
       .add-public{:style=>'display:none;'}= link_to '加入公共资源库', 'javascript:;', :data=>{:url=>share_public_path}
+      .set-category= link_to "设置公共资源分类","javascript:;"
     - else
       .added{:style=>'display:none;'} 已经加入公共资源库
       .add-public= link_to '加入公共资源库', 'javascript:;', :data=>{:url=>share_public_path}
+      .set-category{:style=>'display:none;'}= link_to "设置公共资源分类","javascript:;"
+
+%ul#tree.treeview
+  = render "media_resources/parts/category_list",:categories=>Category.roots

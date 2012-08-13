@@ -53,6 +53,7 @@ class MediaResource < ActiveRecord::Base
   scope :ops_order, order('fileops_time ASC')
   scope :web_order, order('is_dir DESC, name ASC')
   scope :of_creator, lambda{|user| where(:creator_id => user.id)}
+  scope :public_share, joins("inner join public_resources on public_resources.media_resource_id = media_resources.id")
 
   def is_file?
     !is_dir?

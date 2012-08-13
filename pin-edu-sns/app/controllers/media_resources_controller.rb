@@ -80,9 +80,9 @@ class MediaResourcesController < ApplicationController
   def update_tag
     resource_path = "/#{params[:path]}"
     @media_resource = MediaResource.get(current_user, resource_path)
-    @media_resource.tag_list = params[:tag]
+    @media_resource.tag_list = params[:tag_names]
     @media_resource.save
-    redirect_to File.join('/file',File.dirname(resource_path))
+    render :json=>@media_resource.tags.map{|tag|tag.name}
   end
 
   def file_show
@@ -95,6 +95,21 @@ class MediaResourcesController < ApplicationController
     @media_resource = MediaResource.get(current_user, resource_path)
     @media_resource.file_entity.into_video_encode_queue
     render :text=>"200"
+  end
+
+  def tag_resources
+  end
+  
+  def tag_resources_mine
+    @media_resources = MediaResource.tagged_with(params[:tag_name]).of_creator(current_user)
+  end
+
+  def tag_resources_public
+    @media_resources = MediaResource.tagged_with(params[:tag_name]).public_share
+  end  
+
+  def tag_resources_shared
+    @media_resources = current_user.received_shared_media_resources.tagged_with(params[:tag_name])
   end
 
 end

@@ -16,7 +16,6 @@
   = render 'media_resources/parts/resource_preview', :resource=>@media_resource
   = render 'media_resources/parts/resource_share_state', :resource=>@media_resource
 
-  .edit.hide
-    = render :template => 'media_resources/edit_tag'
+  = render 'media_resources/parts/resource_tag', :resource=>@media_resource
 
 = jcomments @media_resource
