@@ -25,6 +25,7 @@
       .page-breadcrumb
         = yield :breadcrumb
       = yield :topbar
+      %a.logout{:href=>'/auth/logout'} 退出登录
 
     .page-content
       = yield

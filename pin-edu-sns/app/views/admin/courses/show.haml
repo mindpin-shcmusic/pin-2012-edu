@@ -39,7 +39,7 @@
   .field.students-count
     %label 课程学生名单
     .v 总共 #{students.count} 个学生
-    .assign= link_to "给班级指定学生", "/admin/courses/#{@course.id}/select_students"
+    .assign= link_to "给课程分配学生", "/admin/courses/#{@course.id}/select_students"
 
   - students.each do |student|
     .field.student

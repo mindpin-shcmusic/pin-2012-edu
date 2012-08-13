@@ -13,33 +13,33 @@
     .meta
       .name=@user.name
       .role=role_str
-      
-  .userpage-statuses
-    -if @user == current_user
-      =flash[:error]
-      =form_tag "/teams/#{Team.first.id}/statuses",:method=>:post do
-        .field
-          %label 说点什么
-          =text_area_tag "content"
-        .field
-          %a.form-submit-button{:href=>'javascript:;'} 发送
-      
-    .statuses
-      -@statuses.each do |status|
-        :ruby
-          creator = status.creator
-          repost = status.repost
-        .status
-          .avatar=avatar creator
-          .ct
-            #{userlink creator}：#{status.content}
-            -if !repost.blank?
-              .repost
-                #{repost.creator.name}：#{repost.content}
-            -#%span=link_to "转发","/statuses/#{status.id}/repost"
+
+.team
+  - if is_student
+    所属班级
+    = link_to @user.student_team.name, 'javascript:;'
+  - elsif is_teacher
+    负责的班级
+    %ul
+      - @user.teacher_teams.each do |team|
+        %li= team.name
+
+.courses
+  = link_to '课程列表', 'javascript:;'
+  %ul
+    - @user.courses.each do |course|
+      %li= course.name
+
+- unless current_user == @user
+  .sharing-with-you
+    该用户分享给您的文件
+    %ul
+      - @user.media_resources.shared_with(current_user) do |resource|
+        = link_to resource.name, "/file_show/#{resource.name}"
 
 
-
-
-        
-
+  .public-resources
+    该用户的公共资源
+    %ul
+      - @user.public_resources do |public_resource|
+        = link_to public_resource.media_resource.name, "/file_show/#{public_resource.media_resource.namexs}"

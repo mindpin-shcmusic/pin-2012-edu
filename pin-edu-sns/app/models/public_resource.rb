@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class PublicResource < ActiveRecord::Base
   class Kind
     UPLOAD = "UPLOAD"
@@ -40,6 +41,10 @@ class PublicResource < ActiveRecord::Base
                     :conditions => lambda { "kind = '#{PublicResource::Kind::UPLOAD}'" }
 
  
+      base.has_many :public_resources,
+                    :class_name  => 'User',
+                    :foreign_key => 'creator_id'
+
       base.send(:include, InstanceMethods)
     end
 

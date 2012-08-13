@@ -12,6 +12,7 @@ class HomeworkStudentUpload < ActiveRecord::Base
   belongs_to :file_entity
   belongs_to :homework
 
+  include Comment::CommentableMethods
   # --- 给其他类扩展的方法
   module UserMethods
     def self.included(base)

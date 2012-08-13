@@ -30,13 +30,16 @@
         - current_upload = attachment.upload_of_user(@student)
         %span 已提交
         %a{:href => "#{current_upload.file_entity.attach.url}"} 下载
+        = jcomments current_upload
       - else
         %span 未提交
+
+
 
 %p
   %a{:href => "/homeworks/#{@homework.id}/student/#{@student.id}/download_student_zip"} zip包下载
 
-- unless @homework.has_finished_for?(@student.student)
+- if @homework.has_finished_for?(@student.student) && current_user == @homework.creator
   .set-finished
     %h3 验收作业
     = link_to '标记为已验收', 'javascript:;', :data => {:url => "/homeworks/#{@homework.id}/student/#{@student.id}/set_finished"}

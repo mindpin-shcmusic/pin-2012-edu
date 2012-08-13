@@ -51,13 +51,13 @@ class Admin::CoursesController < ApplicationController
   
   def show
   end
-  
-  def select_teacher
+
+  def select_students
   end
   
-  def set_teacher
-    @course.teacher = Teacher.find(params[:course][:teacher_id])
-    @course.save
+  def set_students
+    student_ids = params[:student_ids].split(',')
+    @course.student_ids = student_ids
     redirect_to "/admin/courses/#{@course.id}"
   end
 

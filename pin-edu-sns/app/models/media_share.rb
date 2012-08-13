@@ -47,7 +47,14 @@ class MediaShare < ActiveRecord::Base
       base.has_many :media_shares
       base.has_many :shared_receivers, :through => :media_shares, :source => :receiver
 
+      base.send(:extend, ClassMethods)
       base.send(:include, InstanceMethods)
+    end
+
+    module ClassMethods
+      def shared_with(user)
+        joins(:media_shares).where('media_shares.receiver_id = ?', user.id)
+      end
     end
 
     module InstanceMethods

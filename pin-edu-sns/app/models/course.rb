@@ -68,7 +68,19 @@ class Course < ActiveRecord::Base
 
     module InstanceMethods
       def courses
-        Course.joins(:teacher, :students).where('teachers.user_id = :id or students.user_id = :id', :id => self.id)
+        if self.is_teacher?
+          self.teacher.courses
+        elsif self.is_student?
+          self.student.courses
+        end
+      end
+
+      def courses=(courses)
+        if self.is_teacher?
+          self.teacher.courses = courses
+        elsif self.is_student?
+          self.student.courses = courses
+        end
       end
     end
   end

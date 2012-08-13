@@ -38,21 +38,6 @@ MindpinEduSns::Application.routes.draw do
         post :import_from_csv
       end
     end
-    resources :courses do
-      member do
-        get :select_teacher
-        put :set_teacher
-        get :upload_image_page
-        post :upload_image
-        get :select_cover_page
-        post :select_cover
-      end
-      collection do
-        get :search
-        get :import_from_csv_page
-        post :import_from_csv
-      end
-    end
     resources :students do
       collection do
         get :search
@@ -60,14 +45,30 @@ MindpinEduSns::Application.routes.draw do
         post :import_from_csv
       end
     end
-    resources :teams do
+
+    resources :courses do
       member do
-        get :select_students
-        put :set_students
+        get  :select_students
+        put  :set_students
+        get  :upload_image_page
+        post :upload_image
+        get  :select_cover_page
+        post :select_cover
       end
       collection do
-        get :search
-        get :import_from_csv_page
+        get  :search
+        get  :import_from_csv_page
+        post :import_from_csv
+      end
+    end
+    resources :teams do
+      member do
+        get  :select_students
+        put  :set_students
+      end
+      collection do
+        get  :search
+        get  :import_from_csv_page
         post :import_from_csv
       end
     end

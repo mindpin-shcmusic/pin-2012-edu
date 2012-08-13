@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 class Teacher < ActiveRecord::Base
   belongs_to :user
+  has_many   :courses
   
   validates :real_name, :presence => true
   validates :tid, :uniqueness => { :if => Proc.new { |teacher| !teacher.tid.blank? } }
