@@ -1,4 +1,4 @@
-# -*- coding: gb2312 -*-
+# encoding: utf-8
 class HomeworksController < ApplicationController
   before_filter :pre_load_teacher, :except => [:show, :index, :student, :create_student_upload, :download_teacher_zip]
   before_filter :login_required
@@ -50,23 +50,36 @@ class HomeworksController < ApplicationController
     @teacher_attachments ||= []
     @requirements ||=[]
 
-    # ËùÓĞ¿Î³Ì
+    # æ‰€æœ‰è¯¾ç¨‹
     @courses = Course.all
     
-    # °à¼¶ÁĞ±í
+    # ç­çº§åˆ—è¡¨
     @teams = Team.where(:teacher_id => current_user.id)
   end
 
   def index
     if params[:status] == 'deadline'
       @homeworks = current_user.deadline_homeworks
-    elsif params[:status] == 'undeadline'
-      @homeworks = current_user.undeadline_homeworks
-    elsif current_user.is_teacher?
-      @homeworks = current_user.homeworks
-    elsif current_user.is_student?
-      @homeworks = current_user.student_homeworks
+      return
     end
+
+    if params[:status] == 'undeadline'
+      @homeworks = current_user.undeadline_homeworks
+      return
+    end
+
+    if current_user.is_teacher?
+      @homeworks = current_user.homeworks
+      return
+    end
+
+    if current_user.is_student?
+      @homeworks = current_user.student_homeworks
+      return
+    end
+
+    render :text=>'å½“å‰ç”¨æˆ·æ—¢ä¸æ˜¯è€å¸ˆä¹Ÿä¸æ˜¯å­¦ç”Ÿï¼Œæ— æ³•æŸ¥çœ‹ä½œä¸š'
+
   end
   
   def show
@@ -78,10 +91,10 @@ class HomeworksController < ApplicationController
     @homework_student_upload_requirements = HomeworkRequirement.where(:homework_id => @homework.id)
     @teacher_attachments = HomeworkTeacherAttachment.where(:homework_id => @homework.id)
 
-    # ËùÓĞ¿Î³Ì
+    # æ‰€æœ‰è¯¾ç¨‹
     @courses = Course.all
     
-    # °à¼¶ÁĞ±í
+    # ç­çº§åˆ—è¡¨
     @teams = Team.all
     @selected_teams = @homework.homework_assign_rule.expression[:teams].map(&:to_i)
     @requirements = HomeworkRequirement.where(:homework_id => @homework.id)
@@ -111,7 +124,7 @@ class HomeworksController < ApplicationController
     redirect_to :back
   end
 
-  # ÀÏÊ¦²é¿´¾ßÌåÄ³Ò»Ñ§Éú×÷ÒµÒ³Ãæ
+  # è€å¸ˆæŸ¥çœ‹å…·ä½“æŸä¸€å­¦ç”Ÿä½œä¸šé¡µé¢
   def student
     unless (current_user.is_teacher? || current_user.id == params[:user_id].to_i)
       return redirect_to '/'
@@ -123,7 +136,7 @@ class HomeworksController < ApplicationController
   def download_teacher_zip
     homework = Homework.find(params[:id])
     
-    # Éú³ÉÀÏÊ¦ÉÏ´«µÄ¸½¼şÑ¹Ëõ°ü
+    # ç”Ÿæˆè€å¸ˆä¸Šä¼ çš„é™„ä»¶å‹ç¼©åŒ…
     homework.build_teacher_attachments_zip(homework.creator)
     
     send_file "/MINDPIN_MRS_DATA/attachments/homework_attachments/homework_teacher#{homework.creator.id}_#{homework.id}.zip"
