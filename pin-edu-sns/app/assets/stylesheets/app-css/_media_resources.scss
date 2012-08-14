@@ -354,12 +354,34 @@
         height:30px;line-height:30px;
         padding:0 14px;
       }
-      .add-public{
-        a{
-          @include mini-button;
-          @include gradient(#FDA034, #FF8201);
-          &:hover{@include gradient(lighten(#FDA034, 10%), lighten(#FF8201, 10%));}
+      a.add-public{
+        @include mini-button;
+        @include gradient(#FDA034, #FF8201);
+        &:hover{@include gradient(lighten(#FDA034, 10%), lighten(#FF8201, 10%));}
+      }
+      a.set-category{
+        float:left;
+        margin-left:20px;
+        @include mini-button;
+        @include gradient(#FDA034, #FF8201);
+        &:hover{@include gradient(lighten(#FDA034, 10%), lighten(#FF8201, 10%));} 
+      }
+
+      &.added{
+        a.add-public{
+          display:none;
         }
+      }
+      &.unadd{
+        .added,a.set-category{
+          display:none;
+        }
+      }
+      .submit-selected-category a{
+        margin:20px 0 0 20px;
+        @include mini-button;
+        @include gradient(#FDA034, #FF8201);
+        &:hover{@include gradient(lighten(#FDA034, 10%), lighten(#FF8201, 10%));} 
       }
     }
   }

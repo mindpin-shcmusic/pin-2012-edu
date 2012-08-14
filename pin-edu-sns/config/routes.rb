@@ -197,6 +197,7 @@ MindpinEduSns::Application.routes.draw do
       post :share
       put :upload
       get :search
+      get :categories
     end
   end
 

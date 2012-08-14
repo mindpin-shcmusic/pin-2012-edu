@@ -7,7 +7,8 @@ class PublicResourcesController < ApplicationController
   # for ajax
   def share
     current_resource = MediaResource.find(params[:resource_id])
-    public_resource_id = current_resource.share_public
+    category = Category.find_by_id(params[:category_id])
+    public_resource_id = current_resource.share_public(category)
     render :text => 'ok'
   end
 
@@ -58,5 +59,9 @@ class PublicResourcesController < ApplicationController
 
   end
 
+  def categories
+    current_resource = MediaResource.find(params[:resource_id])
+    render :json=>Category.dynatree_data(current_resource.category_of_shared_public_resource)
+  end
 
 end
