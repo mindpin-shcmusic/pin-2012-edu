@@ -46,13 +46,25 @@ pie.load ->
 
 # 资源查看 -> 分享资源到公共资源库
 pie.load ->
-  jQuery(document).delegate '.page-media-resource .public-resource .add-public a', 'click', ->
-    jQuery.ajax
-      type: 'POST'
-      url : jQuery(this).data('url')
-      success: (res)=>
-        $state = jQuery(this).closest('.share-state')
-        $state
-          .find('.add-public').hide().end()
-          .find('.added').show().end()
-          .find('.set-category').show()
+  $public_resource = jQuery('.page-media-resource .share-state .public-resource')
+  jQuery(document).delegate '.page-float-box[data-jfbox-id=set_category]', 'mindpin:open-fbox', ->
+    if "" == jQuery('.dynatree').text()
+      jQuery.ajax
+        type: 'GET'
+        url : $public_resource.data('categories_url')
+        success: (res)=>
+          console.log(res)
+          jQuery('.dynatree').dynatree
+            children: res
+
+  jQuery(document).delegate '.page-media-resource .share-state .public-resource .submit-selected-category', 'click', ->
+    $node = jQuery('.dynatree').dynatree("getActiveNode")
+    if null != $node
+      jQuery.ajax
+        type: 'POST'
+        url: $public_resource.data('share_url')
+        data:
+          category_id: $node.data.id
+        success:(res)=>
+          $public_resource.addClass("added").removeClass("unadd").end()
+          pie.close_fbox("set_category")

@@ -20,12 +20,14 @@
 @import 'mindpin-scss/coderay';
 @import 'mindpin-scss/flash_info';
 @import 'mindpin-scss/paginate';
+@import 'mindpin-scss/floatbox';
 
 
 // this app
 // ------------------
 @import 'app-css/base/override';
 @import 'app-css/base/layout';
+@import 'app-css/ui.dynatree';
 // @import 'app-css/base/mixins';
 
 @import 'app-css/media_resources';
