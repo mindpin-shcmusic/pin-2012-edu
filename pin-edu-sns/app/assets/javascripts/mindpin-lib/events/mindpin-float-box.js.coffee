@@ -9,7 +9,7 @@ pie.load ->
     pie.show_page_overlay()
     $box.delay(200).fadeIn(200)
 
-    jQuery(document).trigger('mindpin:open-fbox')
+    $box.trigger "mindpin:open-fbox"
 
   jQuery(document).delegate '.page-float-box a.box-close', 'click', ->
     $box = jQuery(this).closest('.page-float-box')
@@ -17,4 +17,4 @@ pie.load ->
     $box.fadeOut 200, ->
       pie.hide_page_overlay()
 
-    jQuery(document).trigger('mindpin:close-fbox')
+    $box.trigger "mindpin:close-fbox"
