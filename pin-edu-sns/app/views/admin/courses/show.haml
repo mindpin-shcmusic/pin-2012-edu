@@ -21,10 +21,10 @@
     .v= @course.location
   .field.teacher
     %label 教师
-    - if @course.teacher.blank?
+    - if @course.teacher_user.blank?
       .v.quiet 未指定
     - else
-      .v= @course.teacher.real_name
+      .v= @course.teacher_user.teacher.real_name
   .field.desc
     %label 备注
     .v= @course.desc
@@ -34,18 +34,18 @@
   .field.select-cover
     = link_to '选择课程封面图片', "/admin/courses/#{@course.id}/select_cover_page"
 
-- students = @course.students
+- student_users = @course.student_users
 .page-admin-model-show
   .field.students-count
     %label 课程学生名单
-    .v 总共 #{students.count} 个学生
+    .v 总共 #{student_users.count} 个学生
     .assign= link_to "给课程分配学生", "/admin/courses/#{@course.id}/select_students"
 
-  - students.each do |student|
+  - student_users.each do |student_user|
     .field.student
-      .avatar= avatar student.user, :mini
-      .name= student.real_name
-      .show= link_to '查看信息', [:admin, student]
+      .avatar= avatar student_user, :mini
+      .name= student_user.student.real_name
+      .show= link_to '查看信息', [:admin, student_user]
 
 .page-admin-go-back= link_to '返回列表页', '/admin/courses'
 .page-admin-edit= link_to '编辑修改', "/admin/courses/#{@course.id}/edit"
