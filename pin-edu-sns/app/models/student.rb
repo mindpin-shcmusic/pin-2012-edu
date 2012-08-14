@@ -2,23 +2,6 @@
 class Student < ActiveRecord::Base
   belongs_to :user
 
-  has_many :homework_assigns
-  
-  # 学生所有被分配作业
-  has_many :homeworks, :through => :homework_assigns
-      
-  # 学生未过期作业
-  has_many :undeadline_student_homeworks,
-           :through => :homework_assigns,
-           :source => :homework,
-           :conditions => ['homeworks.deadline > ?', Time.now] 
-
-  # 学生已过期作业
-  has_many :deadline_student_homeworks,
-           :through => :homework_assigns,
-           :source => :homework,
-           :conditions => ['homeworks.deadline <= ?', Time.now]
-
   has_many :course_students
   has_many :courses,
            :through => :course_students

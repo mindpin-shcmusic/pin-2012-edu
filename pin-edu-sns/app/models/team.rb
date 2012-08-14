@@ -1,16 +1,20 @@
 # -*- coding: utf-8 -*-
 class Team < ActiveRecord::Base
-  
-  belongs_to :teacher
-  
+  belongs_to :teacher_user,
+             :class_name  => 'User',
+             :foreign_key => :teacher_user_id
+
   has_many :team_students
-  has_many :students, :through => :team_students
-  
+
+  has_many :student_users,
+           :through => :team_students,
+           :source  => :student_user
+
   validates :name, :presence => true
   validates :cid, :uniqueness => { :if => Proc.new { |team| !team.cid.blank? } }
 
   def get_user_ids
-    [students, teacher].flatten.map(&:user_id).sort
+    [student_users, teacher_user].flatten.map(&:id).sort
   end
 
   def get_users
@@ -31,18 +35,16 @@ class Team < ActiveRecord::Base
 
   module UserMethods
     def self.included(base)
-      base.send :include, InstanceMethods
+      base.has_many :teacher_teams,
+                    :class_name  => 'Team',
+                    :foreign_key => :teacher_user_id
+
+      base.has_one  :team_student, :foreign_key => :student_user_id
+      base.has_one  :student_team,
+                    :through => :team_student,
+                    :source  => :team
     end
 
-    module InstanceMethods
-      def student_team
-        Team.joins(:students).where('students.user_id = ?', self.id).first
-      end
-
-      def teacher_teams
-        Team.where(:teacher_id => self.id)
-      end
-    end
   end
 
   include ModelRemovable

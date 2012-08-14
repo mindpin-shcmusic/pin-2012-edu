@@ -17,7 +17,7 @@ class HomeworkStudentUpload < ActiveRecord::Base
   module UserMethods
     def self.included(base)
       base.has_many :homework_student_uploads,
-                    :class_name => 'HomeworkStudentUpload',
+                    :class_name  => 'HomeworkStudentUpload',
                     :foreign_key => 'creator_id'
 
       base.send(:include, InstanceMethods)
@@ -30,19 +30,14 @@ class HomeworkStudentUpload < ActiveRecord::Base
 
       # 学生是否提交作业附件
       def is_uploaded_for_requirement?(requirement)
-        !self.upload_for_requirement(requirement).nil?
+        !self.upload_for_requirement(requirement).blank?
       end
       
       # 学生上传作业提交物的数量
       # 参数 homework 是一个实例变量
       def uploaded_count_of_homework(homework)
-        count = 0
-        homework.homework_requirements.each do |attachment|
-          count += 1 if HomeworkStudentUpload.where(:creator_id => self.id, :requirement_id => attachment.id).exists?
-        end
-        return count
+        self.homework_student_uploads.where(:homework_id => homework.id).count
       end
-      
     end
   end
 end

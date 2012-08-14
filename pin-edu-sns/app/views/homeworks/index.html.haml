@@ -19,7 +19,7 @@
         has_attach = !homework.homework_teacher_attachments.blank?
         course = homework.course
 
-        assigned_students = homework.assigned_students
+        assigned_students = homework.assignees
         submitted_students = homework.submitted_students
 
       .homework
