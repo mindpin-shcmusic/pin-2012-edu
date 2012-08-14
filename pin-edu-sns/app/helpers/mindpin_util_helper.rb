@@ -8,6 +8,7 @@ module MindpinUtilHelper
     base.send(:include, ImageMethods)
     base.send(:include, TimeMethods)
     base.send(:include, CommentMethods)
+    base.send(:include, FloatBoxMethods)
   end
 
   module LayoutMethods
@@ -201,5 +202,47 @@ module MindpinUtilHelper
     def jcomments(model)
       render 'aj/comments', :model => model
     end
+  end
+
+  module FloatBoxMethods
+    def jfbox(jfbox_id, title, options = {}, &block)
+      width = options[:width] || 640
+      height = options[:height] || 400
+
+      style =
+        'display:none;' +
+        "width:#{width}px;" + 
+        "height:#{height}px;" +
+        "margin-left:-#{width/2}px;" +
+        "margin-top:-#{height/2}px"
+
+      tag_close = 
+        content_tag :a, '×', 
+                    :href => 'javascript:;',
+                    :class => 'box-close'
+      tag_title = 
+        content_tag :div, title, 
+                    :class => 'box-title'
+
+      tag_body =
+        content_tag :div, :class => 'box-body' do
+          yield
+        end
+
+      content_tag :div, 
+                  :'data-jfbox-id' => jfbox_id,
+                  :class => 'page-float-box',
+                  :style => style do
+        tag_close + tag_title + tag_body
+      end
+    end
+
+    def jfbox_link(jfbox_id, text, options ={})
+      klass = ['page-float-box-link', options[:class]] * ' '
+
+      link_to text, 'javascript:;', :class => klass,
+                                    :'data-jfbox-id' => jfbox_id
+    end
+
   end
 end
