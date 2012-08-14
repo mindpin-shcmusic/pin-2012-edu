@@ -1,5 +1,8 @@
-.page-media-resource-head
-  = render 'media_shares/parts/search_bar'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '我收到的共享'
+
+- content_for :topbar do
+  = jsearchbar '/media_shares/search'
 
 = render 'media_shares/parts/nav'
 = render 'media_shares/parts/file_list', :resources => @received_resources

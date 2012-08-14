@@ -1,5 +1,14 @@
 # -*- coding: utf-8 -*-
 class MediaSharesController < ApplicationController
+
+  def index
+    @received_resources = current_user.received_shared_media_resources
+
+    # 共享给我的用户列表
+    @shared_users = current_user.shared_res_users
+    UserShareTipMessage.clear current_user
+  end
+
   def new
     resource_path = params[:resource_path].sub('/file', '')
     @current_dir = MediaResource.get(current_user, resource_path)
@@ -16,14 +25,6 @@ class MediaSharesController < ApplicationController
     media_resource.share_to_expression params[:receivers].to_json
 
     redirect_to params[:resource_path].split(/\//)[0..-2].join('/')
-  end
-
-  def mine
-    @received_resources = current_user.received_shared_media_resources
-
-    # 共享给我的用户列表
-    @shared_users = current_user.shared_res_users
-    UserShareTipMessage.clear current_user
   end
 
   # 分享给其它用户目录

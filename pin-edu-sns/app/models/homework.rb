@@ -11,6 +11,7 @@ class Homework < ActiveRecord::Base
   accepts_nested_attributes_for :homework_requirements
 
   has_many :homework_assigns
+  accepts_nested_attributes_for :homework_assigns
 
   has_many :assigned_students,
            :through => :homework_assigns,
@@ -34,7 +35,6 @@ class Homework < ActiveRecord::Base
   # 老师创建作业时上传的附件
   has_many :homework_teacher_attachments
   
-  accepts_nested_attributes_for :homework_assigns
   
   # --- 校验方法
   validates :title, :content, :presence => true

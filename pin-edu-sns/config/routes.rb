@@ -171,12 +171,11 @@ MindpinEduSns::Application.routes.draw do
 
   resources :media_shares do
     collection do
-      get :mine
       get :search
     end
   end
-  get    '/media_shares/user/:id/file/*path' => 'media_shares#share'
-  get    '/media_shares/shared_by/:user_id'  => 'media_shares#shared_by'
+  get '/media_shares/user/:id/file/*path' => 'media_shares#share'
+  get '/media_shares/shared_by/:user_id'  => 'media_shares#shared_by'
 
 
 
