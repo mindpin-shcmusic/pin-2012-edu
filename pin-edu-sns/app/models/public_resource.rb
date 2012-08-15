@@ -9,6 +9,9 @@ class PublicResource < ActiveRecord::Base
   belongs_to :creator, :class_name  => 'User', :foreign_key => 'creator_id'
   belongs_to :category
 
+  scope :of_category, lambda{|category| where(:category_id => category.id)}
+  scope :no_category, where(:category_id=>nil)
+
   def is_upload?
     self.kind == PublicResource::Kind::UPLOAD
   end
