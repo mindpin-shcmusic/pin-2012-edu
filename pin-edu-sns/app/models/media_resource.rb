@@ -49,6 +49,7 @@ class MediaResource < ActiveRecord::Base
 
   # --------
 
+  scope :dir_res, where(:is_dir => true)
   scope :root_res, where(:dir_id => 0)
   scope :ops_order, order('fileops_time ASC')
   scope :web_order, order('is_dir DESC, name ASC')
@@ -210,6 +211,63 @@ class MediaResource < ActiveRecord::Base
         :reset    => false,
         :cursor   => new_cursor,
         :has_more => has_more
+      }
+    end
+  end
+
+  def self_and_ancestors
+    resources = [self]
+    loop do
+      resource = resources.first.dir
+      break if resource.blank?
+      resources.unshift(resource)
+    end
+    resources
+  end
+
+  def self.root_dynatree(user)
+    root_resources = user.media_resources.root_res.dir_res
+    [{
+      :title => '根目录', :isFolder => true, :activate => true, :id => 0,
+      :children=>_preload_dynatree(root_resources,[]), :expand => true
+    }]
+  end
+
+  def preload_dynatree
+    root_resources = self.creator.media_resources.root_res.dir_res
+    ancestor_resources = self_and_ancestors-[self]
+    children = self.class._preload_dynatree(root_resources,ancestor_resources,self)
+    [{
+      :title => '根目录', :isFolder => true, :activate => true, :id => 0,
+      :children=>children, :expand => true
+    }]
+  end
+
+  def self._preload_dynatree(resources,ancestor_resources,current_resource = nil)
+    resources.map do |resource|
+      child_resources = resource.media_resources.dir_res
+      isLazy = child_resources.blank? ? false : true
+      children = ancestor_resources.include?(resource) ? _preload_dynatree(child_resources,ancestor_resources,current_resource) : []
+      activate = resource == current_resource ? true : false
+      expand = ancestor_resources.include?(resource) ? true : false
+
+      {
+        :title => resource.name, :id => resource.id,
+        :isFolder => true, :children => children,
+        :expand => expand, :activate => activate, :isLazy => isLazy
+      }
+    end
+  end
+
+  def lazyload_sub_dynatree(move_media_resource)
+    return [] if move_media_resource == self
+    child_resources = self.media_resources.dir_res
+    child_resources.map do |resource|
+      isLazy = resource.media_resources.dir_res.blank? ? false : true
+      isLazy = false if move_media_resource == resource
+      {
+        :title => resource.name, :id => resource.id,
+        :isFolder => true, :isLazy => isLazy
       }
     end
   end
