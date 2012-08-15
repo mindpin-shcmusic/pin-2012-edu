@@ -43,6 +43,24 @@
 
       = render 'layouts/parts/current_user_js_info'
 
+    - if logged_in?
+      :javascript
+        window.USER_INFO = {
+          id : #{current_user.id},
+          name : #{current_user.name.to_json},
+          email : #{current_user.email.to_json},
+          channels : {
+            comment : #{current_user.comment_tip_message.hash_name.to_json},
+            media_share : #{current_user.media_share_tip_message.hash_name.to_json},
+            share_rate : #{current_user.share_rate_tip_message.hash_name.to_json}
+          },
+          paths : {
+            comment : #{current_user.comment_tip_message.path.to_json},
+            media_share : #{current_user.media_share_tip_message.path.to_json},
+            share_rate : #{current_user.share_rate_tip_message.path.to_json}
+          }
+        }
+
       = javascript_include_tag "http://#{request.host}/juggernaut/application.js"
       = javascript_include_tag 'application'
       = yield :javascript
@@ -54,3 +72,4 @@
       .page-content
         .invalid-role 你的用户信息不完整，你不是一个老师或者学生。不能使用这个系统。
         .invalid-role 请联系管理员帮忙解决
+ 

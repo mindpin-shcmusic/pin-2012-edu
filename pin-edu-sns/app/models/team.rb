@@ -43,8 +43,18 @@ class Team < ActiveRecord::Base
       base.has_one  :student_team,
                     :through => :team_student,
                     :source  => :team
+      base.send(:include, InstanceMethods)
     end
 
+    module InstanceMethods
+      def teams
+        if self.is_student?
+          [self.student_team]
+        elsif self.is_teacher?
+          self.teacher_teams
+        end
+      end
+    end
   end
 
   include ModelRemovable
