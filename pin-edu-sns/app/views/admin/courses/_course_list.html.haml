@@ -37,11 +37,11 @@
       .t2= course.department
       .t2= course.location
       .t2
-        - if course.teacher.blank?
+        - if course.teacher_user.blank?
           %span.c.quiet 未指定
         - else
-          .ava= avatar course.teacher.user, :mini
-          %span.c= course.teacher.real_name
+          .ava= avatar course.teacher_user, :mini
+          %span.c= course.teacher_user.teacher.real_name
       .t3= course.desc
 
       .ops

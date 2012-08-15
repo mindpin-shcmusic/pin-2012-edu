@@ -1,13 +1,26 @@
 class PublicResourcesController < ApplicationController
   # 公共资源列表
   def index
+    if params[:category_id].blank?
+      @sub_categories = Category.roots
+      @public_resources = PublicResource.no_category
+      @navigation_categories = []
+    else
+      @category = Category.find(params[:category_id])
+      @sub_categories = @category.children
+      @public_resources = PublicResource.of_category(@category)
+      @navigation_categories = @category.self_and_ancestors
+      @parent_category = @category.parent
+    end
+    @items = @sub_categories + @public_resources
   end
 
   # 分享到公共资源
   # for ajax
   def share
     current_resource = MediaResource.find(params[:resource_id])
-    public_resource_id = current_resource.share_public
+    category = Category.find_by_id(params[:category_id])
+    public_resource_id = current_resource.share_public(category)
     render :text => 'ok'
   end
 
@@ -31,24 +44,6 @@ class PublicResourcesController < ApplicationController
     return send_file file_entity.attach.path
   end
 
-  # 目录下面的目录
-  def dir
-    resource_path = URI.decode(request.fullpath).sub(/\/public_resources\/user\/.*\/file/, "")
-
-    creator = User.find(params[:id])
-    current_resource = MediaResource.get(creator, resource_path)
-
-    if current_resource.is_dir?
-      @current_dir = current_resource
-      @media_resources = @current_dir.media_resources.web_order
-    end
-    
-    if current_resource.is_file?
-      return send_file current_resource.attach.path
-    end
-  end
-
-
   # 搜索公共资源
   def search
     @keyword = params[:keyword]
@@ -58,5 +53,9 @@ class PublicResourcesController < ApplicationController
 
   end
 
+  def categories
+    current_resource = MediaResource.find(params[:resource_id])
+    render :json=>Category.dynatree_data(current_resource.category_of_shared_public_resource)
+  end
 
 end

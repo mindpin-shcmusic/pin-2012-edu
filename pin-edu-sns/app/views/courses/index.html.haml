@@ -25,6 +25,6 @@
           = link_to c.location,
                     "/locations/#{c.location}"
         %td
-          = link_to c.teacher && c.teacher.real_name,
-                    c.teacher
+          = link_to c.teacher_user.teacher.real_name,
+                    c.teacher_user
 

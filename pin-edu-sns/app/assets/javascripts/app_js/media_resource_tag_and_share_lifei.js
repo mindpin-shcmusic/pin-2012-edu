@@ -49,9 +49,4 @@ pie.load(function(){
 
   });
 
-  // 设置 共享公共资源标签
-  // jQuery(document).delegate('.page-media-resource .public-resource .set-category a','click',function(){
-
-  // });
-  
 });

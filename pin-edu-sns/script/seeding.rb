@@ -50,9 +50,9 @@ ActiveRecord::Base.transaction do
 
     puts ">>>>>>>> seeding team-#{counter}: #{team[0].to_s}"
 
-    team = Team.create(:name     => team[0].to_s,
-                       :teacher  => teacher,
-                       :students => students)
+    team = Team.create(:name          => team[0].to_s,
+                       :teacher_user  => teacher.user,
+                       :student_users => students.map(&:user))
 
     puts ">>>>>>>> done! (#{time_consumed} seconds)"
 
@@ -62,9 +62,9 @@ ActiveRecord::Base.transaction do
   Teacher.all.reduce(0) {|counter, teacher|
     puts ">>>>>>>> seeding course-#{counter}: #{courses[counter]}"
 
-    Course.create(:name     => courses[counter],
-                  :teacher  => teacher,
-                  :students => Student.all[counter, 30])
+    Course.create(:name          => courses[counter],
+                  :teacher_user  => teacher.user,
+                  :student_users => Student.all[counter, 30].map(&:user))
 
     puts ">>>>>>>> done! (#{time_consumed} seconds)"
 

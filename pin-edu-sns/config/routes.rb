@@ -126,6 +126,7 @@ MindpinEduSns::Application.routes.draw do
   get 'homeworks/:homework_id/student/:user_id' => 'homeworks#student'
   get 'homeworks/:homework_id/student/:user_id/download_student_zip' => 'homeworks#download_student_zip'
   put 'homeworks/:homework_id/student/:user_id/set_finished' => 'homeworks#set_finished'
+  put 'homeworks/:homework_id/student/:user_id/set_submitted' => 'homeworks#set_submitted'
   delete 'homeworks/teacher_attachment/:id/destroy' => 'homeworks#destroy_teacher_attachment'
   delete 'homeworks/requirement/:id/destroy' => 'homeworks#destroy_requirement'
 
@@ -197,6 +198,7 @@ MindpinEduSns::Application.routes.draw do
       post :share
       put :upload
       get :search
+      get :categories
     end
   end
 

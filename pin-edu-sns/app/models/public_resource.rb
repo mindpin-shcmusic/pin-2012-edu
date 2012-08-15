@@ -9,6 +9,9 @@ class PublicResource < ActiveRecord::Base
   belongs_to :creator, :class_name  => 'User', :foreign_key => 'creator_id'
   belongs_to :category
 
+  scope :of_category, lambda{|category| where(:category_id => category.id)}
+  scope :no_category, where(:category_id=>nil)
+
   def is_upload?
     self.kind == PublicResource::Kind::UPLOAD
   end
@@ -60,7 +63,7 @@ class PublicResource < ActiveRecord::Base
   module MediaResourceMethods
     def self.included(base)
       base.has_one :shared_public_resource,
-                   :class_name  => 'MediaResource', :foreign_key => 'media_resource_id'
+                   :class_name  => 'PublicResource', :foreign_key => 'media_resource_id'
 
       base.send(:include, InstanceMethods)
     end
@@ -68,35 +71,33 @@ class PublicResource < ActiveRecord::Base
     module InstanceMethods
 
       # 分享到公共资源
-      def share_public
-        if self.is_public?
-          return ''
+      def share_public(category = nil)
+        public_resource = self.shared_public_resource
+        if public_resource.blank?
+          PublicResource.create(
+            :creator => self.creator,
+            :name => self.name,
+            :media_resource => self,
+            :kind => PublicResource::Kind::LINK,
+            :category => category
+          )
+        else
+          public_resource.update_attribute(:category, category)
         end
-
-        public_resource = PublicResource.create(
-          :creator => self.creator,
-          :media_resource => self,
-          :name => self.name,
-          :kind => PublicResource::Kind::LINK
-        )
-
-        public_resource.id
       end
-      # 结束 put_public
-
 
       # 判断是否添加到公共资源库
       def is_public?
-        PublicResource.where(:media_resource_id => self.id).exists?
+        !self.shared_public_resource.blank?
       end
-      # 结束判断 is_public
+
+      def category_of_shared_public_resource
+        shared_public_resource.blank? ? nil : shared_public_resource.category
+      end
 
     end
 
   end
-
-  # 结束 MediaResourceMethods
-
 
   # 设置全文索引字段
   define_index do

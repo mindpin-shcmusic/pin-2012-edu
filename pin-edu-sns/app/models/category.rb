@@ -34,4 +34,32 @@ class Category < ActiveRecord::Base
     end
     self.remove
   end
+
+  def self.dynatree_data(activated_category)
+    expand_categories = []
+    activate = false
+    if !activated_category.blank?
+      expand_categories = activated_category.self_and_ancestors
+    else
+      activate = true
+    end
+    [{
+      :title => "无分类", :id => -1, :activate => activate,:expand => true,
+      :children => sub_dynatree_data(Category.roots,activated_category,expand_categories) 
+    }]
+  end
+
+  def self.sub_dynatree_data(categories,activated_category,expand_categories)
+    categories.map do |category|
+      children = category.children
+      hash = {:title=>category.name,:id=>category.id}
+      if !children.blank?
+        hash[:children] = sub_dynatree_data(children,activated_category,expand_categories)
+        hash[:isFolder] = true
+      end
+      hash[:expand] = true if expand_categories.include?(category)
+      hash[:activate] = true if category == activated_category
+      hash
+    end
+  end
 end

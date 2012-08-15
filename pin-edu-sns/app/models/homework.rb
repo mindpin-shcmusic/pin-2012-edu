@@ -13,20 +13,20 @@ class Homework < ActiveRecord::Base
   has_many :homework_assigns
   accepts_nested_attributes_for :homework_assigns
 
-  has_many :assigned_students,
+  has_many :assignees,
            :through => :homework_assigns,
-           :source => :student
+           :source  => :user
   
   # 没有提交作业的学生
   has_many :not_submitted_students,
            :through => :homework_assigns,
-           :source => :student,
+           :source => :user,
            :conditions => ['homework_assigns.is_submit = ?', false]
   
   # 已经提交作业的学生
   has_many :submitted_students,
            :through => :homework_assigns,
-           :source => :student,
+           :source => :user,
            :conditions => ['homework_assigns.is_submit = ?', true]
   
   # 学生附件
@@ -40,22 +40,29 @@ class Homework < ActiveRecord::Base
   validates :title, :content, :presence => true
   validates :course, :presence => true
   
-  def assigned_by_student(student)
-    self.homework_assigns.find_by_student_id(student.id)
+  def assign_record_of(student_user)
+    student_user.homework_assigns.find_by_homework_id(self.id)
   end
   
   # 学生是否被分配
-  def has_assigned(student)
-    self.homework_assigns.where(:student_id => student.id).any?
+  def has_assigned_to?(student_user)
+    !self.assign_record_of(student_user).blank?
   end
   
-  def has_finished_for?(student)
-    raise "学生#{student.id}没有被分配作业#{self.id}" unless self.has_assigned(student)
-    self.assigned_by_student(student).has_finished
+  def has_finished_by?(student_user)
+    self.assign_record_of(student_user).has_finished
   end
 
-  def set_finished_for!(student)
-    self.assigned_by_student(student).update_attribute :has_finished, true
+  def set_finished_by!(student_user)
+    self.assign_record_of(student_user).update_attribute :has_finished, true
+  end
+
+  def has_submitted_by?(student_user)
+    self.assign_record_of(student_user).is_submit
+  end
+
+  def all_requirement_submitted_by?(student_user)
+    self.homework_requirements.count == student_user.uploaded_count_of_homework(self)
   end
 
   # 老师创建作业时生成的附件压缩包
@@ -71,7 +78,7 @@ class Homework < ActiveRecord::Base
   end
   
   # 压缩学生提交的附件
-  def build_student_uploads_zip(user)#, homework_student_upload, old_file = '')
+  def build_student_uploads_zip(user)
     homework_id = self.id
     path = "/MINDPIN_MRS_DATA/attachments/homework_attachments/homework_student#{user.id}_#{self.id}.zip"
     Zip::ZipFile.open(path, Zip::ZipFile::CREATE) do |zip|
@@ -82,68 +89,61 @@ class Homework < ActiveRecord::Base
   end
   
   # 学生提交作业
-  def submit_by_student(user, content = '')
-    homework_assign = self.homework_assigns.find_by_student_id(user.id)
+  def set_submitted_by!(user, content = '')
+    homework_assign = self.homework_assigns.find_by_user_id(user.id)
     homework_assign.content = content
     homework_assign.is_submit = true
-    homework_assign.has_finished = true
-    homework_assign.submitted_at = DateTime.now
+    homework_assign.submitted_at = Time.now
     homework_assign.save
   end
   
   # --- 给其他类扩展的方法
   module UserMethods
     def self.included(base)
-      base.has_many :homeworks,
+      base.has_many :teacher_homeworks,
+                    :class_name  => 'Homework',
                     :foreign_key => :creator_id
 
       # 老师未过期作业
-      base.has_many :undeadline_teacher_homeworks,
-                    :class_name => 'Homework',
+      base.has_many :expired_teacher_homeworks,
+                    :class_name  => 'Homework',
                     :foreign_key => :creator_id,
-                    :conditions => [
-                      'deadline > ?',
-                      Time.new.strftime("%Y-%m-%d %H:%M:%S")
-                    ]
+                    :conditions  => ['deadline > ?', Time.now]
       
       # 老师已过期作业
-      base.has_many :deadline_teacher_homeworks,
-                    :class_name => 'Homework',
+      base.has_many :unexpired_teacher_homeworks,
+                    :class_name  => 'Homework',
                     :foreign_key => :creator_id,
-                    :conditions => ['deadline <= ?', Time.now]
+                    :conditions  => ['deadline <= ?', Time.now]
       
       base.send(:include, InstanceMethods)
     end
     
     module InstanceMethods
-      def deadline_homeworks
+      def homeworks
         if self.is_teacher?
-          deadline_teacher_homeworks
+          teacher_homeworks
         elsif self.is_student?
-          deadline_student_homeworks
+          student_homeworks
         end
       end
 
-      def undeadline_homeworks
+      def unexpired_homeworks
         if self.is_teacher?
-          undeadline_teacher_homeworks
+          unexpired_teacher_homeworks
         elsif self.is_student?
-          undeadline_student_homeworks
+          unexpired_student_homeworks
         end
       end
 
-      def deadline_student_homeworks
-        self.student_homeworks.where('deadline <= ?', Time.now)
+      def expired_homeworks
+        if self.is_teacher?
+          expired_teacher_homeworks
+        elsif self.is_student?
+          expired_student_homeworks
+        end
       end
 
-      def undeadline_student_homeworks
-        self.student_homeworks.where('deadline > ?', Time.now)
-      end
-
-      def student_homeworks
-        raise "#User-#{self.id}: 该用户不是学生" unless self.is_student?
-        Homework.joins(:homework_assigns).where('homework_assigns.student_id = ?', self.student.id)
-      end
     end
   end
   include HomeworkAssignRule::HomeworkMethods

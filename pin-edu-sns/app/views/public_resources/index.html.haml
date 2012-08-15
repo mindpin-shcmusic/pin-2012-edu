@@ -2,9 +2,22 @@
   =render 'public_resources/parts/search_bar'
   =render 'public_resources/parts/forms'
 
-.page-media-shared-resource-list
-  - resources = PublicResource.where(:category_id=>nil)
-  - resources.each do |resource|
-    .resource
-      = resource.name
-  = render 'category_list', :categories => Category.roots
+.page-public-resource-nav
+  .go-parent-dir
+    - if @parent_category.blank?
+      %span.quiet 上一级
+    - else
+      %a{:href => "/public_resources?category_id=#{@parent_category.id}"} 上一级
+  .navs
+    %span= link_to '根目录', '/public_resources'
+    - @navigation_categories.each do |category|
+      %span= link_to category.name, "/public_resources?category_id=#{category.id}"
+
+.page-public-resources
+  - @items.each do |item|
+    - if item.is_a?(Category)
+      .category
+        %span= link_to item.name, "/public_resources?category_id=#{item.id}"
+    - else
+      .resource
+        = item.name

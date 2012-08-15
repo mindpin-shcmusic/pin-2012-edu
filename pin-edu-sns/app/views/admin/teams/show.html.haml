@@ -13,19 +13,19 @@
     .v= @team.cid
   .field.teacher
     %label 教师
-    - if @team.teacher.blank?
+    - if @team.teacher_user.blank?
       .v.quiet 未指定
     - else
-      .v= @team.teacher.real_name
+      .v= @team.teacher_user.teacher.real_name
 
-- students = @team.students
+- student = @team.student_users.map(&:student)
 .page-admin-model-show
   .field.students-count
     %label 班级学生名单
-    .v 总共 #{students.count} 个学生
+    .v 总共 #{student.count} 个学生
     .assign= link_to "给班级指定学生", "/admin/teams/#{@team.id}/select_students"
 
-  - students.each do |student|
+  - student.each do |student|
     .field.student
       .avatar= avatar student.user, :mini
       .name= student.real_name

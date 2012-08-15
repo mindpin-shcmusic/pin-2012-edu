@@ -7,7 +7,7 @@
 .page-admin-form
   = flash_info
   = form_for [:admin,@team] do |f|
-    - teacher_hash = Teacher.all.map{|teacher|[teacher.real_name, teacher.id]}.unshift(['不指定',''])
+    - teacher_hash = Teacher.all.map{|teacher|[teacher.real_name, teacher.user_id]}.unshift(['不指定',''])
 
     .field.need
       %label 班级名
@@ -17,7 +17,7 @@
       = f.text_field :cid
     .field
       %label 教师
-      = f.select(:teacher_id, teacher_hash)
+      = f.select(:teacher_user_id, teacher_hash)
     .field.submit
       = jfsubmit '确定'
       = jfcancel '取消'
