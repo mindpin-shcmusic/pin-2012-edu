@@ -53,11 +53,11 @@
 
 - if current_user.is_teacher?
   %div
-    - @homework.homework_assigns.each do |h|
-      - uploaded_count = h.student.user.uploaded_count_of_homework(@homework)
+    - @homework.homework_assigns.each do |assign|
+      - uploaded_count = assign.user.uploaded_count_of_homework(@homework)
       %p
-        %a{:href => "/homeworks/#{h.homework_id}/student/#{h.student.user_id}"} 
-          =h.student.real_name
+        %a{:href => "/homeworks/#{assign.homework_id}/student/#{assign.user_id}"} 
+          = assign.user.student.real_name
       = uploaded_count
       %span /
       = student_attachments_count
@@ -67,10 +67,16 @@
       - else
         %span 未完成
 
-      - if h.has_finished
+      - if assign.has_finished
         %span 已签
       - else 
         %span 未签
+
+- if current_user.is_student? && @homework.all_requirement_submitted_by?(current_user)
+  .set-submitted
+    %h3 提交作业
+    = text_field_tag :content
+    = link_to '标记为已提交', 'javascript:;', :data => {:url => "/homeworks/#{@homework.id}/student/#{current_user.id}/set_submitted"}
 
 - if logged_in?
   = jcomments @homework

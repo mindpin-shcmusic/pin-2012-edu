@@ -1,6 +1,6 @@
 # encoding: utf-8
 class HomeworksController < ApplicationController
-  before_filter :pre_load_teacher, :except => [:show, :index, :student, :create_student_upload, :download_teacher_zip]
+  before_filter :pre_load_teacher, :except => [:show, :index, :create_student_upload, :download_teacher_zip, :set_submitted, :student]
   before_filter :login_required
 
   def pre_load_teacher
@@ -8,7 +8,7 @@ class HomeworksController < ApplicationController
   end
   
   def create
-    @homework = current_user.homeworks.build(params[:homework])
+    @homework = current_user.teacher_homeworks.build(params[:homework])
     if @homework.save
       @homework.share_to_expression({:teams => params[:teams]}.to_json)
       
@@ -46,15 +46,11 @@ class HomeworksController < ApplicationController
 
   def new
     @homework = Homework.new
-    @homework_student_upload_requirement = HomeworkRequirement.new
-    @teacher_attachments ||= []
-    @requirements ||=[]
+    @teacher_attachments = []
+    @requirements = []
 
-    # 所有课程
-    @courses = Course.all
-    
-    # 班级列表
-    @teams = Team.where(:teacher_id => current_user.id)
+    @courses = Course.where(:teacher_user_id => current_user.id)
+    @teams = Team.where(:teacher_user_id => current_user.id)
   end
 
   def index
@@ -68,18 +64,7 @@ class HomeworksController < ApplicationController
       return
     end
 
-    if current_user.is_teacher?
-      @homeworks = current_user.homeworks
-      return
-    end
-
-    if current_user.is_student?
-      @homeworks = current_user.student_homeworks
-      return
-    end
-
-    render :text=>'当前用户既不是老师也不是学生，无法查看作业'
-
+    @homeworks = current_user.homeworks
   end
   
   def show
@@ -91,11 +76,9 @@ class HomeworksController < ApplicationController
     @homework_student_upload_requirements = HomeworkRequirement.where(:homework_id => @homework.id)
     @teacher_attachments = HomeworkTeacherAttachment.where(:homework_id => @homework.id)
 
-    # 所有课程
-    @courses = Course.all
-    
-    # 班级列表
-    @teams = Team.all
+    @courses = Course.where(:teacher_user_id => current_user.id)
+    @teams = Team.where(:teacher_user_id => current_user.id)
+
     @selected_teams = @homework.homework_assign_rule.expression[:teams].map(&:to_i)
     @requirements = HomeworkRequirement.where(:homework_id => @homework.id)
   end
@@ -124,19 +107,18 @@ class HomeworksController < ApplicationController
     redirect_to :back
   end
 
-  # 老师查看具体某一学生作业页面
   def student
     unless (current_user.is_teacher? || current_user.id == params[:user_id].to_i)
       return redirect_to '/'
     end
+
     @homework = Homework.find(params[:homework_id])
-    @student = User.find(params[:user_id])
+    @student_user = User.find(params[:user_id])
   end
   
   def download_teacher_zip
     homework = Homework.find(params[:id])
     
-    # 生成老师上传的附件压缩包
     homework.build_teacher_attachments_zip(homework.creator)
     
     send_file "/MINDPIN_MRS_DATA/attachments/homework_attachments/homework_teacher#{homework.creator.id}_#{homework.id}.zip"
@@ -151,10 +133,20 @@ class HomeworksController < ApplicationController
 
   def set_finished
     homework = Homework.find(params[:homework_id])
-    student = User.find(params[:user_id]).student
+    user = User.find(params[:user_id])
 
-    homework.set_finished_for!(student)
+    homework.set_finished_by!(user)
     render :text => 'set finished!'
+  end
+
+  def set_submitted
+    unless (current_user.is_student? && current_user.id == params[:user_id].to_i)
+      return redirect_to '/'
+    end
+
+    assign = HomeworkAssign.find_by_homework_id_and_user_id params[:homework_id], params[:user_id]
+    assign.homework.set_submitted_by!(current_user, params[:content])
+    render :text => 'set submitted!'
   end
 
   def destroy_teacher_attachment

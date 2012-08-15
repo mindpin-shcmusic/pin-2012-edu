@@ -48,3 +48,15 @@ pie.load ->
     $request.success =>
       $(this).parent().fadeOut()
       $('.student-home-work-status .signed').removeClass('hide').hide().fadeIn()
+
+
+  jQuery('.set-submitted a').click ->
+    console.log($(this).data('url'))
+    $request = $.ajax
+      url  : $(this).data('url')
+      type : 'PUT'
+      data :
+        'content': $(this).parent().find('input').val()
+
+    $request.success =>
+      $(this).parent().fadeOut()

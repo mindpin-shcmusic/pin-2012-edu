@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120810063454) do
+ActiveRecord::Schema.define(:version => 20120814074028) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -65,24 +65,22 @@ ActiveRecord::Schema.define(:version => 20120810063454) do
 
   create_table "course_students", :force => true do |t|
     t.integer  "course_id"
-    t.integer  "student_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "student_user_id"
   end
 
   create_table "courses", :force => true do |t|
-    t.string   "name",       :default => "",    :null => false
+    t.string   "name",            :default => "",    :null => false
     t.string   "cid"
     t.string   "department"
     t.string   "location"
-    t.integer  "teacher_id"
     t.text     "desc"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_removed", :default => false
+    t.boolean  "is_removed",      :default => false
+    t.integer  "teacher_user_id"
   end
-
-  add_index "courses", ["teacher_id"], :name => "index_courses_on_teacher_id"
 
   create_table "courses_images", :force => true do |t|
     t.integer  "course_id"
@@ -115,7 +113,6 @@ ActiveRecord::Schema.define(:version => 20120810063454) do
   end
 
   create_table "homework_assigns", :force => true do |t|
-    t.integer  "student_id"
     t.integer  "homework_id"
     t.text     "content"
     t.boolean  "is_submit",    :default => false
@@ -123,10 +120,10 @@ ActiveRecord::Schema.define(:version => 20120810063454) do
     t.boolean  "has_finished", :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
   end
 
   add_index "homework_assigns", ["homework_id"], :name => "index_homework_assigns_on_homework_id"
-  add_index "homework_assigns", ["student_id"], :name => "index_homework_assigns_on_student_id"
 
   create_table "homework_requirements", :force => true do |t|
     t.integer  "creator_id"
@@ -329,24 +326,21 @@ ActiveRecord::Schema.define(:version => 20120810063454) do
 
   create_table "team_students", :force => true do |t|
     t.integer  "team_id"
-    t.integer  "student_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "student_user_id"
   end
 
-  add_index "team_students", ["student_id"], :name => "index_team_students_on_student_id"
   add_index "team_students", ["team_id"], :name => "index_team_students_on_team_id"
 
   create_table "teams", :force => true do |t|
-    t.string   "name",       :default => "",    :null => false
+    t.string   "name",            :default => "",    :null => false
     t.string   "cid"
-    t.integer  "teacher_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_removed", :default => false
+    t.boolean  "is_removed",      :default => false
+    t.integer  "teacher_user_id"
   end
-
-  add_index "teams", ["teacher_id"], :name => "index_teams_on_teacher_id"
 
   create_table "users", :force => true do |t|
     t.string   "name",                      :default => "", :null => false

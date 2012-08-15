@@ -1,9 +1,14 @@
 # -*- coding: utf-8 -*-
 class Course < ActiveRecord::Base
-  belongs_to :teacher
+  belongs_to :teacher_user,
+             :class_name  => 'User',
+             :foreign_key => :teacher_user_id
 
   has_many :course_students
-  has_many :students, :through => :course_students
+
+  has_many :student_users,
+           :through => :course_students,
+           :source  => :student_user
 
   validates :name, :presence => true
   validates :cid, :uniqueness => { :if => Proc.new { |course| !course.cid.blank? } }
@@ -20,7 +25,7 @@ class Course < ActiveRecord::Base
   end
 
   def get_user_ids
-    [students, teacher].flatten.map(&:user_id).sort
+    [student_users, teacher_user].flatten.map(&:id).sort
   end
 
   def get_users
@@ -64,22 +69,30 @@ class Course < ActiveRecord::Base
   module UserMethods
     def self.included(base)
       base.send :include, InstanceMethods
+      base.has_many :teacher_courses,
+                    :class_name  => 'Course',
+                    :foreign_key => :teacher_user_id
+
+      base.has_many :course_students, :foreign_key => :student_user_id
+      base.has_many :student_courses,
+                    :through     => :course_students,
+                    :source      => :course
     end
 
     module InstanceMethods
       def courses
         if self.is_teacher?
-          self.teacher.courses
+          self.teacher_courses
         elsif self.is_student?
-          self.student.courses
+          self.student_courses
         end
       end
 
       def courses=(courses)
         if self.is_teacher?
-          self.teacher.courses = courses
+          self.teacher_courses = courses
         elsif self.is_student?
-          self.student.courses = courses
+          self.student_courses = courses
         end
       end
     end
