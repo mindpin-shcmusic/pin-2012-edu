@@ -9,6 +9,7 @@ pie.load ->
 
     evt = jQuery.Event "mindpin:open-fbox"
     evt.link_elm = $link
+    evt.box_body = $box.find('.box-body')
 
     pie.show_page_overlay()
     $box
