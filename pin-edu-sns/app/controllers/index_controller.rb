@@ -20,5 +20,12 @@ class IndexController < ApplicationController
 
     render :partial => 'complete_search/user'
   end
-  
+
+  def check_tip_messages
+    render :json => {
+      :comments_count    => current_user.comment_tip_message.count,
+      :media_share_count => current_user.media_share_tip_message.count,
+      :share_rate_count  => current_user.rate_and_rank
+    }
+  end
 end

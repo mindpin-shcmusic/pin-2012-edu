@@ -14,6 +14,10 @@ class User < ActiveRecord::Base
   # --- 站内信
   include ShortMessage::UserMethods
 
+  include UserCommentTipMessage::UserMethods
+  include UserShareRateTipMessage::UserMethods
+  include UserMediaShareTipMessage::UserMethods
+
   # 如果该声明放在 MediaResource::UserMethods 上 会导致引用出现异常
   # 只能在这里声明了 fushang318
   has_many :media_resources,
@@ -53,6 +57,8 @@ class User < ActiveRecord::Base
     :presence => { :on => :create },
     :confirmation => true,
     :length => { :in => 4..32 , :on => :create}
+
+  default_scope where('id > 1')
 
   def is_admin?
     "admin" == self.name && 1 == self.id

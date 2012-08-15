@@ -4,11 +4,31 @@ class MediaShare < ActiveRecord::Base
   belongs_to :media_resource
   belongs_to :creator, :class_name => 'User', :foreign_key => 'creator_id'
   belongs_to :receiver, :class_name => 'User', :foreign_key => 'receiver_id'
-  after_create lambda {UserShareTipMessage.create(receiver, "#{creator.name}向您分享了#{media_resource.is_dir? ? '目录' : '文件'}: #{media_resource.name}。")}
 
   validates  :media_resource, :presence => true
   validates  :creator, :presence => true
   validates  :receiver, :presence => true
+
+  after_create :send_tip_message_for_receiver_on_create
+  def send_tip_message_for_receiver_on_create
+    receiver = self.receiver
+
+    return true if receiver.blank?
+    return true if receiver == self.creator
+
+    receiver.media_share_tip_message.put("#{self.creator.name} 给你分享了一个资源", self.id)
+    receiver.media_share_tip_message.send_count_to_juggernaut
+  end
+
+  after_destroy :send_tip_message_on_destroy
+  def send_tip_message_on_destroy
+    receiver = self.receiver
+
+    if !receiver.blank?
+      receiver.media_share_tip_message.delete(self.id)
+      receiver.media_share_tip_message.send_count_to_juggernaut
+    end
+  end
 
   # 给 User 类扩展方法，User类 include 这个 module
   module UserMethods
