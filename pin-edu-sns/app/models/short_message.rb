@@ -1,8 +1,4 @@
 class ShortMessage < ActiveRecord::Base
-  include Notifying
-
-  after_create Notify.new
-
   belongs_to :sender,
              :class_name  => 'User',
              :foreign_key => :sender_id
@@ -18,38 +14,18 @@ class ShortMessage < ActiveRecord::Base
 
   validate   :not_the_same_user
 
+  after_save :send_a
+
   def read!
     self.update_attribute :receiver_read, true
-    self.class.notify_count(receiver)
   end
 
   def receiver_hide!
     self.update_attribute :receiver_hide, true
-    self.class.notify_count(receiver)
   end
 
   def sender_hide!
     self.update_attribute :sender_hide, true
-  end
-
-  class << self
-    def any_unread?(user)
-      self.unread(user).any? ? true : false
-    end
-
-    protected
-
-    def unread_conditions
-      {:receiver_read => false, :receiver_hide => false}
-    end
-
-    def unread_count(user)
-      unread(user).count
-    end
-  end
-
-  def publish(user)
-    super user, content
   end
 
   module UserMethods
