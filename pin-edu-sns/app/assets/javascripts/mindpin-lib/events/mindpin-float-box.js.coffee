@@ -3,13 +3,17 @@
 
 pie.load ->
   jQuery(document).delegate 'a.page-float-box-link', 'click', ->
-    jfbox_id = jQuery(this).data('jfbox-id')
+    $link = jQuery(this)
+    jfbox_id = $link.data('jfbox-id')
     $box = jQuery(".page-float-box[data-jfbox-id=#{jfbox_id}]")
+
+    evt = jQuery.Event "mindpin:open-fbox"
+    evt.link_elm = $link
 
     pie.show_page_overlay()
     $box
       .delay(200).fadeIn(200)
-      .trigger "mindpin:open-fbox"
+      .trigger evt
 
   _close = ($box)->
     $box
