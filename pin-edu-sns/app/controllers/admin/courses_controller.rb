@@ -56,8 +56,8 @@ class Admin::CoursesController < ApplicationController
   end
   
   def set_students
-    student_ids = params[:student_ids].split(',')
-    @course.student_ids = student_ids
+    student_user_ids = params[:student_user_ids].split(',')
+    @course.student_user_ids = student_user_ids
     redirect_to "/admin/courses/#{@course.id}"
   end
 

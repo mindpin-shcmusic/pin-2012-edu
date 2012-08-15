@@ -8,11 +8,11 @@
     .t2= team.name
     .t2= team.cid
     .t2
-      - if team.teacher.blank?
+      - if team.teacher_user.blank?
         %span.c 未指定
       - else
         .ava= avatar User.new, :mini
-        %span.c= team.teacher.real_name
+        %span.c= team.teacher_user.teacher.real_name
 
     .ops
       - remove_url = admin_team_path(team)
