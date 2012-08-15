@@ -45,7 +45,7 @@
     .field.student
       .avatar= avatar student_user, :mini
       .name= student_user.student.real_name
-      .show= link_to '查看信息', [:admin, student_user]
+      .show= link_to '查看信息', [:admin, student_user.student]
 
 .page-admin-go-back= link_to '返回列表页', '/admin/courses'
 .page-admin-edit= link_to '编辑修改', "/admin/courses/#{@course.id}/edit"

@@ -14,25 +14,25 @@
 
   .selector
     .list
-      - student_ids = @course.student_ids
+      - student_user_ids = @course.student_user_ids
       - Student.all.each do |student|
-        - selected = student_ids.include?(student.id)
-        .student{:class=>selected ? 'selected' : '', :'data-id'=>student.id, :'data-name'=>student.real_name}
+        - selected = student_user_ids.include?(student.user_id)
+        .student{:class=>selected ? 'selected' : '', :'data-id'=>student.user_id, :'data-name'=>student.real_name}
           .name= student.real_name
   .result
     .list
-      - @course.students.each do |student|
-        - selected = student_ids.include?(student.id)
-        .student{:class=>selected ? 'selected' : '', :'data-id'=>student.id, :'data-name'=>student.real_name}
-          .name= student.real_name
+      - @course.student_users.each do |student_user|
+        - selected = student_user_ids.include?(student_user.id)
+        .student{:class=>selected ? 'selected' : '', :'data-id'=>student_user.id, :'data-name'=>student_user.student.real_name}
+          .name= student_user.student.real_name
     .count
       %span 已经分配
-      %span.c= student_ids.count
+      %span.c= student_user_ids.count
       %span 人
 
   .ops
     = form_tag "/admin/courses/#{@course.id}/set_students",:method=>:put do |f|
-      %input.ids{:name=>:student_ids, :type=>'hidden', :value=>student_ids*','}
+      %input.ids{:name=>:student_user_ids, :type=>'hidden', :value=>student_user_ids*','}
       .field.submit
         = jfsubmit '确定'
         = jfcancel '取消'
