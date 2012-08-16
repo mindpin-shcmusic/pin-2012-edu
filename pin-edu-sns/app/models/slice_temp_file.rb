@@ -58,50 +58,23 @@ class SliceTempFile < ActiveRecord::Base
     self.save
   end
 
-  def get_merged_file
-    if !merged?
-      merge_slice_files
-    end
-    File.new(file_path, 'r')
-  end
-
   def remove_files
     FileUtils.rm_r(blob_dir)
   end
 
   def build_file_entity
-    if 1 == blob_count
-      file = self.get_merged_file
-      FileEntity.create(:merged => true, :attach => file)
-    else
-      file_entity = FileEntity.create(:merged => false)
-      MergeSliceTempFileResqueQueue.enqueue(self.id, file_entity.id)
-      file_entity
-    end
-  end
-
-  def merge_on_queue(file_entity_id)
-    file = self.get_merged_file
-
-    file_entity = FileEntity.find(file_entity_id)
-    file_entity.attach = file
-    file_entity.merged = true
-    file_entity.save
+    file = File.new(file_path,"r")
+    file_entity = FileEntity.create(:merged => true, :attach => file)
 
     self.remove_files
     self.destroy
-    
     if file_entity.is_video?
       file_entity.into_video_encode_queue
     end
+    file_entity
   end
 
   private
-
-  def next_blob_path
-    File.join(blob_dir, "blob.#{self.saved_size}")
-  end
-
   # 所有文件片段是否全部上传完毕
   def is_complete_upload?
     self.saved_size >= self.entry_file_size
@@ -112,22 +85,6 @@ class SliceTempFile < ActiveRecord::Base
     dir = File.join(R::SLICE_TEMP_FILE_ATTACHED_DIR, self.id.to_s)
     FileUtils.mkdir_p(dir)
     dir
-  end
-
-  def blob_count
-    `cd #{blob_dir};ls blob* |wc -l`.to_i
-  end
-
-  # TODO 重构
-  def merge_slice_files
-    # 合并文件片段
-    if 1 == blob_count
-      `cd #{blob_dir};mv blob.0 #{file_path}`
-    else
-      `cd #{blob_dir};ls blob* |sort -n -k 2 -t.|xargs cat > #{file_path}`
-    end
-    self.merged = true
-    self.save
   end
 
   # 合并后的 slice_temp_file 文件的存放的位置
