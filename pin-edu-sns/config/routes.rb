@@ -206,6 +206,7 @@ MindpinEduSns::Application.routes.draw do
   get '/public_resources/user/:id/index_file/:file_entity_id' => 'public_resources#index_file'
   put '/public_resources/upload/*path' => 'public_resources#upload'
   get '/user_complete_search' => 'index#user_complete_search'
+  get '/check_tip_messages' => 'index#check_tip_messages'
 
   get '/tags/:tag_name' => 'tags#show'
 
