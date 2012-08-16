@@ -2,8 +2,7 @@
 
 .page-upload-box{:style=>'display:none;'}
   .form-title 上传文件
-  .page-media-file-uploader{:'data-new-upload-url'=>'/new_upload', |
-    :'data-send-blob-url'=>'/upload_blob', |
+  .page-media-file-uploader{:'data-new-upload-url'=>'/upload', |
     :'data-file-put-url' => '/file_put', |
     :'data-current-path' => current_path }
 
@@ -21,24 +20,14 @@
     .progress-bar-sample.hide
       .file{:'data-name'=>'', :'data-size'=>''}
         .bar
-          .percent 26%
-          .p{:style=>'width:26.8%;'}
-        .meta
+          .p{:style=>'width:26%;'}
+        .data
           .name on_your_mark.rmvb
-          .size (65.5MB)
-          .hide
-            .md5  MD5: 计算中……
-            .md5-percent 16%
-        .stat
-          .speed 
-            %span.t 上传速度:
-            %span.data 32KB/s
-          .remaining-time
-            %span.t 剩余时间:
-            %span.data 00:32:32
-        .error-info
-          文件上传出错 
-        .ops.running
+          .size 65.5MB
+          .percent 26%
+          .speed 32KB/s
+          .error 文件上传出错
+        .ops
           %a.close{:href=>'javascript:;', :title=>'取消上传'} 关闭
 
     .uploading-files-list

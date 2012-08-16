@@ -80,8 +80,7 @@
   .uploading-files-list, .progress-bar-sample{
     .file{
       border-bottom:solid 1px #ccc;
-
-      padding:5px 84px 5px 14px;
+      padding:0 12px;
       position:relative;
 
       @include transition(all ease-in .2s);
@@ -89,19 +88,15 @@
       &.error{
         background-color:#333;
         $c1:lighten(red, 30%); $c2 : #ccc;
-        .meta{
+        .data{
           .name{color:$c2;};
-          .size{color:$c2;};
+          .size{display:none;}
+          .percent{display:none;}
+          .speed{display:none;}
+          .error{color:$c1;display:block;width:100px;margin-right:12px;}
         }
         .bar{
           display:none;
-        }
-        .stat{
-          display:none;
-        }
-        .error-info{
-          display:block;
-          color:$c1;font-weight:bold;
         }
       }
 
@@ -110,40 +105,30 @@
         top:0;bottom:0;left:0;right:0;
         background-color:rgba(white, 0.8);
         z-index:-1;
-        .percent{
-          position:absolute;
-          height:20px;line-height:20px;
-          top:30px;right:56px;
-
-          font-size:12px;
-          text-align:center;
-          color:#666;
-          text-shadow:0 0 2px white;
-          z-index:1;
-        }
         .p{
           position:absolute;
           top:0;bottom:0;
-          background-color:#DDF1CE;
+          background-color:#ABD7FF;
         }
       }
 
-      .meta{
+      .data{
         overflow:hidden;
-        height:20px;line-height:20px;
-        margin-bottom:5px;
-        .name, .size{height:20px;line-height:20px;font-size:12px;}
-        .name{float:left;font-weight:bold;margin-right:12px;}
-        .size{float:left;color:#444;}
-      }
-
-      .stat{
-        overflow:hidden;
-        height:20px;line-height:20px;
-        color:#666;
+        height:30px;line-height:30px;
         font-size:12px;
-        .speed{float:left;margin-right:12px;}
-        .remaining-time{float:left;}
+
+        .name, .size, .percent, .speed, .error{
+          text-overflow:ellipsis;
+          white-space:nowrap;
+          overflow:hidden;
+          float:left;
+        }
+
+        .name{width:200px;margin-right:12px;}
+        .size{width:100px;margin-right:12px;}
+        .percent{width:40px;margin-right:12px;}
+        .speed{width:100px;}
+        .error{display:none;}
       }
 
       .error-info{
@@ -152,41 +137,11 @@
 
       .ops{
         position:absolute;
-        top:15px;right:15px;
+        top:3px;right:12px;
         overflow:hidden;
 
-        a{
-          float:left;
-          width:24px;height:24px;
-          overflow:hidden;
-          border:solid 1px transparent;
-          line-height:20em;
-          position:relative;
-
-          &:hover{
-            border:1px solid #ddd;
-            background-color:rgba(white, 0.8);
-          }
-
-          &.close{
-            &:before{
-              content:"";
-              height:17px;width:3px;
-              background-color:#666;
-              position:absolute;
-              top:4px;left:11px;
-              @include transform(rotate(45deg));
-            }
-            &:after{
-              content:"";
-              height:17px;width:3px;
-              background-color:#666;
-              position:absolute;
-              top:4px;left:11px;
-              @include transform(rotate(-45deg));
-            }
-          }
-
+        a.close{
+          @include icon-close-24(#666);
         }
       }
     }

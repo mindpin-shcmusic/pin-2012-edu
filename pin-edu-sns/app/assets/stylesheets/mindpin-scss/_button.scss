@@ -73,3 +73,29 @@
     @include gradient(lighten(#2079C1, 10%), lighten(#1F659A, 10%));
   }
 }
+
+@mixin icon-close-24($color){
+  width:24px;height:24px;
+  overflow:hidden;line-height:20em;
+  @include border-radius(2px);
+  display:block;
+
+  &:hover{
+    background-color:rgba(black, 0.1);
+  }
+
+  &:before, &:after{
+    content:"";
+    height:17px;width:3px;
+    background-color:$color;
+    position:absolute;
+    top:4px;left:11px;
+  }
+
+  &:before{
+    @include transform(rotate(45deg));
+  }
+  &:after{
+    @include transform(rotate(-45deg));
+  }
+}
