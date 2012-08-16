@@ -1,18 +1,19 @@
 :ruby
   share_path = URI.decode(new_media_share_path(:resource_path => resource.path))
   share_public_path = URI.decode(share_public_resources_path(:resource_id => resource.id))
-  categories_path = URI.decode(categories_public_resources_path(:resource_id => resource.id))
 
 .share-state
   .share= link_to '共享给其他人', share_path
 
   - class_name = resource.is_public? ? 'added' : 'unadd'
-  .public-resource{:class=>class_name,:data=>{:share_url=>share_public_path,:categories_url=>categories_path}}
+  - category = resource.category_of_shared_public_resource
+  - category_id = category.blank? ? -1 : category.id
+  .public-resource{:class=>class_name,:data=>{:share_url=>share_public_path,:category_id=>category_id}}
     .added 已经加入公共资源库
     =jfbox_link :set_category, '加入公共资源库',:class=>'add-public'
     =jfbox_link :set_category, "设置公共资源的分类",:class=>"set-category"
 
 
     = jfbox :set_category, "选择分类" do
-      .dynatree
+      .dynatree{:data=>{:children=>Category.preload_dynatree(resource.category_of_shared_public_resource).to_json}}
       .submit-selected-category= link_to "确定选择的分类", "javascript:;"

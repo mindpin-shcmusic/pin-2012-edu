@@ -164,9 +164,7 @@ MindpinEduSns::Application.routes.draw do
 
   get  'file_show/*path' => 'media_resources#file_show', :format => false
 
-  post '/new_upload' => 'slice_temp_files#new_upload'
-  post '/upload_blob' => 'slice_temp_files#upload_blob'
-  get  '/new_upload_page' => 'slice_temp_files#new_upload_page'
+  post '/upload' => 'slice_temp_files#upload'
 
   get '/media_resources/lazyload_sub_dynatree' => 'media_resources#lazyload_sub_dynatree'
   put '/media_resources/move' => 'media_resources#move'
@@ -199,7 +197,6 @@ MindpinEduSns::Application.routes.draw do
       post :share
       put :upload
       get :search
-      get :categories
     end
   end
 
@@ -207,6 +204,13 @@ MindpinEduSns::Application.routes.draw do
   get '/public_resources/user/:id/index_file/:file_entity_id' => 'public_resources#index_file'
   put '/public_resources/upload/*path' => 'public_resources#upload'
   get '/user_complete_search' => 'index#user_complete_search'
+  get '/check_tip_messages' => 'index#check_tip_messages'
 
   get '/tags/:tag_name' => 'tags#show'
+
+  resources :categories do
+    member do
+      get :lazyload_sub_dynatree
+    end
+  end
 end

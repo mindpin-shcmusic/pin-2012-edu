@@ -35,31 +35,47 @@ class Category < ActiveRecord::Base
     self.remove
   end
 
-  def self.dynatree_data(activated_category)
-    expand_categories = []
-    activate = false
-    if !activated_category.blank?
-      expand_categories = activated_category.self_and_ancestors
-    else
-      activate = true
-    end
-    [{
-      :title => "无分类", :id => -1, :activate => activate,:expand => true,
-      :children => sub_dynatree_data(Category.roots,activated_category,expand_categories) 
+  def self.preload_dynatree(activated_category = nil)
+    expand_categories = activated_category.blank? ? [] : activated_category.self_and_ancestors-[activated_category]
+    activate = activated_category.blank?
+
+    return [{
+      :title => "无分类", :id => 0, :isFolder => true, :key => 0,
+      :activate => activate, :expand => true, :isLazy => true,
+      :children => _preload_sub_dynatree(Category.roots,activated_category,expand_categories) 
     }]
+
   end
 
-  def self.sub_dynatree_data(categories,activated_category,expand_categories)
+  def self._preload_sub_dynatree(categories,activated_category,expand_categories)
     categories.map do |category|
-      children = category.children
-      hash = {:title=>category.name,:id=>category.id}
-      if !children.blank?
-        hash[:children] = sub_dynatree_data(children,activated_category,expand_categories)
-        hash[:isFolder] = true
+      child_categories = category.children
+      isLazy = !child_categories.blank?
+
+      children = []
+      expand = false
+
+      if expand_categories.include?(category)
+        children = _preload_sub_dynatree(child_categories,activated_category,expand_categories)
+        expand = true
       end
-      hash[:expand] = true if expand_categories.include?(category)
-      hash[:activate] = true if category == activated_category
-      hash
+      activate = (category == activated_category)
+
+      {
+        :title => category.name, :id => category.id, :key => category.id,
+        :children => children, :isFolder => true, :isLazy => isLazy,
+        :expand => expand, :activate => activate
+      }
+    end
+  end
+
+  def lazyload_sub_dynatree
+    self.children.map do |category|
+      isLazy = !category.children.blank?
+      {
+        :title => category.name, :id => category.id,
+        :isFolder => true, :isLazy => isLazy, :key => category.id
+      }
     end
   end
 end

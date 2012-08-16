@@ -6,17 +6,16 @@ class MediaSharesController < ApplicationController
 
     # 共享给我的用户列表
     @shared_users = current_user.shared_res_users
-    UserShareTipMessage.clear current_user
   end
 
   def new
     resource_path = params[:resource_path].sub('/file', '')
     @current_dir = MediaResource.get(current_user, resource_path)
-    @users = User.where("id != ?", current_user.id)
+    @users = User.where("id != ? AND id != ?", current_user.id, 1)
     @shared_receivers = @current_dir.shared_receivers
 
-    @courses = Course.all
-    @teams   = Team.all
+    @courses = current_user.courses
+    @teams   = current_user.teams
   end
 
   def create
@@ -69,6 +68,5 @@ class MediaSharesController < ApplicationController
       @media_resources << shared.media_resource
     end
   end
-
 
 end

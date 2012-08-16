@@ -94,8 +94,9 @@ class MediaShareRule < ActiveRecord::Base
 
     module InstanceMethods
       def share_rate
-        shared_count = self.media_share_rules.count
         total_count  = self.media_resources.count
+        return 0 if 0 == total_count
+        shared_count = self.media_share_rules.count
 
         shared_count / total_count.to_f * 100
       end

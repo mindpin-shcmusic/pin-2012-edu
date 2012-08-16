@@ -12,6 +12,7 @@ pie.load ->
     show_tip_dialog: (web_json)->
       @_set_attr('comment', web_json.comments_count)
       @_set_attr('media_share', web_json.media_shares_count)
+      @_set_attr('short_message', web_json.short_message_count)
 
     get_dialog: ->
       if !jQuery('.page-tip-message-dialog').exists()
@@ -27,10 +28,17 @@ pie.load ->
           .append("<a href='#{window.USER_INFO['paths']['media_share']}'>点击查看</a>")
           .hide()
 
+        $short_message = jQuery("<div></div>")
+          .addClass('item short_message')
+          .append("<span></span>")
+          .append("<a href='#{window.USER_INFO['paths']['short_message']}'>点击查看</a>")
+          .hide()
+
         @$dialog = jQuery("<div class='page-tip-message-dialog'></div>")
           .hide()
           .append($comment)
           .append($media_share)
+          .append($short_message)
           .appendTo jQuery(document.body)
       else
         @$dialog
@@ -55,16 +63,23 @@ pie.load ->
             .fadeIn()
             .find('.media_share').removeClass('zero').fadeIn(200)
             .find('span').html("#{count}个新资源分享，")
+        when 'short_message'
+          @$dialog
+            .fadeIn()
+            .find('.short_message').removeClass('zero').fadeIn(200)
+            .find('span').html("#{count}个站内信，")
 
     bind_juggernaut_listener: ->
       @jug = new Juggernaut
 
       @jug.subscribe window.USER_INFO['channels']['comment'], (json)=>
-        # console.log(json)
         @change_tip_dialog('comment', json.count)
 
       @jug.subscribe window.USER_INFO['channels']['media_share'], (json)=>
         @change_tip_dialog('media_share', json.count)
+
+      @jug.subscribe window.USER_INFO['channels']['short_message'], (json)=>
+        @change_tip_dialog('short_message', json.count)
 
 
     change_tip_dialog: (kind, count)->

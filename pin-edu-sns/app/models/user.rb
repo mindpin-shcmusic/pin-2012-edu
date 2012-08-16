@@ -58,9 +58,8 @@ class User < ActiveRecord::Base
     :confirmation => true,
     :length => { :in => 4..32 , :on => :create}
 
-  default_scope where('id > 1')
-
   def is_admin?
     "admin" == self.name && 1 == self.id
   end
+
 end

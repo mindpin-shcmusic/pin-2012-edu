@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Comment < ActiveRecord::Base
   belongs_to :model, 
              :polymorphic => true
@@ -58,6 +59,7 @@ class Comment < ActiveRecord::Base
     return true if reply_user == self.creator
 
     reply_user.comment_tip_message.put("#{self.creator.name} 给你发了评论", self.id)
+    reply_user.comment_tip_message.send_count_to_juggernaut
   end
 
   after_destroy :send_tip_message_on_destroy

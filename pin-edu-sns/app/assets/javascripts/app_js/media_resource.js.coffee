@@ -47,24 +47,37 @@ pie.load ->
 # 资源查看 -> 分享资源到公共资源库
 pie.load ->
   $public_resource = jQuery('.page-media-resource .share-state .public-resource')
-  jQuery(document).delegate '.page-float-box[data-jfbox-id=set_category]', 'mindpin:open-fbox', ->
-    if "" == jQuery('.dynatree').text()
-      jQuery.ajax
-        type: 'GET'
-        url : $public_resource.data('categories_url')
-        success: (res)=>
-          console.log(res)
-          jQuery('.dynatree').dynatree
-            children: res
+  $dynatree = jQuery('.dynatree')
+
+  $dynatree.dynatree
+    debugLevel: 0
+    children: $dynatree.data('children')
+    onLazyRead:(node)->
+      node.appendAjax
+        tyle: 'GET'
+        url: "/categories/#{node.data.id}/lazyload_sub_dynatree"
 
   jQuery(document).delegate '.page-media-resource .share-state .public-resource .submit-selected-category', 'click', ->
-    $node = jQuery('.dynatree').dynatree("getActiveNode")
-    if null != $node
-      jQuery.ajax
-        type: 'POST'
-        url: $public_resource.data('share_url')
-        data:
-          category_id: $node.data.id
-        success:(res)=>
-          $public_resource.addClass("added").removeClass("unadd").end()
-          pie.close_fbox("set_category")
+    $node = $dynatree.dynatree("getActiveNode")
+    if $node.data.id == $public_resource.data('category_id')
+      alert('分类没有变化')
+      return 
+
+    jQuery.ajax
+      type: 'POST'
+      url: $public_resource.data('share_url')
+      data:
+        category_id: $node.data.id
+      success:(res)=>
+        $public_resource.addClass("added").removeClass("unadd").end()
+        $public_resource.data('category_id',$node.data.id)
+        pie.close_fbox("set_category")
+
+  jQuery(document).delegate '.page-float-box[data-jfbox-id=set_category]','mindpin:close-fbox',->
+    select_id = $dynatree.dynatree("getActiveNode").data.id
+    if select_id != $public_resource.data('category_id')
+      node_of_belongs_category = $dynatree.dynatree('getTree').getNodeByKey($public_resource.data('category_id'))
+      if !!node_of_belongs_category
+        node_of_belongs_category.activate()
+      else
+        $dynatree.dynatree('getTree').reload()
