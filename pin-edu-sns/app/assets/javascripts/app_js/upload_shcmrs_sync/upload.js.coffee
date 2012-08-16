@@ -101,24 +101,25 @@ pie.load ->
           res = jQuery.string(xhr.responseText).evalJSON()
           @uploaded_byte = res.saved_size
 
-          console.log "文件大小: #{@file.size}"
+          console.log "文件大小: #{@file_size}"
           console.log "已上传: #{@uploaded_byte}"
+
+          @SLICE_TEMP_FILE_ID = @SLICE_TEMP_FILE_ID || res.slice_temp_file_id
 
           @continue()
         else
           console.log "blob上传出错: #{status}"
           @show_error()
 
-      xhr.upload.onprogress = (evt)->
+      xhr.upload.onprogress = (evt)=>
         loaded = evt.loaded
         total  = evt.total
 
         uploaded_byte = @uploaded_byte + loaded
-        file_size     = @file.size
 
         # 计算上传百分比
         percent_uploaded = (uploaded_byte * 100 / @file_size).toFixed(1)
-        @set_progress(percent_uploaded);
+        @set_progress(percent_uploaded)
 
         # 计算上传速度
         new_time = new Date()
@@ -130,24 +131,23 @@ pie.load ->
           @last_refreshed_time = new_time
           @set_speed size_delta / time_delta
 
-      xhr.open 'POST', @UPLOAD_URL, true
+      xhr.open 'POST', @uploader.UPLOAD_URL, true
       xhr.send @get_form_data()
 
     get_form_data: ->
       form_data = new FormData
       form_data.append 'name', @file_name
       form_data.append 'size', @file_size
-      form_data.append 'blob', @get_blob()
-
       if @SLICE_TEMP_FILE_ID
         form_data.append 'slice_temp_file_id', @SLICE_TEMP_FILE_ID
       
+      form_data.append 'blob', @get_blob()
       return form_data
 
     continue: ->
       if @is_finished()
         console.log '上传完毕'
-        @file_put()
+        # @file_put()
         @set_progress(100)
         return
 
@@ -173,7 +173,7 @@ pie.load ->
 #       }
 
     get_blob: ->
-      return @slice_file()
+      return @slice_file(@uploaded_size)
 
     slice_file: (start_byte)->
       File.prototype.mindpin_slice = 
@@ -181,7 +181,8 @@ pie.load ->
         File.prototype.webkitSlice ||
         File.prototype.mozSlice
 
-      return @file.mindpin_slice(start_byte, start_byte + @BLOB_SIZE)
+      end_byte = start_byte + @uploader.BLOB_SIZE
+      return @file.mindpin_slice(start_byte, end_byte)
 
   $uploader_elm = jQuery('.page-media-file-uploader')
 
