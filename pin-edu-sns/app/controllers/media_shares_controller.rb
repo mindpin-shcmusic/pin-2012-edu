@@ -6,7 +6,6 @@ class MediaSharesController < ApplicationController
 
     # 共享给我的用户列表
     @shared_users = current_user.shared_res_users
-    UserShareTipMessage.clear current_user
   end
 
   def new
