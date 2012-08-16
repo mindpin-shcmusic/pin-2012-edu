@@ -61,4 +61,5 @@ class User < ActiveRecord::Base
   def is_admin?
     "admin" == self.name && 1 == self.id
   end
+
 end
