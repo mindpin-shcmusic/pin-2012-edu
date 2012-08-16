@@ -12,7 +12,8 @@ class SliceTempFilesController < ApplicationController
       slice_temp_file = SliceTempFile.find(slice_temp_file_id)
       slice_temp_file.save_new_blob(blob)
       return render :json => {
-        :saved_size => slice_temp_file.saved_size 
+        :saved_size => slice_temp_file.saved_size,
+        :slice_temp_file_id => slice_temp_file.id
       }
     end
 
