@@ -69,5 +69,4 @@ class MediaSharesController < ApplicationController
     end
   end
 
-
 end
