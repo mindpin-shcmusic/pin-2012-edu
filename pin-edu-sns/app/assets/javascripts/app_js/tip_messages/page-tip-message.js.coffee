@@ -60,7 +60,6 @@ pie.load ->
       @jug = new Juggernaut
 
       @jug.subscribe window.USER_INFO['channels']['comment'], (json)=>
-        # console.log(json)
         @change_tip_dialog('comment', json.count)
 
       @jug.subscribe window.USER_INFO['channels']['media_share'], (json)=>
