@@ -53,7 +53,13 @@ class SliceTempFile < ActiveRecord::Base
     end
 
     file_blob_size = file_blob.size
-    `cat '#{file_blob.path}' >> '#{file_path}'`
+    # `cat '#{file_blob.path}' >> '#{file_path}'`
+    File.open(file_path,"a") do |src_f|
+      File.open(file_blob,'r') do |f|
+        src_f << f.read
+      end
+    end
+
     self.saved_size += file_blob_size
     self.save
   end
