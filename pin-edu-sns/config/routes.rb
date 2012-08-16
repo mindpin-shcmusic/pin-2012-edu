@@ -164,9 +164,7 @@ MindpinEduSns::Application.routes.draw do
 
   get  'file_show/*path' => 'media_resources#file_show', :format => false
 
-  post '/new_upload' => 'slice_temp_files#new_upload'
-  post '/upload_blob' => 'slice_temp_files#upload_blob'
-  get  '/new_upload_page' => 'slice_temp_files#new_upload_page'
+  post '/upload' => 'slice_temp_files#upload'
 
   get '/media_resources/lazyload_sub_dynatree' => 'media_resources#lazyload_sub_dynatree'
   put '/media_resources/move' => 'media_resources#move'

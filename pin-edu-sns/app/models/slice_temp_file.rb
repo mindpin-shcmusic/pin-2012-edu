@@ -12,10 +12,8 @@ class SliceTempFile < ActiveRecord::Base
     slice_temp_file.saved_size = 0
   end
 
-  # 如果找到实例就返回
-  # 如果找不到就创建一个新的并返回
-  def self.find_or_create(file_name,file_size, creator)
-    self.get(file_name, file_size, creator) ||
+  # 根据参数创建一个新的并返回
+  def self.create_by_params(file_name,file_size, creator)
     self.create(
       :real_file_name  => file_name,
       :entry_file_name => get_randstr_filename(file_name),
@@ -24,22 +22,39 @@ class SliceTempFile < ActiveRecord::Base
     )
   end
   
-  def self.get(file_name,file_size,creator)
+  # 获取一个文件的 MD5
+  def self.get_md5(path)
+    `md5sum '#{path}' |cut -d ' ' -f 1`.gsub("\n","")
+  end
+
+  def self.get_from_blob(creator, file_name, file_size, blob)
+    md5 = self.get_md5(blob.path)
     self.where(
       :real_file_name  => file_name,
       :entry_file_size => file_size,
-      :creator_id      => creator.id
+      :creator_id      => creator.id,
+      :first_blob_md5  => md5
     ).first
   end
 
-  # TODO 重构
   # 保存文件片段
   def save_new_blob(file_blob)
-    return if is_complete_upload?
-    # 保存文件片段
-    FileUtils.mv(file_blob.path,next_blob_path)
-    # 记录保存进度
-    self.saved_size += file_blob.size
+    if saved_size == 0
+      # 计算第一段 MD5
+      first_blob_md5 = self.class.get_md5(file_blob.path)
+      file_blob_size = file_blob.size
+      # 创建结果文件
+      FileUtils.mv(file_blob.path,file_path)
+      # 修改字段
+      self.saved_size += file_blob_size
+      self.first_blob_md5 = first_blob_md5
+      self.save
+      return
+    end
+
+    file_blob_size = file_blob.size
+    `cat '#{file_blob.path}' >> '#{file_path}'`
+    self.saved_size += file_blob_size
     self.save
   end
 
