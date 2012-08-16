@@ -112,4 +112,20 @@ class MediaResourcesController < ApplicationController
     @media_resources = current_user.received_shared_media_resources.tagged_with(params[:tag_name])
   end
 
+  def lazyload_sub_dynatree
+    @media_resource = MediaResource.find(params[:parent_media_resource_id])
+    @move_media_resource = MediaResource.find(params[:move_media_resource_id])
+    render :json => @media_resource.lazyload_sub_dynatree(@move_media_resource)
+  end
+
+  def move
+    @media_resource = MediaResource.find(params[:media_resource_id])
+    @media_resource.dir_id = params[:to_dir_id]
+    if @media_resource.save
+      path = @media_resource.dir.blank? ?  '/' : @media_resource.dir.path
+      return render :text => path
+    end
+    render :status=>422
+  end
+
 end
