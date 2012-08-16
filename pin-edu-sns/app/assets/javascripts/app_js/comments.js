@@ -2,8 +2,6 @@ jQuery('a.comment-reply').click(function(e) {
   e.preventDefault();
   e.stopPropagation();
 
-  alert('ohoh');
-
   var creator_id = jQuery(this).parent().data('creator_id');
   var comment_id = jQuery(this).parent().data('comment_id');
 
