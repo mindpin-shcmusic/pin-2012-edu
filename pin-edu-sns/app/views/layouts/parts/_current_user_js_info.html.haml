@@ -7,11 +7,13 @@
       channels : {
         comment : #{current_user.comment_tip_message.hash_name.to_json},
         media_share : #{current_user.media_share_tip_message.hash_name.to_json},
-        share_rate : #{current_user.share_rate_tip_message.hash_name.to_json}
+        share_rate : #{current_user.share_rate_tip_message.hash_name.to_json},
+        short_message : #{current_user.short_message_count_channel.to_json}
       },
       paths : {
         comment : #{current_user.comment_tip_message.path.to_json},
         media_share : #{current_user.media_share_tip_message.path.to_json},
-        share_rate : #{current_user.share_rate_tip_message.path.to_json}
+        share_rate : #{current_user.share_rate_tip_message.path.to_json},
+        short_message : #{inbox_short_messages_path.to_json}
       }
     }
