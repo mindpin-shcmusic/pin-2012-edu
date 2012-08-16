@@ -40,7 +40,7 @@ class Category < ActiveRecord::Base
     activate = activated_category.blank?
 
     return [{
-      :title => "无分类", :id => 0, :isFolder => true,
+      :title => "无分类", :id => 0, :isFolder => true, :key => 0,
       :activate => activate, :expand => true, :isLazy => true,
       :children => _preload_sub_dynatree(Category.roots,activated_category,expand_categories) 
     }]
@@ -62,7 +62,7 @@ class Category < ActiveRecord::Base
       activate = (category == activated_category)
 
       {
-        :title => category.name, :id => category.id,
+        :title => category.name, :id => category.id, :key => category.id,
         :children => children, :isFolder => true, :isLazy => isLazy,
         :expand => expand, :activate => activate
       }
@@ -74,7 +74,7 @@ class Category < ActiveRecord::Base
       isLazy = !category.children.blank?
       {
         :title => category.name, :id => category.id,
-        :isFolder => true, :isLazy => isLazy
+        :isFolder => true, :isLazy => isLazy, :key => category.id
       }
     end
   end
