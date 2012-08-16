@@ -50,6 +50,7 @@ pie.load ->
   $dynatree = jQuery('.dynatree')
 
   $dynatree.dynatree
+    debugLevel: 0
     children: $dynatree.data('children')
     onLazyRead:(node)->
       node.appendAjax

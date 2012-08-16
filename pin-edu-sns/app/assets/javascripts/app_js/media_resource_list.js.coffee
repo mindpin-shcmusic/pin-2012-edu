@@ -36,6 +36,7 @@ pie.load ->
   # 移动目录
   $dynatree = jQuery('.page-float-box[data-jfbox-id=move_dir] .dynatree')
   $dynatree.dynatree
+    debugLevel: 0
     children: $dynatree.data('children')
     onLazyRead:(node)->
       node.appendAjax
