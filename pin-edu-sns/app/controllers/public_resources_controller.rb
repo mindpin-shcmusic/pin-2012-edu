@@ -50,12 +50,6 @@ class PublicResourcesController < ApplicationController
     @public_resources = PublicResource.search(@keyword, 
       :conditions => {:creator_id => current_user.id}, 
       :page => params[:page], :per_page => 20)
-
-  end
-
-  def categories
-    current_resource = MediaResource.find(params[:resource_id])
-    render :json=>Category.dynatree_data(current_resource.category_of_shared_public_resource)
   end
 
 end
