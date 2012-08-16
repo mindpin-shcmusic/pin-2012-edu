@@ -27,7 +27,6 @@
 // ------------------
 @import 'app-css/base/override';
 @import 'app-css/base/layout';
-@import 'app-css/ui.dynatree';
 // @import 'app-css/base/mixins';
 
 @import 'app-css/media_resources';
@@ -38,4 +37,6 @@
 @import 'app-css/student_upload';
 @import 'app-css/homeworks';
 //kaid added this
-@import 'app-css/tip-message'
+@import 'app-css/tip-message';
+//fushang318 added this
+@import 'app-css/dynatree/ui.dynatree';

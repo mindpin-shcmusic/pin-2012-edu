@@ -7,7 +7,7 @@
 
   - class_name = resource.is_public? ? 'added' : 'unadd'
   - category = resource.category_of_shared_public_resource
-  - category_id = category.blank? ? 0 : category.id
+  - category_id = category.blank? ? -1 : category.id
   .public-resource{:class=>class_name,:data=>{:share_url=>share_public_path,:category_id=>category_id}}
     .added 已经加入公共资源库
     =jfbox_link :set_category, '加入公共资源库',:class=>'add-public'
