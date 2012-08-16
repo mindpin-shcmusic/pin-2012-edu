@@ -199,7 +199,6 @@ MindpinEduSns::Application.routes.draw do
       post :share
       put :upload
       get :search
-      get :categories
     end
   end
 
@@ -210,4 +209,10 @@ MindpinEduSns::Application.routes.draw do
   get '/check_tip_messages' => 'index#check_tip_messages'
 
   get '/tags/:tag_name' => 'tags#show'
+
+  resources :categories do
+    member do
+      get :lazyload_sub_dynatree
+    end
+  end
 end
