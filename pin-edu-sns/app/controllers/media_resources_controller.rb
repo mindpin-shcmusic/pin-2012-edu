@@ -97,21 +97,6 @@ class MediaResourcesController < ApplicationController
     render :text=>"200"
   end
 
-  def tag_resources
-  end
-  
-  def tag_resources_mine
-    @media_resources = MediaResource.tagged_with(params[:tag_name]).of_creator(current_user)
-  end
-
-  def tag_resources_public
-    @media_resources = MediaResource.tagged_with(params[:tag_name]).public_share
-  end  
-
-  def tag_resources_shared
-    @media_resources = current_user.received_shared_media_resources.tagged_with(params[:tag_name])
-  end
-
   def lazyload_sub_dynatree
     @media_resource = MediaResource.find(params[:parent_media_resource_id])
     @move_media_resource = MediaResource.find(params[:move_media_resource_id])
