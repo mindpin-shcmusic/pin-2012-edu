@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120816082803) do
+ActiveRecord::Schema.define(:version => 20120817071000) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -96,10 +96,11 @@ ActiveRecord::Schema.define(:version => 20120816082803) do
     t.integer  "attach_file_size"
     t.datetime "attach_updated_at"
     t.string   "md5"
-    t.boolean  "merged",              :default => false
+    t.boolean  "merged",                           :default => false
     t.string   "video_encode_status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "saved_size",          :limit => 8
   end
 
   add_index "file_entities", ["md5"], :name => "index_file_entities_on_md5"

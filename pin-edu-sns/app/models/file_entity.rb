@@ -31,6 +31,10 @@ class FileEntity < ActiveRecord::Base
                     :path => R::FILE_ENTITY_ATTACHED_PATH,
                     :url  => R::FILE_ENTITY_ATTACHED_URL
 
+  before_validation(:on => :create) do |file_entity|
+    file_entity.saved_size = 0
+  end
+
   def self.get_or_greate_by_file_md5(file)
     md5 = Digest::MD5.file(file).to_s
 
@@ -105,5 +109,52 @@ class FileEntity < ActiveRecord::Base
     self.video_encode_status = FileEntity::EncodeStatus::ENCODEING
     self.save
     FileEntityVideoEncodeResqueQueue.enqueue(self.id)
+  end
+
+  def self.create_by_params(file_name,file_size,blob)
+    attach_file_name = get_randstr_filename(file_name)
+    attach_content_type = file_content_type(file_name)
+    attach_file_size = file_size
+    file_entity = self.create(
+      :attach_file_name => attach_file_name,
+      :attach_content_type => attach_content_type,
+      :attach_file_size => attach_file_size,
+      :merged => false
+    )
+
+    FileUtils.mkdir_p(File.dirname(file_entity.attach.path))
+    saved_size = blob.size
+    FileUtils.mv(blob.path,file_entity.attach.path)
+    file_entity.update_attributes(
+      :saved_size => saved_size,
+      :attach_updated_at => file_entity.created_at
+    )
+    file_entity.check_completion_status
+    file_entity
+  end
+
+  def save_new_blob(file_blob)
+    file_blob_size = file_blob.size
+    # `cat '#{file_blob.path}' >> '#{file_path}'`
+    File.open(self.attach.path,"a") do |src_f|
+      File.open(file_blob.path,'r') do |f|
+        src_f << f.read
+      end
+    end
+
+    self.saved_size += file_blob_size
+    self.save
+    self.check_completion_status
+  end
+
+  def check_completion_status
+    return if self.saved_size != self.attach_file_size
+
+    self.update_attributes( :merged => true )
+    # 如果 文件是图片，生成 all styles 图片
+    self.attach.reprocess!
+    if self.is_video?
+      self.into_video_encode_queue
+    end
   end
 end
