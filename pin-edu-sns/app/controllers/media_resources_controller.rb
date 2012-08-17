@@ -27,8 +27,14 @@ class MediaResourcesController < ApplicationController
   def upload_file
     file_entity = FileEntity.find(params[:file_entity_id])
     resource_path = URI.decode(request.fullpath).sub('/file_put', '')
+
     MediaResource.put_file_entity(current_user, resource_path, file_entity)
-    render :text=>200
+    
+    resource = MediaResource.get(current_user, resource_path)
+    return render :partial => '/media_resources/parts/resources.html.haml',
+                  :locals => {
+                    :resources => [resource]
+                  }
   end
 
   # for ajax
@@ -42,7 +48,7 @@ class MediaResourcesController < ApplicationController
                       :text => '文件夹创建失败'
       end
 
-      return render :partial => 'media_resources/parts/resources',
+      return render :partial => '/media_resources/parts/resources',
                     :locals => {
                       :resources => [resource]
                     }

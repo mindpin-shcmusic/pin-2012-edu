@@ -99,3 +99,32 @@
     @include transform(rotate(-45deg));
   }
 }
+
+.page-upload-button{
+  $w:86px;
+  $h:32px;
+
+  width:$w;
+  height:$h;
+  position:relative;
+  overflow:hidden;
+
+  a.button{
+    display:block;
+    height:$h - 2px;line-height:$h - 2px;
+    width:$w - 2px;
+    @include gradient(#fda034, #FF8201);
+    border:1px solid rgba(black, 0.2);
+    @include border-radius(3px);
+    color:white;text-align: center;
+    text-shadow:0 -1px 1px rgba(black, 0.3);
+    font-size:14px;
+  }
+  input[type=file]{
+    position:absolute;
+    top:0;right:0;
+    font-size:118px;
+    opacity:0;
+    cursor:pointer;
+  }
+}

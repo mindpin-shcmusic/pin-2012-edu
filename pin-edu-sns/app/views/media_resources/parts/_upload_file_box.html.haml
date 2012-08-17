@@ -2,21 +2,7 @@
 
 .page-upload-box{:style=>'display:none;'}
   .form-title 上传文件
-  .page-media-file-uploader{:'data-new-upload-url'=>'/upload', |
-    :'data-file-put-url' => '/file_put', |
-    :'data-current-path' => current_path }
-
-    .upload-drop-area
-      .upload-btn-box
-        %a.upload-btn{:href=>'javascript:;'} 打开文件
-        = file_field_tag :file, :multiple => true
-      .desc 上传电脑上的文件。
-      %a.form-cancel-button{:href=>'javascript:;'} 关闭
-      
-      .tip 
-        %span.t1 请把想要上传的文件拖拖拽到这里
-        %span.t2 你正在拖放文件，松开鼠标按键，开始上传
-
+  .page-media-file-uploader{:'data-current-path' => current_path}
     .progress-bar-sample.hide
       .file{:'data-name'=>'', :'data-size'=>''}
         .bar
@@ -29,5 +15,4 @@
           .error 文件上传出错
         .ops
           %a.close{:href=>'javascript:;', :title=>'取消上传'} 关闭
-
     .uploading-files-list

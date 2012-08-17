@@ -80,7 +80,7 @@ class HomeworkAssignRule < ActiveRecord::Base
     end
 
     module InstanceMethods
-      def share_to(options)
+      def assign_to(options)
         rule = HomeworkAssignRule.find_or_initialize_by_homework_id(self.id)
         rule.creator = self.creator
 
@@ -88,8 +88,8 @@ class HomeworkAssignRule < ActiveRecord::Base
         rule.save
       end
 
-      def share_to_expression(expression_string)
-        share_to(JSON.parse expression_string, :symbolize_names => true)
+      def assign_to_expression(expression_string)
+        assign_to(JSON.parse expression_string, :symbolize_names => true)
       end
 
     end
