@@ -245,4 +245,5 @@ pie.load ->
         # 创建媒体资源记录
         file_entity_id = file_wrapper.FILE_ENTITY_ID
 
-        file_wrapper.$elm.find('input').val(file_entity_id)
+        file_wrapper.$elm.find('input.fid').val(file_entity_id)
+        file_wrapper.$elm.find('input.fname').val(file_wrapper.file_name)

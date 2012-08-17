@@ -31,7 +31,8 @@
           .bar
             .p{:style=>'width:23%;'}
 
-          %input{:type=>'text', :name=>'file_entity_ids[]'}
+          %input.fid{:type=>'text', :name=>'file_entities[][id]'}
+          %input.fname{:type=>'text', :name=>'file_entities[][name]'}
 
 
       = jupload_button '上传附件'
