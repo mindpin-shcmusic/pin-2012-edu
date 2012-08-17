@@ -43,19 +43,15 @@ class MediaShare < ActiveRecord::Base
     end
 
     module InstanceMethods
-      def shared_res_users
-        MediaShare.where("receiver_id = ?", self.id).group("creator_id")
+      def linked_sharers
+        User.joins('inner join media_shares on media_shares.creator_id = users.id').
+          where('media_shares.receiver_id = ?',self.id).group('users.id')
       end
 
-      def shared_res_count(user)
-        res = MediaShare.select("count(id) as count").where("receiver_id = ? and creator_id = ?", self.id, user.id).first
-        res.count
+      def shared_resources_from(user)
+        MediaResource.joins('inner join media_shares on media_shares.media_resource_id = media_resources.id').
+          where('media_shares.receiver_id = ? and media_shares.creator_id = ?',self.id,user.id)          
       end
-
-      def shared_res_by_user(user)
-        MediaShare.where("creator_id = ? and receiver_id = ?", user.id, self.id)
-      end
-
     end
 
   end

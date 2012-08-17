@@ -174,10 +174,9 @@ MindpinEduSns::Application.routes.draw do
       get :search
     end
   end
-  get '/media_shares/user/:id/file/*path' => 'media_shares#share'
-  get '/media_shares/shared_by/:user_id'  => 'media_shares#shared_by'
 
-
+  get '/media_shares/users/:user_id'       => 'media_shares#share'
+  get '/media_shares/users/:user_id/*path' => 'media_shares#share'
 
   # 全文索引
   get    '/file_search' => 'media_resources#search'
