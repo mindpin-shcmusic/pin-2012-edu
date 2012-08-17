@@ -8,8 +8,8 @@
       %a.new-homework{:href=>new_homework_path} 布置新作业
 
   .tabs
-    %a{:href => homeworks_path(:status => 'undeadline')} 未过期
-    %a{:href => homeworks_path(:status => 'deadline')} 已过期
+    %a{:href => homeworks_path(:status => 'unexpired')} 未过期
+    %a{:href => homeworks_path(:status => 'expired')} 已过期
 
   .homeworks
     - @homeworks.each do |homework|

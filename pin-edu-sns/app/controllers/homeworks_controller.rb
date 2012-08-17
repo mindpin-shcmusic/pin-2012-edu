@@ -10,13 +10,11 @@ class HomeworksController < ApplicationController
   def create
     @homework = current_user.teacher_homeworks.build(params[:homework])
     if @homework.save
-      @homework.share_to_expression({:teams => params[:teams]}.to_json)
+      @homework.assign_to_expression({:teams => params[:teams]}.to_json)
       
-      if params[:teacher_attachment_ids]
-        params[:teacher_attachment_ids].each do |id|
-          attach = HomeworkTeacherAttachment.find(id)
-          attach.homework = @homework
-          attach.save
+      if params[:file_entities]
+        params[:file_entities].each do |file|
+          attach = HomeworkTeacherAttachment.create(:creator => current_user, :name => file[:name], :file_entity_id => file[:id], :homework => @homework)
         end
       end
 
@@ -26,12 +24,6 @@ class HomeworksController < ApplicationController
     error = @homework.errors.first
     flash.now[:error] = "#{error[0]} #{error[1]}"
     redirect_to '/homeworks/new'
-  end
-  
-  def create_teacher_attachment
-    file_entity = FileEntity.find(params[:file_entity_id])
-    @homework_teacher_attachment = HomeworkTeacherAttachment.create(:creator => current_user, :name =>params[:file_name], :file_entity => file_entity)
-    render :text => @homework_teacher_attachment.id
   end
   
   def create_student_upload
@@ -54,13 +46,13 @@ class HomeworksController < ApplicationController
   end
 
   def index
-    if params[:status] == 'deadline'
-      @homeworks = current_user.deadline_homeworks
+    if params[:status] == 'expired'
+      @homeworks = current_user.expired_homeworks
       return
     end
 
-    if params[:status] == 'undeadline'
-      @homeworks = current_user.undeadline_homeworks
+    if params[:status] == 'unexpired'
+      @homeworks = current_user.unexpired_homeworks
       return
     end
 
