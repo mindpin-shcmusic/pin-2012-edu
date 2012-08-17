@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120816082803) do
+ActiveRecord::Schema.define(:version => 20120817092532) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -96,10 +96,11 @@ ActiveRecord::Schema.define(:version => 20120816082803) do
     t.integer  "attach_file_size"
     t.datetime "attach_updated_at"
     t.string   "md5"
-    t.boolean  "merged",              :default => false
+    t.boolean  "merged",                           :default => false
     t.string   "video_encode_status"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "saved_size",          :limit => 8
   end
 
   add_index "file_entities", ["md5"], :name => "index_file_entities_on_md5"
@@ -270,20 +271,6 @@ ActiveRecord::Schema.define(:version => 20120816082803) do
     t.boolean  "receiver_hide", :default => false
     t.datetime "created_at"
     t.datetime "updated_at"
-  end
-
-  create_table "slice_temp_files", :force => true do |t|
-    t.integer  "creator_id"
-    t.string   "entry_file_name"
-    t.string   "entry_content_type"
-    t.integer  "entry_file_size",    :limit => 8
-    t.datetime "entry_updated_at"
-    t.integer  "saved_size",         :limit => 8
-    t.boolean  "merged"
-    t.string   "real_file_name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "first_blob_md5"
   end
 
   create_table "students", :force => true do |t|

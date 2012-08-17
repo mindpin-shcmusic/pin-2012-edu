@@ -29,7 +29,7 @@ class HomeworksController < ApplicationController
   end
   
   def create_teacher_attachment
-    file_entity = SliceTempFile.find(params[:slice_temp_file_id]).build_file_entity
+    file_entity = FileEntity.find(params[:file_entity_id])
     @homework_teacher_attachment = HomeworkTeacherAttachment.create(:creator => current_user, :name =>params[:file_name], :file_entity => file_entity)
     render :text => @homework_teacher_attachment.id
   end
