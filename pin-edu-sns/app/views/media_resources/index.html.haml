@@ -7,7 +7,10 @@
 .page-media-resource-fixed
   .page-media-resource-head
     %a.create-folder-button{:href=>'javascript:;'} 新建文件夹
-    %a.upload-file-button{:href=>'javascript:;'} 上传文件
+    
+    .page-upload-button
+      %a.button{:href=>'javascript:;'} 上传文件
+      = file_field_tag :file, :multiple => true
 
   .page-media-resource-nav
     .go-parent-dir

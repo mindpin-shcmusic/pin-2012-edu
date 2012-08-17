@@ -43,14 +43,14 @@ module MediaResourceHelper
     end
 
     file_entity = media_resource.file_entity
-    return 'x' if file_entity.blank?
+    return '' if file_entity.blank?
 
     case file_entity.content_kind
     when :image
       return File.join('http://', request.host, file_entity.attach.url(:small))
     when :audio
       return '/assets/covers/audio.small.png'
-    else "x"
+    else ''
     end
   end
 

@@ -99,6 +99,7 @@ class FileEntity < ActiveRecord::Base
   end
 
   def into_video_encode_queue
+    return if !self.is_video?
     return if self.video_encode_success?
 
     self.video_encode_status = FileEntity::EncodeStatus::ENCODEING

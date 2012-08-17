@@ -157,16 +157,10 @@ MindpinEduSns::Application.routes.draw do
   get    '/file_attr/*path/edit_tag' => 'media_resources#edit_tag'
   post   '/file_attr/*path/update_tag' => 'media_resources#update_tag'
   post   '/file_attr/*path/re_encode'  => 'media_resources#re_encode'
-  get    '/tags/:tag_name'             => 'media_resources#tag_resources'
-  get    '/tags/:tag_name/mine'        => 'media_resources#tag_resources_mine'
-  get    '/tags/:tag_name/public'      => 'media_resources#tag_resources_public'
-  get    '/tags/:tag_name/shared'      => 'media_resources#tag_resources_shared'
 
   get  'file_show/*path' => 'media_resources#file_show', :format => false
 
-  post '/new_upload' => 'slice_temp_files#new_upload'
-  post '/upload_blob' => 'slice_temp_files#upload_blob'
-  get  '/new_upload_page' => 'slice_temp_files#new_upload_page'
+  post '/upload' => 'slice_temp_files#upload'
 
   get '/media_resources/lazyload_sub_dynatree' => 'media_resources#lazyload_sub_dynatree'
   put '/media_resources/move' => 'media_resources#move'
@@ -176,10 +170,9 @@ MindpinEduSns::Application.routes.draw do
       get :search
     end
   end
-  get '/media_shares/user/:id/file/*path' => 'media_shares#share'
-  get '/media_shares/shared_by/:user_id'  => 'media_shares#shared_by'
 
-
+  get '/media_shares/users/:user_id'       => 'media_shares#share'
+  get '/media_shares/users/:user_id/*path' => 'media_shares#share'
 
   # 全文索引
   get    '/file_search' => 'media_resources#search'
@@ -208,7 +201,10 @@ MindpinEduSns::Application.routes.draw do
   get '/user_complete_search' => 'index#user_complete_search'
   get '/check_tip_messages' => 'index#check_tip_messages'
 
-  get '/tags/:tag_name' => 'tags#show'
+  get    '/tags/:tag_name'             => 'tags#show'
+  get    '/tags/:tag_name/mine'        => 'tags#show_mine'
+  get    '/tags/:tag_name/public'      => 'tags#show_public'
+  get    '/tags/:tag_name/shared'      => 'tags#show_shared'
 
   resources :categories do
     member do

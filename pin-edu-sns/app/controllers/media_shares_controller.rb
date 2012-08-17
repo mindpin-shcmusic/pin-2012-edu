@@ -2,10 +2,8 @@
 class MediaSharesController < ApplicationController
 
   def index
-    @received_resources = current_user.received_shared_media_resources
-
     # 共享给我的用户列表
-    @shared_users = current_user.shared_res_users
+    @shared_users = current_user.linked_sharers
   end
 
   def new
@@ -28,32 +26,21 @@ class MediaSharesController < ApplicationController
 
   # 分享给其它用户目录
   def share
-    resource_path = URI.decode(request.fullpath).sub(/\/media_shares\/user\/.*\/file/, "")
+    if params[:path].blank?
 
-    creator = User.find(params[:id])
-    current_resource = MediaResource.get(creator, resource_path)
-
-    if current_resource.is_dir?
-      @current_dir = current_resource
-      @media_resources = @current_dir.media_resources.web_order
-    end
-    
-    if current_resource.is_file?
-      return send_file current_resource.attach.path
-    end
-  end
-
-  # 显示某个用户共享给我的资源
-  def shared_by
-    creator = User.find(params[:user_id])
-    shared_resources = current_user.shared_res_by_user(creator)
-
-    @media_resources = []
-    shared_resources.each do |shared|
-      @media_resources << shared.media_resource
+      @sharer = User.find(params[:user_id])
+      @media_resources = current_user.shared_resources_from(@sharer)
+      @prev = :base
+      return
     end
 
-    render :action => "share"
+    resource_path = "/#{params[:path]}"
+
+    @sharer = User.find(params[:user_id])
+    @current_dir = MediaResource.get(@sharer, resource_path)
+    @media_resources = @current_dir.media_resources.web_order
+    @prev = @current_dir.dir
+    @prev = @sharer if @prev.blank?
   end
 
   # 搜索共享资源

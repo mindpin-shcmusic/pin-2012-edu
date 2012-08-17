@@ -28,7 +28,12 @@ class MediaResourcesController < ApplicationController
     slice_temp_file = SliceTempFile.find(params[:slice_temp_file_id])
     resource_path = URI.decode(request.fullpath).sub('/file_put', '')
     MediaResource.put_slice_temp_file(current_user, resource_path, slice_temp_file)
-    render :text=>200
+    
+    resource = MediaResource.get(current_user, resource_path)
+    return render :partial => '/media_resources/parts/resources.html.haml',
+                  :locals => {
+                    :resources => [resource]
+                  }
   end
 
   # for ajax
@@ -42,7 +47,7 @@ class MediaResourcesController < ApplicationController
                       :text => '文件夹创建失败'
       end
 
-      return render :partial => 'media_resources/parts/resources',
+      return render :partial => '/media_resources/parts/resources',
                     :locals => {
                       :resources => [resource]
                     }
@@ -95,21 +100,6 @@ class MediaResourcesController < ApplicationController
     @media_resource = MediaResource.get(current_user, resource_path)
     @media_resource.file_entity.into_video_encode_queue
     render :text=>"200"
-  end
-
-  def tag_resources
-  end
-  
-  def tag_resources_mine
-    @media_resources = MediaResource.tagged_with(params[:tag_name]).of_creator(current_user)
-  end
-
-  def tag_resources_public
-    @media_resources = MediaResource.tagged_with(params[:tag_name]).public_share
-  end  
-
-  def tag_resources_shared
-    @media_resources = current_user.received_shared_media_resources.tagged_with(params[:tag_name])
   end
 
   def lazyload_sub_dynatree
