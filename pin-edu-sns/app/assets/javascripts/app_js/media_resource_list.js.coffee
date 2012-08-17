@@ -16,6 +16,7 @@ pie.load ->
   jQuery(window).bind('scroll', lazy_load)
   jQuery(document).on('pjax:complete', lazy_load)
   jQuery(document).on('ajax:create-folder', lazy_load)
+  jQuery(document).on('ajax:create-resource', lazy_load)
 
 # 点击列表项
 pie.load ->

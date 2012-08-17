@@ -30,20 +30,6 @@ pie.load ->
           $box.fadeOut 200, ->
             pie.hide_page_overlay()
 
-
-# 我的文件夹 -> 上传文件
-pie.load ->
-  $upload_box = jQuery('.page-upload-box')
-
-  jQuery(document).delegate '.page-media-resource-head a.upload-file-button', 'click', ->
-    pie.show_page_overlay()
-    $uploader = jQuery('.page-media-file-uploader')
-    $upload_box.delay(200).fadeIn(200)
-
-  jQuery(document).delegate '.page-upload-box a.form-cancel-button', 'click', ->
-    $upload_box.fadeOut 200, ->
-      pie.hide_page_overlay()
-
 # 资源查看 -> 分享资源到公共资源库
 pie.load ->
   $public_resource = jQuery('.page-media-resource .share-state .public-resource')

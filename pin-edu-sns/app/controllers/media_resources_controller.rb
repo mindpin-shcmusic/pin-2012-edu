@@ -28,7 +28,12 @@ class MediaResourcesController < ApplicationController
     slice_temp_file = SliceTempFile.find(params[:slice_temp_file_id])
     resource_path = URI.decode(request.fullpath).sub('/file_put', '')
     MediaResource.put_slice_temp_file(current_user, resource_path, slice_temp_file)
-    render :text=>200
+    
+    resource = MediaResource.get(current_user, resource_path)
+    return render :partial => '/media_resources/parts/resources.html.haml',
+                  :locals => {
+                    :resources => [resource]
+                  }
   end
 
   # for ajax
@@ -42,7 +47,7 @@ class MediaResourcesController < ApplicationController
                       :text => '文件夹创建失败'
       end
 
-      return render :partial => 'media_resources/parts/resources',
+      return render :partial => '/media_resources/parts/resources',
                     :locals => {
                       :resources => [resource]
                     }
