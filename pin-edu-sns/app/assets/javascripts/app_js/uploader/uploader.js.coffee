@@ -15,7 +15,6 @@ class FileUploader
     @bind_button()
 
   bind_button: ->
-    console.log 111
     that = this
 
     @$button.find('input[type=file]').live 'change', (evt)->
@@ -84,7 +83,7 @@ class FileUploadWrapper
         # console.log "文件大小: #{@file_size}"
         # console.log "已上传: #{@uploaded_size}"
 
-        @SLICE_TEMP_FILE_ID = @SLICE_TEMP_FILE_ID || res.slice_temp_file_id
+        @FILE_ENTITY_ID = @FILE_ENTITY_ID || res.file_entity_id
 
         @continue()
       else
@@ -108,8 +107,8 @@ class FileUploadWrapper
     form_data = new FormData
     form_data.append 'name', @file_name
     form_data.append 'size', @file_size
-    if @SLICE_TEMP_FILE_ID
-      form_data.append 'slice_temp_file_id', @SLICE_TEMP_FILE_ID
+    if @FILE_ENTITY_ID
+      form_data.append 'file_entity_id', @FILE_ENTITY_ID
     
     form_data.append 'blob', @get_next_blob()
     return form_data
@@ -196,7 +195,7 @@ pie.load ->
           url:  url
           type: 'PUT'
           data:
-            'slice_temp_file_id' : file_wrapper.SLICE_TEMP_FILE_ID
+            'file_entity_id' : file_wrapper.FILE_ENTITY_ID
 
           success: (res)-> # 返回应该是一个字符串，新的 media_file_id
             $list = jQuery('.page-media-resources')
@@ -244,6 +243,6 @@ pie.load ->
 
       success: (file_wrapper)->
         # 创建媒体资源记录
-        file_entity_id = file_wrapper.SLICE_TEMP_FILE_ID
+        file_entity_id = file_wrapper.FILE_ENTITY_ID
 
         file_wrapper.$elm.find('input').val(file_entity_id)
