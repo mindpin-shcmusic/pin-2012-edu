@@ -8,3 +8,31 @@
     }
   }
 }
+
+.page-homework-form{
+  .field.attachments{
+    
+    .file{
+      @include floatfix;
+      margin-bottom:10px;
+
+      .name{
+        float:left;
+        margin-right:10px;
+        height:20px;line-height:20px;
+      }
+      .bar{
+        float:left;
+        border:solid 1px #ccc;
+        background-color:white;
+        height:20px;line-height:20px;
+        width:200px;
+        .p{
+          background-color:black;
+          height:20px;line-height:20px;
+        }
+      }
+
+    }
+  }
+}

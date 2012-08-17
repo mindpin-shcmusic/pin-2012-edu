@@ -1,51 +1,52 @@
-.home-attachment-uploader
-  = render 'homeworks/parts/upload_file_box'
-.hidden.attachment-ids= hidden_field_tag 'teacher_attachment_ids[]'
+.page-homework-form
+  = form_for @homework, :html => {:class => "assign_form", :multipart => true} do |f|
+    = flash_info
 
-= form_for @homework, :html => {:class => "assign_form", :multipart => true} do |f|
-  = flash_info
-
-  .field.need
-    %label 作业标题
-    = f.text_field :title
-  
-  .field.need
-    %label 作业内容
-    = f.text_area :content, :size => "60x12"
-  
-  .field
-    %label 请选择课程
-    = f.select :course_id, @courses.collect {|item| [item.name, item.id]}, {}, {:class => 'courses-selector'}
-  
-  .field.need
-    %label 请选择日期
-    = f.text_field :deadline, :class => 'auto-kal'
-  
-  .field  
-    %label 请选择要布置作业的班级
-    //%a#show-students{:href => "javascript:void(0);"} +
-    = select_tag :teams, options_from_collection_for_select(@teams, :id, :name, @selected_teams), :multiple => true, :class => 'students-selector', :style => 'width:360px;', :data => {:placeholder => '请选择要布置作业的班级'}
-  
-  .field
-    %label 老师作业附件
-    .uploaded-teacher-attachments
-      - @teacher_attachments.each do |attach|
-        .attachment
-          %span.file_name= attach.name
-          = link_to '删除', 'javascript:;', :data => {:'destroy-url' => "/homeworks/teacher_attachment/#{attach.id}/destroy"}
-
-    = link_to '上传', 'javascript:;', :class => 'upload-teacher-homework-attachment-button'
+    .field.need
+      %label 作业标题
+      = f.text_field :title
     
-  .field
-    %label 作业需求
-    .added-requirements
-      - @requirements.each do |requirement|
-        .requirement
-          %span.requirement-title= requirement.title
-          = link_to '删除', 'javascript:;', :data => {:'destroy-url' => "/homeworks/requirement/#{requirement.id}/destroy"}
-
-    %a.add-student-attachement-field{:href => "javascript:;"} 添加+
-    %div{:id => "student-attachement-fields"}
+    .field.need
+      %label 作业内容
+      = f.text_area :content, :size => "60x12"
     
-  .field.submit
-    = jfsubmit "布置作业"
+    .field
+      %label 请选择课程
+      = f.select :course_id, @courses.collect {|item| [item.name, item.id]}, {}, {:class => 'courses-selector'}
+    
+    .field.need
+      %label 请选择日期
+      = f.text_field :deadline, :class => 'auto-kal'
+    
+    .field  
+      %label 请选择要布置作业的班级
+      = select_tag :teams, options_from_collection_for_select(@teams, :id, :name, @selected_teams), :multiple => true, :class => 'students-selector', :style => 'width:256px;', :data => {:placeholder => '请选择'}
+    
+    .field.attachments
+      %label 老师作业附件
+
+      .sample.hide
+        .file
+          .name 123.txt
+          .bar
+            .p{:style=>'width:23%;'}
+
+          %input{:type=>'text', :name=>'file_entity_ids[]'}
+
+
+      = jupload_button '上传附件'
+
+      
+    .field
+      %label 作业需求
+      .added-requirements
+        - @requirements.each do |requirement|
+          .requirement
+            %span.requirement-title= requirement.title
+            = link_to '删除', 'javascript:;', :data => {:'destroy-url' => "/homeworks/requirement/#{requirement.id}/destroy"}
+
+      %a.add-student-attachement-field{:href => "javascript:;"} 添加+
+      %div{:id => "student-attachement-fields"}
+      
+    .field.submit
+      = jfsubmit "布置作业"

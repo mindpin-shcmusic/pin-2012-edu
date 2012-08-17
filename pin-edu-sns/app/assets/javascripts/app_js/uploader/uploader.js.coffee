@@ -15,6 +15,7 @@ class FileUploader
     @bind_button()
 
   bind_button: ->
+    console.log 111
     that = this
 
     @$button.find('input[type=file]').live 'change', (evt)->
@@ -208,3 +209,41 @@ pie.load ->
       error: ($wrapper, msg)->
         $wrapper.addClass 'error'
         $wrapper.find('.error').append msg || ''
+
+# 作业附件上传
+pie.load ->
+
+  $upload_button = jQuery('.page-homework-form .page-upload-button')
+
+  if $upload_button.exists()
+    uploader = new FileUploader $upload_button,
+      render: (file_wrapper)->        
+        # 添加上传进度条
+        $file_elm = jQuery('.page-homework-form .field.attachments .sample.hide .file').clone()
+        $list = jQuery('.page-homework-form .field.attachments')
+
+        $file_elm.find('.name').html file_wrapper.file_name
+        # $file_elm.find('.size').html file_wrapper.get_size_str()
+
+        $file_elm
+          .hide()
+          .fadeIn(100)
+          .appendTo $list
+
+        return $file_elm
+
+      set_progress: ($wrapper, percent)->
+        pstr = "#{percent}%"
+
+        $wrapper.find('.percent').html(pstr)
+
+        if 0 == percent
+          $wrapper.find('.bar .p').css('width', pstr)
+        else
+          $wrapper.find('.bar .p').animate({'width': pstr}, 100)
+
+      success: (file_wrapper)->
+        # 创建媒体资源记录
+        file_entity_id = file_wrapper.SLICE_TEMP_FILE_ID
+
+        file_wrapper.$elm.find('input').val(file_entity_id)

@@ -9,6 +9,7 @@ module MindpinUtilHelper
     base.send(:include, TimeMethods)
     base.send(:include, CommentMethods)
     base.send(:include, FloatBoxMethods)
+    base.send(:include, UploadMethods)
   end
 
   module LayoutMethods
@@ -242,6 +243,17 @@ module MindpinUtilHelper
 
       link_to text, 'javascript:;', :class => klass,
                                     :'data-jfbox-id' => jfbox_id
+    end
+  end
+
+  module UploadMethods
+
+    def jupload_button(text)
+      content_tag :div, :class => 'page-upload-button' do
+        str1 = link_to text, 'javascript:;', :class => 'button'
+        str2 = file_field_tag :file, :multiple => true
+        str1 + str2
+      end
     end
 
   end
