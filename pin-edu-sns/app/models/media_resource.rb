@@ -81,8 +81,7 @@ class MediaResource < ActiveRecord::Base
     return nil
   end
 
-  def self.put_slice_temp_file(creator, resource_path, slice_temp_file)
-    file_entity = slice_temp_file.build_file_entity
+  def self.put_file_entity(creator, resource_path, file_entity)
     self._put(creator, resource_path, file_entity)
   end
 

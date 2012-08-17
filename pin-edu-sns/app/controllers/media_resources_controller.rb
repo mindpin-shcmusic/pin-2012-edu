@@ -25,9 +25,9 @@ class MediaResourcesController < ApplicationController
   end
 
   def upload_file
-    slice_temp_file = SliceTempFile.find(params[:slice_temp_file_id])
+    file_entity = FileEntity.find(params[:file_entity_id])
     resource_path = URI.decode(request.fullpath).sub('/file_put', '')
-    MediaResource.put_slice_temp_file(current_user, resource_path, slice_temp_file)
+    MediaResource.put_file_entity(current_user, resource_path, file_entity)
     render :text=>200
   end
 
