@@ -11,27 +11,29 @@ class FileUploader
     @set_speed      = options.set_speed || ->
     @success        = options.success || ->
     @error          = options.error || ->
+    @close          = options.close || ->
 
     @bind_button()
+
+    File::mindpin_slice = 
+      File::slice ||
+      File::webkitSlice ||
+      File::mozSlice
 
   bind_button: ->
     that = this
 
     @$button.find('input[type=file]').live 'change', (evt)->
       files = evt.target.files
-
       jQuery.each files, (index, file)=>
-        # console.log file
-        # TODO 这里需要加入文件是否重复上传的判断
         new FileUploadWrapper(that, file).render().upload()
-
 
 class FileUploadWrapper
   constructor: (uploader, file)->
     @uploader = uploader
     @file = file
 
-    @file_name = jQuery.string(@file.name).escapeHTML().str
+    @file_name = @file.name
     @file_size = @file.size
     @uploaded_size = 0
 
@@ -56,6 +58,11 @@ class FileUploadWrapper
   error: (msg)->
     @uploader.error(@$elm, msg)
 
+  close: ->
+    @cancel = true
+    @xhr.abort()
+    @uploader.close(@$elm)
+
   get_size_str: ->
     mbs = @file_size / 1024 / 1024
     return "#{Math.floor(mbs * 100) / 100}MB"
@@ -68,26 +75,18 @@ class FileUploadWrapper
     @last_refreshed_time = new Date
 
     @xhr.open 'POST', @uploader.UPLOAD_URL, true
-    @xhr.send @get_form_data()
+    @xhr.send @build_form_data()
 
   xhr_onload: (evt)=>
-      # console.log '上传blob'
       status = @xhr.status
 
       if status >= 200 && status < 300 || status == 304
         res = jQuery.string(@xhr.responseText).evalJSON()
         @uploaded_size = res.saved_size
-
-        @set_progress_on_upload()
-
-        # console.log "文件大小: #{@file_size}"
-        # console.log "已上传: #{@uploaded_size}"
-
         @FILE_ENTITY_ID = @FILE_ENTITY_ID || res.file_entity_id
 
         @continue()
       else
-        # console.log "blob上传出错: #{status}"
         @error()
 
   set_progress_on_upload: ->
@@ -103,7 +102,7 @@ class FileUploadWrapper
     @set_progress percent
     @set_speed speed
 
-  get_form_data: ->
+  build_form_data: ->
     form_data = new FormData
     form_data.append 'name', @file_name
     form_data.append 'size', @file_size
@@ -114,31 +113,25 @@ class FileUploadWrapper
     return form_data
 
   continue: ->
+    return if @cancel == true
+
     if @is_finished()
-      console.log '上传完毕'
-      # @set_progress(100)
-
+      @set_progress(100)
       @success()
-
       return
 
+    @set_progress_on_upload()
     @upload()
 
   is_finished: ->
     return @uploaded_size >= @file.size
 
   get_next_blob: ->
-    File.prototype.mindpin_slice = 
-      File.prototype.slice ||
-      File.prototype.webkitSlice ||
-      File.prototype.mozSlice
-
     start_byte = @uploaded_size
     end_byte   = start_byte + @uploader.BLOB_SIZE
 
-    # console.log "blob分段: #{start_byte} - #{end_byte}"
-
     return @file.mindpin_slice(start_byte, end_byte)
+
 
 
 # 媒体资源
@@ -152,22 +145,24 @@ pie.load ->
     uploader = new FileUploader $upload_button,
       render: (file_wrapper)->
         # 显示上传框
-        $upload_box = jQuery('.page-upload-box')
-        $upload_box.delay(200).fadeIn(200)
+        pie.open_fbox 'upload_resource'
 
         # 添加上传进度条
-        $file_elm = $uploader_elm.find('.progress-bar-sample .file').clone()
-        $list = $uploader_elm.find('.uploading-files-list').append $file_elm
+        $file = $uploader_elm.find('.progress-bar-sample .file').clone()
+        $list = $uploader_elm.find('.uploading-files-list').append($file)
 
-        $file_elm.find('.name').html file_wrapper.file_name
-        $file_elm.find('.size').html file_wrapper.get_size_str()
+        $file.find('.name').html file_wrapper.file_name
+        $file.find('.size').html file_wrapper.get_size_str()
 
-        $file_elm
+        $file.find('a.close').click ->
+          file_wrapper.close()
+
+        $file
           .hide()
           .fadeIn(100)
           .appendTo $list
 
-        return $file_elm
+        return $file
 
       set_progress: ($wrapper, percent)->
         pstr = "#{percent}%"
@@ -186,10 +181,11 @@ pie.load ->
         # 创建媒体资源记录
         FILE_PUT_URL = '/file_put'
         CURRENT_PATH = $uploader_elm.data('current-path')
-
         file_name = file_wrapper.file_name
-
         url = jQuery.path_join(FILE_PUT_URL, CURRENT_PATH, file_name)
+
+        file_wrapper.$elm.addClass 'success'
+        file_wrapper.$elm.find('.state').html '上传完毕'
 
         jQuery.ajax
           url:  url
@@ -197,9 +193,15 @@ pie.load ->
           data:
             'file_entity_id' : file_wrapper.FILE_ENTITY_ID
 
-          success: (res)-> # 返回应该是一个字符串，新的 media_file_id
+          success: (res)->
             $list = jQuery('.page-media-resources')
-            $list.prepend jQuery(res).find('.media-resource')
+            $resource = jQuery(res).find('.media-resource')
+            id = $resource.data('id')
+
+            $list.find('.media-resource-blank').remove()
+            $list.find(".media-resource[data-id=#{id}]").remove()
+            $list.prepend $resource
+
             jQuery(document).trigger('ajax:create-resource')
 
           error: ->
@@ -207,7 +209,13 @@ pie.load ->
 
       error: ($wrapper, msg)->
         $wrapper.addClass 'error'
-        $wrapper.find('.error').append msg || ''
+        $wrapper.find('.state').html msg || '上传出错'
+
+      close: ($wrapper)->
+        $wrapper.addClass 'cancel'
+        $wrapper.find('.state').html '已取消'
+
+# -------------------
 
 # 作业附件上传
 pie.load ->
@@ -222,7 +230,6 @@ pie.load ->
         $list = jQuery('.page-homework-form .field.attachments')
 
         $file_elm.find('.name').html file_wrapper.file_name
-        # $file_elm.find('.size').html file_wrapper.get_size_str()
 
         $file_elm
           .hide()

@@ -1,81 +1,9 @@
 .page-media-file-uploader, .page-attachment-uploader{
-  .upload-drop-area{
-    margin:3px;
-    border:solid 1px #ddd;
-    background-color:#FFFAE8;
-    padding:14px;
-    position:relative;
-
-    $h:32px;
-    .upload-btn-box{
-      width:86px;
-      height:$h;
-      position:relative;
-      overflow:hidden;
-
-      .upload-btn{
-        display:block;
-        height:$h - 2px;line-height:$h - 2px;
-        width:84px;
-        @include gradient(#fda034, #FF8201);
-        border:1px solid rgba(black, 0.2);
-        @include border-radius(3px);
-        color:white;text-align: center;
-        text-shadow:0 -1px 1px rgba(black, 0.3);
-        font-size:14px;
-      }
-      input[type=file]{
-        position:absolute;
-        top:0;right:0;
-        font-size:118px;
-        opacity:0;
-        cursor:pointer;
-      }
-    }
-    .desc{
-      height:$h;line-height:$h;
-      position:absolute;
-      top:14px;left:114px;
-    }
-    a.form-cancel-button{
-      @include mini-button;
-      position:absolute;
-      top:14px;right:14px;
-      @include gradient(#666, #555);
-      &:hover{
-        @include gradient(gray, #6e6e6e);
-      }
-    }
-
-    .tip{
-      display:none;
-      margin-top:14px;
-      height:40px;line-height:40px;
-      border:dashed 1px rgba(black, 0.2);
-      padding:12px;
-      font-size:14px;
-      text-align:center;
-      color:rgba(black, 0.6);
-      background-color:rgba(black, 0.05);
-      .t2{display:none;}
-
-      &.dragover{
-        background-color:rgba(#6BACEB, 0.6);
-        color:white;
-        text-shadow:0 -1px 1px rgba(black, 0.3);
-        border-color:rgba(white, 0.4);
-        .t1{display:none;}
-        .t2{display:block;}
-      }
-    }
-  }
-
   .uploading-files-list{
-    // background-color:rgba(black, 0.05);
-    height:292px;
+    height:355px;
     overflow-y:auto;
     margin:3px;
-    border:solid 1px #ddd;
+    border:solid 1px #ccc;
   }
   .uploading-files-list, .progress-bar-sample{
     .file{
@@ -83,26 +11,49 @@
       padding:0 12px;
       position:relative;
 
-      @include transition(all ease-in .2s);
-
       &.error{
-        $c1:lighten(red, 10%); $c2 : #ccc;
+        background-color:white;
         .data{
-          // .name{color:$c2;};
-          .size{display:none;}
-          .percent{display:none;}
-          .speed{display:none;}
-          .error{color:$c1;display:block;width:100px;margin-right:12px;}
+          .attr{display:none;}
+          .state{
+            color:lighten(red, 10%);
+            display:block;width:100px;margin-right:12px;
+          }
         }
-        .bar{
-          display:none;
+        .bar{display:none;}
+        .ops a.close{display:none;}
+      }
+
+      &.cancel{
+        background-color:white;
+        .data{
+          .attr{display:none;}
+          .state{
+            color:#666;
+            display:block;width:100px;margin-right:12px;
+          }
         }
+        .bar{display:none;}
+        .ops a.close{display:none;}
+      }
+
+      &.success{
+        background-color:white;
+        .data{
+          .attr{display:none;}
+          .state{
+            color:lighten(green, 10%);
+            display:block;width:100px;margin-right:12px;
+          }
+        }
+        .bar{display:none;}
+        .ops a.close{display:none;}
       }
 
       .bar{
         position:absolute;
         top:0;bottom:0;left:0;right:0;
-        background-color:rgba(white, 0.8);
+        background-color:white;
         z-index:-1;
         .p{
           position:absolute;
@@ -116,7 +67,7 @@
         height:30px;line-height:30px;
         font-size:12px;
 
-        .name, .size, .percent, .speed, .error{
+        .name, .size, .percent, .speed, .state{
           text-overflow:ellipsis;
           white-space:nowrap;
           overflow:hidden;
@@ -127,11 +78,8 @@
         .size{width:100px;margin-right:12px;}
         .percent{width:40px;margin-right:12px;}
         .speed{width:100px;}
-        .error{display:none;}
-      }
 
-      .error-info{
-        display:none;
+        .state{display:none;}
       }
 
       .ops{
@@ -143,6 +91,7 @@
           @include icon-close-24(#666);
         }
       }
+
     }
   }
 }

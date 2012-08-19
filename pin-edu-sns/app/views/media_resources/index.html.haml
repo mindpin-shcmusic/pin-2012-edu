@@ -1,3 +1,5 @@
+- htitle '我的文件夹'
+
 - hbreadcrumb '首页', '/'
 - hbreadcrumb '我的文件夹'
 
@@ -28,20 +30,4 @@
 
 = render 'media_resources/parts/create_folder_box', :current_dir=>@current_dir
 = render 'media_resources/parts/upload_file_box', :current_dir=>@current_dir
-
 = render 'media_resources/parts/resources', :resources=>@media_resources
-
-.page-media-resource-show-wrapper{:style=>'display:none;'}
-  .box
-    .header
-      .hbox
-        .avatar
-        .title
-        .meta
-          %span.creator-name
-          %span 上传于
-          %span.uploaded-at
-
-      %a.close{:href=>'javascript:;'}
-    .bd
-      .cover
