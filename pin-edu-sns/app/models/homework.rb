@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 class Homework < ActiveRecord::Base
+  HOMEWORK_ATTACHMENTS_DIR = '/MINDPIN_MRS_DATA/attachments/homework_attachments'
+
   # --- 模型关联
   belongs_to :creator,
              :class_name => 'User',
@@ -67,7 +69,7 @@ class Homework < ActiveRecord::Base
 
   # 老师创建作业时生成的附件压缩包
   def build_teacher_attachments_zip(user)
-    path = "/MINDPIN_MRS_DATA/attachments/homework_attachments/homework_teacher#{user.id}_#{self.id}.zip"
+    path = "#{HOMEWORK_ATTACHMENTS_DIR}/homework_teacher#{user.id}_#{self.id}.zip"
     Zip::ZipFile.open(path, Zip::ZipFile::CREATE) do |zip|
       self.homework_teacher_attachments.each do |attachment|
         unless zip.find_entry(attachment.name)
@@ -80,7 +82,7 @@ class Homework < ActiveRecord::Base
   # 压缩学生提交的附件
   def build_student_uploads_zip(user)
     homework_id = self.id
-    path = "/MINDPIN_MRS_DATA/attachments/homework_attachments/homework_student#{user.id}_#{self.id}.zip"
+    path = "#{HOMEWORK_ATTACHMENTS_DIR}/homework_student#{user.id}_#{self.id}.zip"
     Zip::ZipFile.open(path, Zip::ZipFile::CREATE) do |zip|
       self.homework_student_uploads.where(:creator_id => user.id).each do |upload|
         zip.add(upload.name, upload.file_entity.attach.path)

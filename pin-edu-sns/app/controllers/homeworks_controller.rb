@@ -27,7 +27,7 @@ class HomeworksController < ApplicationController
   end
   
   def create_student_upload
-    upload = HomeworkStudentUpload.find_or_initialize_by_creator_id_and_requirement_id(params[:homework_student_upload][:creator_id], params[:homework_student_upload][:requirement_id])
+    upload = HomeworkStudentUpload.find_or_initialize_by_creator_id_and_requirement_id(current_user.id, params[:homework_student_upload][:requirement_id])
     upload.update_attributes params[:homework_student_upload]
     upload.save
     render :text => upload.name
@@ -110,14 +110,14 @@ class HomeworksController < ApplicationController
     
     homework.build_teacher_attachments_zip(homework.creator)
     
-    send_file "/MINDPIN_MRS_DATA/attachments/homework_attachments/homework_teacher#{homework.creator.id}_#{homework.id}.zip"
+    send_file "#{Homework::HOMEWORK_ATTACHMENTS_DIR}/homework_teacher#{homework.creator.id}_#{homework.id}.zip"
   end
 
   def download_student_zip
     homework = Homework.find(params[:homework_id])
     student = User.find(params[:user_id])
     homework.build_student_uploads_zip(student)
-    send_file "/MINDPIN_MRS_DATA/attachments/homework_attachments/homework_student#{student.id}_#{homework.id}.zip"
+    send_file "#{Homework::HOMEWORK_ATTACHMENTS_DIR}/homework_student#{student.id}_#{homework.id}.zip"
   end
 
   def set_finished
