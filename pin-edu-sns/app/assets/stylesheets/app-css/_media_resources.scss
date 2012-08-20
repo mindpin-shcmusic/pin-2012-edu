@@ -41,6 +41,10 @@
     padding-right:20px;
     margin-right:20px;
     padding-left:10px;
+    a{
+      color:#666;
+      &:hover{color:#333;}
+    }
   }
   .navs{
     float:left;
@@ -298,5 +302,40 @@
         &:hover{@include gradient(lighten(#FDA034, 10%), lighten(#FF8201, 10%));} 
       }
     }
+  }
+}
+
+
+.page-media-resources.shared{
+  margin-top:42px;
+}
+.page-media-resources.public{
+  margin-top:42px;
+}
+
+.page-media-share-users{
+  @include floatfix;
+  margin-top:32px;
+
+  .media-resource-blank{
+    height:28px;line-height:28px;
+    padding:11px;
+    border-bottom:solid 1px #E5E5E5;
+  }
+
+  .user{
+    height:32px;line-height:32px;
+    border-bottom:solid 1px #ddd;
+    @include floatfix;
+    padding:10px 0;
+
+    .avatar{
+      float:left;margin-right:10px;
+    }
+    .name{
+      float:left;margin-right:10px;
+      width:200px;
+    }
+
   }
 }
