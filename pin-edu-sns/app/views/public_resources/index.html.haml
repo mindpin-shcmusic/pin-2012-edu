@@ -1,23 +1,25 @@
-.page-media-resource-head
-  =render 'public_resources/parts/search_bar'
-  =render 'public_resources/parts/forms'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '公共资源库'
 
-.page-public-resource-nav
-  .go-parent-dir
-    - if @parent_category.blank?
-      %span.quiet 上一级
-    - else
-      %a{:href => "/public_resources?category_id=#{@parent_category.id}"} 上一级
-  .navs
-    %span= link_to '根目录', '/public_resources'
-    - @navigation_categories.each do |category|
-      %span= link_to category.name, "/public_resources?category_id=#{category.id}"
+- content_for :topbar do
+  = jsearchbar '/public_resources/search'
 
-.page-public-resources
-  - @items.each do |item|
-    - if item.is_a?(Category)
-      .category
-        %span= link_to item.name, "/public_resources?category_id=#{item.id}"
-    - else
-      .resource
-        = item.name
+.page-media-resource-fixed
+
+  / .page-media-resource-head    
+  /   .page-upload-button
+  /     %a.button{:href=>'javascript:;'} 上传文件
+  /     = file_field_tag :file, :multiple => true
+
+  .page-media-resource-nav
+    .go-parent-dir
+      - if @parent_category.blank?
+        %span.quiet 上一级
+      - else
+        %a{:href => "/public_resources?category_id=#{@parent_category.id}"} 上一级
+    .navs
+      %span= link_to '根目录', '/public_resources'
+      - @navigation_categories.each do |category|
+        %span= link_to category.name, "/public_resources?category_id=#{category.id}"
+
+= render 'public_resources/parts/resources', :items => @items

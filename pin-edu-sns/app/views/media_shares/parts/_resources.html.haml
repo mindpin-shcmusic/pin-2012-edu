@@ -1,0 +1,32 @@
+.page-media-resources.shared
+  - if resources.blank?
+    .media-resource-blank.quiet
+      这个目录下没有资源
+
+  - resources.each do |resource|
+    :ruby
+      cover_src = media_resource_cover_src(resource)
+      title = truncate_u(resource.name, 10)
+      creator_name = resource.creator.name
+      creator_avatar_src = resource.creator.logo.url
+      uploaded_at = resource.created_at
+      is_dir = resource.is_dir?
+      resource_url = "/media_shares/users/#{resource.creator.id}#{resource.path}"
+
+    .media-resource{:href=>'javascript:;', |
+      :'data-id' => resource.id, |
+      :'data-resource-url' => resource_url, |
+      :'data-title' => title, |
+      :'data-uploaded-at' => uploaded_at, |
+      :'data-creator-name' => creator_name, |
+      :'data-creator-avatar-src' => creator_avatar_src, |
+      :'data-is-dir' => is_dir.to_s }
+      .meta-box
+        .cover{:'data-src'=>cover_src}
+        .detail
+          .ftime= jtime uploaded_at
+          - if is_dir
+            .link.open= link_to '打开文件夹', resource_url
+          - else
+            .link.open= link_to '下载资源', resource_url
+        .title= title

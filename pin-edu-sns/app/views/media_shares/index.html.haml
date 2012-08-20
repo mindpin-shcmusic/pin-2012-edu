@@ -4,9 +4,15 @@
 - content_for :topbar do
   = jsearchbar '/media_shares/search'
 
-= render 'media_shares/parts/nav'
+.page-media-resource-fixed
+  = render 'media_shares/parts/nav'
 
-.page-media-share-shared-users
+.page-media-share-users
+  - if @shared_users.blank?
+    .media-resource-blank.quiet
+      没有收到任何共享
+
   - @shared_users.each do |user|
-    .shared-user
-      = link_to user.name, "/media_shares/users/#{user.id}"
+    .user
+      .avatar= avatar user, :tiny
+      .name= link_to user.name, "/media_shares/users/#{user.id}"

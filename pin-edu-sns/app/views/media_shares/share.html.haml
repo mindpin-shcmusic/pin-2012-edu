@@ -1,8 +1,7 @@
 - content_for :topbar do
   = jsearchbar '/media_shares/search'
 
-= render 'media_shares/parts/nav'
+.page-media-resource-fixed
+  = render 'media_shares/parts/nav'
 
-= render 'media_shares/parts/file_list', :resources => @media_resources
-        
-
+= render 'media_shares/parts/resources', :resources => @media_resources

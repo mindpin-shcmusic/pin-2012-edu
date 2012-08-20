@@ -1,0 +1,28 @@
+.page-media-resources.public
+  - items.each do |item|
+    - if item.is_a?(Category)
+      :ruby
+        category = item
+        cover_src = ''
+        title = category.name
+        resource_url = "/public_resources?category_id=#{category.id}"
+      .media-resource
+        .meta-box
+          .cover{:'data-src'=>cover_src}
+          .detail
+            .link.open= link_to '打开分类', resource_url
+          .title= title
+
+    - else
+      :ruby
+        public_resource = item
+        cover_src = ''
+        title = truncate_u(public_resource.name, 10)
+        resource_url = "javascript:;"
+
+      .media-resource
+        .meta-box
+          .cover{:'data-src'=>cover_src}
+          .detail
+            .link.open= link_to '下载资源', resource_url
+          .title= title
