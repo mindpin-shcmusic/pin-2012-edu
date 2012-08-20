@@ -29,9 +29,6 @@ class HomeworksController < ApplicationController
   def create_student_upload
     upload = HomeworkStudentUpload.find_or_initialize_by_creator_id_and_requirement_id(params[:homework_student_upload][:creator_id], params[:homework_student_upload][:requirement_id])
     upload.update_attributes params[:homework_student_upload]
-    upload.name = params[:file_name]
-    upload.file_entity = upload.file_entity || FileEntity.new
-    upload.file_entity.update_attributes :attach => params[:attachment], :merged => true
     upload.save
     render :text => upload.name
   end
@@ -79,7 +76,7 @@ class HomeworksController < ApplicationController
     @homework = Homework.find(params[:id])
     @homework.update_attributes(params[:homework])
     if @homework.save
-      @homework.share_to_expression({:teams => params[:teams]}.to_json)
+      @homework.assign_to_expression({:teams => params[:teams]}.to_json)
       
       if params[:teacher_attachment_ids]
         params[:teacher_attachment_ids].each do |id|
