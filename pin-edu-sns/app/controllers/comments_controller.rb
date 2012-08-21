@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class CommentsController < ApplicationController
   before_filter :login_required
   
@@ -47,5 +48,4 @@ class CommentsController < ApplicationController
     @comments = current_user.received_comments.paginate :page => params[:page],
                                                         :per_page => 20
   end
-
 end

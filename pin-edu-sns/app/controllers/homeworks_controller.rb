@@ -21,8 +21,6 @@ class HomeworksController < ApplicationController
       return redirect_to @homework
     end
     
-    error = @homework.errors.first
-    flash.now[:error] = "#{error[0]} #{error[1]}"
     redirect_to '/homeworks/new'
   end
   
