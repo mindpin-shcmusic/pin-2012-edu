@@ -1,4 +1,5 @@
 class FileEntitiesController < ApplicationController
+  include DownloadHelper
   before_filter :login_required
 
   def upload
@@ -18,5 +19,11 @@ class FileEntitiesController < ApplicationController
       :file_entity_id => file_entity.id,
       :saved_size => file_entity.saved_size
     }
+  end
+
+  def download
+    file_entity_id = get_file_entity_id_by_download_id(current_user,params[:download_id])
+    file_entity = FileEntity.find(file_entity_id)
+    send_file file_entity.attach.path
   end
 end

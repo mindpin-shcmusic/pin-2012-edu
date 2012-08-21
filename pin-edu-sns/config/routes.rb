@@ -161,6 +161,7 @@ MindpinEduSns::Application.routes.draw do
   get  'file_show/*path' => 'media_resources#file_show', :format => false
 
   post '/upload' => 'file_entities#upload'
+  get  '/download/:download_id' => 'file_entities#download'
 
   get '/media_resources/lazyload_sub_dynatree' => 'media_resources#lazyload_sub_dynatree'
   put '/media_resources/move' => 'media_resources#move'

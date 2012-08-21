@@ -11,7 +11,7 @@
       creator_avatar_src = resource.creator.logo.url
       uploaded_at = resource.created_at
       is_dir = resource.is_dir?
-      resource_url = File.join('/file', resource.path)
+      resource_url = is_dir ? File.join('/file', resource.path) : download_link(resource.file_entity)
       show_url = File.join('/file_show', resource.path)
 
       share_url = "/media_shares/new?resource_path=/file#{resource.path}"
