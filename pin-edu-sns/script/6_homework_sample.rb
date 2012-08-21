@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
-homework_data1 = ['作业1', '画一幅画。', 1.month.from_now]
-homework_data2 = ['作业2', '编一首曲子。', 2.weeks.from_now]
-homework_data3 = ['作业3', '写一篇论文。', 1.week.ago]
-homework_data4 = ['作业4', '剪辑一段视频。', 4.minute.from_now]
+homework_data1 = ['作业1', '画一幅画。', '一幅画', 1.month.from_now]
+homework_data2 = ['作业2', '编一首曲子。', '一首曲子', 2.weeks.from_now]
+homework_data3 = ['作业3', '写一篇论文。', '一篇论文',1.week.ago]
+homework_data4 = ['作业4', '剪辑一段视频。', '一段视频', 4.minute.from_now]
 HOMEWORKS_DATA = [homework_data1, homework_data2, homework_data3, homework_data4]
 TEACHERS       = Teacher.find(:all, :limit => 4)
 
@@ -17,8 +17,10 @@ ActiveRecord::Base.transaction do
     homework = Homework.create(:title        => homework_data[0],
                                :content      => homework_data[1],
                                :course       => course,
-                               :deadline     => homework_data[2],
+                               :deadline     => homework_data[3],
                                :creator      => teacher_user)
+
+    HomeworkRequirement.create :title => homework_data[2], :homework => homework
 
     homework.assign_to({:teams => teacher_user.teams.map(&:id)})
 
