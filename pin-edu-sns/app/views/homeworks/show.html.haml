@@ -71,7 +71,7 @@
   /       - else 
   /         %span 未签
 
-  - if current_user.is_student? && @homework.all_requirement_submitted_by?(current_user)
+  - if current_user.is_student? && @homework.all_requirements_uploaded_by?(current_user)
     .set-submitted
       %h3 提交作业
       = text_field_tag :content

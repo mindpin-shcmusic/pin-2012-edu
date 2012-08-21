@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   # --- 站内信
   include ShortMessage::UserMethods
 
+  include Comment::UserMethods
   include UserCommentTipMessage::UserMethods
   include UserShareRateTipMessage::UserMethods
   include UserMediaShareTipMessage::UserMethods
