@@ -51,6 +51,8 @@ class UserAvatarAdpater
     user.update_attributes(:logo=>croped_file)
 
     # 移除临时文件
+    croped_file.close
+    croped_file.unlink
     file_entity.destroy
   end
 
