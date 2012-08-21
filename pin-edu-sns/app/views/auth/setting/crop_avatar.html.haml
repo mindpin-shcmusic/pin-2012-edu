@@ -3,13 +3,6 @@
 
 -htitle '裁剪头像'
 
-- content_for :css do
-  = stylesheet_link_tag  '/jcrop/css/jquery.jcrop.css'
-
-- content_for :javascript do
-  = javascript_include_tag '/jcrop/js/jquery.jcrop.min.js'
-  = javascript_include_tag '/javascripts/views/image_cut.js'
-
 :ruby
   width, height = @temp_image_size[:width], @temp_image_size[:height]
   temp_image_url = "#{@temp_image_url}?#{randstr}"
