@@ -24,15 +24,6 @@ class HomeworkStudentUpload < ActiveRecord::Base
     end
     
     module InstanceMethods
-      def upload_for_requirement(requirement)
-        self.homework_student_uploads.find_by_requirement_id(requirement.id)
-      end
-
-      # 学生是否提交作业附件
-      def is_uploaded_for_requirement?(requirement)
-        !self.upload_for_requirement(requirement).blank?
-      end
-      
       # 学生上传作业提交物的数量
       # 参数 homework 是一个实例变量
       def uploaded_count_of_homework(homework)
@@ -41,3 +32,4 @@ class HomeworkStudentUpload < ActiveRecord::Base
     end
   end
 end
+

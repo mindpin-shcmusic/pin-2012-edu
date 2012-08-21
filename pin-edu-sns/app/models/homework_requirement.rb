@@ -1,3 +1,4 @@
+# -*- coding: no-conversion -*-
 class HomeworkRequirement < ActiveRecord::Base
   belongs_to :creator,
              :class_name => 'User',
@@ -13,6 +14,15 @@ class HomeworkRequirement < ActiveRecord::Base
     self.homework_student_uploads.where(:creator_id => user.id).first
   end
 
+  def upload_by(user)
+    user.homework_student_uploads.find_by_requirement_id(self.id)
+  end
+
+  # 学生是否提交作业附件
+  def is_uploaded_by?(user)
+    !self.upload_by(user).blank?
+  end
+  
   module UserMethods
     def self.included(base)
       base.has_many :homework_requirements,

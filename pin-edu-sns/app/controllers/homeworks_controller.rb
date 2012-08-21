@@ -27,8 +27,9 @@ class HomeworksController < ApplicationController
   end
   
   def create_student_upload
-    upload = HomeworkStudentUpload.find_or_initialize_by_creator_id_and_requirement_id(current_user.id, params[:homework_student_upload][:requirement_id])
-    upload.update_attributes params[:homework_student_upload]
+    requirement = HomeworkRequirement.find(params[:requirement_id])
+    upload = HomeworkStudentUpload.find_or_initialize_by_creator_id_and_requirement_id(current_user.id, requirement.id)
+    upload.homework = requirement.homework
     upload.save
     render :text => upload.name
   end

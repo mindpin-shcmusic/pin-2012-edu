@@ -10,6 +10,7 @@ module MindpinUtilHelper
     base.send(:include, CommentMethods)
     base.send(:include, FloatBoxMethods)
     base.send(:include, UploadMethods)
+    base.send(:include, TextMethods)
   end
 
   module LayoutMethods
@@ -179,6 +180,10 @@ module MindpinUtilHelper
       content_tag(:span, _friendly_relative_time(local_time), :class=>'date', :'data-date'=>local_time.to_i)
     end
 
+    def jtimeformat(time)
+      time.localtime.strftime('%Y年%m月%d日 %H:%M')
+    end
+
     private
       # 根据当前时间与time的间隔距离，返回时间的显示格式
       # 李飞编写
@@ -257,4 +262,11 @@ module MindpinUtilHelper
     end
 
   end
+
+  module TextMethods
+    def jct(text)
+      html_escape(text).gsub(/\n/, '<br />').html_safe
+    end
+  end
+
 end

@@ -69,7 +69,7 @@ class FileUploadWrapper
 
   upload: ->
     if 0 == @file_size
-      @show_error '请不要上传空文件'
+      @error '请不要上传空文件'
       return
 
     @last_refreshed_time = new Date
@@ -205,7 +205,7 @@ pie.load ->
             jQuery(document).trigger('ajax:create-resource')
 
           error: ->
-            file_wrapper.show_error
+            file_wrapper.error()
 
       error: ($wrapper, msg)->
         $wrapper.addClass 'error'
@@ -216,7 +216,6 @@ pie.load ->
         $wrapper.find('.state').html '已取消'
 
 # -------------------
-
 # 作业附件上传
 pie.load ->
 
@@ -249,8 +248,62 @@ pie.load ->
           $wrapper.find('.bar .p').animate({'width': pstr}, 100)
 
       success: (file_wrapper)->
-        # 创建媒体资源记录
         file_entity_id = file_wrapper.FILE_ENTITY_ID
 
         file_wrapper.$elm.find('input.fid').val(file_entity_id)
         file_wrapper.$elm.find('input.fname').val(file_wrapper.file_name)
+
+
+# --------------
+# 作业提交物上传
+pie.load ->
+  $upload_buttons = jQuery('.page-homework-show .page-upload-button')
+
+  $upload_buttons.each ->
+    $button = jQuery(this)
+
+    uploader = new FileUploader $button,
+      render: (file_wrapper)->
+        # 添加上传进度条
+        $file_elm = $button.closest('.requirement')
+        $file_elm
+          .removeClass('complete')
+          .removeClass('error')
+          .addClass('uploading')
+        $file_elm.find('.name').html file_wrapper.file_name
+
+        return $file_elm
+
+      set_progress: ($wrapper, percent)->
+        pstr = "#{percent}%"
+
+        $wrapper.find('.percent').html(pstr)
+
+        if 0 == percent
+          $wrapper.find('.bar .p').css('width', pstr)
+        else
+          $wrapper.find('.bar .p').animate({'width': pstr}, 100)
+
+      success: (file_wrapper)->
+        file_entity_id = file_wrapper.FILE_ENTITY_ID
+
+        URL = '/homeworks/create_student_upload'
+        requirement_id = file_wrapper.$elm.data('id')
+
+        jQuery.ajax
+          url: URL
+          type: 'POST'
+          data:
+            requirement_id: requirement_id
+            name: file_wrapper.file_name
+            file_entity_id: file_entity_id
+          success: (res)->
+            file_wrapper.$elm.addClass('complete').removeClass('uploading')
+          error: ->
+            file_wrapper.error()
+
+      error: ($wrapper, msg)->
+        $wrapper
+          .removeClass('complete')
+          .removeClass('uploading')
+          .addClass('error')

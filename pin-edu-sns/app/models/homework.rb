@@ -63,7 +63,7 @@ class Homework < ActiveRecord::Base
     self.assign_record_of(student_user).is_submit
   end
 
-  def all_requirement_submitted_by?(student_user)
+  def all_requirements_uploaded_by?(student_user)
     self.homework_requirements.count == student_user.uploaded_count_of_homework(self)
   end
 

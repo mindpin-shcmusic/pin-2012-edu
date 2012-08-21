@@ -42,9 +42,9 @@ pie.load ->
     del_field = "<a href='javascript:void(0)' class='delete'>x</a>"
     $('#student-attachement-fields').append("<p>" + attachement_field + del_field + "</p>")
 
-    # 删除表单
-  jQuery('a.delete').live 'click', ->
-    $(this).parent().remove()
+  #   # 删除表单
+  # jQuery('a.delete').live 'click', ->
+  #   $(this).parent().remove()
 
 
   jQuery('a.upload-teacher-homework-attachment-button').click ->
