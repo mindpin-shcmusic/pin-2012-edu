@@ -75,10 +75,13 @@ http {
       proxy_pass http://localhost:8080/;
     }
 
+    proxy_set_header  X-Accel-Mapping       /MINDPIN_MRS_DATA/=/attachments/;
+
     # attachments
     ##### /MINDPIN_MRS_DATA 这个路径，和 pin-2012-edu/property.yaml 中的 MINDPIN_MRS_DATA_PATH 对应
-    location /attachments {
-      root /MINDPIN_MRS_DATA;
+    location /attachments/ {
+      internal;
+      alias /MINDPIN_MRS_DATA/;
     }
 
     # === 主应用, app

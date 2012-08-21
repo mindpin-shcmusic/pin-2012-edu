@@ -14,6 +14,7 @@ class User < ActiveRecord::Base
   # --- 站内信
   include ShortMessage::UserMethods
 
+  include Comment::UserMethods
   include UserCommentTipMessage::UserMethods
   include UserShareRateTipMessage::UserMethods
   include UserMediaShareTipMessage::UserMethods
@@ -62,4 +63,19 @@ class User < ActiveRecord::Base
     "admin" == self.name && 1 == self.id
   end
 
+  def real_name
+    return self.name if self.is_admin?
+    teacher_or_student_real_name if is_teacher_or_student?
+  end
+
+private
+
+  def teacher_or_student_real_name
+    (self.student && self.student.real_name) ||
+    (self.teacher && self.teacher.real_name)
+  end
+
+  def is_teacher_or_student?
+    self.is_teacher? || self.is_student?
+  end
 end

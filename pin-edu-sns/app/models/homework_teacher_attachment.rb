@@ -7,4 +7,6 @@ class HomeworkTeacherAttachment < ActiveRecord::Base
              :foreign_key => 'creator_id'
   
   belongs_to :file_entity
+
+  validates :file_entity, :presence => true
 end
