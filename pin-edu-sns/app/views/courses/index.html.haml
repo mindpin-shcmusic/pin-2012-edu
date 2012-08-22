@@ -2,6 +2,10 @@
 - hbreadcrumb '课程'
 
 .page-courses-head
+  .tab
+    .item.all= link_to '全部课程', '/courses'
+    .item.mine= link_to '我的课程', '/courses/mine'
+
   .cells
     .cell.name 名称
     .cell.cid 编号
