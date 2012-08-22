@@ -1,10 +1,6 @@
-- htitle '我的文件夹'
-
 - hbreadcrumb '首页', '/'
 - hbreadcrumb '我的文件夹'
-
-- content_for :topbar do
-  = jsearchbar '/file_search'
+  
 
 .page-media-resource-fixed
   .page-media-resource-head
@@ -13,6 +9,9 @@
     .page-upload-button
       %a.button{:href=>'javascript:;'} 上传文件
       = file_field_tag :file, :multiple => true
+
+    .search
+      = jsearchbar '/file_search'
 
   .page-media-resource-nav
     .go-parent-dir

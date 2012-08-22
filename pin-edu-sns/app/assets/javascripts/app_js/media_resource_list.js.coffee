@@ -46,7 +46,8 @@ pie.load ->
   # delete
   jQuery(document).delegate '.page-media-resources .media-resource .link.delete a', 'click', ->
     $resource = jQuery(this).closest('.media-resource')
-    url = $resource.data('resource-url')
+    path = $resource.data('path')
+    url = "/file#{path}"
 
     jQuery(this).confirm_dialog '确定要删除吗', ->
       jQuery.ajax
@@ -72,8 +73,8 @@ pie.load ->
 
   # 打开移动目录窗口时，记录当前要移动的资源
   jQuery(document).delegate '.page-float-box[data-jfbox-id=move_dir]','mindpin:open-fbox',(evt)->
-    move_dir = evt.link_elm.closest('.media-resource').data('resource-path')
-    $dynatree.data('move_dir',move_dir)
+    move_dir = evt.link_elm.closest('.media-resource').data('path')
+    $dynatree.data('move_dir', move_dir)
 
   jQuery(document).delegate '.page-float-box[data-jfbox-id=move_dir] .submit-selected-dir','click',->
     active_dir = $dynatree.dynatree('getActiveNode').data.dir
@@ -88,4 +89,4 @@ pie.load ->
         success:(res)->
           window.location = "/file#{res}"
     else
-      alert("不能移动到自己")
+      alert('不能移动一个文件夹到它自己下面')
