@@ -25,11 +25,11 @@ class Course < ActiveRecord::Base
   end
 
   def get_user_ids
-    [student_users, teacher_user].flatten.map(&:id).sort
+    get_users.map(&:id).sort
   end
 
   def get_users
-    User.find get_user_ids
+    [student_users, teacher_user].flatten
   end
 
   def create_courses_image(file)
@@ -81,19 +81,14 @@ class Course < ActiveRecord::Base
 
     module InstanceMethods
       def courses
-        if self.is_teacher?
-          self.teacher_courses
-        elsif self.is_student?
-          self.student_courses
-        end
+        return self.teacher_courses if self.is_teacher?
+        return self.student_courses if self.is_student?
+        []
       end
 
       def courses=(courses)
-        if self.is_teacher?
-          self.teacher_courses = courses
-        elsif self.is_student?
-          self.student_courses = courses
-        end
+        return self.teacher_courses = courses if self.is_teacher?
+        return self.student_courses = courses if self.is_student?
       end
     end
   end

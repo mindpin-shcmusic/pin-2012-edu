@@ -9,7 +9,7 @@ class MediaSharesController < ApplicationController
   def new
     resource_path = params[:resource_path].sub('/file', '')
     @current_dir = MediaResource.get(current_user, resource_path)
-    @users = User.where("id != ? AND id != ?", current_user.id, 1)
+    @users = current_user.share_receiver_candidates
     @shared_receivers = @current_dir.shared_receivers
 
     @courses = current_user.courses

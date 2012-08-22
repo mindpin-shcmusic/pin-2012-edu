@@ -63,6 +63,8 @@ ActiveRecord::Base.transaction do
     puts ">>>>>>>> seeding course-#{counter}: #{courses[counter]}"
 
     Course.create(:name          => courses[counter],
+                  :cid           => "course-#{counter + 1}",
+                  :department    => '矿业和土木工程学院',
                   :teacher_user  => teacher.user,
                   :student_users => Student.all[counter, 30].map(&:user))
 
