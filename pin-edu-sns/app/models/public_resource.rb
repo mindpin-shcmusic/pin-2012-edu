@@ -31,6 +31,10 @@ class PublicResource < ActiveRecord::Base
     )
   end
 
+  def real_file_entity
+    return file_entity if is_upload?
+    return media_resource.file_entity
+  end
 
   # 给 User 类扩展方法，User类 include 这个 module
   module UserMethods
