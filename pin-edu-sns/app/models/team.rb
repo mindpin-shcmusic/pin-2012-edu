@@ -14,11 +14,11 @@ class Team < ActiveRecord::Base
   validates :cid, :uniqueness => { :if => Proc.new { |team| !team.cid.blank? } }
 
   def get_user_ids
-    [student_users, teacher_user].flatten.map(&:id).sort
+    get_users.map(&:id).sort
   end
 
   def get_users
-    User.find get_user_ids
+    [student_users, teacher_user].flatten
   end
 
   def self.import_from_csv(file)
@@ -48,11 +48,9 @@ class Team < ActiveRecord::Base
 
     module InstanceMethods
       def teams
-        if self.is_student?
-          [self.student_team]
-        elsif self.is_teacher?
-          self.teacher_teams
-        end
+        return [self.student_team] if self.is_student?
+        return self.teacher_teams if self.is_teacher?
+        []
       end
     end
   end
