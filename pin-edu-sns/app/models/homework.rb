@@ -67,6 +67,10 @@ class Homework < ActiveRecord::Base
     self.homework_requirements.count == student_user.uploaded_count_of_homework(self)
   end
 
+  def uploaded_count_of(student_user)
+    self.homework_student_uploads.where('creator_id = ?', student_user.id).count
+  end
+
   # 老师创建作业时生成的附件压缩包
   def build_teacher_attachments_zip(user)
     path = "#{HOMEWORK_ATTACHMENTS_DIR}/homework_teacher#{user.id}_#{self.id}.zip"
