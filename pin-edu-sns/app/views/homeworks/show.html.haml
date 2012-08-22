@@ -75,10 +75,18 @@
   /         %span 未签
 
   - if current_user.is_student? && @homework.all_requirements_uploaded_by?(current_user)
-    .submit
-      .title 作业提交附言:
-      = text_area_tag :content
-      = link_to '确定提交', 'javascript:;', :data => {:url => "/homeworks/#{@homework.id}/student/#{current_user.id}/set_submitted"}
+    :ruby
+      data = {
+        :url => "/homeworks/#{@homework.id}/set_submitted"
+      }
+
+    .student-submit{:data=>data}
+      %form
+        .field
+          %label 你现在可以提交作业了，如果有附言，写在这里:
+          = text_area_tag :content
+        .field.submit
+          = jfbutton '确定提交作业'
 
 - if logged_in?
   = jcomments @homework

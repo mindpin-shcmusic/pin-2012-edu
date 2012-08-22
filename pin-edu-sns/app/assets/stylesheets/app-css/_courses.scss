@@ -1,7 +1,7 @@
 @mixin course-cells{
   .cell{
     float:left;
-    height:40px;line-height:40px;
+    height:50px;line-height:50px;
     overflow:hidden;
     white-space:nowrap;
     text-overflow:ellipsis;
@@ -26,19 +26,37 @@
   background:url(bodybg.gif);
   box-shadow:0 1px 2px rgba(black, 0.07);
 
+  .tab{
+    @include floatfix;
+    margin:0;
+    padding:10px 20px;
+    background-color:rgba(white, 0.6);
+    .item{
+      height:32px;line-height:32px;
+      float:left;
+      margin-right:10px;
+      background-color:#444;
+      padding:0 12px;
+      color:white;
+      @include border-radius(3px);
+    }
+  }
+
   .cells{
     @include floatfix;
     margin:0;
-    padding:11px 20px 0 20px;
+    padding:0 20px 0 20px;
     background-color:rgba(0, 0, 0, 0.05);
-    border-bottom:1px solid #CCCCCC;
+    border-top:solid 1px #ddd;
+    border-bottom:solid 1px #ccc;
 
     @include course-cells;
   }
 }
 
 .page-courses{
-  margin-top:22px;
+  margin-top:22px + 52px;
+  margin-bottom:20px;
 
   .course{
     @include floatfix;

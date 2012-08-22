@@ -20,7 +20,7 @@
     
     .field  
       %label 请选择要布置作业的班级
-      = select_tag :teams, options_from_collection_for_select(@teams, :id, :name, @selected_teams), :multiple => true, :class => 'students-selector', :style => 'width:256px;', :data => {:placeholder => '请选择'}
+      = select_tag :teams, options_from_collection_for_select(@teams, :id, :name, @selected_teams), :multiple => true, :class => 'teams-selector', :style => 'width:256px;', :data => {:placeholder => '请选择'}
     
     .field.attachments
       %label 老师作业附件
@@ -47,7 +47,7 @@
             = link_to '删除', 'javascript:;', :data => {:'destroy-url' => "/homeworks/requirement/#{requirement.id}/destroy"}
 
       %a.add-student-attachement-field{:href => "javascript:;"} 添加+
-      %div{:id => "student-attachement-fields"}
+      .student-attachement-fields
       
     .field.submit
       = jfsubmit "布置作业"
