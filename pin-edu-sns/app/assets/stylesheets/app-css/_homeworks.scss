@@ -203,4 +203,21 @@
       height:80px;
     }
   }
+
+  .teacher-info{
+    .students-list{
+      .student{
+        @include floatfix;
+        border-bottom:solid 1px #ddd;
+        padding:10px 0;
+
+        .cell{
+          float:left;
+          width:100px;
+          height:24px;line-height:24px;
+          margin-right:10px;
+        }
+      }
+    }
+  }
 }
