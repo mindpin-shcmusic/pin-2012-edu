@@ -169,6 +169,7 @@ MindpinEduSns::Application.routes.draw do
   get  '/download/:download_id' => 'file_entities#download'
 
   get '/media_resources/lazyload_sub_dynatree' => 'media_resources#lazyload_sub_dynatree'
+  get '/media_resources/reload_dynatree'       => 'media_resources#reload_dynatree'
   put '/media_resources/move' => 'media_resources#move'
 
   resources :media_shares do

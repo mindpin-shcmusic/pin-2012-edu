@@ -33,7 +33,7 @@ pie.load ->
 # 资源查看 -> 分享资源到公共资源库
 pie.load ->
   $public_resource = jQuery('.page-media-resource .share-state .public-resource')
-  $dynatree = jQuery('.dynatree')
+  $dynatree = jQuery('.page-media-resource .share-state .public-resource .page-float-box[data-jfbox-id=set_category] .dynatree')
 
   $dynatree.dynatree
     debugLevel: 0
