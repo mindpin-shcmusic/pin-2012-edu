@@ -75,11 +75,13 @@ http {
       proxy_pass http://localhost:8080/;
     }
 
-    proxy_set_header  X-Accel-Mapping       /MINDPIN_MRS_DATA/=/attachments/;
-
     # attachments
     ##### /MINDPIN_MRS_DATA 这个路径，和 pin-2012-edu/property.yaml 中的 MINDPIN_MRS_DATA_PATH 对应
     location /attachments/ {
+      root /MINDPIN_MRS_DATA/;
+    }
+
+    location /download_mapping/ {
       internal;
       alias /MINDPIN_MRS_DATA/;
     }
@@ -94,6 +96,7 @@ http {
       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
       proxy_set_header X-Real-IP $remote_addr;
       proxy_set_header X-Scheme $scheme;
+      proxy_set_header  X-Accel-Mapping       /MINDPIN_MRS_DATA/=/download_mapping/;
 
       if ($request_uri ~* "\.(ico|css|js|gif|jpe?g|png)\?[0-9A-Za-z]+$") { expires max; break; }
       if (!-f $request_filename) { proxy_pass http://shcmusic-pin-edu-sns-server; }
