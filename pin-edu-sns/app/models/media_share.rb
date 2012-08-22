@@ -52,6 +52,11 @@ class MediaShare < ActiveRecord::Base
         MediaResource.joins('inner join media_shares on media_shares.media_resource_id = media_resources.id').
           where('media_shares.receiver_id = ? and media_shares.creator_id = ?',self.id,user.id)          
       end
+
+      def share_receiver_candidates
+        (self.courses + self.teams).map(&:get_users).flatten.uniq.compact.select {|user| user.id != self.id}
+      end
+
     end
 
   end

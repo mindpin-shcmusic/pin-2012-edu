@@ -18,8 +18,8 @@
             "/locations/#{@course.location}"
 .attr
   老师
-  = link_to @course.teacher && @course.teacher.real_name,
-            @course.teacher
+  = link_to @course.teacher_user && @course.teacher_user.real_name,
+            @course.teacher_user
 .attr
   = link_to "上传图片","/courses/#{@course.id}/upload_image_page"
 

@@ -37,12 +37,15 @@
       .title 作业要求提交以下内容
       .list
         - requirements.each do |requirement|
-          .requirement{:'data-id'=>requirement.id}
+          :ruby
+            klass = requirement.is_uploaded_by?(current_user) ? 'complete' : ''
+
+          .requirement{:'data-id'=>requirement.id, :class=>klass}
             .t= requirement.title
             - if current_user.is_student?
               .ops
                 .error 上传出错 ×，你可以重新上传
-                .complete 已上传完毕 √，你可以重新上传
+                .complete 已经上传完毕 √，你可以重新上传
                 .upload= jupload_button '上传文件'
               .upload-data
                 .bar
@@ -72,10 +75,10 @@
   /         %span 未签
 
   - if current_user.is_student? && @homework.all_requirements_uploaded_by?(current_user)
-    .set-submitted
-      %h3 提交作业
-      = text_field_tag :content
-      = link_to '标记为已提交', 'javascript:;', :data => {:url => "/homeworks/#{@homework.id}/student/#{current_user.id}/set_submitted"}
+    .submit
+      .title 作业提交附言:
+      = text_area_tag :content
+      = link_to '确定提交', 'javascript:;', :data => {:url => "/homeworks/#{@homework.id}/student/#{current_user.id}/set_submitted"}
 
 - if logged_in?
   = jcomments @homework
