@@ -37,7 +37,7 @@
           .avatar= avatar_link current_user, :mini
           .name>
             %span> 你好，
-            %span>= user_link current_user
+            %span= user_link current_user
             - if current_user.is_teacher?
               %span 老师
             - if current_user.is_student?

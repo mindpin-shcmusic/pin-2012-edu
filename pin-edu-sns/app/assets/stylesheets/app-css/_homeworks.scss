@@ -192,4 +192,15 @@
       }
     }
   }
+
+  .student-submit{
+    border-top:solid 2px #ccc;
+    border-bottom:solid 2px #ccc;
+    padding:20px 0;
+
+    textarea{
+      width:500px;
+      height:80px;
+    }
+  }
 }
