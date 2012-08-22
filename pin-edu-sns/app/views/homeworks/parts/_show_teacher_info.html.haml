@@ -1,0 +1,26 @@
+.teacher-info
+  :ruby
+    requirements_count = homework.homework_requirements.count
+
+  .students-list
+    - homework.homework_assigns.each do |assign|
+      - uploaded_count = assign.user.uploaded_count_of_homework(homework)
+      .student
+        .avatar
+        .name
+          %a{:href => "/homeworks/#{assign.homework_id}/student/#{assign.user_id}"} 
+            = assign.user.real_name
+
+        = uploaded_count
+        %span /
+        = requirements_count
+
+        - if uploaded_count == requirements_count
+          %span 完成
+        - else
+          %span 未完成
+
+        - if assign.has_finished
+          %span 已确认
+        - else 
+          %span 未确认
