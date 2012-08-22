@@ -1,9 +1,9 @@
 .student-info
+  - requirements = homework.homework_requirements
+
   - if homework.has_submitted_by? current_user
     .submitted
       你已经提交了这个作业，等待老师检查。
-
-
   - else
     - if !requirements.blank?
       .requirements
