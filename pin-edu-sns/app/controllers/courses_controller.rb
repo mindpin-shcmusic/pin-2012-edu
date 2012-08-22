@@ -6,7 +6,11 @@ class CoursesController < ApplicationController
 
 
   def index
-    @courses = Course.all
+    @courses = Course.paginated(params[:page])
+  end
+
+  def mine
+    @courses = current_user.courses.paginated(params[:page])
   end
 
   def show

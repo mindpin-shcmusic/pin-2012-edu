@@ -65,6 +65,7 @@ ActiveRecord::Base.transaction do
     Course.create(:name          => courses[counter],
                   :cid           => "course-#{counter + 1}",
                   :department    => '矿业和土木工程学院',
+                  :location      => "第一教学楼第16#{rand 4}教室",
                   :teacher_user  => teacher.user,
                   :student_users => Student.all[counter, 30].map(&:user))
 

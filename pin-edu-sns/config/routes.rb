@@ -134,7 +134,11 @@ MindpinEduSns::Application.routes.draw do
   resources :homeworks, :student
 
   resources :teachers
+
+  # 查看当前用户参与或负责的课程
+  get 'courses/mine' => 'courses#mine'
   resources :courses
+
   resources :notifications do
     collection do
       post :read_all
