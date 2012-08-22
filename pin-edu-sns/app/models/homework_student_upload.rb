@@ -20,15 +20,6 @@ class HomeworkStudentUpload < ActiveRecord::Base
                     :class_name  => 'HomeworkStudentUpload',
                     :foreign_key => 'creator_id'
 
-      base.send(:include, InstanceMethods)
-    end
-    
-    module InstanceMethods
-      # 学生上传作业提交物的数量
-      # 参数 homework 是一个实例变量
-      def uploaded_count_of_homework(homework)
-        self.homework_student_uploads.where(:homework_id => homework.id).count
-      end
     end
   end
 end

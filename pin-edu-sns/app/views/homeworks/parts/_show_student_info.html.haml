@@ -1,0 +1,40 @@
+.student-info
+  - requirements = homework.homework_requirements
+
+  - if homework.has_submitted_by? current_user
+    .submitted
+      你已经提交了这个作业，等待老师检查。
+  - else
+    - if !requirements.blank?
+      .requirements
+        .title 作业要求提交以下内容
+        .list
+          - requirements.each do |requirement|
+            :ruby
+              klass = requirement.is_uploaded_by?(current_user) ? 'complete' : ''
+
+            .requirement{:'data-id'=>requirement.id, :class=>klass}
+              .t= requirement.title
+              .ops
+                .error 上传出错 ×，你可以重新上传
+                .complete 已经上传完毕 √，你可以重新上传
+                .upload= jupload_button '上传文件'
+              .upload-data
+                .bar
+                  .p{:style=>'width:20%;'}
+                .percent 0%
+                .name
+
+    -if homework.all_requirements_uploaded_by?(current_user)
+      :ruby
+        data = {
+          :url => "/homeworks/#{@homework.id}/set_submitted"
+        }
+
+      .student-submit{:data=>data}
+        %form
+          .field
+            %label 你现在可以提交作业了，如果有附言，写在这里:
+            = text_area_tag :content
+          .field.submit
+            = jfbutton '确定提交作业'

@@ -121,6 +121,11 @@ module MindpinUtilHelper
       end
     end
 
+    def jfbutton(text)
+      content_tag :a, text, :href => 'javascript:;',
+                            :class => 'form-button'
+    end
+
     # 表单里的提交按钮
     def jfsubmit(text)
       # %a.form-submit-button{:href=>'javascript:;'} 登录

@@ -1,0 +1,29 @@
+.teacher-info
+  :ruby
+    requirements_count = homework.homework_requirements.count
+
+  .students-list
+    - homework.homework_assigns.each do |assign|
+      :ruby
+        user = assign.user
+        user_link = "/homeworks/#{homework.id}/students/#{assign.user_id}"
+
+        uploaded_count = homework.uploaded_count_of user
+
+        submitted = homework.has_submitted_by? user
+        finished = assign.has_finished
+
+      .student
+        .cell.avatar= avatar user, :mini
+        .cell.name= link_to user.real_name, user_link
+
+        .cell.count
+          %span= uploaded_count
+          %span /
+          %span= requirements_count
+
+        .cell.submitted
+          %span= submitted ? '已完成' : '未完成'
+
+        .cell.finished
+          %span= finished ? '已确认' : '未确认'

@@ -27,6 +27,7 @@ class HomeworksController < ApplicationController
   def create_student_upload
     requirement = HomeworkRequirement.find(params[:requirement_id])
     upload = HomeworkStudentUpload.find_or_initialize_by_creator_id_and_requirement_id(current_user.id, requirement.id)
+    upload.file_entity_id = params[:file_entity_id]
     upload.homework = requirement.homework
     upload.save
     render :text => upload.name
@@ -128,11 +129,7 @@ class HomeworksController < ApplicationController
   end
 
   def set_submitted
-    unless (current_user.is_student? && current_user.id == params[:user_id].to_i)
-      return redirect_to '/'
-    end
-
-    assign = HomeworkAssign.find_by_homework_id_and_user_id params[:homework_id], params[:user_id]
+    assign = HomeworkAssign.find_by_homework_id_and_user_id params[:homework_id], current_user.id
     assign.homework.set_submitted_by!(current_user, params[:content])
     render :text => 'set submitted!'
   end

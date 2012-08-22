@@ -4,81 +4,39 @@
 
 :ruby
   attachments = @homework.homework_teacher_attachments
-  requirements = @homework.homework_requirements
 
 .page-homework-show
-  .head
-    .title= @homework.title
-    .user #{user_link @homework.creator} 创建，#{jtime @homework.created_at}
+  .common-info
+    .head
+      .title= @homework.title
+      .user #{user_link @homework.creator} 创建，#{jtime @homework.created_at}
 
-  .content
-    .title 作业要求
-    .ct= jct @homework.content
+    .content
+      .title 作业要求
+      .ct= jct @homework.content
 
-  .deadline
-    .title 过期时间
-    .time= jtimeformat @homework.deadline
-    .state
-      = Time.now < @homework.deadline ? '未过期' : '已过期'
+    .deadline
+      .title 过期时间
+      .time= jtimeformat @homework.deadline
+      .state
+        = Time.now < @homework.deadline ? '未过期' : '已过期'
 
-  - if !attachments.blank?
-    .attachments
-      .title 作业参考附件
-      .list
-        - attachments.each do |attachment|
-          .file
-            .cover
-            .name= link_to attachment.name, 'javascript:;'
-      .zip
-        %a.down{:href=>"/homeworks/#{@homework.id}/download_teacher_zip"} 打包下载附件
-    
-  - if !requirements.blank?
-    .requirements
-      .title 作业要求提交以下内容
-      .list
-        - requirements.each do |requirement|
-          :ruby
-            klass = requirement.is_uploaded_by?(current_user) ? 'complete' : ''
+    - if !attachments.blank?
+      .attachments
+        .title 作业参考附件
+        .list
+          - attachments.each do |attachment|
+            .file
+              .cover
+              .name= link_to attachment.name, 'javascript:;'
+        .zip
+          %a.down{:href=>"/homeworks/#{@homework.id}/download_teacher_zip"} 打包下载附件
 
-          .requirement{:'data-id'=>requirement.id, :class=>klass}
-            .t= requirement.title
-            - if current_user.is_student?
-              .ops
-                .error 上传出错 ×，你可以重新上传
-                .complete 已经上传完毕 √，你可以重新上传
-                .upload= jupload_button '上传文件'
-              .upload-data
-                .bar
-                  .p{:style=>'width:20%;'}
-                .percent 0%
-                .name
+  - if current_user.is_student?
+    = render '/homeworks/parts/show_student_info', :homework => @homework
 
-  / - if current_user.is_teacher?
-  /   %div
-  /     - @homework.homework_assigns.each do |assign|
-  /       - uploaded_count = assign.user.uploaded_count_of_homework(@homework)
-  /       %p
-  /         %a{:href => "/homeworks/#{assign.homework_id}/student/#{assign.user_id}"} 
-  /           = assign.user.student.real_name
-  /       = uploaded_count
-  /       %span /
-  /       = student_attachments_count
+  - if current_user.is_teacher?
+    = render '/homeworks/parts/show_teacher_info', :homework => @homework
 
-  /       - if uploaded_count == student_attachments_count
-  /         %span 完成
-  /       - else
-  /         %span 未完成
 
-  /       - if assign.has_finished
-  /         %span 已签
-  /       - else 
-  /         %span 未签
-
-  - if current_user.is_student? && @homework.all_requirements_uploaded_by?(current_user)
-    .submit
-      .title 作业提交附言:
-      = text_area_tag :content
-      = link_to '确定提交', 'javascript:;', :data => {:url => "/homeworks/#{@homework.id}/student/#{current_user.id}/set_submitted"}
-
-- if logged_in?
-  = jcomments @homework
+= jcomments @homework
