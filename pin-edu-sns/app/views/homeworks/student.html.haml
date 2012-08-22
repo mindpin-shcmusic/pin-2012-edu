@@ -6,39 +6,40 @@
   uploaded_count = @homework.uploaded_count_of(@student_user)
   
   
-%h1 学生:#{@student_user.student.real_name} 作业:#{@homework.title} 完成情况
+.page-homework-student
+  %h1 学生:#{@student_user.student.real_name} 作业:#{@homework.title} 完成情况
 
-= link_to '返回作业描述页面', @homework
+  = link_to '返回作业描述页面', @homework
 
-%div 作业内容
-%p= @homework.content
+  %div 作业内容
+  %p= @homework.content
 
-.student-home-work-status
-  = uploaded_count.to_s + "/" + student_attachments_count.to_s
-  - if uploaded_count == student_attachments_count
-    %span 完成
-    %span.signed{:class => @homework.has_finished_by?(@student_user) ? '' : 'hide'} 已签收
-  - else
-    %span 未完成
-    
-%div
-  %h4
-    学生是否已确定提交: #{@homework.has_submitted_by?(@student_user) ? '是' : '否'}
-  - @homework.homework_requirements.each do |requirement|
-    %p
+  .student-home-work-status
+    = uploaded_count.to_s + "/" + student_attachments_count.to_s
+    - if uploaded_count == student_attachments_count
+      %span 完成
+      %span.signed{:class => @homework.has_finished_by?(@student_user) ? '' : 'hide'} 已签收
+    - else
+      %span 未完成
+
+  %div
+    %h4
+      学生是否已确定提交: #{@homework.has_submitted_by?(@student_user) ? '是' : '否'}
+    - @homework.homework_requirements.each do |requirement|
       = requirement.title
       - if requirement.is_uploaded_by?(@student_user)
         - current_upload = requirement.upload_of_user(@student_user)
-        %span 已提交
-        %a{:href => "#{current_upload.file_entity.attach.url}"} 下载
-        = jcomments current_upload
+        .upload{:'data-id' => current_upload.id}
+          %span 已提交
+          %a{:href => "#{current_upload.file_entity.attach.url}"} 下载
+          = link_to "#{current_upload.comments.count} 评论", 'javascript:;', :class => 'comments-count'
       - else
         %span 未提交
 
-%p
-  %a{:href => "/homeworks/#{@homework.id}/student/#{@student_user.id}/download_student_zip"} zip包下载
+  %p
+    %a{:href => "/homeworks/#{@homework.id}/student/#{@student_user.id}/download_student_zip"} zip包下载
 
-- if !@homework.has_finished_by?(@student_user) && current_user == @homework.creator && @homework.has_submitted_by?(@student_user)
-  .set-finished
-    %h3 验收作业
-    = link_to '标记为已验收', 'javascript:;', :data => {:url => "/homeworks/#{@homework.id}/student/#{@student_user.id}/set_finished"}
+  - if !@homework.has_finished_by?(@student_user) && current_user == @homework.creator && @homework.has_submitted_by?(@student_user)
+    .set-finished
+      %h3 验收作业
+      = link_to '标记为已验收', 'javascript:;', :data => {:url => "/homeworks/#{@homework.id}/student/#{@student_user.id}/set_finished"}

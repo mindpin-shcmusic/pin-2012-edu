@@ -74,3 +74,25 @@ pie.load ->
         content: content
       success: =>
         console.log(111)
+
+
+
+  jQuery('.page-homework-student .upload a.comments-count').live 'click', ->
+    $upload = jQuery(this).closest('.upload')
+    model_id = $upload.data('id')
+    model_type = 'HomeworkStudentUpload'
+
+    if $upload.find('.page-comments').exists()
+      $upload.find('.page-comments').fadeOut 200, ->
+        $upload.find('.page-comments').remove()
+    else
+      jQuery.ajax
+        url: '/comments/show_model_comments'
+        type: 'GET'
+        data: {
+          'model_id' : model_id
+          'model_type' : model_type
+        }
+        success: (res)->
+          $comments = jQuery(res)
+          $comments.appendTo($upload).hide().fadeIn(200)

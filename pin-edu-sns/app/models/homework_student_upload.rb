@@ -12,6 +12,8 @@ class HomeworkStudentUpload < ActiveRecord::Base
   belongs_to :file_entity
   belongs_to :homework
 
+  validates :file_entity, :presence => true
+
   include Comment::CommentableMethods
   # --- 给其他类扩展的方法
   module UserMethods
