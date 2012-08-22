@@ -6,6 +6,8 @@
   background-color:rgba(white, 0.95);
 
   a.box-close{
+    @include icon-close-24(white);
+    
     width:24px;height:24px;
     overflow:hidden;
     line-height:20em;
@@ -21,8 +23,6 @@
     }
 
     @include border-radius(3px);
-
-    
   }
 
   .box-title{
