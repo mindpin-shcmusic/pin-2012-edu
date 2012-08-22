@@ -21,8 +21,10 @@ pie.load ->
 # 点击列表项
 pie.load ->
   $dynatree = jQuery('.page-float-box[data-jfbox-id=move_dir] .dynatree')
+
   reload_dynatree = () ->
-    console.log('reload')
+    console.log('reload dynatree')
+    pie.dont_show_loading_bar()
     jQuery.ajax
       url: '/media_resources/reload_dynatree'
       type: 'GET'

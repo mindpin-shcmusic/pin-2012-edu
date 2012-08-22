@@ -40,10 +40,22 @@
 
         .title= link_to title, open_url
 
-:ruby
-  dynatree_data = @current_dir.blank? ? MediaResource.root_dynatree(current_user) : @current_dir.preload_dynatree
-  current_dir_path = @current_dir.blank? ? "" : @current_dir.path
   
 = jfbox :move_dir, '移动到文件夹' do
-  .dynatree{:data=>{:children=>dynatree_data.to_json,:current_dir=>current_dir_path}}
-  .submit-selected-dir= link_to "确定移动", "javascript:;"
+  :ruby
+    is_root = @current_dir.blank?
+
+    dynatree_data = is_root ? MediaResource.root_dynatree(current_user) : @current_dir.preload_dynatree
+    current_dir_path = is_root ? '' : @current_dir.path
+
+    html_data = {
+      :children => dynatree_data.to_json,
+      :current_dir => current_dir_path
+    }
+
+  .page-resource-tree
+    .box
+      .dynatree{:data=>html_data}
+    .ops
+      .submit-selected-dir= link_to '确定移动', 'javascript:;'
+      %a.close-fbox{:href=>'javascript:;', :onclick=>"pie.close_fbox('move_dir')"} 关闭

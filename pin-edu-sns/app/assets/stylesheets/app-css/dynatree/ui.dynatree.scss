@@ -3,8 +3,8 @@
  */
 ul.dynatree-container
 {
-	font-family: tahoma, arial, helvetica;
-	font-size: 10pt; /* font size should not be too big */
+	// font-family: tahoma, arial, helvetica;
+	font-size:12px; /* font size should not be too big */
 	white-space: nowrap;
 	padding: 3px;
 	margin: 0; /* issue 201 */
@@ -57,9 +57,7 @@ ul.dynatree-no-connector > li
 }
 
 
-/*******************************************************************************
- * Common icon definitions
- */
+// Common icon definitions
 span.dynatree-empty,
 span.dynatree-vline,
 span.dynatree-connector,
@@ -72,14 +70,10 @@ span.dynatree-drag-helper-img,
 {
 	width: 16px;
 	height: 16px;
-/*	display: -moz-inline-box; /* @ FF 1+2 removed for issue 221*/
-/*	-moz-box-align: start; /* issue 221 */
-	display: inline-block; /* Required to make a span sizeable */
+	display: inline-block;
 	vertical-align: top;
-	background-repeat: no-repeat;
-	background-position: left;
-	background-image: url("dynatree/icons.gif");
-	background-position: 0 0;
+	background:url('dynatree/icons.gif') 0 0 no-repeat;
+	margin-top:1px;
 }
 
 /** Used by 'icon' node option: */
@@ -272,17 +266,13 @@ span.dynatree-icon /* Default icon */
 /*	background-image: url("ltError.gif");*/
 }
 
-/*******************************************************************************
- * Node titles
- */
+//Node titles
 
-/* @Chrome: otherwise hit area of node titles is broken (issue 133)
-   Removed again for issue 165; (133 couldn't be reproduced) */
-span.dynatree-node
-{
-/*	display: -moz-inline-box; /* issue 133, 165, 172, 192. removed for issue 221 */
-/*	-moz-box-align: start; /* issue 221 */
-/*  display: inline-block; /* Required to make a span sizeable */
+// @Chrome: otherwise hit area of node titles is broken (issue 133)
+// Removed again for issue 165; (133 couldn't be reproduced)
+span.dynatree-node{
+	display:block;
+	height:18px;
 }
 
 
@@ -316,7 +306,7 @@ span.dynatree-node a
 /*	vertical-align: top;*/
 	padding-left: 3px;
 	padding-right: 3px; /* Otherwise italic font will be outside bounds */
-	/*	line-height: 16px; /* should be the same as img height, in case 16 px */
+	line-height: 16px; /* should be the same as img height, in case 16 px */
 }
 span.dynatree-folder a
 {

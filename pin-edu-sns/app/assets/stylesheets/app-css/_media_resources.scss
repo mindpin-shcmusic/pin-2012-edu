@@ -207,7 +207,7 @@
       }
 
       .title{
-        font-size:14px;
+        font-size:12px;
         height:20px;line-height:20px;
         margin-top:5px;
         color:#666;
@@ -216,6 +216,10 @@
         white-space:nowrap;
         text-overflow:ellipsis;
         overflow:hidden;
+        a{
+          color:#666;
+          &:hover{color:#333;text-decoration:underline;}
+        }
       }
     }
 
@@ -375,5 +379,35 @@
       width:200px;
     }
 
+  }
+}
+
+.page-resource-tree{
+  .box{
+    border:solid 1px #ddd;
+    margin:3px;
+    height:298px;
+    overflow:auto;
+    background-color:#fff;
+
+    ul.dynatree-container{
+      border:none;
+    }
+  }
+  .ops{
+    margin:14px;
+    @include floatfix;
+
+    .submit-selected-dir a{
+      @include mini-button;
+    }
+
+    .submit-selected-dir{
+      float:left;
+      margin-right:14px;
+    }
+    a.close-fbox{
+      @include mini-button-black;
+    }
   }
 }
