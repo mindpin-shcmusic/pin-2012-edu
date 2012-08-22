@@ -24,7 +24,7 @@
             %a.link.homeworks{:href=>homeworks_path} 布置的作业
           - if current_user.is_student?
             %a.link.homeworks{:href=>homeworks_path} 我的作业
-          %a.link.courses{:href=>'/courses'} 课程
+          %a.link.courses{:href=>'/courses/mine'} 我的课程
           %a.link.short-messages{:href=>inbox_short_messages_path} 站内信
           %a.link.notifications{:href=>notifications_path} 通知
 
@@ -38,6 +38,10 @@
           .name>
             %span> 你好，
             %span>= user_link current_user
+            - if current_user.is_teacher?
+              %span 老师
+            - if current_user.is_student?
+              %span 同学
 
           %a.setting{:href=>'/auth/setting'} 设置
           %a.logout{:href=>'/auth/logout'} 退出登录

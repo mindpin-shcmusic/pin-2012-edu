@@ -3,8 +3,8 @@
 
 .page-courses-head
   .tab
-    .item.all= link_to '全部课程', '/courses'
-    .item.mine= link_to '我的课程', '/courses/mine'
+    %a.item.mine{:href=>'/courses/mine'} 我的课程
+    %a.item.all{:href=>'/courses'} 全部课程
 
   .cells
     .cell.name 名称
@@ -27,3 +27,5 @@
       .cell.teacher
         .avatar= avatar_link course.teacher_user, :tiny
         .name= user_link course.teacher_user
+
+.page-paginate= will_paginate @courses

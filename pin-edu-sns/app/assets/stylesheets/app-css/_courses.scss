@@ -29,11 +29,16 @@
   .tab{
     @include floatfix;
     margin:0;
-    padding:20px;
+    padding:10px 20px;
     background-color:rgba(white, 0.6);
     .item{
+      height:32px;line-height:32px;
       float:left;
-      margin-right:20px;
+      margin-right:10px;
+      background-color:#444;
+      padding:0 12px;
+      color:white;
+      @include border-radius(3px);
     }
   }
 
@@ -50,7 +55,8 @@
 }
 
 .page-courses{
-  margin-top:22px + 61px;
+  margin-top:22px + 52px;
+  margin-bottom:20px;
 
   .course{
     @include floatfix;

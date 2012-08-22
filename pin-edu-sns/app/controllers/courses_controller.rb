@@ -11,6 +11,7 @@ class CoursesController < ApplicationController
 
   def mine
     @courses = current_user.courses.paginated(params[:page])
+    render :index
   end
 
   def show
