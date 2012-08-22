@@ -67,24 +67,24 @@ pie.load ->
         url: '/media_resources/lazyload_sub_dynatree'
         type: 'GET'
         data:
-          parent_media_resource_id: node.data.id
-          move_media_resource_id: $dynatree.data('move_media_resource_id')
+          parent_dir: node.data.dir
+          move_dir: $dynatree.data('move_dir')
 
   # 打开移动目录窗口时，记录当前要移动的资源
   jQuery(document).delegate '.page-float-box[data-jfbox-id=move_dir]','mindpin:open-fbox',(evt)->
-    move_media_resource_id = evt.link_elm.closest('.media-resource').data('id')
-    $dynatree.data('move_media_resource_id',move_media_resource_id)
+    move_dir = evt.link_elm.closest('.media-resource').data('resource-path')
+    $dynatree.data('move_dir',move_dir)
 
   jQuery(document).delegate '.page-float-box[data-jfbox-id=move_dir] .submit-selected-dir','click',->
-    active_media_resource_id = $dynatree.dynatree('getActiveNode').data.id
-    move_media_resource_id = $dynatree.data('move_media_resource_id')
-    if active_media_resource_id != move_media_resource_id
+    active_dir = $dynatree.dynatree('getActiveNode').data.dir
+    move_dir = $dynatree.data('move_dir')
+    if active_dir != move_dir
       jQuery.ajax
         url: '/media_resources/move'
         type: 'PUT'
         data:
-          media_resource_id: move_media_resource_id
-          to_dir_id: active_media_resource_id
+          current_dir: move_dir
+          to_dir: active_dir
         success:(res)->
           window.location = "/file#{res}"
     else

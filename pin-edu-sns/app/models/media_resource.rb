@@ -227,7 +227,7 @@ class MediaResource < ActiveRecord::Base
   def self.root_dynatree(user)
     root_resources = user.media_resources.root_res.dir_res
     [{
-      :title => '根目录', :isFolder => true, :activate => true, :id => 0,
+      :title => '根目录', :isFolder => true, :activate => true, :dir => "",
       :children=>_preload_dynatree(root_resources,[]), :expand => true
     }]
   end
@@ -237,7 +237,7 @@ class MediaResource < ActiveRecord::Base
     ancestor_resources = self_and_ancestors-[self]
     children = self.class._preload_dynatree(root_resources,ancestor_resources,self)
     [{
-      :title => '根目录', :isFolder => true, :activate => true, :id => 0,
+      :title => '根目录', :isFolder => true, :activate => true, :dir => "",
       :children=>children, :expand => true
     }]
   end
@@ -251,7 +251,7 @@ class MediaResource < ActiveRecord::Base
       expand = ancestor_resources.include?(resource) ? true : false
 
       {
-        :title => resource.name, :id => resource.id,
+        :title => resource.name, :dir => resource.path,
         :isFolder => true, :children => children,
         :expand => expand, :activate => activate, :isLazy => isLazy
       }
@@ -265,7 +265,7 @@ class MediaResource < ActiveRecord::Base
       isLazy = resource.media_resources.dir_res.blank? ? false : true
       isLazy = false if move_media_resource == resource
       {
-        :title => resource.name, :id => resource.id,
+        :title => resource.name, :dir => resource.path,
         :isFolder => true, :isLazy => isLazy
       }
     end
