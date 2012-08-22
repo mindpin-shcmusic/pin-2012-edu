@@ -21,6 +21,8 @@ module ApplicationMethods
   #----------------------
 
   def hold_ie6
+    return if params[:controller] == 'file_entities' && params[:action] == 'download'
+    
     if /MSIE 6/.match(request.user_agent)
       render "layouts/status_page/hold_ie6",:layout=>false
     end
