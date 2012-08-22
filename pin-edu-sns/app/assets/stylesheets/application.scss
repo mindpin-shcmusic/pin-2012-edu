@@ -1,7 +1,3 @@
-// lib
-@import 'chosen';
-@import 'kalendae';
-
 // basic css，don't change
 // -----------------
 @import 'base/mixins';
@@ -35,10 +31,13 @@
 @import 'app-css/admin';
 @import 'app-css/student_upload';
 @import 'app-css/homeworks';
+@import 'app-css/courses';
+
 //kaid added this
 @import 'app-css/tip-message';
 @import 'app-css/datepicker/jquery-ui-datepicker-timepicker-addon';
 @import 'app-css/datepicker/datepicker';
+@import 'app-css/chosen/chosen';
 //fushang318 added this
 @import 'app-css/dynatree/ui.dynatree';
 @import 'app-css/avatar_crop/jquery.jcrop';

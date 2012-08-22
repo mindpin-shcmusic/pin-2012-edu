@@ -1,30 +1,25 @@
-= render 'breadcrumb_bar'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '课程'
 
-%table
-  %thead
-    %tr
-      %th 课程名
-      %th 课程号
-      %th 院系
-      %th 上课地点
-      %th 老师
+.page-courses-head
+  .cells
+    .cell.name 名称
+    .cell.cid 编号
+    .cell.department 开课院系
+    .cell.location 上课地点
+    .cell.teacher 任课老师
 
-  %tbody
-    - @courses.each do |c|
-      %tr
-        %td
-          = link_to c.name,
-                    c
-        %td
-          = link_to c.cid,
-                    c
-        %td
-          = link_to c.department,
-                    "/departments/#{c.department}"
-        %td
-          = link_to c.location,
-                    "/locations/#{c.location}"
-        %td
-          = link_to c.teacher_user.teacher.real_name,
-                    c.teacher_user
-
+.page-courses
+  - @courses.each do |course|
+    .course
+      .cell.name
+        = link_to hspan(course.name), course
+      .cell.cid
+        = link_to hspan(course.cid), course
+      .cell.department
+        = hspan(course.department)
+      .cell.location
+        = hspan(course.location)
+      .cell.teacher
+        .avatar= avatar_link course.teacher_user, :tiny
+        .name= user_link course.teacher_user
