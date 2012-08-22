@@ -43,7 +43,8 @@
 
 :ruby
   dynatree_data = @current_dir.blank? ? MediaResource.root_dynatree(current_user) : @current_dir.preload_dynatree
+  current_dir_path = @current_dir.blank? ? "" : @current_dir.path
   
 = jfbox :move_dir, "移动目录" do
-  .dynatree{:data=>{:children=>dynatree_data.to_json}}
+  .dynatree{:data=>{:children=>dynatree_data.to_json,:current_dir=>current_dir_path}}
   .submit-selected-dir= link_to "确定移动", "javascript:;"

@@ -109,6 +109,16 @@ class MediaResourcesController < ApplicationController
     render :json => @media_resource.lazyload_sub_dynatree(@move_media_resource)
   end
 
+  def reload_dynatree
+    if params[:dir].blank?
+      data = MediaResource.root_dynatree(current_user)
+    else
+      media_resource = MediaResource.get(current_user, params[:dir])
+      data = media_resource.preload_dynatree
+    end
+    render :json => data
+  end
+
   def move
     @media_resource = MediaResource.find(params[:media_resource_id])
     @media_resource.dir_id = params[:to_dir_id]
