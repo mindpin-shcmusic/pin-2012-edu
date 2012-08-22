@@ -83,7 +83,7 @@ module MindpinUtilHelper
   module UserSignMethods
     def user_link(user)
       return '未知用户' if user.blank?
-      link_to user.name, "/users/#{user.id}", :class=>'u-name'
+      link_to user.real_name, "/users/#{user.id}", :class=>'u-name'
     end
   end
 
@@ -266,6 +266,14 @@ module MindpinUtilHelper
   module TextMethods
     def jct(text)
       html_escape(text).gsub(/\n/, '<br />').html_safe
+    end
+
+    # 有时需要显示的文字为空，但又需要占位时，可以使用此方法
+    def hspan(text, replace = '--')
+      if text.blank?
+        return content_tag :span, replace, :class => 'quiet'
+      end
+      return content_tag :span, text
     end
   end
 
