@@ -128,11 +128,7 @@ class HomeworksController < ApplicationController
   end
 
   def set_submitted
-    unless (current_user.is_student? && current_user.id == params[:user_id].to_i)
-      return redirect_to '/'
-    end
-
-    assign = HomeworkAssign.find_by_homework_id_and_user_id params[:homework_id], params[:user_id]
+    assign = HomeworkAssign.find_by_homework_id_and_user_id params[:homework_id], current_user.id
     assign.homework.set_submitted_by!(current_user, params[:content])
     render :text => 'set submitted!'
   end
