@@ -1,51 +1,61 @@
 .page-media-resources
   - if resources.blank?
     .media-resource-blank.quiet
-      这个目录下没有资源
+      这个文件夹下没有资源
 
   - resources.each do |resource|
     :ruby
       cover_src = media_resource_cover_src(resource)
-      title = truncate_u(resource.name, 10)
-      creator_name = resource.creator.name
-      creator_avatar_src = resource.creator.logo.url
+      title = resource.name
       uploaded_at = resource.created_at
+
       is_dir = resource.is_dir?
-      resource_url = is_dir ? File.join('/file', resource.path) : download_link(resource.file_entity)
-      show_url = File.join('/file_show', resource.path)
+
+      if is_dir
+        open_url = File.join('/file', resource.path)
+      else
+        open_url = File.join('/file_show', resource.path)
+        download_url = download_link(resource.file_entity)
+      end
 
       share_url = "/media_shares/new?resource_path=/file#{resource.path}"
 
-    .media-resource{:href=>'javascript:;', |
-      :'data-id' => resource.id, |
-      :'data-resource-path' => resource.path, |
-      :'data-resource-url' => resource_url, |
-      :'data-title' => title, |
-      :'data-uploaded-at' => uploaded_at, |
-      :'data-creator-name' => creator_name, |
-      :'data-creator-avatar-src' => creator_avatar_src, |
-      :'data-is-dir' => is_dir.to_s }
+      html_data = {
+        :'id'     => resource.id,
+        :'path'   => resource.path
+      } 
+
+    .media-resource{:href=>'javascript:;', :data=>html_data}
       .meta-box
         .cover{:'data-src'=>cover_src}
         .detail
           .ftime= jtime uploaded_at
           
-          - if is_dir
-            .link.open= link_to '打开文件夹', resource_url
-          - else
-            .link.open= link_to '打开查看', show_url
-            .link.open= link_to '下载资源', resource_url
+          .link.share= link_to '共享给…', share_url
+          .link.move-dir= jfbox_link :move_dir, '移动到…'
 
-          .link.share= link_to '共享给他人', share_url
-          .link.delete= link_to '删除资源', 'javascript:;'
-          .link.move-dir= jfbox_link :move_dir, '移动目录'
+          - if !is_dir
+            .link.download= link_to '下　载', download_url
+          .link.delete= link_to '删　除', 'javascript:;'
 
-        .title= title
+        .title= link_to title, open_url
 
-:ruby
-  dynatree_data = @current_dir.blank? ? MediaResource.root_dynatree(current_user) : @current_dir.preload_dynatree
-  current_dir_path = @current_dir.blank? ? "" : @current_dir.path
   
-= jfbox :move_dir, "移动目录" do
-  .dynatree{:data=>{:children=>dynatree_data.to_json,:current_dir=>current_dir_path}}
-  .submit-selected-dir= link_to "确定移动", "javascript:;"
+= jfbox :move_dir, '移动到文件夹' do
+  :ruby
+    is_root = @current_dir.blank?
+
+    dynatree_data = is_root ? MediaResource.root_dynatree(current_user) : @current_dir.preload_dynatree
+    current_dir_path = is_root ? '' : @current_dir.path
+
+    html_data = {
+      :children => dynatree_data.to_json,
+      :current_dir => current_dir_path
+    }
+
+  .page-resource-tree
+    .box
+      .dynatree{:data=>html_data}
+    .ops
+      .submit-selected-dir= link_to '确定移动', 'javascript:;'
+      %a.close-fbox{:href=>'javascript:;', :onclick=>"pie.close_fbox('move_dir')"} 关闭

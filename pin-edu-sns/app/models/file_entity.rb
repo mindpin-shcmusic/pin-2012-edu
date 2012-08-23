@@ -16,7 +16,8 @@ class FileEntity < ActiveRecord::Base
         'png', 'svg',  'tif', 'gif'
       ].map{|x| file_content_type(x)}.uniq,
     :document => [
-        'pdf', 'xls', 'doc', 'ppt'
+        'pdf', 'xls', 'doc', 'ppt', 
+        'txt'
       ].map{|x| file_content_type(x)}.uniq
   }
 

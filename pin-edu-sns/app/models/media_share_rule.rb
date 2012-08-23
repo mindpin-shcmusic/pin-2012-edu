@@ -105,7 +105,7 @@ class MediaShareRule < ActiveRecord::Base
 
   module MediaResourceMethods
     def self.included(base)
-      base.has_one :media_share_rule
+      base.has_one :media_share_rule, :dependent => :destroy
 
       base.send    :include,
                    InstanceMethods

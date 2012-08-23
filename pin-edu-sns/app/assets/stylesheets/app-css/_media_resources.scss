@@ -15,14 +15,23 @@
   padding:20px;
   background-color:rgba(white, 0.6);
 
-  .create-folder-button, .upload-file-button{
+  .create-folder-button{
     @include mini-button;
     float:left;margin-right:20px;
-  }
-  .create-folder-button{
     @include gradient(#2079C1, #1F659A);
     &:hover{
       @include gradient(lighten(#2079C1, 10%), lighten(#1F659A, 10%));
+    }
+  }
+
+  .page-upload-button{
+    float:left;
+  }
+
+  .search{
+    float:right;
+    form .field{
+      margin-bottom:0;
     }
   }
 }
@@ -119,7 +128,7 @@
 
 .page-media-resources{
   @include floatfix;
-  margin-top:114px;
+  margin-top:124px;
 
   .media-resource-blank{
     height:28px;line-height:28px;
@@ -140,7 +149,7 @@
     .meta-box{
       @include border-radius(3px);
       box-shadow:0 1px 2px rgba(black, 0.07);
-      padding:10px;
+      padding:5px;
       background-color:white;
       position:relative;
 
@@ -155,17 +164,41 @@
         opacity:0;
         @include transition(all ease-in .2s);
         position:absolute;
-        width:180px;height:130px;padding:10px;
-        top:10px;left:10px;
+        width:190px;height:140px;padding:5px;
+        top:5px;left:5px;
         color:#888;
         overflow:hidden;
-        .fname{
-          color:#444;font-size:14px;font-weight:bold;line-height:1.2em;
-          margin-bottom:4px;
-        }
-        .ftime{font-size:12px;margin-bottom:6px;}
 
-        .link{font-size:14px;}
+        .ftime{font-size:12px;margin-bottom:6px;}
+        .link{
+          font-size:14px;
+          @include floatfix;
+          margin-bottom:5px;
+          a{
+            @include mini-button-black;
+            height:22px;line-height:22px;
+            width:50px;
+            padding:0 7px;
+            font-size:12px;
+          }
+
+          &.download a{
+            @include mini-button-blue;
+            height:22px;line-height:22px;
+            width:50px;
+            padding:0 7px;
+            font-size:12px;
+          }
+
+          &.delete a{
+            @include mini-button-red;
+            height:22px;line-height:22px;
+            width:50px;
+            padding:0 7px;
+            font-size:12px;
+          }
+
+        }
       }
       &:hover{
         .detail{
@@ -175,9 +208,18 @@
 
       .title{
         font-size:12px;
-        height:12px;line-height:12px;
-        margin-top:10px;
+        height:20px;line-height:20px;
+        margin-top:5px;
         color:#666;
+        width:200px - 10px;
+        padding-left:5px;
+        white-space:nowrap;
+        text-overflow:ellipsis;
+        overflow:hidden;
+        a{
+          color:#666;
+          &:hover{color:#333;text-decoration:underline;}
+        }
       }
     }
 
@@ -337,5 +379,46 @@
       width:200px;
     }
 
+  }
+}
+
+.page-resource-tree{
+  .box{
+    border:solid 1px #ddd;
+    margin:3px;
+    height:298px;
+    overflow:auto;
+    background-color:#fff;
+
+    ul.dynatree-container{
+      border:none;
+    }
+  }
+  .ops{
+    margin:14px;
+    @include floatfix;
+
+    .submit-selected-dir a{
+      @include mini-button;
+    }
+
+    .submit-selected-dir{
+      float:left;
+      margin-right:14px;
+    }
+    a.close-fbox{
+      @include mini-button-black;
+    }
+  }
+}
+
+.page-media-share-form{
+  margin-top:52px;
+
+  .field.course, .field.team{
+    border:solid 1px #ddd;
+    background-color:rgba(black, 0.05);
+    margin-top:20px;
+    padding:10px;
   }
 }

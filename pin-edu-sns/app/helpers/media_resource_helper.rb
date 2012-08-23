@@ -50,7 +50,11 @@ module MediaResourceHelper
       return File.join('http://', request.host, file_entity.attach.url(:small))
     when :audio
       return '/assets/covers/audio.small.png'
-    else '/assets/covers/document.small.png'
+    when :video
+      return '/assets/covers/video.small.png'
+    when :document
+      return '/assets/covers/document.small.png'
+    else '/assets/covers/normal.small.png'
     end
   end
 

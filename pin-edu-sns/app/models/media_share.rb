@@ -65,7 +65,7 @@ class MediaShare < ActiveRecord::Base
   # 给 MediaResource 类扩展方法，MediaResource 类 include 这个 module
   module MediaResourceMethods
     def self.included(base)
-      base.has_many :media_shares
+      base.has_many :media_shares, :dependent => :destroy
       base.has_many :shared_receivers, :through => :media_shares, :source => :receiver
 
       base.send(:extend, ClassMethods)

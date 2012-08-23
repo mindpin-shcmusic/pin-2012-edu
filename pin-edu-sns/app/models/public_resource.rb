@@ -33,6 +33,7 @@ class PublicResource < ActiveRecord::Base
 
   def real_file_entity
     return file_entity if is_upload?
+    return if media_resource.blank?
     return media_resource.file_entity
   end
 
@@ -67,7 +68,8 @@ class PublicResource < ActiveRecord::Base
   module MediaResourceMethods
     def self.included(base)
       base.has_one :shared_public_resource,
-                   :class_name  => 'PublicResource', :foreign_key => 'media_resource_id'
+                   :class_name  => 'PublicResource', :foreign_key => 'media_resource_id',
+                   :dependent => :destroy
 
       base.send(:include, InstanceMethods)
     end

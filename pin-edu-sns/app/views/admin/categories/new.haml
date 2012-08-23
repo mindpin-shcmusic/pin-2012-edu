@@ -1,11 +1,16 @@
-.page-title 创建数据分类
+- htitle '资源分类维护'
+
+- hbreadcrumb '基础数据管理', '/admin'
+- hbreadcrumb '资源分类维护', '/admin/categories'
+- hbreadcrumb '创建新资源分类'
 
 .page-admin-form
-  =flash[:error]
-  =form_for [:admin,@category] do |f|
+  = flash_info
+  = form_for [:admin, @category] do |f|
     .field
       %label 分类名称
-      =f.text_field :name
-      =hidden_field_tag :parent_id, params[:parent_id]
-    .field
-      %a.form-submit-button{:href=>'javascript:;'} 确定创建
+      = f.text_field :name
+      = hidden_field_tag :parent_id, params[:parent_id]
+    .field.submit
+      = jfsubmit '确定'
+      = jfcancel '取消'

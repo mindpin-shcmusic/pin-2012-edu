@@ -3,14 +3,15 @@
 - hbreadcrumb '基础数据管理', '/admin'
 - hbreadcrumb '班级维护'
 
-- content_for :topbar do
-  = jsearchbar search_admin_teams_path
-
 .page-admin-ops
   %a.create{:href=>'/admin/teams/new'} 增加班级
   %a.import{:href=>'/admin/teams/import_from_csv_page'} 批量导入班级
+  .search
+    = jsearchbar search_admin_teams_path
+
+.page-paginate= will_paginate @teams
 
 .page-admin-models.teams
   = render 'team_list', :teams => @teams
-
+  
 .page-paginate= will_paginate @teams

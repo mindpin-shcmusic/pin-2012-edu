@@ -3,12 +3,11 @@
 - hbreadcrumb '基础数据管理', '/admin'
 - hbreadcrumb '学生维护'
 
-- content_for :topbar do
-  = jsearchbar search_admin_students_path
-
 .page-admin-ops
   %a.create{:href=>'/admin/students/new'} 增加学生
   %a.import{:href=>'/admin/students/import_from_csv_page'} 批量导入学生
+  .search
+    = jsearchbar search_admin_students_path
 
 .page-paginate= will_paginate @students
 
