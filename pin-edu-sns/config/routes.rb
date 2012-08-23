@@ -161,12 +161,12 @@ MindpinEduSns::Application.routes.draw do
 
   get    '/file_attr/*path/edit_tag' => 'media_resources#edit_tag'
   post   '/file_attr/*path/update_tag' => 'media_resources#update_tag'
-  post   '/file_attr/*path/re_encode'  => 'media_resources#re_encode'
 
   get  'file_show/*path' => 'media_resources#file_show', :format => false
 
   post '/upload' => 'file_entities#upload'
   get  '/download/:download_id' => 'file_entities#download'
+  post   '/file_entities/:id/re_encode'  => 'file_entities#re_encode'
 
   get '/media_resources/lazyload_sub_dynatree' => 'media_resources#lazyload_sub_dynatree'
   get '/media_resources/reload_dynatree'       => 'media_resources#reload_dynatree'

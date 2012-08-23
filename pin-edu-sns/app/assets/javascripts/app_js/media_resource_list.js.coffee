@@ -79,9 +79,21 @@ pie.load ->
     $dynatree.data('move_dir', move_dir)
 
   jQuery(document).delegate '.page-float-box[data-jfbox-id=move_dir] .submit-selected-dir','click',->
-    active_dir = $dynatree.dynatree('getActiveNode').data.dir
+    active_dir_node = $dynatree.dynatree('getActiveNode')
+    active_dir = active_dir_node.data.dir
     move_dir = $dynatree.data('move_dir')
+
     if active_dir != move_dir
+      has_same_name_dir = false
+      move_title = move_dir.split("/").pop()
+      items = active_dir_node.childList || []
+      jQuery.each items,(index,item)->
+        if item.data.title == move_title
+          has_same_name_dir = true
+      if has_same_name_dir
+        alert('目标目录中有同名字目录，不能移动')
+        return 
+
       jQuery.ajax
         url: '/media_resources/move'
         type: 'PUT'
