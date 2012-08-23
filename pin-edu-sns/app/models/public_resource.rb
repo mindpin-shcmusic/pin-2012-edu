@@ -101,6 +101,23 @@ class PublicResource < ActiveRecord::Base
         shared_public_resource.blank? ? nil : shared_public_resource.category
       end
 
+      def public_resources_of_same_category(limit = 0)
+        return [] if shared_public_resource.blank?
+
+        category = category_of_shared_public_resource
+        if category.blank?
+          public_resources = PublicResource.no_category
+        else
+          public_resources = PublicResource.of_category(category)
+        end
+        public_resources = public_resources.where("id != #{shared_public_resource.id}")
+
+        if limit != 0
+          public_resources = public_resources.limit(limit.to_i)
+        end
+        public_resources
+      end
+
     end
 
   end

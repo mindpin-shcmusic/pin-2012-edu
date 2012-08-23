@@ -1,10 +1,83 @@
-.page-homeworks{
-  .ops{
+@mixin homework-cells{
+  .cell{
+    float:left;
+    height:50px;line-height:50px;
     overflow:hidden;
-    margin-bottom:20px;
+    white-space:nowrap;
+    text-overflow:ellipsis;
+    overflow:hidden;
+    margin-right:20px;
+
+    &.title{width:200px;}
+    &.deadline{width:200px;}
+    &.attach{width:50px;}
+    &.course{width:200px;}
+    &.count{width:100px;}
+  }
+}
+
+.page-homeworks-head{
+  position:fixed;
+  top:0px;
+  left:210px;right:0;
+  z-index:8;
+  padding:50px 0 0 0;
+  background-color:#eee;
+  background:url(bodybg.gif);
+  box-shadow:0 1px 2px rgba(black, 0.07);
+
+  .tab{
+    @include floatfix;
+    margin:0;
+    padding:10px 20px;
+    background-color:rgba(white, 0.6);
+    .item{
+      height:32px;line-height:32px;
+      float:left;
+      margin-right:10px;
+      background-color:#444;
+      padding:0 12px;
+      color:white;
+      @include border-radius(3px);
+    }
 
     a.new-homework{
       @include mini-button;
+      margin-left:10px;
+    }
+  }
+
+  .cells{
+    @include floatfix;
+    margin:0;
+    padding:0 20px 0 20px;
+    background-color:rgba(0, 0, 0, 0.05);
+    border-top:solid 1px #ddd;
+    border-bottom:solid 1px #ccc;
+
+    @include homework-cells;
+  }
+}
+
+.page-homeworks{
+  margin-top:22px + 62px;
+  margin-bottom:20px;
+
+  .homework{
+    @include floatfix;
+    margin:0;
+    padding:10px 0;
+    border-bottom:1px solid #CCCCCC;
+
+    @include homework-cells;
+    .cell{
+      height:32px;line-height:32px;
+    }
+    .cell.teacher{
+      @include floatfix;
+      .avatar{
+        float:left;margin-right:10px;
+      }
     }
   }
 }

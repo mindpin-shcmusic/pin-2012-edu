@@ -278,15 +278,6 @@
     }
   }
 
-  .preview{
-    width:640px;height:400px;
-    padding:20px;
-    box-shadow:0 1px 2px rgba(0, 0, 0, 0.07);
-    @include border-radius(3px);
-    background-color:#fff;
-    margin-bottom:20px;
-  }
-
   .share-state{
     @include floatfix;
 
@@ -420,5 +411,36 @@
     background-color:rgba(black, 0.05);
     margin-top:20px;
     padding:10px;
+  }
+}
+
+.page-file-entity-preview{
+  width:640px;
+  padding:10px;
+  box-shadow:0 1px 2px rgba(0, 0, 0, 0.07);
+  @include border-radius(3px);
+  background-color:#fff;
+  margin-bottom:20px;
+  .state{
+    height:24px;line-height:24px;
+    font-size:16px;
+  }
+
+  .video-screenshots{
+    @include floatfix;
+    margin-top:20px;
+    .desc{
+      height:24px;line-height:24px;
+      border-bottom:solid 1px #ddd;
+      margin-bottom:10px;
+      padding-bottom:10px;
+    }
+    .img{
+      width:160px;height:120px;
+      overflow:hidden;
+      margin:0 10px 10px 0;
+      float:left;
+      @include border-radius(3px);
+    }
   }
 }
