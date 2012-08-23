@@ -10,8 +10,8 @@
 
     - elsif file_entity.is_audio?
       / 音乐播放
-      %embed{:src=>file_entity.attach.url, :width=>'640px', :height=>'100px'}
-
+      %audio{:preload=>"auto"}
+        %source{:src=>file_entity.attach.url}
 
     - elsif file_entity.is_video?
       - if file_entity.video_encoding?
