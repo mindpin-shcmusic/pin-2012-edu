@@ -79,6 +79,7 @@
   overflow:hidden;line-height:20em;
   @include border-radius(2px);
   display:block;
+  position:relative;
 
   &:hover{
     background-color:rgba(black, 0.1);
