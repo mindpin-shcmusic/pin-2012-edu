@@ -1,11 +1,10 @@
 - hbreadcrumb '首页', '/'
 - hbreadcrumb '我收到的共享'
 
-- content_for :topbar do
-  = jsearchbar '/media_shares/search'
-
 .page-media-resource-fixed
   = render 'media_shares/parts/nav'
+  / .search
+  /   = jsearchbar '/media_shares/search'
 
 .page-media-share-users
   - if @shared_users.blank?
