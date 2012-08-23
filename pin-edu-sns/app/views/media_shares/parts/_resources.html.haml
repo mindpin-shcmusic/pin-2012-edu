@@ -11,7 +11,7 @@
       creator_avatar_src = resource.creator.logo.url
       uploaded_at = resource.created_at
       is_dir = resource.is_dir?
-      resource_url = is_dir ? "/media_shares/users/#{resource.creator.id}#{resource.path}" : download_link(resource.file_entity)
+      resource_url = is_dir ? "/media_shares/users/#{resource.creator.id}#{resource.path}" : media_resource_download_link(resource)
 
     .media-resource{:href=>'javascript:;', |
       :'data-id' => resource.id, |

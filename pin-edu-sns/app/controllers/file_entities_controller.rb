@@ -22,8 +22,9 @@ class FileEntitiesController < ApplicationController
   end
 
   def download
-    file_entity_id = get_file_entity_id_by_download_id(params[:download_id])
-    file_entity = FileEntity.find(file_entity_id)
-    send_file file_entity.attach.path, :type => file_entity.attach_content_type, :disposition => 'attachment'
+    item = get_download_item_by_download_id(params[:download_id])
+    file_entity = FileEntity.find(item.file_entity_id)
+    send_file file_entity.attach.path, :type => file_entity.attach_content_type, :disposition => 'attachment',
+      :filename => item.real_file_name
   end
 end
