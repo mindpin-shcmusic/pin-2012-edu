@@ -9,11 +9,7 @@ module CommentHelper
 
   def comment_from_content(comment)
     model = comment.model
-
-    case model
-    when Homework
-      return truncate_u model.content, 16
-    end
+    truncate_u model.content, 16
   end
 
 end
