@@ -27,4 +27,10 @@ class FileEntitiesController < ApplicationController
     send_file file_entity.attach.path, :type => file_entity.attach_content_type, :disposition => 'attachment',
       :filename => item.real_file_name
   end
+
+  def re_encode
+    file_entity = FileEntity.find(params[:id])
+    file_entity.into_video_encode_queue
+    render :partial => 'aj/file_entity_preview', :locals => {:file_entity => file_entity}
+  end
 end
