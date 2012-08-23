@@ -69,8 +69,14 @@ class Category < ActiveRecord::Base
     end
   end
 
-  def lazyload_sub_dynatree
-    self.children.map do |category|
+  def self.lazyload_sub_dynatree(category_id)
+    if category_id.to_i == 0
+      categories = Category.roots
+    else
+      categories = Category.find(category_id).children
+    end
+
+    categories.map do |category|
       isLazy = !category.children.blank?
       {
         :title => category.name, :id => category.id,
