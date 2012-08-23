@@ -411,3 +411,14 @@
     }
   }
 }
+
+.page-media-share-form{
+  margin-top:52px;
+
+  .field.course, .field.team{
+    border:solid 1px #ddd;
+    background-color:rgba(black, 0.05);
+    margin-top:20px;
+    padding:10px;
+  }
+}

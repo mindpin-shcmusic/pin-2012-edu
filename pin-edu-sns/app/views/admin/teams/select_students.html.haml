@@ -5,36 +5,53 @@
 - hbreadcrumb @team.name, "/admin/teams/#{@team.id}"
 - hbreadcrumb '分配学生'
 
+- student_user_ids = @team.student_user_ids
+
 .page-admin-students-selector
-  %form.search
-    .field
-      %input.search{:type=>'text'}
-    .desc
-      小提示：可以输入中文或拼音来快速查找
 
-  .selector
-    .list
-      - student_user_ids = @team.student_user_ids
-      - Student.all.each do |student|
-        - selected = student_user_ids.include?(student.user_id)
-        .student{:class=>selected ? 'selected' : '', :'data-id'=>student.user_id, :'data-name'=>student.real_name}
-          .name= student.real_name
-  .result
-    .list
-      - @team.student_users.map(&:student).each do |student|
-        - selected = student_user_ids.include?(student.user_id)
-        .student{:class=>selected ? 'selected' : '', :'data-id'=>student.user_id, :'data-name'=>student.real_name}
-          .name= student.real_name
-    .count
-      %span 已经分配
-      %span.c= student_user_ids.count
-      %span 人
+  = form_tag "/admin/teams/#{@team.id}/set_students", :method=>:put do |f|
 
-  .ops
-    = form_tag "/admin/teams/#{@team.id}/set_students",:method=>:put do |f|
-      %input.ids{:name=>:student_user_ids, :type=>'hidden', :value=>student_user_ids*','}
-      .field.submit
-        = jfsubmit '确定'
-        = jfcancel '取消'
-  
-		
+    .page-form-user-selector
+      .search
+        .field
+          %input.search{:type=>'text'}
+        .desc
+          小提示：可以输入中文或拼音来快速查找
+
+      .selector
+        .list
+          - Student.all.each do |student|
+            :ruby
+              selected = student_user_ids.include?(student.user_id)
+
+              klass = selected ? 'selected' : ''
+              html_data = {
+                :id => student.user_id,
+                :name => student.real_name
+              }
+
+            .user{:class=>klass, :data=>html_data}
+              .name= student.real_name
+      .result
+        .list
+          - @team.student_users.each do |user|
+            :ruby
+              html_data = {
+                :id => user.id,
+                :name => user.real_name
+              }
+
+            .user{:class=>'selected', :data=>html_data}
+              .name= user.real_name
+
+        .count
+          %span 已经选择
+          %span.c= student_user_ids.count
+          %span 人
+
+      - selected_ids_str = student_user_ids*','
+      %input.ids{:name=>:student_user_ids, :type=>'hidden', :value=>selected_ids_str}
+
+    .field.submit
+      = jfsubmit '确定'
+      = jfcancel '取消'

@@ -1,38 +1,39 @@
-= form_tag "/media_shares?resource_path=#{params[:resource_path]}", :method => 'post', :class => 'create' do
-  = hidden_field_tag :media_resource_id, @current_dir.blank? ? '/' : @current_dir.id
-  .h1 用户
-  %ul
-    - @users.each do |user|
-      %li
-        - if @current_dir.shared_to?(user)
-          = check_box_tag 'receivers[users][]', user.id, true, {:id => "user_#{user.id}"}
-        - else
-          = check_box_tag 'receivers[users][]', user.id, false, {:id => "user_#{user.id}"}
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '我的文件夹', '/file'
+- hbreadcrumb '共享文件'
 
-        = user.name
+:ruby
+  path = @media_resource.path
 
-    - if current_user
-      .h1 课程
-      %ul 
+  dir_path = @media_resource.dir.blank? ? '/file' : "/file#{@media_resource.dir.path}"
+
+  form_action = "/media_shares?resource_path=#{path}"
+
+.page-media-resource-fixed
+  .page-media-resource-nav
+    .go-parent-dir
+      %a{:href=>dir_path} 返回文件夹
+    .navs
+      %span 共享 #{path} 给其他人
+
+.page-media-share-form
+  = form_tag form_action, :method=>:post do
+    = render 'aj/user_selector', :users=>@users, :selected_users=>@shared_receivers, :name=>'user_ids'
+
+    .field.course
+      %label 我的课程
+      .courses
         - current_user.courses.each do |course|
-          %li
-            = check_box_tag 'receivers[courses][]', course.id, false
-            = course.name
+          .course
+            = jcheckbox 'receivers[courses][]', course.id, false, course.name
 
-      .h1 小组
-      %ul 
+    .field.team
+      %label 我的班级
+      .teams
         - current_user.teams.each do |team|
-          %li
-            = check_box_tag 'receivers[teams][]', team.id, false
-            = team.name
+          .team
+            = jcheckbox 'receivers[teams][]', team.id, false, team.name
 
-  = submit_tag "共享"
-
-
-.page-user-selector
-
--content_for :javascript do
-  :javascript
-    jQuery(function(){
-      new TextboxList('.page-user-selector');
-    });
+    .field.submit
+      = jfsubmit '确定'
+      = jfcancel '取消'

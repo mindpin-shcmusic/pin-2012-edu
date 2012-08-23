@@ -60,6 +60,10 @@
     .desc{float:left;margin-right:10px;}
     a{float:left;margin-right:10px;}
   }
+
+  .search{
+    float:right;
+  }
 }
 
 .page-admin-models{
@@ -313,89 +317,4 @@
   @include floatfix;
   a{@include mini-button;}
   float:left;margin-right:10px;
-}
-
-.page-admin-students-selector{
-  @include floatfix;
-  float:left;
-  padding:10px;
-  background-color:rgba(black, 0.05);
-  border:solid 1px #ddd;
-  @include border-radius(3px);
-
-  form.search{
-    margin-bottom:10px;
-    position:relative;
-    .desc{
-      position:absolute;
-      height:32px;line-height:32px;
-      left:300px;top:0;
-    }
-  }
-
-  .selector{
-    float:left;
-    margin-bottom:10px;
-    margin-right:10px;
-
-    .list{
-      background-color:rgba(white, 0.8);
-      border:solid 1px #ddd;
-      width:320px;
-      height:400px;
-      padding:5px;
-      overflow-y:scroll;
-      .student{
-        height:30px;line-height:32px;
-        width:76px;
-        float:left;
-        padding:0 10px;
-        cursor:pointer;
-        margin:0 1px 1px 0;
-        border:solid 2px transparent;
-
-        @include border-radius(3px);
-
-        &:hover{
-          border:solid 2px rgba(black, 0.5);
-        }
-        &.selected{
-          background-color:#1F78C0;
-          color:white;
-          text-shadow:0 0 2px rgba(black, 0.5);
-        }
-      }
-    }
-  }
-
-  .result{
-    float:left;
-    .list{
-      background-color:rgba(white, 0.8);
-      border:solid 1px #ddd;
-      width:320px;
-      height:400px;
-      padding:5px;
-      overflow-y:scroll;
-      margin-bottom:10px;
-      .student{
-        height:24px;line-height:24px;
-        cursor:pointer;
-        padding:0 10px;
-        &:hover{
-          background-color:#eee;
-        }
-      }
-    }
-    .count{
-      height:24px;line-height:24px;
-      font-size:16px;
-      .c{font-weight:bold;}
-    }
-  }
-
-  .ops{
-    @include floatfix;
-    clear:both;
-  }
 }

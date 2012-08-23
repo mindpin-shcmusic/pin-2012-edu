@@ -1,12 +1,12 @@
-# 班级学生分配 -> 学生选择器
+# 用户选择器
 
 pie.load ->
   class UserSelector
     constructor: ->
-      @$selector = jQuery('.page-admin-students-selector')
+      @$selector = jQuery('.page-form-user-selector')
 
       @$select_list = @$selector.find('.selector .list')
-      @$stundets = @$select_list.find('.student')
+      @$users = @$select_list.find('.user')
 
       @$result_list = @$selector.find('.result .list')
 
@@ -18,33 +18,33 @@ pie.load ->
 
     bind: ->
       that = this
-      @$stundets.click ->
-        $student = jQuery(this)
-        if $student.hasClass('selected')
-          that.unselect($student)
+      @$users.click ->
+        $user = jQuery(this)
+        if $user.hasClass('selected')
+          that.unselect($user)
         else
-          that.select($student)
+          that.select($user)
 
-    select: ($student)->
-      $student.addClass('selected')
-      @$result_list.prepend $student.clone().hide().fadeIn(100)
+    select: ($user)->
+      $user.addClass('selected')
+      @$result_list.prepend $user.clone().hide().fadeIn(100)
       @refresh_count()
 
-    unselect: ($student)->
-      $student.removeClass('selected')
-      $_student = @$result_list.find(".student[data-id=#{$student.data('id')}]")
-      $_student.fadeOut 100, =>
-        $_student.remove()
+    unselect: ($user)->
+      $user.removeClass('selected')
+      $_user = @$result_list.find(".user[data-id=#{$user.data('id')}]")
+      $_user.fadeOut 100, =>
+        $_user.remove()
         @refresh_count()
 
     refresh_count: ->
-      $result_students = @$result_list.find('.student')
-      length = $result_students.length
+      $result_users = @$result_list.find('.user')
+      length = $result_users.length
 
       @$selector.find('.result .count .c').html(length)
 
       arr = []
-      $result_students.each ->
+      $result_users.each ->
         arr.push jQuery(this).data('id')
 
       @$ids_input.val(arr.join(','))
@@ -53,19 +53,19 @@ pie.load ->
       @engine = pinyinEngine()
       that = this
 
-      @$stundets.each ->
-        $student = jQuery(this)
-        name = $student.data('name')
+      @$users.each ->
+        $user = jQuery(this)
+        name = $user.data('name')
 
-        that.engine.setCache([name], $student)
+        that.engine.setCache([name], $user)
 
     pinyin_search: (value)->
       if jQuery.string(value).blank()
-        return @$stundets.show()
+        return @$users.show()
 
-      @$stundets.hide()
-      @engine.search value, ($student)=>
-        $student.show()
+      @$users.hide()
+      @engine.search value, ($user)=>
+        $user.show()
 
     bind_search_input: ->
       $search_input = @$selector.find('input.search')

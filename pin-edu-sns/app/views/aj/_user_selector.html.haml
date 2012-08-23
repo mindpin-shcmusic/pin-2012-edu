@@ -1,0 +1,45 @@
+/ 需要传入
+/ users
+/ selected_users
+/ name
+
+.page-form-user-selector
+  .search
+    .field
+      %input.search{:type=>'text'}
+    .desc
+      小提示：可以输入中文或拼音来快速查找
+
+  .selector
+    .list
+      - users.each do |user|
+        :ruby
+          selected = selected_users.include?(user)
+
+          klass = selected ? 'selected' : ''
+          html_data = {
+            :id => user.id,
+            :name => user.real_name
+          }
+
+        .user{:class=>klass, :data=>html_data}
+          .name= user.real_name
+  .result
+    .list
+      - selected_users.each do |user|
+        :ruby
+          html_data = {
+            :id => user.id,
+            :name => user.real_name
+          }
+
+        .user{:class=>'selected', :data=>html_data}
+          .name= user.real_name
+
+    .count
+      %span 已经选择
+      %span.c= selected_users.count
+      %span 人
+
+  - selected_ids_str = selected_users.map{|user| user.id}*','
+  %input.ids{:name=>name, :type=>'hidden', :value=>selected_ids_str}

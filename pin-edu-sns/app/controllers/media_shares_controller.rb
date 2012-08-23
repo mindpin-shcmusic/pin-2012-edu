@@ -8,18 +8,22 @@ class MediaSharesController < ApplicationController
 
   def new
     resource_path = params[:resource_path].sub('/file', '')
-    @current_dir = MediaResource.get(current_user, resource_path)
+    @media_resource = MediaResource.get(current_user, resource_path)
     @users = current_user.share_receiver_candidates
-    @shared_receivers = @current_dir.shared_receivers
+    @shared_receivers = @media_resource.shared_receivers
 
     @courses = current_user.courses
     @teams   = current_user.teams
   end
 
   def create
-    media_resource = MediaResource.find(params[:media_resource_id])
+    resource_path = params[:resource_path]
+    media_resource = MediaResource.get(current_user, resource_path)
 
-    media_resource.share_to_expression params[:receivers].to_json
+    receivers = params[:receivers] || {}
+    receivers[:users] = params[:user_ids].split ','
+
+    media_resource.share_to_expression receivers.to_json
 
     redirect_to params[:resource_path].split(/\//)[0..-2].join('/')
   end
