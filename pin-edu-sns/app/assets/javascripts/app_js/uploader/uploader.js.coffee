@@ -225,17 +225,20 @@ pie.load ->
     uploader = new FileUploader $upload_button,
       render: (file_wrapper)->        
         # 添加上传进度条
-        $file_elm = jQuery('.page-homework-form .field.attachments .sample.hide .file').clone()
+        $file = jQuery('.page-homework-form .field.attachments .sample.hide .file').clone()
         $list = jQuery('.page-homework-form .field.attachments')
 
-        $file_elm.find('.name').html file_wrapper.file_name
+        $file.find('.name').html file_wrapper.file_name
 
-        $file_elm
+        $file.find('a.close').click ->
+          file_wrapper.close()
+
+        $file
           .hide()
           .fadeIn(100)
           .appendTo $list
 
-        return $file_elm
+        return $file
 
       set_progress: ($wrapper, percent)->
         pstr = "#{percent}%"
@@ -252,6 +255,10 @@ pie.load ->
 
         file_wrapper.$elm.find('input.fid').val(file_entity_id)
         file_wrapper.$elm.find('input.fname').val(file_wrapper.file_name)
+        file_wrapper.$elm.addClass 'complete'
+
+      close: ($wrapper)->
+        $wrapper.remove()
 
 
 # --------------

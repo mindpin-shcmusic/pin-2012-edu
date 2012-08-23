@@ -27,12 +27,15 @@
 
       .sample.hide
         .file
-          .name 123.txt
+          .complete 上传完毕
           .bar
             .p{:style=>'width:23%;'}
+          .percent 23%
+          .name 123.txt
+          %a.close{:href=>'javascript:;'}
 
-          %input.fid{:type=>'text', :name=>'file_entities[][id]'}
-          %input.fname{:type=>'text', :name=>'file_entities[][name]'}
+          %input.fid{:type=>'hidden', :name=>'file_entities[][id]'}
+          %input.fname{:type=>'hidden', :name=>'file_entities[][name]'}
 
 
       = jupload_button '上传附件'
