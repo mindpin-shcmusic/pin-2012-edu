@@ -27,7 +27,7 @@
           %span= link_to "“#{truncate_u comment.reply_comment.content, 16}”", comment.model
 
         - else
-          %span 回复我的
+          %span 评论我的
           %span #{comment.model.class}：
           %span= link_to "“#{comment_from_content comment}”", comment.model
 

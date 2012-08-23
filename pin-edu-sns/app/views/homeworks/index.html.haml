@@ -1,33 +1,32 @@
-- htitle '作业'
 - hbreadcrumb '首页', '/'
 - hbreadcrumb '作业'
 
-.page-homeworks
-  - if current_user.is_teacher?
-    .ops
+.page-homeworks-head
+  .tab
+    %a.item.unexpired{:href=>homeworks_path(:status => 'unexpired')} 未过期的作业
+    %a.item.expired{:href=>homeworks_path(:status => 'expired')} 已过期的作业
+    - if current_user.is_teacher?
       %a.new-homework{:href=>new_homework_path} 布置新作业
 
-  .tabs
-    %a{:href => homeworks_path(:status => 'unexpired')} 未过期
-    %a{:href => homeworks_path(:status => 'expired')} 已过期
+  .cells
+    .cell.title 标题
+    .cell.deadline 截止时间
+    .cell.attach 附件
+    .cell.course 所属课程
+    .cell.count 已分配/已提交
 
-  .homeworks
-    - @homeworks.each do |homework|
-      :ruby
-        title = homework.title
-        deadline = homework.deadline.strftime('%Y-%m-%d')
-        has_attach = !homework.homework_teacher_attachments.blank?
-        course = homework.course
-
-        assigned_students = homework.assignees
-        submitted_students = homework.submitted_students
-
-      .homework
-        .title= link_to title, homework
-        .time
-          %span 截止时间
-          %span= deadline
-        .attach= has_attach ? '有附件' : '没有附件'
-        .course= course.cover
-        .assign-count 分配给 #{assigned_students.count} 个学生
-        .submit-count 已经有 #{submitted_students.count} 人提交
+.page-homeworks
+  - @homeworks.each do |homework|
+    :ruby
+      course = homework.course
+    .homework
+      .cell.title
+        = link_to hspan(homework.title), homework
+      .cell.deadline
+        = jtimeformat homework.deadline
+      .cell.attach
+        = homework.homework_teacher_attachments.count
+      .cell.course
+        = link_to hspan(course.name), course
+      .cell.count
+        #{homework.assignees.count}/#{homework.submitted_students.count}

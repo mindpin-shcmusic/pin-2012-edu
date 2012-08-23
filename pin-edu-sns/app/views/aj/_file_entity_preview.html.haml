@@ -1,0 +1,44 @@
+.page-file-entity-preview
+  - if file_entity.blank?
+    .state.empty 资源无法预览
+
+  - else
+    - if file_entity.is_image?
+      / 图片展示
+      - src = file_entity.attach.url :large
+      = jimage src, :width=>640, :height=>400
+
+    - elsif file_entity.is_audio?
+      / 音乐播放
+      %embed{:src=>file_entity.attach.url, :width=>'640px', :height=>'100px'}
+
+
+    - elsif file_entity.is_video?
+      - if file_entity.video_encoding?
+        .state.encoding 视频正在进行转码，请等待转码完毕
+
+      - elsif file_entity.video_encode_failure?
+        :ruby
+          re_encode_url = File.join('/file_attr', resource.path, 're_encode')
+
+        .state.encode-failure 视频转码失败
+        .re-encode= link_to '重新转码', re_encode_url, :method=>:post
+
+      - elsif file_entity.video_encode_success?
+
+        = video_tag file_entity
+        .video-screenshots
+          .desc 视频截图预览
+          - 1.upto 6 do |i|
+            :ruby
+              arr = file_entity.attach.url.split('original')
+              arr.pop
+              src = arr.push("/screenshot_#{i}.jpg").join('original')
+            .img
+              = jimage src, :width=>160, :height=>120
+
+      - else
+        .state.no-support 当前视频无法预览
+
+    - else
+      .state.no-support 不支持当前资源的预览

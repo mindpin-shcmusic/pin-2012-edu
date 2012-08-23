@@ -9,7 +9,10 @@ module CommentHelper
 
   def comment_from_content(comment)
     model = comment.model
-    truncate_u model.content, 16
+    if model.class == HomeworkStudentUpload
+      return truncate_u model.name, 16
+    end
+    return truncate_u model.content, 16
   end
 
 end
