@@ -1,6 +1,7 @@
 module DownloadHelper
 
   def download_link(file_entity)
+    return if file_entity.blank?
     raise "#{file_entity} 不是 file_entity 实例" if !file_entity.is_a?(FileEntity)
     download_id = get_download_id_by_file_entity_id(current_user,file_entity)
     "/download/#{download_id}"
