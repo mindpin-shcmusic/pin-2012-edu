@@ -6,13 +6,14 @@ pie.load ->
         url:'/check_tip_messages'
         dataType: 'json'
         success : (json)=>
-          if json.comments_count > 0
+          if json.comments_count > 0 || json.media_shares_count > 0 || json.short_messages_count > 0
             @show_tip_dialog(json)
 
     show_tip_dialog: (web_json)->
+      console.log web_json
       @_set_attr('comment', web_json.comments_count)
       @_set_attr('media_share', web_json.media_shares_count)
-      @_set_attr('short_message', web_json.short_message_count)
+      @_set_attr('short_message', web_json.short_messages_count)
 
     get_dialog: ->
       if !jQuery('.page-tip-message-dialog').exists()
