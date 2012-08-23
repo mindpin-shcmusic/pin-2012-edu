@@ -42,7 +42,10 @@ module MediaResourceHelper
       return '/assets/covers/folder.small.png'
     end
 
-    file_entity = media_resource.file_entity
+    file_entity_cover_src media_resource.file_entity
+  end
+
+  def file_entity_cover_src(file_entity)
     return '' if file_entity.blank?
 
     case file_entity.content_kind

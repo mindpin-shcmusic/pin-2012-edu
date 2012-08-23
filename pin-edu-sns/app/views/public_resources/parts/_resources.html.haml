@@ -3,7 +3,7 @@
     - if item.is_a?(Category)
       :ruby
         category = item
-        cover_src = ''
+        cover_src = '/assets/covers/category.small.png'
         title = category.name
         resource_url = "/public_resources?category_id=#{category.id}"
       .media-resource
@@ -16,9 +16,9 @@
     - else
       :ruby
         public_resource = item
-        cover_src = ''
+        cover_src = file_entity_cover_src public_resource.real_file_entity
         title = truncate_u(public_resource.name, 10)
-        resource_url = download_link(public_resource.real_file_entity,public_resource.name)
+        resource_url = download_link(public_resource.real_file_entity, public_resource.name)
 
       .media-resource
         .meta-box
