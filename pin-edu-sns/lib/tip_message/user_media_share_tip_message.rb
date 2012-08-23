@@ -4,7 +4,7 @@ class UserMediaShareTipMessage < UserTipMessage
   end
 
   def path
-    '/notification/media_share'
+    '/media_shares'
   end
 
   module UserMethods
