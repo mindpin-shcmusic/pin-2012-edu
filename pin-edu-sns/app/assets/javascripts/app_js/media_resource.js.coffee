@@ -46,7 +46,7 @@ pie.load ->
   jQuery(document).delegate '.page-media-resource .share-state .public-resource .submit-selected-category', 'click', ->
     $node = $dynatree.dynatree("getActiveNode")
     if $node.data.id == $public_resource.data('category_id')
-      alert('分类没有变化')
+      pie.close_fbox("set_category")
       return 
 
     jQuery.ajax

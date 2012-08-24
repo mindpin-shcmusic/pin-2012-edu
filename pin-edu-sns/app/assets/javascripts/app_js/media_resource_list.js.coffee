@@ -83,6 +83,10 @@ pie.load ->
     selected_dir = selected_dir_node.data.dir
     current_resource_path = $dynatree.data('current_resource_path')
 
+    if selected_dir == $dynatree.data('current_dir')
+      pie.close_fbox("move_dir")
+      return
+
     if selected_dir != current_resource_path
       jQuery.ajax
         url: '/media_resources/move'
