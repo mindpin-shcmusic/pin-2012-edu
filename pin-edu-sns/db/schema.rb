@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120817092532) do
+ActiveRecord::Schema.define(:version => 20120824022543) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -93,7 +93,7 @@ ActiveRecord::Schema.define(:version => 20120817092532) do
   create_table "file_entities", :force => true do |t|
     t.string   "attach_file_name"
     t.string   "attach_content_type"
-    t.integer  "attach_file_size"
+    t.integer  "attach_file_size",    :limit => 8
     t.datetime "attach_updated_at"
     t.string   "md5"
     t.boolean  "merged",                           :default => false
