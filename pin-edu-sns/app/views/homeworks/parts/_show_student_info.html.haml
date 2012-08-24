@@ -28,7 +28,7 @@
     -if homework.all_requirements_uploaded_by?(current_user)
       :ruby
         data = {
-          :url => "/homeworks/#{@homework.id}/set_submitted"
+          :url => set_submitted_homework_assign_path
         }
 
       .student-submit{:data=>data}

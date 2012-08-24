@@ -6,7 +6,6 @@
     - homework.homework_assigns.each do |assign|
       :ruby
         user = assign.user
-        user_link = "/homeworks/#{homework.id}/students/#{assign.user_id}"
 
         uploaded_count = homework.uploaded_count_of user
 
@@ -15,7 +14,7 @@
 
       .student
         .cell.avatar= avatar user, :mini
-        .cell.name= link_to user.real_name, user_link
+        .cell.name= link_to user.real_name, assign
 
         .cell.count
           %span= uploaded_count

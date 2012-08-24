@@ -97,42 +97,11 @@ class HomeworksController < ApplicationController
     redirect_to :back
   end
 
-  def student
-    unless (current_user.is_teacher? || current_user.id == params[:user_id].to_i)
-      return redirect_to '/'
-    end
-
-    @homework = Homework.find(params[:homework_id])
-    @student_user = User.find(params[:user_id])
-  end
-  
   def download_teacher_zip
     homework = Homework.find(params[:id])
-    
     homework.build_teacher_attachments_zip(homework.creator)
     
-    send_file "#{Homework::HOMEWORK_ATTACHMENTS_DIR}/homework_teacher#{homework.creator.id}_#{homework.id}.zip"
-  end
-
-  def download_student_zip
-    homework = Homework.find(params[:homework_id])
-    student = User.find(params[:user_id])
-    homework.build_student_uploads_zip(student)
-    send_file "#{Homework::HOMEWORK_ATTACHMENTS_DIR}/homework_student#{student.id}_#{homework.id}.zip"
-  end
-
-  def set_finished
-    homework = Homework.find(params[:homework_id])
-    user = User.find(params[:user_id])
-
-    homework.set_finished_by!(user)
-    render :text => 'set finished!'
-  end
-
-  def set_submitted
-    assign = HomeworkAssign.find_by_homework_id_and_user_id params[:homework_id], current_user.id
-    assign.homework.set_submitted_by!(current_user, params[:content])
-    render :text => 'set submitted!'
+    send_file homework.teacher_attachment_zip_path
   end
 
   def destroy_teacher_attachment
