@@ -28,6 +28,14 @@ class MediaResource < ActiveRecord::Base
   validates  :creator,
              :presence    => true
 
+  validate do
+    if 0 != self.dir_id
+      media_resource = MediaResource.find_by_id(self.dir_id)
+      if media_resource.blank? || !media_resource.is_dir?
+        self.errors.add(:dir_id,'资源的父资源必须是一个目录')
+      end
+    end
+  end
   # --------
 
   before_create :create_fileops_time
