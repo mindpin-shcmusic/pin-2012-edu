@@ -1,7 +1,6 @@
 # encoding: utf-8
 
 class MediaResourcesController < ApplicationController
-  include FileShowHelper
   before_filter :login_required
 
   def index
@@ -11,7 +10,7 @@ class MediaResourcesController < ApplicationController
   end
 
   def file
-    resource_path = get_media_resource_path_by_encode_path(params[:path])
+    resource_path = Base64Plus.decode64(params[:path])
     current_resource = MediaResource.get(current_user, resource_path)
 
     if current_resource.is_dir?
@@ -93,7 +92,7 @@ class MediaResourcesController < ApplicationController
   end
 
   def file_show
-    resource_path = get_media_resource_path_by_encode_path(params[:path])
+    resource_path = Base64Plus.decode64(params[:path])
     @media_resource = MediaResource.get(current_user, resource_path)
   end
 
@@ -117,8 +116,7 @@ class MediaResourcesController < ApplicationController
     @media_resource = MediaResource.get(current_user, params[:current_resource_path])
     
     if @media_resource.move(params[:to_dir])
-      path = @media_resource.dir.blank? ?  '/file' : file_link(@media_resource.dir)
-      return render :text => path
+      return render :partial=>'move',:locals=>{:media_resource => @media_resource}
     end
     render :status=>422, :text => @media_resource.errors[:dir_id].first
   end
