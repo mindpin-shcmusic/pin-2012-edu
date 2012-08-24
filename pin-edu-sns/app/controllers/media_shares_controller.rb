@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 class MediaSharesController < ApplicationController
+  include FileShowHelper
 
   def index
     # 共享给我的用户列表
@@ -38,8 +39,8 @@ class MediaSharesController < ApplicationController
       return
     end
 
-    resource_path = "/#{params[:path]}"
-
+    resource_path = get_media_resource_path_by_encode_path(params[:path])
+    
     @sharer = User.find(params[:user_id])
     @current_dir = MediaResource.get(@sharer, resource_path)
     @media_resources = @current_dir.media_resources.web_order
