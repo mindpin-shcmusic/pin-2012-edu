@@ -1,6 +1,7 @@
 # encoding: utf-8
 
 class MediaResourcesController < ApplicationController
+  include FileShowHelper
   before_filter :login_required
 
   def index
@@ -10,7 +11,7 @@ class MediaResourcesController < ApplicationController
   end
 
   def file
-    resource_path = URI.decode(request.fullpath).sub('/file', '')
+    resource_path = get_media_resource_path_by_encode_path(params[:path])
     current_resource = MediaResource.get(current_user, resource_path)
 
     if current_resource.is_dir?
@@ -92,7 +93,7 @@ class MediaResourcesController < ApplicationController
   end
 
   def file_show
-    resource_path = URI.decode(request.fullpath).sub('/file_show', '')
+    resource_path = get_media_resource_path_by_encode_path(params[:path])
     @media_resource = MediaResource.get(current_user, resource_path)
   end
 

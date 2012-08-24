@@ -12,9 +12,9 @@
       is_dir = resource.is_dir?
 
       if is_dir
-        open_url = File.join('/file', resource.path)
+        open_url = file_link(resource)
       else
-        open_url = File.join('/file_show', resource.path)
+        open_url = file_show_link(resource)
         download_url = media_resource_download_link(resource)
       end
 
