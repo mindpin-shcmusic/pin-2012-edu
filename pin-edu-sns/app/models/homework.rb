@@ -42,6 +42,10 @@ class Homework < ActiveRecord::Base
   validates :title, :content, :presence => true
   validates :course, :presence => true
   
+  def teacher_attachment_zip_path
+    "#{self.class::HOMEWORK_ATTACHMENTS_DIR}/homework_teacher#{self.creator.id}_#{self.id}.zip"
+  end
+
   def assign_record_of(student_user)
     student_user.homework_assigns.find_by_homework_id(self.id)
   end
@@ -89,7 +93,9 @@ class Homework < ActiveRecord::Base
     path = "#{HOMEWORK_ATTACHMENTS_DIR}/homework_student#{user.id}_#{self.id}.zip"
     Zip::ZipFile.open(path, Zip::ZipFile::CREATE) do |zip|
       self.homework_student_uploads.where(:creator_id => user.id).each do |upload|
-        zip.add(upload.name, upload.file_entity.attach.path)
+        unless zip.find_entry(upload.name)
+          zip.add(upload.name, upload.file_entity.attach.path)
+        end
       end
     end
   end

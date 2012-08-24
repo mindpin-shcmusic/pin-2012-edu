@@ -32,14 +32,15 @@
         .upload{:'data-id' => current_upload.id}
           %span 已提交
           %a{:href => "#{current_upload.file_entity.attach.url}"} 下载
-          = link_to "#{current_upload.comments.count} 评论", 'javascript:;', :class => 'comments-count'
+
       - else
         %span 未提交
 
-  %p
-    %a{:href => "/homeworks/#{@homework.id}/student/#{@student_user.id}/download_student_zip"} zip包下载
+    .student-upload-zip= link_to 'zip包下载', download_student_zip_homework_assign_path
 
   - if !@homework.has_finished_by?(@student_user) && current_user == @homework.creator && @homework.has_submitted_by?(@student_user)
     .set-finished
       %h3 验收作业
-      = link_to '标记为已验收', 'javascript:;', :data => {:url => "/homeworks/#{@homework.id}/student/#{@student_user.id}/set_finished"}
+      = link_to '标记为已验收', 'javascript:;', :data => {:url => set_finished_homework_assign_path}
+
+  .homework-assign-comments= jcomments @assign

@@ -2,11 +2,6 @@
 class Student < ActiveRecord::Base
   belongs_to :user
 
-  has_many :course_students
-  has_many :courses,
-           :through => :course_students
-                    
-  
   # --- 校验方法
   validates :real_name, :presence => true
   validates :sid, :uniqueness => { :if => Proc.new { |student| !student.sid.blank? } }
@@ -25,11 +20,15 @@ class Student < ActiveRecord::Base
 
   accepts_nested_attributes_for :user
 
-  after_destroy :destroy_homework_assigns_after_destroy
-  def destroy_homework_assigns_after_destroy
-    self.user.homework_assigns.destroy_all
+  after_save :destroy_homework_assigns_after_remove
+  def destroy_homework_assigns_after_remove
+    self.user.homework_assigns.destroy_all if self.is_removed?
   end
 
+  after_save :destroy_team_student_after_remove
+  def destroy_team_student_after_remove
+    self.user.team_student.destroy if self.is_removed?
+  end
 
   def self.import_from_csv(file)
     ActiveRecord::Base.transaction do

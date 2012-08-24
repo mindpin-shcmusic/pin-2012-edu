@@ -5,6 +5,12 @@ class HomeworkAssign < ActiveRecord::Base
   belongs_to :user
   belongs_to :student
 
+  include Comment::CommentableMethods
+
+  def student_upload_zip_path
+    "#{Homework::HOMEWORK_ATTACHMENTS_DIR}/homework_student#{self.user.id}_#{self.homework.id}.zip"
+  end
+
   module UserMethods
     def self.included(base)
       base.has_many :homework_assigns

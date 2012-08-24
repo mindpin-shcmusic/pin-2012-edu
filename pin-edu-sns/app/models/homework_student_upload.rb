@@ -14,7 +14,6 @@ class HomeworkStudentUpload < ActiveRecord::Base
 
   validates :file_entity, :presence => true
 
-  include Comment::CommentableMethods
   # --- 给其他类扩展的方法
   module UserMethods
     def self.included(base)

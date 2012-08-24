@@ -123,11 +123,15 @@ MindpinEduSns::Application.routes.draw do
       get :download_teacher_zip
     end
   end
-  # 老师查看某一学生作业路由
-  get 'homeworks/:homework_id/students/:user_id' => 'homeworks#student'
-  get 'homeworks/:homework_id/students/:user_id/download_student_zip' => 'homeworks#download_student_zip'
-  put 'homeworks/:homework_id/students/:user_id/set_finished' => 'homeworks#set_finished'
-  put 'homeworks/:homework_id/set_submitted' => 'homeworks#set_submitted'
+
+  resources :homework_assigns, :only => [:show] do
+    member do
+      get :download_student_zip
+      put :set_finished
+      put :set_submitted
+    end
+  end
+
   delete 'homeworks/teacher_attachment/:id/destroy' => 'homeworks#destroy_teacher_attachment'
   delete 'homeworks/requirement/:id/destroy' => 'homeworks#destroy_requirement'
 
