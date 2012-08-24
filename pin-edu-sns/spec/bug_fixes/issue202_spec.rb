@@ -17,14 +17,14 @@ describe 'issue202' do
 
     tmpfile = Tempfile.new('panda')
     tmpfile.write('hello world')
-    @file_media_resource_1 = MediaResource.new(
+    @file_media_resource_1 = MediaResource.create(
       :name => '三只熊猫.jpg', 
       :is_dir => false,
       :creator => @ben7th,
       :file_entity => FileEntity.new(:attach => tmpfile)
     )
 
-    @file_media_resource_2 = MediaResource.new(
+    @file_media_resource_2 = MediaResource.create(
       :name => '三只狼.jpg', 
       :is_dir => false,
       :creator => @ben7th,
