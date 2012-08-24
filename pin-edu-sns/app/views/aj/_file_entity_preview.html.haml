@@ -10,8 +10,8 @@
 
     - elsif file_entity.is_audio?
       / 音乐播放
-      %embed{:src=>file_entity.attach.url, :width=>'640px', :height=>'100px'}
-
+      %audio{:preload=>"auto"}
+        %source{:src=>file_entity.attach.url}
 
     - elsif file_entity.is_video?
       - if file_entity.video_encoding?
@@ -19,7 +19,7 @@
 
       - elsif file_entity.video_encode_failure?
         :ruby
-          re_encode_url = File.join('/file_attr', resource.path, 're_encode')
+          re_encode_url = File.join('/file_entities', file_entity.id.to_s, 're_encode')
 
         .state.encode-failure 视频转码失败
         .re-encode= link_to '重新转码', re_encode_url, :method=>:post

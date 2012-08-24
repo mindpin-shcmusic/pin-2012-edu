@@ -96,13 +96,6 @@ class MediaResourcesController < ApplicationController
     @media_resource = MediaResource.get(current_user, resource_path)
   end
 
-  def re_encode
-    resource_path = "/#{params[:path]}"
-    @media_resource = MediaResource.get(current_user, resource_path)
-    @media_resource.file_entity.into_video_encode_queue
-    render :text=>"200"
-  end
-
   def lazyload_sub_dynatree
     @media_resource = MediaResource.get(current_user, params[:parent_dir])
     @move_media_resource = MediaResource.get(current_user, params[:move_dir])
