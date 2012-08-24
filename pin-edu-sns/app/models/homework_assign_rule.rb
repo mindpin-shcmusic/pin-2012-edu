@@ -46,6 +46,7 @@ class HomeworkAssignRule < ActiveRecord::Base
 
   def build_assign
     expression_assignees.each {|assignee|
+      next if !assignee.has_role?
       assign = HomeworkAssign.find_or_initialize_by_homework_id_and_user_id self.homework.id,
                                                                             assignee.id
       assign.save
