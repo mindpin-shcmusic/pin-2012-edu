@@ -25,6 +25,12 @@ class Student < ActiveRecord::Base
 
   accepts_nested_attributes_for :user
 
+  after_destroy :destroy_homework_assigns_after_destroy
+  def destroy_homework_assigns_after_destroy
+    self.user.homework_assigns.destroy_all
+  end
+
+
   def self.import_from_csv(file)
     ActiveRecord::Base.transaction do
       parse_csv_file(file) do |row,index|

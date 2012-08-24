@@ -6,7 +6,7 @@ FactoryGirl.define do
 
     trait :with_student_users do
       after_create do |team|
-        team.student_users << 16.times.map {create(:user, :student)}
+        team.student_users = 16.times.map {FactoryGirl.create(:user, :student)}
       end
     end
 

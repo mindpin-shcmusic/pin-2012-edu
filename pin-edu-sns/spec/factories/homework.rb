@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :homwork do
+  factory :homework do
     sequence(:title) {|n| "test homework#{n}"}
     content 'ipsum lorem....'
     creator
