@@ -30,9 +30,18 @@ class MediaResource < ActiveRecord::Base
 
   validate do
     if 0 != self.dir_id
+      # dir_id 关联的资源必须是目录
       media_resource = MediaResource.find_by_id(self.dir_id)
       if media_resource.blank? || !media_resource.is_dir?
         self.errors.add(:dir_id,'资源的父资源必须是一个目录')
+      end
+    end
+  end
+
+  validate do
+    if !self.dir.blank?
+      if !self.dir.media_resources.where(:name => self.name).blank?
+        self.errors.add(:dir_id,'移动失败，文件已存在于目标文件夹中')
       end
     end
   end
@@ -266,17 +275,24 @@ class MediaResource < ActiveRecord::Base
     end
   end
 
-  def lazyload_sub_dynatree(move_media_resource)
-    return [] if move_media_resource == self
+  def lazyload_sub_dynatree(current_resource)
+    return [] if current_resource == self
     child_resources = self.media_resources.dir_res
     child_resources.map do |resource|
       isLazy = resource.media_resources.dir_res.blank? ? false : true
-      isLazy = false if move_media_resource == resource
+      isLazy = false if current_resource == resource
       {
         :title => resource.name, :dir => resource.path,
         :isFolder => true, :isLazy => isLazy
       }
     end
+  end
+
+  def move(parent_path)
+    to_dir = MediaResource.get(self.creator, parent_path)
+    to_dir_id = to_dir.blank? ? 0 : to_dir.id
+    self.dir_id = to_dir_id
+    self.save
   end
 
   private

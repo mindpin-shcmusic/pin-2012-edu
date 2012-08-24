@@ -99,8 +99,8 @@ class MediaResourcesController < ApplicationController
 
   def lazyload_sub_dynatree
     @media_resource = MediaResource.get(current_user, params[:parent_dir])
-    @move_media_resource = MediaResource.get(current_user, params[:move_dir])
-    render :json => @media_resource.lazyload_sub_dynatree(@move_media_resource)
+    @current_resource = MediaResource.get(current_user, params[:current_resource_path])
+    render :json => @media_resource.lazyload_sub_dynatree(@current_resource)
   end
 
   def reload_dynatree
@@ -114,15 +114,13 @@ class MediaResourcesController < ApplicationController
   end
 
   def move
-    @media_resource = MediaResource.get(current_user, params[:current_dir])
-    to_dir = MediaResource.get(current_user, params[:to_dir])
-    to_dir_id = to_dir.blank? ? 0 : to_dir.id
-    @media_resource.dir_id = to_dir_id
-    if @media_resource.save
-      path = @media_resource.dir.blank? ?  '/' : @media_resource.dir.path
+    @media_resource = MediaResource.get(current_user, params[:current_resource_path])
+    
+    if @media_resource.move(params[:to_dir])
+      path = @media_resource.dir.blank? ?  '/file' : file_link(@media_resource.dir)
       return render :text => path
     end
-    render :status=>422
+    render :status=>422, :text => @media_resource.errors[:dir_id].first
   end
 
 end

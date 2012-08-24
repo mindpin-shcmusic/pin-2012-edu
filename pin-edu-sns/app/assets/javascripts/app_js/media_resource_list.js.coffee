@@ -71,36 +71,29 @@ pie.load ->
         type: 'GET'
         data:
           parent_dir: node.data.dir
-          move_dir: $dynatree.data('move_dir')
+          current_resource_path: $dynatree.data('current_resource_path')
 
   # 打开移动目录窗口时，记录当前要移动的资源
   jQuery(document).delegate '.page-float-box[data-jfbox-id=move_dir]','mindpin:open-fbox',(evt)->
-    move_dir = evt.link_elm.closest('.media-resource').data('path')
-    $dynatree.data('move_dir', move_dir)
+    current_resource_path = evt.link_elm.closest('.media-resource').data('path')
+    $dynatree.data('current_resource_path', current_resource_path)
 
   jQuery(document).delegate '.page-float-box[data-jfbox-id=move_dir] .submit-selected-dir','click',->
-    active_dir_node = $dynatree.dynatree('getActiveNode')
-    active_dir = active_dir_node.data.dir
-    move_dir = $dynatree.data('move_dir')
+    selected_dir_node = $dynatree.dynatree('getActiveNode')
+    selected_dir = selected_dir_node.data.dir
+    current_resource_path = $dynatree.data('current_resource_path')
 
-    if active_dir != move_dir
-      has_same_name_dir = false
-      move_title = move_dir.split("/").pop()
-      items = active_dir_node.childList || []
-      jQuery.each items,(index,item)->
-        if item.data.title == move_title
-          has_same_name_dir = true
-      if has_same_name_dir
-        alert('目标目录中有同名字目录，不能移动')
-        return 
-
+    if selected_dir != current_resource_path
       jQuery.ajax
         url: '/media_resources/move'
         type: 'PUT'
         data:
-          current_dir: move_dir
-          to_dir: active_dir
+          current_resource_path: current_resource_path
+          to_dir: selected_dir
         success:(res)->
-          window.location = "/file#{res}"
+          window.location = res
+        error:(jqXHR, textStatus)->
+          if jqXHR.status == 422
+            alert(jqXHR.responseText)
     else
-      alert('不能移动一个文件夹到它自己下面')
+      alert('不能将文件移动到自身或其子目录下')
