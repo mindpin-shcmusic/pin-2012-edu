@@ -13,7 +13,7 @@ describe 'issue261' do
 
   it '如果删除学生B，老师在查看作业状况时不应该再出现学生B' do
     homework.assignees.should include student_user
-    student_user.student.destroy
+    student_user.student.remove
     homework.assignees.reload.should_not include student_user
   end
 end
