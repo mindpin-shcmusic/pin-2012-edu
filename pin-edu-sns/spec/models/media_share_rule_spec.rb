@@ -23,14 +23,13 @@ describe MediaShareRule do
   context 'private after_save callbacks' do
     before do
       @user = FactoryGirl.create :user
-      resource = FactoryGirl.create :media_resource, :creator => @user
     end
 
     describe '#update_achievement' do
       it 'should updates user achievement' do
         Achievement.first.should be nil
         FactoryGirl.create :media_share_rule, :creator => @user
-        Achievement.first.share_rate.should eq User.first.share_rate
+        Achievement.first.share_rate.should eq @user.share_rate
       end
 
       # it 'should notify user' do
