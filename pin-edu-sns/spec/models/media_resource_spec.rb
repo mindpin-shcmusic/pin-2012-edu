@@ -201,7 +201,7 @@ describe MediaResource do
           MediaResource.get(@ben7th, '/大熊猫/倒挂.jpg').is_file?.should == true
           MediaResource.get(@ben7th, '/大熊猫/这是寂寞.jpg').is_file?.should == true
 
-          MediaResource.put(@ben7th, '/大熊猫', file)
+          MediaResource.replace(@ben7th, '/大熊猫', file)
           MediaResource.get(@ben7th, '/大熊猫').is_file?.should == true
           MediaResource.get(@ben7th, '/大熊猫/倒挂.jpg').should == nil
           MediaResource.get(@ben7th, '/大熊猫/这是寂寞.jpg').should == nil

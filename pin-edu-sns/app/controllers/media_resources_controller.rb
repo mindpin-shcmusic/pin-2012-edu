@@ -28,7 +28,7 @@ class MediaResourcesController < ApplicationController
     file_entity = FileEntity.find(params[:file_entity_id])
     resource_path = URI.decode(request.fullpath).sub('/file_put', '')
 
-    resource = MediaResource.put_file_entity(current_user, resource_path, file_entity, create=true)
+    resource = MediaResource.put_file_entity(current_user, resource_path, file_entity)
     
     #resource = MediaResource.get(current_user, resource_path)
     return render :partial => '/media_resources/parts/resources.html.haml',

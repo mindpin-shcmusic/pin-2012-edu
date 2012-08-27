@@ -10,7 +10,7 @@ def randstr(length=8)
   re
 end
 
-# 生成崇明文件标示，例如: bla.jpg -> bla(1).jpg, bla(1).jpg -> bla(2).jpg
+# 生成重名文件标示，例如: bla.jpg -> bla(1).jpg, bla(1).jpg -> bla(2).jpg
 def rename_duplicated_file_name(file_name)
   file_ext = File.extname file_name
   file_basename = File.basename file_name, file_ext

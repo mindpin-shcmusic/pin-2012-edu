@@ -99,11 +99,21 @@ class MediaResource < ActiveRecord::Base
     return nil
   end
 
-  def self.put_file_entity(creator, resource_path, file_entity, new_file=nil)
-    self._put(creator, resource_path, file_entity, new_file=new_file)
+  def self.put_file_entity(creator, resource_path, file_entity)
+    resource_path = self.process_same_file_name(creator,resource_path)
+    self._put(creator, resource_path, file_entity)
   end
 
   def self.put(creator, resource_path, file)
+    raise NotAssignCreatorError if creator.blank?
+    raise FileEmptyError if file.blank?
+
+    resource_path = self.process_same_file_name(creator,resource_path)
+    file_entity = FileEntity.new(:attach => file, :merged => true)
+    self._put(creator, resource_path, file_entity)
+  end
+
+  def self.replace(creator, resource_path, file)
     raise NotAssignCreatorError if creator.blank?
     raise FileEmptyError if file.blank?
 
@@ -114,7 +124,7 @@ class MediaResource < ActiveRecord::Base
   # 根据传入的资源路径字符串以及文件对象，创建一个文件资源
   # 传入的路径类似 /hello/test.txt
   # 创建文件资源的过程中，关联创建文件夹资源
-  def self._put(creator, resource_path, file_entity, new_file=nil)
+  def self._put(creator, resource_path, file_entity)
     with_exclusive_scope do
       file_name = self.split_path(resource_path)[-1]
       dir_names = self.split_path(resource_path)[0...-1] # 只创建到上层目录
@@ -122,9 +132,6 @@ class MediaResource < ActiveRecord::Base
       collect = _mkdirs_by_names(creator, dir_names).media_resources
 
       resource = collect.find_or_initialize_by_name_and_creator_id(file_name, creator.id)
-
-      # 重命名重复的文件，如果要创建新文件(而不是覆盖旧文件)，即new_file为真时运行这一行
-      new_file && (file_name = rename_duplicated_file_name(file_name)) && resource = collect.build
 
       resource._remove_children!
       resource.update_attributes(
@@ -306,6 +313,24 @@ class MediaResource < ActiveRecord::Base
   end
 
   private
+    def self.process_same_file_name(creator,resource_path)
+      resource = self.get(creator,resource_path)
+      return resource_path if resource.blank?
+
+      
+      file_name = self.split_path(resource_path)[-1]
+      dir_names = self.split_path(resource_path)[0...-1] # 只创建到上层目录
+
+      loop do
+        file_name = rename_duplicated_file_name(file_name)
+        paths = dir_names+[file_name]
+        resource_path = "/#{paths*"/"}"
+        resource = self.get(creator,resource_path)
+        break if resource.blank?
+      end
+
+      return resource_path
+    end
 
     # 根据传入的 resource_path 划分出涉及到的资源名称数组
     def self.split_path(resource_path) 
