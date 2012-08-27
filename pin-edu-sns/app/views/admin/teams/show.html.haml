@@ -18,7 +18,7 @@
     - else
       .v= @team.teacher_user.teacher.real_name
 
-- students = @team.student_users.map(&:student)
+- students = @team.student_users.map(&:student).compact
 .page-admin-model-show
   .field.students-count
     %label 班级学生名单
