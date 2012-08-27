@@ -89,8 +89,8 @@ class MediaResource < ActiveRecord::Base
     return nil
   end
 
-  def self.put_file_entity(creator, resource_path, file_entity)
-    self._put(creator, resource_path, file_entity)
+  def self.put_file_entity(creator, resource_path, file_entity, new_file=nil)
+    self._put(creator, resource_path, file_entity, new_file=new_file)
   end
 
   def self.put(creator, resource_path, file)
@@ -104,7 +104,7 @@ class MediaResource < ActiveRecord::Base
   # 根据传入的资源路径字符串以及文件对象，创建一个文件资源
   # 传入的路径类似 /hello/test.txt
   # 创建文件资源的过程中，关联创建文件夹资源
-  def self._put(creator, resource_path, file_entity)
+  def self._put(creator, resource_path, file_entity, new_file=nil)
     with_exclusive_scope do
       file_name = self.split_path(resource_path)[-1]
       dir_names = self.split_path(resource_path)[0...-1] # 只创建到上层目录
@@ -112,12 +112,21 @@ class MediaResource < ActiveRecord::Base
       collect = _mkdirs_by_names(creator, dir_names).media_resources
 
       resource = collect.find_or_initialize_by_name_and_creator_id(file_name, creator.id)
+
+      # 重命名重复的文件，如果要创建新文件(而不是覆盖旧文件)，即new_file为真时运行这一行
+      new_file && (file_name = rename_duplicated_file_name(file_name)) && resource = collect.build
+
       resource._remove_children!
       resource.update_attributes(
+        :creator     => creator,
+        :name        => file_name,
         :is_dir      => false,
         :is_removed  => false,
         :file_entity => file_entity
       )
+
+      # 这里需要返回resource以便在controller里调用
+      resource
     end
   end
 
@@ -280,6 +289,7 @@ class MediaResource < ActiveRecord::Base
   end
 
   private
+
     # 根据传入的 resource_path 划分出涉及到的资源名称数组
     def self.split_path(resource_path) 
       raise InvalidPathError if resource_path.blank?
