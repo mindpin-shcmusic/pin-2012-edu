@@ -40,7 +40,8 @@ class MediaResource < ActiveRecord::Base
 
   validate do
     if !self.dir.blank?
-      if !self.dir.media_resources.where(:name => self.name).blank?
+      media_resource = self.dir.media_resources.where(:name => self.name).first
+      if !media_resource.blank? && media_resource != self
         self.errors.add(:dir_id,'移动失败，文件已存在于目标文件夹中')
       end
     end
