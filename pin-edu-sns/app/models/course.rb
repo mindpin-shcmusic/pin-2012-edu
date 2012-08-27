@@ -29,7 +29,7 @@ class Course < ActiveRecord::Base
   end
 
   def get_users
-    [student_users, teacher_user].flatten
+    [student_users, teacher_user].flatten.uniq
   end
 
   def create_courses_image(file)

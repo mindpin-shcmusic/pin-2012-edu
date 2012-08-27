@@ -18,7 +18,7 @@ class Team < ActiveRecord::Base
   end
 
   def get_users
-    [student_users, teacher_user].flatten
+    [student_users, teacher_user].flatten.uniq
   end
 
   def self.import_from_csv(file)
