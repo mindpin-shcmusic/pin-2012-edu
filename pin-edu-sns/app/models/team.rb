@@ -21,6 +21,10 @@ class Team < ActiveRecord::Base
     [student_users, teacher_user].flatten.uniq
   end
 
+  def students
+    self.student_users.map(&:student).compact
+  end
+
   def self.import_from_csv(file)
     ActiveRecord::Base.transaction do
       parse_csv_file(file) do |row,index|
