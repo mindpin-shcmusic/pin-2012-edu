@@ -8,7 +8,7 @@
       - when User
         %a{:href => "/media_shares/users/#{params[:user_id]}"} 上一级
       - when MediaResource
-        - url = File.join("/media_shares/users/#{params[:user_id]}", @prev.path)
+        - url = media_share_link(@prev)
         %a{:href => url} 上一级
 
   .navs
@@ -16,4 +16,4 @@
     - if !@sharer.blank?
       %span= link_to @sharer.name, "/media_shares/users/#{params[:user_id]}"
     - media_resource_navs_dirs(@current_dir).each do |dir|
-      %span= link_to dir.name, File.join("/media_shares/users/#{params[:user_id]}", dir.path)
+      %span= link_to dir.name, media_share_link(dir)

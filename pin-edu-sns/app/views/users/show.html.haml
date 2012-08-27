@@ -35,11 +35,12 @@
     该用户分享给您的文件
     %ul
       - @user.media_resources.shared_with(current_user) do |resource|
-        %li= link_to resource.name, "/file_show/#{resource.name}"
+
+        %li= link_to resource.name, file_show_link(resource)
 
 
   .public-resources
     该用户的公共资源
     %ul
       - @user.public_resources do |public_resource|
-        %li= link_to public_resource.media_resource.name, "/file_show/#{public_resource.media_resource.namexs}"
+        %li= link_to public_resource.media_resource.name, file_show_link(public_resource.media_resource)

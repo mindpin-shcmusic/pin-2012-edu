@@ -22,7 +22,7 @@
   - resources.each do |resource|
     :ruby
       klass = resource.is_dir? ? 'dir' : 'file'
-      url = File.join('/file', resource.path)
+      url = file_link(resource)
       time = resource.fileops_time.localtime
       name = resource.excerpts.name.html_safe
 

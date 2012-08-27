@@ -10,7 +10,7 @@ class MediaResourcesController < ApplicationController
   end
 
   def file
-    resource_path = URI.decode(request.fullpath).sub('/file', '')
+    resource_path = Base64Plus.decode64(params[:path])
     current_resource = MediaResource.get(current_user, resource_path)
 
     if current_resource.is_dir?
@@ -92,14 +92,14 @@ class MediaResourcesController < ApplicationController
   end
 
   def file_show
-    resource_path = URI.decode(request.fullpath).sub('/file_show', '')
+    resource_path = Base64Plus.decode64(params[:path])
     @media_resource = MediaResource.get(current_user, resource_path)
   end
 
   def lazyload_sub_dynatree
     @media_resource = MediaResource.get(current_user, params[:parent_dir])
-    @move_media_resource = MediaResource.get(current_user, params[:move_dir])
-    render :json => @media_resource.lazyload_sub_dynatree(@move_media_resource)
+    @current_resource = MediaResource.get(current_user, params[:current_resource_path])
+    render :json => @media_resource.lazyload_sub_dynatree(@current_resource)
   end
 
   def reload_dynatree
@@ -113,15 +113,12 @@ class MediaResourcesController < ApplicationController
   end
 
   def move
-    @media_resource = MediaResource.get(current_user, params[:current_dir])
-    to_dir = MediaResource.get(current_user, params[:to_dir])
-    to_dir_id = to_dir.blank? ? 0 : to_dir.id
-    @media_resource.dir_id = to_dir_id
-    if @media_resource.save
-      path = @media_resource.dir.blank? ?  '/' : @media_resource.dir.path
-      return render :text => path
+    @media_resource = MediaResource.get(current_user, params[:current_resource_path])
+    
+    if @media_resource.move(params[:to_dir])
+      return render :partial=>'move',:locals=>{:media_resource => @media_resource}
     end
-    render :status=>422
+    render :status=>422, :text => @media_resource.errors[:dir_id].first
   end
 
 end

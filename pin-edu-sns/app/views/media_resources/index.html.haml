@@ -19,13 +19,13 @@
         %span.quiet 上一级
       - else
         :ruby
-          url = @current_dir.dir.blank? ? '/file' : File.join('/file', @current_dir.dir.path)
+          url = @current_dir.dir.blank? ? '/file' : file_link(@current_dir.dir)
         %a{:href => url} 上一级
 
     .navs
       %span= link_to '根文件夹', '/file'
       - media_resource_navs_dirs(@current_dir).each do |dir|
-        %span= link_to dir.name, File.join('/file', dir.path)
+        %span= link_to dir.name, file_link(dir)
 
 = render 'media_resources/parts/create_folder_box', :current_dir=>@current_dir
 = render 'media_resources/parts/upload_file_box', :current_dir=>@current_dir
