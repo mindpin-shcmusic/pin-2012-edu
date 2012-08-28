@@ -5,18 +5,18 @@
     %a.form-submit-button 上传图片
 
 .page-upload-courses-images
-  - @course.courses_images.each do |courses_image|
+  - @course.course_images.each do |course_image|
     .kind
-      = courses_image.kind
+      = course_image.kind
     .image
-      %img{:src=>courses_image.file_entity.attach.url}
+      %img{:src=>course_image.file_entity.attach.url}
 
 %hr
-- if !@course.cover_courses_image.blank?
+- if !@course.cover_course_image.blank?
   .page-course-current-cover
     .title
       当前封面
     .image
-      %img{:src=>@course.cover_courses_image.file_entity.attach.url}
+      %img{:src=>@course.cover_course_image.file_entity.attach.url}
 .page-course-select-cover
   = link_to "选择封面","/admin/courses/#{@course.id}/select_cover_page"

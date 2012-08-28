@@ -1,4 +1,4 @@
-class CoursesImage < ActiveRecord::Base
+class CourseImage < ActiveRecord::Base
   class Kind
     ATTACHMENT = "ATTACHMENT"
     COVER = "COVER"

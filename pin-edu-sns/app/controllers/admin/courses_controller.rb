@@ -78,7 +78,7 @@ class Admin::CoursesController < ApplicationController
   end
 
   def upload_image
-    @course.create_courses_image(params[:file])
+    @course.create_course_image(params[:file])
     redirect_to "/admin/courses/#{@course.id}/upload_image_page"
   rescue Exception => ex
     flash[:error] = ex.message
@@ -89,8 +89,8 @@ class Admin::CoursesController < ApplicationController
   end
 
   def select_cover
-    courses_image = @course.courses_images.find(params[:courses_image_id])
-    @course.select_cover(courses_image)
+    course_image = @course.course_images.find(params[:course_image_id])
+    @course.select_cover(course_image)
     redirect_to "/admin/courses/#{@course.id}/select_cover_page"
   end
 
