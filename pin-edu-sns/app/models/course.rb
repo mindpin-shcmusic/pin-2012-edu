@@ -23,7 +23,7 @@ class Course < ActiveRecord::Base
   has_many :file_entities, :through=> :course_images
 
   def cover_url
-    self.cover && self.cover.file_entity.attach.url
+    self.cover & self.cover.file_entity.attach.url : self.default_cover
   end
 
   def default_cover
