@@ -1,5 +1,4 @@
 class FileEntitiesController < ApplicationController
-  include DownloadHelper
   before_filter :login_required,:only=>[:upload]
 
   def upload
@@ -22,7 +21,7 @@ class FileEntitiesController < ApplicationController
   end
 
   def download
-    item = get_download_item_by_download_id(params[:download_id])
+    item = FileEntityDownloadItem.new(params[:download_id])
     file_entity = FileEntity.find(item.file_entity_id)
     send_file file_entity.attach.path, :type => file_entity.attach_content_type, :disposition => 'attachment',
       :filename => item.real_file_name
