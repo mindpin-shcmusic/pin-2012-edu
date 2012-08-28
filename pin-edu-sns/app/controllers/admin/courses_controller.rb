@@ -1,4 +1,4 @@
-# -*- coding: no-conversion -*-
+# -*- coding: utf-8 -*-
 class Admin::CoursesController < ApplicationController
   layout 'admin'
   before_filter :login_required
@@ -78,11 +78,8 @@ class Admin::CoursesController < ApplicationController
   end
 
   def upload_image
-    @course.create_course_image(params[:file])
-    redirect_to "/admin/courses/#{@course.id}/upload_image_page"
-  rescue Exception => ex
-    flash[:error] = ex.message
-    redirect_to "/admin/courses/#{@course.id}/upload_image_page"
+    @course.course_images.create :file_entity_id => params[:file_entity_id]
+    render :text => '图片上传成功'
   end
 
   def select_cover_page
@@ -98,8 +95,8 @@ class Admin::CoursesController < ApplicationController
   end
 
   def upload_video
-    @course.course_video.create :file_entity_id => params[:file_entity_id]
-    render :text => '课程视频上传成功'
+    @course.course_videos.create :file_entity_id => params[:file_entity_id]
+    render :text => '视频上传成功'
   end
 
 end
