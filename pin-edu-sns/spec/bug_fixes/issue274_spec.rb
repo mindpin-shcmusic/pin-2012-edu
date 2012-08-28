@@ -24,7 +24,7 @@ describe 'issue274' do
 
   end
 
-  it '目前在个人文件夹上传文件时，如果已经有同名文件，会被直接覆盖。这样有时候是不靠谱的。' do
+  it '目前在个人文件夹上传文件时，如果已经有同名文件，新上传的同名文件名字应该是这样 old_name(1) old_name(2)' do
     tmpfile = Tempfile.new('panda')
     tmpfile.write('hello world')
 
