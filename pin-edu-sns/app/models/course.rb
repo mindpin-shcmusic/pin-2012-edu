@@ -32,6 +32,10 @@ class Course < ActiveRecord::Base
     [student_users, teacher_user].flatten.uniq
   end
 
+  def students
+    self.student_users.map(&:student).compact
+  end
+
   def create_courses_image(file)
     raise "请选择图片上传" if :image != FileEntity.content_kind(file.content_type)
 
