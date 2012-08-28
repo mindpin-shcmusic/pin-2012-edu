@@ -29,6 +29,10 @@
         %label 确认密码
         = user_f.password_field :password_confirmation, :value=>'', :maxlength=>32
 
+    .field
+      %label 教师介绍
+      = t.text_area :description
+
     .field.submit
       = jfsubmit '确定'
       = jfcancel '取消'
