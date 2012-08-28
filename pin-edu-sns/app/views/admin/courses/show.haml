@@ -27,10 +27,10 @@
       .v= @course.teacher_user.teacher.real_name
   .field.desc
     %label 备注
-    .v= @course.desc
+    .v= sanitize @course.desc
   .field.syllabus
     %label 教学大纲
-    .v= @course.syllabus
+    .v= sanitize @course.syllabus
 
   .field.upload-image
     = link_to '上传课程图片', "/admin/courses/#{@course.id}/upload_image_page"

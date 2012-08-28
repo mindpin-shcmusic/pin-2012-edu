@@ -13,7 +13,8 @@
 
     .content
       .title 作业要求
-      .ct= jct @homework.content
+      //.ct= jct @homework.content
+      .ct= sanitize @homework.content
 
     .deadline
       .title 过期时间

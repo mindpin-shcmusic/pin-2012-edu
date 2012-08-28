@@ -44,6 +44,14 @@ module MindpinEduSns
       keep :forced
     end
 
+    config.action_view.sanitized_allowed_tags = 'table', 'tr', 'td', 'th',
+    'thead', 'tbody', 'tfoot', 'h3', 'h4', 'div', 'ul', 'ol', 'li', 'a',
+    'code', 'pre', 'p', 'br', 'img', 'cite', 'blockquote', 'b', 'i', 'em',
+    'strong'
+
+    config.action_view.sanitized_allowed_attributes = 'href', 'src'
   end
+
 end
+
 $REDIS_NAMESPACE = 'MindpinAgile'
