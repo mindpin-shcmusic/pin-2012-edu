@@ -4,7 +4,7 @@ class Team < ActiveRecord::Base
              :class_name  => 'User',
              :foreign_key => :teacher_user_id
 
-  has_many :team_students
+  has_many :team_students,:dependent => :destroy
 
   has_many :student_users,
            :through => :team_students,
@@ -62,5 +62,10 @@ class Team < ActiveRecord::Base
     indexes name, :sortable => true
 
     where('is_removed = 0')
+  end
+
+  after_false_remove :remove_related_team_students
+  def remove_related_team_students
+    self.team_students.clear
   end
 end

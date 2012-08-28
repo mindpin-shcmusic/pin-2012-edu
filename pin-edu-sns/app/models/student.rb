@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 class Student < ActiveRecord::Base
   belongs_to :user
+  scope :no_team, joins('left join team_students on team_students.student_user_id = students.user_id').where('team_students.team_id is null')
+  scope :of_team,lambda{|team|joins("inner join team_students on team_students.student_user_id = students.user_id").where("team_students.team_id = #{team.id}")}
 
   # --- 校验方法
   validates :real_name, :presence => true

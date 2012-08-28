@@ -20,7 +20,7 @@
 
       .selector
         .list
-          - Student.all.each do |student|
+          - (Student.of_team(@team)+Student.no_team).each do |student|
             :ruby
               selected = student_user_ids.include?(student.user_id)
 
