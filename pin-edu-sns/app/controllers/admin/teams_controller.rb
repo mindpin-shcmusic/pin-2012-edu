@@ -11,7 +11,7 @@ class Admin::TeamsController < ApplicationController
   end
   
   def search
-    @result = Team.search params[:q]
+    @result = Team.search params[:query]
 
     render :partial => 'team_list', :locals => {:teams => @result}, :layout => false
   end

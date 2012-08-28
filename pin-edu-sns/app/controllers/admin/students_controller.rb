@@ -47,7 +47,7 @@ class Admin::StudentsController < ApplicationController
   end
 
   def search
-    @result = Student.search params[:q]
+    @result = Student.search params[:query]
     render :partial => 'student_list', :locals => {:students => @result}, :layout => false
   end
 

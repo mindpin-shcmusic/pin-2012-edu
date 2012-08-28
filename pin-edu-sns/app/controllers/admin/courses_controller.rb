@@ -7,7 +7,7 @@ class Admin::CoursesController < ApplicationController
   end
   
   def search
-    @result = Course.search params[:q]
+    @result = Course.search params[:query]
 
     render :partial => 'course_list', :locals => {:courses => @result}, :layout => false
   end
