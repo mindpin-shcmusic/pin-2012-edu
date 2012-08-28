@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120824022543) do
+ActiveRecord::Schema.define(:version => 20120828030831) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -70,6 +70,11 @@ ActiveRecord::Schema.define(:version => 20120824022543) do
     t.integer  "student_user_id"
   end
 
+  create_table "course_videos", :force => true do |t|
+    t.integer "course_id"
+    t.integer "file_entity_id"
+  end
+
   create_table "courses", :force => true do |t|
     t.string   "name",            :default => "",    :null => false
     t.string   "cid"
@@ -80,6 +85,7 @@ ActiveRecord::Schema.define(:version => 20120824022543) do
     t.datetime "updated_at"
     t.boolean  "is_removed",      :default => false
     t.integer  "teacher_user_id"
+    t.text     "syllabus"
   end
 
   create_table "courses_images", :force => true do |t|
@@ -302,12 +308,13 @@ ActiveRecord::Schema.define(:version => 20120824022543) do
   end
 
   create_table "teachers", :force => true do |t|
-    t.string   "real_name",  :default => "",    :null => false
+    t.string   "real_name",   :default => "",    :null => false
     t.string   "tid"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_removed", :default => false
+    t.boolean  "is_removed",  :default => false
+    t.text     "description"
   end
 
   add_index "teachers", ["user_id"], :name => "index_teachers_on_user_id"

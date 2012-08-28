@@ -28,24 +28,27 @@
   .field.desc
     %label 备注
     .v= @course.desc
+  .field.syllabus
+    %label 教学大纲
+    .v= @course.syllabus
 
   .field.upload-image
     = link_to '上传课程图片', "/admin/courses/#{@course.id}/upload_image_page"
   .field.select-cover
     = link_to '选择课程封面图片', "/admin/courses/#{@course.id}/select_cover_page"
 
-- student_users = @course.student_users
+- students = @course.students
 .page-admin-model-show
   .field.students-count
     %label 课程学生名单
-    .v 总共 #{student_users.count} 个学生
+    .v 总共 #{students.count} 个学生
     .assign= link_to "给课程分配学生", "/admin/courses/#{@course.id}/select_students"
 
-  - student_users.each do |student_user|
+  - students.each do |student|
     .field.student
-      .avatar= avatar student_user, :mini
-      .name= student_user.student.real_name
-      .show= link_to '查看信息', [:admin, student_user.student]
+      .avatar= avatar student.user, :mini
+      .name= student.real_name
+      .show= link_to '查看信息', [:admin, student]
 
 .page-admin-go-back= link_to '返回列表页', '/admin/courses'
 .page-admin-edit= link_to '编辑修改', "/admin/courses/#{@course.id}/edit"

@@ -1,7 +1,9 @@
+# -*- coding: no-conversion -*-
 class Admin::CoursesController < ApplicationController
   layout 'admin'
   before_filter :login_required
   before_filter :per_load
+
   def per_load
     @course = Course.find(params[:id]) if params[:id]  
   end
@@ -91,4 +93,13 @@ class Admin::CoursesController < ApplicationController
     @course.select_cover(courses_image)
     redirect_to "/admin/courses/#{@course.id}/select_cover_page"
   end
+
+  def upload_video_page
+  end
+
+  def upload_video
+    @course.course_video.create :file_entity_id => params[:file_entity_id]
+    render :text => '课程视频上传成功'
+  end
+
 end

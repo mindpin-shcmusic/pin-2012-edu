@@ -14,6 +14,7 @@ class Course < ActiveRecord::Base
   validates :cid, :uniqueness => { :if => Proc.new { |course| !course.cid.blank? } }
 
   has_many :courses_images
+  has_many :course_videos
   has_many :file_entities, :through=> :courses_images
 
   def cover
@@ -30,6 +31,10 @@ class Course < ActiveRecord::Base
 
   def get_users
     [student_users, teacher_user].flatten.uniq
+  end
+
+  def teacher
+    self.teacher_user && self.teacher_user.teacher
   end
 
   def students
