@@ -107,6 +107,10 @@ def get_randstr_filename(uploaded_filename)
 end
 
 def parse_csv_file(file)
+  raise '请先选择 一个 CSV 文件' if file.blank?
+  if File.extname(file.original_filename) != '.csv'
+    raise '你导入的不是一个 CSV 文件'
+  end
   rows = CSV::parse(file.read)
   is_utf8 = rows[0].join(",").utf8?
   rows.each_with_index do |row,index|
