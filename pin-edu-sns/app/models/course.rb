@@ -15,10 +15,15 @@ class Course < ActiveRecord::Base
 
   has_many :course_images
   has_many :course_videos
+
+  belongs_to :cover,
+             :class_name  => 'CourseImage',
+             :foreign_key => :cover_id
+
   has_many :file_entities, :through=> :course_images
 
-  def cover
-    self.cover_course_image ? self.cover_course_image.file_entity.attach.url : self.default_cover
+  def cover_url
+    self.cover && self.cover.file_entity.attach.url
   end
 
   def default_cover
@@ -46,19 +51,8 @@ class Course < ActiveRecord::Base
 
     raise "请选择图片上传" if :image != FileEntity.content_kind(file.content_type)
     file_entity = FileEntity.create(:attach => file, :merged => true)
-    course_image = CourseImage.create(:file_entity=>file_entity,:course=>self,:kind=>CourseImage::Kind::ATTACHMENT)
+    course_image = CourseImage.create(:file_entity=>file_entity,:course=>self)
     raise course_image.errors.first[1] if !course_image.valid?
-  end
-
-  def cover_course_image
-    self.course_images.find_by_kind(CourseImage::Kind::COVER)
-  end
-
-  def select_cover(course_image)
-    if !self.cover_course_image.blank?
-      self.cover_course_image.update_attributes(:kind=>CourseImage::Kind::ATTACHMENT)
-    end
-    course_image.update_attributes(:kind=>CourseImage::Kind::COVER)
   end
 
   def self.import_from_csv(file)

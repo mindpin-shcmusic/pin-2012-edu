@@ -87,8 +87,9 @@ class Admin::CoursesController < ApplicationController
 
   def select_cover
     course_image = @course.course_images.find(params[:course_image_id])
-    @course.select_cover(course_image)
-    redirect_to "/admin/courses/#{@course.id}/select_cover_page"
+    @course.cover = course_image
+    @course.save
+    render :text => '封面选择成功'
   end
 
   def upload_video_page

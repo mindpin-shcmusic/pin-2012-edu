@@ -6,7 +6,7 @@
 
 .page-admin-model-show
   .field.image
-    = jimage @course.cover, :width => 160, :height => 96
+    = jimage @course.cover_url, :width => 160, :height => 96
   .field.name
     %label 课程名
     .v= @course.name

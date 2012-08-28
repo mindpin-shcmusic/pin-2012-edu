@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120828085923) do
+ActiveRecord::Schema.define(:version => 20120828102218) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -66,7 +66,6 @@ ActiveRecord::Schema.define(:version => 20120828085923) do
   create_table "course_images", :force => true do |t|
     t.integer  "course_id"
     t.integer  "file_entity_id"
-    t.string   "kind"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -94,6 +93,7 @@ ActiveRecord::Schema.define(:version => 20120828085923) do
     t.boolean  "is_removed",      :default => false
     t.integer  "teacher_user_id"
     t.text     "syllabus"
+    t.integer  "cover_id"
   end
 
   create_table "file_entities", :force => true do |t|

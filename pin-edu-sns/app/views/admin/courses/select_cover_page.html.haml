@@ -1,7 +1,7 @@
 = link_to "返回上传图片页面","/admin/courses/#{@course.id}/upload_image_page"
 .page-select-cover-forms
   = flash[:error]
-  - current_id = @course.cover_course_image.blank? ? -1 : @course.cover_course_image.id 
+  - current_id = @course.cover ? -1 : @course.cover.id 
   = form_tag "/admin/courses/#{@course.id}/select_cover", :method => 'post', :class => 'select_cover' do
     - @course.course_images.each do |course_image|
       .select
