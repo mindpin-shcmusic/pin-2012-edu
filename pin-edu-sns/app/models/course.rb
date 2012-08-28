@@ -37,9 +37,9 @@ class Course < ActiveRecord::Base
   end
 
   def create_courses_image(file)
-    raise "请选择图片上传" if :image != FileEntity.content_kind(file.content_type)
-
     raise "请选择上传文件" if file.blank?
+
+    raise "请选择图片上传" if :image != FileEntity.content_kind(file.content_type)
     file_entity = FileEntity.create(:attach => file, :merged => true)
     courses_image = CoursesImage.create(:file_entity=>file_entity,:course=>self,:kind=>CoursesImage::Kind::ATTACHMENT)
     raise courses_image.errors.first[1] if !courses_image.valid?
