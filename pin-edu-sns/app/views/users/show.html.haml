@@ -1,46 +1,29 @@
-:ruby
-  name = @user.name
-  is_teacher = @user.is_teacher?
-  is_student = @user.is_student?
-  
-  role_str = ''
-  role_str = '教师' if is_teacher
-  role_str = '学生' if is_student
+- hbreadcrumb '首页', '/'
+- hbreadcrumb @user.real_name
 
-.page-userpage
-  .header
-    .avatar=avatar @user, :medium
-    .meta
-      .name=@user.name
-      .role=role_str
+.page-admin-model-show
+  .field.avatar
+    = avatar @user, :medium
 
-.team
-  - if is_student
-    所属班级
-    = link_to @user.student_team.name, 'javascript:;'
-  - elsif is_teacher
-    负责的班级
-    %ul
-      - @user.teacher_teams.each do |team|
-        %li= team.name
+  .data
+    .field.name
+      %label 教师姓名
+      .v= @user.real_name
 
-.courses
-  = link_to '课程列表', 'javascript:;'
-  %ul
-    - @user.courses.each do |course|
-      %li= course.name
+    - if @user.is_teacher?
+      .field.tid
+        %label 教师编号 
+        .v= @user.teacher.tid
 
-- unless current_user == @user
-  .sharing-with-you
-    该用户分享给您的文件
-    %ul
-      - @user.media_resources.shared_with(current_user) do |resource|
+      .field.description
+        %label 简介
+        .v= sanitize @user.teacher.description
 
-        %li= link_to resource.name, file_show_link(resource)
+    - if @user.is_student?
+      .field.tid
+        %label 学生编号 
+        .v= @user.student.sid
 
-
-  .public-resources
-    该用户的公共资源
-    %ul
-      - @user.public_resources do |public_resource|
-        %li= link_to public_resource.media_resource.name, file_show_link(public_resource.media_resource)
+    .field.email
+      %label 邮箱
+      .v= @user.email

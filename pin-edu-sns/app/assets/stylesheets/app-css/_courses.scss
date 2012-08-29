@@ -192,6 +192,7 @@
         .desc-info{
           .desc{
             min-height:200px;
+            width:600px;
           }
         }
       }
@@ -223,6 +224,10 @@
             }
           }
         }
+      }
+
+      &.syllabus{
+        .syllabus{width:600px;}
       }
 
       &.images{
