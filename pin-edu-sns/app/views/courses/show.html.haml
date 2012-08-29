@@ -66,7 +66,35 @@
               .cover= jimage file_entity_cover_src(file_entity), :width => 160, :height => 120
 
       = jfbox :upload_resource, '上传文件' do
-        .page-media-file-uploader{:data=>{:'course-id'=>@course.id}}
+        .page-media-file-uploader{:data=>{:'course-id'=>@course.id, :kind=>:image}}
+          .progress-bar-sample.hide
+            .file{:'data-name'=>'', :'data-size'=>''}
+              .bar
+                .p{:style=>'width:26%;'}
+              .data
+                .name on_your_mark.rmvb
+                .attr.size 65.5MB
+                .attr.percent 26%
+                .attr.speed 32KB/s
+                .state 上传出错
+              .ops
+                %a.close{:href=>'javascript:;', :title=>'取消上传'} 关闭
+          .uploading-files-list
+
+    - when :videos
+      .detail.images
+        .upload
+          = jupload_button '上传视频'
+
+        .images
+          - @course.course_videos.each do |course_video|
+            :ruby
+              file_entity = course_video.file_entity
+            .image
+              .cover= jimage file_entity_cover_src(file_entity), :width => 160, :height => 120
+
+      = jfbox :upload_resource, '上传文件' do
+        .page-media-file-uploader{:data=>{:'course-id'=>@course.id, :kind=>:video}}
           .progress-bar-sample.hide
             .file{:'data-name'=>'', :'data-size'=>''}
               .bar

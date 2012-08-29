@@ -365,7 +365,8 @@ pie.load ->
       success: (file_wrapper)->
         # 创建课程图片记录
         course_id = $uploader_elm.data('course-id')
-        url = "/admin/courses/#{course_id}/upload_image"
+        kind = $uploader_elm.data('kind')
+        url = "/admin/courses/#{course_id}/upload_#{kind}"
 
         file_wrapper.$elm.addClass 'success'
         file_wrapper.$elm.find('.state').html '上传完毕'
