@@ -144,8 +144,14 @@ MindpinEduSns::Application.routes.draw do
   resources :teachers
 
   # 查看当前用户参与或负责的课程
-  get 'courses/mine' => 'courses#mine'
-  resources :courses
+  resources :courses do
+    collection do
+      get :mine
+    end
+
+    resources :course_images, :only => [:create, :destroy], :shallow => true
+    resources :course_videos, :only => [:create, :destroy], :shallow => true
+  end
 
   resources :notifications do
     collection do
