@@ -12,4 +12,9 @@ class CourseImagesController < ApplicationController
     render :text => '图片已删除'
   end
 
+  def show
+    @resource = CourseImage.find(params[:id])
+    render :template => 'courses/resource_show'
+  end
+
 end

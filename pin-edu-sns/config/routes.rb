@@ -145,8 +145,8 @@ MindpinEduSns::Application.routes.draw do
       get :mine
     end
 
-    resources :course_images, :only => [:create, :destroy], :shallow => true
-    resources :course_videos, :only => [:create, :destroy], :shallow => true
+    resources :course_images, :shallow => true
+    resources :course_videos, :shallow => true
   end
 
   resources :notifications do

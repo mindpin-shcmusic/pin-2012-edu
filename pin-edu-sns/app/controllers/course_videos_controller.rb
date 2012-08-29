@@ -12,4 +12,9 @@ class CourseVideosController < ApplicationController
     render :text => '视频已删除'
   end
 
+  def show
+    @resource = CourseVideo.find(params[:id])
+    render :template => 'courses/resource_show'
+  end
+
 end

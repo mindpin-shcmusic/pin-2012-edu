@@ -9,6 +9,5 @@ pie.load ->
         url: url
         type: 'DELETE'
         success: (res)->
-          jQuery(document).trigger('ajax:delete-folder')
           $resource.fadeOut 400, ->
             $resource.remove()

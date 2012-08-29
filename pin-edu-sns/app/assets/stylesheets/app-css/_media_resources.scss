@@ -261,6 +261,16 @@
     @include floatfix;
     margin-bottom:20px;
 
+    .go-back{
+      @include floatfix;
+      padding-bottom:10px;
+      margin-bottom:10px;
+      border-bottom:solid 1px #ddd;
+      a{
+        @include mini-button-black;
+      }
+    }
+
     .avatar{
       float:left;
     }
