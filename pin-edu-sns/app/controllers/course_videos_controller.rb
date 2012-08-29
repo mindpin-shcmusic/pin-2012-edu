@@ -3,7 +3,7 @@ class CourseVideosController < ApplicationController
   before_filter :login_required
 
   def create
-    CourseVideo.create :file_entity_id => params[:file_entity_id], :course_id => params[:course_id]
+    CourseVideo.create :file_entity_id => params[:file_entity_id], :course_id => params[:course_id], :name => params[:name]
     render :text => '视频上传成功'
   end
 
