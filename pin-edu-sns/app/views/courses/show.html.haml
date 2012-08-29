@@ -32,7 +32,9 @@
         .field.teacher-info
           .t 任课老师
           .avatar= avatar @course.teacher_user, :medium
-          .name= @course.teacher_user.real_name
+          .name
+            %span= @course.teacher_user.real_name
+            %span= link_to '查看信息', @course.teacher_user
           .tid
             %span 教师编号：
             %span= @course.teacher_user.teacher.tid
