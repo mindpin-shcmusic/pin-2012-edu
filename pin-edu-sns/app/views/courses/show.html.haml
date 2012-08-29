@@ -1,29 +1,82 @@
-= render 'breadcrumb_bar'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '课程', '/courses'
+- hbreadcrumb @course.name
 
-.attr
-  课程名称
-  = link_to @course.name,
-            @course
-.attr
-  课程号
-  = link_to @course.cid,
-            @course
-.attr
-  院系
-  = link_to @course.department,
-            "/departments/#{@course.department}"
-.attr
-  上课地点
-  = link_to @course.location,
-            "/locations/#{@course.location}"
-.attr
-  老师
-  = link_to @course.teacher_user && @course.teacher_user.real_name,
-            @course.teacher_user
-.attr
-  = link_to "上传图片","/courses/#{@course.id}/upload_image_page"
+.page-course-show
+  .base-info
+    .cover
+      = jimage @course.cover_url, :width => 160, :height => 120
+    .meta
+      .name= @course.name
+      .field.cid
+        %span 课程编号：
+        %span= @course.cid
+      .field.department
+        %span 开课院系：
+        %span= @course.department
+      .field.location
+        %span 上课地点：
+        %span= @course.location
 
+  .detail-info
+    .tabs
+      = course_tab_link @course, :basic, '基础信息', @current_tab
+      = course_tab_link @course, :syllabus, '教学大纲', @current_tab
+      = course_tab_link @course, :images, '课程照片', @current_tab
+      = course_tab_link @course, :videos, '课程视频', @current_tab
+      = course_tab_link @course, :students, '上课学生', @current_tab, @course.student_users.count
 
+    - case @current_tab
+    - when :basic
+      .detail.basic
+        .field.teacher-info
+          .t 任课老师
+          .avatar= avatar @course.teacher_user, :medium
+          .name= @course.teacher_user.real_name
+          .tid
+            %span 教师编号：
+            %span= @course.teacher_user.teacher.tid
+        .field.desc-info
+          .t 课程简介
+          .desc= sanitize @course.desc
 
+    - when :syllabus
+      .detail.syllabus
+        = sanitize @course.syllabus
 
+    - when :students
+      .detail.students
+        .students
+          - @course.student_users.each do |student_user|
+            .student
+              .avatar= avatar student_user, :tiny
+              .name= student_user.real_name
+              %a.info{:href=>"/users/#{student_user.id}"} 查看信息
 
+    - when :images
+      .detail.images
+        .upload
+          = jupload_button '上传照片'
+
+        .images
+          - @course.course_images.each do |course_image|
+            :ruby
+              file_entity = course_image.file_entity
+            .image
+              .cover= jimage file_entity_cover_src(file_entity), :width => 160, :height => 120
+
+      = jfbox :upload_resource, '上传文件' do
+        .page-media-file-uploader{:data=>{:'course-id'=>@course.id}}
+          .progress-bar-sample.hide
+            .file{:'data-name'=>'', :'data-size'=>''}
+              .bar
+                .p{:style=>'width:26%;'}
+              .data
+                .name on_your_mark.rmvb
+                .attr.size 65.5MB
+                .attr.percent 26%
+                .attr.speed 32KB/s
+                .state 上传出错
+              .ops
+                %a.close{:href=>'javascript:;', :title=>'取消上传'} 关闭
+          .uploading-files-list
