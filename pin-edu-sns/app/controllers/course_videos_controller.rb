@@ -8,7 +8,7 @@ class CourseVideosController < ApplicationController
   end
 
   def destroy
-    CourseVideo.find(params[:course_video_id]).destroy
+    CourseVideo.find(params[:id]).destroy
     render :text => '视频已删除'
   end
 

@@ -8,7 +8,7 @@ class CourseImagesController < ApplicationController
   end
 
   def destroy
-    CourseImage.find(params[:course_image_id]).destroy
+    CourseImage.find(params[:id]).destroy
     render :text => '图片已删除'
   end
 
