@@ -16,4 +16,4 @@
   - @shared_users.each do |user|
     .user
       .avatar= avatar user, :tiny
-      .name= link_to user.name, "/media_shares/users/#{user.id}"
+      .name= link_to user.real_name, "/media_shares/users/#{user.id}"

@@ -6,9 +6,7 @@
   .page-media-resource-head
     %a.create-folder-button{:href=>'javascript:;'} 新建文件夹
     
-    .page-upload-button
-      %a.button{:href=>'javascript:;'} 上传文件
-      = file_field_tag :file, :multiple => true
+    = jupload_button '上传文件'
 
     .search
       = jsearchbar '/file_search'

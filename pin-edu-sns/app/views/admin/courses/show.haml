@@ -28,9 +28,6 @@
   .field.desc
     %label 备注
     .v= sanitize @course.desc
-  .field.syllabus
-    %label 教学大纲
-    .v= sanitize @course.syllabus
 
   .field.upload-image
     = link_to '上传课程图片', "/admin/courses/#{@course.id}/upload_image_page"
