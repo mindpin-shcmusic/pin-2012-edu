@@ -24,7 +24,7 @@
       = course_tab_link @course, :syllabus, '教学大纲', @current_tab
       = course_tab_link @course, :images, '课程照片', @current_tab
       = course_tab_link @course, :videos, '课程视频', @current_tab
-      = course_tab_link @course, :students, '上课学生', @current_tab, @course.student_users.count
+      = course_tab_link @course, :students, '学生', @current_tab, @course.student_users.count
 
     - case @current_tab
     - when :basic
@@ -55,56 +55,12 @@
 
     - when :images
       .detail.images
-        .upload
-          = jupload_button '上传照片'
-
-        .images
-          - @course.course_images.each do |course_image|
-            :ruby
-              file_entity = course_image.file_entity
-            .image
-              .cover= jimage file_entity_cover_src(file_entity), :width => 160, :height => 120
-
-      = jfbox :upload_resource, '上传文件' do
-        .page-media-file-uploader{:data=>{:'course-id'=>@course.id, :kind=>:image}}
-          .progress-bar-sample.hide
-            .file{:'data-name'=>'', :'data-size'=>''}
-              .bar
-                .p{:style=>'width:26%;'}
-              .data
-                .name on_your_mark.rmvb
-                .attr.size 65.5MB
-                .attr.percent 26%
-                .attr.speed 32KB/s
-                .state 上传出错
-              .ops
-                %a.close{:href=>'javascript:;', :title=>'取消上传'} 关闭
-          .uploading-files-list
+        .upload= jupload_button '上传照片'
+        = render '/courses/parts/resources', :course_resources=>@course.course_images
+        = render '/courses/parts/uploader', :course=>@course, :kind=>:image
 
     - when :videos
       .detail.images
-        .upload
-          = jupload_button '上传视频'
-
-        .images
-          - @course.course_videos.each do |course_video|
-            :ruby
-              file_entity = course_video.file_entity
-            .image
-              .cover= jimage file_entity_cover_src(file_entity), :width => 160, :height => 120
-
-      = jfbox :upload_resource, '上传文件' do
-        .page-media-file-uploader{:data=>{:'course-id'=>@course.id, :kind=>:video}}
-          .progress-bar-sample.hide
-            .file{:'data-name'=>'', :'data-size'=>''}
-              .bar
-                .p{:style=>'width:26%;'}
-              .data
-                .name on_your_mark.rmvb
-                .attr.size 65.5MB
-                .attr.percent 26%
-                .attr.speed 32KB/s
-                .state 上传出错
-              .ops
-                %a.close{:href=>'javascript:;', :title=>'取消上传'} 关闭
-          .uploading-files-list
+        .upload= jupload_button '上传视频'
+        = render '/courses/parts/resources', :course_resources => @course.course_videos
+        = render '/courses/parts/uploader', :course=>@course, :kind=>:video

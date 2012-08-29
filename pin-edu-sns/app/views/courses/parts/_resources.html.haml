@@ -1,0 +1,6 @@
+.images
+  - course_resources.each do |resource|
+    :ruby
+      file_entity = resource.file_entity
+    .image
+      .cover= jimage file_entity_cover_src(file_entity), :width => 160, :height => 120
