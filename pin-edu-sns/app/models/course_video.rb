@@ -10,4 +10,6 @@ class CourseVideo < ActiveRecord::Base
             :uniqueness => {:scope => :course_id}
 
   default_scope order('created_at DESC')
+
+  include Comment::CommentableMethods
 end
