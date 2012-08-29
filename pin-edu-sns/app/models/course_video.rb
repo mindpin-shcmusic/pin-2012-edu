@@ -9,4 +9,5 @@ class CourseVideo < ActiveRecord::Base
             :presence   => true,
             :uniqueness => {:scope => :course_id}
 
+  default_scope order('created_at DESC')
 end
