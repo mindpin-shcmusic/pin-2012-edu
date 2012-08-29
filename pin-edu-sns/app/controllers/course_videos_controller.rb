@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-class Course::CourseVideosController < ApplicationController
+class CourseVideosController < ApplicationController
   before_filter :login_required
 
   def create
@@ -7,7 +7,6 @@ class Course::CourseVideosController < ApplicationController
     render :text => '视频上传成功'
   end
 
-  
   def destroy
     CourseVideo.find(params[:course_video_id]).destroy
     render :text => '视频已删除'

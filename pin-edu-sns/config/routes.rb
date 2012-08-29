@@ -52,11 +52,7 @@ MindpinEduSns::Application.routes.draw do
         get  :select_students
         put  :set_students
         get  :upload_image_page
-        post :upload_image
-        delete :delete_image
         get  :upload_video_page
-        post :upload_video
-        delete :delete_video
         get  :select_cover_page
         post :select_cover
       end
