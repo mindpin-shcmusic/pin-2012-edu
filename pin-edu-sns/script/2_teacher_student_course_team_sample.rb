@@ -25,6 +25,7 @@ ActiveRecord::Base.transaction do
 
 
     teacher = Teacher.create(:real_name => teachers[counter],
+                             :tid      => "T-#{counter + 1}",
                              :user      => teacher_user)
     puts ">>>>>>>> done! (#{time_consumed} seconds)"
 
@@ -39,6 +40,7 @@ ActiveRecord::Base.transaction do
       raise student_user.errors.messages.to_s if student_user.errors.any?
 
       student = Student.create(:real_name => name,
+                               :sid       => "S-#{student_user.id - 1}",
                                :user      => student_user)
 
       student_counter += 1
@@ -51,6 +53,7 @@ ActiveRecord::Base.transaction do
     puts ">>>>>>>> seeding team-#{counter}: #{team[0].to_s}"
 
     team = Team.create(:name          => team[0].to_s,
+                       :cid           => "T-#{counter + 1}",
                        :teacher_user  => teacher.user,
                        :student_users => students.map(&:user))
 
@@ -63,7 +66,7 @@ ActiveRecord::Base.transaction do
     puts ">>>>>>>> seeding course-#{counter}: #{courses[counter]}"
 
     Course.create(:name          => courses[counter],
-                  :cid           => "course-#{counter + 1}",
+                  :cid           => "C-#{counter + 1}",
                   :department    => '矿业和土木工程学院',
                   :location      => "第一教学楼第16#{rand 4}教室",
                   :teacher_user  => teacher.user,

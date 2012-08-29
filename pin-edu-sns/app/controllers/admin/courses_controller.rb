@@ -82,6 +82,11 @@ class Admin::CoursesController < ApplicationController
     render :text => '图片上传成功'
   end
 
+  def delete_image
+    CourseImage.find(params[:course_image_id]).destroy
+    render :text => '图片已删除'
+  end
+
   def select_cover_page
   end
 
@@ -98,6 +103,11 @@ class Admin::CoursesController < ApplicationController
   def upload_video
     @course.course_videos.create :file_entity_id => params[:file_entity_id]
     render :text => '视频上传成功'
+  end
+
+  def delete_video
+    CourseVideo.find(params[:course_video_id]).destroy
+    render :text => '视频已删除'
   end
 
 end

@@ -12,11 +12,11 @@
       %img{:src=>course_image.file_entity.attach.url}
 
 %hr
-- if !@course.cover_course_image.blank?
+- if !@course.cover.blank?
   .page-course-current-cover
     .title
       当前封面
     .image
-      %img{:src=>@course.cover_course_image.file_entity.attach.url}
+      %img{:src=>@course.cover_url}
 .page-course-select-cover
   = link_to "选择封面","/admin/courses/#{@course.id}/select_cover_page"
