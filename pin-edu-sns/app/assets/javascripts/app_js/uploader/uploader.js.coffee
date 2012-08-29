@@ -317,9 +317,8 @@ pie.load ->
 
 
 # -------------
-# 课程照片上传
+# 课程照片、视频上传
 
-# 媒体资源
 pie.load ->
   
   $upload_button = jQuery('.page-course-show .page-upload-button')
@@ -375,7 +374,8 @@ pie.load ->
           url:  url
           type: 'POST'
           data:
-            'file_entity_id' : file_wrapper.FILE_ENTITY_ID
+            'file_entity_id': file_wrapper.FILE_ENTITY_ID
+            'name': file_wrapper.file_name
 
           success: (res)->
             # $list = jQuery('.page-media-resources')
