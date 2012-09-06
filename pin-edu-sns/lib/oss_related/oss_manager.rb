@@ -43,4 +43,8 @@ class OssManager
   def self.file_exists?(save_path)
     OSS.file_exists?(CONFIG["bucket"],save_path)
   end
+
+  def self.init_multipart_upload(save_path)
+    OSS.init_multipart_upload(CONFIG["bucket"], save_path)
+  end
 end

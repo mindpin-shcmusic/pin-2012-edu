@@ -119,6 +119,24 @@ class Oss
     !get_file_meta(bucket,save_path).blank?
   end
 
+
+  ## multipart upload
+  def init_multipart_upload(bucket, save_path)
+    path = "#{File.join("/",bucket,save_path)}?uploads"
+    method = "POST"
+    head_hash = get_head_hash(method,path)
+
+    Net::HTTP.start('storage.aliyun.com') do |http|
+      r = http.send_request(method,path,nil,head_hash)
+      case r.code
+      when "200"
+        return Nokogiri::XML(r.body).css("InitiateMultipartUploadResult UploadId").text()
+      else
+        raise Oss::ResponseError,r.code
+      end
+    end
+  end
+
   private
   def get_head_hash(method,path,option={})
     date = Time.now.gmtime.strftime('%a, %d %b %Y %H:%M:%S %Z')
