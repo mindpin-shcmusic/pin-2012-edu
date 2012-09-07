@@ -20,7 +20,7 @@ module Oss
     end
 
     def object(object_name)
-      Object.new(self, object_name)
+      Oss::Object.new(self, object_name)
     end
 
   end

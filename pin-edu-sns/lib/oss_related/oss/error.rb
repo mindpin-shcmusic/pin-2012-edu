@@ -15,5 +15,6 @@ module Oss
     end
 
     class NoSuchBucket < ResponseError; end
+    class AccessDenied < ResponseError; end
   end
 end

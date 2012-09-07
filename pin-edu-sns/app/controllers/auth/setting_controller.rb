@@ -73,7 +73,7 @@ class Auth::SettingController <  ApplicationController
   rescue Exception => ex
     p ex.message
     puts ex.backtrace * '\n'
-    flash[:error] = ex
+    flash[:error] = ex.message
     return redirect_to :action => :avatar
   end
   

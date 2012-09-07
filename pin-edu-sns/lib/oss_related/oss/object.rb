@@ -14,8 +14,8 @@ module Oss
       md5 = Digest::MD5.hexdigest(body)
       content_length = body.length
 
-      @connection.request(:put, :path => @path, :body => body
-        :headers => { :content_length => content_length, :md5 => md5, :content_type => content_type })
+      @connection.request(:put, :path => @path, :body => body,
+        :headers => {  :md5 => md5, :content_type => content_type })
     end
 
     def delete

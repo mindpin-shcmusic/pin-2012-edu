@@ -44,7 +44,7 @@ module Paperclip
           log("deleting #{path}")
           begin
             OssManager.delete_file(path)
-          rescue ::Oss::ResponseError => ex
+          rescue ::Oss::Error::ResponseError => ex
             # 忽略吧...
           end
         end
