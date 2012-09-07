@@ -1,0 +1,13 @@
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '课程', '/courses'
+- hbreadcrumb @resource.course.name
+- hbreadcrumb @resource.name
+
+.page-media-resource
+  .head
+    .go-back= link_to '返回课程页', @resource.course
+    %h2= @resource.name
+
+  = render 'aj/file_entity_preview', :file_entity=>@resource.file_entity
+
+= jcomments @resource

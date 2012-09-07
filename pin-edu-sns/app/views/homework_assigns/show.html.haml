@@ -12,7 +12,7 @@
   = link_to '返回作业描述页面', @homework
 
   %div 作业内容
-  %p= @homework.content
+  %p= sanitize @homework.content
 
   .student-home-work-status
     = uploaded_count.to_s + "/" + student_attachments_count.to_s

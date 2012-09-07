@@ -13,6 +13,7 @@ class HomeworkStudentUpload < ActiveRecord::Base
   belongs_to :homework
 
   validates :file_entity, :presence => true
+  validates :requirement_id, :uniqueness => true
 
   # --- 给其他类扩展的方法
   module UserMethods
@@ -24,4 +25,3 @@ class HomeworkStudentUpload < ActiveRecord::Base
     end
   end
 end
-

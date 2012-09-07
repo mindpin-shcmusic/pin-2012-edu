@@ -6,7 +6,7 @@
 
 .page-admin-model-show
   .field.image
-    = jimage @course.cover, :width => 160, :height => 96
+    = jimage @course.cover_url, :width => 160, :height => 96
   .field.name
     %label 课程名
     .v= @course.name
@@ -27,10 +27,7 @@
       .v= @course.teacher_user.teacher.real_name
   .field.desc
     %label 备注
-    .v= @course.desc
-  .field.syllabus
-    %label 教学大纲
-    .v= @course.syllabus
+    .v= sanitize @course.desc
 
   .field.upload-image
     = link_to '上传课程图片', "/admin/courses/#{@course.id}/upload_image_page"

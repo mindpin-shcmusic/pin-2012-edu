@@ -1,4 +1,4 @@
-# -*- coding: no-conversion -*-
+# -*- coding: utf-8 -*-
 class Admin::CoursesController < ApplicationController
   layout 'admin'
   before_filter :login_required
@@ -78,28 +78,36 @@ class Admin::CoursesController < ApplicationController
   end
 
   def upload_image
-    @course.create_courses_image(params[:file])
-    redirect_to "/admin/courses/#{@course.id}/upload_image_page"
-  rescue Exception => ex
-    flash[:error] = ex.message
-    redirect_to "/admin/courses/#{@course.id}/upload_image_page"
+    @course.course_images.create :file_entity_id => params[:file_entity_id]
+    render :text => '图片上传成功'
+  end
+
+  def delete_image
+    CourseImage.find(params[:course_image_id]).destroy
+    render :text => '图片已删除'
   end
 
   def select_cover_page
   end
 
   def select_cover
-    courses_image = @course.courses_images.find(params[:courses_image_id])
-    @course.select_cover(courses_image)
-    redirect_to "/admin/courses/#{@course.id}/select_cover_page"
+    course_image = @course.course_images.find(params[:course_image_id])
+    @course.cover = course_image
+    @course.save
+    render :text => '封面选择成功'
   end
 
   def upload_video_page
   end
 
   def upload_video
-    @course.course_video.create :file_entity_id => params[:file_entity_id]
-    render :text => '课程视频上传成功'
+    @course.course_videos.create :file_entity_id => params[:file_entity_id]
+    render :text => '视频上传成功'
+  end
+
+  def delete_video
+    CourseVideo.find(params[:course_video_id]).destroy
+    render :text => '视频已删除'
   end
 
 end

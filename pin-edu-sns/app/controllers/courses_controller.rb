@@ -15,6 +15,7 @@ class CoursesController < ApplicationController
   end
 
   def show
+    @current_tab = (params[:tab] || :basic).to_sym
   end
 
 end

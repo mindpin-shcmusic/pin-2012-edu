@@ -52,9 +52,7 @@ MindpinEduSns::Application.routes.draw do
         get  :select_students
         put  :set_students
         get  :upload_image_page
-        post :upload_image
         get  :upload_video_page
-        post :upload_video
         get  :select_cover_page
         post :select_cover
       end
@@ -142,8 +140,14 @@ MindpinEduSns::Application.routes.draw do
   resources :teachers
 
   # 查看当前用户参与或负责的课程
-  get 'courses/mine' => 'courses#mine'
-  resources :courses
+  resources :courses do
+    collection do
+      get :mine
+    end
+
+    resources :course_images, :shallow => true
+    resources :course_videos, :shallow => true
+  end
 
   resources :notifications do
     collection do

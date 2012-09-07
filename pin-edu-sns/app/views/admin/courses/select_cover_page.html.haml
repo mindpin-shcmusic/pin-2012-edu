@@ -1,10 +1,10 @@
 = link_to "返回上传图片页面","/admin/courses/#{@course.id}/upload_image_page"
 .page-select-cover-forms
   = flash[:error]
-  - current_id = @course.cover_courses_image.blank? ? -1 : @course.cover_courses_image.id 
+  - current_id = @course.cover ? -1 : @course.cover.id 
   = form_tag "/admin/courses/#{@course.id}/select_cover", :method => 'post', :class => 'select_cover' do
-    - @course.courses_images.each do |courses_image|
+    - @course.course_images.each do |course_image|
       .select
-        %img{:src=>courses_image.file_entity.attach.url}
-        = radio_button_tag :courses_image_id, courses_image.id, current_id == courses_image.id
+        %img{:src=>course_image.file_entity.attach.url}
+        = radio_button_tag :course_image_id, course_image.id, current_id == course_image.id
     %a.form-submit-button 确定
