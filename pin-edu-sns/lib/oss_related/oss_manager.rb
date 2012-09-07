@@ -2,49 +2,48 @@ class OssManager
   YML_FILE_PATH = File.join(File.dirname(File.expand_path(__FILE__)),"oss.yml")
 
   CONFIG = YAML.load_file(YML_FILE_PATH)[Rails.env]
-  OSS = Oss.new(CONFIG["access_key_id"],CONFIG["secret_access_key"])
+
+  OSS_SERVICE = Oss::Service.new(:access_key_id => CONFIG["access_key_id"], :secret_access_key => CONFIG["secret_access_key"])
+  OSS_BUCKET = OSS_SERVICE.bucket(CONFIG["bucket"])
   
   def self.create_bucket
-    OSS.create_bucket(CONFIG["bucket"])
+    OSS_BUCKET.create
   end
 
   def self.set_bucket_to_public
-    OSS.set_bucket_acl(CONFIG["bucket"], "public-read")
+    OSS_BUCKET.set_acl(Oss::Bucket::ACL::PUBLIC_READ)
   end
 
   def self.upload_file(file, save_path, content_type)
     begin
-      OSS.upload_file(CONFIG["bucket"], file, save_path, content_type)
-    rescue ::Oss::NoSuchBucketError => ex
+      OSS_BUCKET.object(save_path).upload(file, content_type)
+    rescue ::Oss::Error::NoSuchBucket => ex
       self.create_bucket
       self.set_bucket_to_public
       retry
-    rescue ::Oss::ResponseError => ex
+    rescue ::Oss::Error::ResponseError => ex
       raise
     end
   end
 
   def self.delete_file(save_path)
-    OSS.delete_file(CONFIG["bucket"], save_path)
+    OSS_BUCKET.object(save_path).delete
   end
 
   def self.get_file(save_path)
-    OSS.get_file(CONFIG["bucket"],save_path)
+    OSS_BUCKET.object(save_path).get_file
   end
 
   def self.get_file_body(save_path)
-    OSS.get_file_body(CONFIG["bucket"],save_path)
+    OSS_BUCKET.object(save_path).get_body
   end
 
   def self.get_file_meta(save_path)
-    OSS.get_file_meta(CONFIG["bucket"],save_path)
+    OSS_BUCKET.object(save_path).meta
   end
 
   def self.file_exists?(save_path)
-    OSS.file_exists?(CONFIG["bucket"],save_path)
+    OSS_BUCKET.object(save_path).exists?
   end
 
-  def self.init_multipart_upload(save_path)
-    OSS.init_multipart_upload(CONFIG["bucket"], save_path)
-  end
 end
