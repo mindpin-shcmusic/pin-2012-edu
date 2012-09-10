@@ -10,11 +10,20 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120829093135) do
+ActiveRecord::Schema.define(:version => 20120910023929) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
     t.float    "share_rate", :default => 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "aliyun_multipart_upload_parts", :force => true do |t|
+    t.integer  "file_entity_id"
+    t.string   "upload_id"
+    t.integer  "part_num"
+    t.string   "md5"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
