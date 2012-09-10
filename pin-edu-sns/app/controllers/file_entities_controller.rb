@@ -8,7 +8,8 @@ class FileEntitiesController < ApplicationController
     blob = params[:blob]
 
     if file_entity_id.blank?
-      file_entity = FileEntity.create_by_params(file_name,file_size,blob)
+      file_entity = FileEntity.create_by_params(file_name,file_size)
+      file_entity.save_first_blob(blob)
     else
       file_entity = FileEntity.find(file_entity_id)
       file_entity.save_new_blob(blob)

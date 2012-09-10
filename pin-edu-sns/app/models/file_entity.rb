@@ -112,26 +112,24 @@ class FileEntity < ActiveRecord::Base
     FileEntityVideoEncodeResqueQueue.enqueue(self.id)
   end
 
-  def self.create_by_params(file_name,file_size,blob)
-    attach_file_name = get_randstr_filename(file_name)
-    attach_content_type = file_content_type(file_name)
-    attach_file_size = file_size
-    file_entity = self.create(
-      :attach_file_name => attach_file_name,
-      :attach_content_type => attach_content_type,
-      :attach_file_size => attach_file_size,
+  def self.create_by_params(file_name,file_size)
+    self.create(
+      :attach_file_name => get_randstr_filename(file_name),
+      :attach_content_type => file_content_type(file_name),
+      :attach_file_size => file_size,
       :merged => false
     )
+  end
 
-    FileUtils.mkdir_p(File.dirname(file_entity.attach.path))
-    saved_size = blob.size
-    FileUtils.mv(blob.path,file_entity.attach.path)
-    file_entity.update_attributes(
-      :saved_size => saved_size,
-      :attach_updated_at => file_entity.created_at
+  def save_first_blob(blob)
+    FileUtils.mkdir_p(File.dirname(self.attach.path))
+    FileUtils.mv(blob.path,self.attach.path)
+
+    self.update_attributes(
+      :saved_size => blob.size,
+      :attach_updated_at => self.created_at
     )
-    file_entity.check_completion_status
-    file_entity
+    self.check_completion_status
   end
 
   def save_new_blob(file_blob)
