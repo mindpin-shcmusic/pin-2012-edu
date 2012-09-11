@@ -1,6 +1,12 @@
 module FileEntityStorage
   module Aliyun
     def self.included(base)
+      # 这个声明只是为了和 filesystem 接口统一，
+      # 只负责 attach.url 的读取
+      base.has_attached_file :attach,
+                        :path => R::FILE_ENTITY_ATTACHED_PATH,
+                        :url  => R::FILE_ENTITY_ATTACHED_URL
+
       base.has_many :aliyun_multipart_upload_parts, :order => 'part_num asc', :dependent => :destroy
       base.send(:include, InstanceMethods)
     end
@@ -13,7 +19,7 @@ module FileEntityStorage
       def save_new_blob(blob)
         multipart_upload = OssManager::OSS_BUCKET.object(object_name).multipart_upload
         part = self.aliyun_multipart_upload_parts.last
-        md5 = Digest::MD5.file(blob).to_s
+        md5 = Digest::MD5.file(blob.path).to_s
 
 
         if part.blank?
@@ -55,7 +61,7 @@ module FileEntityStorage
       end
 
       def object_name
-        "/file_entities/attaches/#{id}/original/#{attach_file_name}"
+        self.attach.url.gsub(/\?.*/,"")
       end
       
     end

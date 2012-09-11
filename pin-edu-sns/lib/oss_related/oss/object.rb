@@ -70,28 +70,31 @@ module Oss
       def init
         path = "#{@object.path}?uploads"
 
-        response = @connection.request(:post, :path => path).body
+        response = @connection.request(:post, :path => path)
         return Nokogiri::XML(response.body).css("InitiateMultipartUploadResult UploadId").text()
       end
 
       def upload(upload_id, part_num, part)
-        path = "#{@object.path}?partNumber=#{part_num}?uploadId=#{upload_id}"
+        path = "#{@object.path}?partNumber=#{part_num}&uploadId=#{upload_id}"
 
         body = IO.read(part.path)
         md5 = Digest::MD5.hexdigest(body)
-        response = @connection.request(:put, :path => path, :body => body)
-        raise Error::ResponseError.new(nil, response) if response['ETag'] != md5
+
+        response = @connection.request(:put, :path => path, :body => body,
+          :headers => {  :md5 => md5, :content_type => 'application/x-www-form-urlencoded' })
+
+        raise Error::ResponseError.new(nil, response) if response['ETag'].gsub("\"","").downcase != md5.downcase
         return PartInfo.new(part_num, md5)
       end
 
       def complete(upload_id, part_infos)
         path = "#{@object.path}?uploadId=#{upload_id}"
 
-        parts_str = part_infos.map.each do |part_info|
+        parts_str = part_infos.map do |part_info|
           %`
             <Part>
               <PartNumber>#{part_info.part_number}</PartNumber>
-              <ETag>#{part_info.etag}</ETag>
+              <ETag>#{part_info.etag.upcase}</ETag>
             </Part>
           `
         end.join("")
@@ -101,13 +104,22 @@ module Oss
             #{parts_str}
           </CompleteMultipartUpload>
         `
-
-        @connection.request(:post, :path => path, :body => body)
+        @connection.request(:post, :path => path, :body => body,:headers => { :content_type => 'application/x-www-form-urlencoded' })
       end
 
       def abort(upload_id)
         path = "#{@object.path}?uploadId=#{upload_id}"
         @connection.request(:delete, :path => path)
+      end
+
+      def list(upload_id)
+        path = "#{@object.path}?uploadId=#{upload_id}"
+        @connection.request(:get, :path => path).body
+      end
+
+      def list_uploads
+        path = "/#{@bucket.name}?uploads"
+        @connection.request(:get, :path => path).body
       end
 
       class PartInfo

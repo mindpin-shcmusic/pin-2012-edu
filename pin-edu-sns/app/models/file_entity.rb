@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 class FileEntity < ActiveRecord::Base
-  include FileEntityStorage::Filesystem
+  # include FileEntityStorage::Filesystem
+  include FileEntityStorage::Aliyun
 
   CONTENT_TYPES = {
     :video    => [

@@ -2,7 +2,7 @@ class FileUploader
   constructor: ($upload_button, options)->
     @$button = $upload_button
 
-    @BLOB_SIZE = 524288 # 1024 * 512 bytes 512K / 每段
+    @BLOB_SIZE = 524288*10 # 1024 * 512 bytes 512K / 每段
     @UPLOAD_URL = '/upload'
 
     # funcs
