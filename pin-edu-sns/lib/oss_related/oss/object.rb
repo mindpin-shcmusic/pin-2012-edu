@@ -61,6 +61,34 @@ module Oss
       @connection.request(:put, :path => @path, :headers => {'x-oss-copy-source' => source_oss_object.path})
     end
 
+    def group(object_names)
+      part_number = 0
+      str = object_names.map do |name|
+        part_number+=1
+        meta = bucket.object(name).meta
+        %`
+          <Part>
+            <PartNumber>#{part_number}</PartNumber>
+            <PartName>#{name}</PartName>
+            <ETag>#{meta[:etag]}</ETag>
+          </Part>
+        `
+      end.join("")
+
+      body = %`
+        <CreateFileGroup>
+        #{str}
+        </CreateFileGroup>
+      `
+      @connection.request(:post, :path => "#{path}?group", :body => body,
+        :headers => { :content_type => 'application/x-www-form-urlencoded' })
+    end
+
+    def get_group_index
+      @connection.request(:get, :path => @path,
+        :headers => { 'x-oss-file-group' => '' }).body
+    end
+
     def multipart_upload
       MultipartUpload.new(self)
     end
