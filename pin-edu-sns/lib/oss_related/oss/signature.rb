@@ -32,7 +32,8 @@ module Oss
 
       header = ''
       unless options[:headers].blank?
-        header = options[:headers].map{|keya,value|"#{keya}:#{value}"}*"\n" + "\n"
+        headers = options[:headers]
+        header = headers.keys.sort.map{|keya|"#{keya}:#{headers[keya]}"}*"\n" + "\n"
       end
 
       str = "#{verb}\n#{md5}\n#{ty}\n#{date}\n#{header}#{res}"

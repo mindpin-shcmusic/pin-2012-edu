@@ -45,7 +45,7 @@ module Oss
       return {
         :content_type => response["Content-Type"],
         :content_length => response["Content-Length"].to_i,
-        :file_name => File.basename(save_path)
+        :file_name => File.basename(@name)
       }
     end
 
@@ -54,6 +54,10 @@ module Oss
       true
     rescue
       false
+    end
+
+    def copy(source_oss_object)
+      @connection.request(:put, :path => @path, :headers => {'x-oss-copy-source' => source_oss_object.path})
     end
 
     def multipart_upload
