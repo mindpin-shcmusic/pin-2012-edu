@@ -40,12 +40,13 @@ module Oss
     end
 
     def meta
-      response = @connection.request(:head, :path => @path).body
+      response = @connection.request(:head, :path => @path)
 
       return {
         :content_type => response["Content-Type"],
         :content_length => response["Content-Length"].to_i,
-        :file_name => File.basename(@name)
+        :file_name => File.basename(@name),
+        :etag => response["ETag"].gsub("\"","")
       }
     end
 
