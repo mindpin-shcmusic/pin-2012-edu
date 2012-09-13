@@ -7,57 +7,50 @@ module FileEntityStorage
                         :path => R::FILE_ENTITY_ATTACHED_PATH,
                         :url  => R::FILE_ENTITY_ATTACHED_URL
 
-      base.has_many :aliyun_multipart_upload_parts, :order => 'part_num asc', :dependent => :destroy
       base.send(:include, InstanceMethods)
+      base.has_many :file_entity_oss_objects, :order => 'id ASC'
     end
 
     module InstanceMethods
+      class ObjectSizeOverflowError < StandardError;end
+
       def save_first_blob(blob)
         save_new_blob(blob)
       end
 
       def save_new_blob(blob)
-        multipart_upload = OssManager::OSS_BUCKET.object(object_name).multipart_upload
-        part = self.aliyun_multipart_upload_parts.last
-        md5 = Digest::MD5.file(blob.path).to_s
+        blob_size = blob.size
+        current_object.save_new_blob(blob)
 
+        self.saved_size += blob_size
+        self.save
+        check_completion_status
+      end
 
-        if part.blank?
-          upload_id = multipart_upload.init
-          part_num = 1
-        else
-          upload_id = part.upload_id
-          part_num = part.part_num+1
-        end
-
-        multipart_upload.upload(upload_id, part_num, blob)
-
-        self.aliyun_multipart_upload_parts.create!(
-          :upload_id => upload_id, :md5 => md5, :part_num => part_num)
-
-        self.update_attributes!(
-          :saved_size => self.saved_size+blob.size,
-          :attach_updated_at => self.created_at
-        )
-
-        self.check_completion_status
+      def current_object
+        object = self.file_entity_oss_objects.last || self.file_entity_oss_objects.create
+        object = self.file_entity_oss_objects.create if object.complete?
+        object
       end
 
       def check_completion_status
-        return if self.saved_size != self.attach_file_size
+        return if !complete?
 
-        part = self.aliyun_multipart_upload_parts.last
-        upload_id = part.upload_id
-        parts = self.aliyun_multipart_upload_parts.where(:upload_id => upload_id)
-        part_infos = parts.map do |part|
-          Oss::Object::MultipartUpload::PartInfo.new(part.part_num, part.md5)
-        end
+        UploadFileEntityToAliyunOssResqueQueue.enqueue(self.id)
+      end
 
-        multipart_upload = OssManager::OSS_BUCKET.object(object_name).multipart_upload
-        multipart_upload.complete(upload_id, part_infos)
+      def upload_to_oss
+        self.file_entity_oss_objects.each{ |object| object.upload_to_oss }
 
-        self.update_attributes!( :merged => true )
-        self.aliyun_multipart_upload_parts.clear
+        # 创建 object_group
+        object_names = self.file_entity_oss_objects.map(&:object_name)
+        OssManager::OSS_BUCKET.object(object_name).group(object_names)
+      end
+
+      def complete?
+        return true if self.saved_size == self.attach_file_size
+        return false if self.saved_size < self.attach_file_size
+        raise ObjectSizeOverflowError
       end
 
       def object_name
