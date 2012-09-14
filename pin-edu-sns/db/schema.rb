@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120913064904) do
+ActiveRecord::Schema.define(:version => 20120914063859) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -118,17 +118,8 @@ ActiveRecord::Schema.define(:version => 20120913064904) do
   add_index "file_entities", ["md5"], :name => "index_file_entities_on_md5"
 
   create_table "file_entity_oss_object_parts", :force => true do |t|
-    t.integer  "file_entity_oss_object_id"
-    t.integer  "saved_size",                :limit => 8
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "file_entity_oss_objects", :force => true do |t|
     t.integer  "file_entity_id"
     t.integer  "saved_size",     :limit => 8
-    t.string   "upload_id"
-    t.boolean  "uploaded"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

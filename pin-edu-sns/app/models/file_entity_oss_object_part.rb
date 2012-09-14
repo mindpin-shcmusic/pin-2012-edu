@@ -2,7 +2,7 @@ class FileEntityOssObjectPart < ActiveRecord::Base
   # 每次通过 multipart upload 上传给 OSS 的片段大小
   PART_SIZE = 8388608
 
-  belongs_to :file_entity_oss_object
+  belongs_to :file_entity
 
   before_validation(:on => :create) do |object_part|
     object_part.saved_size = 0

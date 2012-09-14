@@ -8,7 +8,7 @@ module FileEntityStorage
                         :url  => R::FILE_ENTITY_ATTACHED_URL
 
       base.send(:include, InstanceMethods)
-      base.has_many :file_entity_oss_objects, :order => 'id ASC'
+      base.has_many :file_entity_oss_object_parts, :order => 'id ASC'
     end
 
     module InstanceMethods
@@ -20,17 +20,17 @@ module FileEntityStorage
 
       def save_new_blob(blob)
         blob_size = blob.size
-        current_object.save_new_blob(blob)
+        current_part.save_new_blob(blob)
 
         self.saved_size += blob_size
         self.save
         check_completion_status
       end
 
-      def current_object
-        object = self.file_entity_oss_objects.last || self.file_entity_oss_objects.create
-        object = self.file_entity_oss_objects.create if object.complete?
-        object
+      def current_part
+        part = self.file_entity_oss_object_parts.last || self.file_entity_oss_object_parts.create
+        part = self.file_entity_oss_object_parts.create if part.complete?
+        part
       end
 
       def check_completion_status
@@ -40,11 +40,16 @@ module FileEntityStorage
       end
 
       def upload_to_oss
-        self.file_entity_oss_objects.each{ |object| object.upload_to_oss }
+        multipart_upload = OssManager::OSS_BUCKET.object(object_name).multipart_upload
+        upload_id = multipart_upload.init
+        
+        part_infos = []
+        self.file_entity_oss_object_parts.each_with_index do |part, index|
+          part_infos << multipart_upload.upload(upload_id, index+1, File.open(part.part_path,'r'))
+        end
+        multipart_upload.complete(upload_id, part_infos)
 
-        # 创建 object_group
-        object_names = self.file_entity_oss_objects.map(&:object_name)
-        OssManager::OSS_BUCKET.object(object_name).group(object_names)
+        self.update_attributes!( :merged => true)
       end
 
       def complete?
