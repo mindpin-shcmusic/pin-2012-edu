@@ -9,6 +9,18 @@ module FileEntityStorage
 
       base.send(:include, InstanceMethods)
       base.has_many :file_entity_oss_object_parts, :order => 'id ASC'
+      base.send(:extend, ClassMethods)
+    end
+
+    module ClassMethods
+      def create_by_params(file_name,file_size)
+        self.create(
+          :attach_file_name => file_name,
+          :attach_content_type => file_content_type(file_name),
+          :attach_file_size => file_size,
+          :merged => false
+        )
+      end
     end
 
     module InstanceMethods
@@ -60,6 +72,10 @@ module FileEntityStorage
 
       def object_name
         self.attach.url.gsub(/\?.*/,"")
+      end
+
+      def oss_url
+        File.join("http://storage.aliyun.com/#{OssManager::CONFIG["bucket"]}", attach.url)
       end
       
     end

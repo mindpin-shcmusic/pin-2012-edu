@@ -16,6 +16,18 @@ module FileEntityStorage
                         :url  => R::FILE_ENTITY_ATTACHED_URL
 
       base.send(:include, InstanceMethods)
+      base.send(:include, ClassMethods)
+    end
+
+    module ClassMethods
+      def create_by_params(file_name,file_size)
+        self.create(
+          :attach_file_name => get_randstr_filename(file_name),
+          :attach_content_type => file_content_type(file_name),
+          :attach_file_size => file_size,
+          :merged => false
+        )
+      end
     end
 
 

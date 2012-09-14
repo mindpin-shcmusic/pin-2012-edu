@@ -13,7 +13,7 @@ module Oss
       body = options.delete(:body) || nil
       method = method.to_s.upcase
 
-      head_hash = Signature.generate(@access_key_id, @secret_access_key, :method => method, :path => path, :headers => headers)
+      head_hash = Signature.generate(@access_key_id, @secret_access_key, :method => method, :path => URI.decode(path), :headers => headers)
 
       http = Net::HTTP.new('storage.aliyun.com')
       # http.set_debug_output $stdout

@@ -31,15 +31,6 @@ class FileEntity < ActiveRecord::Base
     file_entity.saved_size = 0
   end
 
-  def self.create_by_params(file_name,file_size)
-    self.create(
-      :attach_file_name => get_randstr_filename(file_name),
-      :attach_content_type => file_content_type(file_name),
-      :attach_file_size => file_size,
-      :merged => false
-    )
-  end
-
   def self.content_kind(type)
     case type
     when *CONTENT_TYPES[:video]
