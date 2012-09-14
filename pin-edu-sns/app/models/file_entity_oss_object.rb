@@ -4,6 +4,10 @@ class FileEntityOssObject < ActiveRecord::Base
 
   has_many :file_entity_oss_object_parts, :order => 'id ASC'
 
+  before_validation(:on => :create) do |oss_object|
+    oss_object.saved_size = 0
+  end
+
   def complete?
     return true if self.saved_size == FileEntityOssObject::OBJECT_SIZE
     return false if self.saved_size < FileEntityOssObject::OBJECT_SIZE
@@ -22,7 +26,7 @@ class FileEntityOssObject < ActiveRecord::Base
     return if uploaded?
 
     multipart_upload = OssManager::OSS_BUCKET.object(object_name).multipart_upload
-    self.update_attribute!( :upload_id, multipart_upload.init )
+    self.update_attributes!( :upload_id => multipart_upload.init )
 
     part_infos = []
     self.file_entity_oss_object_parts.each_with_index do |part, index|
@@ -40,7 +44,7 @@ class FileEntityOssObject < ActiveRecord::Base
   end
 
   def object_name
-    "/file_entity_oss_objects/#{self.id}"
+    "file_entity_oss_objects/#{self.id}"
   end
 
   class ObjectSizeOverflowError < StandardError;end

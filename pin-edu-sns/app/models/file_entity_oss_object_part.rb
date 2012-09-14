@@ -4,6 +4,15 @@ class FileEntityOssObjectPart < ActiveRecord::Base
 
   belongs_to :file_entity_oss_object
 
+  before_validation(:on => :create) do |object_part|
+    object_part.saved_size = 0
+  end
+
+  after_create do |object_part|
+    dir = File.dirname(object_part.part_path)
+    FileUtils.mkdir_p(dir)
+  end
+
   def complete?
     return true if self.saved_size == FileEntityOssObjectPart::PART_SIZE 
     return false if self.saved_size < FileEntityOssObjectPart::PART_SIZE 

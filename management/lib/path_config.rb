@@ -15,6 +15,7 @@ module PathConfig
   QUEUES = [
     "build_media_share_resque_queue",
     "file_entity_video_encode_resque_queue",
-    'build_homework_assign_resque_queue'
+    'build_homework_assign_resque_queue',
+    'upload_file_entity_to_aliyun_oss_resque_queue'
   ]
 end
