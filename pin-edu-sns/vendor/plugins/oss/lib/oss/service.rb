@@ -1,8 +1,3 @@
-require 'openssl'
-require 'base64'
-require 'digest/md5'
-require 'net/http'
-
 module Oss
 
   class Service
