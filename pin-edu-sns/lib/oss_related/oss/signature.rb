@@ -9,7 +9,7 @@ module Oss
       content_type = headers.delete :content_type
 
 
-      date = Time.now.gmtime.strftime('%a, %d %b %Y %H:%M:%S %Z')
+      date = Time.now.gmtime.strftime('%a, %d %b %Y %H:%M:%S GMT')
 
       oss_sign = ali_oss_sign(secret_access_key, method, date, path,
         :headers => headers, :md5 => md5, :content_type => content_type)
