@@ -6,4 +6,6 @@ class TeachingPlan < ActiveRecord::Base
   has_many :courses, :through => :teaching_plan_courses
 
   has_many :teams
+
+  include ModelRemovable
 end
