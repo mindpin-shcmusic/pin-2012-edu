@@ -1,0 +1,18 @@
+=link_to "添加", "/admin/course_teachers/new"
+=link_to "列表", "/admin/course_teachers"
+
+.page-admin-form
+  = flash_info
+  = form_for [:admin, @course_teacher] do |t|
+    .field
+      %label 课程安排
+
+      - 12.times do |hour|          
+        .item
+          = hour + 1
+          - 7.times do |weekday|
+            = check_box_tag "time_expression[]", "#{weekday},#{hour + 1}"
+    
+    .field.submit
+      = jfsubmit '添加'
+      = jfcancel '取消'

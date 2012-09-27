@@ -81,6 +81,14 @@ MindpinEduSns::Application.routes.draw do
         post :import_from_yaml
       end
     end
+
+    resources :course_teachers do
+      member do
+        get :edit_time_expression
+        get :show_time_expression
+        put :update_time_expression
+      end
+    end
     
     root :to=>"index#index"
   end

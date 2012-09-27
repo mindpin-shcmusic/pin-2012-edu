@@ -1,0 +1,16 @@
+=link_to "添加", "/admin/course_teachers/new"
+=link_to "列表", "/admin/course_teachers"
+
+
+- 12.times do |hour|          
+  .item
+    = hour + 1
+    - 7.times do |weekday|
+      :ruby
+        checked = false
+        @time_expression.each do |time|
+          if time['weekday'] == weekday
+            checked = time['number'].include?(hour + 1)
+          end
+        end
+      = check_box_tag "time_expressions[]", "#{weekday},#{hour + 1}", checked
