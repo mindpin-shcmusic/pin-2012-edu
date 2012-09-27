@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120926090034) do
+ActiveRecord::Schema.define(:version => 20120927013733) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
@@ -72,11 +72,11 @@ ActiveRecord::Schema.define(:version => 20120926090034) do
     t.integer  "creator_id"
   end
 
-  create_table "course_students", :force => true do |t|
-    t.integer  "course_id"
+  create_table "course_teacher_teams", :force => true do |t|
+    t.integer  "course_teacher_id"
+    t.integer  "team_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "student_user_id"
   end
 
   create_table "course_teachers", :force => true do |t|
@@ -98,15 +98,12 @@ ActiveRecord::Schema.define(:version => 20120926090034) do
   end
 
   create_table "courses", :force => true do |t|
-    t.string   "name",            :default => "",    :null => false
+    t.string   "name",       :default => "",    :null => false
     t.string   "cid"
-    t.string   "department"
-    t.string   "location"
     t.text     "desc"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_removed",      :default => false
-    t.integer  "teacher_user_id"
+    t.boolean  "is_removed", :default => false
     t.text     "syllabus"
     t.integer  "cover_id"
   end
@@ -341,6 +338,19 @@ ActiveRecord::Schema.define(:version => 20120926090034) do
 
   add_index "teachers", ["user_id"], :name => "index_teachers_on_user_id"
 
+  create_table "teaching_plan_courses", :force => true do |t|
+    t.integer  "teaching_plan_id"
+    t.integer  "course_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "teaching_plans", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "team_students", :force => true do |t|
     t.integer  "team_id"
     t.datetime "created_at"
@@ -351,12 +361,13 @@ ActiveRecord::Schema.define(:version => 20120926090034) do
   add_index "team_students", ["team_id"], :name => "index_team_students_on_team_id"
 
   create_table "teams", :force => true do |t|
-    t.string   "name",            :default => "",    :null => false
+    t.string   "name",                   :default => "",    :null => false
     t.string   "cid"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_removed",      :default => false
-    t.integer  "teacher_user_id"
+    t.boolean  "is_removed",             :default => false
+    t.integer  "teaching_plan_id"
+    t.integer  "course_teacher_team_id"
   end
 
   create_table "users", :force => true do |t|

@@ -13,6 +13,8 @@ module CommentHelper
       return truncate_u model.name, 16
     end
     return truncate_u model.content, 16
+  rescue
+    return 'error'
   end
 
 end

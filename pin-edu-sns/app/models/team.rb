@@ -1,24 +1,22 @@
 # -*- coding: utf-8 -*-
 class Team < ActiveRecord::Base
-  belongs_to :teacher_user,
-             :class_name  => 'User',
-             :foreign_key => :teacher_user_id
-
   has_many :team_students,:dependent => :destroy
 
   has_many :student_users,
            :through => :team_students,
            :source  => :student_user
 
+  belongs_to :teaching_plan
+
+  has_many :course_teacher_teams
+  has_many :course_teachers, :through => :course_teacher_teams
+  has_many :courses, :through => :course_teachers
+
   validates :name, :presence => true
   validates :cid, :uniqueness => { :if => Proc.new { |team| !team.cid.blank? } }
 
   def get_user_ids
-    get_users.map(&:id).sort
-  end
-
-  def get_users
-    [student_users, teacher_user].flatten.uniq
+    student_users.map(&:id).sort
   end
 
   def students
@@ -39,10 +37,6 @@ class Team < ActiveRecord::Base
 
   module UserMethods
     def self.included(base)
-      base.has_many :teacher_teams,
-                    :class_name  => 'Team',
-                    :foreign_key => :teacher_user_id
-
       base.has_one  :team_student, :foreign_key => :student_user_id
       base.has_one  :student_team,
                     :through => :team_student,
@@ -53,7 +47,6 @@ class Team < ActiveRecord::Base
     module InstanceMethods
       def teams
         return [self.student_team] if self.is_student?
-        return self.teacher_teams if self.is_teacher?
         []
       end
     end
