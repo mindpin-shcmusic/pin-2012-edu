@@ -13,39 +13,14 @@
   .field.cid
     %label 课程编号
     .v= @course.cid
-  .field.department
-    %label 开课院系
-    .v= @course.department
-  .field.location
-    %label 上课地点
-    .v= @course.location
-  .field.teacher
-    %label 教师
-    - if @course.teacher_user.blank?
-      .v.quiet 未指定
-    - else
-      .v= @course.teacher_user.teacher.real_name
   .field.desc
-    %label 备注
+    %label 课程简介
     .v= sanitize @course.desc
 
   .field.upload-image
     = link_to '上传课程图片', "/admin/courses/#{@course.id}/upload_image_page"
   .field.select-cover
     = link_to '选择课程封面图片', "/admin/courses/#{@course.id}/select_cover_page"
-
-- students = @course.students
-.page-admin-model-show
-  .field.students-count
-    %label 课程学生名单
-    .v 总共 #{students.count} 个学生
-    .assign= link_to "给课程分配学生", "/admin/courses/#{@course.id}/select_students"
-
-  - students.each do |student|
-    .field.student
-      .avatar= avatar student.user, :mini
-      .name= student.real_name
-      .show= link_to '查看信息', [:admin, student]
 
 .page-admin-go-back= link_to '返回列表页', '/admin/courses'
 .page-admin-edit= link_to '编辑修改', "/admin/courses/#{@course.id}/edit"

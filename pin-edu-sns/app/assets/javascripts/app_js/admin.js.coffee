@@ -45,3 +45,10 @@ pie.load ->
 # 构建form中的 select 控件
 pie.load ->
   jQuery('.page-admin-form .field select').chosen()
+
+
+# 展开课程教师信息
+pie.load ->
+  jQuery(document).delegate '.page-admin-models.courses .model.course .ops .open-teachers', 'click', ->
+    $course = jQuery(this).closest('.course')
+    $course.toggleClass('open')

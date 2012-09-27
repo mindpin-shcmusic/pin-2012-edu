@@ -3,8 +3,11 @@
 
   .pagination{
     height:24px;line-height:24px;
+    span{
+      padding:0 5px;
+    }
     a{
-      width:22px;
+      min-width:22px;
       padding:0 5px;
       border:solid 1px #ddd;
       background-color:rgba(black, 0.05);

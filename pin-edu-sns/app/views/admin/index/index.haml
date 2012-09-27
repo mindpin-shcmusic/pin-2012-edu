@@ -1,25 +1,30 @@
 - htitle '系统数据概览'
 
 - hbreadcrumb '基础数据管理', '/admin'
+- hbreadcrumb '总体概览'
 
 .page-admin-stat
   .data
     .title 教师
-    .count=Teacher.count
-    =link_to "打开维护","/admin/teachers"
+    .count= Teacher.count
+    = link_to '打开维护', '/admin/teachers'
   .data
     .title 学生
-    .count=Student.count
-    =link_to "打开维护","/admin/students"
+    .count= Student.count
+    = link_to '打开维护', '/admin/students'
   .data
-    .title 班级
-    .count=Team.count
-    =link_to "打开维护","/admin/teams"
+    .title 教学计划
+    .count= TeachingPlan.count
+    = link_to '打开维护', '/admin/teaching_plans'
   .data
     .title 课程
-    .count=Course.count
-    =link_to "打开维护","/admin/courses"
+    .count= Course.count
+    = link_to '打开维护', '/admin/courses'
+  .data
+    .title 班级
+    .count= Team.count
+    = link_to '打开维护', '/admin/teams'
   .data
     .title 分类
-    .count=Category.count
-    =link_to "打开维护","/admin/categories"
+    .count= Category.count
+    = link_to '打开维护', '/admin/categories'

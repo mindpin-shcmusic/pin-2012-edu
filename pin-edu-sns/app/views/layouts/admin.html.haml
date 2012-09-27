@@ -13,13 +13,14 @@
   %body.echo.gray
     .page-sider
       - if logged_in?
-        .links
-          %a.link.admin-index{:href=>'/admin'} 概览
+        .links.admin
+          %a.link.admin-index{:href=>'/admin'} 总体概览
           %a.link.admin-teachers{:href=>'/admin/teachers'} 教师
           %a.link.admin-students{:href=>'/admin/students'} 学生
-          %a.link.admin-teams{:href=>'/admin/teams'} 班级
+          %a.link.admin-teaching-plans{:href=>'/admin/teaching_plans'} 教学计划
           %a.link.admin-courses{:href=>'/admin/courses'} 课程
-          %a.link.admin-categories{:href=>'/admin/categories'} 分类数据
+          %a.link.admin-teams{:href=>'/admin/teams'} 班级
+          %a.link.admin-categories{:href=>'/admin/categories'} 资源分类
 
     .page-topbar
       .page-breadcrumb
