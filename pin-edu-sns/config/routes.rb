@@ -89,6 +89,14 @@ MindpinEduSns::Application.routes.draw do
         put :update_time_expression
       end
     end
+
+    resources :teaching_plans do
+      collection do
+        get :import_from_csv_page
+      end
+    end
+
+
     
     root :to=>"index#index"
   end
