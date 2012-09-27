@@ -28,8 +28,8 @@ class User < ActiveRecord::Base
   include PublicResource::UserMethods
   include MediaShareRule::UserMethods
   include Achievement::UserMethods
-  include Course::UserMethods
   include Team::UserMethods
+  include CourseTeacher::UserMethods
 
   ###
   include UserAvatarMethods
