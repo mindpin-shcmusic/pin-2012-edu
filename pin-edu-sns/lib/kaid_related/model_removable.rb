@@ -44,6 +44,8 @@ module ModelRemovable
       self.class.validators.select {|validator|
         validator.instance_of? ActiveRecord::Validations::UniquenessValidator
       }.first.attributes
+    rescue
+      []
     end
 
     def nullify_unique_attributes
