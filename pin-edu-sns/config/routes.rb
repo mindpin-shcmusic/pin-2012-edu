@@ -96,7 +96,9 @@ MindpinEduSns::Application.routes.draw do
       end
     end
 
+    resources :course_surveys
 
+    resources :course_survey_records
     
     root :to=>"index#index"
   end

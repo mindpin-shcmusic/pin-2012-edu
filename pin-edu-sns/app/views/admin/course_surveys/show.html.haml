@@ -1,0 +1,13 @@
+- htitle '课程调查'
+
+- hbreadcrumb '基础数据管理', '/admin'
+- hbreadcrumb '课程调查', '/admin/course_surveys'
+- hbreadcrumb @course_survey.title
+
+.page-admin-model-show
+  .field.title
+    %label 标题
+    .v= @course_survey.title
+
+.page-admin-go-back= link_to '返回列表页', '/admin/course_surveys'
+.page-admin-edit= link_to '编辑修改', "/admin/course_surveys/#{@course_survey.id}/edit"
