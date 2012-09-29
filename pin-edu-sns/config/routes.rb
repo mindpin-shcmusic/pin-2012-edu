@@ -97,8 +97,6 @@ MindpinEduSns::Application.routes.draw do
     end
 
     resources :course_surveys
-
-    resources :course_survey_records
     
     root :to=>"index#index"
   end
@@ -158,6 +156,11 @@ MindpinEduSns::Application.routes.draw do
   resources :teachers
 
   # 查看当前用户参与或负责的课程
+  resources :course_surveys, :shallow => true do
+    resources :course_survey_records
+  end
+
+
   resources :courses do
     collection do
       get :mine
