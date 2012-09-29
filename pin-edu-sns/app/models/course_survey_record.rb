@@ -3,8 +3,11 @@ class CourseSurveyRecord < ActiveRecord::Base
 
   # --- 模型关联
   belongs_to :student,
-             :class_name => 'CourseSurveyRecord',
+             :class_name => 'User',
              :foreign_key => 'student_user_id'
+
+
+  scope :with_student, lambda {|student| {:conditions => ['student_user_id = ?', student.id]}}
 
 
   # --- 给其他类扩展的方法
@@ -22,11 +25,6 @@ class CourseSurveyRecord < ActiveRecord::Base
       def has_surveyed?(course_survey)
         return false if course_survey.blank?
         CourseSurveyRecord.where(:student_user_id => self.id, :course_survey_id => course_survey.id).exists?
-      end
-
-      def get_course_survey_record(course_survey)
-        return false if course_survey.blank?
-        CourseSurveyRecord.where(:student_user_id => self.id, :course_survey_id => course_survey.id).first
       end
     end
   end

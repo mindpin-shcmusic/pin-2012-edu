@@ -1,0 +1,12 @@
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '课程调查'
+
+.page-courses-head
+  .tab
+    %a.item.all{:href=>'/course_surveys'} 课程调查列表
+
+
+.page-paginate= will_paginate @course_surveys
+
+.page-admin-models.course_surveys
+  = render 'course_survey_record_list', :course_surveys => @course_surveys

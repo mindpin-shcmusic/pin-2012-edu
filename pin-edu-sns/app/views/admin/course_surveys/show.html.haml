@@ -4,10 +4,198 @@
 - hbreadcrumb '课程调查', '/admin/course_surveys'
 - hbreadcrumb @course_survey.title
 
+:ruby
+  course_survey_records = @course_survey.course_survey_records
+
 .page-admin-model-show
   .field.title
     %label 标题
     .v= @course_survey.title
+
+    %label 学生人数
+    .student_count= course_survey_records.count
+
+  
+  :ruby
+    survey_count = each_count(@course_survey)
+
+  .field.survey
+    .block
+      %label 教学态度
+
+      .field
+        %span 上下课
+        %span 准时
+        = survey_count[:on_off_class]
+
+      .field
+        %span 考勤制度
+        %span 每次点名
+        = survey_count[:checking_institution]
+
+      .field
+        %span 课堂秩序
+        %span 能控制
+        = survey_count[:class_order]
+
+      .field
+        %span 备课情况
+        %span 充分
+        = survey_count[:prepare_situation_total_enough]
+
+        %span 较为充分
+        = survey_count[:prepare_situation_general_enough]
+
+        %span 不够充分
+        = survey_count[:prepare_situation_not_enough]
+
+
+      .field
+        %span 教书育人
+        %span 好
+        = survey_count[:teaching_level_good]
+
+        %span 一般
+        = survey_count[:teaching_level_general]
+
+
+
+      .field
+        %span 教师师德
+        %span 好
+        = survey_count[:teacher_morality_good]
+
+        %span 较好
+        = survey_count[:teacher_morality_better]
+
+
+    .block
+      %label 教学内容
+
+
+      .field
+        %span 授课内容
+        %span 丰富扣题
+        = survey_count[:class_content_rich_relation]
+
+        %span 基本扣题
+        = survey_count[:class_content_general_relation]
+
+
+      .field
+        %span 知识性
+        %span 强
+        = survey_count[:knowledge_level_rich]
+
+        %span 较强
+        = survey_count[:knowledge_level_richer]
+
+
+      .field
+        %span 教学进度
+        %span 合理
+        = survey_count[:teaching_schedule_reasonable]
+
+        %span 基本合理
+        = survey_count[:teaching_schedule_basic_reasonable]
+
+        %span 不合理
+        = survey_count[:teaching_schedule_not_reasonable]
+
+
+    .block
+      %label 教学方式
+
+      .field
+        %span 教学互动
+        %span 好
+        = survey_count[:teaching_interact_good]
+
+        %span 较好
+        = survey_count[:teaching_interact_better]
+
+
+      .field
+        %span 板书质量
+        %span 工整
+        = survey_count[:board_writing_quality_good]
+
+        %span 一般
+        = survey_count[:board_writing_quality_general]
+
+
+      .field
+        %span 课件
+        %span 有
+        = survey_count[:has_courseware_yes]
+
+        %span 没有
+        = survey_count[:has_courseware_no]
+
+
+      .field
+        %span 课件质量
+        %span 好
+        = survey_count[:courseware_quality_good]
+
+        %span 一般
+        = survey_count[:courseware_quality_general]
+
+
+
+      .field
+        %span 语言表达
+        %span 思路清晰
+        = survey_count[:speak_level_good]
+
+        %span 一般
+        = survey_count[:speak_level_general]
+
+
+    .block
+      %label 教学效果
+
+      .field
+        %span 学习收获
+        %span 大
+        = survey_count[:study_result_much]
+
+        %span 一般
+        = survey_count[:study_result_little]
+
+        %span 没有
+        = survey_count[:study_result_none]
+
+
+
+      .field
+        %span 授课效果
+        %span 好
+        = survey_count[:teaching_result_good]
+
+        %span 一般
+        = survey_count[:teaching_result_general]
+
+        %span 较差
+        = survey_count[:teaching_result_bad]
+
+
+      .field
+        %span 原因分析
+        %span 教师原因
+        = survey_count[:result_reason_teacher]
+
+        %span 学生主观原因
+        = survey_count[:result_reason_student]
+
+    .block
+      %label 建议和意见
+
+      .field
+        %label 建议和意见
+        - course_survey_records.each do |record|
+          .suggestion= record.suggestion
+
 
 .page-admin-go-back= link_to '返回列表页', '/admin/course_surveys'
 .page-admin-edit= link_to '编辑修改', "/admin/course_surveys/#{@course_survey.id}/edit"
