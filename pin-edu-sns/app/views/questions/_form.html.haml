@@ -1,0 +1,19 @@
+
+.field.need
+  %label 标题
+  = f.text_field :title
+
+.field.need
+  %label 问题
+  = f.text_area :content
+
+.field.need
+  %label 选择老师
+  - Teacher.all.each do |teacher|
+    = f.radio_button :teacher_id, teacher.id
+    = teacher.real_name
+
+
+.field
+  = jfsubmit '确定'
+  = jfcancel '取消'

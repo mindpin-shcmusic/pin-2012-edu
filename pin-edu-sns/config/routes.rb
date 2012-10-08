@@ -107,6 +107,11 @@ MindpinEduSns::Application.routes.draw do
   # --- 用户
   resources :users
 
+  # --- 老师问答
+  resources :questions, :shallow => true do
+    resources :answers
+  end
+
   # ----------------------
 
   # 所有类型的评论都在这里，不单独定义

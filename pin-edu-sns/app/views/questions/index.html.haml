@@ -1,0 +1,16 @@
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '师生问答'
+
+.page-questions
+  .tab
+    %a.new{:href => "/questions/new"} 提问题
+
+    %a.items.all{:href => "/questions/new"} 全部
+    %a.answered{:href => "/questions/new"} 已回答
+    %a.unanswered{:href => "/questions/new"} 未回答
+
+
+.page-paginate= will_paginate @questions
+
+.page-admin-models.questions
+  = render 'question_list', :questions => @questions

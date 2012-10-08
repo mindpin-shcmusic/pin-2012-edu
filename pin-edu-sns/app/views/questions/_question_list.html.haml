@@ -1,0 +1,7 @@
+- questions.each do |question|
+  .model.question
+    .tite= question.title
+
+    .ops
+      %a.edit{:href => "/questions/#{question.id}/edit"} 修改
+      %a.detail{:href=>"/questions/#{question.id}"} 查看详情
