@@ -23,12 +23,21 @@ class Announcement < ActiveRecord::Base
       base.has_many :received_announcements,
                     :through => :announcement_users,
                     :source  => :announcement
-      base.send :extend, ClassMethods
+
+      base.send :include, InstanceMethods
     end
 
-    module ClassMethods
+    module InstanceMethods
       def unread_announcements
-        self.received_announcements.where(:read => false)
+        self.received_announcements.where('announcement_users.read = false')
+      end
+
+      def announcement_hash_name
+        "user:anouncement:#{self.id}"
+      end
+
+      def announcement_path
+        '/announcements/received'
       end
 
     end

@@ -6,17 +6,24 @@ pie.load ->
         url:'/check_tip_messages'
         dataType: 'json'
         success : (json)=>
-          if json.comments_count > 0 || json.media_shares_count > 0 || json.short_messages_count > 0
+          if json.announcements_count > 0 || json.comments_count > 0 || json.media_shares_count > 0 || json.short_messages_count > 0
             @show_tip_dialog(json)
 
     show_tip_dialog: (web_json)->
       console.log web_json
+      @_set_attr('announcement', web_json.announcements_count)
       @_set_attr('comment', web_json.comments_count)
       @_set_attr('media_share', web_json.media_shares_count)
       @_set_attr('short_message', web_json.short_messages_count)
 
     get_dialog: ->
       if !jQuery('.page-tip-message-dialog').exists()
+        $announcement = jQuery("<div></div>")
+          .addClass('item announcement')
+          .append("<span></span>")
+          .append("<a href='#{window.USER_INFO['paths']['announcement']}'>查看通知</a>")
+          .hide()
+
         $comment = jQuery("<div></div>")
           .addClass('item comment')
           .append("<span></span>")
@@ -40,6 +47,7 @@ pie.load ->
           .append($comment)
           .append($media_share)
           .append($short_message)
+          .append($announcement)
           .appendTo jQuery(document.body)
       else
         @$dialog
@@ -54,6 +62,11 @@ pie.load ->
         return
 
       switch kind
+        when 'announcement'
+          @$dialog
+            .fadeIn()
+            .find('.announcement').removeClass('zero').fadeIn(200)
+            .find('span').html("#{count}条新通知，")
         when 'comment'
           @$dialog
             .fadeIn()
@@ -72,6 +85,9 @@ pie.load ->
 
     bind_juggernaut_listener: ->
       @jug = new Juggernaut
+
+      @jug.subscribe window.USER_INFO['channels']['announcement'], (json)=>
+        @change_tip_dialog('announcement', json.count)
 
       @jug.subscribe window.USER_INFO['channels']['comment'], (json)=>
         @change_tip_dialog('comment', json.count)

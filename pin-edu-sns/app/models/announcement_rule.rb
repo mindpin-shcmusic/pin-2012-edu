@@ -44,7 +44,7 @@ private
 
   def able_to_create
     errors.add :base,
-               '没有发布通知的权限' if creator.is_student?
+               '没有发布通知的权限' if self.creator.is_student?
   end
 
   def enqueue_build_announcement
