@@ -1,0 +1,18 @@
+- htitle '课程维护'
+
+- hbreadcrumb '基础数据管理', '/admin'
+- hbreadcrumb '课程调查', '/admin/course_surveys'
+- hbreadcrumb '增加课程调查'
+
+.page-admin-form
+  = flash_info
+  = form_for [:admin, @course_survey] do |f|
+ 
+    .field.need
+      %label 标题
+      =f.text_field :title
+     
+
+    .field
+      = jfsubmit '确定'
+      = jfcancel '取消'

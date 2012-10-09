@@ -1,0 +1,25 @@
+- htitle '教学计划'
+
+- hbreadcrumb '基础数据管理', '/admin'
+- hbreadcrumb '增加教学计划'
+  
+
+.page-admin-ops
+  %a.create{:href=>'/admin/teaching_plans/new'} 增加计划
+  %a.import{:href=>'/admin/teaching_plans/import_from_csv_page'} 批量导入
+
+
+.page-admin-form
+  = flash_info
+  = form_for [:admin, @teaching_plan] do |t|
+    .field
+      %label 计划标题
+      = t.text_field :title
+
+    .field
+      - Course.all.each do |course|
+        = jcheckbox 'teaching_plan[teaching_plan_courses_attributes][][course_id]', course.id, false, course.name
+
+    .field.submit
+      = jfsubmit '确定'
+      = jfcancel '取消'

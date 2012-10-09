@@ -6,7 +6,7 @@ pie.load ->
         url:'/check_tip_messages'
         dataType: 'json'
         success : (json)=>
-          if json.announcements_count > 0 || json.comments_count > 0 || json.media_shares_count > 0 || json.short_messages_count > 0
+          if json.announcements_count > 0 || json.comments_count > 0 || json.media_shares_count > 0 || json.short_messages_count > 0 || json.questions_count > 0
             @show_tip_dialog(json)
 
     show_tip_dialog: (web_json)->
@@ -15,6 +15,7 @@ pie.load ->
       @_set_attr('comment', web_json.comments_count)
       @_set_attr('media_share', web_json.media_shares_count)
       @_set_attr('short_message', web_json.short_messages_count)
+      @_set_attr('question', web_json.questions_count)
 
     get_dialog: ->
       if !jQuery('.page-tip-message-dialog').exists()
@@ -42,12 +43,19 @@ pie.load ->
           .append("<a href='#{window.USER_INFO['paths']['short_message']}'>点击查看</a>")
           .hide()
 
+        $question = jQuery("<div></div>")
+          .addClass('item question')
+          .append("<span></span>")
+          .append("<a href='#{window.USER_INFO['paths']['question']}'>点击查看</a>")
+          .hide()
+
         @$dialog = jQuery("<div class='page-tip-message-dialog'></div>")
           .hide()
           .append($comment)
           .append($media_share)
           .append($short_message)
           .append($announcement)
+          .append($question)
           .appendTo jQuery(document.body)
       else
         @$dialog
@@ -83,6 +91,12 @@ pie.load ->
             .find('.short_message').removeClass('zero').fadeIn(200)
             .find('span').html("#{count}个站内信，")
 
+        when 'question'
+          @$dialog
+            .fadeIn()
+            .find('.question').removeClass('zero').fadeIn(200)
+            .find('span').html("#{count}个问题，")
+
     bind_juggernaut_listener: ->
       @jug = new Juggernaut
 
@@ -98,6 +112,8 @@ pie.load ->
       @jug.subscribe window.USER_INFO['channels']['short_message'], (json)=>
         @change_tip_dialog('short_message', json.count)
 
+      @jug.subscribe window.USER_INFO['channels']['question'], (json)=>
+        @change_tip_dialog('question', json.count)
 
     change_tip_dialog: (kind, count)->
       @$dialog = @get_dialog()

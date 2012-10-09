@@ -1,0 +1,12 @@
+- teaching_plans.each do |teaching_plan|
+  .model.teaching_plan
+    .name= teaching_plan.title
+ 
+    .ops
+      - remove_url = admin_teaching_plan_path(teaching_plan)
+      %a.remove{:href=>'javascript:;', :'data-url'=>remove_url} 删除
+      %a.edit{:href=>"/admin/teaching_plans/#{teaching_plan.id}/edit"} 编辑
+      %a.open-teachers{:href=>'javascript:;'}
+        %span.open 展开
+        %span.close 收起
+      %a.detail{:href=>"/admin/teaching_plans/#{teaching_plan.id}"} 查看详情

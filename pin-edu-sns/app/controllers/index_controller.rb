@@ -27,7 +27,8 @@ class IndexController < ApplicationController
       :media_shares_count => current_user.media_share_tip_message.count,
       :comments_count => current_user.comment_tip_message.count,
       :share_rate  => current_user.rate_and_rank,
-      :short_messages_count => current_user.unread_messages.count
+      :short_messages_count => current_user.unread_messages.count,
+      :questions_count => current_user.question_tip_message.count
     }
   end
 end

@@ -1,0 +1,14 @@
+- questions.each do |question|
+  .model.question
+    .tite= question.title
+
+    .status
+      - if question.has_answered
+        已回答
+      - else
+        未回答
+
+    .ops
+      %a.remove{:href=>'javascript:;', :'data-url' => question_path(question)} 删除
+      %a.edit{:href => "/questions/#{question.id}/edit"} 修改
+      %a.detail{:href=>"/questions/#{question.id}"} 查看详情

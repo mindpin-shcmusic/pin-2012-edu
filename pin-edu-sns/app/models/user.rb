@@ -31,6 +31,10 @@ class User < ActiveRecord::Base
   include Achievement::UserMethods
   include Team::UserMethods
   include CourseTeacher::UserMethods
+  include CourseSurveyRecord::UserMethods
+  include Answer::UserMethods
+  include Question::UserMethods
+  include QuestionTipMessage::UserMethods
 
   ###
   include UserAvatarMethods

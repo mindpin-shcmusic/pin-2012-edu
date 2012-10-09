@@ -1,0 +1,7 @@
+=link_to "添加", "/admin/course_teachers/new"
+=link_to "列表", "/admin/course_teachers"
+
+- CourseTeacher.all.each do |course_teacher|
+  .item
+    =link_to course_teacher.id, "/admin/course_teachers/#{course_teacher.id}/show_time_expression"
+    =link_to "编辑", "/admin/course_teachers/#{course_teacher.id}/edit_time_expression"
