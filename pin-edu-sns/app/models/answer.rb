@@ -8,6 +8,13 @@ class Answer < ActiveRecord::Base
              :class_name  => 'Question',
              :foreign_key => :question_id
 
+  after_save :set_question_answered
+
+  def set_question_answered
+    self.question.has_answered = true
+    self.question.save
+  end
+
 
   module UserMethods
     def self.included(base)

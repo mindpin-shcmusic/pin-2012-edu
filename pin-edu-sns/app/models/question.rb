@@ -5,6 +5,11 @@ class Question < ActiveRecord::Base
 
   has_one :answer
 
+  scope :with_teacher, lambda {|teacher| {:conditions => ['teacher_user_id = ?', teacher.id]}}
+  scope :answered, where(:has_answered => true)
+  scope :unanswered, where(:has_answered => false)
+
+
 
   module UserMethods
     def self.included(base)
@@ -16,4 +21,7 @@ class Question < ActiveRecord::Base
    
     end
   end
+
+  include ModelRemovable
+
 end

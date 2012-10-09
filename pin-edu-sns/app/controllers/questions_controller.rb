@@ -8,7 +8,30 @@ class QuestionsController < ApplicationController
   end
 
   def index
-    @questions = Question.paginate(:page => params[:page])
+    type = params[:type]
+
+    if current_user.is_student?
+      case type
+      when 'answered'
+        @questions = current_user.questions.answered
+      when 'unanswered'
+        @questions = current_user.questions.unanswered
+      else
+        @questions = current_user.questions
+      end
+    else
+      case type
+      when 'answered'
+        @questions = Question.with_teacher(current_user).answered
+      when 'unanswered'
+        @questions = Question.with_teacher(current_user).unanswered
+      else
+        @questions = Question.with_teacher(current_user)
+      end
+    end
+
+  
+    @questions = @questions.paginate(:page => params[:page])
   end
 
 
@@ -16,7 +39,6 @@ class QuestionsController < ApplicationController
   end
 
   def create
-
     @question = current_user.questions.build(params[:question])
     if @question.save
       return redirect_to "/questions"
@@ -45,6 +67,8 @@ class QuestionsController < ApplicationController
   
 
   def destroy
+    @question.remove
+    render :text => 'ok'
   end
 
 end
