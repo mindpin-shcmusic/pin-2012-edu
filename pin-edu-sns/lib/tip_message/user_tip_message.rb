@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 class UserTipMessage < RedisDatabase
+  attr_accessor :user
+
   def self.instance
     @@instance ||= self.get_db_instance(RedisDatabase::TIP_DB)
   end
@@ -8,8 +10,6 @@ class UserTipMessage < RedisDatabase
     self.class.instance
   end
 
-  attr_accessor :user
-
   def initialize(user)
     self.user = user
   end
@@ -17,7 +17,6 @@ class UserTipMessage < RedisDatabase
   def put(message_str, key = randstr)
     self.instance.hset self.hash_name, key, message_str
   end
-
 
   def count
     self.instance.hlen self.hash_name

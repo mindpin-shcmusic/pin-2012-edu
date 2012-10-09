@@ -5,4 +5,3 @@ class CategoriesController < ApplicationController
     render :json => Category.lazyload_sub_dynatree(params[:id])
   end
 end
-  

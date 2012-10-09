@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   include HomeworkStudentUpload::UserMethods
   # --- 通知
   include Notification::UserMethods
+  include Announcement::UserMethods
   # --- 站内信
   include ShortMessage::UserMethods
 
@@ -36,6 +37,8 @@ class User < ActiveRecord::Base
   include UserAuthMethods
   # 在线状态记录
   has_one :online_record,:dependent => :destroy
+
+  scope :not_admin, where("name != 'admin'")
 
   # 校验部分
   # 不能为空的有：用户名，登录名，电子邮箱

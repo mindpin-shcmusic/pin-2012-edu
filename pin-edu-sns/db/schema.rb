@@ -10,11 +10,35 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20120829093135) do
+ActiveRecord::Schema.define(:version => 20121008070302) do
 
   create_table "achievements", :force => true do |t|
     t.integer  "user_id"
     t.float    "share_rate", :default => 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "announcement_rules", :force => true do |t|
+    t.integer  "creator_id"
+    t.integer  "announcement_id"
+    t.text     "expression"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "announcement_users", :force => true do |t|
+    t.integer  "announcement_id"
+    t.integer  "user_id"
+    t.boolean  "read",            :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "announcements", :force => true do |t|
+    t.string   "title"
+    t.text     "content"
+    t.integer  "creator_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

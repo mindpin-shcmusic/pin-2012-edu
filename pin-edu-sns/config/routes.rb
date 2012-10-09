@@ -228,4 +228,15 @@ MindpinEduSns::Application.routes.draw do
       get :lazyload_sub_dynatree
     end
   end
+
+  resources :announcements do
+    collection do
+      get :received
+    end
+
+    member do
+      put :announce
+    end
+  end
+
 end

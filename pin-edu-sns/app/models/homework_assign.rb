@@ -18,8 +18,7 @@ class HomeworkAssign < ActiveRecord::Base
       # 学生所有被分配作业
       base.has_many :student_homeworks,
                     :through    => :homework_assigns,
-                    :source     => :homework,
-                    :through    => :homework_assigns
+                    :source     => :homework
       
       # 学生未过期作业
       base.has_many :unexpired_student_homeworks,
