@@ -4,7 +4,7 @@ class Question < ActiveRecord::Base
              :foreign_key => :creator_id
 
   has_one :answer
-  has_one :teacher_user,
+  belongs_to :teacher_user,
           :class_name  => 'User',
           :foreign_key => 'teacher_user_id'
 
