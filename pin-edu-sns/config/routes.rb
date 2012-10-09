@@ -109,7 +109,11 @@ MindpinEduSns::Application.routes.draw do
 
   # --- 老师问答
   resources :questions, :shallow => true do
-    resources :answers
+    resources :answers do
+      collection do
+        get :received
+      end
+    end
   end
 
   # ----------------------

@@ -4,6 +4,10 @@ class Question < ActiveRecord::Base
              :foreign_key => :creator_id
 
   has_one :answer
+  has_one :teacher_user,
+          :class_name  => 'User',
+          :foreign_key => 'teacher_user_id'
+
 
   scope :with_teacher, lambda {|teacher| {:conditions => ['teacher_user_id = ?', teacher.id]}}
   scope :answered, where(:has_answered => true)
@@ -18,7 +22,13 @@ class Question < ActiveRecord::Base
     end
     
     module InstanceMethod
-   
+      def unread_messages
+        self.received_messages.unread
+      end
+
+      def question_count_channel
+        "user:question:count:#{self.id}"
+      end
     end
   end
 
