@@ -96,11 +96,20 @@ ActiveRecord::Schema.define(:version => 20121008070302) do
     t.integer  "creator_id"
   end
 
-  create_table "course_students", :force => true do |t|
-    t.integer  "course_id"
+  create_table "course_teacher_teams", :force => true do |t|
+    t.integer  "course_teacher_id"
+    t.integer  "team_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "student_user_id"
+  end
+
+  create_table "course_teachers", :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "teacher_user_id"
+    t.string   "location"
+    t.string   "time_expression"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "course_videos", :force => true do |t|
@@ -113,15 +122,12 @@ ActiveRecord::Schema.define(:version => 20121008070302) do
   end
 
   create_table "courses", :force => true do |t|
-    t.string   "name",            :default => "",    :null => false
+    t.string   "name",       :default => "",    :null => false
     t.string   "cid"
-    t.string   "department"
-    t.string   "location"
     t.text     "desc"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_removed",      :default => false
-    t.integer  "teacher_user_id"
+    t.boolean  "is_removed", :default => false
     t.text     "syllabus"
     t.integer  "cover_id"
   end
@@ -140,6 +146,13 @@ ActiveRecord::Schema.define(:version => 20121008070302) do
   end
 
   add_index "file_entities", ["md5"], :name => "index_file_entities_on_md5"
+
+  create_table "file_entity_oss_object_parts", :force => true do |t|
+    t.integer  "file_entity_id"
+    t.integer  "saved_size",     :limit => 8
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "homework_assign_rules", :force => true do |t|
     t.integer  "creator_id"
@@ -349,6 +362,20 @@ ActiveRecord::Schema.define(:version => 20121008070302) do
 
   add_index "teachers", ["user_id"], :name => "index_teachers_on_user_id"
 
+  create_table "teaching_plan_courses", :force => true do |t|
+    t.integer  "teaching_plan_id"
+    t.integer  "course_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "teaching_plans", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "is_removed"
+  end
+
   create_table "team_students", :force => true do |t|
     t.integer  "team_id"
     t.datetime "created_at"
@@ -359,12 +386,13 @@ ActiveRecord::Schema.define(:version => 20121008070302) do
   add_index "team_students", ["team_id"], :name => "index_team_students_on_team_id"
 
   create_table "teams", :force => true do |t|
-    t.string   "name",            :default => "",    :null => false
+    t.string   "name",                   :default => "",    :null => false
     t.string   "cid"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_removed",      :default => false
-    t.integer  "teacher_user_id"
+    t.boolean  "is_removed",             :default => false
+    t.integer  "teaching_plan_id"
+    t.integer  "course_teacher_team_id"
   end
 
   create_table "users", :force => true do |t|

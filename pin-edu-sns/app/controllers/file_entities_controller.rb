@@ -8,7 +8,8 @@ class FileEntitiesController < ApplicationController
     blob = params[:blob]
 
     if file_entity_id.blank?
-      file_entity = FileEntity.create_by_params(file_name,file_size,blob)
+      file_entity = FileEntity.create_by_params(file_name,file_size)
+      file_entity.save_first_blob(blob)
     else
       file_entity = FileEntity.find(file_entity_id)
       file_entity.save_new_blob(blob)
@@ -23,8 +24,7 @@ class FileEntitiesController < ApplicationController
   def download
     item = FileEntityDownloadItem.new(params[:download_id])
     file_entity = FileEntity.find(item.file_entity_id)
-    send_file file_entity.attach.path, :type => file_entity.attach_content_type, :disposition => 'attachment',
-      :filename => item.real_file_name
+    redirect_to file_entity.oss_url
   end
 
   def re_encode

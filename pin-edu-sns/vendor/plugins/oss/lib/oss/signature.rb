@@ -9,7 +9,7 @@ module Oss
       content_type = headers.delete :content_type
 
 
-      date = Time.now.gmtime.strftime('%a, %d %b %Y %H:%M:%S %Z')
+      date = Time.now.gmtime.strftime('%a, %d %b %Y %H:%M:%S GMT')
 
       oss_sign = ali_oss_sign(secret_access_key, method, date, path,
         :headers => headers, :md5 => md5, :content_type => content_type)
@@ -32,7 +32,8 @@ module Oss
 
       header = ''
       unless options[:headers].blank?
-        header = options[:headers].map{|keya,value|"#{keya}:#{value}"}*"\n" + "\n"
+        headers = options[:headers]
+        header = headers.keys.sort.map{|keya|"#{keya}:#{headers[keya]}"}*"\n" + "\n"
       end
 
       str = "#{verb}\n#{md5}\n#{ty}\n#{date}\n#{header}#{res}"

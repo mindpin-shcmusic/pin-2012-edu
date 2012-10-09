@@ -5,7 +5,7 @@ class OssManager
 
   OSS_SERVICE = Oss::Service.new(:access_key_id => CONFIG["access_key_id"], :secret_access_key => CONFIG["secret_access_key"])
   OSS_BUCKET = OSS_SERVICE.bucket(CONFIG["bucket"])
-  
+
   def self.create_bucket
     OSS_BUCKET.create
   end

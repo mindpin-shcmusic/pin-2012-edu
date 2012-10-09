@@ -1,51 +1,13 @@
-- if is_grid == 'true'
+- courses.each do |course|
+  .model.course
+    .name= course.name
+    .cid= course.cid
 
-  - courses.each do |course|
-    :ruby
-      name = truncate_u course.name, 10
-      teacher = course.teacher
-
-    .grid.course
-      .box
-        .cover
-          = link_to admin_course_path(course) do
-            = jimage course.cover, :width => 160, :height => 96
-
-        .name= link_to name, admin_course_path(course)
-
-      .teacher
-        - if teacher.blank?
-          %span.c.quiet 未指定教师
-        - else
-          .ava= avatar teacher.user, :mini
-          %span.c= link_to teacher.real_name, admin_teacher_path(teacher)
-
-- else
-
-  .attrs
-    .t3 名称
-    .t2 课序号
-    .t2 开课院系
-    .t2 上课地点
-    .t2 教师
-    .t3 备注
-
-  - courses.each do |course|
-    .model.course
-      .t3= truncate_u course.name, 8
-      .t2= course.cid
-      .t2= course.department
-      .t2= course.location
-      .t2
-        - if course.teacher_user.blank?
-          %span.c.quiet 未指定
-        - else
-          .ava= avatar course.teacher_user, :mini
-          %span.c= course.teacher_user.teacher.real_name
-      .t3= course.desc
-
-      .ops
-        - remove_url = admin_course_path(course)
-        %a.remove{:href=>'javascript:;', :'data-url'=>remove_url} 删除
-        %a.edit{:href=>"/admin/courses/#{course.id}/edit"} 编辑
-        %a.detail{:href=>"/admin/courses/#{course.id}"} 查看详情
+    .ops
+      - remove_url = admin_course_path(course)
+      %a.remove{:href=>'javascript:;', :'data-url'=>remove_url} 删除
+      %a.edit{:href=>"/admin/courses/#{course.id}/edit"} 编辑
+      %a.open-teachers{:href=>'javascript:;'}
+        %span.open 展开
+        %span.close 收起
+      %a.detail{:href=>"/admin/courses/#{course.id}"} 查看详情

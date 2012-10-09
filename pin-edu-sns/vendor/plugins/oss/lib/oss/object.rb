@@ -40,12 +40,13 @@ module Oss
     end
 
     def meta
-      response = @connection.request(:head, :path => @path).body
+      response = @connection.request(:head, :path => @path)
 
       return {
         :content_type => response["Content-Type"],
         :content_length => response["Content-Length"].to_i,
-        :file_name => File.basename(save_path)
+        :file_name => File.basename(@name),
+        :etag => response["ETag"].gsub("\"","")
       }
     end
 
@@ -54,6 +55,38 @@ module Oss
       true
     rescue
       false
+    end
+
+    def copy(source_oss_object)
+      @connection.request(:put, :path => @path, :headers => {'x-oss-copy-source' => source_oss_object.path})
+    end
+
+    def group(object_names)
+      part_number = 0
+      str = object_names.map do |name|
+        part_number+=1
+        meta = bucket.object(name).meta
+        %`
+          <Part>
+            <PartNumber>#{part_number}</PartNumber>
+            <PartName>#{name}</PartName>
+            <ETag>#{meta[:etag]}</ETag>
+          </Part>
+        `
+      end.join("")
+
+      body = %`
+        <CreateFileGroup>
+        #{str}
+        </CreateFileGroup>
+      `
+      @connection.request(:post, :path => "#{path}?group", :body => body,
+        :headers => { :content_type => 'application/x-www-form-urlencoded' })
+    end
+
+    def get_group_index
+      @connection.request(:get, :path => @path,
+        :headers => { 'x-oss-file-group' => '' }).body
     end
 
     def multipart_upload
@@ -70,28 +103,31 @@ module Oss
       def init
         path = "#{@object.path}?uploads"
 
-        response = @connection.request(:post, :path => path).body
+        response = @connection.request(:post, :path => path)
         return Nokogiri::XML(response.body).css("InitiateMultipartUploadResult UploadId").text()
       end
 
       def upload(upload_id, part_num, part)
-        path = "#{@object.path}?partNumber=#{part_num}?uploadId=#{upload_id}"
+        path = "#{@object.path}?partNumber=#{part_num}&uploadId=#{upload_id}"
 
         body = IO.read(part.path)
         md5 = Digest::MD5.hexdigest(body)
-        response = @connection.request(:put, :path => path, :body => body)
-        raise Error::ResponseError.new(nil, response) if response['ETag'] != md5
+
+        response = @connection.request(:put, :path => path, :body => body,
+          :headers => {  :md5 => md5, :content_type => 'application/x-www-form-urlencoded' })
+
+        raise Error::ResponseError.new(nil, response) if response['ETag'].gsub("\"","").downcase != md5.downcase
         return PartInfo.new(part_num, md5)
       end
 
       def complete(upload_id, part_infos)
         path = "#{@object.path}?uploadId=#{upload_id}"
 
-        parts_str = part_infos.map.each do |part_info|
+        parts_str = part_infos.map do |part_info|
           %`
             <Part>
               <PartNumber>#{part_info.part_number}</PartNumber>
-              <ETag>#{part_info.etag}</ETag>
+              <ETag>#{part_info.etag.upcase}</ETag>
             </Part>
           `
         end.join("")
@@ -101,13 +137,22 @@ module Oss
             #{parts_str}
           </CompleteMultipartUpload>
         `
-
-        @connection.request(:post, :path => path, :body => body)
+        @connection.request(:post, :path => path, :body => body,:headers => { :content_type => 'application/x-www-form-urlencoded' })
       end
 
       def abort(upload_id)
         path = "#{@object.path}?uploadId=#{upload_id}"
         @connection.request(:delete, :path => path)
+      end
+
+      def list(upload_id)
+        path = "#{@object.path}?uploadId=#{upload_id}"
+        @connection.request(:get, :path => path).body
+      end
+
+      def list_uploads
+        path = "/#{@bucket.name}?uploads"
+        @connection.request(:get, :path => path).body
       end
 
       class PartInfo
