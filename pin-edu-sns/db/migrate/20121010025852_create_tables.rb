@@ -1,6 +1,7 @@
 class CreateTables < ActiveRecord::Migration
   def change
     # 基础
+    # --------
     create_table "users", :force => true do |t|
       t.string   "name",                      :default => "", :null => false
       t.string   "hashed_password",           :default => "", :null => false
@@ -50,16 +51,8 @@ class CreateTables < ActiveRecord::Migration
     add_index "online_records", "user_id"
 
 
-    # 通知和消息
-    create_table "notifications", :force => true do |t|
-      t.text     "content"
-      t.integer  "receiver_id"
-      t.boolean  "read",        :default => false
-      t.datetime "created_at"
-      t.datetime "updated_at"
-    end
-    add_index "notifications", "receiver_id"
-
+    # 消息和通知
+    # --------
     create_table "short_messages", :force => true do |t|
       t.integer  "sender_id"
       t.integer  "receiver_id"
@@ -75,8 +68,35 @@ class CreateTables < ActiveRecord::Migration
     add_index "short_messages", "sender_hide"
     add_index "short_messages", "receiver_hide"
 
+    create_table "announcements", :force => true do |t|
+      t.string   "title"
+      t.text     "content"
+      t.integer  "creator_id"
+      t.datetime "created_at"
+      t.datetime "updated_at"
+    end
+    add_index "announcements", "creator_id"
+
+    create_table "announcement_users", :force => true do |t|
+      t.integer  "announcement_id"
+      t.integer  "user_id"
+      t.boolean  "read",            :default => false
+      t.datetime "created_at"
+      t.datetime "updated_at"
+    end
+    add_index "announcement_users", "user_id"
+
+    create_table "announcement_rules", :force => true do |t|
+      t.integer  "creator_id"
+      t.integer  "announcement_id"
+      t.text     "expression"
+      t.datetime "created_at"
+      t.datetime "updated_at"
+    end
+
 
     # 资源
+    # --------
     create_table "categories", :force => true do |t|
       t.string   "name"
       t.integer  "parent_id"
@@ -189,6 +209,7 @@ class CreateTables < ActiveRecord::Migration
 
 
     # 用户角色
+    # --------
     create_table "students", :force => true do |t|
       t.string   "real_name",  :default => "",    :null => false
       t.string   "sid"
@@ -214,6 +235,7 @@ class CreateTables < ActiveRecord::Migration
 
 
     # 班级
+    # --------
     create_table "team_students", :force => true do |t|
       t.integer  "team_id"
       t.datetime "created_at"
@@ -222,7 +244,6 @@ class CreateTables < ActiveRecord::Migration
     end
     add_index "team_students", "team_id"
     add_index "team_students", "student_user_id"
-
 
     create_table "teams", :force => true do |t|
       t.string   "name",                   :default => "",    :null => false
@@ -237,7 +258,9 @@ class CreateTables < ActiveRecord::Migration
     add_index "teams", "teaching_plan_id"
     add_index "teams", "course_teacher_team_id"
 
+
     # 课程
+    # --------
     create_table "course_images", :force => true do |t|
       t.integer  "course_id"
       t.integer  "file_entity_id"
@@ -300,7 +323,6 @@ class CreateTables < ActiveRecord::Migration
     end
     add_index "teaching_plan_courses", "teaching_plan_id"
 
-
     create_table "teaching_plans", :force => true do |t|
       t.string   "title"
       t.datetime "created_at"
@@ -311,6 +333,7 @@ class CreateTables < ActiveRecord::Migration
 
 
     # 作业
+    # --------
     create_table "homework_assign_rules", :force => true do |t|
       t.integer  "creator_id"
       t.integer  "homework_id"
@@ -320,7 +343,6 @@ class CreateTables < ActiveRecord::Migration
     end
     add_index "homework_assign_rules", "creator_id"
     add_index "homework_assign_rules", "homework_id"
-
 
     create_table "homework_assigns", :force => true do |t|
       t.integer  "homework_id"
@@ -336,7 +358,6 @@ class CreateTables < ActiveRecord::Migration
     add_index "homework_assigns", "is_submit"
     add_index "homework_assigns", "has_finished"
 
-
     create_table "homework_requirements", :force => true do |t|
       t.integer  "creator_id"
       t.integer  "homework_id"
@@ -346,7 +367,6 @@ class CreateTables < ActiveRecord::Migration
     end
     add_index "homework_requirements", "creator_id"
     add_index "homework_requirements", "homework_id"
-
 
     create_table "homework_student_uploads", :force => true do |t|
       t.integer  "creator_id"
@@ -361,7 +381,6 @@ class CreateTables < ActiveRecord::Migration
     add_index "homework_student_uploads", "file_entity_id"
     add_index "homework_student_uploads", "requirement_id"
 
-
     create_table "homework_teacher_attachments", :force => true do |t|
       t.integer  "creator_id"
       t.integer  "homework_id"
@@ -373,7 +392,6 @@ class CreateTables < ActiveRecord::Migration
     add_index "homework_teacher_attachments", "creator_id"
     add_index "homework_teacher_attachments", "homework_id"
     add_index "homework_teacher_attachments", "file_entity_id"
-
 
     create_table "homeworks", :force => true do |t|
       t.integer  "creator_id"
@@ -387,6 +405,70 @@ class CreateTables < ActiveRecord::Migration
     add_index "homeworks", "course_id"
     add_index "homeworks", "creator_id"
     add_index "homeworks", "course_id"
+
+
+    # 课堂调查
+    # --------
+    create_table "course_surveys", :force => true do |t|
+      t.string   "title"
+      t.datetime "created_at"
+      t.datetime "updated_at"
+    end
+
+    create_table "course_survey_records", :force => true do |t|
+      t.integer  "course_survey_id"
+      t.integer  "student_user_id"
+      t.boolean  "on_off_class"
+      t.boolean  "checking_institution"
+      t.boolean  "class_order"
+      t.string   "prepare_situation"
+      t.string   "teaching_level"
+      t.string   "teacher_morality"
+      t.string   "class_content"
+      t.string   "knowledge_level"
+      t.string   "teaching_schedule"
+      t.string   "teaching_interact"
+      t.string   "board_writing_quality"
+      t.string   "has_courseware"
+      t.string   "courseware_quality"
+      t.string   "speak_level"
+      t.string   "study_result"
+      t.string   "teaching_result"
+      t.string   "result_reason"
+      t.text     "suggestion"
+      t.datetime "created_at"
+      t.datetime "updated_at"
+    end
+    add_index "course_survey_records", "course_survey_id"
+    add_index "course_survey_records", "student_user_id"
+
+
+    # 问答
+    # --------
+    create_table "questions", :force => true do |t|
+      t.integer  "creator_id"
+      t.integer  "teacher_user_id"
+      t.string   "title"
+      t.text     "content"
+      t.datetime "created_at"
+      t.datetime "updated_at"
+      t.boolean  "is_removed",      :default => false
+      t.boolean  "has_answered",    :default => false
+    end
+    add_index "questions", "creator_id"
+    add_index "questions", "teacher_user_id"
+    add_index "questions", "is_removed"
+    add_index "questions", "has_answered"
+
+    create_table "answers", :force => true do |t|
+      t.integer  "creator_id"
+      t.integer  "question_id"
+      t.text     "content"
+      t.datetime "created_at"
+      t.datetime "updated_at"
+    end
+    add_index "answers", "creator_id"
+    add_index "answers", "question_id"
 
   end
 end
