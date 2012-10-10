@@ -20,8 +20,8 @@ class Answer < ActiveRecord::Base
   def send_tip_message_for_receiver_on_create
     receiver = self.question.teacher_user
 
-    receiver.comment_tip_message.put("#{self.creator.name} 给你发了问题", self.id)
-    receiver.comment_tip_message.send_count_to_juggernaut
+    receiver.answer_tip_message.put("#{self.creator.name} 给你发了问题", self.id)
+    receiver.answer_tip_message.send_count_to_juggernaut
   end
 
   after_destroy :send_tip_message_on_destroy
@@ -29,8 +29,8 @@ class Answer < ActiveRecord::Base
     receiver = self.question.teacher_user
 
     if !receiver.blank?
-      receiver.comment_tip_message.delete(self.id)
-      receiver.comment_tip_message.send_count_to_juggernaut
+      receiver.answer_tip_message.delete(self.id)
+      receiver.answer_tip_message.send_count_to_juggernaut
     end
   end
 
