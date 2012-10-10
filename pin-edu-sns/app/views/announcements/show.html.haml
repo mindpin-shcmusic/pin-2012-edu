@@ -1,0 +1,4 @@
+.page-announcement-show
+  %h1.title= @announcement.title
+  .content= @announcement.content
+  .announce-link= link_to '发布通知', announce_announcement_path(@announcement), :method => :put

@@ -1,0 +1,12 @@
+.page-new-announcement
+  = form_for @announcement do |f|
+    = flash_info
+    .field.placeholder.need
+      %label 标题
+      = f.text_field :title
+    .field.need
+      %label 正文
+      = f.text_area :content
+    .field.submit
+      = jfsubmit '保存'
+      = jfcancel '返回'

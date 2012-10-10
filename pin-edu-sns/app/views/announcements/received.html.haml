@@ -1,0 +1,4 @@
+.page-received-announcements
+  - @announcements.each do |announcement|
+    %h1.title= announcement.title
+    .content= announcement.content

@@ -1,0 +1,11 @@
+- htitle '老师问答'
+
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '老师问答', '/questions'
+- hbreadcrumb '编辑问题'
+
+.page-form
+  = flash_info
+  = form_for @question do |f|
+    
+    =render 'form', :f => f

@@ -1,8 +1,9 @@
 class Notification < ActiveRecord::Base
   include Notifying
+  @@notify = Notify.new
 
-  after_create  Notify.new
-  after_destroy Notify.new
+  after_create  @@notify
+  after_destroy @@notify
 
   belongs_to :receiver,
              :class_name  => 'User',

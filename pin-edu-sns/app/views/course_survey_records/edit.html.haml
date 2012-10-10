@@ -1,0 +1,11 @@
+- htitle '课程维护'
+
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '课程调查', '/course_surveys'
+- hbreadcrumb @course_survey_record.course_survey.title
+
+.page-admin-form
+  = flash_info
+  = form_for @course_survey_record do |f|
+ 
+    =render 'form', :f => f

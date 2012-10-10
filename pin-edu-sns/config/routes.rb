@@ -81,6 +81,22 @@ MindpinEduSns::Application.routes.draw do
         post :import_from_yaml
       end
     end
+
+    resources :course_teachers do
+      member do
+        get :edit_time_expression
+        get :show_time_expression
+        put :update_time_expression
+      end
+    end
+
+    resources :teaching_plans do
+      collection do
+        get :import_from_csv_page
+      end
+    end
+
+    resources :course_surveys
     
     root :to=>"index#index"
   end
@@ -90,6 +106,15 @@ MindpinEduSns::Application.routes.draw do
   
   # --- 用户
   resources :users
+
+  # --- 老师问答
+  resources :questions, :shallow => true do
+    resources :answers do
+      collection do
+        get :received
+      end
+    end
+  end
 
   # ----------------------
 
@@ -140,6 +165,11 @@ MindpinEduSns::Application.routes.draw do
   resources :teachers
 
   # 查看当前用户参与或负责的课程
+  resources :course_surveys, :shallow => true do
+    resources :course_survey_records
+  end
+
+
   resources :courses do
     collection do
       get :mine
@@ -228,4 +258,15 @@ MindpinEduSns::Application.routes.draw do
       get :lazyload_sub_dynatree
     end
   end
+
+  resources :announcements do
+    collection do
+      get :received
+    end
+
+    member do
+      put :announce
+    end
+  end
+
 end

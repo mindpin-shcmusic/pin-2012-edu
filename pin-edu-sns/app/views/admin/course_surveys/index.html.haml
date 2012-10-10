@@ -1,0 +1,13 @@
+- htitle '课程维护'
+
+- hbreadcrumb '基础数据管理', '/admin'
+- hbreadcrumb '课程调查'
+  
+
+.page-admin-ops
+  %a.create{:href=>'/admin/course_surveys/new'} 增加课程
+
+.page-paginate= will_paginate @course_surveys
+
+.page-admin-models.course_surveys
+  = render 'course_survey_list', :course_surveys=>@course_surveys
