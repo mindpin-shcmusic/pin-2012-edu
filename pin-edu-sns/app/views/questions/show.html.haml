@@ -22,7 +22,7 @@
     .field
       .link.edit= link_to '编辑', 'javascript:;'
 
-    .page-edit-form
+    .page-edit-form.hide
       = flash_info
       = form_for @question.answer do |f|
         =render 'answer_form', :f => f
