@@ -24,7 +24,7 @@ class Answer < ActiveRecord::Base
     receiver.answer_tip_message.send_count_to_juggernaut
   end
 
-  after_destroy :send_tip_message_on_destroy
+  after_false_remove :send_tip_message_on_destroy
   def send_tip_message_on_destroy
     receiver = self.question.creator
 
