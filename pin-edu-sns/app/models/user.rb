@@ -10,7 +10,6 @@ class User < ActiveRecord::Base
   include HomeworkRequirement::UserMethods
   include HomeworkStudentUpload::UserMethods
   # --- 通知
-  include Notification::UserMethods
   include Announcement::UserMethods
   # --- 站内信
   include ShortMessage::UserMethods

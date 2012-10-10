@@ -179,16 +179,6 @@ MindpinEduSns::Application.routes.draw do
     resources :course_videos, :shallow => true
   end
 
-  resources :notifications do
-    collection do
-      post :read_all
-    end
-
-    member do
-      put :read
-    end
-  end
-
   # --------------------
 
   # web
