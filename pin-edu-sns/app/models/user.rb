@@ -27,7 +27,6 @@ class User < ActiveRecord::Base
   include MediaShare::UserMethods
   include PublicResource::UserMethods
   include MediaShareRule::UserMethods
-  include Achievement::UserMethods
   include Team::UserMethods
   include CourseTeacher::UserMethods
 

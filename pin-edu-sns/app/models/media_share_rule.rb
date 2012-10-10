@@ -1,7 +1,6 @@
 class MediaShareRule < ActiveRecord::Base
   attr_reader :deleting
   after_save :enqueue_build_share
-  after_save :update_achievement
 
   belongs_to :media_resource
 
@@ -75,12 +74,6 @@ class MediaShareRule < ActiveRecord::Base
 
   def enqueue_build_share
     BuildMediaShareResqueQueue.enqueue(self.id)
-  end
-
-  def update_achievement
-    achievement = Achievement.find_or_initialize_by_user_id(self.creator.id)
-    achievement.share_rate = self.creator.share_rate
-    achievement.save
   end
 
   module UserMethods

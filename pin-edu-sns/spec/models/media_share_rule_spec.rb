@@ -25,20 +25,6 @@ describe MediaShareRule do
       @user = FactoryGirl.create :user
     end
 
-    describe '#update_achievement' do
-      it 'should updates user achievement' do
-        Achievement.first.should be nil
-        FactoryGirl.create :media_share_rule, :creator => @user
-        Achievement.first.share_rate.should eq @user.share_rate
-      end
-
-      # it 'should notify user' do
-      #   rule = FactoryGirl.build :media_share_rule, :creator => @user
-      #   UserShareRateTipMessage.should_receive(:notify_share_rank).with(User.first)
-      #   rule.save
-      # end
-    end
-    
     describe '#enqueue_build_share' do
       it 'should queue the build share job' do
         rule = FactoryGirl.build(:media_share_rule, :creator => @user)
