@@ -17,8 +17,6 @@ class Answer < ActiveRecord::Base
   end
 
 
-  include ModelRemovable
-
   after_create :send_tip_message_for_receiver_on_create
   def send_tip_message_for_receiver_on_create
     receiver = self.question.creator
@@ -27,15 +25,6 @@ class Answer < ActiveRecord::Base
     receiver.answer_tip_message.send_count_to_juggernaut
   end
 
-  after_false_remove :send_tip_message_on_destroy
-  def send_tip_message_on_destroy
-    receiver = self.question.creator
-
-    if !receiver.blank?
-      receiver.answer_tip_message.delete(self.id)
-      receiver.answer_tip_message.send_count_to_juggernaut
-    end
-  end
 
 
   module UserMethods

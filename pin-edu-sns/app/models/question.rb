@@ -30,8 +30,11 @@ class Question < ActiveRecord::Base
     if !receiver.blank?
       receiver.question_tip_message.delete(self.id)
       receiver.question_tip_message.send_count_to_juggernaut
+      self.creator.answer_tip_message.delete(self.answer.id)
+      self.creator.answer_tip_message.send_count_to_juggernaut
     end
   end
+
 
 
 
