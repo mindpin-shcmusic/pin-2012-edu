@@ -16,6 +16,9 @@ class Answer < ActiveRecord::Base
     self.question.save
   end
 
+
+  include ModelRemovable
+
   after_create :send_tip_message_for_receiver_on_create
   def send_tip_message_for_receiver_on_create
     receiver = self.question.creator
