@@ -28,7 +28,7 @@ describe Course do
     s2 = Semester.of_time Time.mktime(2013, 4)
     s2.value.should == '2013A'
 
-    Semester.now.should == Semester.of_time Time.now
+    Semester.now.should == Semester.of_time(Time.now)
   end
 
   it '能够在一个学期的某个课程下添加多个任课老师，并且能够取得指定的不同学期的课程下面的任课老师' do
