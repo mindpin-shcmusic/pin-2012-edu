@@ -4,9 +4,6 @@ class CourseTeacher < ActiveRecord::Base
              :class_name  => 'User',
              :foreign_key => :teacher_user_id
 
-  has_many :course_teacher_teams
-  has_many :teams, :through => :course_teacher_teams
-
   validates :course_id, :presence => true
   validates :teacher_user_id, :presence => true
 

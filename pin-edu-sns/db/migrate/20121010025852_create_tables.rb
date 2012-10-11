@@ -272,25 +272,29 @@ class CreateTables < ActiveRecord::Migration
     add_index "course_images", "course_id"
     add_index "course_images", "creator_id"
 
-    create_table "course_teacher_teams", :force => true do |t|
-      t.integer  "course_teacher_id"
-      t.integer  "team_id"
-      t.datetime "created_at"
-      t.datetime "updated_at"
-    end
-    add_index "course_teacher_teams", "course_teacher_id"
-    add_index "course_teacher_teams", "team_id"
-    
     create_table "course_teachers", :force => true do |t|
       t.integer  "course_id"
       t.integer  "teacher_user_id"
       t.string   "location"
       t.string   "time_expression"
+      t.string   "semester_value"
       t.datetime "created_at"
       t.datetime "updated_at"
     end
     add_index "course_teachers", "course_id"
     add_index "course_teachers", "teacher_user_id"
+
+    create_table "course_student_assigns", :force => true do |t|
+      t.integer "course_id"
+      t.integer "teacher_user_id"
+      t.integer "student_user_id"
+      t.string  "semester_value"
+      t.datetime "created_at"
+      t.datetime "updated_at"
+    end
+    add_index "course_student_assigns", "course_id"
+    add_index "course_student_assigns", "teacher_user_id"
+    add_index "course_student_assigns", "student_user_id"
 
     create_table "course_videos", :force => true do |t|
       t.integer  "course_id"

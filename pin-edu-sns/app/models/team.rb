@@ -8,7 +8,6 @@ class Team < ActiveRecord::Base
 
   belongs_to :teaching_plan
 
-  has_many :course_teacher_teams
   has_many :course_teachers, :through => :course_teacher_teams
   has_many :courses, :through => :course_teachers
 
