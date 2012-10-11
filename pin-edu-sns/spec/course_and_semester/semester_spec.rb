@@ -11,6 +11,17 @@ describe Course do
   let(:teacher_li)    {FactoryGirl.create :user, :teacher}
   let(:teacher_zhao)  {FactoryGirl.create :user, :teacher}
 
+  let(:student_song)  {FactoryGirl.create :user, :student}
+  let(:student_wu)    {FactoryGirl.create :user, :student}
+  let(:student_men)   {FactoryGirl.create :user, :student}
+  let(:student_huang) {FactoryGirl.create :user, :student}
+
+  let(:course_3d)    {FactoryGirl.create :course}
+  let(:course_music) {FactoryGirl.create :course}
+
+  let(:semester_2012_a) { Semester.get(2012, :A) } # 2012年上学期
+  let(:semester_2012_b) { Semester.get(2012, :B) } # 2012年下学期
+
   it '系统能够使用学期抽象类获得学期值' do
     # 学期值是一个特定表达方法的值，并非一个数据库表，也并非一个ActiveRecord对象
     # Semester是用来维护，管理和获取这个值的一个抽象类
@@ -32,35 +43,47 @@ describe Course do
   end
 
   it '能够在一个学期的某个课程下添加多个任课老师，并且能够取得指定的不同学期的课程下面的任课老师' do
-    semester_2012_a = Semester.get(2012, :A) # 2012年上学期
-    semester_2012_b = Semester.get(2012, :B) # 2012年下学期
+    course_3d.add_teacher :semester => semester_2012_a,
+                          :teacher_user => teacher_zhang
 
-    course = course.find_by_name('3d动画制作基础')
+    course_3d.add_teacher :semester => semester_2012_a,
+                          :teacher_user => teacher_wang
 
-    course.add_teacher :semester => semester_2012_a,
-                       :teacher_user => teacher_zhang
+    course_3d.add_teacher :semester => semester_2012_b,
+                          :teacher_user => teacher_li
 
-    course.add_teacher :semester => semester_2012_a,
-                       :teacher_user => teacher_wang
+    course_3d.add_teacher :semester => semester_2012_b,
+                          :teacher_user => teacher_zhao
 
-    course.add_teacher :semester => semester_2012_b,
-                       :teacher_user => teacher_li
-
-    course.add_teacher :semester => semester_2012_b,
-                       :teacher_user => teacher_zhao
-
-    teachers_2012_a = course.get_teachers(:semester => semester_2012_a)
+    teachers_2012_a = course_3d.get_teachers(:semester => semester_2012_a)
     teachers_2012_a.length.should == 2
     teachers_2012_a.include?(teacher_zhang).should == true
     teachers_2012_a.include?(teacher_wang).should == true
 
-    teachers_2012_b = course.get_teachers(:semester => semester_2012_a)
+    teachers_2012_b = course_3d.get_teachers(:semester => semester_2012_a)
     teachers_2012_b.length.should == 2
     teachers_2012_b.include?(teacher_li).should == true
     teachers_2012_b.include?(teacher_zhao).should == true
   end
 
-  pending '能够在指定的学期下，给一个学生指定他要上的课，以及指定任课老师'
+  it '能够在指定的学期下，给一个学生指定他要上的课，以及指定任课老师' do
+    course_3d.add_teacher :semester => semester_2012_a,
+                          :teacher_user => teacher_zhang
+
+    course_3d.add_teacher :semester => semester_2012_a,
+                          :teacher_user => teacher_wang
+
+    student_song.add_course :semester => semester_2012_a,
+                            :course => course_3d,
+                            :teacher_user => teacher_zhang
+
+    expect {
+      # 尝试给学生增加课程，但是该学期该课程下并不存在该老师，则抛异常
+      student_song.add_course :semester => semester_2012_a,
+                              :course => course_3d,
+                              :teacher_user => teacher_wang
+    }.to raise_error(Course::InvalidCourseParams)
+  end
 
   pending '课程能够归属到一个或多个教学计划'
   pending '能够根据教学计划，查找这个教学计划中包含的课程'
