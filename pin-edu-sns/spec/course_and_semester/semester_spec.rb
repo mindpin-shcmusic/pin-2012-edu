@@ -43,17 +43,22 @@ describe Course do
   end
 
   it '能够在一个学期的某个课程下添加多个任课老师，并且能够取得指定的不同学期的课程下面的任课老师' do
-    course_3d.add_teacher :semester => semester_2012_a,
+    course_3d.add_teacher :semester     => semester_2012_a,
                           :teacher_user => teacher_zhang
 
-    course_3d.add_teacher :semester => semester_2012_a,
+    course_3d.add_teacher :semester     => semester_2012_a,
                           :teacher_user => teacher_wang
 
-    course_3d.add_teacher :semester => semester_2012_b,
+    course_3d.add_teacher :semester     => semester_2012_b,
                           :teacher_user => teacher_li
 
-    course_3d.add_teacher :semester => semester_2012_b,
+    course_3d.add_teacher :semester     => semester_2012_b,
                           :teacher_user => teacher_zhao
+
+    expect {
+      # 参数未指定学期，老师，则抛异常
+      course_3d.add_teacher {}
+    }.to raise_error(Course::InvalidCourseParams)
 
     teachers_2012_a = course_3d.get_teachers(:semester => semester_2012_a)
     teachers_2012_a.length.should == 2
@@ -67,22 +72,33 @@ describe Course do
   end
 
   it '能够在指定的学期下，给一个学生指定他要上的课，以及指定任课老师' do
-    course_3d.add_teacher :semester => semester_2012_a,
+    course_3d.add_teacher :semester     => semester_2012_a,
                           :teacher_user => teacher_zhang
 
-    course_3d.add_teacher :semester => semester_2012_a,
+    course_3d.add_teacher :semester     => semester_2012_a,
                           :teacher_user => teacher_wang
 
-    student_song.add_course :semester => semester_2012_a,
-                            :course => course_3d,
+    student_song.add_course :semester     => semester_2012_a,
+                            :course       => course_3d,
                             :teacher_user => teacher_zhang
 
     expect {
       # 尝试给学生增加课程，但是该学期该课程下并不存在该老师，则抛异常
-      student_song.add_course :semester => semester_2012_a,
-                              :course => course_3d,
+      student_song.add_course :semester     => semester_2012_a,
+                              :course       => course_3d,
                               :teacher_user => teacher_wang
     }.to raise_error(Course::InvalidCourseParams)
+
+    # 获取某个学生在某个学期要上的课
+    courses = student_song.get_courses :semester => semester_2012_a
+    courses.length.should == 1
+    courses[0].should == course_3d
+
+    # 获取某个学生在某个学期的所有任课老师
+    teachers = student_song.get_teachers :semester => semester_2012_a
+    teachers.length.should == 2
+    teachers.include?(teacher_zhang).should == true
+    teachers.include?(teacher_wang).should == true
   end
 
   pending '课程能够归属到一个或多个教学计划'
