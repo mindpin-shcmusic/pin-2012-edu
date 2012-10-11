@@ -1,8 +1,15 @@
 require 'spec_helper'
 
+
+
 describe Course do
   describe '课程是客观存在的对象，和学期，教师，学生，均没有由它们带来的约束关系' do
   end
+
+  let(:teacher_zhang) {FactoryGirl.create :user, :teacher}
+  let(:teacher_wang)  {FactoryGirl.create :user, :teacher}
+  let(:teacher_li)    {FactoryGirl.create :user, :teacher}
+  let(:teacher_zhao)  {FactoryGirl.create :user, :teacher}
 
   it '系统能够使用学期抽象类获得学期值' do
     # 学期值是一个特定表达方法的值，并非一个数据库表，也并非一个ActiveRecord对象
@@ -10,13 +17,18 @@ describe Course do
 
     semester_2012_a = Semester.get(2012, :A) # 2012年上学期
     semester_2012_b = Semester.get(2012, :B) # 2012年下学期
-    semester_now = Semester.now
 
     semester_2012_a.value.should == '2012A'
     semester_2012_b.value.should == '2012B'
-    semester_now.value.should == '2012B'
 
-    semester_2012_b.should == semester_now
+    s1 = Semester.of_time Time.mktime(2012, 10)
+    s1.value.should == '2012B'
+    s1.should == semester_2012_b
+
+    s2 = Semester.of_time Time.mktime(2013, 4)
+    s2.value.should == '2013A'
+
+    Semester.now.should == Semester.of_time Time.now
   end
 
   it '能够在一个学期的某个课程下添加多个任课老师，并且能够取得指定的不同学期的课程下面的任课老师' do
@@ -24,11 +36,6 @@ describe Course do
     semester_2012_b = Semester.get(2012, :B) # 2012年下学期
 
     course = course.find_by_name('3d动画制作基础')
-
-    teacher_zhang
-    teacher_wang
-    teacher_li
-    teacher_zhao
 
     course.add_teacher :semester => semester_2012_a,
                        :teacher_user => teacher_zhang
