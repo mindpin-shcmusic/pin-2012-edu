@@ -31,7 +31,7 @@ class QuestionsController < ApplicationController
     end
 
   
-    @questions = @questions.paginate(:page => params[:page])
+    @questions = @questions.paginate(:page => params[:page]).order('id DESC')
   end
 
 
@@ -67,7 +67,9 @@ class QuestionsController < ApplicationController
   
 
   def destroy
-    @question.remove
+    if current_user == @question.creator || current_user == @question.teacher_user
+      @question.remove
+    end
     render :text => 'ok'
   end
 

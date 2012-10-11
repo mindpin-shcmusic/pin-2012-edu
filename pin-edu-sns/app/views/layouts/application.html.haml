@@ -26,6 +26,7 @@
             %a.link.homeworks{:href=>homeworks_path} 我的作业
           %a.link.courses{:href=>'/courses/mine'} 我的课程
           %a.link.courses{:href=>'/course_surveys'} 课程调查
+          %a.link.courses{:href=>'/questions'} 老师问答
 
         .links
           .title 互动
@@ -55,7 +56,7 @@
         = yield
 
       = render 'layouts/parts/current_user_js_info'
-      = # javascript_include_tag "http://#{request.host}/juggernaut/application.js"
+      = javascript_include_tag "http://#{request.host}/juggernaut/application.js"
       = javascript_include_tag 'application'
       = yield :javascript
 

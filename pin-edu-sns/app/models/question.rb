@@ -4,7 +4,7 @@ class Question < ActiveRecord::Base
              :foreign_key => :creator_id
 
   has_one :answer
-  has_one :teacher_user,
+  belongs_to :teacher_user,
           :class_name  => 'User',
           :foreign_key => 'teacher_user_id'
 
@@ -13,7 +13,8 @@ class Question < ActiveRecord::Base
   scope :answered, where(:has_answered => true)
   scope :unanswered, where(:has_answered => false)
 
-
+  include ModelRemovable
+  
   after_create :send_tip_message_for_receiver_on_create
   def send_tip_message_for_receiver_on_create
     receiver = self.teacher_user
@@ -22,15 +23,18 @@ class Question < ActiveRecord::Base
     receiver.question_tip_message.send_count_to_juggernaut
   end
 
-  after_destroy :send_tip_message_on_destroy
+  after_false_remove :send_tip_message_on_destroy
   def send_tip_message_on_destroy
     receiver = self.teacher_user
 
     if !receiver.blank?
       receiver.question_tip_message.delete(self.id)
       receiver.question_tip_message.send_count_to_juggernaut
+      self.creator.answer_tip_message.delete(self.answer.id)
+      self.creator.answer_tip_message.send_count_to_juggernaut
     end
   end
+
 
 
 
@@ -51,6 +55,6 @@ class Question < ActiveRecord::Base
     end
   end
 
-  include ModelRemovable
+  
 
 end

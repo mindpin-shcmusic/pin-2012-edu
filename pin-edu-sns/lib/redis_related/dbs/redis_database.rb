@@ -13,15 +13,15 @@ class RedisDatabase
   end
 
   def self.get_db_instance(db)
-    if $REDIS_NAMESPACE.blank?
-      raise NoRedisNameSpaceError.new('没有设置 $REDIS_NAMESPACE 常量，请在 application.rb 里设置') 
-    end
+    # if $REDIS_NAMESPACE.blank?
+    #   raise NoRedisNameSpaceError.new('没有设置 $REDIS_NAMESPACE 常量，请在 application.rb 里设置') 
+    # end
 
     redis = Redis.new(:thread_safe => true)
     redis.select(db)
 
-    app_redis = Redis::Namespace.new($REDIS_NAMESPACE, :redis => redis)
-    return Redis::Namespace.new(self.to_s, :redis => app_redis)
+    #app_redis = Redis::Namespace.new($REDIS_NAMESPACE, :redis => redis)
+    return redis#Redis::Namespace.new(self.to_s, :redis => app_redis)
   end
 
   class NoRedisNameSpaceError < Exception; end;

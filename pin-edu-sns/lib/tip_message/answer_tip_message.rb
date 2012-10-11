@@ -4,7 +4,7 @@ class AnswerTipMessage < UserTipMessage
   end
 
   def path
-    "/answers/received"
+    "/questions?type=answered"
   end
 
   module UserMethods
