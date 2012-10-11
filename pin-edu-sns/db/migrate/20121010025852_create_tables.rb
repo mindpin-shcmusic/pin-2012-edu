@@ -404,8 +404,6 @@ class CreateTables < ActiveRecord::Migration
     end
     add_index "homeworks", "course_id"
     add_index "homeworks", "creator_id"
-    add_index "homeworks", "course_id"
-
 
     # 课堂调查
     # --------

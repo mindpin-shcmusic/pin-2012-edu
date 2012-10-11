@@ -10,14 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121009050128) do
-
-  create_table "achievements", :force => true do |t|
-    t.integer  "user_id"
-    t.float    "share_rate", :default => 0.0
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(:version => 20121010025852) do
 
   create_table "announcement_rules", :force => true do |t|
     t.integer  "creator_id"
@@ -35,6 +28,8 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.datetime "updated_at"
   end
 
+  add_index "announcement_users", ["user_id"], :name => "index_announcement_users_on_user_id"
+
   create_table "announcements", :force => true do |t|
     t.string   "title"
     t.text     "content"
@@ -43,6 +38,8 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.datetime "updated_at"
   end
 
+  add_index "announcements", ["creator_id"], :name => "index_announcements_on_creator_id"
+
   create_table "answers", :force => true do |t|
     t.integer  "creator_id"
     t.integer  "question_id"
@@ -50,6 +47,9 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "answers", ["creator_id"], :name => "index_answers_on_creator_id"
+  add_index "answers", ["question_id"], :name => "index_answers_on_question_id"
 
   create_table "categories", :force => true do |t|
     t.string   "name"
@@ -62,6 +62,7 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.boolean  "is_removed", :default => false
   end
 
+  add_index "categories", ["is_removed"], :name => "index_categories_on_is_removed"
   add_index "categories", ["parent_id"], :name => "index_categories_on_parent_id"
 
   create_table "comments", :force => true do |t|
@@ -71,29 +72,15 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.text     "content"
     t.integer  "reply_comment_id"
     t.integer  "reply_comment_user_id"
+    t.integer  "receiver_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "receiver_id"
   end
 
   add_index "comments", ["creator_id"], :name => "index_comments_on_creator_id"
   add_index "comments", ["model_id", "model_type"], :name => "index_comments_on_model_id_and_model_type"
   add_index "comments", ["reply_comment_id"], :name => "index_comments_on_reply_comment_id"
   add_index "comments", ["reply_comment_user_id"], :name => "index_comments_on_reply_comment_user_id"
-
-  create_table "connect_users", :force => true do |t|
-    t.integer  "user_id"
-    t.string   "connect_type"
-    t.string   "connect_id"
-    t.string   "oauth_token"
-    t.string   "oauth_token_secret"
-    t.text     "account_detail"
-    t.boolean  "oauth_invalid"
-    t.boolean  "syn_from_connect"
-    t.string   "last_syn_message_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "course_images", :force => true do |t|
     t.integer  "course_id"
@@ -103,6 +90,9 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.string   "name"
     t.integer  "creator_id"
   end
+
+  add_index "course_images", ["course_id"], :name => "index_course_images_on_course_id"
+  add_index "course_images", ["creator_id"], :name => "index_course_images_on_creator_id"
 
   create_table "course_survey_records", :force => true do |t|
     t.integer  "course_survey_id"
@@ -129,6 +119,9 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.datetime "updated_at"
   end
 
+  add_index "course_survey_records", ["course_survey_id"], :name => "index_course_survey_records_on_course_survey_id"
+  add_index "course_survey_records", ["student_user_id"], :name => "index_course_survey_records_on_student_user_id"
+
   create_table "course_surveys", :force => true do |t|
     t.string   "title"
     t.datetime "created_at"
@@ -142,6 +135,9 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.datetime "updated_at"
   end
 
+  add_index "course_teacher_teams", ["course_teacher_id"], :name => "index_course_teacher_teams_on_course_teacher_id"
+  add_index "course_teacher_teams", ["team_id"], :name => "index_course_teacher_teams_on_team_id"
+
   create_table "course_teachers", :force => true do |t|
     t.integer  "course_id"
     t.integer  "teacher_user_id"
@@ -151,6 +147,9 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.datetime "updated_at"
   end
 
+  add_index "course_teachers", ["course_id"], :name => "index_course_teachers_on_course_id"
+  add_index "course_teachers", ["teacher_user_id"], :name => "index_course_teachers_on_teacher_user_id"
+
   create_table "course_videos", :force => true do |t|
     t.integer  "course_id"
     t.integer  "file_entity_id"
@@ -159,6 +158,9 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.datetime "updated_at"
     t.integer  "creator_id"
   end
+
+  add_index "course_videos", ["course_id"], :name => "index_course_videos_on_course_id"
+  add_index "course_videos", ["file_entity_id"], :name => "index_course_videos_on_file_entity_id"
 
   create_table "courses", :force => true do |t|
     t.string   "name",       :default => "",    :null => false
@@ -171,6 +173,8 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.integer  "cover_id"
   end
 
+  add_index "courses", ["is_removed"], :name => "index_courses_on_is_removed"
+
   create_table "file_entities", :force => true do |t|
     t.string   "attach_file_name"
     t.string   "attach_content_type"
@@ -179,12 +183,13 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.string   "md5"
     t.boolean  "merged",                           :default => false
     t.string   "video_encode_status"
+    t.integer  "saved_size",          :limit => 8
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "saved_size",          :limit => 8
   end
 
   add_index "file_entities", ["md5"], :name => "index_file_entities_on_md5"
+  add_index "file_entities", ["merged"], :name => "index_file_entities_on_merged"
 
   create_table "file_entity_oss_object_parts", :force => true do |t|
     t.integer  "file_entity_id"
@@ -193,6 +198,8 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.datetime "updated_at"
   end
 
+  add_index "file_entity_oss_object_parts", ["file_entity_id"], :name => "index_file_entity_oss_object_parts_on_file_entity_id"
+
   create_table "homework_assign_rules", :force => true do |t|
     t.integer  "creator_id"
     t.integer  "homework_id"
@@ -200,6 +207,9 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "homework_assign_rules", ["creator_id"], :name => "index_homework_assign_rules_on_creator_id"
+  add_index "homework_assign_rules", ["homework_id"], :name => "index_homework_assign_rules_on_homework_id"
 
   create_table "homework_assigns", :force => true do |t|
     t.integer  "homework_id"
@@ -212,7 +222,9 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.integer  "user_id"
   end
 
+  add_index "homework_assigns", ["has_finished"], :name => "index_homework_assigns_on_has_finished"
   add_index "homework_assigns", ["homework_id"], :name => "index_homework_assigns_on_homework_id"
+  add_index "homework_assigns", ["is_submit"], :name => "index_homework_assigns_on_is_submit"
 
   create_table "homework_requirements", :force => true do |t|
     t.integer  "creator_id"
@@ -222,8 +234,8 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.datetime "updated_at"
   end
 
-  add_index "homework_requirements", ["creator_id"], :name => "index_homework_student_upload_requirements_on_creator_id"
-  add_index "homework_requirements", ["homework_id"], :name => "index_homework_student_upload_requirements_on_homework_id"
+  add_index "homework_requirements", ["creator_id"], :name => "index_homework_requirements_on_creator_id"
+  add_index "homework_requirements", ["homework_id"], :name => "index_homework_requirements_on_homework_id"
 
   create_table "homework_student_uploads", :force => true do |t|
     t.integer  "creator_id"
@@ -236,6 +248,8 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
   end
 
   add_index "homework_student_uploads", ["creator_id"], :name => "index_homework_student_uploads_on_creator_id"
+  add_index "homework_student_uploads", ["file_entity_id"], :name => "index_homework_student_uploads_on_file_entity_id"
+  add_index "homework_student_uploads", ["requirement_id"], :name => "index_homework_student_uploads_on_requirement_id"
 
   create_table "homework_teacher_attachments", :force => true do |t|
     t.integer  "creator_id"
@@ -246,8 +260,9 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.string   "name"
   end
 
-  add_index "homework_teacher_attachments", ["creator_id"], :name => "index_homework_teacher_attachements_on_creator_id"
-  add_index "homework_teacher_attachments", ["homework_id"], :name => "index_homework_teacher_attachements_on_homework_id"
+  add_index "homework_teacher_attachments", ["creator_id"], :name => "index_homework_teacher_attachments_on_creator_id"
+  add_index "homework_teacher_attachments", ["file_entity_id"], :name => "index_homework_teacher_attachments_on_file_entity_id"
+  add_index "homework_teacher_attachments", ["homework_id"], :name => "index_homework_teacher_attachments_on_homework_id"
 
   create_table "homeworks", :force => true do |t|
     t.integer  "creator_id"
@@ -261,27 +276,6 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
 
   add_index "homeworks", ["course_id"], :name => "index_homeworks_on_course_id"
   add_index "homeworks", ["creator_id"], :name => "index_homeworks_on_creator_id"
-
-  create_table "media_files", :force => true do |t|
-    t.string   "entry_file_name"
-    t.string   "entry_content_type"
-    t.integer  "entry_file_size",     :limit => 8
-    t.datetime "entry_updated_at"
-    t.string   "place"
-    t.text     "desc"
-    t.integer  "creator_id"
-    t.integer  "category_id"
-    t.string   "video_encode_status"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.boolean  "file_merged"
-    t.string   "real_file_name"
-    t.string   "md5"
-    t.text     "description"
-  end
-
-  add_index "media_files", ["category_id"], :name => "index_media_files_on_category_id"
-  add_index "media_files", ["creator_id"], :name => "index_media_files_on_creator_id"
 
   create_table "media_resources", :force => true do |t|
     t.integer  "file_entity_id"
@@ -300,8 +294,8 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
   add_index "media_resources", ["creator_id"], :name => "index_media_resources_on_creator_id"
   add_index "media_resources", ["dir_id"], :name => "index_media_resources_on_dir_id"
   add_index "media_resources", ["file_entity_id"], :name => "index_media_resources_on_file_entity_id"
-  add_index "media_resources", ["fileops_time"], :name => "index_media_resources_on_fileops_time"
-  add_index "media_resources", ["name"], :name => "index_media_resources_on_name"
+  add_index "media_resources", ["is_dir"], :name => "index_media_resources_on_is_dir"
+  add_index "media_resources", ["is_removed"], :name => "index_media_resources_on_is_removed"
 
   create_table "media_share_rules", :force => true do |t|
     t.integer  "creator_id"
@@ -310,6 +304,9 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "media_share_rules", ["creator_id"], :name => "index_media_share_rules_on_creator_id"
+  add_index "media_share_rules", ["media_resource_id"], :name => "index_media_share_rules_on_media_resource_id"
 
   create_table "media_shares", :force => true do |t|
     t.integer  "media_resource_id"
@@ -320,13 +317,9 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.datetime "updated_at"
   end
 
-  create_table "notifications", :force => true do |t|
-    t.text     "content"
-    t.integer  "receiver_id"
-    t.boolean  "read",        :default => false
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+  add_index "media_shares", ["creator_id"], :name => "index_media_shares_on_creator_id"
+  add_index "media_shares", ["media_resource_id"], :name => "index_media_shares_on_media_resource_id"
+  add_index "media_shares", ["receiver_id"], :name => "index_media_shares_on_receiver_id"
 
   create_table "online_records", :force => true do |t|
     t.integer  "user_id"
@@ -350,6 +343,12 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.integer  "category_id"
   end
 
+  add_index "public_resources", ["category_id"], :name => "index_public_resources_on_category_id"
+  add_index "public_resources", ["creator_id"], :name => "index_public_resources_on_creator_id"
+  add_index "public_resources", ["file_entity_id"], :name => "index_public_resources_on_file_entity_id"
+  add_index "public_resources", ["kind"], :name => "index_public_resources_on_kind"
+  add_index "public_resources", ["media_resource_id"], :name => "index_public_resources_on_media_resource_id"
+
   create_table "questions", :force => true do |t|
     t.integer  "creator_id"
     t.integer  "teacher_user_id"
@@ -360,6 +359,11 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.boolean  "is_removed",      :default => false
     t.boolean  "has_answered",    :default => false
   end
+
+  add_index "questions", ["creator_id"], :name => "index_questions_on_creator_id"
+  add_index "questions", ["has_answered"], :name => "index_questions_on_has_answered"
+  add_index "questions", ["is_removed"], :name => "index_questions_on_is_removed"
+  add_index "questions", ["teacher_user_id"], :name => "index_questions_on_teacher_user_id"
 
   create_table "short_messages", :force => true do |t|
     t.integer  "sender_id"
@@ -372,6 +376,11 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.datetime "updated_at"
   end
 
+  add_index "short_messages", ["receiver_hide"], :name => "index_short_messages_on_receiver_hide"
+  add_index "short_messages", ["receiver_id"], :name => "index_short_messages_on_receiver_id"
+  add_index "short_messages", ["sender_hide"], :name => "index_short_messages_on_sender_hide"
+  add_index "short_messages", ["sender_id"], :name => "index_short_messages_on_sender_id"
+
   create_table "students", :force => true do |t|
     t.string   "real_name",  :default => "",    :null => false
     t.string   "sid"
@@ -381,6 +390,7 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.boolean  "is_removed", :default => false
   end
 
+  add_index "students", ["is_removed"], :name => "index_students_on_is_removed"
   add_index "students", ["user_id"], :name => "index_students_on_user_id"
 
   create_table "taggings", :force => true do |t|
@@ -410,6 +420,7 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.text     "description"
   end
 
+  add_index "teachers", ["is_removed"], :name => "index_teachers_on_is_removed"
   add_index "teachers", ["user_id"], :name => "index_teachers_on_user_id"
 
   create_table "teaching_plan_courses", :force => true do |t|
@@ -419,12 +430,16 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.datetime "updated_at"
   end
 
+  add_index "teaching_plan_courses", ["teaching_plan_id"], :name => "index_teaching_plan_courses_on_teaching_plan_id"
+
   create_table "teaching_plans", :force => true do |t|
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_removed"
   end
+
+  add_index "teaching_plans", ["is_removed"], :name => "index_teaching_plans_on_is_removed"
 
   create_table "team_students", :force => true do |t|
     t.integer  "team_id"
@@ -433,6 +448,7 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.integer  "student_user_id"
   end
 
+  add_index "team_students", ["student_user_id"], :name => "index_team_students_on_student_user_id"
   add_index "team_students", ["team_id"], :name => "index_team_students_on_team_id"
 
   create_table "teams", :force => true do |t|
@@ -444,6 +460,10 @@ ActiveRecord::Schema.define(:version => 20121009050128) do
     t.integer  "teaching_plan_id"
     t.integer  "course_teacher_team_id"
   end
+
+  add_index "teams", ["course_teacher_team_id"], :name => "index_teams_on_course_teacher_team_id"
+  add_index "teams", ["is_removed"], :name => "index_teams_on_is_removed"
+  add_index "teams", ["teaching_plan_id"], :name => "index_teams_on_teaching_plan_id"
 
   create_table "users", :force => true do |t|
     t.string   "name",                      :default => "", :null => false
