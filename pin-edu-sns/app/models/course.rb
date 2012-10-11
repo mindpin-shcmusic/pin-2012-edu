@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 class Course < ActiveRecord::Base
+  class InvalidCourseParams < Exception;end
+
   validates :name, :presence => true
   validates :cid, :uniqueness => { :if => Proc.new { |course| !course.cid.blank? } }
 
@@ -46,6 +48,21 @@ class Course < ActiveRecord::Base
         end
       end
     end
+  end
+
+  def add_teacher(options)
+    raise InvalidCourseParams.new if options[:semester].blank? || options[:teacher_user].blank?
+    CourseTeacher.create(
+      :teacher_user => options[:teacher_user],
+      :semester => options[:semester],
+      :course => self
+    )
+  end
+
+  def get_teachers(options)
+    raise InvalidCourseParams.new if options[:semester].blank?
+    User.joins("inner join course_teachers on course_teachers.teacher_user_id = users.id").
+      where("course_teachers.course_id = #{self.id} and course_teachers.semester_value = '#{options[:semester].value}'")
   end
 
   define_index do

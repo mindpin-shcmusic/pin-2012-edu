@@ -94,6 +94,19 @@ ActiveRecord::Schema.define(:version => 20121010025852) do
   add_index "course_images", ["course_id"], :name => "index_course_images_on_course_id"
   add_index "course_images", ["creator_id"], :name => "index_course_images_on_creator_id"
 
+  create_table "course_student_assigns", :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "teacher_user_id"
+    t.integer  "student_user_id"
+    t.string   "semester_value"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "course_student_assigns", ["course_id"], :name => "index_course_student_assigns_on_course_id"
+  add_index "course_student_assigns", ["student_user_id"], :name => "index_course_student_assigns_on_student_user_id"
+  add_index "course_student_assigns", ["teacher_user_id"], :name => "index_course_student_assigns_on_teacher_user_id"
+
   create_table "course_survey_records", :force => true do |t|
     t.integer  "course_survey_id"
     t.integer  "student_user_id"
@@ -128,21 +141,12 @@ ActiveRecord::Schema.define(:version => 20121010025852) do
     t.datetime "updated_at"
   end
 
-  create_table "course_teacher_teams", :force => true do |t|
-    t.integer  "course_teacher_id"
-    t.integer  "team_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "course_teacher_teams", ["course_teacher_id"], :name => "index_course_teacher_teams_on_course_teacher_id"
-  add_index "course_teacher_teams", ["team_id"], :name => "index_course_teacher_teams_on_team_id"
-
   create_table "course_teachers", :force => true do |t|
     t.integer  "course_id"
     t.integer  "teacher_user_id"
     t.string   "location"
     t.string   "time_expression"
+    t.string   "semester_value"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

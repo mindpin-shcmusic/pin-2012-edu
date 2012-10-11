@@ -57,7 +57,7 @@ describe Course do
 
     expect {
       # 参数未指定学期，老师，则抛异常
-      course_3d.add_teacher {}
+      course_3d.add_teacher({})
     }.to raise_error(Course::InvalidCourseParams)
 
     teachers_2012_a = course_3d.get_teachers(:semester => semester_2012_a)
@@ -65,7 +65,7 @@ describe Course do
     teachers_2012_a.include?(teacher_zhang).should == true
     teachers_2012_a.include?(teacher_wang).should == true
 
-    teachers_2012_b = course_3d.get_teachers(:semester => semester_2012_a)
+    teachers_2012_b = course_3d.get_teachers(:semester => semester_2012_b)
     teachers_2012_b.length.should == 2
     teachers_2012_b.include?(teacher_li).should == true
     teachers_2012_b.include?(teacher_zhao).should == true
