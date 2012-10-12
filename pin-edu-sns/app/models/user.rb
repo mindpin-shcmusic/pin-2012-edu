@@ -68,7 +68,7 @@ class User < ActiveRecord::Base
     :length => { :in => 4..32 , :on => :create}
 
   ROLES = %w[admin student teacher]
-  named_scope :with_role, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }
+  scope :with_role, lambda { |role| {:conditions => "roles_mask & #{2**ROLES.index(role.to_s)} > 0"} }
 
   def roles=(roles)
     self.roles_mask = (roles & ROLES).map { |r| 2**ROLES.index(r) }.sum
@@ -80,6 +80,11 @@ class User < ActiveRecord::Base
 
   def role?(role)
     roles.include? role.to_s
+  end
+
+  def set_role(role)
+    self.roles = (ROLES & [role.to_s])
+    save
   end
 
   def is_admin?

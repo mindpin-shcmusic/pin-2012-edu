@@ -6,15 +6,17 @@ FactoryGirl.define do
 
     trait :teacher do
       teacher
+      roles_mask 4
     end
 
     trait :student do
       student
+      roles_mask 2
     end
 
     trait :admin do
-      id 1
       name 'admin'
+      roles_mask 1
       # 这里需要修改一下
     end
 

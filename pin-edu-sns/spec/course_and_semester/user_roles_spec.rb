@@ -7,7 +7,7 @@ describe User do
   let(:li)    {FactoryGirl.create :user}
   let(:zhao)  {FactoryGirl.create :user}
 
-  describe '用户可以设定角色' do
+  it '用户可以设定角色' do
     zhang.set_role :admin
     zhang.role?(:admin).should == true
 
@@ -19,7 +19,7 @@ describe User do
     zhang.is_admin?.should == false
   end
 
-  describe '可以查询不同角色的用户' do
+  it '可以查询不同角色的用户' do
 
     5.times do
       FactoryGirl.create :user, :teacher
