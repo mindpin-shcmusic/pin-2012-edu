@@ -34,6 +34,12 @@ class Team < ActiveRecord::Base
     end
   end
 
+  def add_course(options)
+    student_users.each do |user|
+      user.add_course(options)
+    end
+  end
+
   module UserMethods
     def self.included(base)
       base.has_one  :team_student, :foreign_key => :student_user_id

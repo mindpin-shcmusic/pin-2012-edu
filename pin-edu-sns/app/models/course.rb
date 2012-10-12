@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 class Course < ActiveRecord::Base
   class InvalidCourseParams < Exception;end
+  class AssignMultiTeachersOfSameCourse < Exception;end
 
   validates :name, :presence => true
   validates :cid, :uniqueness => { :if => Proc.new { |course| !course.cid.blank? } }
@@ -71,6 +72,14 @@ class Course < ActiveRecord::Base
       
       course_teacher = CourseTeacher.get_by_params(options[:course], options[:semester], options[:teacher_user])
       raise InvalidCourseParams.new if course_teacher.blank?
+
+      course_student_assign = CourseStudentAssign.where(
+        :student_user_id => self.id,
+        :semester_value => options[:semester].value,
+        :course_id => options[:course].id
+      ).first
+
+      raise AssignMultiTeachersOfSameCourse.new if !course_student_assign.blank?
 
       CourseStudentAssign.create(
         :teacher_user => options[:teacher_user],

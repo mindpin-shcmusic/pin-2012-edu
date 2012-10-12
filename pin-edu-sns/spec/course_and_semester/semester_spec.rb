@@ -168,7 +168,7 @@ describe Course do
                            :teacher_user => teacher_li
     }.to raise_error(Course::InvalidCourseParams)
 
-    student_user = team_test.students.first
+    student_user = team_test.student_users.first
 
     courses = student_user.get_courses :semester => semester_2012_a
     courses.length.should == 1

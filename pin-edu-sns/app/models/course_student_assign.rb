@@ -10,7 +10,7 @@ class CourseStudentAssign < ActiveRecord::Base
   validates :course_id, :presence => true
   validates :teacher_user_id, :presence => true
   validates :student_user_id, :presence => true,
-    :uniqueness => {:scope => [:course_id,:semester_value,:teacher_user_id]}
+    :uniqueness => {:scope => [:course_id,:semester_value]}
 
   def semester=(semester)
     @semester = semester
