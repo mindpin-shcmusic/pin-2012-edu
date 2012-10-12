@@ -436,6 +436,16 @@ ActiveRecord::Schema.define(:version => 20121010025852) do
 
   add_index "teaching_plan_courses", ["teaching_plan_id"], :name => "index_teaching_plan_courses_on_teaching_plan_id"
 
+  create_table "teaching_plan_students", :force => true do |t|
+    t.integer  "teaching_plan_id"
+    t.integer  "student_user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "teaching_plan_students", ["student_user_id"], :name => "index_teaching_plan_students_on_student_user_id"
+  add_index "teaching_plan_students", ["teaching_plan_id"], :name => "index_teaching_plan_students_on_teaching_plan_id"
+
   create_table "teaching_plans", :force => true do |t|
     t.string   "title"
     t.datetime "created_at"

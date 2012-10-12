@@ -335,6 +335,14 @@ class CreateTables < ActiveRecord::Migration
     end
     add_index "teaching_plans", "is_removed"
 
+    create_table "teaching_plan_students", :force => true do |t|
+      t.integer "teaching_plan_id"
+      t.integer "student_user_id"
+      t.datetime "created_at"
+      t.datetime "updated_at"
+    end
+    add_index "teaching_plan_students", "teaching_plan_id"
+    add_index "teaching_plan_students", "student_user_id"
 
     # 作业
     # --------

@@ -119,6 +119,7 @@ describe Course do
     teaching_plan_design.courses.length.should == 2
 
     teaching_plan_design.remove_course course_3d
+    teaching_plan_design.reload
     teaching_plan_design.courses.length.should == 1
 
     teaching_plan_computer.add_course course_3d
@@ -132,16 +133,18 @@ describe Course do
     teaching_plan_design.students.length == 2
 
     teaching_plan_design.remove_student student_song
+    teaching_plan_design.reload
     teaching_plan_design.students.length.should == 1
 
     expect {
       # 一个学生不能同时加入多个教学计划
-      teaching_plan_computer.add_student student_huang
+      teaching_plan_design.add_student student_huang
     }.to raise_error(TeachingPlan::AddStudentToMultiTeachingPlanError)
 
     teaching_plan_design.remove_student student_huang
     teaching_plan_computer.add_student student_huang
-
+    teaching_plan_design.reload
+    teaching_plan_computer.reload
     teaching_plan_design.students.length.should == 0
     teaching_plan_computer.students.length.should == 1
   end
