@@ -108,9 +108,44 @@ describe Course do
     teachers.include?(teacher_li).should == true
   end
 
-  pending '课程能够归属到一个或多个教学计划'
-  pending '能够根据教学计划，查找这个教学计划中包含的课程'
-  pending '学生能够归属到一个教学计划'
+
+  let(:teaching_plan_design)   {FactoryGirl.create :teaching_plan}
+  let(:teaching_plan_computer) {FactoryGirl.create :teaching_plan}
+
+  it '课程能够归属到一个或多个教学计划' do
+    teaching_plan_design.add_course course_3d
+    teaching_plan_design.add_course course_music
+
+    teaching_plan_design.courses.length.should == 2
+
+    teaching_plan_design.remove_course course_3d
+    teaching_plan_design.courses.length.should == 1
+
+    teaching_plan_computer.add_course course_3d
+    teaching_plan_computer.courses.length.should == 1
+  end
+
+  it '学生能够归属到一个教学计划' do
+    teaching_plan_design.add_student student_song
+    teaching_plan_design.add_student student_huang
+
+    teaching_plan_design.students.length == 2
+
+    teaching_plan_design.remove_student student_song
+    teaching_plan_design.students.length.should == 1
+
+    expect {
+      # 一个学生不能同时加入多个教学计划
+      teaching_plan_computer.add_student student_huang
+    }.to raise_error(TeachingPlan::AddStudentToMultiTeachingPlanError)
+
+    teaching_plan_design.remove_student student_huang
+    teaching_plan_computer.add_student student_huang
+
+    teaching_plan_design.students.length.should == 0
+    teaching_plan_computer.students.length.should == 1
+  end
+
   pending '学生能够在教学计划所包含的课程的范围中指定其要上的课'
 
   pending '能够在不同的学期给一个班的学生指定要上的课，但是产生的指定记录仍然直接指向学生'
