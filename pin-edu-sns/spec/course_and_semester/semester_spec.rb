@@ -95,11 +95,11 @@ describe Course do
     courses[0].should == course_3d
 
     course_music.add_teacher :semester => semester_2012_a,
-                             :teacher  => teacher_li
+                             :teacher_user  => teacher_li
 
     student_song.add_course :semester => semester_2012_a,
                             :course   => course_music,
-                            :teacher  => teacher_li
+                            :teacher_user  => teacher_li
 
     # 获取某个学生在某个学期的所有任课老师
     teachers = student_song.get_teachers :semester => semester_2012_a
