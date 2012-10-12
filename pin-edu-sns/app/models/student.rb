@@ -59,7 +59,7 @@ class Student < ActiveRecord::Base
     
     module InstanceMethod
       def is_student?
-        !self.student.blank?
+        role? "student"
       end
     end
   end

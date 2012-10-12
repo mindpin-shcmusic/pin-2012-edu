@@ -19,6 +19,7 @@ class CreateTables < ActiveRecord::Migration
       t.datetime "last_login_time"
       t.boolean  "send_invite_email"
       t.integer  "reputation",                :default => 0,  :null => false
+      t.integer  "roles_mask"
       t.datetime "created_at"
       t.datetime "updated_at"
     end
