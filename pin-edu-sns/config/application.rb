@@ -21,6 +21,9 @@ module MindpinEduSns
     # 当前工程的middleware
     config.autoload_paths += ["#{Rails.root}/app/middleware/"]
 
+    # 当前工程的 模型
+    config.autoload_paths += Dir["#{Rails.root}/app/edu_models/**/"]
+
     # 时区，国际化
     config.time_zone = 'UTC'
     config.i18n.default_locale = :cn
