@@ -1,7 +1,5 @@
 require 'spec_helper'
 
-
-
 describe Course do
   describe '课程是客观存在的对象，和学期，教师，学生，均没有由它们带来的约束关系' do
   end
