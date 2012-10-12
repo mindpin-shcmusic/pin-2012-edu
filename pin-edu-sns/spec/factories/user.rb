@@ -15,6 +15,7 @@ FactoryGirl.define do
     trait :admin do
       id 1
       name 'admin'
+      # 这里需要修改一下
     end
 
   end
