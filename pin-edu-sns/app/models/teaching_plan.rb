@@ -37,7 +37,7 @@ class TeachingPlan < ActiveRecord::Base
   end
 
   def add_student(student_user)
-    teaching_plan_student = self.teaching_plan_students.find_by_student_user_id(student_user.id)
+    teaching_plan_student = TeachingPlanStudent.find_by_student_user_id(student_user.id)
     raise AddStudentToMultiTeachingPlanError.new if !teaching_plan_student.blank?
     TeachingPlanStudent.create(
       :teaching_plan => self,

@@ -138,7 +138,7 @@ describe Course do
 
     expect {
       # 一个学生不能同时加入多个教学计划
-      teaching_plan_design.add_student student_huang
+      teaching_plan_computer.add_student student_huang
     }.to raise_error(TeachingPlan::AddStudentToMultiTeachingPlanError)
 
     teaching_plan_design.remove_student student_huang
