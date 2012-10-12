@@ -13,6 +13,8 @@ class User < ActiveRecord::Base
   include Announcement::UserMethods
   # --- 站内信
   include ShortMessage::UserMethods
+  # --- 课程
+  include Course::UserMethods
 
   include Comment::UserMethods
   include UserCommentTipMessage::UserMethods

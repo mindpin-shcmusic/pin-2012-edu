@@ -65,6 +65,32 @@ class Course < ActiveRecord::Base
       where("course_teachers.course_id = #{self.id} and course_teachers.semester_value = '#{options[:semester].value}'")
   end
 
+  module UserMethods
+    def add_course(options)
+      raise InvalidCourseParams.new if options[:course].blank? || options[:semester].blank? || options[:teacher_user].blank?
+      
+      course_teacher = CourseTeacher.get_by_params(options[:course], options[:semester], options[:teacher_user])
+      raise InvalidCourseParams.new if course_teacher.blank?
+
+      CourseStudentAssign.create(
+        :teacher_user => options[:teacher_user],
+        :student_user => self,
+        :semester => options[:semester],
+        :course => options[:course]
+      )
+    end
+
+    def get_courses(options)
+      Course.joins("inner join course_student_assigns on course_student_assigns.course_id = courses.id").
+        where("course_student_assigns.semester_value = '#{options[:semester].value}' and course_student_assigns.student_user_id = #{self.id}")
+    end
+
+    def get_teachers(options)
+      User.joins("inner join course_student_assigns on course_student_assigns.teacher_user_id = users.id").
+        where("course_student_assigns.semester_value = '#{options[:semester].value}' and course_student_assigns.student_user_id = #{self.id}")
+    end
+  end
+
   define_index do
     indexes name, :sortable => true
 

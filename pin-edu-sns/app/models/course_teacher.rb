@@ -17,6 +17,14 @@ class CourseTeacher < ActiveRecord::Base
     @semester
   end
 
+  def self.get_by_params(course, semester, teacher_user)
+    self.where(
+      :course_id => course.id,
+      :semester_value => semester.value,
+      :teacher_user_id => teacher_user.id
+    ).first
+  end
+
   module UserMethods
     def self.included(base)
       base.has_many :course_teachers, :foreign_key => :teacher_user_id
