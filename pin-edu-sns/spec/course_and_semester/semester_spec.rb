@@ -86,7 +86,7 @@ describe Course do
       # 尝试给学生增加课程，但是该学期该课程下并不存在该老师，则抛异常
       student_song.add_course :semester     => semester_2012_a,
                               :course       => course_3d,
-                              :teacher_user => teacher_wang
+                              :teacher_user => teacher_li
     }.to raise_error(Course::InvalidCourseParams)
 
     # 获取某个学生在某个学期要上的课
@@ -94,11 +94,18 @@ describe Course do
     courses.length.should == 1
     courses[0].should == course_3d
 
+    course_music.add_teacher :semester => semester_2012_a,
+                             :teacher  => teacher_li
+
+    student_song.add_course :semester => semester_2012_a,
+                            :course   => course_music,
+                            :teacher  => teacher_li
+
     # 获取某个学生在某个学期的所有任课老师
     teachers = student_song.get_teachers :semester => semester_2012_a
     teachers.length.should == 2
     teachers.include?(teacher_zhang).should == true
-    teachers.include?(teacher_wang).should == true
+    teachers.include?(teacher_li).should == true
   end
 
   pending '课程能够归属到一个或多个教学计划'
