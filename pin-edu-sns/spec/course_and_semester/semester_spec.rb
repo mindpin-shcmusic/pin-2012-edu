@@ -146,7 +146,51 @@ describe Course do
     teaching_plan_computer.students.length.should == 1
   end
 
-  pending '学生能够在教学计划所包含的课程的范围中指定其要上的课'
+  let(:team_test) {FactoryGirl.create :team, :with_student_users}
 
-  pending '能够在不同的学期给一个班的学生指定要上的课，但是产生的指定记录仍然直接指向学生'
+  it '能够在不同的学期给一个班的学生指定要上的课，但是产生的指定记录仍然直接指向学生' do
+    course_3d.add_teacher :semester     => semester_2012_a,
+                          :teacher_user => teacher_zhang
+
+    course_3d.add_teacher :semester     => semester_2012_a,
+                          :teacher_user => teacher_wang
+
+    team_test.add_course :semester     => semester_2012_a,
+                         :course       => course_3d,
+                         :teacher_user => teacher_zhang
+
+    expect {
+      team_test.add_course :semester     => semester_2012_a,
+                           :course       => course_3d,
+                           :teacher_user => teacher_li
+    }.to raise_error(Course::InvalidCourseParams)
+
+    student_user = team_test.students.first
+
+    courses = student_user.get_courses :semester => semester_2012_a
+    courses.length.should == 1
+    courses[0].should == course_3d
+
+    teachers = student_user.get_teachers :semester => semester_2012_a
+    teachers.length.should == 1
+    teachers.include?(teacher_zhang).should == true
+  end
+
+  it '不能够给一个学生同时指定一个课的不同老师' do
+    course_3d.add_teacher :semester     => semester_2012_a,
+                          :teacher_user => teacher_zhang
+
+    course_3d.add_teacher :semester     => semester_2012_a,
+                          :teacher_user => teacher_wang
+
+    student_song.add_course :semester     => semester_2012_a,
+                            :course       => course_3d,
+                            :teacher_user => teacher_zhang
+
+    expect {
+      student_song.add_course :semester     => semester_2012_a,
+                              :course       => course_3d,
+                              :teacher_user => teacher_wang
+    }.to raise_error(Course::AssignMultiTeachersOfSameCourse)
+  end
 end
