@@ -66,6 +66,16 @@ class Course < ActiveRecord::Base
       where("course_teachers.course_id = #{self.id} and course_teachers.semester_value = '#{options[:semester].value}'")
   end
 
+  def set_course_time(options)
+    raise InvalidCourseParams.new if options[:semester].blank? || options[:teacher_user].blank? || options[:time].blank?
+
+    course_teacher = CourseTeacher.get_by_params(self, options[:semester], options[:teacher_user])
+    raise InvalidCourseParams.new if course_teacher.blank?
+
+    course_teacher.time_expression_array = options[:time]
+    course_teacher.save
+  end
+
   module UserMethods
     def add_course(options)
       raise InvalidCourseParams.new if options[:course].blank? || options[:semester].blank? || options[:teacher_user].blank?
@@ -97,6 +107,23 @@ class Course < ActiveRecord::Base
     def get_teachers(options)
       User.joins("inner join course_student_assigns on course_student_assigns.teacher_user_id = users.id").
         where("course_student_assigns.semester_value = '#{options[:semester].value}' and course_student_assigns.student_user_id = #{self.id}")
+    end
+
+    def get_course_time(options)
+      raise InvalidCourseParams.new if options[:semester].blank? || options[:teacher_user].blank? || options[:course].blank?
+
+      course_teacher = CourseTeacher.get_by_params(options[:course], options[:semester], options[:teacher_user])
+      course_teacher.time_expression_hash
+    end
+
+    def get_all_course_time(options)
+      raise InvalidCourseParams.new if options[:semester].blank?
+      course_teachers = CourseTeacher.get_all_by_semester(options[:semester])
+      value = {}
+      course_teachers.each do |course_teacher|
+        value[course_teacher.course.name] = course_teacher.time_expression_hash
+      end
+      value
     end
   end
 
