@@ -83,9 +83,9 @@ ActiveRecord::Base.transaction do
     team = Team.create(:name => "2012级#{count}班",
                        :cid => "cid-#{count}")
 
-    team.student_users = student_users[(count)*30, 30]
+    team.student_users = student_users[(count-1)*30, 30]
 
-    puts ">>>>>>>> 创建班级#{team.name}"
+    puts ">>>>>>>> 创建班级#{team.name}，共#{team.student_users.count}名学生"
   end
 
 end
