@@ -54,6 +54,7 @@ ActiveRecord::Base.transaction do
   courses.reduce(1) do |count, name|
     course = Course.create(:name => name,
                            :cid => "cid-#{count}")
+
     puts ">>>>>>>> 创建课程《#{course.name}》"
 
     teachers = teacher_users[(count-1)*3, 3].each do |teacher|
@@ -64,8 +65,17 @@ ActiveRecord::Base.transaction do
 
     puts ">>>>>>>> 为#{semester.value}《#{course.name}》分配#{teachers.map(&:real_name).join('，')}几位老师"
 
-    teachers.reduce(0) do |t_count, teacher|
-      student_users[(count-1)*5 + t_count*5, 5].each do |student|
+    count + 1
+  end
+
+  student_chunks = student_users.shuffle.each_slice(50)
+
+  Course.all.each do |course|
+    teachers  = course.get_teachers :semester => semester
+
+    student_chunks.reduce(0) do |index, students|
+      teacher = teachers[index]
+      students.each do |student|
         student.add_course(:semester => semester,
                            :course => course,
                            :teacher_user => teacher)
@@ -73,10 +83,9 @@ ActiveRecord::Base.transaction do
 
       puts ">>>>>>>> 为教授#{semester.value}《#{course.name}》的#{teacher.real_name}老师分配上课学生"
 
-      t_count + 1
+      index + 1
     end
 
-    count + 1
   end
 
   1.upto(5).each do |count|

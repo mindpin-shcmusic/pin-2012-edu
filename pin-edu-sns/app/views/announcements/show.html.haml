@@ -1,4 +1,13 @@
 .page-announcement-show
   %h1.title= @announcement.title
   .content= @announcement.content
-  .announce-link= link_to '发布通知', announce_announcement_path(@announcement), :method => :put
+  .receivers
+    - creator = @announcement.creator
+    
+    = form_tag announce_announcement_path(@announcement), :method => :put do
+      - creator.courses.each do |course|
+        = check_box_tag 'course_ids[]', course.id
+        = course.name
+        = check_box_tag 'course_ids[]', 4
+        = 'OoooOOOooo'
+      = submit_tag '发布通知'

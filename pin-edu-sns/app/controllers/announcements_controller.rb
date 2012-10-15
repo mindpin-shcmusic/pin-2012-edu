@@ -5,6 +5,10 @@ class AnnouncementsController < ApplicationController
     @announcement = current_user.created_announcements.build
   end
 
+  def index
+    @announcements = current_user.received_announcements
+  end
+
   def create
     @announcement = current_user.created_announcements.build params[:announcement]
     return redirect_to @announcement if @announcement.save
