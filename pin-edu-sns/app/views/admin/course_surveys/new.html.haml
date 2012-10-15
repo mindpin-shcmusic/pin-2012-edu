@@ -11,6 +11,15 @@
     .field.need
       %label 标题
       =f.text_field :title
+
+
+    .field.need
+      %label 调查类型
+      =f.radio_button :kind, 'A'
+      %span  课程调查1
+
+      =f.radio_button :kind, 'B'
+      %span  课程调查2
      
 
     .field
