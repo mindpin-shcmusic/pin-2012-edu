@@ -7,23 +7,12 @@
 .page-admin-form
   = flash_info
   = form_for [:admin,@course] do |f|
-    - teacher_hash = Teacher.all.map{|teacher|[teacher.real_name, teacher.user_id]}.unshift(['不指定',''])
-
     .field.need
       %label 名字
       =f.text_field :name
     .field.need
       %label 课程号
       =f.text_field :cid
-    .field
-      %label 开课院系
-      =f.text_field :department
-    .field
-      %label 上课地点
-      =f.text_field :location
-    .field
-      %label 教师
-      = f.select(:teacher_user_id, teacher_hash)
     .field
       %label 备注
       =f.text_area :desc

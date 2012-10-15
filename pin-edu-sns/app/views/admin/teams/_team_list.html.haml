@@ -1,19 +1,11 @@
 .attrs
   .t2 名称
   .t2 班级序号
-  .t2 教师
 
 - teams.each do |team|
   .model.team
     .t2= team.name
     .t2= team.cid
-    .t2
-      - if team.teacher_user.blank?
-        %span.c 未指定
-      - else
-        .ava= avatar User.new, :mini
-        %span.c= team.teacher_user.teacher.real_name
-
     .ops
       - remove_url = admin_team_path(team)
       %a.remove{:href=>'javascript:;', :'data-url'=>remove_url} 删除

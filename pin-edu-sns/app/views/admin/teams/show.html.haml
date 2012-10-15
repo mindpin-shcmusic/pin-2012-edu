@@ -11,12 +11,6 @@
   .field.cid
     %label 班级编号
     .v= @team.cid
-  .field.teacher
-    %label 教师
-    - if @team.teacher_user.blank?
-      .v.quiet 未指定
-    - else
-      .v= @team.teacher_user.teacher.real_name
 
 - students = @team.students
 .page-admin-model-show
