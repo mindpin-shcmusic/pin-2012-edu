@@ -25,48 +25,80 @@
 
       .field
         %span 上下课
+        
         %span 准时
-        = survey_count[:on_off_class]
+        = survey_count[:on_off_class_a]
+
+        %span 基本准时
+        = survey_count[:on_off_class_b]
+
+        %span 不准时
+        = survey_count[:on_off_class_c]
+
+
 
       .field
         %span 考勤制度
+ 
         %span 每次点名
-        = survey_count[:checking_institution]
+        = survey_count[:checking_institution_a]
+
+        %span 有时点名
+        = survey_count[:checking_institution_b]
+
+        %span 不点名
+        = survey_count[:checking_institution_c]
+
+
 
       .field
-        %span 课堂秩序
+        %span 课堂秩序        
+
         %span 能控制
-        = survey_count[:class_order]
+        = survey_count[:class_order_a]
+
+        %span 基本控制
+        = survey_count[:class_order_b]
+
+        %span 不能控制
+        = survey_count[:class_order_c]
+
 
       .field
         %span 备课情况
         %span 充分
-        = survey_count[:prepare_situation_total_enough]
+        = survey_count[:prepare_situation_a]
 
         %span 较为充分
-        = survey_count[:prepare_situation_general_enough]
+        = survey_count[:prepare_situation_b]
 
         %span 不够充分
-        = survey_count[:prepare_situation_not_enough]
+        = survey_count[:prepare_situation_c]
 
 
       .field
         %span 教书育人
         %span 好
-        = survey_count[:teaching_level_good]
+        = survey_count[:teaching_level_a]
 
         %span 一般
-        = survey_count[:teaching_level_general]
+        = survey_count[:teaching_level_b]
+
+        %span 较差
+        = survey_count[:teaching_level_c]
 
 
 
       .field
         %span 教师师德
         %span 好
-        = survey_count[:teacher_morality_good]
+        = survey_count[:teacher_morality_a]
 
         %span 较好
-        = survey_count[:teacher_morality_better]
+        = survey_count[:teacher_morality_b]
+
+        %span 较差
+        = survey_count[:teacher_morality_c]
 
 
     .block
@@ -76,31 +108,37 @@
       .field
         %span 授课内容
         %span 丰富扣题
-        = survey_count[:class_content_rich_relation]
+        = survey_count[:class_content_a]
 
         %span 基本扣题
-        = survey_count[:class_content_general_relation]
+        = survey_count[:class_content_b]
+
+        %span 不扣主题
+        = survey_count[:class_content_c]
 
 
       .field
         %span 知识性
         %span 强
-        = survey_count[:knowledge_level_rich]
+        = survey_count[:knowledge_level_a]
 
         %span 较强
-        = survey_count[:knowledge_level_richer]
+        = survey_count[:knowledge_level_b]
+
+        %span 较差
+        = survey_count[:knowledge_level_c]
 
 
       .field
         %span 教学进度
         %span 合理
-        = survey_count[:teaching_schedule_reasonable]
+        = survey_count[:teaching_schedule_a]
 
         %span 基本合理
-        = survey_count[:teaching_schedule_basic_reasonable]
+        = survey_count[:teaching_schedule_b]
 
         %span 不合理
-        = survey_count[:teaching_schedule_not_reasonable]
+        = survey_count[:teaching_schedule_c]
 
 
     .block
@@ -109,47 +147,59 @@
       .field
         %span 教学互动
         %span 好
-        = survey_count[:teaching_interact_good]
+        = survey_count[:teaching_interact_a]
 
         %span 较好
-        = survey_count[:teaching_interact_better]
+        = survey_count[:teaching_interact_b]
+
+        %span 较差
+        = survey_count[:teaching_interact_c]
 
 
       .field
         %span 板书质量
         %span 工整
-        = survey_count[:board_writing_quality_good]
+        = survey_count[:board_writing_quality_a]
 
         %span 一般
-        = survey_count[:board_writing_quality_general]
+        = survey_count[:board_writing_quality_b]
+
+        %span 较差
+        = survey_count[:board_writing_quality_c]
 
 
       .field
         %span 课件
         %span 有
-        = survey_count[:has_courseware_yes]
+        = survey_count[:has_courseware_a]
 
         %span 没有
-        = survey_count[:has_courseware_no]
+        = survey_count[:has_courseware_b]
 
 
       .field
         %span 课件质量
         %span 好
-        = survey_count[:courseware_quality_good]
+        = survey_count[:courseware_quality_a]
 
         %span 一般
-        = survey_count[:courseware_quality_general]
+        = survey_count[:courseware_quality_b]
+
+        %span 较差
+        = survey_count[:courseware_quality_c]
 
 
 
       .field
         %span 语言表达
         %span 思路清晰
-        = survey_count[:speak_level_good]
+        = survey_count[:speak_level_a]
 
         %span 一般
-        = survey_count[:speak_level_general]
+        = survey_count[:speak_level_b]
+
+        %span 较差
+        = survey_count[:speak_level_c]
 
 
     .block
@@ -158,35 +208,39 @@
       .field
         %span 学习收获
         %span 大
-        = survey_count[:study_result_much]
+        = survey_count[:study_result_a]
 
         %span 一般
-        = survey_count[:study_result_little]
+        = survey_count[:study_result_b]
 
         %span 没有
-        = survey_count[:study_result_none]
+        = survey_count[:study_result_c]
 
 
 
       .field
         %span 授课效果
         %span 好
-        = survey_count[:teaching_result_good]
+        = survey_count[:teaching_result_a]
 
         %span 一般
-        = survey_count[:teaching_result_general]
+        = survey_count[:teaching_result_b]
 
         %span 较差
-        = survey_count[:teaching_result_bad]
+        = survey_count[:teaching_result_c]
 
 
       .field
         %span 原因分析
         %span 教师原因
-        = survey_count[:result_reason_teacher]
+        = survey_count[:result_reason_a]
+
+        %span 课堂纪律原因
+        = survey_count[:result_reason_b]
+
 
         %span 学生主观原因
-        = survey_count[:result_reason_student]
+        = survey_count[:result_reason_c]
 
     .block
       %label 建议和意见
