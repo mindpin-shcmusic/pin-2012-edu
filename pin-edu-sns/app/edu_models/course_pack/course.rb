@@ -88,6 +88,12 @@ class Course < ActiveRecord::Base
     course_teacher.save
   end
 
+  def get_semesters
+    CourseTeacher.where(:course_id=>self.id).group(:semester_value).map do |course_teacher|
+      course_teacher.semester
+    end
+  end
+
   module UserMethods
     def add_course(options)
       raise InvalidCourseParams.new if options[:course].blank? || options[:semester].blank? || options[:teacher_user].blank?

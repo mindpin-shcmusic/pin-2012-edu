@@ -14,7 +14,11 @@ class CourseTeacher < ActiveRecord::Base
   end
 
   def semester
-    @semester
+    @semester || (
+      if !self.semester_value.blank?
+        Semester.get_by_value(self.semester_value)
+      end
+    )
   end
 
   # 格式
