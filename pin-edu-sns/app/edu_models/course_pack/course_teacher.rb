@@ -17,12 +17,43 @@ class CourseTeacher < ActiveRecord::Base
     @semester
   end
 
+  # 格式
+  # [
+  #   {:weekday => weekday, :number => [hour,hour2]},
+  #   {:weekday => weekday, :number => [hour]}
+  # ]
+  def time_expression_array
+    JSON.parse(self.time_expression || "[]")
+  end
+
+  def time_expression_array=(time_expression_array)
+    self.time_expression = time_expression_array.to_json
+  end
+
+  #{
+  # :weekday1 => numbers,
+  # :weekday2 => numbers
+  # }
+  def time_expression_hash
+    value = {}
+    self.time_expression_array.each do |item|
+      value[item["weekday"]] = item["number"]
+    end
+    value
+  end
+
   def self.get_by_params(course, semester, teacher_user)
     self.where(
       :course_id => course.id,
       :semester_value => semester.value,
       :teacher_user_id => teacher_user.id
     ).first
+  end
+
+  def self.get_all_by_semester(semester)
+    self.where(
+      :semester_value => semester.value
+    )
   end
 
   module UserMethods
