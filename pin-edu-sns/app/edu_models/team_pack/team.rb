@@ -6,11 +6,6 @@ class Team < ActiveRecord::Base
            :through => :team_students,
            :source  => :student_user
 
-  belongs_to :teaching_plan
-
-  has_many :course_teachers, :through => :course_teacher_teams
-  has_many :courses, :through => :course_teachers
-
   validates :name, :presence => true
   validates :cid, :uniqueness => { :if => Proc.new { |team| !team.cid.blank? } }
 
