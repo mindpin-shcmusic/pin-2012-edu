@@ -104,6 +104,25 @@ describe Course do
     teachers.length.should == 2
     teachers.include?(teacher_zhang).should == true
     teachers.include?(teacher_li).should == true
+
+    # 获取某个课程在某个学期下的所有上课学生
+    student_wu.add_course  :semester     => semester_2012_a,
+                           :course       => course_3d,
+                           :teacher_user => teacher_zhang
+
+    student_men.add_course :semester     => semester_2012_a,
+                           :course       => course_3d,
+                           :teacher_user => teacher_zhang
+
+    students = course_3d.get_students :semester => semester_2012_a
+    students.include?(student_song).should == true
+    students.include?(student_wu).should == true
+    students.include?(student_men).should == true
+
+    expect {
+      # 不传参数则抛异常
+      students = course_3d.get_students({})
+    }.to raise_error(Course::InvalidCourseParams)
   end
 
   let(:teaching_plan_design)   {FactoryGirl.create :teaching_plan}
