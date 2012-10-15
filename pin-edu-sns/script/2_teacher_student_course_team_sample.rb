@@ -6,45 +6,69 @@ students = ["陈芳芳", "丁云燕", "李翠", "刘微", "朱康敏", "张毅",
 teachers = ["蔡嗣经", "陈广平", "高永涛", "胡乃联", "姜福兴", "李克庆", "李仲学", "刘胜富", "明士祥", "宋卫东", "吴爱祥", "谢玉玲", "徐九华", "杨鹏", "李翠平", "刘保顺", "吕文生", "毛市龙", "王洪江", "王进强", "于晓晋", "张树泉", "韩斌", "金爱兵", "杜建华", "李国清", "晏剑斌", "王存文", "尹升华", "赵怡晴", "张会林", "汪旭光", "蔡美峰", "高谦", "龚敏", "纪洪广", "李长洪", "牟在根", "乔兰", "璩世杰", "宋波", "谭卓英", "王德胜"]
 
 ActiveRecord::Base.transaction do
-students.reduce(1) do |count, name|
-  user = User.create(:name => "student#{count}",
-                     :email => "student#{count}@edu.dev",
-                     :password => '1234')
+  semester = Semester.get(2012, :B)
 
-  user.set_role :student
+  admin = User.create(:name => 'admin',
+                      :email => 'admin@edu.dev',
+                      :password => '1234')
 
-  student = Student.create(:real_name => name,
-                           :sid => "sid-#{count}",
-                           :user => user)
+  admin.set_role :admin
 
-  if user.errors.any? || student.errors.any?
-    return puts "user errors: user.errors.messages; student errors: student.errors.messages"
+  puts ">>>>>>>> 管理员"
+
+  students.reduce(1) do |count, name|
+    user = User.create(:name => "student#{count}",
+                       :email => "student#{count}@edu.dev",
+                       :password => '1234')
+
+    user.set_role :student
+
+    student = Student.create(:real_name => name,
+                             :sid => "sid-#{count}",
+                             :user => user)
+
+    puts ">>>>>>>> 学生: #{student.real_name}; sid: #{student.sid}"
+
+    count + 1
   end
 
-  puts ">>>>>>>> 学生: #{student.real_name}; sid: #{student.sid}"
+  teachers.reduce(1) do |count, name|
+    user = User.create(:name => "teacher#{count}",
+                       :email => "teacher#{count}@edu.dev",
+                       :password => '1234')
 
-  count + 1
-end
+    user.set_role :teacher
 
-teachers.reduce(1) do |count, name|
-  user = User.create(:name => "teacher#{count}",
-                     :email => "teacher#{count}@edu.dev",
-                     :password => '1234')
+    teacher = Teacher.create(:real_name => name,
+                             :tid => "tid-#{count}",
+                             :user => user)
 
-  user.set_role :teacher
+    puts ">>>>>>>> 老师: #{teacher.real_name}; tid: #{teacher.tid}"
 
-  teacher = Teacher.create(:real_name => name,
-                           :tid => "tid-#{count}",
-                           :user => user)
-
-  if user.errors.any? || teacher.errors.any?
-    return puts "user errors: user.errors.messages; teacher errors: student.errors.messages"
+    count + 1
   end
 
-  puts ">>>>>>>> 老师: #{teacher.real_name}; tid: #{teacher.tid}"
+  # courses.reduce(1) do |count, name|
+  #   course = Course.create(:name => name,
+  #                          :cid => "cid-#{count}")
 
-  count + 1
-end
+  #   teachers = Teacher.all[(count-1)*3, 3].each do |teacher|
+  #     course.add_teacher(:semester => semester,
+  #                        :teacher_user => teacher.user)
+  #     teacher
+  #   end
 
-puts "学生数: #{students.count}; 老师数: #{teachers.count}"
+  #   teachers.each do |teacher|
+  #     Student.all[(count-1)*5, 5].each do |student|
+  #       student.user.add_course(:semester => semester,
+  #                               :course => course,
+  #                               :teacher_user => teacher.user)
+  #     end
+
+  #   end
+
+  #   count + 1
+  # end
+
+  puts "学生数: #{students.count}; 老师数: #{teachers.count}"
 end
