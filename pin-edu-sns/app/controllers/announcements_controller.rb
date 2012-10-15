@@ -25,7 +25,7 @@ class AnnouncementsController < ApplicationController
 
   def announce
     @announcement = Announcement.find(params[:id])
-    @announcement.announce_to(params[:rule] || {})
+    @announcement.announce_to(:courses => params[:course_ids] || [])
     redirect_to @announcement
   end
 

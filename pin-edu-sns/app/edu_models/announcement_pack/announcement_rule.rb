@@ -11,10 +11,10 @@ class AnnouncementRule < ActiveRecord::Base
 
   def build_expression(options = {})
     options.assert_valid_keys :courses
-    options[:courses] ||= self.creator.courses.map(&:id) if self.creator.is_teacher?
+    options[:courses] ||= []
     self.expression = options.to_json
   end
-
+  
   def expression
     exp = read_attribute(:expression)
     exp && JSON.parse(exp, :symbolize_names => true).reduce({}) do |sanitized, (k, v)|
@@ -53,7 +53,7 @@ private
 
   module AnnouncementMethods
     def self.included(base)
-      base.has_one :homework_assign_rule
+      base.has_one :announcement_rule
       base.send :include, InstanceMethods
     end
 
