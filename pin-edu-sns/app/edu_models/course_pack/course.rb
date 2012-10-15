@@ -66,6 +66,18 @@ class Course < ActiveRecord::Base
       where("course_teachers.course_id = #{self.id} and course_teachers.semester_value = '#{options[:semester].value}'")
   end
 
+  def get_students(options)
+    raise InvalidCourseParams.new if options[:semester].blank?
+
+    if options[:teacher_user].blank?
+      User.joins("inner join course_student_assigns on course_student_assigns.student_user_id = users.id").
+        where("course_student_assigns.course_id = #{self.id} and course_student_assigns.semester_value = '#{options[:semester].value}'")
+    else
+      User.joins("inner join course_student_assigns on course_student_assigns.student_user_id = users.id").
+        where("course_student_assigns.teacher_user_id = #{options[:teacher_user].id} and course_student_assigns.course_id = #{self.id} and course_student_assigns.semester_value = '#{options[:semester].value}'")
+    end
+  end
+
   def set_course_time(options)
     raise InvalidCourseParams.new if options[:semester].blank? || options[:teacher_user].blank? || options[:time].blank?
 
