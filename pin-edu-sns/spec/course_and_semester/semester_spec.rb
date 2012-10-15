@@ -106,7 +106,6 @@ describe Course do
     teachers.include?(teacher_li).should == true
   end
 
-
   let(:teaching_plan_design)   {FactoryGirl.create :teaching_plan}
   let(:teaching_plan_computer) {FactoryGirl.create :teaching_plan}
 
@@ -193,5 +192,32 @@ describe Course do
                               :course       => course_3d,
                               :teacher_user => teacher_wang
     }.to raise_error(Course::AssignMultiTeachersOfSameCourse)
+  end
+
+  it '可以给多个学生指定一个课的同一个老师的' do
+    # kaid在 2012.10.15 报告的错误。
+    # 此处会抛出意外的异常，但是不应该抛
+
+    course_3d.add_teacher :semester     => semester_2012_a,
+                          :teacher_user => teacher_zhang
+
+    course_3d.add_teacher :semester     => semester_2012_a,
+                          :teacher_user => teacher_wang
+
+    student_song.add_course :semester     => semester_2012_a,
+                            :course       => course_3d,
+                            :teacher_user => teacher_zhang
+
+    student_wu.add_course :semester     => semester_2012_a,
+                          :course       => course_3d,
+                          :teacher_user => teacher_zhang
+
+    courses = student_song.get_courses :semester => semester_2012_a
+    courses.length.should == 1
+    courses[0].should == course_3d
+
+    courses = student_wu.get_courses :semester => semester_2012_a
+    courses.length.should == 1
+    courses[0].should == course_3d
   end
 end
