@@ -53,12 +53,12 @@ class QuestionsController < ApplicationController
 
   def update
     if @question.update_attributes(params[:question])
-      return redirect_to :back
+      return redirect_to "/questions"
     end
 
     error = @question.errors.first
     flash[:error] = error[1]
-    redirect_to "/questions/#{@question.id}/edit"
+    redirect_to "/questions"
   end
 
 

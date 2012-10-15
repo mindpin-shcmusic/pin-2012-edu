@@ -10,9 +10,9 @@
 .field.need
   %label 选择老师
   - # current_user.courses.map {|course| course.teacher_users}.flatten.uniq.each do |teacher|
-  - Teacher.all.each do |teacher|
-    = f.radio_button :teacher_user_id, teacher.user_id
-    = teacher.real_name
+  - current_user.get_teachers(:semester => Semester.now).each do |user|
+    = f.radio_button :teacher_user_id, user._id
+    = user.real_name
 
 
 .field
