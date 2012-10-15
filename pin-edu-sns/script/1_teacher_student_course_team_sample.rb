@@ -54,6 +54,7 @@ ActiveRecord::Base.transaction do
   courses.reduce(1) do |count, name|
     course = Course.create(:name => name,
                            :cid => "cid-#{count}")
+    puts ">>>>>>>> 创建课程《#{course.name}》"
 
     teachers = teacher_users[(count-1)*3, 3].each do |teacher|
       course.add_teacher(:semester => semester,
@@ -61,13 +62,16 @@ ActiveRecord::Base.transaction do
       teacher
     end
 
+    puts ">>>>>>>> 为#{semester.value}《#{course.name}》分配#{teachers.map(&:real_name).join('，')}几位老师"
+
     teachers.reduce(0) do |t_count, teacher|
       student_users[(count-1)*5 + t_count*5, 5].each do |student|
-        puts ">>>>>>>> #{student.real_name} #{teacher.real_name} #{course.name} #{semester} #{(count-1)*5 + t_count*5}"
         student.add_course(:semester => semester,
                            :course => course,
                            :teacher_user => teacher)
       end
+
+      puts ">>>>>>>> 为教授#{semester.value}《#{course.name}》的#{teacher.real_name}老师分配上课学生"
 
       t_count + 1
     end
@@ -80,7 +84,8 @@ ActiveRecord::Base.transaction do
                        :cid => "cid-#{count}")
 
     team.student_users = student_users[(count)*30, 30]
+
+    puts ">>>>>>>> 创建班级#{team.name}"
   end
 
-  puts "学生数: #{students.count}; 老师数: #{teachers.count}"
 end
