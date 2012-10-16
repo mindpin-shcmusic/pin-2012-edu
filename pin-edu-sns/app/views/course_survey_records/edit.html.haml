@@ -6,6 +6,17 @@
 
 .page-admin-form
   = flash_info
-  = form_for @course_survey_record do |f|
+
+
+  :ruby
+    kind = params[:kind]
+    case kind
+    when '1'
+      form = 'form_1'
+    when '2'
+      form = 'form_2'
+    end
+
+  = form_for @course_survey_record, :url => {:controller => 'course_survey_records', :action => 'update', :kind => kind} do |f|
  
-    =render 'form', :f => f
+    =render form, :f => f

@@ -24,7 +24,13 @@ class CourseSurveyRecord < ActiveRecord::Base
     module InstanceMethods
       def has_surveyed?(course_survey)
         return false if course_survey.blank?
-        CourseSurveyRecord.where(:student_user_id => self.id, :course_survey_id => course_survey.id).exists?
+
+        case course_survey.kind
+        when '1'
+          CourseSurveyRecord.where(:student_user_id => self.id, :course_survey_id => course_survey.id).exists?
+        when '2'
+          CourseSurveyEsRecord.where(:student_user_id => self.id, :course_survey_id => course_survey.id).exists?
+        end
       end
     end
   end

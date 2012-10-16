@@ -201,5 +201,50 @@ module CourseSurveyHelper
     }
   end
 
+  def es_each_count(course_survey)
+    attend_class_a, attend_class_b, attend_class_c = 0, 0, 0
+    interesting_level_a, interesting_level_b, interesting_level_c, interesting_level_d, interesting_level_e = 0, 0, 0, 0, 0
+    understand_level_a, understand_level_b, understand_level_c, understand_level_d, understand_level_e = 0, 0, 0, 0, 0
+
+    records = course_survey.course_survey_es_records
+
+    records_group = records.group_by(&:attend_class)
+    attend_class_a = records_group['A'].length if !records_group['A'].nil?
+    attend_class_b = records_group['B'].length if !records_group['B'].nil?
+    attend_class_c = records_group['C'].length if !records_group['C'].nil?
+
+    records_group = records.group_by(&:interesting_level)
+    interesting_level_a = records_group['A'].length if !records_group['A'].nil?
+    interesting_level_b = records_group['B'].length if !records_group['B'].nil?
+    interesting_level_c = records_group['C'].length if !records_group['C'].nil?
+    interesting_level_d = records_group['D'].length if !records_group['D'].nil?
+    interesting_level_e = records_group['E'].length if !records_group['E'].nil?
+
+    records_group = records.group_by(&:understand_level)
+    understand_level_a = records_group['A'].length if !records_group['A'].nil?
+    understand_level_b = records_group['B'].length if !records_group['B'].nil?
+    understand_level_c = records_group['C'].length if !records_group['C'].nil?
+    understand_level_d = records_group['D'].length if !records_group['D'].nil?
+    understand_level_e = records_group['E'].length if !records_group['E'].nil?
+
+    {
+      :attend_class_a => attend_class_a,
+      :attend_class_b => attend_class_b,
+      :attend_class_c => attend_class_c,
+
+      :interesting_level_a => interesting_level_a,
+      :interesting_level_b => interesting_level_b,
+      :interesting_level_c => interesting_level_c,
+      :interesting_level_d => interesting_level_d,
+      :interesting_level_e => interesting_level_e,
+
+      :understand_level_a => understand_level_a,
+      :understand_level_b => understand_level_b,
+      :understand_level_c => understand_level_c,
+      :understand_level_d => understand_level_d,
+      :understand_level_e => understand_level_e
+    }
+  end
+
 
 end

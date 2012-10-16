@@ -9,14 +9,7 @@ class CourseSurveysController < ApplicationController
 
   def index
     kind = params[:kind]
-    case kind
-    when '1'
-      @course_surveys = CourseSurvey.where(:kind => kind).paginate(:page => params[:page])
-    when '2'
-      @course_surveys = CourseSurvey.where(:kind => kind).paginate(:page => params[:page])
-    else
-      @course_surveys = CourseSurvey.paginate(:page => params[:page])
-    end    
+    @course_surveys = CourseSurvey.with_kind(kind).paginate(:page => params[:page])  
   end
 
 end
