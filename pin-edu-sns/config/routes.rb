@@ -97,6 +97,8 @@ MindpinEduSns::Application.routes.draw do
     end
 
     resources :course_surveys
+
+    resources :announcements
     
     root :to=>"index#index"
   end
@@ -256,6 +258,7 @@ MindpinEduSns::Application.routes.draw do
 
     member do
       put :announce
+      put :read
     end
   end
 
