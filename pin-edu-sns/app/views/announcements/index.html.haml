@@ -1,0 +1,6 @@
+.page-announcements
+  = link_to '创建通知', new_announcement_path
+  = link_to '未读通知', received_announcements_path
+  - @announcements.each do |announcement|
+    %h1.title= announcement.title
+    .content= announcement.content

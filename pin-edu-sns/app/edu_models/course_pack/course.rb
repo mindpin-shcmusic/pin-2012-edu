@@ -68,8 +68,14 @@ class Course < ActiveRecord::Base
 
   def get_students(options)
     raise InvalidCourseParams.new if options[:semester].blank?
-    User.joins("inner join course_student_assigns on course_student_assigns.student_user_id = users.id").
-      where("course_student_assigns.course_id = #{self.id} and course_student_assigns.semester_value = '#{options[:semester].value}'")
+
+    if options[:teacher_user].blank?
+      User.joins("inner join course_student_assigns on course_student_assigns.student_user_id = users.id").
+        where("course_student_assigns.course_id = #{self.id} and course_student_assigns.semester_value = '#{options[:semester].value}'")
+    else
+      User.joins("inner join course_student_assigns on course_student_assigns.student_user_id = users.id").
+        where("course_student_assigns.teacher_user_id = #{options[:teacher_user].id} and course_student_assigns.course_id = #{self.id} and course_student_assigns.semester_value = '#{options[:semester].value}'")
+    end
   end
 
   def set_course_time(options)
@@ -80,6 +86,12 @@ class Course < ActiveRecord::Base
 
     course_teacher.time_expression_array = options[:time]
     course_teacher.save
+  end
+
+  def get_semesters
+    CourseTeacher.where(:course_id=>self.id).group(:semester_value).map do |course_teacher|
+      course_teacher.semester
+    end
   end
 
   module UserMethods
