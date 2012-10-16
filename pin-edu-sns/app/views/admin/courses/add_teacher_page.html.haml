@@ -7,7 +7,7 @@
 
 - selected_teacher_users = @course.get_teachers(:semester=>Semester.now)
 - selected_teachers = selected_teacher_users.map{|user|user.teacher}
-- teachers = Teacher.all - [selected_teachers]
+- teachers = Teacher.all - selected_teachers
 .page-admin-course-add-teacher
   = form_tag "/admin/courses/#{@course.id}/add_teacher", :method=>:put do
     - teachers.each do |teacher|

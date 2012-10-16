@@ -4,7 +4,10 @@
 
 - hbreadcrumb '基础数据管理', '/admin'
 - hbreadcrumb '课程维护', '/admin/courses'
-- hbreadcrumb course.name
+- hbreadcrumb course.name, "/admin/courses/#{course.id}"
+- hbreadcrumb semester.value, "/admin/courses/#{course.id}/teachers?semester=#{semester.value}"
+- hbreadcrumb @course_teacher.teacher_user.real_name,"/admin/courses/#{course.id}/teachers?semester=#{semester.value}"
+- hbreadcrumb "分配学生"
 
 - selected_student_users = course.get_students :semester => semester
 - selected_students = selected_student_users.map{|user|user.student}
