@@ -49,6 +49,8 @@ MindpinEduSns::Application.routes.draw do
 
     resources :courses do
       member do
+        get  :add_teacher_page
+        put  :add_teacher
         get  :select_students
         put  :set_students
         get  :upload_image_page
@@ -84,6 +86,8 @@ MindpinEduSns::Application.routes.draw do
 
     resources :course_teachers do
       member do
+        get :select_students_page
+        put :select_students
         get :edit_time_expression
         get :show_time_expression
         put :update_time_expression

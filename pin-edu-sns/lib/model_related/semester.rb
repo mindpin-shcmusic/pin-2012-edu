@@ -39,4 +39,32 @@ class Semester
   def ==(other)
     self.value == other.value
   end
+
+  def prev
+    if @section == :B
+      self.class.get(@year,:A)
+    else
+      self.class.get(@year.to_i-1,:B)
+    end
+  end
+
+  def next
+    if @section == :B
+      self.class.get(@year.to_i+1,:A)
+    else
+      self.class.get(@year,:B)
+    end
+  end
+
+  def self.get_nav_array
+    now_semester = self.now
+    now_semester_prev = now_semester.prev
+    now_semester_prev_prev = now_semester_prev.prev
+
+    [
+      now_semester_prev_prev,
+      now_semester_prev,
+      now_semester
+    ]
+  end
 end
