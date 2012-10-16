@@ -110,9 +110,6 @@ class Admin::CoursesController < ApplicationController
     render :text => '视频已删除'
   end
 
-  def teachers
-  end
-
   def add_teacher_page
   end
 
@@ -125,7 +122,7 @@ class Admin::CoursesController < ApplicationController
         :teacher_user => user
       )
     end
-    redirect_to "/admin/courses/#{@course.id}/teachers"
+    redirect_to "/admin/courses/#{@course.id}"
   end
 
 end

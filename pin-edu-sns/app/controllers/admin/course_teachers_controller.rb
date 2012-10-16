@@ -57,7 +57,7 @@ class Admin::CourseTeachersController < ApplicationController
         :teacher_user => @course_teacher.teacher_user
       )
     end
-    redirect_to "/admin/courses/#{@course_teacher.course.id}/teachers"
+    redirect_to "/admin/courses/#{@course_teacher.course.id}"
   end
 
 end

@@ -51,7 +51,6 @@ MindpinEduSns::Application.routes.draw do
       member do
         get  :add_teacher_page
         put  :add_teacher
-        get  :teachers
         get  :select_students
         put  :set_students
         get  :upload_image_page
