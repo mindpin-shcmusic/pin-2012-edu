@@ -1,0 +1,73 @@
+.field
+  %span 上课能够集中精力认真参与吗? (积极地记笔记，提问，参与讨论等)
+  
+  %span 完全能够
+  = survey_count[:attend_class_a]
+
+  %span 做到一部分
+  = survey_count[:attend_class_b]
+
+  %span 没能够
+  = survey_count[:attend_class_c]
+
+
+.field
+  %label 阐述选择上述答案的理由
+  - course_survey_records.each do |record|
+    .suggestion= record.attend_class_reason
+
+
+.field
+  %span [内容・兴趣条目] 对上课的内容感兴趣吗
+  
+  %span 非常感兴趣
+  = survey_count[:interesting_level_a]
+
+  %span 感兴趣
+  = survey_count[:interesting_level_b]
+
+  %span 不确定
+  = survey_count[:interesting_level_c]
+
+  %span 不怎么感兴趣
+  = survey_count[:interesting_level_d]
+
+  %span 不感兴趣
+  = survey_count[:interesting_level_e]
+
+
+.field
+  %label [内容・印象条目] 对自己来说，印象深刻的内容、自己收获的东西，其关键词是什么
+  - course_survey_records.each do |record|
+    .suggestion= record.keywords
+
+
+.field
+  %span [内容・理解条目] 能够理解上课的内容吗
+  
+  %span 非常感兴趣
+  = survey_count[:understand_level_a]
+
+  %span 感兴趣
+  = survey_count[:understand_level_b]
+
+  %span 不确定
+  = survey_count[:understand_level_c]
+
+  %span 不怎么感兴趣
+  = survey_count[:understand_level_d]
+
+  %span 不感兴趣
+  = survey_count[:understand_level_e]
+
+
+.field
+  %label [内容・疑问条目] 觉得难以理解的点・疑问点是什么
+  - course_survey_records.each do |record|
+    .suggestion= record.student_question
+
+
+.field
+  %label [内容・疑问条目] 觉得难以理解的点・疑问点是什么
+  - course_survey_records.each do |record|
+    .suggestion= record.student_response

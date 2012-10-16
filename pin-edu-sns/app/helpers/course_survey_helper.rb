@@ -3,288 +3,246 @@ module CourseSurveyHelper
   def each_count(course_survey)
 
 
-    on_off_class = 0
-    checking_institution = 0
-    class_order = 0
+    on_off_class_a, on_off_class_b, on_off_class_c  = 0, 0, 0
+    checking_institution_a, checking_institution_b, checking_institution_c = 0, 0, 0
+    class_order_a, class_order_b, class_order_c = 0, 0, 0
 
-    prepare_situation_total_enough, prepare_situation_general_enough, prepare_situation_not_enough = 0, 0, 0
-    teaching_level_good, teaching_level_general = 0, 0
-    teacher_morality_good, teacher_morality_better = 0, 0
+    prepare_situation_a, prepare_situation_b, prepare_situation_c = 0, 0, 0
+    teaching_level_a, teaching_level_b, teaching_level_c = 0, 0, 0
+    teacher_morality_a, teacher_morality_b, teacher_morality_c = 0, 0, 0
 
-    class_content_rich_relation, class_content_general_relation = 0, 0
-    knowledge_level_rich, knowledge_level_richer = 0, 0
-    teaching_schedule_reasonable, teaching_schedule_basic_reasonable, teaching_schedule_not_reasonable = 0, 0, 0
+    class_content_a, class_content_b, class_content_c = 0, 0, 0
+    knowledge_level_a, knowledge_level_b, knowledge_level_c = 0, 0, 0
+    teaching_schedule_a, teaching_schedule_b, teaching_schedule_c = 0, 0, 0
 
-    teaching_interact_good, teaching_interact_better = 0, 0
-    board_writing_quality_good, board_writing_quality_general = 0, 0
-    has_courseware_yes, has_courseware_no = 0, 0
+    teaching_interact_a, teaching_interact_b, teaching_interact_c = 0, 0, 0
+    board_writing_quality_a, board_writing_quality_b, board_writing_quality_c = 0, 0, 0
+    has_courseware_a, has_courseware_b = 0, 0
 
-    courseware_quality_good, courseware_quality_general = 0, 0
-    speak_level_good, speak_level_general = 0, 0
-    study_result_much, study_result_little, study_result_none = 0, 0, 0
-    teaching_result_good, teaching_result_general, teaching_result_bad = 0, 0, 0
-    result_reason_teacher, result_reason_student = 0, 0
+    courseware_quality_a, courseware_quality_b, courseware_quality_c = 0, 0, 0
+    speak_level_a, speak_level_b, speak_level_c = 0, 0, 0
+    study_result_much, study_result_b, study_result_c = 0, 0, 0
+    teaching_result_a, teaching_result_b, teaching_result_c = 0, 0, 0
+    result_reason_a, result_reason_b, result_reason_c = 0, 0, 0
 
     records = course_survey.course_survey_records
 
     records_group = records.group_by(&:on_off_class)
-    on_off_class = records_group['on_off_class'].length if !records_group['on_off_class'].nil?
+    on_off_class_a = records_group['A'].length if !records_group['A'].nil?
+    on_off_class_b = records_group['B'].length if !records_group['B'].nil?
+    on_off_class_c = records_group['C'].length if !records_group['C'].nil?
+
 
     records_group = records.group_by(&:checking_institution)
-    checking_institution = records_group['checking_institution'].length if !records_group['checking_institution'].nil?
+    checking_institution_a = records_group['A'].length if !records_group['A'].nil?
+    checking_institution_b = records_group['B'].length if !records_group['B'].nil?
+    checking_institution_c = records_group['C'].length if !records_group['C'].nil?
 
 
     records_group = records.group_by(&:class_order)
-    class_order = records_group['class_order'].length if !records_group['class_order'].nil?
+    class_order_a = records_group['A'].length if !records_group['A'].nil?
+    class_order_b = records_group['B'].length if !records_group['B'].nil?
+    class_order_c = records_group['C'].length if !records_group['C'].nil?
 
 
     records_group = records.group_by(&:prepare_situation)
-    prepare_situation_total_enough = records_group['TOTAL_ENOUGH'].length if !records_group['TOTAL_ENOUGH'].nil?
-    prepare_situation_general_enough = records_group['GENERAL_ENOUGH'].length if !records_group['GENERAL_ENOUGH'].nil?
-    prepare_situation_not_enough = records_group['NOT_ENOUGH'].length if !records_group['NOT_ENOUGH'].nil?
+    prepare_situation_a = records_group['A'].length if !records_group['A'].nil?
+    prepare_situation_b = records_group['B'].length if !records_group['B'].nil?
+    prepare_situation_c = records_group['C'].length if !records_group['C'].nil?
 
 
     records_group = records.group_by(&:teaching_level)
-    teaching_level_good = records_group['GOOD'].length if !records_group['GOOD'].nil?
-    teaching_level_general = records_group['GENERAL'].length if !records_group['GENERAL'].nil?
+    teaching_level_a = records_group['A'].length if !records_group['A'].nil?
+    teaching_level_b = records_group['B'].length if !records_group['B'].nil?
+    teaching_level_c = records_group['C'].length if !records_group['C'].nil?
 
 
     records_group = records.group_by(&:teacher_morality)
-    teacher_morality_good = records_group['GOOD'].length if !records_group['GOOD'].nil?
-    teacher_morality_better = records_group['BETTER'].length if !records_group['BETTER'].nil?
+    teacher_morality_a = records_group['A'].length if !records_group['A'].nil?
+    teacher_morality_b = records_group['B'].length if !records_group['B'].nil?
+    teacher_morality_c = records_group['C'].length if !records_group['C'].nil?
 
 
     records_group = records.group_by(&:class_content)
-    class_content_rich_relation = records_group['RICH_RELATION'].length if !records_group['RICH_RELATION'].nil?
-    class_content_general_relation = records_group['GENERAL_RELATION'].length if !records_group['GENERAL_RELATION'].nil?
+    class_content_a = records_group['A'].length if !records_group['A'].nil?
+    class_content_b = records_group['B'].length if !records_group['B'].nil?
+    class_content_c = records_group['C'].length if !records_group['C'].nil?
 
 
     records_group = records.group_by(&:knowledge_level)
-    knowledge_level_rich = records_group['RICH'].length if !records_group['RICH'].nil?
-    knowledge_level_richer = records_group['RICHER'].length if !records_group['RICHER'].nil?
+    knowledge_level_a = records_group['A'].length if !records_group['A'].nil?
+    knowledge_level_b = records_group['B'].length if !records_group['B'].nil?
+    knowledge_level_c = records_group['C'].length if !records_group['C'].nil?
 
 
     records_group = records.group_by(&:teaching_schedule)
-    teaching_schedule_reasonable = records_group['REASONABLE'].length if !records_group['REASONABLE'].nil?
-    teaching_schedule_basic_reasonable = records_group['BASIC_REASONABLE'].length if !records_group['BASIC_REASONABLE'].nil?
-    teaching_schedule_not_reasonable = records_group['NOT_REASONABLE'].length if !records_group['NOT_REASONABLE'].nil?
+    teaching_schedule_a = records_group['A'].length if !records_group['A'].nil?
+    teaching_schedule_b = records_group['B'].length if !records_group['B'].nil?
+    teaching_schedule_c = records_group['C'].length if !records_group['C'].nil?
 
 
     records_group = records.group_by(&:teaching_interact)
-    teaching_interact_good = records_group['GOOD'].length if !records_group['GOOD'].nil?
-    teaching_interact_better = records_group['BETTER'].length if !records_group['BETTER'].nil?
+    teaching_interact_a = records_group['A'].length if !records_group['A'].nil?
+    teaching_interact_b = records_group['B'].length if !records_group['B'].nil?
+    teaching_interact_c = records_group['C'].length if !records_group['C'].nil?
 
 
     records_group = records.group_by(&:board_writing_quality)
-    board_writing_quality_good = records_group['GOOD'].length if !records_group['GOOD'].nil?
-    board_writing_quality_general = records_group['GENERAL'].length if !records_group['GENERAL'].nil?
+    board_writing_quality_a = records_group['A'].length if !records_group['A'].nil?
+    board_writing_quality_b = records_group['B'].length if !records_group['B'].nil?
+    board_writing_quality_c = records_group['C'].length if !records_group['C'].nil?
 
 
     records_group = records.group_by(&:has_courseware)
-    has_courseware_yes = records_group['has_courseware'].length if !records_group['has_courseware'].nil?
-    has_courseware_yes = records_group['has_courseware'].length if !records_group['has_courseware'].nil?
+    has_courseware_a = records_group['A'].length if !records_group['A'].nil?
+    has_courseware_b = records_group['B'].length if !records_group['B'].nil?
 
-
-    records_group = records.group_by(&:has_courseware)
-    has_courseware_yes = records_group['YES'].length if !records_group['YES'].nil?
-    has_courseware_no = records_group['NO'].length if !records_group['NO'].nil?
 
     records_group = records.group_by(&:courseware_quality)
-    courseware_quality_good = records_group['GOOD'].length if !records_group['GOOD'].nil?
-    courseware_quality_general = records_group['GENERAL'].length if !records_group['GENERAL'].nil?
+    courseware_quality_a = records_group['A'].length if !records_group['A'].nil?
+    courseware_quality_b = records_group['B'].length if !records_group['B'].nil?
+    courseware_quality_c = records_group['C'].length if !records_group['C'].nil?
+
+    records_group = records.group_by(&:speak_level)
+    speak_level_a = records_group['A'].length if !records_group['A'].nil?
+    speak_level_b = records_group['B'].length if !records_group['B'].nil?
+    speak_level_c = records_group['C'].length if !records_group['C'].nil?
 
 
     records_group = records.group_by(&:speak_level)
-    speak_level_good = records_group['speak_level'].length if !records_group['speak_level'].nil?
-    speak_level_general = records_group['speak_level'].length if !records_group['speak_level'].nil?
-
-
-    records_group = records.group_by(&:speak_level)
-    speak_level_good = records_group['GOOD'].length if !records_group['GOOD'].nil?
-    speak_level_general = records_group['GENERAL'].length if !records_group['GENERAL'].nil?
+    speak_level_a = records_group['A'].length if !records_group['A'].nil?
+    speak_level_b = records_group['B'].length if !records_group['B'].nil?
+    speak_level_c = records_group['C'].length if !records_group['C'].nil?
 
     records_group = records.group_by(&:study_result)
-    study_result_much = records_group['MUCH'].length if !records_group['MUCH'].nil?
-    study_result_little = records_group['LITTLE'].length if !records_group['LITTLE'].nil?
-    study_result_none = records_group['NONE'].length if !records_group['NONE'].nil?
+    study_result_a = records_group['A'].length if !records_group['A'].nil?
+    study_result_b = records_group['B'].length if !records_group['B'].nil?
+    study_result_c = records_group['C'].length if !records_group['C'].nil?
 
 
     records_group = records.group_by(&:teaching_result)
-    teaching_result_good = records_group['GOOD'].length if !records_group['GOOD'].nil?
-    teaching_result_general = records_group['GENERAL'].length if !records_group['GENERAL'].nil?
-    teaching_result_bad = records_group['BAD'].length if !records_group['BAD'].nil?
+    teaching_result_a = records_group['A'].length if !records_group['A'].nil?
+    teaching_result_b = records_group['B'].length if !records_group['B'].nil?
+    teaching_result_c = records_group['C'].length if !records_group['C'].nil?
 
     records_group = records.group_by(&:result_reason)
-    result_reason_teacher = records_group['TEACHER_REASON'].length if !records_group['TEACHER_REASON'].nil?
-    result_reason_student = records_group['STUDENT_REASON'].length if !records_group['STUDENT_REASON'].nil?
-
-=begin
-
-    records.each do |record|
-
-      on_off_class += 1 if record.on_off_class
-
-      checking_institution += 1 if record.checking_institution
- 
-      class_order += 1 if record.class_order
-
-      case record.prepare_situation
-      when 'TOTAL_ENOUGH'
-        prepare_situation_total_enough += 1
-      when 'GENERAL_ENOUGH'
-        prepare_situation_general_enough += 1
-      when 'NOT_ENOUGH'
-        prepare_situation_not_enough += 1
-      end
-
-      case record.teaching_level
-      when 'GOOD'
-        teaching_level_good += 1
-      when 'GENERAL'
-        teaching_level_general += 1
-      end
-
-      case record.teacher_morality
-      when 'GOOD'
-        teacher_morality_good += 1
-      when 'BETTER'
-        teacher_morality_better += 1
-      end
-
-      case record.class_content
-      when 'RICH_RELATION'
-        class_content_rich_relation += 1
-      when 'GENERAL_RELATION'
-        class_content_general_relation += 1
-      end
-
-
-      case record.knowledge_level
-      when 'RICH'
-        knowledge_level_rich += 1
-      when 'RICHER'
-        knowledge_level_richer += 1
-      end
-
-      case record.teaching_schedule
-      when 'REASONABLE'
-        teaching_schedule_reasonable += 1
-      when 'BASIC_REASONABLE'
-        teaching_schedule_basic_reasonable += 1
-      when 'NOT_REASONABLE'
-        teaching_schedule_not_reasonable += 1
-      end
-
-      
-      case record.teaching_interact
-      when 'GOOD'
-        teaching_interact_good += 1
-      when 'BETTER'
-        teaching_interact_better += 1
-      end
-      
-
-      case record.board_writing_quality
-      when 'GOOD'
-        board_writing_quality_good += 1
-      when 'GENERAL'
-        board_writing_quality_general += 1
-      end
-
-
-      case record.has_courseware
-      when 'YES'
-        has_courseware_yes += 1
-      when 'NO'
-        has_courseware_no += 1
-      end
-
-
-      case record.courseware_quality
-      when 'GOOD'
-        courseware_quality_good += 1
-      when 'GENERAL'
-        courseware_quality_general += 1
-      end
-
-
-      case record.speak_level
-      when 'GOOD'
-        speak_level_good += 1
-      when 'GENERAL'
-        speak_level_general += 1
-      end
-
-
-
-      case record.study_result
-      when 'MUCH'
-        study_result_much += 1
-      when 'LITTLE'
-        study_result_little += 1
-      when 'NONE'
-        study_result_none += 1
-      end
-
-      
-
-      case record.teaching_result
-      when 'GOOD'
-        teaching_result_good += 1
-      when 'GENERAL'
-        teaching_result_general += 1
-      when 'BAD'
-        teaching_result_bad += 1
-      end
-
-
-      
-      case record.result_reason
-      when 'TEACHER_REASON'
-        result_reason_teacher += 1
-      when 'STUDENT_REASON'
-        result_reason_student += 1
-      end
-    end
-=end
+    result_reason_a = records_group['A'].length if !records_group['A'].nil?
+    result_reason_b = records_group['B'].length if !records_group['B'].nil?
+    result_reason_c = records_group['C'].length if !records_group['C'].nil?
 
     
     {
-      :on_off_class => on_off_class,
-      :checking_institution => checking_institution,
-      :class_order => class_order,
-      :prepare_situation_total_enough => prepare_situation_total_enough, 
-      :prepare_situation_general_enough => prepare_situation_general_enough, 
-      :prepare_situation_not_enough => prepare_situation_not_enough,
-      :teaching_level_good => teaching_level_good, 
-      :teaching_level_general => teaching_level_general,
-      :teacher_morality_good => teacher_morality_good, 
-      :teacher_morality_better => teacher_morality_better, 
-      :class_content_rich_relation => class_content_rich_relation, 
-      :class_content_general_relation => class_content_general_relation, 
-      :knowledge_level_rich => knowledge_level_rich, 
-      :knowledge_level_richer => knowledge_level_richer, 
-      :teaching_schedule_reasonable => teaching_schedule_reasonable, 
-      :teaching_schedule_basic_reasonable => teaching_schedule_basic_reasonable, 
-      :teaching_schedule_not_reasonable => teaching_schedule_not_reasonable, 
-      :teaching_interact_good => teaching_interact_good, 
-      :teaching_interact_better => teaching_interact_better, 
-      :board_writing_quality_good => board_writing_quality_good, 
-      :board_writing_quality_general => board_writing_quality_general, 
-      :has_courseware_yes => has_courseware_yes, 
-      :has_courseware_no => has_courseware_no,
-      :courseware_quality_good => courseware_quality_good, 
-      :courseware_quality_general => courseware_quality_general,
-      :speak_level_good => speak_level_good, 
-      :speak_level_general => speak_level_general,
-      :study_result_much => study_result_much, 
-      :study_result_little => study_result_little, 
-      :study_result_none => study_result_none,
-      :teaching_result_good => teaching_result_good, 
-      :teaching_result_general => teaching_result_general, 
-      :teaching_result_bad => teaching_result_bad, 
-      :result_reason_teacher => result_reason_teacher, 
-      :result_reason_student => result_reason_student
+      :on_off_class_a => on_off_class_a,
+      :on_off_class_b => on_off_class_b,
+      :on_off_class_c => on_off_class_c,
+
+      :checking_institution_a => checking_institution_a,
+      :checking_institution_b => checking_institution_b,
+      :checking_institution_c => checking_institution_c,
+
+      :class_order_a => class_order_a,
+      :class_order_b => class_order_b,
+      :class_order_c => class_order_c,
+
+      :prepare_situation_a => prepare_situation_a, 
+      :prepare_situation_b => prepare_situation_b, 
+      :prepare_situation_c => prepare_situation_c,
+
+      :teaching_level_a => teaching_level_a, 
+      :teaching_level_b => teaching_level_b,
+      :teaching_level_c => teaching_level_c, 
+
+      :teacher_morality_a => teacher_morality_a, 
+      :teacher_morality_b => teacher_morality_b,
+      :teacher_morality_c => teacher_morality_c,
+
+      :class_content_a => class_content_a, 
+      :class_content_b => class_content_b, 
+      :class_content_c => class_content_c, 
+
+      :knowledge_level_a => knowledge_level_a, 
+      :knowledge_level_b => knowledge_level_b, 
+      :knowledge_level_c => knowledge_level_c,
+
+      :teaching_schedule_a => teaching_schedule_a, 
+      :teaching_schedule_b => teaching_schedule_b, 
+      :teaching_schedule_c => teaching_schedule_c,
+
+      :teaching_interact_a => teaching_interact_a, 
+      :teaching_interact_b => teaching_interact_b, 
+      :teaching_interact_c => teaching_interact_c, 
+
+      :board_writing_quality_a => board_writing_quality_a, 
+      :board_writing_quality_b => board_writing_quality_b, 
+      :board_writing_quality_c => board_writing_quality_c, 
+
+      :has_courseware_a => has_courseware_a, 
+      :has_courseware_b => has_courseware_b,
+
+      :courseware_quality_a => courseware_quality_a, 
+      :courseware_quality_b => courseware_quality_b,
+      :courseware_quality_c => courseware_quality_c, 
+
+      :speak_level_a => speak_level_a, 
+      :speak_level_b => speak_level_b,
+      :speak_level_c => speak_level_c,
+
+      :study_result_a => study_result_a, 
+      :study_result_b => study_result_b, 
+      :study_result_c => study_result_c,
+
+      :teaching_result_a => teaching_result_a, 
+      :teaching_result_b => teaching_result_b, 
+      :teaching_result_c => teaching_result_c, 
+
+      :result_reason_a => result_reason_a, 
+      :result_reason_b => result_reason_b,
+      :result_reason_c => result_reason_c
+    }
+  end
+
+  def es_each_count(course_survey)
+    attend_class_a, attend_class_b, attend_class_c = 0, 0, 0
+    interesting_level_a, interesting_level_b, interesting_level_c, interesting_level_d, interesting_level_e = 0, 0, 0, 0, 0
+    understand_level_a, understand_level_b, understand_level_c, understand_level_d, understand_level_e = 0, 0, 0, 0, 0
+
+    records = course_survey.course_survey_es_records
+
+    records_group = records.group_by(&:attend_class)
+    attend_class_a = records_group['A'].length if !records_group['A'].nil?
+    attend_class_b = records_group['B'].length if !records_group['B'].nil?
+    attend_class_c = records_group['C'].length if !records_group['C'].nil?
+
+    records_group = records.group_by(&:interesting_level)
+    interesting_level_a = records_group['A'].length if !records_group['A'].nil?
+    interesting_level_b = records_group['B'].length if !records_group['B'].nil?
+    interesting_level_c = records_group['C'].length if !records_group['C'].nil?
+    interesting_level_d = records_group['D'].length if !records_group['D'].nil?
+    interesting_level_e = records_group['E'].length if !records_group['E'].nil?
+
+    records_group = records.group_by(&:understand_level)
+    understand_level_a = records_group['A'].length if !records_group['A'].nil?
+    understand_level_b = records_group['B'].length if !records_group['B'].nil?
+    understand_level_c = records_group['C'].length if !records_group['C'].nil?
+    understand_level_d = records_group['D'].length if !records_group['D'].nil?
+    understand_level_e = records_group['E'].length if !records_group['E'].nil?
+
+    {
+      :attend_class_a => attend_class_a,
+      :attend_class_b => attend_class_b,
+      :attend_class_c => attend_class_c,
+
+      :interesting_level_a => interesting_level_a,
+      :interesting_level_b => interesting_level_b,
+      :interesting_level_c => interesting_level_c,
+      :interesting_level_d => interesting_level_d,
+      :interesting_level_e => interesting_level_e,
+
+      :understand_level_a => understand_level_a,
+      :understand_level_b => understand_level_b,
+      :understand_level_c => understand_level_c,
+      :understand_level_d => understand_level_d,
+      :understand_level_e => understand_level_e
     }
   end
 

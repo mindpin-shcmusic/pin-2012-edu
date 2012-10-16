@@ -37,4 +37,6 @@
           =render 'answer_form', :f => f
 
 .page-admin-go-back= link_to '返回列表页', '/questions'
-.page-admin-edit= link_to '编辑修改', "/questions/#{@question.id}/edit"
+
+- if current_user.is_student?
+  .page-admin-edit= link_to '编辑修改', "/questions/#{@question.id}/edit"

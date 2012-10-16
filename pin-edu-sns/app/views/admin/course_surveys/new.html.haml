@@ -6,11 +6,20 @@
 
 .page-admin-form
   = flash_info
-  = form_for [:admin, @course_survey] do |f|
+  = form_for [:admin, CourseSurvey.new] do |f|
  
     .field.need
       %label 标题
       =f.text_field :title
+
+
+    .field.need
+      %label 调查类型
+      =f.radio_button :kind, '1'
+      %span  课程调查1
+
+      =f.radio_button :kind, '2'
+      %span  课程调查2
      
 
     .field

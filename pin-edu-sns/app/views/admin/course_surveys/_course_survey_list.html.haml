@@ -1,11 +1,8 @@
-- CourseSurvey.all.each do |course_survey|
+- @course_surveys.each do |course_survey|
   .model.course_survey
     .tite= course_survey.title
 
     .ops
       - remove_url = admin_course_survey_path(course_survey)
       %a.remove{:href=>'javascript:;', :'data-url'=>remove_url} 删除
-      %a.open-course-survey{:href=>'javascript:;'}
-        %span.open 展开
-        %span.close 收起
       %a.detail{:href=>"/admin/course_surveys/#{course_survey.id}"} 查看详情

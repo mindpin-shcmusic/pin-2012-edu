@@ -1,4 +1,4 @@
-class CourseSurveyRecord < ActiveRecord::Base
+class CourseSurveyEsRecord < ActiveRecord::Base
   belongs_to :course_survey
 
   # --- 模型关联
@@ -13,8 +13,8 @@ class CourseSurveyRecord < ActiveRecord::Base
   # --- 给其他类扩展的方法
   module UserMethods
     def self.included(base)
-      base.has_many :course_survey_records,
-                    :class_name  => 'CourseSurveyRecord',
+      base.has_many :course_survey_es_records,
+                    :class_name  => 'CourseSurveyEsRecord',
                     :foreign_key => :student_user_id
 
 
@@ -24,7 +24,7 @@ class CourseSurveyRecord < ActiveRecord::Base
     module InstanceMethods
       def has_surveyed?(course_survey)
         return false if course_survey.blank?
-
+        
         case course_survey.kind
         when '1'
           CourseSurveyRecord.where(:student_user_id => self.id, :course_survey_id => course_survey.id).exists?
@@ -36,3 +36,4 @@ class CourseSurveyRecord < ActiveRecord::Base
   end
 
 end
+

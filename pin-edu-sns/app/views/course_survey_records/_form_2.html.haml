@@ -1,0 +1,79 @@
+ 
+.field
+  %span 上课能够集中精力认真参与吗? (积极地记笔记，提问，参与讨论等)
+  =f.radio_button :attend_class, 'A'
+  %span 完全能够
+
+  =f.radio_button :attend_class, 'B'
+  %span 做到一部分
+
+  =f.radio_button :attend_class, 'C'
+  %span 没能够
+
+  
+.field
+  %label 请阐述选择上述答案的理由
+  =f.text_area :attend_class_reason
+
+
+
+.field
+  %span [内容・兴趣条目] 对上课的内容感兴趣吗
+  =f.radio_button :interesting_level, 'A'
+  %span 非常感兴趣
+
+  =f.radio_button :interesting_level, 'B'
+  %span 感兴趣
+
+  =f.radio_button :interesting_level, 'C'
+  %span 不确定
+
+  =f.radio_button :interesting_level, 'D'
+  %span 不怎么感兴趣
+
+  =f.radio_button :interesting_level, 'E'
+  %span 不感兴趣
+
+
+
+.field
+  %span [内容・印象条目] 对自己来说，印象深刻的内容、自己收获的东西，其关键词是什么
+  =f.text_area :keywords
+
+
+
+
+.field
+  %span [内容・理解条目] 能够理解上课的内容吗
+  =f.radio_button :understand_level, 'A'
+  %span 完全理解了
+
+  =f.radio_button :understand_level, 'B'
+  %span 理解
+
+  =f.radio_button :understand_level, 'C'
+  %span 不能确定
+
+  =f.radio_button :understand_level, 'D'
+  %span 不怎么理解
+
+  =f.radio_button :understand_level, 'E'
+  %span 没有理解
+
+
+
+
+.field
+  %span [内容・疑问条目] 觉得难以理解的点・疑问点是什么
+  =f.text_area :student_question
+
+.field
+  %span [内容・疑问条目] 觉得难以理解的点・疑问点是什么
+  =f.text_area :student_response
+
+
+ 
+%input{:name => "kind", :type => "hidden", :value => "2"}/
+.field
+  = jfsubmit '确定'
+  = jfcancel '取消'
