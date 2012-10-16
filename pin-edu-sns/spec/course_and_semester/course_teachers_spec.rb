@@ -138,4 +138,21 @@ describe CourseTeacher do
     end
 
   end
+
+  context "一门课程在哪些学期分布" do
+    it '一门课程在哪些学期分布' do
+      course_3d.get_semesters().should == []
+
+      course_3d.add_teacher :semester => semester_2012_a,
+        :teacher_user => teacher_3d
+      course_3d.get_semesters().should == [semester_2012_a]
+
+      course_3d.add_teacher :semester => semester_2012_b,
+        :teacher_user => teacher_3d
+      semesters = course_3d.get_semesters()
+      semesters.length.should == 2
+      semesters.include?(semester_2012_a).should == true
+      semesters.include?(semester_2012_b).should == true
+    end
+  end
 end

@@ -44,8 +44,6 @@ class User < ActiveRecord::Base
   # 在线状态记录
   has_one :online_record,:dependent => :destroy
 
-  scope :not_admin, where("name != 'admin'")
-
   # 校验部分
   # 不能为空的有：用户名，登录名，电子邮箱
   # 不能重复的有：登录名，电子邮箱（大小写不区分）

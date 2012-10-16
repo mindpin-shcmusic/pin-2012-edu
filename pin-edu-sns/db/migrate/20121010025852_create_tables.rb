@@ -252,12 +252,8 @@ class CreateTables < ActiveRecord::Migration
       t.datetime "created_at"
       t.datetime "updated_at"
       t.boolean  "is_removed",             :default => false
-      t.integer  "teaching_plan_id"
-      t.integer  "course_teacher_team_id"
     end
     add_index "teams", "is_removed"
-    add_index "teams", "teaching_plan_id"
-    add_index "teams", "course_teacher_team_id"
 
 
     # 课程

@@ -11,10 +11,10 @@ class AnnouncementRule < ActiveRecord::Base
 
   def build_expression(options = {})
     options.assert_valid_keys :courses
-    options[:courses] ||= self.creator.courses.map(&:id) if self.creator.is_teacher?
+    options[:courses] ||= []
     self.expression = options.to_json
   end
-
+  
   def expression
     exp = read_attribute(:expression)
     exp && JSON.parse(exp, :symbolize_names => true).reduce({}) do |sanitized, (k, v)|
@@ -23,20 +23,16 @@ class AnnouncementRule < ActiveRecord::Base
     end
   end
 
-  def expression_receiver_ids
-    Course.find(expression[:courses]).map(&:student_users).flatten.map(&:id).map().sort
-  end
-
   def expression_receivers
-    return User.not_admin if self.creator.is_admin?
-    User.find expression_receiver_ids
+    return User.all.reject {|user| user == self.creator} if self.creator.is_admin?
+    Course.find(expression[:courses]).map{|course| course.get_students :semester => Semester.now, :teacher_user => self.creator}.flatten.uniq
   end
 
   def build_announcement
     self.expression_receivers.each {|receiver|
-      receiver = AnnouncementUser.find_or_initialize_by_announcement_id_and_user_id self.announcement.id,
-                                                                                    receiver.id
-      receiver.save
+      receiver_key = AnnouncementUser.find_or_initialize_by_announcement_id_and_user_id self.announcement.id,
+                                                                                        receiver.id
+      receiver_key.save
     }
   end
 
@@ -53,7 +49,7 @@ private
 
   module AnnouncementMethods
     def self.included(base)
-      base.has_one :homework_assign_rule
+      base.has_one :announcement_rule
       base.send :include, InstanceMethods
     end
 

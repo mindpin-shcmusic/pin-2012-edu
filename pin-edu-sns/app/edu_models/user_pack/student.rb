@@ -29,7 +29,10 @@ class Student < ActiveRecord::Base
 
   after_save :destroy_team_student_after_remove
   def destroy_team_student_after_remove
-    self.user.team_student.destroy if self.is_removed?
+    if self.is_removed?
+      team_student = self.user.team_student
+      team_student.destroy if !team_student.blank?
+    end
   end
 
   def self.import_from_csv(file)

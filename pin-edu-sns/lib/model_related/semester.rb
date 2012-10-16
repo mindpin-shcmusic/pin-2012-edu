@@ -13,6 +13,12 @@ class Semester
     self.new(year, section)
   end
 
+  def self.get_by_value(value)
+    year = value[0...-1]
+    section = value[-1..-1]
+    self.get(year, section.to_sym)
+  end
+
   def self.now
     self.of_time Time.now
   end
