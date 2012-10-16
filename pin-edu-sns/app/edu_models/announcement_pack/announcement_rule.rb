@@ -10,8 +10,9 @@ class AnnouncementRule < ActiveRecord::Base
   validate :able_to_create
 
   def build_expression(options = {})
-    options.assert_valid_keys :courses
+    options.assert_valid_keys :courses, :teams
     options[:courses] ||= []
+    options[:teams] ||= []
     self.expression = options.to_json
   end
   
@@ -24,7 +25,12 @@ class AnnouncementRule < ActiveRecord::Base
   end
 
   def expression_receivers
-    return User.all.reject {|user| user == self.creator} if self.creator.is_admin?
+    if self.creator.is_admin?
+      return User.all.reject {|user| user == self.creator} if self.expression.blank?
+
+      return (Course.find(expression[:courses]).map {|course| course.current_semester_users} +
+      Team.find(expression[:teams]).map {|team| team.student_users}).flatten.uniq
+    end
     Course.find(expression[:courses]).map{|course| course.get_students :semester => Semester.now, :teacher_user => self.creator}.flatten.uniq
   end
 
@@ -32,6 +38,7 @@ class AnnouncementRule < ActiveRecord::Base
     self.expression_receivers.each {|receiver|
       receiver_key = AnnouncementUser.find_or_initialize_by_announcement_id_and_user_id self.announcement.id,
                                                                                         receiver.id
+      next if receiver_key.persisted?
       receiver_key.save
     }
   end

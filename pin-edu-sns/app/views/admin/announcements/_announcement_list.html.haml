@@ -1,0 +1,12 @@
+.attrs
+  .t2 标题
+  .t2 内容
+
+- announcements.each do |announcement|
+  .model.announcement
+    .t2= announcement.title
+    .t2= announcement.content
+    .ops
+      - remove_url = admin_announcement_path(announcement)
+      %a.remove{:href=>'javascript:;', :'data-url'=>remove_url} 删除
+      %a.detail{:href=>"/admin/announcements/#{announcement.id}"} 详情

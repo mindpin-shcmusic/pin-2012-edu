@@ -12,6 +12,20 @@ class Announcement < ActiveRecord::Base
   validates :content,
             :presence => true
 
+  def read_by?(user)
+    get_announcement_user_by(user).read
+  end
+
+  def read_by!(user)
+    get_announcement_user_by(user).update_attribute(:read, true)
+  end
+
+private
+
+  def get_announcement_user_by(user)
+    self.announcement_users.find_by_user_id(user.id)
+  end
+
   module UserMethods
     def self.included(base)
       base.has_many :created_announcements,
@@ -45,4 +59,5 @@ class Announcement < ActiveRecord::Base
   end
 
   include AnnouncementRule::AnnouncementMethods
+  include Paginated
 end
