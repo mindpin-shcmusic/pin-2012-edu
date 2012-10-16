@@ -1,6 +1,6 @@
 - rule = @announcement.announcement_rule
-- expression = rule.expression
-- course_ids = rule && expression ? expression[:courses] : []
+- expression = rule ? rule.expression : {}
+- course_ids = expression.blank? ? [] : expression[:courses]
 
 .page-announcement-show
   %h1.title= @announcement.title
