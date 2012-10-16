@@ -209,7 +209,7 @@ describe Course do
     teachers.include?(teacher_zhang).should == true
   end
 
-  it '不能够给一个学生同时指定一个课的不同老师' do
+  it '不能够给一个学生在一个学期指定一个课的不同老师，但可以在不同的学期指定' do
     course_3d.add_teacher :semester     => semester_2012_a,
                           :teacher_user => teacher_zhang
 
@@ -225,6 +225,17 @@ describe Course do
                               :course       => course_3d,
                               :teacher_user => teacher_wang
     }.to raise_error(Course::AssignMultiTeachersOfSameCourse)
+
+    # 可以在不同的学期给一个学生分配一个课的不同老师
+
+    course_3d.add_teacher :semester     => semester_2012_b,
+                          :teacher_user => teacher_li
+
+    student_song.add_course :semester     => semester_2012_b,
+                            :course       => course_3d,
+                            :teacher_user => teacher_li
+
+    student_song.get_teachers(:semester => semester_2012_b).include?(teacher_li).should == true
   end
 
   it '可以给多个学生指定一个课的同一个老师的' do
