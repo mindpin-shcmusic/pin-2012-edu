@@ -3,8 +3,8 @@ class AnnouncementUser < ActiveRecord::Base
   belongs_to :announcement
   belongs_to :user
 
-  after_destroy :send_tip_message_on_destroy
-  after_create  :send_tip_message_on_create
+  after_destroy :send_count_to_juggernaut
+  after_create  :send_count_to_juggernaut
 
   validates :announcement,
             :user,
@@ -14,18 +14,9 @@ class AnnouncementUser < ActiveRecord::Base
 
 private
 
-  def send_tip_message_on_destroy
+  def send_count_to_juggernaut
     Juggernaut.publish self.user.announcement_hash_name,
-                       {:count => user.unread_announcements.count}
-  end
-
-  def send_tip_message_on_create
-    self.send_count_to_juggernaut self.user.announcement_hash_name,
-                                  self.user.unread_announcements.count
-  end
-
-  def send_count_to_juggernaut(channel, count)
-    Juggernaut.publish channel, {:count => count}
+                       {:count => self.user.unread_announcements.count}
   end
 
   def exclude_creator

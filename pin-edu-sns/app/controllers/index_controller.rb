@@ -28,7 +28,6 @@ class IndexController < ApplicationController
       :announcements_count => current_user.unread_announcements.count,
       :media_shares_count => current_user.media_share_tip_message.count,
       :comments_count => current_user.comment_tip_message.count,
-      :share_rate  => current_user.rate_and_rank,
       :short_messages_count => current_user.unread_messages.count
     }
   end
