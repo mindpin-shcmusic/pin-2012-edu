@@ -9,7 +9,11 @@ class CourseSurveysController < ApplicationController
 
   def index
     kind = params[:kind]
-    @course_surveys = CourseSurvey.with_kind(kind).paginate(:page => params[:page])  
+    if kind
+      @course_surveys = CourseSurvey.with_kind(kind).paginate(:page => params[:page])
+    else
+      @course_surveys = CourseSurvey.paginate(:page => params[:page])
+    end
   end
 
 end
