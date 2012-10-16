@@ -323,3 +323,21 @@
   a{@include mini-button;}
   float:left;margin-right:10px;
 }
+
+.page-admin-course-teachers{
+  .semesters-nav{
+    .current{
+      background-color:#C0C0C0;
+    }
+  }
+
+  .teachers{
+    .teacher{
+      @include floatfix;
+      .field{
+        float:left;
+        margin-right:10px;
+      }
+    }
+  }
+}

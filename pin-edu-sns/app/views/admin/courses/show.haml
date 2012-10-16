@@ -21,6 +21,8 @@
     = link_to '上传课程图片', "/admin/courses/#{@course.id}/upload_image_page"
   .field.select-cover
     = link_to '选择课程封面图片', "/admin/courses/#{@course.id}/select_cover_page"
+  .field.add-teacher
+    = link_to '增加教师',"/admin/courses/#{@course.id}/teachers"
 
 .page-admin-go-back= link_to '返回列表页', '/admin/courses'
 .page-admin-edit= link_to '编辑修改', "/admin/courses/#{@course.id}/edit"
