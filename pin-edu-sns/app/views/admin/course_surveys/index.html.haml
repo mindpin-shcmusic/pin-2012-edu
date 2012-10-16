@@ -3,6 +3,10 @@
 - hbreadcrumb '基础数据管理', '/admin'
 - hbreadcrumb '课程调查'
   
+.tab
+  %a.item.all{:href=>'/admin/course_surveys'} 课程调查列表
+  %a.item.all{:href=>'/admin/course_surveys?kind=1'} 课程调查1
+  %a.item.all{:href=>'/admin/course_surveys?kind=2'} 课程调查2
 
 .page-admin-ops
   %a.create{:href=>'/admin/course_surveys/new'} 增加课程

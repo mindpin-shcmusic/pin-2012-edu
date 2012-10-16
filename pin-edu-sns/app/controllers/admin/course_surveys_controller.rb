@@ -9,11 +9,15 @@ class Admin::CourseSurveysController < ApplicationController
   end
 
   def index
-    @course_surveys = CourseSurvey.paginate(:page => params[:page])
+    kind = params[:kind]
+    if kind
+      @course_surveys = CourseSurvey.where(:kind => kind).paginate(:page => params[:page])
+    else
+      @course_surveys = CourseSurvey.paginate(:page => params[:page])
+    end
   end
 
   def new
-    @course_survey = CourseSurvey.new
   end
 
   def create

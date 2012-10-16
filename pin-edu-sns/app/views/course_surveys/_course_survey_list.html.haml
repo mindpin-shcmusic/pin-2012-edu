@@ -6,4 +6,4 @@
       - if current_user.has_surveyed?(course_survey)
         %a.detail{:href => "/course_survey_records/#{course_survey.course_survey_records.with_student(current_user)[0].id}/edit"} 修改
       - else
-        %a.detail{:href => "/course_surveys/#{course_survey.id}/course_survey_records/new"} 填写
+        %a.detail{:href => "/course_surveys/#{course_survey.id}/course_survey_records/new?kind=#{course_survey.kind}"} 填写
