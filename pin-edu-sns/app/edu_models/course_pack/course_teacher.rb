@@ -46,6 +46,32 @@ class CourseTeacher < ActiveRecord::Base
     value
   end
 
+  def course_student_assigns
+    CourseStudentAssign.where(
+      :course_id => self.course_id,
+      :teacher_user_id => self.teacher_user_id,
+      :semester_value => self.semester_value
+    )
+  end
+
+  def set_students(users)
+    students = self.course.get_students(:semester=>self.semester,:teacher_user=>self.teacher_user)
+
+    remove_users = students - users
+    self.course_student_assigns.each do |assign|
+      assign.destroy if remove_users.include?(assign.student_user)
+    end
+
+    add_users = users - students
+    add_users.each do |user|
+      user.add_course(
+        :semester => self.semester,
+        :course => self.course,
+        :teacher_user => self.teacher_user
+      )
+    end
+  end
+
   def self.get_by_params(course, semester, teacher_user)
     self.where(
       :course_id => course.id,

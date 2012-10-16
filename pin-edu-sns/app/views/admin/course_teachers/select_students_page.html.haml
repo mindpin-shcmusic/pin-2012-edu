@@ -9,13 +9,17 @@
 - hbreadcrumb @course_teacher.teacher_user.real_name
 - hbreadcrumb "分配学生"
 
-- selected_student_users = course.get_students :semester => semester
-- selected_students = selected_student_users.map{|user|user.student}
-- students = Student.all-selected_students
+- selected_course_student_users = course.get_students :semester => semester
+- selected_course_students = selected_course_student_users.map{|user|user.student}
+
+- selected_current_student_users = course.get_students(:semester => semester,:teacher_user=>@course_teacher.teacher_user)
+- selected_current_students = selected_current_student_users.map{|user|user.student}
+
+- students = Student.all - selected_course_students + selected_current_students
 .page-course-teacher-select-students
   = form_tag "/admin/course_teachers/#{@course_teacher.id}/select_students", :method=>:put do
     - students.each do |student|
-      = check_box_tag "user_ids[]", student.user_id
+      = check_box_tag "user_ids[]", student.user_id, selected_current_students.include?(student)
       %label= student.real_name
     .field.submit
       = jfsubmit '确定'
