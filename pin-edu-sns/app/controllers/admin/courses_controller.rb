@@ -110,4 +110,19 @@ class Admin::CoursesController < ApplicationController
     render :text => '视频已删除'
   end
 
+  def add_teacher_page
+  end
+
+  def add_teacher
+    users = params[:user_ids].map{|id|User.find(id)}
+    semester = Semester.now
+    users.each do |user|
+      @course.add_teacher(
+        :semester => semester,
+        :teacher_user => user
+      )
+    end
+    redirect_to "/admin/courses/#{@course.id}"
+  end
+
 end

@@ -4,7 +4,15 @@
 - hbreadcrumb '课程维护', '/admin/courses'
 - hbreadcrumb @course.name
 
+- current_semester = params[:semester].blank? ? Semester.now : Semester.get_by_value(params[:semester])
+- teachers = @course.get_teachers(:semester=>current_semester)
+
 .page-admin-model-show
+  .field.semesters-nav
+    %label 学期
+    - Semester.get_nav_array.each do |semester|
+      - class_name = current_semester == semester ? "current" : ""
+      = link_to semester.value, "/admin/courses/#{@course.id}?semester=#{semester.value}",:class => class_name
   .field.image
     = jimage @course.cover_url, :width => 160, :height => 96
   .field.name
@@ -21,6 +29,24 @@
     = link_to '上传课程图片', "/admin/courses/#{@course.id}/upload_image_page"
   .field.select-cover
     = link_to '选择课程封面图片', "/admin/courses/#{@course.id}/select_cover_page"
+  .field.teachers
+    %label 任课教师
+    - teachers.each do |user|
+      .model.teacher
+        .field.name
+          = user.teacher.real_name
+        .field.tid
+          = user.teacher.tid
+        .field.students-count
+          - count = @course.get_students(:semester => current_semester,:teacher_user => user).count
+          = "#{count} 个学生"
+        .field.select-students
+          - course_teacher = CourseTeacher.get_by_params(@course, current_semester, user)
+          = link_to "分配学生", "/admin/course_teachers/#{course_teacher.id}/select_students_page"
+          = link_to "删除", "/admin/course_teachers/#{course_teacher.id}",:method=>:delete,:confirm => "确定删除该任课教师吗？"
+  .field.add-teacher
+    - if current_semester == Semester.now
+      = link_to "增加任课教师","/admin/courses/#{@course.id}/add_teacher_page"
 
 .page-admin-go-back= link_to '返回列表页', '/admin/courses'
 .page-admin-edit= link_to '编辑修改', "/admin/courses/#{@course.id}/edit"

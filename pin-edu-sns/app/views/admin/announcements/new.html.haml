@@ -1,0 +1,18 @@
+- htitle '通知管理'
+
+- hbreadcrumb '基础数据管理', '/admin'
+- hbreadcrumb '通知管理', '/admin/announcements'
+- hbreadcrumb '增加通知'
+
+.page-admin-form
+  = flash_info
+  = form_for [:admin, @announcement] do |f|
+    .field.need
+      %label 标题
+      = f.text_field :title
+    .field.need
+      %label 内容
+      = f.text_area :content
+    .field.submit
+      = jfsubmit '确定'
+      = jfcancel '取消'

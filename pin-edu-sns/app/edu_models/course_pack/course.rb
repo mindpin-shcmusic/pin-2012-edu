@@ -94,6 +94,12 @@ class Course < ActiveRecord::Base
     end
   end
 
+  def current_semester_users
+    semester = Semester.now
+    (self.get_teachers(:semester => semester) +
+     self.get_students(:semester => semester)).flatten.uniq
+  end
+
   module UserMethods
     def add_course(options)
       raise InvalidCourseParams.new if options[:course].blank? || options[:semester].blank? || options[:teacher_user].blank?

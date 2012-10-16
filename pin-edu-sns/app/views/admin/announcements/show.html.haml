@@ -1,0 +1,44 @@
+- htitle '通知管理'
+
+- hbreadcrumb '基础数据管理', '/admin'
+- hbreadcrumb '通知管理', '/admin/announcements'
+- hbreadcrumb @announcement.title
+
+- rule = @announcement.announcement_rule
+- expression = rule ? rule.expression : {}
+- course_ids = expression.blank? ? [] : expression[:courses]
+- team_ids = expression.blank? ? [] : expression[:teams]
+
+.page-admin-model-show
+  .field.title
+    %label 标题
+    .v= @announcement.title
+  .field.creator  
+    %label 发布人
+    .v= @announcement.creator.real_name
+  .field.content
+    %label 内容
+    .v= @announcement.content
+
+- if current_user == @announcement.creator
+  .page-admin-model-show
+    .field.students-count
+      %label 选择通知发布的对象
+
+      = form_tag announce_announcement_path(@announcement), :method => :put do
+        .assign= submit_tag '发布通知'
+        .courses
+          请选择要发布通知的课程
+          - Course.all.each do |course|
+            - is_announced = course_ids.include?(course.id)
+            %label
+              = check_box_tag 'course_ids[]', course.id, is_announced, :disabled => is_announced
+              = course.name
+
+        .teams        
+          请选择要发布通知的班级
+          - Team.all.each do |team|
+            - is_announced = team_ids.include?(team.id)
+            %label
+              = check_box_tag 'team_ids[]', team.id, is_announced, :disabled => is_announced
+              = team.name
