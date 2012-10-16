@@ -8,6 +8,13 @@ class CourseTeacher < ActiveRecord::Base
   validates :teacher_user_id, :presence => true,
     :uniqueness => {:scope => [:course_id,:semester_value]}
 
+  after_destroy :remove_relative_course_student_assigns
+  def remove_relative_course_student_assigns
+    course_student_assigns.each do |assign|
+      assign.destroy
+    end
+  end
+
   def semester=(semester)
     @semester = semester
     self.semester_value = semester.value

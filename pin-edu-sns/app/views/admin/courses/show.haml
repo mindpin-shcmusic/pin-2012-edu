@@ -43,6 +43,7 @@
         .field.select-students
           - course_teacher = CourseTeacher.get_by_params(@course, current_semester, user)
           = link_to "分配学生", "/admin/course_teachers/#{course_teacher.id}/select_students_page"
+          = link_to "删除", "/admin/course_teachers/#{course_teacher.id}",:method=>:delete,:confirm => "确定删除该任课教师吗？"
   .field.add-teacher
     - if current_semester == Semester.now
       = link_to "增加任课教师","/admin/courses/#{@course.id}/add_teacher_page"
