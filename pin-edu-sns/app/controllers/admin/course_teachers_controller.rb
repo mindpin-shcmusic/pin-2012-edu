@@ -7,7 +7,6 @@ class Admin::CourseTeachersController < ApplicationController
   def pre_load
     if params[:id]
       @course_teacher  = CourseTeacher.find params[:id]
-      @time_expression = JSON.parse(@course_teacher.time_expression)
     end
   end
 
@@ -43,6 +42,22 @@ class Admin::CourseTeachersController < ApplicationController
 
 
   def show_time_expression
+  end
+
+  def select_students_page
+  end
+
+  def select_students
+    users = params[:user_ids].map{|id|User.find(id)}
+    semester = Semester.now
+    users.each do |user|
+      user.add_course(
+        :semester => semester,
+        :course => @course_teacher.course,
+        :teacher_user => @course_teacher.teacher_user
+      )
+    end
+    redirect_to "/admin/courses/#{@course_teacher.course.id}/teachers"
   end
 
 end

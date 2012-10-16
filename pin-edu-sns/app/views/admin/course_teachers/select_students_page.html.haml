@@ -1,0 +1,21 @@
+- course = @course_teacher.course
+- semester = @course_teacher.semester
+- htitle '课程维护'
+
+- hbreadcrumb '基础数据管理', '/admin'
+- hbreadcrumb '课程维护', '/admin/courses'
+- hbreadcrumb course.name
+
+- selected_student_users = course.get_students :semester => semester
+- selected_students = selected_student_users.map{|user|user.student}
+- students = Student.all-selected_students
+.page-course-teacher-select-students
+  = form_tag "/admin/course_teachers/#{@course_teacher.id}/select_students", :method=>:put do
+    - students.each do |student|
+      = check_box_tag "user_ids[]", student.user_id
+      %label= student.real_name
+    .field.submit
+      = jfsubmit '确定'
+      = jfcancel '取消'
+  
+.page-admin-go-back= link_to '返回任课教师', "/admin/courses/#{course.id}/teachers"

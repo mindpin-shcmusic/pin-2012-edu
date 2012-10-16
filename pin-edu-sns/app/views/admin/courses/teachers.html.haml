@@ -22,7 +22,13 @@
           = user.teacher.real_name
         .field.tid
           = user.teacher.tid
-  .field.add_tacher
+        .field.students-count
+          - count = @course.get_students(:semester => current_semester,:teacher_user => user).count
+          = "#{count} 个学生"
+        .field.select-students
+          - course_teacher = CourseTeacher.get_by_params(@course, current_semester, user)
+          = link_to "分配学生", "/admin/course_teachers/#{course_teacher.id}/select_students_page"
+  .field.add-tacher
     - if current_semester == Semester.now
       = link_to "增加教师","/admin/courses/#{@course.id}/add_teacher_page"
 
