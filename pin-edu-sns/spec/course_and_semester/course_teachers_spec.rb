@@ -155,4 +155,27 @@ describe CourseTeacher do
       semesters.include?(semester_2012_b).should == true
     end
   end
+
+  context '学期下有任课教师的课程' do
+    it '学期下有任课教师的课程' do
+      semester_2013_a = Semester.get_by_value("2013A")
+      semester_2013_a.get_courses.should == []
+
+      course_3d.add_teacher :semester => semester_2013_a,
+        :teacher_user => teacher_3d
+      semester_2013_a.get_courses.should == [course_3d]
+
+      course_music.add_teacher :semester => semester_2013_a,
+        :teacher_user => teacher_music
+      semester_2013_a.get_courses.length.should == 2
+      semester_2013_a.get_courses.include?(course_music)
+      semester_2013_a.get_courses.include?(course_3d)
+
+      course_3d.add_teacher :semester => semester_2013_a,
+        :teacher_user => teacher_music
+      semester_2013_a.get_courses.length.should == 2
+      semester_2013_a.get_courses.include?(course_music)
+      semester_2013_a.get_courses.include?(course_3d)
+    end
+  end
 end
