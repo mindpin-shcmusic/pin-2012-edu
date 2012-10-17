@@ -1,11 +1,12 @@
 = render 'nav'
 
 .page-announcements
-  - if !current_user.is_student?
+  - if current_user.is_teacher?
     = link_to '创建通知', new_announcement_path
   = link_to '未读通知', received_announcements_path
-  %h2.created-announcements 我创建的通知
-  = render 'announcements_list', :announcements => @created_announcements
+  - if current_user.is_teacher?
+    %h2.created-announcements 我创建的通知
+    = render 'announcements_list', :announcements => @created_announcements
 
   %h2.received-announcements 我收到的通知
   = render 'announcements_list', :announcements => @received_announcements
