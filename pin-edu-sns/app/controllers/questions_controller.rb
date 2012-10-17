@@ -63,6 +63,9 @@ class QuestionsController < ApplicationController
 
 
   def show
+    current_user.answer_tip_message.delete(@question.answer.id) if current_user.is_student?
+
+    current_user.question_tip_message.delete(@question.id) if current_user.is_teacher?    
   end
   
 
