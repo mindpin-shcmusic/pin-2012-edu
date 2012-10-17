@@ -67,4 +67,9 @@ class Semester
       now_semester
     ]
   end
+
+  def get_courses
+    Course.joins("inner join course_teachers on course_teachers.course_id = courses.id").
+      where("course_teachers.semester_value = '#{self.value}'").uniq
+  end
 end
