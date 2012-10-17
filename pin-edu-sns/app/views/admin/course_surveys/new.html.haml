@@ -7,10 +7,19 @@
 .page-admin-form
   = flash_info
   = form_for [:admin, CourseSurvey.new] do |f|
- 
+
     .field.need
       %label 标题
       =f.text_field :title
+ 
+    .field.need
+      %label 学期
+      = select('semester', 'value', Semester.get_nav_array.collect {|p| [ p.value ] }, {:include_blank => true})
+
+      = select('course', 'value', '', {:include_blank => true})
+
+      = select('teacher', 'value', '', {:include_blank => true})
+
 
 
     .field.need
