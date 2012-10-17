@@ -40,4 +40,21 @@ class Admin::CourseSurveysController < ApplicationController
     render :text => 'ok'
   end
 
+
+  def show_courses_by_semester
+    semester_value = params[:semester_value]
+    semester = Semester.get_by_value(semester_value)
+    courses = semester.get_courses.map{|course|{:id => course.id, :name => course.name}}
+
+    render :json => courses
+  end
+
+  def show_teachers_by_course
+    course_id = params[:course_id]
+    course = Course.find(course_id)
+    teachers = course.get_teachers.map{|user|{:id => user.id, :name => user.teacher.real_name}}
+
+    render :json => teachers
+  end
+
 end

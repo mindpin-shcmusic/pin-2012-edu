@@ -7,8 +7,9 @@
       course_survey_records = course_survey.course_survey_es_records
     end
   .model.course_survey
-    .tite= course_survey.title
-
+    .title
+      = course_survey.title
+      
     .ops
       - if current_user.has_surveyed?(course_survey)
         %a.detail{:href => "/course_survey_records/#{course_survey_records.with_student(current_user)[0].id}/edit?kind=#{course_survey.kind}"} 修改

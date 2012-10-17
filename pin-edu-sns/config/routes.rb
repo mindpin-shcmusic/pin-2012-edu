@@ -100,7 +100,12 @@ MindpinEduSns::Application.routes.draw do
       end
     end
 
-    resources :course_surveys
+    resources :course_surveys do
+      collection do
+        get :show_courses_by_semester
+        get :show_teachers_by_course
+      end
+    end
 
     resources :announcements
     

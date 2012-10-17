@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121016020748) do
+ActiveRecord::Schema.define(:version => 20121017071443) do
 
   create_table "announcement_rules", :force => true do |t|
     t.integer  "creator_id"
@@ -154,6 +154,7 @@ ActiveRecord::Schema.define(:version => 20121016020748) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "kind"
+    t.integer  "course_teacher_id"
   end
 
   create_table "course_teachers", :force => true do |t|
@@ -481,14 +482,18 @@ ActiveRecord::Schema.define(:version => 20121016020748) do
   add_index "team_students", ["team_id"], :name => "index_team_students_on_team_id"
 
   create_table "teams", :force => true do |t|
-    t.string   "name",       :default => "",    :null => false
+    t.string   "name",                   :default => "",    :null => false
     t.string   "cid"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_removed", :default => false
+    t.boolean  "is_removed",             :default => false
+    t.integer  "teaching_plan_id"
+    t.integer  "course_teacher_team_id"
   end
 
+  add_index "teams", ["course_teacher_team_id"], :name => "index_teams_on_course_teacher_team_id"
   add_index "teams", ["is_removed"], :name => "index_teams_on_is_removed"
+  add_index "teams", ["teaching_plan_id"], :name => "index_teams_on_teaching_plan_id"
 
   create_table "users", :force => true do |t|
     t.string   "name",                      :default => "", :null => false
