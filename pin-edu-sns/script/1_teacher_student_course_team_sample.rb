@@ -68,7 +68,7 @@ ActiveRecord::Base.transaction do
     count + 1
   end
 
-  student_chunks = student_users.shuffle.each_slice(50)
+  student_chunks = student_users.each_slice(50)
 
   Course.all.each do |course|
     teachers  = course.get_teachers :semester => semester

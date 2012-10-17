@@ -1,9 +1,11 @@
+= render 'nav'
+
 .page-announcements
   - if !current_user.is_student?
     = link_to '创建通知', new_announcement_path
   = link_to '未读通知', received_announcements_path
-  - @announcements.each do |announcement|
-    %h1.title= announcement.title
-    .content= announcement.content
-    - if !announcement.read_by?(current_user)
-      = link_to '标记已读', read_announcement_path(announcement), :method => :put
+  %h2.created-announcements 我创建的通知
+  = render 'announcements_list', :announcements => @created_announcements
+
+  %h2.received-announcements 我收到的通知
+  = render 'announcements_list', :announcements => @received_announcements

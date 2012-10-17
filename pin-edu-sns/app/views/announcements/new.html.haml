@@ -1,3 +1,6 @@
+= render 'nav'
+- hbreadcrumb '创建新通知'
+
 .page-new-announcement
   = form_for @announcement do |f|
     = flash_info
@@ -8,5 +11,5 @@
       %label 正文
       = f.text_area :content
     .field.submit
-      = jfsubmit '保存'
+      = jfsubmit '下一步'
       = jfcancel '返回'

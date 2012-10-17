@@ -262,7 +262,6 @@ MindpinEduSns::Application.routes.draw do
 
     member do
       put :announce
-      put :read
     end
   end
 

@@ -1,4 +1,5 @@
+= render 'nav'
+- hbreadcrumb '未读通知'
+
 .page-received-announcements
-  - @announcements.each do |announcement|
-    %h1.title= announcement.title
-    .content= announcement.content
+  = render 'announcements_list', :announcements => @announcements
