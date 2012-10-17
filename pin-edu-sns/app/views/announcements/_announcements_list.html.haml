@@ -1,0 +1,4 @@
+- announcements.each do |announcement|
+  = link_to announcement, :class => 'announcement' do
+    .cell.title= announcement.title
+    .cell.content= announcement.content

@@ -1,11 +1,13 @@
 .attrs
   .t2 标题
   .t2 内容
+  .t2 发布人
 
 - announcements.each do |announcement|
   .model.announcement
     .t2= announcement.title
     .t2= announcement.content
+    .t2= announcement.creator.real_name
     .ops
       - remove_url = admin_announcement_path(announcement)
       %a.remove{:href=>'javascript:;', :'data-url'=>remove_url} 删除

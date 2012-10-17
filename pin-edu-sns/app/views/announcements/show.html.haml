@@ -2,13 +2,16 @@
 - expression = rule ? rule.expression : {}
 - course_ids = expression.blank? ? [] : expression[:courses]
 
+= render 'nav'
+- hbreadcrumb @announcement.title
+
 .page-announcement-show
   %h1.title= @announcement.title
   .content= @announcement.content
   .receivers-selector
     - creator = @announcement.creator
     
-    - if !current_user.is_student?
+    - if current_user == @announcement.creator
       = form_tag announce_announcement_path(@announcement), :method => :put do
         .courses
           请选择要发布通知的课程

@@ -7,7 +7,8 @@ class AnnouncementsController < ApplicationController
   end
 
   def index
-    @announcements = current_user.received_announcements
+    @received_announcements = current_user.received_announcements
+    @created_announcements = current_user.created_announcements
   end
 
   def create
@@ -31,12 +32,8 @@ class AnnouncementsController < ApplicationController
 
     @announcement = Announcement.find(params[:id])
     @announcement.announce_to(:courses => courses, :teams => teams)
-    redirect_to :back
-  end
-
-  def read
-    Announcement.find(params[:id]).read_by!(current_user)
-    redirect_to :back
+    return redirect_to admin_announcements_path if current_user.is_admin?
+    redirect_to :action => :index
   end
 
 protected
