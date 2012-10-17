@@ -7,6 +7,18 @@ class CourseSurveyEsRecord < ActiveRecord::Base
              :foreign_key => 'student_user_id'
 
 
+  validates :course_survey, 
+            :student, 
+            :attend_class, 
+            :attend_class_reason, 
+            :interesting_level,
+            :keywords,
+            :understand_level,
+            :student_question,
+            :student_response,
+            :presence => true
+
+
   scope :with_student, lambda {|student| {:conditions => ['student_user_id = ?', student.id]}}
 
 

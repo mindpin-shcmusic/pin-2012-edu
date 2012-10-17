@@ -9,9 +9,16 @@ class Question < ActiveRecord::Base
           :foreign_key => 'teacher_user_id'
 
 
+
+  validates :creator, :teacher_user, :title, :content, :presence => true
+
+
   scope :with_teacher, lambda {|teacher| {:conditions => ['teacher_user_id = ?', teacher.id]}}
   scope :answered, where(:has_answered => true)
   scope :unanswered, where(:has_answered => false)
+
+
+
 
   include ModelRemovable
   

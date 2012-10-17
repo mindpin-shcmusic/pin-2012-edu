@@ -9,6 +9,9 @@ class Answer < ActiveRecord::Base
              :class_name  => 'Question',
              :foreign_key => :question_id
 
+
+  validates :creator, :question, :content, :presence => true
+
   after_save :set_question_answered
 
   def set_question_answered
