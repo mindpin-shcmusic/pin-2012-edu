@@ -2,13 +2,13 @@
   %span 上课能够集中精力认真参与吗? (积极地记笔记，提问，参与讨论等)
   
   %span 完全能够
-  = survey_count[:attend_class_a]
+  = survey_count[:attend_class]['A'].length
 
   %span 做到一部分
-  = survey_count[:attend_class_b]
+  = survey_count[:attend_class]['B'].length
 
   %span 没能够
-  = survey_count[:attend_class_c]
+  = survey_count[:attend_class]['C'].length
 
 
 .field
@@ -21,19 +21,19 @@
   %span [内容・兴趣条目] 对上课的内容感兴趣吗
   
   %span 非常感兴趣
-  = survey_count[:interesting_level_a]
+  = survey_count[:interesting_level]['A'].length
 
   %span 感兴趣
-  = survey_count[:interesting_level_b]
+  = survey_count[:interesting_level]['B'].length
 
   %span 不确定
-  = survey_count[:interesting_level_c]
+  = survey_count[:interesting_level]['C'].length
 
   %span 不怎么感兴趣
-  = survey_count[:interesting_level_d]
+  = survey_count[:interesting_level]['D'].length
 
   %span 不感兴趣
-  = survey_count[:interesting_level_e]
+  = survey_count[:interesting_level]['E'].length
 
 
 .field
@@ -46,19 +46,19 @@
   %span [内容・理解条目] 能够理解上课的内容吗
   
   %span 非常感兴趣
-  = survey_count[:understand_level_a]
+  = survey_count[:understand_level]['A'].length
 
   %span 感兴趣
-  = survey_count[:understand_level_b]
+  = survey_count[:understand_level]['B'].length
 
   %span 不确定
-  = survey_count[:understand_level_c]
+  = survey_count[:understand_level]['C'].length
 
   %span 不怎么感兴趣
-  = survey_count[:understand_level_d]
+  = survey_count[:understand_level]['D'].length
 
   %span 不感兴趣
-  = survey_count[:understand_level_e]
+  = survey_count[:understand_level]['E'].length
 
 
 .field
