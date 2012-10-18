@@ -44,21 +44,21 @@ ActiveRecord::Base.transaction do
 
   puts ">>>>>>>> 管理员"
 
-  # students.reduce(1) do |count, name|
-  #   user = User.create(:name => "student#{count}",
-  #                      :email => "student#{count}@edu.dev",
-  #                      :password => '1234')
+  students.reduce(1) do |count, name|
+    user = User.create(:name => "student#{count}",
+                       :email => "student#{count}@edu.dev",
+                       :password => '1234')
 
-  #   user.set_role :student
+    user.set_role :student
 
-  #   student = Student.create(:real_name => name,
-  #                            :sid => "sid-#{count}",
-  #                            :user => user)
+    student = Student.create(:real_name => name,
+                             :sid => "sid-#{count}",
+                             :user => user)
 
-  #   puts ">>>>>>>> 学生: #{student.real_name}; sid: #{student.sid}"
+    puts ">>>>>>>> 学生: #{student.real_name}; sid: #{student.sid}"
 
-  #   count + 1
-  # end
+    count + 1
+  end
 
   teachers.reduce(1) do |count, name|
     user = User.create(:name => "teacher#{count}",
@@ -85,23 +85,22 @@ ActiveRecord::Base.transaction do
     count + 1
   end
 
-  # 1.upto(5).each do |count|
-  #   team = Team.create(:name => "2012级#{count}班",
-  #                      :cid => "cid-#{count}")
+  student_users = Student.all.map(&:user)
 
-  #   team.student_users = student_users[(count-1)*30, 30]
+  1.upto(5).each do |count|
+    team = Team.create(:name => "2012级#{count}班",
+                       :cid => "cid-#{count}")
 
-  #   puts ">>>>>>>> 创建班级#{team.name}，共#{team.student_users.count}名学生"
-  # end
+    team.student_users = student_users[(count-1)*30, 30]
 
-  #student_users = Student.all.map(&:user)
-  teacher_users = Teacher.all.map(&:user)
-  #student_chunks = student_users.each_slice(50)
-  teacher_chunks = teacher_users.each_slice(4).to_a
-  course_chunks = Course.all.each_slice(5)
+    puts ">>>>>>>> 创建班级#{team.name}，共#{team.student_users.count}名学生"
+  end
+
+  student_chunks = student_users.each_slice(30)
+  teacher_chunks = Teacher.all.map(&:user).each_slice(4).to_a
+  course_chunks = Course.all.each_slice(5).to_a
 
   course_chunks.reduce(teacher_chunks) do |t_chunks, courses|
-
     courses.reduce(1) do |week_day, course|
       teachers = t_chunks[week_day-1]
 
@@ -122,6 +121,26 @@ ActiveRecord::Base.transaction do
     end
 
     tail_to_head(t_chunks)
+  end
+
+  student_chunks.reduce(0) do |index, students|
+    courses = course_chunks[index]
+
+    students.each do |student|
+      courses.each do |course|
+        teacher_users = course.get_teachers(:semester => semester)
+        x = student.add_course(:semester => semester,
+                               :course => course,
+                               :teacher_user => teacher_users[rand 4])
+
+        raise x.errors.messages.to_json if x.invalid?
+      end
+
+      puts ">>>>>>> 为学生#{student.real_name}选择课程"
+
+    end
+
+    index + 1
   end
 
 end
