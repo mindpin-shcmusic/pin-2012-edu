@@ -150,7 +150,7 @@ ActiveRecord::Schema.define(:version => 20121018034241) do
   add_index "course_survey_records", ["student_user_id"], :name => "index_course_survey_records_on_student_user_id"
 
   create_table "course_surveys", :force => true do |t|
-    t.string   "title",           :null => false
+    t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "kind"
@@ -484,18 +484,14 @@ ActiveRecord::Schema.define(:version => 20121018034241) do
   add_index "team_students", ["team_id"], :name => "index_team_students_on_team_id"
 
   create_table "teams", :force => true do |t|
-    t.string   "name",                   :default => "",    :null => false
+    t.string   "name",       :default => "",    :null => false
     t.string   "cid"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_removed",             :default => false
-    t.integer  "teaching_plan_id"
-    t.integer  "course_teacher_team_id"
+    t.boolean  "is_removed", :default => false
   end
 
-  add_index "teams", ["course_teacher_team_id"], :name => "index_teams_on_course_teacher_team_id"
   add_index "teams", ["is_removed"], :name => "index_teams_on_is_removed"
-  add_index "teams", ["teaching_plan_id"], :name => "index_teams_on_teaching_plan_id"
 
   create_table "users", :force => true do |t|
     t.string   "name",                      :default => "", :null => false

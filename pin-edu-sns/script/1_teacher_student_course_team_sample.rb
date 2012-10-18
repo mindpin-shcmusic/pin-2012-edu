@@ -126,18 +126,18 @@ ActiveRecord::Base.transaction do
   student_chunks.reduce(0) do |index, students|
     courses = course_chunks[index]
 
-    students.each do |student|
+    students.reduce(0) do |offset, student|
+      offset = 0 if offset > 3
       courses.each do |course|
         teacher_users = course.get_teachers(:semester => semester)
         x = student.add_course(:semester => semester,
                                :course => course,
-                               :teacher_user => teacher_users[rand 4])
-
-        raise x.errors.messages.to_json if x.invalid?
+                               :teacher_user => teacher_users[offset])
       end
 
       puts ">>>>>>> 为学生#{student.real_name}选择课程"
 
+      offset + 1
     end
 
     index + 1
