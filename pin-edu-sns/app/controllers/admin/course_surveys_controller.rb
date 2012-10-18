@@ -52,8 +52,11 @@ class Admin::CourseSurveysController < ApplicationController
   def show_teachers_by_course
     course_id = params[:course_id]
     semester = params[:semester]
+
     course = Course.find(course_id)
-    teachers = course.get_teachers(:semester => semester).map{|user|{:id => user.id, :name => user.teacher.real_name}}
+    semester = Semester.get_by_value(semester)
+
+    teachers = course.get_teachers(:semester => semester).map{|user|{:id => user.id, :name => user.real_name}}
 
     render :json => teachers
   end

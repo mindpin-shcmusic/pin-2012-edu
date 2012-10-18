@@ -27,7 +27,7 @@ pie.load ->
       success: (res)->
         i = 0
         while i < res.length
-          jQuery('#teacher').append(new Option(res[i].real_name, res[i].id))
+          jQuery('#teacher').append(new Option(res[i].name, res[i].id))
           jQuery('.teacher-selector').trigger('liszt:updated')
           i++       
     
