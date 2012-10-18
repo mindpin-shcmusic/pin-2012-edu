@@ -12,7 +12,7 @@
       %label 标题
       =f.text_field :title
  
-    .field.need
+    .field
       %label 学期
       = select_tag 'semester', options_for_select(Semester.get_nav_array.collect{ |p| [p.value, p.value] }), :class => 'semester-selector'
 
