@@ -14,11 +14,11 @@
  
     .field
       %label 学期
-      = f.select(:semester_value, Semester.get_nav_array.collect {|p| [ p.value, p.value ] })
+      = f.select(:semester_value, Semester.get_nav_array.collect {|p| [ p.value, p.value ] }, {:include_blank => true}, {:data => {:placeholder => '学期'}})
 
-      = f.select(:course_id, '')
+      = f.select(:course_id, '', {:include_blank => true}, {:data => {:placeholder => '课程'}})
 
-      = f.select(:teacher_user_id, '')
+      = f.select(:teacher_user_id, '', {:include_blank => true}, {:data => {:placeholder => '教师'}})
 
 
 
