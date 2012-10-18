@@ -8,6 +8,8 @@ pie.load ->
         'semester' : jQuery(this).val()
       }
       success: (res)->
+        $('#course_survey_course_id').empty()
+
         i = 0
         while i < res.length
           jQuery('#course_survey_course_id').append(new Option(res[i].name, res[i].id))
@@ -25,6 +27,7 @@ pie.load ->
         'semester' : jQuery('#course_survey_semester_value').val()
       }
       success: (res)->
+        $('#course_survey_teacher_user_id').empty()
         i = 0
         while i < res.length
           jQuery('#course_survey_teacher_user_id').append(new Option(res[i].name, res[i].id))
