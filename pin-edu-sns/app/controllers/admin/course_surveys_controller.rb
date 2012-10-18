@@ -22,15 +22,6 @@ class Admin::CourseSurveysController < ApplicationController
 
   def create
     @course_survey = CourseSurvey.new(params[:course_survey])
-
-    course = Course.find(params[:course])
-    semester = Semester.get_by_value(params[:semester])
-    teacher_user = User.find(params[:teacher])
-
-    course_teacher = CourseTeacher.get_by_params(course, semester, teacher_user)
-
-    @course_survey.course_teacher = course_teacher
-
     if @course_survey.save
       return redirect_to "/admin/course_surveys/#{@course_survey.id}"
     end

@@ -6,6 +6,10 @@ class CourseSurvey < ActiveRecord::Base
   validates :title, :presence => true
 
   scope :with_kind, lambda {|kind| {:conditions => ['kind = ?', kind]}}
+  scope :with_student, lambda { |student_user| 
+    joins("inner join course_student_assigns on course_surveys.course_id = course_student_assigns.course_id and course_surveys.semester_value = course_student_assigns.semester_value and course_surveys.teacher_user_id = course_student_assigns.teacher_user_id").
+      where("course_student_assigns.student_user_id = #{student_user.id}")
+  }
 
   def has_permission?(student_user)
     return false if !student_user.is_student?
