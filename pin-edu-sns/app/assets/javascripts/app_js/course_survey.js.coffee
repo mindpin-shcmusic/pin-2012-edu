@@ -1,8 +1,4 @@
 pie.load ->
-  jQuery('.semester-selector').chosen()
-  jQuery('.course-selector').chosen()
-  jQuery('.teacher-selector').chosen()
-
   # 根据学期动态显示课程
   jQuery(document).delegate '#semester', 'change', ->
     jQuery.ajax
@@ -15,6 +11,7 @@ pie.load ->
         i = 0
         while i < res.length
           jQuery('#course').append(new Option(res[i].name, res[i].id))
+          jQuery('.course-selector').trigger('liszt:updated')
           i++
 
 
@@ -31,5 +28,6 @@ pie.load ->
         i = 0
         while i < res.length
           jQuery('#teacher').append(new Option(res[i].real_name, res[i].id))
+          jQuery('.teacher-selector').trigger('liszt:updated')
           i++       
     
