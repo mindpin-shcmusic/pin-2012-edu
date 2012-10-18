@@ -14,11 +14,12 @@
  
     .field.need
       %label 学期
-      = select('semester', 'value', Semester.get_nav_array.collect {|p| [ p.value ] }, {:include_blank => true})
+      = select_tag 'semester', options_for_select(Semester.get_nav_array.collect{ |p| [p.value, p.value] }), :class => 'semester-selector'
 
-      = select('course', 'value', '', {:include_blank => true})
+      = select_tag 'course', '', :class => 'course-selector'
 
-      = select('teacher', 'value', '', {:include_blank => true})
+      = select_tag 'teacher', '', :class => 'teacher-selector'
+
 
 
 
