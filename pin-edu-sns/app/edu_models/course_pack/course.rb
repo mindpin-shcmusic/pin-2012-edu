@@ -130,11 +130,24 @@ class Course < ActiveRecord::Base
         where("course_student_assigns.semester_value = '#{options[:semester].value}' and course_student_assigns.student_user_id = #{self.id}")
     end
 
+    def get_student_course_teachers(options)
+      raise '该用户不是 student' if !self.is_student?
+
+      CourseTeacher.joins("inner join course_student_assigns on course_student_assigns.course_id = course_teachers.course_id and course_student_assigns.semester_value = course_teachers.semester_value and course_student_assigns.teacher_user_id = course_teachers.teacher_user_id").
+        where("course_student_assigns.semester_value = '#{options[:semester].value}' and course_student_assigns.student_user_id = #{self.id}")
+    end
+
     def get_teacher_courses(options)
       raise '该用户不是 teacher' if !self.is_teacher?
 
       Course.joins("inner join course_teachers on course_teachers.course_id = courses.id").
         where("course_teachers.semester_value = '#{options[:semester].value}' and course_teachers.teacher_user_id = #{self.id}")
+    end
+
+    def get_teacher_course_teachers(options)
+      raise '该用户不是 teacher' if !self.is_teacher?
+
+      CourseTeacher.where("course_teachers.semester_value = '#{options[:semester].value}' and course_teachers.teacher_user_id = #{self.id}")
     end
 
     def get_teachers(options)

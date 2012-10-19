@@ -92,6 +92,9 @@ describe Course do
     courses.length.should == 1
     courses[0].should == course_3d
 
+    courses = student_song.get_student_course_teachers(:semester => semester_2012_a).map{|course_teacher|course_teacher.course}
+    courses.should == [course_3d]
+
     course_music.add_teacher :semester => semester_2012_a,
                              :teacher_user  => teacher_li
 
@@ -267,11 +270,14 @@ describe Course do
 
   it '获取一个教师在某个学期应该教的课程' do
     teacher_zhang.get_teacher_courses(:semester => semester_2012_a).should == []
+    teacher_zhang.get_teacher_course_teachers(:semester => semester_2012_a).should == []
 
     course_3d.add_teacher :semester     => semester_2012_a,
                           :teacher_user => teacher_zhang
 
     teacher_zhang.get_teacher_courses(:semester => semester_2012_a).should == [course_3d]
+    courses = teacher_zhang.get_teacher_course_teachers(:semester => semester_2012_a).map{|course_teacher|course_teacher.course}
+    courses.should == [course_3d]
 
     course_music.add_teacher :semester     => semester_2012_a,
                           :teacher_user => teacher_zhang
@@ -279,5 +285,9 @@ describe Course do
     teacher_zhang.get_teacher_courses(:semester => semester_2012_a).length.should == 2
     teacher_zhang.get_teacher_courses(:semester => semester_2012_a).include?(course_3d)
     teacher_zhang.get_teacher_courses(:semester => semester_2012_a).include?(course_music)
+
+    courses = teacher_zhang.get_teacher_course_teachers(:semester => semester_2012_a).map{|course_teacher|course_teacher.course}
+    courses.include?(course_3d).should == true
+    courses.include?(course_music).should == true
   end
 end
