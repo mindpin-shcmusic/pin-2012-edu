@@ -9,6 +9,7 @@ pie.load ->
       }
       success: (res)->
         $('#course_survey_course_id').empty()
+        $('#course_survey_teacher_user_id').empty()
 
         i = 0
         while i < res.length

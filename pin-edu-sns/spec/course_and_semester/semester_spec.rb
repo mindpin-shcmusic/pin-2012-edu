@@ -88,9 +88,12 @@ describe Course do
     }.to raise_error(Course::InvalidCourseParams)
 
     # 获取某个学生在某个学期要上的课
-    courses = student_song.get_courses :semester => semester_2012_a
+    courses = student_song.get_student_courses :semester => semester_2012_a
     courses.length.should == 1
     courses[0].should == course_3d
+
+    courses = student_song.get_student_course_teachers(:semester => semester_2012_a).map{|course_teacher|course_teacher.course}
+    courses.should == [course_3d]
 
     course_music.add_teacher :semester => semester_2012_a,
                              :teacher_user  => teacher_li
@@ -200,7 +203,7 @@ describe Course do
 
     student_user = team_test.student_users.first
 
-    courses = student_user.get_courses :semester => semester_2012_a
+    courses = student_user.get_student_courses :semester => semester_2012_a
     courses.length.should == 1
     courses[0].should == course_3d
 
@@ -256,12 +259,35 @@ describe Course do
                           :course       => course_3d,
                           :teacher_user => teacher_zhang
 
-    courses = student_song.get_courses :semester => semester_2012_a
+    courses = student_song.get_student_courses :semester => semester_2012_a
     courses.length.should == 1
     courses[0].should == course_3d
 
-    courses = student_wu.get_courses :semester => semester_2012_a
+    courses = student_wu.get_student_courses :semester => semester_2012_a
     courses.length.should == 1
     courses[0].should == course_3d
+  end
+
+  it '获取一个教师在某个学期应该教的课程' do
+    teacher_zhang.get_teacher_courses(:semester => semester_2012_a).should == []
+    teacher_zhang.get_teacher_course_teachers(:semester => semester_2012_a).should == []
+
+    course_3d.add_teacher :semester     => semester_2012_a,
+                          :teacher_user => teacher_zhang
+
+    teacher_zhang.get_teacher_courses(:semester => semester_2012_a).should == [course_3d]
+    courses = teacher_zhang.get_teacher_course_teachers(:semester => semester_2012_a).map{|course_teacher|course_teacher.course}
+    courses.should == [course_3d]
+
+    course_music.add_teacher :semester     => semester_2012_a,
+                          :teacher_user => teacher_zhang
+
+    teacher_zhang.get_teacher_courses(:semester => semester_2012_a).length.should == 2
+    teacher_zhang.get_teacher_courses(:semester => semester_2012_a).include?(course_3d)
+    teacher_zhang.get_teacher_courses(:semester => semester_2012_a).include?(course_music)
+
+    courses = teacher_zhang.get_teacher_course_teachers(:semester => semester_2012_a).map{|course_teacher|course_teacher.course}
+    courses.include?(course_3d).should == true
+    courses.include?(course_music).should == true
   end
 end
