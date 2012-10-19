@@ -2923,6 +2923,8 @@ ActiveRecord::Base.transaction do
                        :password => '1234',
                        :email => 'xiao@edu.dev')
 
+    user.set_role :teacher
+
     teacher.real_name = '肖少富'
     teacher.tid = 'tid-x'
     teacher.user = user
@@ -2932,6 +2934,9 @@ ActiveRecord::Base.transaction do
     user = User.create(:name => 'yedx',
                        :password => '1234',
                        :email => 'ye@edu.dev')
+
+    user.set_role :student
+
     student.real_name = '叶大雄'
     student.sid = 'sid-y'
     student.user = user
