@@ -3,20 +3,15 @@ class HomeworkAssignRule < ActiveRecord::Base
   after_save :enqueue_build_assign
 
   belongs_to :homework
-
   belongs_to :creator,
              :class_name  => 'User',
              :foreign_key => 'creator_id'
 
   def build_expression(options = {})
-    options.assert_valid_keys :teams
+    options.assert_valid_keys :courses
 
-    options[:teams] ||= []
+    options[:courses] ||= []
 
-    @deleting = persisted? ? deleting_assignee_ids(options) : []
-
-    delete_assign
-    
     self.expression = options.to_json
   end
 
@@ -28,20 +23,13 @@ class HomeworkAssignRule < ActiveRecord::Base
     end
   end
 
-  def expression_assignee_ids
-    Team.find(expression[:teams]).map(&:student_users).flatten.map(&:id).map().sort
-  end
-
   def expression_assignees
-    User.find expression_assignee_ids
-  end
+    Course.find(expression[:courses]).map do |course|
+      course.get_students :semester => Semester.now,
+                          :teacher => self.creator
 
-  def deleting_assignees
-    User.find deleting_assignee_ids
-  end
+    end.flatten
 
-  def delete_assign
-    HomeworkAssign.where('homework_id = ? and user_id in (?)', self.homework_id, self.deleting).delete_all
   end
 
   def build_assign
@@ -52,13 +40,7 @@ class HomeworkAssignRule < ActiveRecord::Base
     }
   end
 
-  private
-
-  def deleting_assignee_ids(options)
-    return [] if expression.nil?
-    deleted_team_ids = ArrayDiff.deleted(expression[:teams], options[:teams].map(&:to_i))
-    Team.find(deleted_team_ids).map(&:student_users).flatten.map(&:id)
-  end
+private
 
   def enqueue_build_assign
     BuildHomeworkAssignResqueQueue.enqueue(self.id)

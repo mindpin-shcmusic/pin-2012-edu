@@ -1,0 +1,37 @@
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '课程'
+
+.page-courses-head
+  .tab
+
+
+.page-courses
+  .field{:style => "float: left; width: 130px;border: 1px solid #000"}
+    - 13.times do |number|
+      :ruby
+        course_label = change_to_course_number(number)
+
+      %item{:style => "display: block;border: 1px solid #000; height: 45px;"}
+        = course_label
+
+  - 7.times do |weekday|
+    :ruby
+      weekday += 1
+      weekday = 0 if weekday == 7
+      weekday_label = change_to_weekday(weekday)
+
+
+    .field{:style => "float: left; width: 130px;border: 1px solid #000;"}
+      %item{:style => "display: block; border: 1px solid #000; height: 45px;border-left-style:none"}
+        %span= weekday_label
+
+      - 12.times do |number|
+        :ruby
+          number += 1
+          course_label = change_to_course_number(number)
+          course = get_teacher_course_by_weekday_and_number(@student_courses, weekday, number)
+
+        %item{:style => "display: block; border: 1px solid #000; height: 45px;border-left-style:none"}
+            
+          - if !course.nil?
+            = course.name

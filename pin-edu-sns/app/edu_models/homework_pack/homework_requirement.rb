@@ -18,7 +18,6 @@ class HomeworkRequirement < ActiveRecord::Base
     user.homework_student_uploads.find_by_requirement_id(self.id)
   end
 
-  # 学生是否提交作业附件
   def is_uploaded_by?(user)
     !self.upload_by(user).blank?
   end

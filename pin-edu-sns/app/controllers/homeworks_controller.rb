@@ -8,17 +8,17 @@ class HomeworksController < ApplicationController
   end
   
   def create
-    @homework = current_user.teacher_homeworks.build(params[:homework])
-    if @homework.save
-      @homework.assign_to_expression({:teams => params[:teams]}.to_json)
+    homework = current_user.teacher_homeworks.build(params[:homework])
+    if homework.save
+      homework.assign_to_expression({:courses => [homework.course_id]}.to_json)
       
       if params[:file_entities]
         params[:file_entities].each do |file|
-          attach = HomeworkTeacherAttachment.create(:creator => current_user, :name => file[:name], :file_entity_id => file[:id], :homework => @homework)
+          attach = HomeworkTeacherAttachment.create(:creator => current_user, :name => file[:name], :file_entity_id => file[:id], :homework => homework)
         end
       end
 
-      return redirect_to @homework
+      return redirect_to homework
     end
     
     redirect_to '/homeworks/new'
@@ -39,8 +39,7 @@ class HomeworksController < ApplicationController
     @teacher_attachments = []
     @requirements = []
 
-    @courses = Course.where(:teacher_user_id => current_user.id)
-    @teams = Team.where(:teacher_user_id => current_user.id)
+    @courses = current_user.courses
   end
 
   def index
@@ -61,41 +60,41 @@ class HomeworksController < ApplicationController
     @homework = Homework.find(params[:id])
   end
 
-  def edit
-    @homework = Homework.find(params[:id])
-    @homework_student_upload_requirements = HomeworkRequirement.where(:homework_id => @homework.id)
-    @teacher_attachments = HomeworkTeacherAttachment.where(:homework_id => @homework.id)
+  # def edit
+  #   @homework = Homework.find(params[:id])
+  #   @homework_student_upload_requirements = HomeworkRequirement.where(:homework_id => @homework.id)
+  #   @teacher_attachments = HomeworkTeacherAttachment.where(:homework_id => @homework.id)
 
-    @courses = Course.where(:teacher_user_id => current_user.id)
-    @teams = Team.where(:teacher_user_id => current_user.id)
+  #   @courses = Course.where(:teacher_user_id => current_user.id)
+  #   @teams = Team.where(:teacher_user_id => current_user.id)
 
-    @selected_teams = @homework.homework_assign_rule.expression[:teams].map(&:to_i)
-    @requirements = HomeworkRequirement.where(:homework_id => @homework.id)
-  end
+  #   @selected_teams = @homework.homework_assign_rule.expression[:teams].map(&:to_i)
+  #   @requirements = HomeworkRequirement.where(:homework_id => @homework.id)
+  # end
 
-  def update
-    @homework = Homework.find(params[:id])
-    @homework.update_attributes(params[:homework])
-    if @homework.save
-      @homework.assign_to_expression({:teams => params[:teams]}.to_json)
+  # def update
+  #   @homework = Homework.find(params[:id])
+  #   @homework.update_attributes(params[:homework])
+  #   if @homework.save
+  #     @homework.assign_to_expression({:teams => params[:teams]}.to_json)
       
-      if params[:teacher_attachment_ids]
-        params[:teacher_attachment_ids].each do |id|
-          attach = HomeworkTeacherAttachment.find(id)
-          attach.homework = @homework
-          attach.save
-        end
-      end
+  #     if params[:teacher_attachment_ids]
+  #       params[:teacher_attachment_ids].each do |id|
+  #         attach = HomeworkTeacherAttachment.find(id)
+  #         attach.homework = @homework
+  #         attach.save
+  #       end
+  #     end
 
-      return redirect_to @homework
-    end
+  #     return redirect_to @homework
+  #   end
     
-    error = @homework.errors.first
-    flash.now[:error] = "#{error[0]} #{error[1]}"
-    redirect_to '/homeworks/new'
-    return redirect_to @homework if @homework.save
-    redirect_to :back
-  end
+  #   error = @homework.errors.first
+  #   flash.now[:error] = "#{error[0]} #{error[1]}"
+  #   redirect_to '/homeworks/new'
+  #   return redirect_to @homework if @homework.save
+  #   redirect_to :back
+  # end
 
   def download_teacher_zip
     homework = Homework.find(params[:id])
