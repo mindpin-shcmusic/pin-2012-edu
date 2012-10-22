@@ -18,10 +18,6 @@
       %label 请选择日期
       = f.text_field :deadline, :class => 'homework-deadline'
     
-    .field  
-      %label 请选择要布置作业的班级
-      = select_tag :teams, options_from_collection_for_select(@teams, :id, :name, @selected_teams), :multiple => true, :class => 'teams-selector', :style => 'width:256px;', :data => {:placeholder => '请选择'}
-    
     .field.attachments
       %label 老师作业附件
 
