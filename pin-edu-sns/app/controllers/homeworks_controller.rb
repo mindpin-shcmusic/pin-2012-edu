@@ -39,7 +39,7 @@ class HomeworksController < ApplicationController
     @teacher_attachments = []
     @requirements = []
 
-    @courses = current_user.courses
+    @courses = current_user.get_teacher_courses :semester => Semester.now
   end
 
   def index
