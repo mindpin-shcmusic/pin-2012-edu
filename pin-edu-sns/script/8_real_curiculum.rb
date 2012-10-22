@@ -69,6 +69,7 @@ ActiveRecord::Base.transaction do
       teacher.user = User.create(:name => "teachern#{id}",
                                  :password => '1234',
                                  :email => "#{teacher.tid}@edu.dev")
+      teacher.user.set_role :teacher
       teacher.save
     end
 
@@ -87,6 +88,24 @@ ActiveRecord::Base.transaction do
                              :teacher_user => teacher.user,
                              :time => expression[:time_expression])
 
+    end
+
+    student = Student.find_or_initialize_by_real_name '吴大刚'
+    if !student.persisted?
+      student.sid = "sid-n#{id}"
+      student.user = User.create(:name => "studentn#{id}",
+                                 :password => '1234',
+                                 :email => "#{student.sid}@edu.dev")
+      student.user.set_role :student
+      student.save
+    end
+
+    course_assign = CourseStudentAssign.find_or_initialize_by_student_user_id_and_course_id(student.user_id, course.id)
+    if !course_assign.persisted?
+      student.user.add_course(:semester => semester,
+                              :teacher_user => teacher.user,
+                              :course => course)
+      
     end
 
     id + 1
