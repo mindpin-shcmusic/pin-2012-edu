@@ -96,7 +96,6 @@ class CourseTeacher < ActiveRecord::Base
   module UserMethods
     def self.included(base)
       base.has_many :course_teachers, :foreign_key => :teacher_user_id
-      base.has_many :courses, :through => :course_teachers
     end
   end
 end
