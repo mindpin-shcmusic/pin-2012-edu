@@ -94,10 +94,10 @@ class CourseTeacher < ActiveRecord::Base
   end
 
 
+
   def get_next_courses_by_time_expression(current_cte)
     courses = []
-    time_expression = JSON.parse(self.time_expression)
-    time_expression.each do |expression|
+    self.time_expression_array.each do |expression|
       
       expression['number'].each do |number|
         cte = CourseTimeExpression.new(expression['weekday'], [number])
