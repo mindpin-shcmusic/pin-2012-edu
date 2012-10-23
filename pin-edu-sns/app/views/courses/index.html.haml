@@ -20,12 +20,10 @@
         = link_to hspan(course.name), course
       .cell.cid
         = link_to hspan(course.cid), course
-      .cell.department
-        = hspan(course.department)
-      .cell.location
-        = hspan(course.location)
-      .cell.teacher
-        .avatar= avatar_link course.teacher_user, :tiny
-        .name= user_link course.teacher_user
+      -# .cell.location
+      -#   = hspan(course.location)
+      -# .cell.teacher
+      -#   .avatar= avatar_link course.teacher_user, :tiny
+      -#   .name= user_link course.teacher_user
 
 .page-paginate= will_paginate @courses

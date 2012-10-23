@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class CoursesController < ApplicationController
   before_filter :login_required
   before_filter :per_load
@@ -8,11 +9,6 @@ class CoursesController < ApplicationController
 
   def index
     @courses = Course.paginated(params[:page])
-  end
-
-  def mine
-    @courses = current_user.courses.paginated(params[:page])
-    render :index
   end
 
   def show
