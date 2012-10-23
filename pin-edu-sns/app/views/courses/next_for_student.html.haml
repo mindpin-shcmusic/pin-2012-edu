@@ -7,6 +7,8 @@
 
 .page-courses
   - @next_course_teachers.each do |course_teacher|
+    = # debug course_teacher
+
     - course_teacher.each do |class_detail|
       .field
         = class_detail[:weekday_str]
