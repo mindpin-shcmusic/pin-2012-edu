@@ -52,21 +52,14 @@ class CoursesController < ApplicationController
             @next_course_teachers << class_detail
           end
         end
-
         
       end
-
  
     end
 
 
     @next_course_teachers = @next_course_teachers.sort_by {|class_detail| class_detail[:weekday]}
-
     @next_course_teachers = @next_course_teachers.group_by{|item| item[:weekday]}
-
-    p 111
-    p @next_course_teachers
-    p 222
 
   end
 
