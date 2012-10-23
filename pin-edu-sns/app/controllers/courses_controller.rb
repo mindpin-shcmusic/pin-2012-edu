@@ -58,6 +58,8 @@ class CoursesController < ApplicationController
 
       @next_course_teachers = @next_course_teachers.sort_by {|class_detail| class_detail[:weekday]}
 
+      @next_course_teachers = @next_course_teachers.group_by{|item| item[:weekday]}
+ 
     end
 
   end
