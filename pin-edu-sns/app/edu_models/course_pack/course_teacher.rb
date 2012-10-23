@@ -93,6 +93,31 @@ class CourseTeacher < ActiveRecord::Base
     )
   end
 
+
+
+  def get_next_courses_by_time_expression(current_cte)
+    courses = []
+    self.time_expression_array.each do |expression|
+      
+      expression['number'].each do |number|
+        cte = CourseTimeExpression.new(expression['weekday'], [number])
+        if cte >= current_cte
+          class_detail = Hash.new(0)
+
+          class_detail[:weekday] = cte.weekday
+          class_detail[:weekday_str] = cte.weekday_str
+          class_detail[:class_time] = "#{cte.start_time_str} - #{cte.end_time_str}"
+          class_detail[:course_teacher] = self
+
+          courses << class_detail
+        end
+      end
+      
+    end
+
+    courses
+  end
+
   module UserMethods
     def self.included(base)
       base.has_many :course_teachers, :foreign_key => :teacher_user_id

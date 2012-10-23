@@ -34,4 +34,4 @@
         %item{:style => "display: block; border: 1px solid #000; height: 45px;border-left-style:none"}
             
           - if !course.nil?
-            = course.name
+            = link_to course.name, "/courses/#{course.id}"

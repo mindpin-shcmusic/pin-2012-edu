@@ -1,0 +1,15 @@
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '课程'
+
+.page-courses-head
+  .tab
+
+
+.page-courses
+  - @next_course_teachers.each do |weekday, course_teacher|
+    = change_to_weekday(weekday)
+    .field
+      - @next_course_teachers[weekday].each do |class_detail|
+        .field
+          = class_detail[:class_time]
+          = link_to class_detail[:course_teacher].course.name, "/courses/#{class_detail[:course_teacher].course.id}"
