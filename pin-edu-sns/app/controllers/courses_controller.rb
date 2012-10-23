@@ -43,24 +43,21 @@ class CoursesController < ApplicationController
           cte = CourseTimeExpression.new(expression['weekday'], [number])
           if cte >= current_cte
             class_detail = Hash.new(0)
-            row = Hash.new(0)
 
-            class_detail[cte.weekday] ||= []
-            row[:weekday] = cte.weekday
-            row[:weekday_str] = cte.weekday_str
-            row[:class_time] = "#{cte.start_time_str} - #{cte.end_time_str}"
-            row[:course_teacher] = course_teacher
+            class_detail[:weekday] = cte.weekday
+            class_detail[:weekday_str] = cte.weekday_str
+            class_detail[:class_time] = "#{cte.start_time_str} - #{cte.end_time_str}"
+            class_detail[:course_teacher] = course_teacher
 
-            class_detail[cte.weekday] << row
-
-            @next_course_teachers << class_detail
+            @next_course_teachers[cte.weekday] ||= []
+            @next_course_teachers[cte.weekday] << class_detail
           end
         end
 
         
       end
 
-      # @next_course_teachers = @next_course_teachers.sort_by {|class_detail| class_detail[:weekday]}
+      @next_course_teachers = @next_course_teachers.sort_by {|class_detail| class_detail[:weekday]}
 
     end
 
