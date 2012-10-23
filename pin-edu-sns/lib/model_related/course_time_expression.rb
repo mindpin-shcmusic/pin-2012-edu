@@ -1,6 +1,7 @@
 class CourseTimeExpression
-  attr_reader :weekday, :numbers, :weekday_str, :start_time_str, :end_time_str
-  def initialize(weekday,numbers)
+  attr_reader :course_teacher, :weekday, :numbers, :weekday_str, :start_time_str, :end_time_str
+  def initialize(course_teacher,weekday,numbers)
+    @course_teacher = course_teacher
     @weekday = weekday.to_i
     @numbers = numbers.map{|n|n.to_i}
     set_weekday_str
@@ -99,6 +100,6 @@ class CourseTimeExpression
     when 1845...1930 then 12
     when 1930...2400 then 13
     end
-    self.new(time.wday,[number])
+    self.new(nil,time.wday,[number])
   end
 end

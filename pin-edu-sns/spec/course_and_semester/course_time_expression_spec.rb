@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe CourseTimeExpression do
   it 'course_time_expression' do
-    cte = CourseTimeExpression.new(1,[3,4])
+    cte = CourseTimeExpression.new(nil,1,[3,4])
     cte.weekday_str.should == "周一"
     cte.start_time_str.should == "10:00"
     cte.end_time_str.should == "11:30"
