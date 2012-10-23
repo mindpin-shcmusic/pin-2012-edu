@@ -2919,8 +2919,8 @@ course_hashes = [
 
 ActiveRecord::Base.transaction do
   User.where('name = "yedx" or name = "xiao"').destroy_all
-  Student.find_by_sid('sid-y').destroy
-  Teacher.find_by_tid('tid-x').destroy
+  Student.where('sid like "sid-y%"').destroy_all
+  Teacher.where('tid like "tid-x%"').destroy_all
   courses = Course.where('cid like "cid-x%"')
   courses.each do |course|
     user_id = course.course_teachers[0].teacher_user_id
