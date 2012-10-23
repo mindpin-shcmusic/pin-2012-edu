@@ -86,15 +86,20 @@ class CourseTimeExpression
     number = case time.strftime("%H%M").to_i
     when 0...800 then 0
     when 800...845 then 1
-    when 845...1000 then 2
+    when 845...930 then 2
+    when 930...1000 then 2.5
     when 1000...1045 then 3
-    when 1045...1150 then 4
+    when 1045...1130 then 4
+    when 1130...1150 then 4.5
     when 1150...1235 then 5
-    when 1235...1330 then 6
+    when 1235...1320 then 6
+    when 1320...1330 then 6.5
     when 1330...1415 then 7
-    when 1415...1530 then 8
+    when 1415...1500 then 8
+    when 1500...1530 then 8.5
     when 1530...1615 then 9
-    when 1615...1800 then 10
+    when 1615...1700 then 10
+    when 1700...1800 then 10.5
     when 1800...1845 then 11
     when 1845...1930 then 12
     when 1930...2400 then 13
