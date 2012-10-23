@@ -187,6 +187,8 @@ MindpinEduSns::Application.routes.draw do
 
       get  :for_student
       get  :for_teacher
+      get  :next_for_student
+      get  :next_for_teacher
     end
 
     resources :course_images, :shallow => true

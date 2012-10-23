@@ -1,0 +1,14 @@
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '课程'
+
+.page-courses-head
+  .tab
+
+
+.page-courses
+  - @next_course_teachers.each do |course_teacher|
+    - course_teacher.each do |class_detail|
+      .field
+        = class_detail[:weekday_str]
+        = class_detail[:class_time]
+        = class_detail[:course_teacher].course.name

@@ -27,4 +27,43 @@ class CoursesController < ApplicationController
     @teacher_courses = current_user.get_teacher_course_teachers(:semester => Semester.now)
   end
 
+  # 从现在时间开始，本周内上的课程，包括当前正在进行的课程
+  def next_for_student
+    @next_course_teachers = []
+    
+
+    current_cte = CourseTimeExpression.get_by_time(Time.now)
+
+    student_courses = current_user.get_student_course_teachers(:semester => Semester.now)
+    student_courses.each do |course_teacher|
+      time_expression = JSON.parse(course_teacher.time_expression)
+      time_expression.each do |expression|
+        
+        expression['number'].each do |number|
+          cte = CourseTimeExpression.new(expression['weekday'], [number])
+          if cte >= current_cte
+            class_detail = Hash.new(0)
+            row = Hash.new(0)
+
+            class_detail[cte.weekday] ||= []
+            row[:weekday] = cte.weekday
+            row[:weekday_str] = cte.weekday_str
+            row[:class_time] = "#{cte.start_time_str} - #{cte.end_time_str}"
+            row[:course_teacher] = course_teacher
+
+            class_detail[cte.weekday] << row
+
+            @next_course_teachers << class_detail
+          end
+        end
+
+        
+      end
+
+      # @next_course_teachers = @next_course_teachers.sort_by {|class_detail| class_detail[:weekday]}
+
+    end
+
+  end
+
 end
