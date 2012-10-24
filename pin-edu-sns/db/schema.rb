@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(:version => 20121024022517) do
   add_index "comments", ["reply_comment_id"], :name => "index_comments_on_reply_comment_id"
   add_index "comments", ["reply_comment_user_id"], :name => "index_comments_on_reply_comment_user_id"
 
+<<<<<<< variant A
   create_table "connect_users", :force => true do |t|
     t.integer  "user_id"
     t.string   "connect_type"
@@ -104,16 +105,19 @@ ActiveRecord::Schema.define(:version => 20121024022517) do
   end
 
   create_table "course_images", :force => true do |t|
+>>>>>>> variant B
+  create_table "course_resources", :force => true do |t|
+####### Ancestor
+  create_table "course_images", :force => true do |t|
+======= end
     t.integer  "course_id"
     t.integer  "file_entity_id"
+    t.integer  "creator_id"
+    t.string   "name"
+    t.string   "kind"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name"
-    t.integer  "creator_id"
   end
-
-  add_index "course_images", ["course_id"], :name => "index_course_images_on_course_id"
-  add_index "course_images", ["creator_id"], :name => "index_course_images_on_creator_id"
 
   create_table "course_student_assigns", :force => true do |t|
     t.integer  "course_id"

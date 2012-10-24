@@ -78,6 +78,11 @@
 }
 
 .page-course-show{
+  .semesters-nav{
+    .current{
+      background-color:#C0C0C0;
+    }
+  }
 
   .base-info{
     @include floatfix;
