@@ -109,6 +109,8 @@ MindpinEduSns::Application.routes.draw do
 
     resources :mentor_notes
 
+    resources :mentor_courses
+
     
     resources :announcements
     

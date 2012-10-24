@@ -1,0 +1,13 @@
+- htitle '课程维护'
+
+- hbreadcrumb '基础数据管理', '/admin'
+- hbreadcrumb '导师方向'
+
+
+.page-admin-ops
+  %a.create{:href=>'/admin/mentor_courses/new'} 增加导师方向
+
+.page-paginate= will_paginate @mentor_courses
+
+.page-admin-models.mentor_courses
+  = render 'mentor_course_list', :mentor_courses => @mentor_courses

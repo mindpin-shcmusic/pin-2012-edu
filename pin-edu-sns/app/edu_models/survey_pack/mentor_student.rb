@@ -13,7 +13,7 @@ class MentorStudent < ActiveRecord::Base
     def self.included(base)
       base.has_many :mentor_students,
                     :class_name  => 'MentorStudent',
-                    :foreign_key => :user_id
+                    :foreign_key => :student_user_id
 
 
       base.send(:include, InstanceMethods)

@@ -1,0 +1,23 @@
+- htitle '课程维护'
+
+- hbreadcrumb '基础数据管理', '/admin'
+- hbreadcrumb '导师方向列表', '/admin/mentor_courses'
+- hbreadcrumb '编辑导师方向'
+
+
+.page-admin-form
+  = flash_info
+  = form_for [:admin, @mentor_course] do |f|
+
+    .field
+      %label 导师
+      = f.select(:teacher_user_id, Teacher.all.collect {|t| [ t.user.real_name, t.user_id ] }, {:include_blank => true}, {:data => {:placeholder => '请选择导师'}})
+
+    .field.need
+      %label 课程
+      =f.text_field :course
+ 
+
+    .field
+      = jfsubmit '确定'
+      = jfcancel '取消'

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121024084856) do
+ActiveRecord::Schema.define(:version => 20121024085205) do
 
   create_table "announcement_rules", :force => true do |t|
     t.integer  "creator_id"
@@ -342,6 +342,13 @@ ActiveRecord::Schema.define(:version => 20121024084856) do
   add_index "media_shares", ["creator_id"], :name => "index_media_shares_on_creator_id"
   add_index "media_shares", ["media_resource_id"], :name => "index_media_shares_on_media_resource_id"
   add_index "media_shares", ["receiver_id"], :name => "index_media_shares_on_receiver_id"
+
+  create_table "mentor_courses", :force => true do |t|
+    t.integer  "teacher_user_id"
+    t.string   "course"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "mentor_notes", :force => true do |t|
     t.string   "title"

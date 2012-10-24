@@ -1,0 +1,10 @@
+- @mentor_courses.each do |mentor_course|
+  .model.mentor_note
+    .tite= mentor_course.user.real_name
+
+    .course= mentor_course.course
+
+    .ops
+      - remove_url = admin_mentor_course_path(mentor_course)
+      %a.remove{:href=>'javascript:;', :'data-url'=>remove_url} 删除
+      %a.edit{:href=>"/admin/mentor_courses/#{mentor_course.id}/edit"} 编辑
