@@ -7,6 +7,8 @@ class CourseStudentAssign < ActiveRecord::Base
              :class_name  => 'User',
              :foreign_key => :student_user_id
 
+  has_one :course_student_score
+
   validates :course_id, :presence => true
   validates :teacher_user_id, :presence => true
   validates :student_user_id, :presence => true,
