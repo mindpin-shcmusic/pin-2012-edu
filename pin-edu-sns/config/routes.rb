@@ -54,7 +54,6 @@ MindpinEduSns::Application.routes.draw do
         get  :select_students
         put  :set_students
         get  :upload_image_page
-        get  :upload_video_page
         get  :select_cover_page
         post :select_cover
       end
