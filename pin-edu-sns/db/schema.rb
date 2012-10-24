@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121018034241) do
+ActiveRecord::Schema.define(:version => 20121024033536) do
 
   create_table "announcement_rules", :force => true do |t|
     t.integer  "creator_id"
@@ -82,17 +82,15 @@ ActiveRecord::Schema.define(:version => 20121018034241) do
   add_index "comments", ["reply_comment_id"], :name => "index_comments_on_reply_comment_id"
   add_index "comments", ["reply_comment_user_id"], :name => "index_comments_on_reply_comment_user_id"
 
-  create_table "course_images", :force => true do |t|
+  create_table "course_resources", :force => true do |t|
     t.integer  "course_id"
     t.integer  "file_entity_id"
+    t.integer  "creator_id"
+    t.string   "name"
+    t.string   "kind"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "name"
-    t.integer  "creator_id"
   end
-
-  add_index "course_images", ["course_id"], :name => "index_course_images_on_course_id"
-  add_index "course_images", ["creator_id"], :name => "index_course_images_on_creator_id"
 
   create_table "course_student_assigns", :force => true do |t|
     t.integer  "course_id"

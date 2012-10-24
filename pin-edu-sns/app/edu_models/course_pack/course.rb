@@ -6,8 +6,7 @@ class Course < ActiveRecord::Base
   validates :name, :presence => true
   validates :cid, :uniqueness => { :if => Proc.new { |course| !course.cid.blank? } }
 
-  has_many :course_images
-  has_many :course_videos
+  has_many :course_resources
 
   belongs_to :cover,
              :class_name  => 'CourseImage',

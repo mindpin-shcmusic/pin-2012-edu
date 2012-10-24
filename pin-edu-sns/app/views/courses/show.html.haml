@@ -24,8 +24,9 @@
       = course_tab_link @course, :basic, '基础信息', @current_tab, current_semester
       = course_tab_link @course, :syllabus, '教学大纲', @current_tab, current_semester
       = course_tab_link @course, :teacher, '任课教师', @current_tab, current_semester
-      = course_tab_link @course, :images, '课程照片', @current_tab, current_semester
-      = course_tab_link @course, :videos, '课程视频', @current_tab, current_semester
+      = course_tab_link @course, :image, '课程照片', @current_tab, current_semester
+      = course_tab_link @course, :courseware, '课程课件', @current_tab, current_semester
+      = course_tab_link @course, :audio, '课程音频', @current_tab, current_semester
       = course_tab_link @course, :students, '学生', @current_tab, current_semester, @course.get_students(:semester => Semester.now).count
 
     - case @current_tab
@@ -56,14 +57,19 @@
               .name= student_user.real_name
               %a.info{:href=>"/users/#{student_user.id}"} 查看信息
 
-    - when :images
+    - when :image
       .detail.images
         .upload= jupload_button '上传照片'
-        = render '/courses/parts/resources', :course_resources=>@course.course_images
+        = render '/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_IMAGE)
         = render '/courses/parts/uploader', :course=>@course, :kind=>:image
 
-    - when :videos
+    - when :courseware
       .detail.images
-        .upload= jupload_button '上传视频'
-        = render '/courses/parts/resources', :course_resources => @course.course_videos
-        = render '/courses/parts/uploader', :course=>@course, :kind=>:video
+        .upload= jupload_button '上传课件'
+        = render '/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_COURSEWARE)
+        = render '/courses/parts/uploader', :course=>@course, :kind=>:courseware
+    - when :audio
+      .detail.images
+        .upload= jupload_button '上传音频'
+        = render '/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_AUDIO)
+        = render '/courses/parts/uploader', :course=>@course, :kind=>:audio

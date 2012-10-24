@@ -365,7 +365,7 @@ pie.load ->
         # 创建课程图片记录
         course_id = $uploader_elm.data('course-id')
         kind = $uploader_elm.data('kind')
-        url = "/courses/#{course_id}/course_#{kind}s"
+        url = "/courses/#{course_id}/course_resources"
 
         file_wrapper.$elm.addClass 'success'
         file_wrapper.$elm.find('.state').html '上传完毕'
@@ -376,6 +376,7 @@ pie.load ->
           data:
             'file_entity_id': file_wrapper.FILE_ENTITY_ID
             'name': file_wrapper.file_name
+            'kind': kind
 
           success: (res)->
             # $list = jQuery('.page-media-resources')
