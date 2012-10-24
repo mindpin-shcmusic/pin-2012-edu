@@ -7,6 +7,7 @@ class CourseResourcesController < ApplicationController
       :course_id => params[:course_id],
       :name => params[:name],
       :kind => params[:kind].upcase,
+      :semester => Semester.now,
       :creator => current_user)
     render :text => '资源上传成功'
   end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121024033536) do
+ActiveRecord::Schema.define(:version => 20121024092503) do
 
   create_table "announcement_rules", :force => true do |t|
     t.integer  "creator_id"
@@ -90,6 +90,7 @@ ActiveRecord::Schema.define(:version => 20121024033536) do
     t.string   "kind"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "semester_value"
   end
 
   create_table "course_student_assigns", :force => true do |t|
@@ -169,18 +170,6 @@ ActiveRecord::Schema.define(:version => 20121024033536) do
 
   add_index "course_teachers", ["course_id"], :name => "index_course_teachers_on_course_id"
   add_index "course_teachers", ["teacher_user_id"], :name => "index_course_teachers_on_teacher_user_id"
-
-  create_table "course_videos", :force => true do |t|
-    t.integer  "course_id"
-    t.integer  "file_entity_id"
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "creator_id"
-  end
-
-  add_index "course_videos", ["course_id"], :name => "index_course_videos_on_course_id"
-  add_index "course_videos", ["file_entity_id"], :name => "index_course_videos_on_file_entity_id"
 
   create_table "courses", :force => true do |t|
     t.string   "name",       :default => "",    :null => false
