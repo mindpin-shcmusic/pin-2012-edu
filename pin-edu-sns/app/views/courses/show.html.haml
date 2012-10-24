@@ -2,6 +2,8 @@
 - hbreadcrumb '课程', '/courses'
 - hbreadcrumb @course.name
 
+- current_semester = params[:semester].blank? ? Semester.now : Semester.get_by_value(params[:semester])
+
 .page-course-show
   .base-info
     .cover
@@ -11,14 +13,19 @@
       .field.cid
         %span 课程编号：
         %span= @course.cid
+  .semesters-nav
+    %label 学期
+    - Semester.get_nav_array.each do |semester|
+      - class_name = current_semester == semester ? "current" : ""
+      = link_to semester.value, "/courses/#{@course.id}?semester=#{semester.value}",:class => class_name
 
   .detail-info
     .tabs
-      = course_tab_link @course, :basic, '基础信息', @current_tab
-      = course_tab_link @course, :syllabus, '教学大纲', @current_tab
-      = course_tab_link @course, :images, '课程照片', @current_tab
-      = course_tab_link @course, :videos, '课程视频', @current_tab
-      = course_tab_link @course, :students, '学生', @current_tab, @course.get_students(:semester => Semester.now).count
+      = course_tab_link @course, :basic, '基础信息', @current_tab, current_semester
+      = course_tab_link @course, :syllabus, '教学大纲', @current_tab, current_semester
+      = course_tab_link @course, :images, '课程照片', @current_tab, current_semester
+      = course_tab_link @course, :videos, '课程视频', @current_tab, current_semester
+      = course_tab_link @course, :students, '学生', @current_tab, current_semester, @course.get_students(:semester => Semester.now).count
 
     - case @current_tab
     - when :basic

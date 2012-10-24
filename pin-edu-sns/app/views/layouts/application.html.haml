@@ -24,7 +24,6 @@
             %a.link.homeworks{:href=>homeworks_path} 布置的作业
           - if current_user.is_student?
             %a.link.homeworks{:href=>homeworks_path} 我的作业
-          %a.link.courses{:href=>'/courses/mine'} 我的课程
 
           - if current_user.is_student?
             %a.link.courses{:href=>'/courses/for_student'} 当前课程
