@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121018034241) do
+ActiveRecord::Schema.define(:version => 20121024044922) do
 
   create_table "announcement_rules", :force => true do |t|
     t.integer  "creator_id"
@@ -343,6 +343,25 @@ ActiveRecord::Schema.define(:version => 20121018034241) do
   add_index "media_shares", ["media_resource_id"], :name => "index_media_shares_on_media_resource_id"
   add_index "media_shares", ["receiver_id"], :name => "index_media_shares_on_receiver_id"
 
+  create_table "mentor_notes", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "mentor_students", :force => true do |t|
+    t.integer  "mentor_note_id"
+    t.integer  "user_id"
+    t.string   "course1"
+    t.string   "teacher1"
+    t.string   "course2"
+    t.string   "teacher2"
+    t.string   "course3"
+    t.string   "teacher3"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "online_records", :force => true do |t|
     t.integer  "user_id"
     t.string   "key"
@@ -484,18 +503,14 @@ ActiveRecord::Schema.define(:version => 20121018034241) do
   add_index "team_students", ["team_id"], :name => "index_team_students_on_team_id"
 
   create_table "teams", :force => true do |t|
-    t.string   "name",                   :default => "",    :null => false
+    t.string   "name",       :default => "",    :null => false
     t.string   "cid"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_removed",             :default => false
-    t.integer  "teaching_plan_id"
-    t.integer  "course_teacher_team_id"
+    t.boolean  "is_removed", :default => false
   end
 
-  add_index "teams", ["course_teacher_team_id"], :name => "index_teams_on_course_teacher_team_id"
   add_index "teams", ["is_removed"], :name => "index_teams_on_is_removed"
-  add_index "teams", ["teaching_plan_id"], :name => "index_teams_on_teaching_plan_id"
 
   create_table "users", :force => true do |t|
     t.string   "name",                      :default => "", :null => false

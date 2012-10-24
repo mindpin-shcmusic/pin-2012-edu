@@ -1,0 +1,13 @@
+- htitle '课程维护'
+
+- hbreadcrumb '基础数据管理', '/admin'
+- hbreadcrumb '导师双向选择'
+
+
+.page-admin-ops
+  %a.create{:href=>'/admin/mentor_notes/new'} 增加导师选择
+
+.page-paginate= will_paginate @mentor_notes
+
+.page-admin-models.mentor_notes
+  = render 'mentor_note_list', :mentor_notes => @mentor_notes

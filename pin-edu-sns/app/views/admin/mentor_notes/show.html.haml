@@ -1,0 +1,36 @@
+- htitle '课程调查'
+
+- hbreadcrumb '基础数据管理', '/admin'
+- hbreadcrumb '课程调查', '/admin/mentor_notes'
+- hbreadcrumb @mentor_note.title
+
+.page-admin-model-show
+  .field.title
+    %label 标题
+    .v= @mentor_note.title
+
+  .field.students
+    %table{:border => "1", :cellspacing => '5', :cellpadding => '5'}
+      %tr
+        %th
+        %th
+        %th 第一志愿
+        %th 第二志愿
+        %th 第三志愿
+      - @mentor_note.mentor_students.each do |mentor_student|
+        %tr
+          %td= mentor_student.user.real_name
+          %td 导师
+          %td= mentor_student.teacher1
+          %td= mentor_student.teacher2
+          %td= mentor_student.teacher3
+
+        %tr
+          %td
+          %td 专修方向
+          %td= mentor_student.course1
+          %td= mentor_student.course2
+          %td= mentor_student.course3
+  
+
+.page-admin-go-back= link_to '返回列表页', '/admin/mentor_notes'

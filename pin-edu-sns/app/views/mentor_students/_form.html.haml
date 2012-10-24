@@ -1,0 +1,39 @@
+.field
+  %label 第一志愿
+
+  .field.need
+    %span 课程
+    =f.text_field :course1
+
+  .field.need
+    %span 导师
+    =f.text_field :teacher1
+
+
+  .field
+    %label 第二志愿
+
+    .field.need
+      %span 课程
+      =f.text_field :course2
+
+    .field.need
+      %span 导师
+      =f.text_field :teacher2
+
+
+  .field
+    %label 第三志愿
+
+    .field.need
+      %span 课程
+      =f.text_field :course3
+
+    .field.need
+      %span 导师
+      =f.text_field :teacher3
+
+
+  .field
+    = jfsubmit '确定'
+    = jfcancel '取消'

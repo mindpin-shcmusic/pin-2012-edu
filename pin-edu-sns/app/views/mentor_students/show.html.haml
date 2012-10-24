@@ -1,0 +1,48 @@
+- htitle '课程维护'
+
+- hbreadcrumb '基础数据管理', '/'
+- hbreadcrumb '导师双向选择', '/mentor_students'
+- hbreadcrumb @mentor_student.mentor_note.title
+
+
+.page-course-show
+  .base-info
+    .field
+      %span 名字
+      .name= @mentor_student.user.real_name
+
+  .detail-info
+    .field
+      %label 第一志愿
+
+      .field.need
+        %span 课程
+        = @mentor_student.course1
+
+      .field.need
+        %span 导师
+        = @mentor_student.teacher1
+
+
+      .field
+        %label 第二志愿
+
+        .field.need
+          %span 课程
+          = @mentor_student.course1
+
+        .field.need
+          %span 导师
+          = @mentor_student.teacher1
+
+
+      .field
+        %label 第三志愿
+
+        .field.need
+          %span 课程
+          = @mentor_student.course1
+
+        .field.need
+          %span 导师
+          = @mentor_student.teacher1

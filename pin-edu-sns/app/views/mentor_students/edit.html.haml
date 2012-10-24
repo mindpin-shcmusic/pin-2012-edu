@@ -1,0 +1,12 @@
+- htitle '课程维护'
+
+- hbreadcrumb '基础数据管理', '/'
+- hbreadcrumb '导师双向选择', '/mentor_students'
+- hbreadcrumb '编辑志愿'
+
+.page-admin-form
+  = flash_info
+  = form_for @mentor_student do |f|
+
+
+    =render 'form', :f => f

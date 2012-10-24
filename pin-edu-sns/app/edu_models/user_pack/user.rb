@@ -37,6 +37,7 @@ class User < ActiveRecord::Base
   include Question::UserMethods
   include QuestionTipMessage::UserMethods
   include AnswerTipMessage::UserMethods
+  include MentorStudent::UserMethods
 
   ###
   include UserAvatarMethods

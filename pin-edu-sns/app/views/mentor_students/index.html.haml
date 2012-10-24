@@ -1,0 +1,9 @@
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '导师双向选择'
+
+
+
+.page-paginate= will_paginate @mentor_notes
+
+.page-admin-models.mentors
+  = render 'mentor_student_list', :mentor_notes => @mentor_notes

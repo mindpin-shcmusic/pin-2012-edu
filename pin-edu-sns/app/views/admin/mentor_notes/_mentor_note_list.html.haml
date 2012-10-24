@@ -1,0 +1,9 @@
+- @mentor_notes.each do |mentor_note|
+  .model.mentor_note
+    .tite= mentor_note.title
+
+    .ops
+      - remove_url = admin_mentor_note_path(mentor_note)
+      %a.remove{:href=>'javascript:;', :'data-url'=>remove_url} 删除
+      %a.edit{:href=>"/admin/mentor_notes/#{mentor_note.id}/edit"} 编辑
+      %a.detail{:href=>"/admin/mentor_notes/#{mentor_note.id}"} 查看详情
