@@ -17,11 +17,11 @@
 
       .field.need
         %span 课程
-        = @mentor_student.course1
+        = @mentor_student.mentor_course_1.course
 
       .field.need
         %span 导师
-        = @mentor_student.teacher1
+        = @mentor_student.mentor_course_1.user.real_name
 
 
       .field
@@ -29,20 +29,22 @@
 
         .field.need
           %span 课程
-          = @mentor_student.course1
+          = @mentor_student.mentor_course_2.course
 
         .field.need
           %span 导师
-          = @mentor_student.teacher1
+          = @mentor_student.mentor_course_2.user.real_name
 
+ 
 
       .field
         %label 第三志愿
 
         .field.need
           %span 课程
-          = @mentor_student.course1
+          = @mentor_student.mentor_course_2.course
 
         .field.need
           %span 导师
-          = @mentor_student.teacher1
+          = @mentor_student.mentor_course_2.user.real_name
+

@@ -3,6 +3,15 @@ class MentorCourse < ActiveRecord::Base
              :class_name => 'User',
              :foreign_key => 'teacher_user_id'
 
+  has_many :mentor_students, 
+           :class_name => 'MentorStudent', :foreign_key => :mentor_course1
+
+  has_many :mentor_students, 
+           :class_name => 'MentorStudent', :foreign_key => :mentor_course2
+
+  has_many :mentor_students, 
+           :class_name => 'MentorStudent', :foreign_key => :mentor_course3
+
 
   # --- 给其他类扩展的方法
   module UserMethods

@@ -1,37 +1,20 @@
 .field
   %label 第一志愿
 
-  .field.need
-    %span 课程
-    =f.text_field :course1
-
-  .field.need
-    %span 导师
-    =f.text_field :teacher1
+  = f.select(:mentor_course1, MentorCourse.all.collect {|t| [ "#{t.user.real_name}, #{t.course}", t.id ] }, {:include_blank => true}, {:data => {:placeholder => '请选择导师跟方向'}})
 
 
-  .field
-    %label 第二志愿
+.field
+  %label 第二志愿
 
-    .field.need
-      %span 课程
-      =f.text_field :course2
-
-    .field.need
-      %span 导师
-      =f.text_field :teacher2
+  = f.select(:mentor_course2, MentorCourse.all.collect {|t| [ "#{t.user.real_name}, #{t.course}", t.id ] }, {:include_blank => true}, {:data => {:placeholder => '请选择导师跟方向'}})
+ 
 
 
-  .field
-    %label 第三志愿
+.field
+  %label 第三志愿
 
-    .field.need
-      %span 课程
-      =f.text_field :course3
-
-    .field.need
-      %span 导师
-      =f.text_field :teacher3
+  = f.select(:mentor_course3, MentorCourse.all.collect {|t| [ "#{t.user.real_name}, #{t.course}", t.id ] }, {:include_blank => true}, {:data => {:placeholder => '请选择导师跟方向'}})
 
 
   .field

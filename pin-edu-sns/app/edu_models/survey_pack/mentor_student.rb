@@ -5,6 +5,21 @@ class MentorStudent < ActiveRecord::Base
              :class_name => 'User',
              :foreign_key => 'student_user_id'
 
+  belongs_to :mentor_course_1,
+             :class_name => 'MentorCourse',
+             :foreign_key => 'mentor_course1'
+
+
+  belongs_to :mentor_course_2,
+             :class_name => 'MentorCourse',
+             :foreign_key => 'mentor_course2'
+
+
+  belongs_to :mentor_course_3,
+             :class_name => 'MentorCourse',
+             :foreign_key => 'mentor_course3'
+
+
   scope :with_student, lambda {|student| {:conditions => ['student_user_id = ?', student.id]}}
 
 
