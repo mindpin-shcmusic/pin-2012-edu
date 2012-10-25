@@ -21,9 +21,9 @@
         .links
           .title 教学
           - if current_user.is_teacher?
-            %a.link.homeworks{:href=>homeworks_path} 布置的作业
+            %a.link.homeworks{:href=>homeworks_path} 布置的作业/艺术实践
           - if current_user.is_student?
-            %a.link.homeworks{:href=>homeworks_path} 我的作业
+            %a.link.homeworks{:href=>homeworks_path} 我的作业/艺术实践
 
           - if current_user.is_student?
             %a.link.courses{:href=>'/courses/for_student'} 当前课程
