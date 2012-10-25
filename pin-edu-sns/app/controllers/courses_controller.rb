@@ -2,6 +2,7 @@
 class CoursesController < ApplicationController
   before_filter :login_required
   before_filter :per_load
+
   def per_load
     @course  = Course.find params[:id] if params[:id]
   end

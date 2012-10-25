@@ -1,0 +1,19 @@
+- htitle '课程维护'
+
+- hbreadcrumb '基础数据管理', '/admin'
+- hbreadcrumb '导师双向选择', '/admin/mentors'
+- hbreadcrumb '编辑导师选择'
+
+
+.page-admin-form
+  = flash_info
+  = form_for [:admin, @mentor_note] do |f|
+
+    .field.need
+      %label 标题
+      =f.text_field :title
+ 
+
+    .field
+      = jfsubmit '确定'
+      = jfcancel '取消'

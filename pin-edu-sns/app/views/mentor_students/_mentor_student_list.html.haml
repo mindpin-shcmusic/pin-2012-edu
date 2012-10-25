@@ -1,0 +1,18 @@
+- @mentor_notes.each do |mentor_note|
+  :ruby
+    if !mentor_note.mentor_students.with_student(current_user)[0].nil?
+      id = mentor_note.mentor_students.with_student(current_user)[0].id
+    end
+
+  .model.mentor_note
+    .tite= mentor_note.title
+
+    .ops
+      - if id.nil?
+        %a.new{:href=>"/mentor_students/new?mentor_note_id=#{mentor_note.id}"} 填写
+        
+      - else
+        %a.edit{:href=>"/mentor_students/#{id}/edit"} 编辑
+        %a.detail{:href=>"/mentor_students/#{id}"} 查看详情
+
+      

@@ -1,0 +1,39 @@
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '成绩单', course_score_lists_path
+- hbreadcrumb @score_list.title
+
+.page-course-score-list
+  = form_for @score_list do |f|
+    = flash_info
+    .field.title
+      %label 课程
+      = @score_list.course.name
+    .field.title
+      %label 标题
+      = f.text_field :title
+    .field.score-list
+      %label 学生成绩单
+      %table
+        %thead
+          %tr
+            %th 学号
+            %th 姓名
+            %th 平时成绩
+            %th 考试成绩
+            %th 总评成绩
+            %th 备注
+        %tbody
+          - @score_list.course_score_records.each do |record|
+            - student_user = record.student_user
+            %tr
+              %td= student_user.student.sid
+              %td= student_user.real_name
+              = f.fields_for :course_score_records, record do |record_fields|
+                %td= record_fields.text_field :performance_score
+                %td= record_fields.text_field :exam_score
+                %td= record.general_score
+                %td= record_fields.text_field :remark
+
+
+      .field.submit
+        = jfsubmit '保存成绩单'

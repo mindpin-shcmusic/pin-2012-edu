@@ -1,0 +1,12 @@
+- htitle '课程维护'
+
+- hbreadcrumb '基础数据管理', '/'
+- hbreadcrumb '导师双向选择', '/mentor_students'
+- hbreadcrumb '填写志愿'
+
+.page-admin-form
+  = flash_info
+  = form_for MentorStudent.new, :url => "/mentor_students?mentor_note_id=#{params[:mentor_note_id]}" do |f|
+
+
+    =render 'form', :f => f
