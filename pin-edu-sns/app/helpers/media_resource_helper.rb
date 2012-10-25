@@ -50,7 +50,7 @@ module MediaResourceHelper
 
     case file_entity.content_kind
     when :image
-      return File.join('http://', request.host, file_entity.attach.url(:small))
+      return file_entity.http_url(:small)
     when :audio
       return '/assets/covers/audio.small.png'
     when :video

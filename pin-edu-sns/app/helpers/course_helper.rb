@@ -10,6 +10,15 @@ module CourseHelper
     link_to link_text, "/courses/#{course.id}?tab=#{name}&semester=#{semester.value}", :class=>klass
   end
 
+  def admin_course_tab_link(course, name, text, current, semester, count=0)
+    span_text = content_tag :span, text
+    count_text = count > 0 ? (content_tag :span, count, :class => 'count') : ''
+
+    link_text = span_text + count_text
+
+    klass = (name.to_sym == current.to_sym) ? "link #{name} current" : "link #{name}"
+    link_to link_text, "/admin/courses/#{course.id}?tab=#{name}&semester=#{semester.value}", :class=>klass
+  end
 
   def get_teacher_course_by_weekday_and_number(teacher_courses, weekday, number)
     teacher_courses.each do |course_teacher|

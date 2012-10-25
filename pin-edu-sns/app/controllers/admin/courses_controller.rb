@@ -52,6 +52,7 @@ class Admin::CoursesController < ApplicationController
   end
   
   def show
+    @current_tab = (params[:tab] || :basic).to_sym
   end
 
   def select_students
@@ -74,27 +75,14 @@ class Admin::CoursesController < ApplicationController
     redirect_to "/admin/courses/import_from_csv_page"
   end
 
-  def upload_image_page
-  end
-
-  def upload_image
-    @course.course_images.create :file_entity_id => params[:file_entity_id]
-    render :text => '图片上传成功'
-  end
-
-  def delete_image
-    CourseImage.find(params[:course_image_id]).destroy
-    render :text => '图片已删除'
-  end
-
   def select_cover_page
   end
 
   def select_cover
-    course_image = @course.course_images.find(params[:course_image_id])
-    @course.cover = course_image
+    course_resource = @course.course_resources.find(params[:course_resource_id])
+    @course.cover = course_resource
     @course.save
-    render :text => '封面选择成功'
+    redirect_to "/admin/courses/#{@course.id}"
   end
 
   def add_teacher_page

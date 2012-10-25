@@ -1,4 +1,4 @@
-class CourseResourcesController < ApplicationController
+class Admin::CourseResourcesController < ApplicationController
   before_filter :login_required
 
   def create
@@ -15,11 +15,6 @@ class CourseResourcesController < ApplicationController
   def destroy
     CourseResource.find(params[:id]).destroy
     render :text => '资源已删除'
-  end
-
-  def show
-    @resource = CourseResource.find(params[:id])
-    render :template => 'courses/resource_show'
   end
 
 end
