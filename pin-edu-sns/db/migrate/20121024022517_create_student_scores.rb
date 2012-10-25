@@ -5,7 +5,6 @@ class CreateStudentScoreRecords < ActiveRecord::Migration
       t.integer :student_user_id
       t.integer :performance_score
       t.integer :exam_score
-      t.integer :general_score
       t.string  :remark
 
     end
