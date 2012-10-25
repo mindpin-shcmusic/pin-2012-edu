@@ -21,7 +21,7 @@ class Course < ActiveRecord::Base
   has_many :teaching_plans, :through => :teaching_plan_courses
 
   def cover_url
-    self.cover ? self.cover.file_entity.attach.url : self.default_cover
+    self.cover ? self.cover.file_entity.http_url : self.default_cover
   end
 
   def default_cover

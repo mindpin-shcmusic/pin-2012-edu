@@ -31,7 +31,7 @@
         - current_upload = requirement.upload_of_user(@student_user)
         .upload{:'data-id' => current_upload.id}
           %span 已提交
-          %a{:href => "#{current_upload.file_entity.attach.url}"} 下载
+          %a{:href => "#{current_upload.file_entity.http_url}"} 下载
 
       - else
         %span 未提交
