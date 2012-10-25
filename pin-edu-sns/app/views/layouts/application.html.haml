@@ -31,6 +31,9 @@
           - if current_user.is_teacher?
             %a.link.courses{:href=>'/courses/for_teacher'} 当前课程
 
+          - if current_user.is_teacher?
+            %a.link.courses{:href=>'/courses/score_lists'} 成绩单
+
 
           - if current_user.is_student?
             %a.link.courses{:href=>'/courses/next_for_student'} 我接下来要上的课

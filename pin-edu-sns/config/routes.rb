@@ -183,12 +183,13 @@ MindpinEduSns::Application.routes.draw do
 
   resources :courses do
     collection do
-      get :mine
-
-      get  :for_student
-      get  :for_teacher
-      get  :next_for_student
-      get  :next_for_teacher
+      get :for_student
+      get :for_teacher
+      get :next_for_student
+      get :next_for_teacher
+      get :score_lists
+      get :new_score_list
+      post :create_score_list
     end
   end
 

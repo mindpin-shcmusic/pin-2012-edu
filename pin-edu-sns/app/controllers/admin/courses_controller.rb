@@ -124,5 +124,4 @@ class Admin::CoursesController < ApplicationController
     end
     redirect_to "/admin/courses/#{@course.id}"
   end
-
 end

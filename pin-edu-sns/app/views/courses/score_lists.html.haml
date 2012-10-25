@@ -1,0 +1,3 @@
+.page-course-student-scores
+  - if current_user.is_teacher?
+    = link_to '添加课程成绩单', new_score_list_courses_path

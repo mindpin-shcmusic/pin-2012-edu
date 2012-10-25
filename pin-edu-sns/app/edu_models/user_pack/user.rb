@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   include ShortMessage::UserMethods
   # --- 课程
   include Course::UserMethods
-  include CourseStudentScore::UserMethods
+  include CourseScoreRecord::UserMethods
 
   include Comment::UserMethods
   include UserCommentTipMessage::UserMethods

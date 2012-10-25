@@ -1,0 +1,7 @@
+.page-new-course-student-score
+  = form_tag create_score_list_courses_path do
+    = flash_info
+    .field.placeholder.need
+      = select_tag :course_id, options_from_collection_for_select(@courses, :id, :name, nil), :class => 'course-selector', :style => 'width:320px;', :include_blank => true, :data => {:placeholder => '请选择课程'}
+    .field.submit    
+      = jfsubmit '为该课程创建成绩单'
