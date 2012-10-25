@@ -53,7 +53,6 @@ MindpinEduSns::Application.routes.draw do
         put  :add_teacher
         get  :select_students
         put  :set_students
-        get  :upload_image_page
         get  :select_cover_page
         post :select_cover
       end
@@ -62,6 +61,7 @@ MindpinEduSns::Application.routes.draw do
         get  :import_from_csv_page
         post :import_from_csv
       end
+      resources :course_resources, :shallow => true
     end
     resources :teams do
       member do

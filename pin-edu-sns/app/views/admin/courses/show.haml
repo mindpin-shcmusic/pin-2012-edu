@@ -25,28 +25,48 @@
     %label 课程简介
     .v= sanitize @course.desc
 
-  .field.upload-image
-    = link_to '上传课程图片', "/admin/courses/#{@course.id}/upload_image_page"
-  .field.select-cover
-    = link_to '选择课程封面图片', "/admin/courses/#{@course.id}/select_cover_page"
-  .field.teachers
-    %label 任课教师
-    - teachers.each do |user|
-      .model.teacher
-        .field.name
-          = user.teacher.real_name
-        .field.tid
-          = user.teacher.tid
-        .field.students-count
-          - count = @course.get_students(:semester => current_semester,:teacher_user => user).count
-          = "#{count} 个学生"
-        .field.select-students
-          - course_teacher = CourseTeacher.get_by_params(@course, current_semester, user)
-          = link_to "分配学生", "/admin/course_teachers/#{course_teacher.id}/select_students_page"
-          = link_to "取消任课", "/admin/course_teachers/#{course_teacher.id}",:method=>:delete,:confirm => "确定取消该教师的任课吗？"
-  .field.add-teacher
-    - if current_semester == Semester.now
-      = link_to "增加任课教师","/admin/courses/#{@course.id}/add_teacher_page"
+  .detail-info
+    .tabs
+      = admin_course_tab_link @course, :basic, '基础信息', @current_tab, current_semester
+      = admin_course_tab_link @course, :syllabus, '教学大纲', @current_tab, current_semester
+      = admin_course_tab_link @course, :teacher, '任课教师', @current_tab, current_semester
+      = admin_course_tab_link @course, :image, '课程照片', @current_tab, current_semester
+      = admin_course_tab_link @course, :courseware, '课程课件', @current_tab, current_semester
+      = admin_course_tab_link @course, :audio, '课程音频', @current_tab, current_semester
+
+    - case @current_tab
+    - when :basic
+    - when :syllabus
+    - when :teacher
+      .field.teachers
+        %label 任课教师
+        - teachers.each do |user|
+          .model.teacher
+            .field.name
+              = user.teacher.real_name
+            .field.tid
+              = user.teacher.tid
+            .field.students-count
+              - count = @course.get_students(:semester => current_semester,:teacher_user => user).count
+              = "#{count} 个学生"
+            .field.select-students
+              - course_teacher = CourseTeacher.get_by_params(@course, current_semester, user)
+              = link_to "分配学生", "/admin/course_teachers/#{course_teacher.id}/select_students_page"
+              = link_to "取消任课", "/admin/course_teachers/#{course_teacher.id}",:method=>:delete,:confirm => "确定取消该教师的任课吗？"
+      .field.add-teacher
+        - if current_semester == Semester.now
+          = link_to "增加任课教师","/admin/courses/#{@course.id}/add_teacher_page"
+    - when :image
+      .detail.images
+        .upload= jupload_button '上传照片'
+        = render '/admin/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_IMAGE).with_semester(current_semester)
+        - if current_semester == Semester.now
+          = render '/admin/courses/parts/uploader', :course=>@course, :kind=>:image
+      .field.select-cover
+        = link_to '选择课程封面图片', "/admin/courses/#{@course.id}/select_cover_page"
+    - when :courseware
+    - when :audio
+
 
 .page-admin-go-back= link_to '返回列表页', '/admin/courses'
 .page-admin-edit= link_to '编辑修改', "/admin/courses/#{@course.id}/edit"
