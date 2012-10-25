@@ -62,6 +62,7 @@ module FileEntityStorage
         multipart_upload.complete(upload_id, part_infos)
 
         self.update_attributes!( :merged => true)
+        self.file_entity_oss_object_parts.each{|part|part.destroy}
       end
 
       def complete?
