@@ -6,11 +6,11 @@
 
 
 :css
-  table, th, td, tr, td
+  table, th, tr, td
   {
     border: 1px solid black;
-    cellspacing: 5px;
-    cellpadding: 5px;
+    padding: 5px;
+    margin: 5px;
   }
 
 .page-admin-model-show
@@ -19,7 +19,7 @@
     .v= @mentor_note.title
 
   .field.students
-    %table{:border => "1", :cellspacing => '5', :cellpadding => '5'}
+    %table{}
       %tr
         %th
         %th
