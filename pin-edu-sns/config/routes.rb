@@ -106,6 +106,11 @@ MindpinEduSns::Application.routes.draw do
       end
     end
 
+    resources :mentor_notes
+
+    resources :mentor_courses
+
+    
     resources :announcements
     
     root :to=>"index#index"
@@ -178,6 +183,8 @@ MindpinEduSns::Application.routes.draw do
   resources :course_surveys, :shallow => true do
     resources :course_survey_records
   end
+
+  resources :mentor_students
 
 
   resources :courses do

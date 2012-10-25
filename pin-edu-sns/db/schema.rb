@@ -355,6 +355,29 @@ ActiveRecord::Schema.define(:version => 20121024033514) do
   add_index "media_shares", ["media_resource_id"], :name => "index_media_shares_on_media_resource_id"
   add_index "media_shares", ["receiver_id"], :name => "index_media_shares_on_receiver_id"
 
+  create_table "mentor_courses", :force => true do |t|
+    t.integer  "teacher_user_id"
+    t.string   "course"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "mentor_notes", :force => true do |t|
+    t.string   "title"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "mentor_students", :force => true do |t|
+    t.integer  "mentor_note_id"
+    t.integer  "student_user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "mentor_course1"
+    t.integer  "mentor_course2"
+    t.integer  "mentor_course3"
+  end
+
   create_table "online_records", :force => true do |t|
     t.integer  "user_id"
     t.string   "key"

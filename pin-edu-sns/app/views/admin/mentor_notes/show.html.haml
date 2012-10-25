@@ -1,0 +1,45 @@
+- htitle '课程调查'
+
+- hbreadcrumb '基础数据管理', '/admin'
+- hbreadcrumb '导师双向选择', '/admin/mentor_notes'
+- hbreadcrumb @mentor_note.title
+
+
+:css
+  table, th, tr, td
+  {
+    border: 1px solid black;
+    padding: 5px;
+    margin: 5px;
+  }
+
+.page-admin-model-show
+  .field.title
+    %label 标题
+    .v= @mentor_note.title
+
+  .field.students
+    %table{}
+      %tr
+        %th
+        %th
+        %th 第一志愿
+        %th 第二志愿
+        %th 第三志愿
+      - @mentor_note.mentor_students.each do |mentor_student|
+        %tr
+          %td= mentor_student.user.real_name
+          %td 导师
+          %td= mentor_student.mentor_course_1.user.real_name
+          %td= mentor_student.mentor_course_2.user.real_name
+          %td= mentor_student.mentor_course_3.user.real_name
+
+        %tr
+          %td
+          %td 专修方向
+          %td= mentor_student.mentor_course_1.course
+          %td= mentor_student.mentor_course_2.course
+          %td= mentor_student.mentor_course_3.course
+  
+
+.page-admin-go-back= link_to '返回列表页', '/admin/mentor_notes'
