@@ -74,7 +74,7 @@ module FileEntityStorage
         self.attach.url.gsub(/\?.*/,"")
       end
 
-      def oss_url
+      def http_url
         File.join("http://storage.aliyun.com/#{OssManager::CONFIG["bucket"]}", attach.url)
       end
       
