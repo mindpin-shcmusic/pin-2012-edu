@@ -11,6 +11,7 @@ class CourseResource < ActiveRecord::Base
 
   validates :course, :presence => true
   validates :creator, :presence => true
+  validates :semester_value, :presence => true
   validates :file_entity_id, :presence => true,
     :uniqueness => {:scope => :course_id}
   validates :kind, :presence => true,
@@ -18,7 +19,20 @@ class CourseResource < ActiveRecord::Base
 
   default_scope order('created_at DESC')
   scope :with_kind, lambda { |kind| {:conditions => {:kind=>kind}} }
+  scope :with_semester, lambda { |semester| {:conditions => {:semester_value=>semester.value}} }
 
   include Comment::CommentableMethods
 
+  def semester=(semester)
+    @semester = semester
+    self.semester_value = semester.value
+  end
+
+  def semester
+    @semester || (
+      if !self.semester_value.blank?
+        Semester.get_by_value(self.semester_value)
+      end
+    )
+  end
 end

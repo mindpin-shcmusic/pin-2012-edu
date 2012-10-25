@@ -82,6 +82,31 @@ ActiveRecord::Schema.define(:version => 20121024033514) do
   add_index "comments", ["reply_comment_id"], :name => "index_comments_on_reply_comment_id"
   add_index "comments", ["reply_comment_user_id"], :name => "index_comments_on_reply_comment_user_id"
 
+<<<<<<< variant A
+>>>>>>> variant B
+  create_table "course_resources", :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "file_entity_id"
+    t.integer  "creator_id"
+    t.string   "name"
+    t.string   "kind"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "semester_value"
+  end
+
+####### Ancestor
+  create_table "course_resources", :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "file_entity_id"
+    t.integer  "creator_id"
+    t.string   "name"
+    t.string   "kind"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+======= end
   create_table "course_student_assigns", :force => true do |t|
     t.integer  "course_id"
     t.integer  "teacher_user_id"

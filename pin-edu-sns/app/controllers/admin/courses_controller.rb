@@ -97,19 +97,6 @@ class Admin::CoursesController < ApplicationController
     render :text => '封面选择成功'
   end
 
-  def upload_video_page
-  end
-
-  def upload_video
-    @course.course_videos.create :file_entity_id => params[:file_entity_id]
-    render :text => '视频上传成功'
-  end
-
-  def delete_video
-    CourseVideo.find(params[:course_video_id]).destroy
-    render :text => '视频已删除'
-  end
-
   def add_teacher_page
   end
 

@@ -54,7 +54,6 @@ MindpinEduSns::Application.routes.draw do
         get  :select_students
         put  :set_students
         get  :upload_image_page
-        get  :upload_video_page
         get  :select_cover_page
         post :select_cover
       end
@@ -191,6 +190,7 @@ MindpinEduSns::Application.routes.draw do
       get :new_score_list
       post :create_score_list
     end
+    resources :course_resources, :shallow => true
   end
 
   # --------------------
