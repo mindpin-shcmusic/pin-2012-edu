@@ -60,19 +60,19 @@
       .detail.images
         .upload= jupload_button '上传照片'
         = render '/admin/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_IMAGE).with_semester(current_semester)
-        = render '/admin/courses/parts/uploader', :course=>@course, :kind=>:image
+        = render '/admin/courses/parts/uploader', :course=>@course, :kind=>:image, :semester => current_semester
       .field.select-cover
         = link_to '选择课程封面图片', "/admin/courses/#{@course.id}/select_cover_page"
     - when :courseware
       .detail.images
         .upload= jupload_button '上传课件'
         = render '/admin/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_COURSEWARE).with_semester(current_semester)
-        = render '/admin/courses/parts/uploader', :course=>@course, :kind=>:courseware
+        = render '/admin/courses/parts/uploader', :course=>@course, :kind=>:courseware, :semester => current_semester
     - when :audio
       .detail.images
         .upload= jupload_button '上传音频'
         = render '/admin/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_AUDIO).with_semester(current_semester)
-        = render '/admin/courses/parts/uploader', :course=>@course, :kind=>:audio
+        = render '/admin/courses/parts/uploader', :course=>@course, :kind=>:audio, :semester => current_semester
 
 
 .page-admin-go-back= link_to '返回列表页', '/admin/courses'

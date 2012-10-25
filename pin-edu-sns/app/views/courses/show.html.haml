@@ -61,18 +61,15 @@
       .detail.images
         .upload= jupload_button '上传照片'
         = render '/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_IMAGE).with_semester(current_semester)
-        - if current_semester == Semester.now
-          = render '/courses/parts/uploader', :course=>@course, :kind=>:image
+        = render '/courses/parts/uploader', :course=>@course, :kind=>:image, :semester => current_semester
 
     - when :courseware
       .detail.images
         .upload= jupload_button '上传课件'
         = render '/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_COURSEWARE).with_semester(current_semester)
-        - if current_semester == Semester.now
-          = render '/courses/parts/uploader', :course=>@course, :kind=>:courseware
+        = render '/courses/parts/uploader', :course=>@course, :kind=>:courseware, :semester => current_semester
     - when :audio
       .detail.images
         .upload= jupload_button '上传音频'
         = render '/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_AUDIO).with_semester(current_semester)
-        - if current_semester == Semester.now
-          = render '/courses/parts/uploader', :course=>@course, :kind=>:audio
+        = render '/courses/parts/uploader', :course=>@course, :kind=>:audio, :semester => current_semester

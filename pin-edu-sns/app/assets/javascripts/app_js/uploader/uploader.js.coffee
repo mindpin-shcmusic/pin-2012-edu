@@ -365,6 +365,7 @@ pie.load ->
         # 创建课程图片记录
         course_id = $uploader_elm.data('course-id')
         kind = $uploader_elm.data('kind')
+        semester_value = $uploader_elm.data('semester_value')
         url = "/courses/#{course_id}/course_resources"
 
         file_wrapper.$elm.addClass 'success'
@@ -377,6 +378,7 @@ pie.load ->
             'file_entity_id': file_wrapper.FILE_ENTITY_ID
             'name': file_wrapper.file_name
             'kind': kind
+            'semester_value': semester_value
 
           success: (res)->
             # $list = jQuery('.page-media-resources')
@@ -448,6 +450,7 @@ pie.load ->
         # 创建课程图片记录
         course_id = $uploader_elm.data('course-id')
         kind = $uploader_elm.data('kind')
+        semester_value = $uploader_elm.data('semester_value')
         url = "/admin/courses/#{course_id}/course_resources"
 
         file_wrapper.$elm.addClass 'success'
@@ -460,6 +463,7 @@ pie.load ->
             'file_entity_id': file_wrapper.FILE_ENTITY_ID
             'name': file_wrapper.file_name
             'kind': kind
+            'semester_value': semester_value
 
           error: ->
             file_wrapper.error()

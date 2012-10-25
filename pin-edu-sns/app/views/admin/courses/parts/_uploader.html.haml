@@ -1,5 +1,5 @@
 = jfbox :upload_resource, '上传文件' do
-  .page-media-file-uploader{:data=>{:'course-id'=>course.id, :kind=>kind}}
+  .page-media-file-uploader{:data=>{:'course-id'=>course.id, :kind=>kind, :semester_value => semester.value}}
     .progress-bar-sample.hide
       .file{:'data-name'=>'', :'data-size'=>''}
         .bar

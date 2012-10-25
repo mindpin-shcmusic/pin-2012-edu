@@ -7,7 +7,7 @@ class Admin::CourseResourcesController < ApplicationController
       :course_id => params[:course_id],
       :name => params[:name],
       :kind => params[:kind].upcase,
-      :semester => Semester.now,
+      :semester => Semester.get_by_value(params[:semester_value]),
       :creator => current_user)
     render :text => '资源上传成功'
   end
