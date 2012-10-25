@@ -82,7 +82,7 @@ class Admin::CoursesController < ApplicationController
     course_resource = @course.course_resources.find(params[:course_resource_id])
     @course.cover = course_resource
     @course.save
-    render :text => '封面选择成功'
+    redirect_to "/admin/courses/#{@course.id}"
   end
 
   def add_teacher_page
