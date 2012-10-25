@@ -3,7 +3,7 @@ ActiveRecord::Base.transaction do
   ActiveRecord::Base.connection.execute("TRUNCATE mentor_notes")
   ActiveRecord::Base.connection.execute("TRUNCATE mentor_students")
 
-  teachers = Teacher.find(:all, :order => "id desc", :limit => 5).reverse
+  teachers = Teacher.find(:all, :order => "id", :limit => 5).reverse
   teachers.each do |teacher|
     MentorCourse.create(:user => teacher.user, :course => "专题课程-#{teacher.id}")
   end
@@ -13,7 +13,7 @@ ActiveRecord::Base.transaction do
   end
   
   
-  students = Student.find(:all, :order => "id desc", :limit => 5).reverse
+  students = Student.find(:all, :order => "id", :limit => 5).reverse
   mentor_courses = MentorCourse.all
 
   MentorNote.all.each do |mentor_note|
