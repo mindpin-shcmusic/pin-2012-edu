@@ -193,9 +193,6 @@ MindpinEduSns::Application.routes.draw do
       get :for_teacher
       get :next_for_student
       get :next_for_teacher
-      get :score_lists
-      get :new_score_list
-      post :create_score_list
     end
     resources :course_resources, :shallow => true
   end
@@ -279,5 +276,17 @@ MindpinEduSns::Application.routes.draw do
       put :announce
     end
   end
+
+  resources :score_lists,
+            :as         => :course_score_lists,
+            :controller => :course_score_lists do
+
+    collection do
+      get :mine
+      get :course_candidates
+    end
+  end
+
+  get '/score_lists/mine/:semester' => 'course_score_lists#student_semester'
 
 end

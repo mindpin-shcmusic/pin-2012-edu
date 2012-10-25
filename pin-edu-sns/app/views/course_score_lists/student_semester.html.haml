@@ -1,0 +1,24 @@
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '成绩单', mine_course_score_lists_path
+- hbreadcrumb "#{@semester}学期成绩单"
+
+.page-student-score-list
+  %h4.title= "#{current_user.real_name}#{@semester}学期成绩单"
+  %table
+    %thead
+      %tr
+        %th 课程名称
+        %th 任课老师
+        %th 平时成绩
+        %th 考试成绩
+        %th 总评成绩
+        %th 备注
+    %tbody
+      - @score_records.each do |record|
+        %tr
+          %td= record.course_score_list.course.name
+          %td= record.course_score_list.teacher_user.real_name
+          %td= record.performance_score
+          %td= record.exam_score
+          %td= record.general_score
+          %td= record.remark

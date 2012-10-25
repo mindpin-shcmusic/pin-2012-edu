@@ -10,7 +10,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121024033514) do
+ActiveRecord::Schema.define(:version => 20121025013517) do
+
+  create_table "achievements", :force => true do |t|
+    t.integer  "user_id"
+    t.float    "share_rate", :default => 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "announcement_rules", :force => true do |t|
     t.integer  "creator_id"
@@ -82,8 +89,20 @@ ActiveRecord::Schema.define(:version => 20121024033514) do
   add_index "comments", ["reply_comment_id"], :name => "index_comments_on_reply_comment_id"
   add_index "comments", ["reply_comment_user_id"], :name => "index_comments_on_reply_comment_user_id"
 
-<<<<<<< variant A
->>>>>>> variant B
+  create_table "connect_users", :force => true do |t|
+    t.integer  "user_id"
+    t.string   "connect_type"
+    t.string   "connect_id"
+    t.string   "oauth_token"
+    t.string   "oauth_token_secret"
+    t.text     "account_detail"
+    t.boolean  "oauth_invalid"
+    t.boolean  "syn_from_connect"
+    t.string   "last_syn_message_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "course_resources", :force => true do |t|
     t.integer  "course_id"
     t.integer  "file_entity_id"
@@ -95,18 +114,13 @@ ActiveRecord::Schema.define(:version => 20121024033514) do
     t.string   "semester_value"
   end
 
-####### Ancestor
-  create_table "course_resources", :force => true do |t|
-    t.integer  "course_id"
-    t.integer  "file_entity_id"
-    t.integer  "creator_id"
-    t.string   "name"
-    t.string   "kind"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "course_score_lists", :force => true do |t|
+    t.integer "course_id"
+    t.integer "teacher_user_id"
+    t.string  "semester_value"
+    t.string  "title"
   end
 
-======= end
   create_table "course_student_assigns", :force => true do |t|
     t.integer  "course_id"
     t.integer  "teacher_user_id"
@@ -129,6 +143,13 @@ ActiveRecord::Schema.define(:version => 20121024033514) do
     t.integer "exam_score"
     t.integer "general_score"
     t.string  "remark"
+  end
+
+  create_table "course_students", :force => true do |t|
+    t.integer  "course_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "student_user_id"
   end
 
   create_table "course_survey_es_records", :force => true do |t|
@@ -208,6 +229,14 @@ ActiveRecord::Schema.define(:version => 20121024033514) do
   end
 
   add_index "courses", ["is_removed"], :name => "index_courses_on_is_removed"
+
+  create_table "courses_images", :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "file_entity_id"
+    t.string   "kind"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "file_entities", :force => true do |t|
     t.string   "attach_file_name"
@@ -311,6 +340,27 @@ ActiveRecord::Schema.define(:version => 20121024033514) do
   add_index "homeworks", ["course_id"], :name => "index_homeworks_on_course_id"
   add_index "homeworks", ["creator_id"], :name => "index_homeworks_on_creator_id"
 
+  create_table "media_files", :force => true do |t|
+    t.string   "entry_file_name"
+    t.string   "entry_content_type"
+    t.integer  "entry_file_size",     :limit => 8
+    t.datetime "entry_updated_at"
+    t.string   "place"
+    t.text     "desc"
+    t.integer  "creator_id"
+    t.integer  "category_id"
+    t.string   "video_encode_status"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.boolean  "file_merged"
+    t.string   "real_file_name"
+    t.string   "md5"
+    t.text     "description"
+  end
+
+  add_index "media_files", ["category_id"], :name => "index_media_files_on_category_id"
+  add_index "media_files", ["creator_id"], :name => "index_media_files_on_creator_id"
+
   create_table "media_resources", :force => true do |t|
     t.integer  "file_entity_id"
     t.string   "name"
@@ -376,6 +426,14 @@ ActiveRecord::Schema.define(:version => 20121024033514) do
     t.integer  "mentor_course1"
     t.integer  "mentor_course2"
     t.integer  "mentor_course3"
+  end
+
+  create_table "notifications", :force => true do |t|
+    t.text     "content"
+    t.integer  "receiver_id"
+    t.boolean  "read",        :default => false
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "online_records", :force => true do |t|

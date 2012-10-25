@@ -16,6 +16,7 @@ class User < ActiveRecord::Base
   # --- 课程
   include Course::UserMethods
   include CourseScoreRecord::UserMethods
+  include CourseScoreList::UserMethods
 
   include Comment::UserMethods
   include UserCommentTipMessage::UserMethods
