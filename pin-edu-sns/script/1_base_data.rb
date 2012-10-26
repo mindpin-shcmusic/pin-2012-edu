@@ -1,4 +1,155 @@
 # -*- coding: utf-8 -*-
+require 'pp'
+
+def course_group_1
+courses = ['中国音乐史', '西方音乐史与赏析', '和声学', '曲式与作品分析', '和声分析与钢琴和声',
+           '管弦乐法', '歌曲分析与创作', '舞蹈编导', '中国传统器乐', '音乐表演美学',
+           '二胡演奏艺术', '打击乐演奏', '小提琴演奏艺术', '钢琴演奏艺术', '声乐演唱艺术',
+           '民族音乐学概论', '复调', '基本乐理', '基础和声', '视唱练耳',
+           '中提琴演奏艺术', '大提琴演奏艺术', '节奏与律动', '数字音乐', '中国音乐：戏曲及说唱']
+
+students = ["陈芳芳", "丁云燕", "李翠", "刘微", "朱康敏", "张毅", "何圣平", "钟杨", "李伟", "邱梅丁",
+            "卢忠庆", "刘绍峰", "罗佳为", "涂鹏", "钱梦辉", "詹立新", "朱志亮", "杨辉灿", "石仁闯", "刘伟",
+            "张新泉", "毛林", "阳永梁", "吴明佳", "焦水飞", "李岳桐", "邓慧颖", "赖蕾", "易翠", "李娅楠",
+            "彭思诗", "项琪琪", "陶宣宣", "鄢韬", "刘遂辉", "郭朝阳", "曾涛", "傅强", "刘青", "聂建元",
+            "曾江劲", "邹柏青", "徐华建", "柯晔", "叶青蓝", "雷鹏", "郑海翔", "彭嘉欣", "方星", "万鹏",
+            "徐中文", "金刚", "徐登鹏", "乔玉明", "王奇", "邓雪莹", "徐文琦", "周文君", "徐雨静", "陈雨馨",
+            "段家伟", "邹剑", "刘锡清", "卓来荣", "陈联斌", "杨强", "钟易程", "王健", "罗贤鹏", "邓来先",
+            "罗剑钧", "罗潇", "朱锐", "吴梦华", "刘丹", "胡仁武", "陈建平", "江海涛", "丁川", "颉德武",
+            "占迎辉", "宋杭原", "赵琪", "周禹希", "朱仪菲", "郝磊", "吕鸿翔", "陈鹏", "熊峰", "周超",
+            "邓远平", "廖卓鸿", "蓝业强", "王世焜", "曾辉", "易思诚", "周海阳", "游磊", "吴文平", "颜良贵",
+            "韩枫", "杨明明", "巫新华", "廖晨", "胡志恒", "淦帆帆", "喻良成", "戴晓伟", "郭颖超", "宋国兴",
+            "孟雪", "贺小火", "姜皓", "胡飞", "杨天星", "赖宗亮", "彭天扬", "刘志鹏", "杨长雄", "杨威",
+            "邓强", "袁建成", "邓灵杰", "袁诗辉", "刘府阳", "宁平平", "甘锋", "何辉海", "张晨阳", "张炜鑫",
+            "彭炜", "彭光宇", "杨磊", "宋雪成", "胡志高", "孙月振", "欧阳晓丽", "汪滢", "梅芬", "陈传其",
+            "杨阳", "王浩", "赵志诚", "王宁", "吕立", "鞠少聪", "金融泉", "刘舰", "张馥川", "张燕山"]
+
+teachers = ["蔡嗣经", "陈广平", "高永涛", "胡乃联",
+            "姜福兴", "李克庆", "李仲学", "刘胜富",
+            "明士祥", "宋卫东", "吴爱祥", "谢玉玲",
+            "徐九华", "杨鹏", "李翠平", "刘保顺",
+            "吕文生", "毛市龙", "王洪江", "王进强"]
+
+def tail_to_head(array)
+  ary = array.dup
+  tail = ary.pop
+  ary.unshift tail
+end
+
+ActiveRecord::Base.transaction do
+  semester = Semester.get(2012, :B)
+
+  admin = User.create(:name => 'admin',
+                      :email => 'admin@edu.dev',
+                      :password => '1234')
+
+  admin.set_role :admin
+
+  puts ">>>>>>>> 管理员"
+
+  students.reduce(1) do |count, name|
+    user = User.create(:name => "student#{count}",
+                       :email => "student#{count}@edu.dev",
+                       :password => '1234')
+
+    user.set_role :student
+
+    student = Student.create(:real_name => name,
+                             :sid => "sid-#{count}",
+                             :user => user)
+
+    puts ">>>>>>>> 学生: #{student.real_name}; sid: #{student.sid}"
+
+    count + 1
+  end
+
+  teachers.reduce(1) do |count, name|
+    user = User.create(:name => "teacher#{count}",
+                       :email => "teacher#{count}@edu.dev",
+                       :password => '1234')
+
+    user.set_role :teacher
+
+    teacher = Teacher.create(:real_name => name,
+                             :tid => "tid-#{count}",
+                             :user => user)
+
+    puts ">>>>>>>> 老师: #{teacher.real_name}; tid: #{teacher.tid}"
+
+    count + 1
+  end
+
+  courses.reduce(1) do |count, name|
+    course = Course.create(:name => name,
+                           :cid => "cid-#{count}")
+
+    puts ">>>>>>>> 创建课程《#{course.name}》"
+
+    count + 1
+  end
+
+  student_users = Student.all.map(&:user)
+
+  1.upto(5).each do |count|
+    team = Team.create(:name => "2012级#{count}班",
+                       :cid => "cid-#{count}")
+
+    team.student_users = student_users[(count-1)*30, 30]
+
+    puts ">>>>>>>> 创建班级#{team.name}，共#{team.student_users.count}名学生"
+  end
+
+  student_chunks = student_users.each_slice(30)
+  teacher_chunks = Teacher.all.map(&:user).each_slice(4).to_a
+  course_chunks = Course.all.each_slice(5).to_a
+
+  course_chunks.reduce(teacher_chunks) do |t_chunks, courses|
+    courses.reduce(1) do |week_day, course|
+      teachers = t_chunks[week_day-1]
+
+      teachers.reduce(1) do |class_no, teacher|
+        course.add_teacher(:semester => semester,
+                           :teacher_user => teacher)
+
+        course.set_course_time(:semester => semester,
+                               :teacher_user => teacher,
+                               :time => [{:weekday => week_day, :number => [class_no, class_no+1]}])
+
+        puts ">>>>>>>> 为#{semester.value}《#{course.name}》分配#{teachers.map(&:real_name).join('，')}几位老师并分配上课时间"
+
+        class_no + 2
+      end
+
+      week_day + 1
+    end
+
+    tail_to_head(t_chunks)
+  end
+
+  student_chunks.reduce(0) do |index, students|
+    courses = course_chunks[index]
+
+    students.reduce(0) do |offset, student|
+      offset = 0 if offset > 3
+      courses.each do |course|
+        teacher_users = course.get_teachers(:semester => semester)
+        x = student.add_course(:semester => semester,
+                               :course => course,
+                               :teacher_user => teacher_users[offset])
+      end
+
+      puts ">>>>>>> 为学生#{student.real_name}选择课程"
+
+      offset + 1
+    end
+
+    index + 1
+  end
+
+end
+end
+
+def course_group_2
 course_hashes = [
  {:course=>"视练",
   :locations=>["中214多"],
@@ -2856,27 +3007,6 @@ course_hashes = [
  {:course=>"声乐四、五",
   :locations=>["北103形"],
   :time_expression=>[{:weekday=>5, :number=>[10]}]},
- {:course=>"徐鸣",
-  :locations=>["北416多"],
-  :time_expression=>[{:weekday=>5, :number=>[10]}]},
- {:course=>"屈燕华",
-  :locations=>["北418多"],
-  :time_expression=>[{:weekday=>5, :number=>[10]}]},
- {:course=>"汤亚汀",
-  :locations=>["北601多"],
-  :time_expression=>[{:weekday=>5, :number=>[10]}]},
- {:course=>"张学君",
-  :locations=>["北602多"],
-  :time_expression=>[{:weekday=>5, :number=>[10]}]},
- {:course=>"胡青",
-  :locations=>["北603多"],
-  :time_expression=>[{:weekday=>5, :number=>[10]}]},
- {:course=>"宋晓琳",
-  :locations=>["北604多"],
-  :time_expression=>[{:weekday=>5, :number=>[10]}]},
- {:course=>"余未来",
-  :locations=>["北606多"],
-  :time_expression=>[{:weekday=>5, :number=>[10]}]},
  {:course=>"音工二（女）艺管二（女）",
   :locations=>[nil],
   :time_expression=>[{:weekday=>5, :number=>[10]}]},
@@ -2968,12 +3098,11 @@ ActiveRecord::Base.transaction do
     course = Course.create(:name => name,
                            :cid => "cid-x#{id}")
 
-    course.add_teacher(:semester => semester,
-                       :teacher_user => teacherx.user)
-                       
-    course.set_course_time(:semester => semester,
-                           :teacher_user => teacherx.user,
-                           :time => time_expression)
+    CourseTeacher.create(:course => course,
+                         :teacher_user => teacherx.user,
+                         :time_expression => time_expression.to_json,
+                         :semester_value => semester.value,
+                         :location => location)
 
     studenty.user.add_course(:semester => semester,
                              :teacher_user => teacherx.user,
@@ -2986,3 +3115,390 @@ ActiveRecord::Base.transaction do
   end
 
 end
+end
+
+def course_group_3
+course_expressions = [
+ {:name=>"思想道德修养与法律基础",
+  :teacher=>"黄静",
+  :location=>"北418",
+  :time_expression=>[{:weekday=>2, :number=>[1]}]},
+ {:name=>"中国近现代史纲要",
+  :teacher=>"黄静",
+  :location=>"北418",
+  :time_expression=>[{:weekday=>2, :number=>[2]}]},
+ {:name=>"大学语文",
+  :teacher=>"杨赛",
+  :location=>"北606",
+  :time_expression=>[{:weekday=>2, :number=>[7, 8]}]},
+ {:name=>"英语",
+  :teacher=>"详见英语分班表",
+  :location=>"详见英语分班表",
+  :time_expression=>
+   [{:weekday=>2, :number=>[9, 10]}, {:weekday=>5, :number=>[9, 10]}]},
+ {:name=>"体育（男）",
+  :teacher=>"张锷、方正基、刘玮",
+  :location=>"操场",
+  :time_expression=>[{:weekday=>5, :number=>[7, 8]}]},
+ {:name=>"体育（女）",
+  :teacher=>"王梦、关虹",
+  :location=>"操场",
+  :time_expression=>[{:weekday=>3, :number=>[7, 8]}]},
+ {:name=>"音乐基础理论",
+  :teacher=>"戴维一",
+  :location=>"中607",
+  :time_expression=>[{:weekday=>1, :number=>[3, 4]}]},
+ {:name=>"绘画基础A",
+  :teacher=>"秦奕",
+  :location=>"北219",
+  :time_expression=>[{:weekday=>1, :number=>[7, 8, 9, 10]}]},
+ {:name=>"绘画基础B",
+  :teacher=>"秦奕",
+  :location=>"北219",
+  :time_expression=>[{:weekday=>1, :number=>[11, 12]}]},
+ {:name=>"程序语言",
+  :teacher=>"陈世哲",
+  :location=>"北604",
+  :time_expression=>[{:weekday=>3, :number=>[3, 4]}]},
+ {:name=>"数字媒体表现艺术",
+  :teacher=>"秦奕",
+  :location=>"北604",
+  :time_expression=>[{:weekday=>4, :number=>[1, 2, 3, 4]}]},
+ {:name=>"动画基础",
+  :teacher=>"秦奕",
+  :location=>"北604",
+  :time_expression=>[{:weekday=>4, :number=>[7, 8]}]},
+ {:name=>"日语会话A",
+  :teacher=>"张治军",
+  :location=>"中215",
+  :time_expression=>[{:weekday=>2, :number=>[3, 4]}]},
+ {:name=>"日语会话B",
+  :teacher=>"张治军",
+  :location=>"中215",
+  :time_expression=>[{:weekday=>2, :number=>[5, 6]}]}]
+
+semester = Semester.get(2012, :B)
+
+ActiveRecord::Base.transaction do
+  course_expressions.reduce(1) do |id, expression|
+    teacher = Teacher.find_or_initialize_by_real_name expression[:teacher]
+    if !teacher.persisted?
+      teacher.tid = "tid-n#{id}"
+      teacher.user = User.create(:name => "teachern#{id}",
+                                 :password => '1234',
+                                 :email => "#{teacher.tid}@edu.dev")
+      teacher.user.set_role :teacher
+      teacher.save
+    end
+
+    course = Course.find_or_initialize_by_name(expression[:name])
+    if !course.persisted?
+      course.cid = "cid-n#{id}"
+      course.save
+    end
+
+    course_teacher = CourseTeacher.find_or_initialize_by_teacher_user_id_and_course_id(teacher.user_id, course.id)
+    if !course_teacher.persisted? || course_teacher.time_expression.blank?
+      course.add_teacher(:semester => semester,
+                         :teacher_user => teacher.user)
+
+      course.set_course_time(:semester => semester,
+                             :teacher_user => teacher.user,
+                             :time => expression[:time_expression])
+
+    end
+
+    student = Student.find_or_initialize_by_real_name '吴大刚'
+    if !student.persisted?
+      student.sid = "sid-n#{id}"
+      student.user = User.create(:name => "studentn#{id}",
+                                 :password => '1234',
+                                 :email => "#{student.sid}@edu.dev")
+      student.user.set_role :student
+      student.save
+    end
+
+    course_assign = CourseStudentAssign.find_or_initialize_by_student_user_id_and_course_id(student.user_id, course.id)
+    if !course_assign.persisted?
+      student.user.add_course(:semester => semester,
+                              :teacher_user => teacher.user,
+                              :course => course)
+      
+    end
+
+    id + 1
+  end
+end
+end
+
+def category_group
+categories = [
+  #level1
+  [
+    '中国传统音乐',
+    #level2
+    [
+      [
+        '民间音乐',
+        #level3
+        ['民间歌曲', '民间器乐', '民间歌舞', '戏曲音乐', '说唱音乐']
+      ],
+      [
+        '文人音乐',
+        ['古琴音乐', '诗词咏吟调', '文人自度曲']
+      ],
+      [
+        '宗教音乐',
+        ['佛教音乐', '道教音乐', '基督教音乐', '伊斯兰教音乐', '萨满教', '其他宗教音乐']
+      ],
+      [
+        '宫廷音乐',
+        ['祭祀乐', '朝会乐', '导迎乐', '巡幸乐', '宴乐']
+      ]
+    ]
+  ],
+  [
+    '古典音乐',
+    ['交响曲', '协奏曲', '鸣奏曲', '交响诗', '序曲', '前奏曲', '托卡塔', '幻想曲', '随想曲', '狂想曲', '夜曲', '小夜曲', '谐谑曲', '间奏曲', '赋格曲', '卡农', '回旋曲', '变奏曲', '进行曲', '晨歌', '船歌', '悲歌', '摇篮曲', '即兴曲', '无穷动', '幽默曲', '小步舞曲', '塔兰泰拉', '波尔卡', '华尔兹', '马祖卡', '波罗涅滋', '哈巴涅拉', '探戈']
+  ],
+  [
+    '流行音乐',
+    [
+      [
+        '爵士乐',
+        ['布鲁斯', '拉格泰姆', '摇摆乐', '比博普', '冷爵士', '硬博普', '自由爵士', '现代爵士乐', '摇滚爵士', '拉丁爵士', '融合爵士', '酸爵士']
+      ],
+      '索尔',
+      '福音歌',
+      '乡村音乐',
+      [
+        '摇滚乐',
+        ['主流摇滚', '温和摇滚', '山区摇滚', '民谣摇滚', '乡村摇滚', '重金属', '朋克', '艺术摇滚']
+      ],
+      [
+        '舞曲',
+        ['迪斯科舞曲', '耗斯舞曲', '流行舞曲', '世界音乐', '雷盖音乐', '拉丁音乐', '桑巴', '伦巴', '曼波', '萨尔萨', '恰恰', '探戈']
+      ],
+      '说唱乐和嘻哈音乐',
+      '电子音乐',
+      '环境音乐',
+      '新世纪音乐',
+      [
+        '其他',
+        ['动作/运动音乐', '喜剧/儿童音乐', '企业音乐', '喜剧/悬念音乐', '广告/铃铛音乐', '模仿音乐', '特殊应景时刻音乐', '无主题音乐/悠闲音乐']
+      ]
+    ]
+  ]
+]
+
+c = categories.dup
+
+if Category
+  ActiveRecord::Base.connection.execute("TRUNCATE categories")
+
+  c = c.flatten.uniq.map do |name|
+    Category.create(:name => name)
+  end
+
+  c[0].move_to_root
+  c[1].move_to_child_of(c[0])
+  c[2, 5].each {|i| i.move_to_child_of(c[1])}
+  c[7].move_to_child_of(c[0])
+  c[8, 3].each {|i| i.move_to_child_of(c[7])}
+  c[11].move_to_child_of(c[0])
+  c[12, 6].each {|i| i.move_to_child_of(c[11])}
+  c[18].move_to_child_of(c[0])
+  c[19, 5].each {|i| i.move_to_child_of(c[18])}
+  c[24].move_to_root
+  c[25, 34].each {|i| i.move_to_child_of(c[24])}
+  c[59].move_to_root
+  c[60].move_to_child_of(c[59])
+  c[61, 12].each {|i| i.move_to_child_of(c[60])}
+  c[73, 3].each {|i| i.move_to_child_of(c[59])}
+  c[76].move_to_child_of(c[59])
+  c[77, 8].each {|i| i.move_to_child_of(c[76])}
+  c[85].move_to_child_of(c[59])
+  c[86, 11].each {|i| i.move_to_child_of(c[85])}
+  c[97, 4].each {|i| i.move_to_child_of(c[59])}
+  c[101].move_to_child_of(c[59])
+  c[102, 8].each {|i| i.move_to_child_of(c[101])}
+
+end
+end
+
+def mentor_group
+  ActiveRecord::Base.transaction do
+    ActiveRecord::Base.connection.execute("TRUNCATE mentor_courses")
+    ActiveRecord::Base.connection.execute("TRUNCATE mentor_notes")
+    ActiveRecord::Base.connection.execute("TRUNCATE mentor_students")
+
+    teachers = Teacher.find(:all, :order => "id", :limit => 5).reverse
+    teachers.each do |teacher|
+      MentorCourse.create(:user => teacher.user, :course => "专题课程-#{teacher.id}")
+    end
+    
+    (1...10).each do |i|
+      MentorNote.create(:title => "导师选择 - #{i}")
+    end
+    
+    
+    students = Student.find(:all, :order => "id", :limit => 5).reverse
+    mentor_courses = MentorCourse.all
+
+    MentorNote.all.each do |mentor_note|
+      i = (1..5).to_a.sample
+      i.times do |n|
+        count = (0..4).to_a.sample
+        number1 = (0..4).to_a.sample
+        number2 = (0..4).to_a.sample
+        number3 = (0..4).to_a.sample
+
+        MentorStudent.create(:mentor_note => mentor_note,
+                             :student_user_id => students[count].user_id,
+                             :mentor_course1 => mentor_courses[number1].id,
+                             :mentor_course2 => mentor_courses[number2].id,
+                             :mentor_course3 => mentor_courses[number3].id)
+      end
+
+    end
+
+  end
+
+end
+
+def media_resource_group
+if User.count < 16
+  puts '请先导入学生及老师示例'
+  exit
+end
+
+path = '/media_samples/resources'
+
+pic_paths = Dir.entries(path).delete_if {|a| a == '.' || a== '..'}.map {|file_name|
+  File.join path, file_name
+}
+
+puts pic_paths
+
+USERS  = User.where('id > ?', 1).limit(8)
+USER_IDS = USERS.map(&:id)
+
+pic_paths.each {|path|
+  pic  = File.open(path)
+  user = USERS[rand 8]
+  resource = MediaResource.put(user, File.join('/', File.basename(path)), pic)
+  pic.close
+  puts "**#{user.name}**上传了文件: #{File.basename pic.path}"
+}
+
+MediaResource.all.each do |resource|
+  resource.share_to(:users => USER_IDS)
+  resource.media_share_rule.build_share
+  resource.share_public
+  puts "已经分享#{resource.name}"
+end
+end
+
+def public_resource_group
+USERS = User.where('id > ?', 1).limit(8)
+
+public_resources_path = '/media_samples/public_resources'
+
+puts public_resources_path
+
+def create_public_resource(path, category = nil)
+  File.open(path,"r") do |f|
+    pr = PublicResource.upload_by_user(USERS[rand 8], f)
+    if !category.blank?
+      pr.category = category
+      pr.save
+    end
+    puts "PublicResource-#{pr.id} created!"
+  end
+end
+
+def list_root_dir(path)
+  Dir[File.join(path, "*")].each do |dir_or_file|
+    p "process #{dir_or_file}"
+    if File.file?(dir_or_file)
+      create_public_resource(dir_or_file)
+    else
+      list_file_from_dir(dir_or_file)
+    end
+  end
+end
+
+def list_file_from_dir(path, category = nil)
+  # 创建分类
+  current_category = Category.create(:name=>File.basename(path))
+  if category.blank?
+    current_category.move_to_root
+  else
+    current_category.move_to_child_of(category)
+  end
+
+  # 遍历当前目录
+  Dir[File.join(path,"*")].each do |dir_or_file|
+    p "process #{dir_or_file}"
+    if File.file?(dir_or_file)
+      create_public_resource(dir_or_file, current_category)
+    else
+      list_file_from_dir(dir_or_file, current_category)
+    end
+  end
+end
+
+ActiveRecord::Base.transaction do
+
+  # file
+  file_dir = File.join(public_resources_path,"file")
+  list_root_dir(file_dir)
+
+  audio_dir = File.join(public_resources_path,"audio")
+  list_root_dir(audio_dir)
+
+  image_dir = File.join(public_resources_path,"image")
+  list_root_dir(image_dir)
+end
+end
+
+def homework_group
+homework_data1 = ['作业1', '画一幅画。', '一幅画', 1.month.from_now]
+homework_data2 = ['作业2', '编一首曲子。', '一首曲子', 2.weeks.from_now]
+homework_data3 = ['作业3', '写一篇论文。', '一篇论文',1.week.ago]
+homework_data4 = ['作业4', '剪辑一段视频。', '一段视频', 4.minute.from_now]
+HOMEWORKS_DATA = [homework_data1, homework_data2, homework_data3, homework_data4]
+TEACHERS       = Teacher.find(:all, :limit => 4)
+
+ActiveRecord::Base.transaction do 
+  (0...4).each {|i|
+    puts "创建作业-#{i}"
+    homework_data = HOMEWORKS_DATA[i]
+    teacher_user  = TEACHERS[i].user
+    courses       = teacher_user.get_teacher_courses(:semester => Semester.get(2012, :B))
+    course        = courses[i]
+
+    homework = Homework.create(:title        => homework_data[0],
+                               :content      => homework_data[1],
+                               :course       => course,
+                               :deadline     => homework_data[3],
+                               :creator      => teacher_user,
+                               :kind         => Homework::KINDS[rand 2])
+
+    HomeworkRequirement.create :title => homework_data[2], :homework => homework
+
+    homework.assign_to({:courses => courses.map(&:id)})
+
+    homework.homework_assign_rule.build_assign
+  }
+end
+end
+
+course_group_1
+course_group_2
+course_group_3
+category_group
+mentor_group
+media_resource_group
+public_resource_group
+homework_group

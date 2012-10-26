@@ -4,6 +4,7 @@ class MentorStudentsController < ApplicationController
   before_filter :pre_load
 
   def pre_load
+    return redirect_to '/' if current_user.is_teacher?
     @mentor_student  = MentorStudent.find params[:id] if params[:id]
     @mentor_note = MentorNote.find params[:mentor_note_id] if params[:mentor_note_id]
   end
