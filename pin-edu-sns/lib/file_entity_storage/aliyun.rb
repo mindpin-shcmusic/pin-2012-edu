@@ -39,6 +39,15 @@ module FileEntityStorage
         check_completion_status
       end
 
+      def sync_save(blob)
+        blob_size = blob.size
+        current_part.save_new_blob(blob)
+
+        self.saved_size += blob_size
+        self.save
+        self.upload_to_oss
+      end
+
       def current_part
         part = self.file_entity_oss_object_parts.last || self.file_entity_oss_object_parts.create
         part = self.file_entity_oss_object_parts.create if part.complete?

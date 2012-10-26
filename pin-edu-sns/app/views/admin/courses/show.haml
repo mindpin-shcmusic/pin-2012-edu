@@ -37,6 +37,7 @@
     - case @current_tab
     - when :basic
     - when :syllabus
+      = @course.syllabus.html_safe
     - when :teacher
       .field.teachers
         %label 任课教师
