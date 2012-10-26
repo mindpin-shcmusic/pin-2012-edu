@@ -5,4 +5,3 @@ try
     jQuery(document).on 'form-ready-submit', ->
       editor.sync()
 catch e
-  pie.log(e)
