@@ -3326,8 +3326,179 @@ if Category
 end
 end
 
+def mentor_group
+  ActiveRecord::Base.transaction do
+    ActiveRecord::Base.connection.execute("TRUNCATE mentor_courses")
+    ActiveRecord::Base.connection.execute("TRUNCATE mentor_notes")
+    ActiveRecord::Base.connection.execute("TRUNCATE mentor_students")
+
+    teachers = Teacher.find(:all, :order => "id", :limit => 5).reverse
+    teachers.each do |teacher|
+      MentorCourse.create(:user => teacher.user, :course => "专题课程-#{teacher.id}")
+    end
+    
+    (1...10).each do |i|
+      MentorNote.create(:title => "导师选择 - #{i}")
+    end
+    
+    
+    students = Student.find(:all, :order => "id", :limit => 5).reverse
+    mentor_courses = MentorCourse.all
+
+    MentorNote.all.each do |mentor_note|
+      i = (1..5).to_a.sample
+      i.times do |n|
+        count = (0..4).to_a.sample
+        number1 = (0..4).to_a.sample
+        number2 = (0..4).to_a.sample
+        number3 = (0..4).to_a.sample
+
+        MentorStudent.create(:mentor_note => mentor_note,
+                             :student_user_id => students[count].user_id,
+                             :mentor_course1 => mentor_courses[number1].id,
+                             :mentor_course2 => mentor_courses[number2].id,
+                             :mentor_course3 => mentor_courses[number3].id)
+      end
+
+    end
+
+  end
+
+end
+
+def media_resource_group
+if User.count < 16
+  puts '请先导入学生及老师示例'
+  exit
+end
+
+path = '/media_samples/resources'
+
+pic_paths = Dir.entries(path).delete_if {|a| a == '.' || a== '..'}.map {|file_name|
+  File.join path, file_name
+}
+
+puts pic_paths
+
+USERS  = User.where('id > ?', 1).limit(8)
+USER_IDS = USERS.map(&:id)
+
+pic_paths.each {|path|
+  pic  = File.open(path)
+  user = USERS[rand 8]
+  resource = MediaResource.put(user, File.join('/', File.basename(path)), pic)
+  pic.close
+  puts "**#{user.name}**上传了文件: #{File.basename pic.path}"
+}
+
+MediaResource.all.each do |resource|
+  resource.share_to(:users => USER_IDS)
+  resource.media_share_rule.build_share
+  resource.share_public
+  puts "已经分享#{resource.name}"
+end
+end
+
+def public_resource_group
+USERS = User.where('id > ?', 1).limit(8)
+
+public_resources_path = '/media_samples/public_resources'
+
+puts public_resources_path
+
+def create_public_resource(path, category = nil)
+  File.open(path,"r") do |f|
+    pr = PublicResource.upload_by_user(USERS[rand 8], f)
+    if !category.blank?
+      pr.category = category
+      pr.save
+    end
+    puts "PublicResource-#{pr.id} created!"
+  end
+end
+
+def list_root_dir(path)
+  Dir[File.join(path, "*")].each do |dir_or_file|
+    p "process #{dir_or_file}"
+    if File.file?(dir_or_file)
+      create_public_resource(dir_or_file)
+    else
+      list_file_from_dir(dir_or_file)
+    end
+  end
+end
+
+def list_file_from_dir(path, category = nil)
+  # 创建分类
+  current_category = Category.create(:name=>File.basename(path))
+  if category.blank?
+    current_category.move_to_root
+  else
+    current_category.move_to_child_of(category)
+  end
+
+  # 遍历当前目录
+  Dir[File.join(path,"*")].each do |dir_or_file|
+    p "process #{dir_or_file}"
+    if File.file?(dir_or_file)
+      create_public_resource(dir_or_file, current_category)
+    else
+      list_file_from_dir(dir_or_file, current_category)
+    end
+  end
+end
+
+ActiveRecord::Base.transaction do
+
+  # file
+  file_dir = File.join(public_resources_path,"file")
+  list_root_dir(file_dir)
+
+  audio_dir = File.join(public_resources_path,"audio")
+  list_root_dir(audio_dir)
+
+  image_dir = File.join(public_resources_path,"image")
+  list_root_dir(image_dir)
+end
+end
+
+def homework_group
+homework_data1 = ['作业1', '画一幅画。', '一幅画', 1.month.from_now]
+homework_data2 = ['作业2', '编一首曲子。', '一首曲子', 2.weeks.from_now]
+homework_data3 = ['作业3', '写一篇论文。', '一篇论文',1.week.ago]
+homework_data4 = ['作业4', '剪辑一段视频。', '一段视频', 4.minute.from_now]
+HOMEWORKS_DATA = [homework_data1, homework_data2, homework_data3, homework_data4]
+TEACHERS       = Teacher.find(:all, :limit => 4)
+
+ActiveRecord::Base.transaction do 
+  (0...4).each {|i|
+    puts "创建作业-#{i}"
+    homework_data = HOMEWORKS_DATA[i]
+    teacher_user  = TEACHERS[i].user
+    courses       = teacher_user.get_teacher_courses(:semester => Semester.get(2012, :B))
+    course        = courses[i]
+
+    homework = Homework.create(:title        => homework_data[0],
+                               :content      => homework_data[1],
+                               :course       => course,
+                               :deadline     => homework_data[3],
+                               :creator      => teacher_user,
+                               :kind         => Homework::KINDS[rand 2])
+
+    HomeworkRequirement.create :title => homework_data[2], :homework => homework
+
+    homework.assign_to({:courses => courses.map(&:id)})
+
+    homework.homework_assign_rule.build_assign
+  }
+end
+end
 
 course_group_1
 course_group_2
 course_group_3
 category_group
+mentor_group
+media_resource_group
+public_resource_group
+homework_group
