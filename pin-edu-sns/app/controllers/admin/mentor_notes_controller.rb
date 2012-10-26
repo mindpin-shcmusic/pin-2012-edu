@@ -41,4 +41,10 @@ class Admin::MentorNotesController < ApplicationController
     flash[:error] = error[1]
     redirect_to :back
   end
+
+
+  def destroy
+    @mentor_note.remove
+    render :text => 'ok'
+  end
 end
