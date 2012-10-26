@@ -53,8 +53,6 @@ MindpinEduSns::Application.routes.draw do
         put  :add_teacher
         get  :select_students
         put  :set_students
-        get  :upload_image_page
-        get  :upload_video_page
         get  :select_cover_page
         post :select_cover
       end
@@ -63,6 +61,7 @@ MindpinEduSns::Application.routes.draw do
         get  :import_from_csv_page
         post :import_from_csv
       end
+      resources :course_resources, :shallow => true
     end
     resources :teams do
       member do
@@ -190,16 +189,12 @@ MindpinEduSns::Application.routes.draw do
 
   resources :courses do
     collection do
-      get :mine
-
-      get  :for_student
-      get  :for_teacher
-      get  :next_for_student
-      get  :next_for_teacher
+      get :for_student
+      get :for_teacher
+      get :next_for_student
+      get :next_for_teacher
     end
-
-    resources :course_images, :shallow => true
-    resources :course_videos, :shallow => true
+    resources :course_resources, :shallow => true
   end
 
   # --------------------
@@ -281,5 +276,17 @@ MindpinEduSns::Application.routes.draw do
       put :announce
     end
   end
+
+  resources :score_lists,
+            :as         => :course_score_lists,
+            :controller => :course_score_lists do
+
+    collection do
+      get :mine
+      get :course_candidates
+    end
+  end
+
+  get '/score_lists/mine/:semester' => 'course_score_lists#student_semester'
 
 end

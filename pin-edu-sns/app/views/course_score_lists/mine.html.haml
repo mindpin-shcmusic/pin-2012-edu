@@ -1,0 +1,9 @@
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '成绩单'
+
+.page-student-score-lists.page-admin-models
+  - @semesters.each do |semester|
+    .score-list.model
+      .title= "#{semester.value}学期成绩单"
+      .ops
+        = link_to '详细情况', "/score_lists/mine/#{semester.value}", :class => 'edit'

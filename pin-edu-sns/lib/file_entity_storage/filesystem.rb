@@ -98,6 +98,9 @@ module FileEntityStorage
         FileEntityVideoEncodeResqueQueue.enqueue(self.id)
       end
 
+      def http_url
+        self.attach.url
+      end
 
     end
 

@@ -2,12 +2,16 @@
   = form_for @homework, :html => {:class => "assign_form", :multipart => true} do |f|
     = flash_info
 
+    .field
+      %label 请选择类别
+      = f.select :kind, [['作业', 'Homework'], ['艺术实践', 'Practice']], {}, {:class => 'courses-selector'}
+    
     .field.need
-      %label 作业标题
+      %label 标题
       = f.text_field :title
     
     .field.need
-      %label 作业内容
+      %label 内容
       = f.text_area :content, :size => "60x12"
     
     .field
@@ -19,7 +23,7 @@
       = f.text_field :deadline, :class => 'homework-deadline'
     
     .field.attachments
-      %label 老师作业附件
+      %label 老师附件
 
       .sample.hide
         .file
@@ -38,7 +42,7 @@
 
       
     .field
-      %label 作业需求
+      %label 需求
       .added-requirements
         - @requirements.each do |requirement|
           .requirement
@@ -49,4 +53,4 @@
       .student-attachement-fields
       
     .field.submit
-      = jfsubmit "布置作业"
+      = jfsubmit "布置作业/艺术实践"

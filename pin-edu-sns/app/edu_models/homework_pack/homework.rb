@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 class Homework < ActiveRecord::Base
   HOMEWORK_ATTACHMENTS_DIR = '/MINDPIN_MRS_DATA/attachments/homework_attachments'
+  KINDS = ['Homework', 'Practice']
 
   # --- 模型关联
   belongs_to :creator,
@@ -41,7 +42,8 @@ class Homework < ActiveRecord::Base
   # --- 校验方法
   validates :title, :content, :presence => true
   validates :course, :presence => true
-  
+  validates :kind, :presence => true, :inclusion => {:in => Homework::KINDS}
+
   def teacher_attachment_zip_path
     "#{self.class::HOMEWORK_ATTACHMENTS_DIR}/homework_teacher#{self.creator.id}_#{self.id}.zip"
   end
@@ -109,6 +111,11 @@ class Homework < ActiveRecord::Base
     homework_assign.save
   end
   
+  def kind_str
+    return '作业' if self.kind == 'Homework'
+    '艺术实践' if self.kind == 'Practice'
+  end
+
   # --- 给其他类扩展的方法
   module UserMethods
     def self.included(base)

@@ -1,5 +1,5 @@
 - hbreadcrumb '首页', '/'
-- hbreadcrumb '作业', '/homeworks'
+- hbreadcrumb '作业/艺术实践', '/homeworks'
 - hbreadcrumb @homework.title
 
 :ruby
@@ -12,7 +12,7 @@
       .user #{user_link @homework.creator} 创建，#{jtime @homework.created_at}
 
     .content
-      .title 作业要求
+      .title #{@homework.kind_str}要求
       //.ct= jct @homework.content
       .ct= sanitize @homework.content
 
@@ -24,7 +24,7 @@
 
     - if !attachments.blank?
       .attachments
-        .title 作业参考附件
+        .title #{@homework.kind_str}参考附件
         .list
           - attachments.each do |attachment|
             .file

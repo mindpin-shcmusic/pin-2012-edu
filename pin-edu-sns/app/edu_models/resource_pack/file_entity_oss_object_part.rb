@@ -11,6 +11,12 @@ class FileEntityOssObjectPart < ActiveRecord::Base
   after_create do |object_part|
     dir = File.dirname(object_part.part_path)
     FileUtils.mkdir_p(dir)
+    FileUtils.rm_rf(object_part.part_path) if File.exists?(object_part.part_path)
+  end
+
+  after_destroy do |object_part|
+    dir = File.dirname(object_part.part_path)
+    FileUtils.rm_rf(dir)
   end
 
   def complete?

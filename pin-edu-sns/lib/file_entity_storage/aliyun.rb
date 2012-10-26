@@ -62,6 +62,7 @@ module FileEntityStorage
         multipart_upload.complete(upload_id, part_infos)
 
         self.update_attributes!( :merged => true)
+        self.file_entity_oss_object_parts.each{|part|part.destroy}
       end
 
       def complete?
@@ -74,8 +75,8 @@ module FileEntityStorage
         self.attach.url.gsub(/\?.*/,"")
       end
 
-      def oss_url
-        File.join("http://storage.aliyun.com/#{OssManager::CONFIG["bucket"]}", attach.url)
+      def http_url(style = :original)
+        File.join("http://storage.aliyun.com/#{OssManager::CONFIG["bucket"]}", attach.url(style))
       end
       
     end

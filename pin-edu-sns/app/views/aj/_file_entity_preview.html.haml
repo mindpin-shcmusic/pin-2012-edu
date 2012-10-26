@@ -5,13 +5,13 @@
   - else
     - if file_entity.is_image?
       / 图片展示
-      - src = file_entity.attach.url :large
+      - src = file_entity.http_url :large
       = jimage src, :width=>640, :height=>400
 
     - elsif file_entity.is_audio?
       / 音乐播放
       %audio{:preload=>"auto"}
-        %source{:src=>file_entity.attach.url}
+        %source{:src=>file_entity.http_url}
 
     - elsif file_entity.is_video?
       - if file_entity.video_encoding?
@@ -31,7 +31,7 @@
           .desc 视频截图预览
           - 1.upto 6 do |i|
             :ruby
-              arr = file_entity.attach.url.split('original')
+              arr = file_entity.http_url.split('original')
               arr.pop
               src = arr.push("/screenshot_#{i}.jpg").join('original')
             .img

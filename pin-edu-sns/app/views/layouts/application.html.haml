@@ -21,10 +21,9 @@
         .links
           .title 教学
           - if current_user.is_teacher?
-            %a.link.homeworks{:href=>homeworks_path} 布置的作业
+            %a.link.homeworks{:href=>homeworks_path} 布置的作业/艺术实践
           - if current_user.is_student?
-            %a.link.homeworks{:href=>homeworks_path} 我的作业
-          %a.link.courses{:href=>'/courses/mine'} 我的课程
+            %a.link.homeworks{:href=>homeworks_path} 我的作业/艺术实践
 
           - if current_user.is_student?
             %a.link.courses{:href=>'/courses/for_student'} 当前课程
@@ -32,6 +31,10 @@
           - if current_user.is_teacher?
             %a.link.courses{:href=>'/courses/for_teacher'} 当前课程
 
+          - if current_user.is_teacher?
+            %a.link.courses{:href=>'/score_lists'} 成绩单
+          - if current_user.is_student?
+            %a.link.courses{:href=>'/score_lists/mine'} 成绩单
 
           - if current_user.is_student?
             %a.link.courses{:href=>'/courses/next_for_student'} 我接下来要上的课

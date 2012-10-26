@@ -6,14 +6,13 @@ class Course < ActiveRecord::Base
   validates :name, :presence => true
   validates :cid, :uniqueness => { :if => Proc.new { |course| !course.cid.blank? } }
 
-  has_many :course_images
-  has_many :course_videos
+  has_many :course_resources
 
   belongs_to :cover,
-             :class_name  => 'CourseImage',
+             :class_name  => 'CourseResource',
              :foreign_key => :cover_id
 
-  has_many :file_entities, :through=> :course_images
+  has_many :file_entities, :through=> :course_resources
 
   has_many :course_teachers
   has_many :teacher_users, :through => :course_teachers
@@ -22,20 +21,11 @@ class Course < ActiveRecord::Base
   has_many :teaching_plans, :through => :teaching_plan_courses
 
   def cover_url
-    self.cover ? self.cover.file_entity.attach.url : self.default_cover
+    self.cover ? self.cover.file_entity.http_url : self.default_cover
   end
 
   def default_cover
     '/assets/covers/course.small.jpg'
-  end
-
-  def create_course_image(file)
-    raise "请选择上传文件" if file.blank?
-
-    raise "请选择图片上传" if :image != FileEntity.content_kind(file.content_type)
-    file_entity = FileEntity.create(:attach => file, :merged => true)
-    course_image = CourseImage.create(:file_entity=>file_entity,:course=>self)
-    raise course_image.errors.first[1] if !course_image.valid?
   end
 
   def self.import_from_csv(file)

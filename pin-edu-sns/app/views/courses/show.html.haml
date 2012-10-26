@@ -2,6 +2,8 @@
 - hbreadcrumb '课程', '/courses'
 - hbreadcrumb @course.name
 
+- current_semester = params[:semester].blank? ? Semester.now : Semester.get_by_value(params[:semester])
+
 .page-course-show
   .base-info
     .cover
@@ -11,34 +13,40 @@
       .field.cid
         %span 课程编号：
         %span= @course.cid
+  .semesters-nav
+    %label 学期
+    - Semester.get_nav_array.each do |semester|
+      - class_name = current_semester == semester ? "current" : ""
+      = link_to semester.value, "/courses/#{@course.id}?semester=#{semester.value}",:class => class_name
 
   .detail-info
     .tabs
-      = course_tab_link @course, :basic, '基础信息', @current_tab
-      = course_tab_link @course, :syllabus, '教学大纲', @current_tab
-      = course_tab_link @course, :images, '课程照片', @current_tab
-      = course_tab_link @course, :videos, '课程视频', @current_tab
-      = course_tab_link @course, :students, '学生', @current_tab, @course.get_students(:semester => Semester.now).count
+      = course_tab_link @course, :basic, '基础信息', @current_tab, current_semester
+      = course_tab_link @course, :syllabus, '教学大纲', @current_tab, current_semester
+      = course_tab_link @course, :teacher, '任课教师', @current_tab, current_semester
+      = course_tab_link @course, :image, '课程照片', @current_tab, current_semester
+      = course_tab_link @course, :courseware, '课程课件', @current_tab, current_semester
+      = course_tab_link @course, :audio, '课程音频', @current_tab, current_semester
+      = course_tab_link @course, :students, '学生', @current_tab, current_semester, @course.get_students(:semester => Semester.now).count
 
     - case @current_tab
     - when :basic
       .detail.basic
-        .field.teacher-info
-          .t 任课老师
-        -#   .avatar= avatar @course.teacher_user, :medium
-        -#   .name
-        -#     %span= @course.teacher_user.real_name
-        -#     %span= link_to '查看信息', @course.teacher_user
-        -#   .tid
-        -#     %span 教师编号：
-        -#     %span= @course.teacher_user.teacher.tid
-        -# .field.desc-info
-        -#   .t 课程简介
-        -#   .desc= sanitize @course.desc
 
     - when :syllabus
       .detail.syllabus
         .syllabus= sanitize @course.syllabus
+    - when :teacher
+      .detail.teacher
+        - teacher_users = @course.get_teachers(:semester => current_semester)
+        - teacher_users.each do |teacher_user|
+          .avatar= avatar teacher_user, :medium
+          .name
+            %span= teacher_user.real_name
+            %span= link_to '查看信息', teacher_user
+          .tid
+            %span 教师编号：
+            %span= teacher_user.teacher.tid
 
     - when :students
       .detail.students
@@ -49,14 +57,19 @@
               .name= student_user.real_name
               %a.info{:href=>"/users/#{student_user.id}"} 查看信息
 
-    - when :images
+    - when :image
       .detail.images
         .upload= jupload_button '上传照片'
-        = render '/courses/parts/resources', :course_resources=>@course.course_images
-        = render '/courses/parts/uploader', :course=>@course, :kind=>:image
+        = render '/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_IMAGE).with_semester(current_semester)
+        = render '/courses/parts/uploader', :course=>@course, :kind=>:image, :semester => current_semester
 
-    - when :videos
+    - when :courseware
       .detail.images
-        .upload= jupload_button '上传视频'
-        = render '/courses/parts/resources', :course_resources => @course.course_videos
-        = render '/courses/parts/uploader', :course=>@course, :kind=>:video
+        .upload= jupload_button '上传课件'
+        = render '/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_COURSEWARE).with_semester(current_semester)
+        = render '/courses/parts/uploader', :course=>@course, :kind=>:courseware, :semester => current_semester
+    - when :audio
+      .detail.images
+        .upload= jupload_button '上传音频'
+        = render '/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_AUDIO).with_semester(current_semester)
+        = render '/courses/parts/uploader', :course=>@course, :kind=>:audio, :semester => current_semester
