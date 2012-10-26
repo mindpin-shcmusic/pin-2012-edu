@@ -1,4 +1,4 @@
-class CreateStudentScoreRecords < ActiveRecord::Migration
+class CreateStudentScores < ActiveRecord::Migration
   def change
     create_table :course_score_records do |t|
       t.integer :course_score_list_id
