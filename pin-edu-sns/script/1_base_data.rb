@@ -3400,15 +3400,13 @@ end
 end
 
 def public_resource_group
-users = User.where('id > ?', 1).limit(8)
-
 public_resources_path = '/media_samples/public_resources'
 
 puts public_resources_path
 
 def create_public_resource(path, category = nil)
   File.open(path,"r") do |f|
-    pr = PublicResource.upload_by_user(users[rand 8], f)
+    pr = PublicResource.upload_by_user(User.where('id > ?', 1).limit(8)[rand 8], f)
     if !category.blank?
       pr.category = category
       pr.save
