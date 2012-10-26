@@ -3380,19 +3380,19 @@ pic_paths = Dir.entries(path).delete_if {|a| a == '.' || a== '..'}.map {|file_na
 
 puts pic_paths
 
-USERS  = User.where('id > ?', 1).limit(8)
-USER_IDS = USERS.map(&:id)
+users  = User.where('id > ?', 1).limit(8)
+user_ids = users.map(&:id)
 
 pic_paths.each {|path|
   pic  = File.open(path)
-  user = USERS[rand 8]
+  user = users[rand 8]
   resource = MediaResource.put(user, File.join('/', File.basename(path)), pic)
   pic.close
   puts "**#{user.name}**上传了文件: #{File.basename pic.path}"
 }
 
 MediaResource.all.each do |resource|
-  resource.share_to(:users => USER_IDS)
+  resource.share_to(:users => user_ids)
   resource.media_share_rule.build_share
   resource.share_public
   puts "已经分享#{resource.name}"
@@ -3400,15 +3400,13 @@ end
 end
 
 def public_resource_group
-USERS = User.where('id > ?', 1).limit(8)
-
 public_resources_path = '/media_samples/public_resources'
 
 puts public_resources_path
 
 def create_public_resource(path, category = nil)
   File.open(path,"r") do |f|
-    pr = PublicResource.upload_by_user(USERS[rand 8], f)
+    pr = PublicResource.upload_by_user(User.where('id > ?', 1).limit(8)[rand 8], f)
     if !category.blank?
       pr.category = category
       pr.save
@@ -3467,14 +3465,14 @@ homework_data1 = ['作业1', '画一幅画。', '一幅画', 1.month.from_now]
 homework_data2 = ['作业2', '编一首曲子。', '一首曲子', 2.weeks.from_now]
 homework_data3 = ['作业3', '写一篇论文。', '一篇论文',1.week.ago]
 homework_data4 = ['作业4', '剪辑一段视频。', '一段视频', 4.minute.from_now]
-HOMEWORKS_DATA = [homework_data1, homework_data2, homework_data3, homework_data4]
-TEACHERS       = Teacher.find(:all, :limit => 4)
+homeworks_data = [homework_data1, homework_data2, homework_data3, homework_data4]
+teachers       = Teacher.find(:all, :limit => 4)
 
 ActiveRecord::Base.transaction do 
   (0...4).each {|i|
     puts "创建作业-#{i}"
-    homework_data = HOMEWORKS_DATA[i]
-    teacher_user  = TEACHERS[i].user
+    homework_data = homeworks_data[i]
+    teacher_user  = teachers[i].user
     courses       = teacher_user.get_teacher_courses(:semester => Semester.get(2012, :B))
     course        = courses[i]
 
