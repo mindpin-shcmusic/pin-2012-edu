@@ -9,6 +9,7 @@ pie.load ->
 
     $form = $button.closest('form')
     if pie.is_form_all_need_filled($form)
+      jQuery(document).trigger('form-ready-submit')
       $form.submit()
 
 pie.load ->

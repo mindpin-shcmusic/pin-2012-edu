@@ -213,6 +213,7 @@ MindpinEduSns::Application.routes.draw do
   get  'file_show/*path' => 'media_resources#file_show', :format => false
 
   post '/upload' => 'file_entities#upload'
+  post '/kindeditor_upload' => 'file_entities#kindeditor_upload'
   get  '/download/:download_id' => 'file_entities#download'
   post   '/file_entities/:id/re_encode'  => 'file_entities#re_encode'
 

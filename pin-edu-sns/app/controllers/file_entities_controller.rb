@@ -32,4 +32,18 @@ class FileEntitiesController < ApplicationController
     file_entity.into_video_encode_queue
     render :partial => 'aj/file_entity_preview', :locals => {:file_entity => file_entity}
   end
+
+
+  def kindeditor_upload
+    blob = params[:imgFile]
+    file_name = params[:imgFile].original_filename
+    file_size = File.size(params[:imgFile].path)
+
+    file_entity = FileEntity.create_by_params(file_name,file_size)
+    file_entity.sync_save(blob)
+    render :json => {
+      :error => 0,
+      :url => file_entity.http_url
+    }
+  end
 end
