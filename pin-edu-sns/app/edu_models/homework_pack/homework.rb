@@ -127,13 +127,13 @@ class Homework < ActiveRecord::Base
       base.has_many :expired_teacher_homeworks,
                     :class_name  => 'Homework',
                     :foreign_key => :creator_id,
-                    :conditions  => ['deadline > ?', Time.now]
+                    :conditions  => ['deadline <= ?', Time.now]
       
       # 老师已过期作业
       base.has_many :unexpired_teacher_homeworks,
                     :class_name  => 'Homework',
                     :foreign_key => :creator_id,
-                    :conditions  => ['deadline <= ?', Time.now]
+                    :conditions  => ['deadline > ?', Time.now]
       
       base.send(:include, InstanceMethods)
     end
