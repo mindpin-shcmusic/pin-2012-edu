@@ -18,9 +18,9 @@
       %label 答案
       .v= html_escape(@question.answer.content).gsub(/\n/, '<br />').html_safe
 
-
-    .field
-      .link.edit= link_to '编辑', 'javascript:;'
+    - if current_user.is_teacher?
+      .field
+        .link.edit= link_to '编辑', 'javascript:;'
 
     .page-edit-form.hide
       = flash_info
