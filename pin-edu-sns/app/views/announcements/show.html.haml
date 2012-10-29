@@ -15,7 +15,7 @@
       = form_tag announce_announcement_path(@announcement), :method => :put do
         .courses
           请选择要发布通知的课程
-          - creator.courses.each do |course|
+          - creator.get_teacher_courses(:semester => Semester.now).each do |course|
             - is_announced = course_ids.include?(course.id)
             %label
               = check_box_tag 'course_ids[]', course.id, is_announced, :disabled => is_announced
