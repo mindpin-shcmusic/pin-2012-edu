@@ -16,7 +16,7 @@ module FileEntityStorage
                         :url  => R::FILE_ENTITY_ATTACHED_URL
 
       base.send(:include, InstanceMethods)
-      base.send(:include, ClassMethods)
+      base.send(:extend, ClassMethods)
     end
 
     module ClassMethods
@@ -56,6 +56,22 @@ module FileEntityStorage
         self.saved_size += file_blob_size
         self.save
         self.check_completion_status
+      end
+
+      def sync_save(blob)
+        FileUtils.mkdir_p(File.dirname(self.attach.path))
+        FileUtils.mv(blob.path,self.attach.path)
+
+        self.update_attributes(
+          :saved_size => blob.size,
+          :attach_updated_at => self.created_at,
+          :merged => true
+        )
+        # 如果 文件是图片，生成 all styles 图片
+        self.attach.reprocess!
+        if self.is_video?
+          self.into_video_encode_queue
+        end
       end
 
       def check_completion_status
@@ -98,8 +114,8 @@ module FileEntityStorage
         FileEntityVideoEncodeResqueQueue.enqueue(self.id)
       end
 
-      def http_url
-        self.attach.url
+      def http_url(style = :original)
+        self.attach.url(style)
       end
 
     end
