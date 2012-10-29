@@ -43,9 +43,9 @@ class CourseSurveyRecordsController < ApplicationController
       return redirect_to "/course_surveys"
     end
     
-    error = @course_survey.errors.first
+    error = @course_survey_record.errors.first
     flash[:error] = error[1]
-    redirect_to "/course_surveys/#{@course_survey.id}/course_survey_records/new"
+    redirect_to "/course_surveys/#{@course_survey.id}/course_survey_records/new?kind=#{@kind}"
   end
 
   def edit

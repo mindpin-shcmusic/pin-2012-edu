@@ -1,0 +1,15 @@
+- @course_surveys.each do |course_survey|
+  :ruby
+    case course_survey.kind
+    when '1'
+      course_survey_records = course_survey.course_survey_records
+    when '2'
+      course_survey_records = course_survey.course_survey_es_records
+    end
+  .model.course_survey
+    .title
+      = course_survey.title
+      
+    .ops
+      %a.detail{:href => "/course_surveys/#{course_survey.id}"} 查看报告结果
+        
