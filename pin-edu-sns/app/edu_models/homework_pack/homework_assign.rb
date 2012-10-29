@@ -3,9 +3,10 @@ class HomeworkAssign < ActiveRecord::Base
   # --- 模型关联
   belongs_to :homework
   belongs_to :user
-  belongs_to :student
 
   include Comment::CommentableMethods
+
+  alias :creator :user
 
   def student_upload_zip_path
     "#{Homework::HOMEWORK_ATTACHMENTS_DIR}/homework_student#{self.user.id}_#{self.homework.id}.zip"

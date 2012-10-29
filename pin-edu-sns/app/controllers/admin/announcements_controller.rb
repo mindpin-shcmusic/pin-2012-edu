@@ -1,3 +1,4 @@
+# -*- coding: no-conversion -*-
 class Admin::AnnouncementsController < ApplicationController
   layout 'admin'
   before_filter :login_required
@@ -22,7 +23,7 @@ class Admin::AnnouncementsController < ApplicationController
 
   def destroy
     Announcement.find(params[:id]).destroy
-    redirect_to :back
+    render :text => '成功删除通知'
   end
 
 end

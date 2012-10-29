@@ -28,10 +28,10 @@ pie.load ->
     monthNamesShort: ['1','2','3','4','5','6'
     '7','8','9','10','11','12']
     dayNames: ['星期一','星期二','星期三','星期四','星期五','星期六','星期天']
-    dayNamesShort: ['一','二','三','四','五','六','七']
-    dayNamesMin: ['一','二','三','四','五','六','七']
+    dayNamesShort: ['七', '一','二','三','四','五','六']
+    dayNamesMin: ['七', '一','二','三','四','五','六']
     dateFormat: 'yy.mm.dd'
-    firstDay: 1
+    firstDay: 7
     isRTL: false
     showMonthAfterYear: false
     yearSuffix: ''
