@@ -31,7 +31,7 @@ pie.load ->
     dayNamesShort: ['一','二','三','四','五','六','七']
     dayNamesMin: ['一','二','三','四','五','六','七']
     dateFormat: 'yy.mm.dd'
-    firstDay: 7
+    firstDay: 1
     isRTL: false
     showMonthAfterYear: false
     yearSuffix: ''
@@ -53,14 +53,14 @@ pie.load ->
   # --------------------
 
   # 老师确定作业完成
-  # jQuery('.set-finished a').click ->
-  #   $request = $.ajax
-  #     url  : $(this).data('url')
-  #     type : 'PUT'
+  jQuery('.page-homework-student .set-finished a').click ->
+    $request = $.ajax
+      url  : $(this).data('url')
+      type : 'PUT'
 
-  #   $request.success =>
-  #     $(this).parent().fadeOut()
-  #     $('.student-home-work-status .signed').removeClass('hide').hide().fadeIn()
+    $request.success =>
+      $(this).parent().fadeOut()
+      $('.student-home-work-status .signed').removeClass('hide').hide().fadeIn()
 
 
   jQuery('.page-homework-show .student-submit a.form-button').click ->

@@ -78,8 +78,8 @@ class Homework < ActiveRecord::Base
   end
 
   # 老师创建作业时生成的附件压缩包
-  def build_teacher_attachments_zip(user)
-    path = "#{HOMEWORK_ATTACHMENTS_DIR}/homework_teacher#{user.id}_#{self.id}.zip"
+  def build_teacher_attachments_zip
+    path = "#{HOMEWORK_ATTACHMENTS_DIR}/homework_teacher#{self.creator.id}_#{self.id}.zip"
     Zip::ZipFile.open(path, Zip::ZipFile::CREATE) do |zip|
       self.homework_teacher_attachments.each do |attachment|
         unless zip.find_entry(attachment.name)

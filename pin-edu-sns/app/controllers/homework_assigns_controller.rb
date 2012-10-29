@@ -16,7 +16,7 @@ class HomeworkAssignsController < ApplicationController
   end
 
   def set_finished
-    @homework.set_finished_by!(user)
+    @homework.set_finished_by!(@assign.user)
     render :text => 'set finished!'
   end
 

@@ -7,7 +7,7 @@
   - else
     - if !requirements.blank?
       .requirements
-        .title 作业要求提交以下内容
+        .title #{@homework.kind_str}要求提交以下内容
         .list
           - requirements.each do |requirement|
             :ruby
