@@ -64,8 +64,9 @@ pie.load ->
 
 
   jQuery('.page-homework-show .student-submit a.form-button').click ->
-    url = jQuery(this).closest('.student-submit').data('url')
-    content = jQuery(this).closest('.student-submit').find('textarea').val()
+    $student_submit = jQuery(this).closest('.student-submit')
+    url = $student_submit.data('url')
+    content = $student_submit.find('textarea').val()
 
     jQuery.ajax
       url: url
@@ -73,7 +74,7 @@ pie.load ->
       data:
         content: content
       success: =>
-        console.log(111)
+        $student_submit.text('作业已提交！')
 
 
 
