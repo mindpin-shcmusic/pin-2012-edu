@@ -51,7 +51,18 @@ class QuestionsController < ApplicationController
   end
 
 
+  def edit
+    if @question.has_answered
+      return redirect_to "/questions"
+    end
+  end
+
+
   def update
+    if @question.has_answered
+      return redirect_to "/questions"
+    end
+
     if @question.update_attributes(params[:question])
       return redirect_to "/questions"
     end
