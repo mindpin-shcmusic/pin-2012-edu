@@ -78,9 +78,9 @@ class Homework < ActiveRecord::Base
   end
 
   # 老师创建作业时生成的附件压缩包
-  def build_teacher_attachments_zip(user)
-    path = "#{HOMEWORK_ATTACHMENTS_DIR}/homework_teacher#{user.id}_#{self.id}.zip"
-    Zip::ZipFile.open(path, Zip::ZipFile::CREATE) do |zip|
+  def build_teacher_attachments_zip
+    FileUtils.mkdir_p(File.dirname(teacher_attachment_zip_path))
+    Zip::ZipFile.open(teacher_attachment_zip_path, Zip::ZipFile::CREATE) do |zip|
       self.homework_teacher_attachments.each do |attachment|
         unless zip.find_entry(attachment.name)
           zip.add(attachment.name, attachment.file_entity.attach.path)
@@ -127,13 +127,13 @@ class Homework < ActiveRecord::Base
       base.has_many :expired_teacher_homeworks,
                     :class_name  => 'Homework',
                     :foreign_key => :creator_id,
-                    :conditions  => ['deadline > ?', Time.now]
+                    :conditions  => ['deadline <= ?', Time.now]
       
       # 老师已过期作业
       base.has_many :unexpired_teacher_homeworks,
                     :class_name  => 'Homework',
                     :foreign_key => :creator_id,
-                    :conditions  => ['deadline <= ?', Time.now]
+                    :conditions  => ['deadline > ?', Time.now]
       
       base.send(:include, InstanceMethods)
     end

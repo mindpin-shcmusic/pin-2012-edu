@@ -7,11 +7,11 @@
   
   
 .page-homework-student
-  %h1 学生:#{@student_user.student.real_name} 作业:#{@homework.title} 完成情况
+  %h1 学生:#{@student_user.student.real_name} #{@homework.kind_str}:#{@homework.title} 完成情况
 
-  = link_to '返回作业描述页面', @homework
+  = link_to "返回#{@homework.kind_str}描述页面", @homework
 
-  %div 作业内容
+  %div #{@homework.kind_str}内容
   %p= sanitize @homework.content
 
   .student-home-work-status

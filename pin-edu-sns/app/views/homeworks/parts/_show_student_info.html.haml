@@ -7,7 +7,7 @@
   - else
     - if !requirements.blank?
       .requirements
-        .title 作业要求提交以下内容
+        .title #{@homework.kind_str}要求提交以下内容
         .list
           - requirements.each do |requirement|
             :ruby
@@ -26,9 +26,10 @@
                 .name
 
     -if homework.all_requirements_uploaded_by?(current_user)
+      - assign = @homework.assign_record_of(current_user)
       :ruby
         data = {
-          :url => set_submitted_homework_assign_path
+          :url => set_submitted_homework_assign_path(assign)
         }
 
       .student-submit{:data=>data}

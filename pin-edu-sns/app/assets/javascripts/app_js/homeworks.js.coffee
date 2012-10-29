@@ -28,8 +28,8 @@ pie.load ->
     monthNamesShort: ['1','2','3','4','5','6'
     '7','8','9','10','11','12']
     dayNames: ['星期一','星期二','星期三','星期四','星期五','星期六','星期天']
-    dayNamesShort: ['一','二','三','四','五','六','七']
-    dayNamesMin: ['一','二','三','四','五','六','七']
+    dayNamesShort: ['七', '一','二','三','四','五','六']
+    dayNamesMin: ['七', '一','二','三','四','五','六']
     dateFormat: 'yy.mm.dd'
     firstDay: 7
     isRTL: false
@@ -53,19 +53,20 @@ pie.load ->
   # --------------------
 
   # 老师确定作业完成
-  # jQuery('.set-finished a').click ->
-  #   $request = $.ajax
-  #     url  : $(this).data('url')
-  #     type : 'PUT'
+  jQuery('.page-homework-student .set-finished a').click ->
+    $request = $.ajax
+      url  : $(this).data('url')
+      type : 'PUT'
 
-  #   $request.success =>
-  #     $(this).parent().fadeOut()
-  #     $('.student-home-work-status .signed').removeClass('hide').hide().fadeIn()
+    $request.success =>
+      $(this).parent().fadeOut()
+      $('.student-home-work-status .signed').removeClass('hide').hide().fadeIn()
 
 
   jQuery('.page-homework-show .student-submit a.form-button').click ->
-    url = jQuery(this).closest('.student-submit').data('url')
-    content = jQuery(this).closest('.student-submit').find('textarea').val()
+    $student_submit = jQuery(this).closest('.student-submit')
+    url = $student_submit.data('url')
+    content = $student_submit.find('textarea').val()
 
     jQuery.ajax
       url: url
@@ -73,7 +74,7 @@ pie.load ->
       data:
         content: content
       success: =>
-        console.log(111)
+        $student_submit.text('作业已提交！')
 
 
 
