@@ -1,16 +1,14 @@
 - hbreadcrumb '首页', '/'
-- hbreadcrumb '课程'
+- hbreadcrumb '我的课程表'
 
-.page-courses-head
+.page-courses-table
+  .table-title
+    #{Semester.now.value} 学期课程表
 
-.page-courses
-  .field{:style => "float: left; width: 130px;border: 1px solid #000"}
+  .field
     - 13.times do |number|
-      :ruby
-        course_label = change_to_course_number(number)
-
-      %item{:style => "display: block;border: 1px solid #000; height: 45px;"}
-        = course_label
+      .item.number
+        = change_to_course_number(number)
 
   - 7.times do |weekday|
     :ruby
@@ -18,18 +16,18 @@
       weekday = 0 if weekday == 7
       weekday_label = change_to_weekday(weekday)
 
-
-    .field{:style => "float: left; width: 130px;border: 1px solid #000;"}
-      %item{:style => "display: block; border: 1px solid #000; height: 45px;border-left-style:none"}
+    .field
+      .item.wd
         %span= weekday_label
 
-      - 12.times do |number|
+      - 1.upto 12 do |number|
         :ruby
-          number += 1
           course_label = change_to_course_number(number)
           course = get_teacher_course_by_weekday_and_number(@teacher_courses, weekday, number)
 
-        %item{:style => "display: block; border: 1px solid #000; height: 45px;border-left-style:none"}
-            
-          - if !course.nil?
+        - if course.blank?
+          .item.blank
+        - else
+          .item.course
             = link_to course.name, "/courses/#{course.id}"
+            
