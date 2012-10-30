@@ -7,9 +7,10 @@
 
 .page-announcement-show
   %h1.title= @announcement.title
+  - creator = @announcement.creator
+  .creator 发布人: #{user_link creator}
   .content= @announcement.content
   .receivers-selector
-    - creator = @announcement.creator
     
     - if current_user == @announcement.creator
       = form_tag announce_announcement_path(@announcement), :method => :put do

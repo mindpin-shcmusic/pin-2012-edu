@@ -2,3 +2,4 @@
   = link_to announcement, :class => 'announcement' do
     .cell.title= announcement.title
     .cell.content= announcement.content
+    .cell.creator 发布人: #{announcement.creator.real_name}
