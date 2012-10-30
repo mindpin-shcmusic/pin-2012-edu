@@ -8,7 +8,7 @@
 - teachers = @course.get_teachers(:semester=>current_semester)
 
 .page-admin-model-show
-  .field.semesters-nav
+  .semesters-nav
     %label 学期
     .page-tabs
       - Semester.get_nav_array.each do |semester|
