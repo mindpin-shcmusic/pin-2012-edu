@@ -3489,11 +3489,14 @@ ActiveRecord::Base.transaction do
 end
 end
 
+
 course_group_1
 course_group_2
 course_group_3
 category_group
 mentor_group
-#media_resource_group
-#public_resource_group
+if !ARGV.include?('--skip-resources')
+  media_resource_group
+  public_resource_group
+end
 homework_group
