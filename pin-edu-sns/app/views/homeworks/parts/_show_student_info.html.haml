@@ -26,16 +26,20 @@
                 .name
 
     -if homework.all_requirements_uploaded_by?(current_user)
-      - assign = @homework.assign_record_of(current_user)
-      :ruby
-        data = {
-          :url => set_submitted_homework_assign_path(assign)
-        }
+      - style = ""
+    -else
+      - style = "display:none;"
+      
+    - assign = @homework.assign_record_of(current_user)
+    :ruby
+      data = {
+        :url => set_submitted_homework_assign_path(assign)
+      }
 
-      .student-submit{:data=>data}
-        %form
-          .field
-            %label 你现在可以提交作业了，如果有附言，写在这里:
-            = text_area_tag :content
-          .field.submit
-            = jfbutton '确定提交作业'
+    .student-submit{:data=>data,:style=>style}
+      %form
+        .field
+          %label 你现在可以提交作业了，如果有附言，写在这里:
+          = text_area_tag :content
+        .field.submit
+          = jfbutton '确定提交作业'

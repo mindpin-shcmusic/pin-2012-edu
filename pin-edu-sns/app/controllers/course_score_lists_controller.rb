@@ -33,9 +33,9 @@ class CourseScoreListsController < ApplicationController
   end
 
   def create
-    redirect_to current_user.create_score_list :semester => Semester.get_by_value(params[:semester]),
+    redirect_to current_user.create_score_list(:semester => Semester.get_by_value(params[:semester]),
                                                :course   => Course.find(params[:course_id]),
-                                               :title    => params[:title]
+                                               :title    => params[:title])
   end
 
   def course_candidates

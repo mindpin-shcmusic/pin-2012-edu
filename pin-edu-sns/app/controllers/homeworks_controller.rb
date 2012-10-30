@@ -31,7 +31,9 @@ class HomeworksController < ApplicationController
     upload.name = params[:name]
     upload.homework = requirement.homework
     upload.save
-    render :text => upload.name
+
+    all_completed = requirement.homework.all_requirements_uploaded_by?(current_user)
+    render :json => {:all_completed=>all_completed}
   end
 
   def new

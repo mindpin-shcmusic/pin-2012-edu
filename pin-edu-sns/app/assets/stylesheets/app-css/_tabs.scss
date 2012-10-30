@@ -1,0 +1,19 @@
+.page-tabs{
+  a.tab{
+    float:left;
+    height:30px;line-height:30px;
+    border:solid 1px #1156BD;
+    background-color:#206DE1;
+    color:white;
+    width:60px;
+    text-align:center;
+    margin-right:3px;
+
+    &:first-child{
+      @include border-radius(3px 0 0 3px);
+    }
+    &:last-child{
+      @include border-radius(0 3px 3px 0);
+    }
+  }
+}

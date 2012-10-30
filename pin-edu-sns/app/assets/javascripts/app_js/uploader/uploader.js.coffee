@@ -306,6 +306,8 @@ pie.load ->
             file_entity_id: file_entity_id
           success: (res)->
             file_wrapper.$elm.addClass('complete').removeClass('uploading')
+            if res.all_completed
+              file_wrapper.$elm.closest('.student-info').find('.student-submit').show()
           error: ->
             file_wrapper.error()
 

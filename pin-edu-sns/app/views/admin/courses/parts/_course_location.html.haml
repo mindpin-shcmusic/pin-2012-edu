@@ -1,0 +1,11 @@
+- location = course_teacher.location.blank? ? "还没有上课地点" : course_teacher.location
+
+.show
+  .content= location
+  .ops
+    %a.edit-btn{:href=>'javascript:;'} 编辑
+.edit{:style=>"display:none;"}
+  %input{:type=>'text',:name=>'location'}
+  %a.update-btn{:href=>'javascript:;', :'data-url'=>"/admin/course_teachers/#{course_teacher.id}/update_location"} 确定
+  %a.cancel-btn{:href=>'javascript:;'} 取消
+

@@ -360,6 +360,12 @@
         text-align:center;
         height:30px;
         line-height:30px;
+        &.today{
+          border-width:2px;
+          padding:9px;
+          border-color:rgba(black, 0.3);
+          font-weight:bold;
+        }
       }
 
       &.course{

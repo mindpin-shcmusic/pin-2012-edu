@@ -3,21 +3,26 @@
 
 .page-courses-table
   .table-title
-    #{Semester.now.value} 学期课程表
+    %span> #{current_user.real_name}
+    - if current_user.is_teacher?
+      %span> 老师，
+    - if current_user.is_student?
+      %span> 同学，
+    %span> #{Semester.now.to_s} 学期课程表
 
   .field
     - 13.times do |number|
       .item.number
         = change_to_course_number(number)
 
-  - 7.times do |weekday|
+  - 1.upto 7 do |weekday|
     :ruby
-      weekday += 1
-      weekday = 0 if weekday == 7
+      weekday = weekday % 7
       weekday_label = change_to_weekday(weekday)
+      klass = (Time.now.wday == weekday ? 'today' : '')
 
     .field
-      .item.wd
+      .item.wd{:class=>klass}
         %span= weekday_label
 
       - 1.upto 12 do |number|

@@ -2,13 +2,13 @@
 - hbreadcrumb '师生问答'
 
 .page-questions
-  .tab
-    - if current_user.is_student?
-      %a.new{:href => "/questions/new"} 提问题
+  - if current_user.is_student?
+    %a.new{:href=>"/questions/new"} 提问题
 
-    %a.items.all{:href => "/questions"} 全部
-    %a.answered{:href => "/questions?type=answered"} 已回答
-    %a.unanswered{:href => "/questions?type=unanswered"} 未回答
+  .page-tabs
+    %a.tab{:href=>"/questions"} 全部
+    %a.tab{:href=>"/questions?type=answered"} 已回答
+    %a.tab{:href=>"/questions?type=unanswered"} 未回答
 
 
 .page-paginate= will_paginate @questions

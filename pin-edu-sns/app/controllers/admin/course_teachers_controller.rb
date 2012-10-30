@@ -49,6 +49,11 @@ class Admin::CourseTeachersController < ApplicationController
   def show_time_expression
   end
 
+  def update_location
+    @course_teacher.update_attributes(:location => params[:location])
+    render :text => @course_teacher.location
+  end
+
   def select_students_page
   end
 
