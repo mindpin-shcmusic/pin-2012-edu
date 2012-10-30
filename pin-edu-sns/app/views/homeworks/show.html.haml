@@ -40,4 +40,5 @@
     = render '/homeworks/parts/show_teacher_info', :homework => @homework
 
 
-= jcomments @homework
+- if current_user.is_student?
+  = jcomments @homework.assign_record_of(current_user)
