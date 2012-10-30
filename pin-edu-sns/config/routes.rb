@@ -90,6 +90,7 @@ MindpinEduSns::Application.routes.draw do
         get :edit_time_expression
         get :show_time_expression
         put :update_time_expression
+        put :update_location
       end
     end
 
