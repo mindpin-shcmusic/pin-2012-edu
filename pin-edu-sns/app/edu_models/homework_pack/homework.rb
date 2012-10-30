@@ -38,11 +38,12 @@ class Homework < ActiveRecord::Base
   # 老师创建作业时上传的附件
   has_many :homework_teacher_attachments
   
-  
   # --- 校验方法
   validates :title, :content, :presence => true
   validates :course, :presence => true
   validates :kind, :presence => true, :inclusion => {:in => Homework::KINDS}
+
+  default_scope order('created_at DESC')
 
   def teacher_attachment_zip_path
     "#{self.class::HOMEWORK_ATTACHMENTS_DIR}/homework_teacher#{self.creator.id}_#{self.id}.zip"

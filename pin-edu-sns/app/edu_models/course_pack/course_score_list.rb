@@ -3,6 +3,8 @@ class CourseScoreList < ActiveRecord::Base
   has_many :course_score_records
   accepts_nested_attributes_for :course_score_records
 
+  default_scope order('id DESC')
+
   include CourseTeacherRelativeMethods
 
   module UserMethods
@@ -25,7 +27,7 @@ class CourseScoreList < ActiveRecord::Base
 
         list = self.course_score_lists.\
         find_or_initialize_by_semester_value_and_course_id :semester_value => semester.value,
-                                                           :course_id      => course
+                                                           :course_id      => course.id
 
         return list if list.persisted?
 
