@@ -6,7 +6,7 @@
     %a.new{:href=>"/questions/new"} 提问题
 
   .page-tabs
-    %a.tab{:href=>"/questions"} 全部
+    %a.tab.current{:href=>"/questions"} 全部
     %a.tab{:href=>"/questions?type=answered"} 已回答
     %a.tab{:href=>"/questions?type=unanswered"} 未回答
 
@@ -14,4 +14,4 @@
 .page-paginate= will_paginate @questions
 
 .page-admin-models.questions
-  = render 'question_list', :questions => @questions
+  = render 'question_list', :questions=>@questions
