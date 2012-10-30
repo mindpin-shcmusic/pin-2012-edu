@@ -2,4 +2,9 @@
 - hbreadcrumb '未读通知'
 
 .page-announcements
+  .page-tabs
+    = link_to '全部通知', announcements_path, :class => "tab #{request.fullpath == announcements_path ? 'current' : ''}"
+
+    = link_to '未读通知', received_announcements_path, :class => "tab #{request.fullpath == received_announcements_path ? 'current' : ''}"
+
   = render 'announcements_list', :announcements => @announcements

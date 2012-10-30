@@ -1,36 +1,39 @@
 - hbreadcrumb '首页', '/'
 - hbreadcrumb '作业/艺术实践'
 
-.page-homeworks-head
-  .tab
-    %a.item.unexpired{:href=>homeworks_path(:status => 'unexpired')} 未过期
-    %a.item.expired{:href=>homeworks_path(:status => 'expired')} 已过期
-    - if current_user.is_teacher?
-      %a.new-homework{:href=>new_homework_path} 布置新作业/艺术实践
+.page-homework-list
+  - if current_user.is_teacher?
+    %a.new-homework{:href=>new_homework_path} 布置新作业/艺术实践
 
-  .cells
-    .cell.title 标题
-    .cell.deadline 截止时间
-    .cell.attach 附件
-    .cell.course 所属课程
-    .cell.kind 类别
-    .cell.count 已分配/已提交
+  .page-tabs
+    %a.tab{:href=>homeworks_path, :class=>"#{params[:status].blank? ? 'current' : ''}"} 全部
+    %a.tab{:href=>homeworks_path(:status => 'unexpired'), :class=>"#{params[:status] == 'unexpired' ? 'current' : ''}"} 未过期
+    %a.tab{:href=>homeworks_path(:status => 'expired'), :class=>"#{params[:status] == 'expired' ? 'current' : ''}"} 已过期
+
+  .page-homeworks-head
+    .cells
+      .cell.title 标题
+      .cell.deadline 截止时间
+      .cell.attach 附件
+      .cell.course 所属课程
+      .cell.kind 类别
+      .cell.count 已分配/已提交
 
 
-.page-homeworks
-  - @homeworks.each do |homework|
-    :ruby
-      course = homework.course
-    .homework
-      .cell.title
-        = link_to hspan(homework.title), homework
-      .cell.deadline
-        = jtimeformat homework.deadline
-      .cell.attach
-        = homework.homework_teacher_attachments.count
-      .cell.course
-        = link_to hspan(course.name), course
-      .cell.kind
-        = homework.kind_str
-      .cell.count
-        #{homework.assignees.count}/#{homework.submitted_students.count}
+  .page-homeworks
+    - @homeworks.each do |homework|
+      :ruby
+        course = homework.course
+      .homework
+        .cell.title
+          = link_to hspan(homework.title), homework
+        .cell.deadline
+          = jtimeformat homework.deadline
+        .cell.attach
+          = homework.homework_teacher_attachments.count
+        .cell.course
+          = link_to hspan(course.name), course
+        .cell.kind
+          = homework.kind_str
+        .cell.count
+          #{homework.assignees.count}/#{homework.submitted_students.count}

@@ -1,9 +1,13 @@
 = render 'nav'
 
 .page-announcements
+  .page-tabs
+    = link_to '全部通知', announcements_path, :class => "tab #{request.fullpath == announcements_path ? 'current' : ''}"
+
+    = link_to '未读通知', received_announcements_path, :class => "tab #{request.fullpath == received_announcements_path ? 'current' : ''}"
+
   - if current_user.is_teacher?
     = link_to '创建通知', new_announcement_path
-  = link_to '未读通知', received_announcements_path
   - if current_user.is_teacher?
     %h2.created-announcements 我创建的通知
     = render 'announcements_list', :announcements => @created_announcements
