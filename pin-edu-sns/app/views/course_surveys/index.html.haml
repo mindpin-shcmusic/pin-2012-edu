@@ -1,11 +1,12 @@
 - hbreadcrumb '首页', '/'
 - hbreadcrumb '课程调查'
 
-.page-courses-head
-  .tab
-    %a.item.all{:href=>'/course_surveys'} 课程调查列表
-    %a.item.all{:href=>'/course_surveys?kind=1'} 课程调查1
-    %a.item.all{:href=>'/course_surveys?kind=2'} 课程调查2
+.page-course-surveys
+
+  .page-tabs
+    %a.tab.current{:href=>"/course_surveys"} 全部
+    %a.tab{:href=>"/course_surveys?kind=1"} 调查1
+    %a.tab{:href=>"/course_surveys?kind=2"} 调查2
 
 
 .page-paginate= will_paginate @course_surveys
