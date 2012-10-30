@@ -15,7 +15,7 @@ module ApplicationMethods
   def render_status_page(code, text = '')
     @status_code = code.to_i
     @status_text = text.to_s
-    render "layouts/status_page/status_page", :status=>@status_code
+    render "layouts/status_page/status_page", :status=>@status_code, :layout => false
   end
 
   #----------------------
