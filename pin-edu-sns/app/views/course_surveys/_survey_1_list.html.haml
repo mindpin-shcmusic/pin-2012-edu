@@ -1,0 +1,230 @@
+.field.survey
+.block
+  %label 教学态度
+
+  .field
+    %span 上下课
+    
+    %span 准时
+    = survey_count[:on_off_class]['A'].length
+
+    %span 基本准时
+    = survey_count[:on_off_class]['B'].length
+
+    %span 不准时
+    = survey_count[:on_off_class]['C'].length
+
+
+
+  .field
+    %span 考勤制度
+
+    %span 每次点名
+    = survey_count[:checking_institution]['A'].length
+
+    %span 有时点名
+    = survey_count[:checking_institution]['B'].length
+
+    %span 不点名
+    = survey_count[:checking_institution]['C'].length
+
+
+
+  .field
+    %span 课堂秩序        
+
+    %span 能控制
+    = survey_count[:class_order]['A'].length
+
+    %span 基本控制
+    = survey_count[:class_order]['B'].length
+
+    %span 不能控制
+    = survey_count[:class_order]['C'].length
+
+
+  .field
+    %span 备课情况
+    %span 充分
+    = survey_count[:prepare_situation]['A'].length
+
+    %span 较为充分
+    = survey_count[:prepare_situation]['B'].length
+
+    %span 不够充分
+    = survey_count[:prepare_situation]['C'].length
+
+
+  .field
+    %span 教书育人
+    %span 好
+    = survey_count[:teaching_level]['A'].length
+
+    %span 一般
+    = survey_count[:teaching_level]['B'].length
+
+    %span 较差
+    = survey_count[:teaching_level]['C'].length
+
+
+
+  .field
+    %span 教师师德
+    %span 好
+    = survey_count[:teacher_morality]['A'].length
+
+    %span 较好
+    = survey_count[:teacher_morality]['B'].length
+
+    %span 较差
+    = survey_count[:teacher_morality]['C'].length
+
+
+.block
+  %label 教学内容
+
+
+  .field
+    %span 授课内容
+    %span 丰富扣题
+    = survey_count[:class_content]['A'].length
+
+    %span 基本扣题
+    = survey_count[:class_content]['B'].length
+
+    %span 不扣主题
+    = survey_count[:class_content]['C'].length
+
+
+  .field
+    %span 知识性
+    %span 强
+    = survey_count[:knowledge_level]['A'].length
+
+    %span 较强
+    = survey_count[:knowledge_level]['B'].length
+
+    %span 较差
+    = survey_count[:knowledge_level]['C'].length
+
+
+  .field
+    %span 教学进度
+    %span 合理
+    = survey_count[:teaching_schedule]['A'].length
+
+    %span 基本合理
+    = survey_count[:teaching_schedule]['B'].length
+
+    %span 不合理
+    = survey_count[:teaching_schedule]['C'].length
+
+
+.block
+  %label 教学方式
+
+  .field
+    %span 教学互动
+    %span 好
+    = survey_count[:teaching_interact]['A'].length
+
+    %span 较好
+    = survey_count[:teaching_interact]['B'].length
+
+    %span 较差
+    = survey_count[:teaching_interact]['C'].length
+
+
+  .field
+    %span 板书质量
+    %span 工整
+    = survey_count[:board_writing_quality]['A'].length
+
+    %span 一般
+    = survey_count[:board_writing_quality]['B'].length
+
+    %span 较差
+    = survey_count[:board_writing_quality]['C'].length
+
+
+  .field
+    %span 课件
+    %span 有
+    = survey_count[:has_courseware]['A'].length
+
+    %span 没有
+    = survey_count[:has_courseware]['B'].length
+
+
+  .field
+    %span 课件质量
+    %span 好
+    = survey_count[:courseware_quality]['A'].length
+
+    %span 一般
+    = survey_count[:courseware_quality]['B'].length
+
+    %span 较差
+    = survey_count[:courseware_quality]['C'].length
+
+
+
+  .field
+    %span 语言表达
+    %span 思路清晰
+    = survey_count[:speak_level]['A'].length
+
+    %span 一般
+    = survey_count[:speak_level]['B'].length
+
+    %span 较差
+    = survey_count[:speak_level]['C'].length
+
+
+.block
+  %label 教学效果
+
+  .field
+    %span 学习收获
+    %span 大
+    = survey_count[:study_result]['A'].length
+
+    %span 一般
+    = survey_count[:study_result]['B'].length
+
+    %span 没有
+    = survey_count[:study_result]['C'].length
+
+
+
+  .field
+    %span 授课效果
+    %span 好
+    = survey_count[:teaching_result]['A'].length
+
+    %span 一般
+    = survey_count[:teaching_result]['B'].length
+
+    %span 较差
+    = survey_count[:teaching_result]['C'].length
+
+
+  .field
+    %span 原因分析
+    %span 教师原因
+    = survey_count[:result_reason]['A'].length
+
+    %span 课堂纪律原因
+    = survey_count[:result_reason]['B'].length
+
+
+    %span 学生主观原因
+    = survey_count[:result_reason]['C'].length
+
+.block
+  %label 建议和意见
+
+  .field
+    %label 建议和意见
+    - course_survey_records.each do |record|
+      .suggestion= record.suggestion
