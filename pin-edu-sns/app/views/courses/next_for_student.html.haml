@@ -13,3 +13,5 @@
         .field
           = class_detail[:class_time]
           = link_to class_detail[:course_teacher].course.name, "/courses/#{class_detail[:course_teacher].course.id}"
+
+          = class_detail[:course_teacher].location
