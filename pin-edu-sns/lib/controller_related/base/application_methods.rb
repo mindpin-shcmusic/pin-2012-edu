@@ -1,7 +1,7 @@
 module ApplicationMethods
   def self.included(base)
     # 拦截ie6的访问
-    base.before_filter :hold_ie6
+    base.before_filter :hold_ie678
     # 捕捉一些特定异常
     # base.around_filter :catch_some_exception 开发时先注掉了
     # 修正IE浏览器请求头问题
@@ -20,15 +20,19 @@ module ApplicationMethods
 
   #----------------------
 
-  def hold_ie6
+  def hold_ie678
     return if params[:controller] == 'file_entities' && params[:action] == 'download'
     
     if /MSIE 6/.match(request.user_agent)
-      render "layouts/status_page/hold_ie6",:layout=>false
+      render "layouts/status_page/hold_ie678",:layout=>false
     end
 
     if /MSIE 7/.match(request.user_agent)
-      render "layouts/status_page/hold_ie6",:layout=>false
+      render "layouts/status_page/hold_ie678",:layout=>false
+    end
+
+    if /MSIE 8/.match(request.user_agent)
+      render "layouts/status_page/hold_ie678",:layout=>false
     end
   end
 
