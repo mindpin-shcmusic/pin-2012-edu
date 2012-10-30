@@ -80,6 +80,7 @@ class Homework < ActiveRecord::Base
   # 老师创建作业时生成的附件压缩包
   def build_teacher_attachments_zip
     FileUtils.mkdir_p(File.dirname(teacher_attachment_zip_path))
+
     Zip::ZipFile.open(teacher_attachment_zip_path, Zip::ZipFile::CREATE) do |zip|
       self.homework_teacher_attachments.each do |attachment|
         unless zip.find_entry(attachment.name)
@@ -87,19 +88,26 @@ class Homework < ActiveRecord::Base
         end
       end
     end
+
+    FileUtils.chmod(0444, teacher_attachment_zip_path)
+    teacher_attachment_zip_path
   end
   
   # 压缩学生提交的附件
-  def build_student_uploads_zip(user)
-    homework_id = self.id
-    path = "#{HOMEWORK_ATTACHMENTS_DIR}/homework_student#{user.id}_#{self.id}.zip"
+  def build_student_uploads_zip(homework_assign)
+    path = homework_assign.student_upload_zip_path
+    FileUtils.mkdir_p(File.dirname(path))
+
     Zip::ZipFile.open(path, Zip::ZipFile::CREATE) do |zip|
-      self.homework_student_uploads.where(:creator_id => user.id).each do |upload|
+      self.homework_student_uploads.where(:creator_id => homework_assign.user.id).each do |upload|
         unless zip.find_entry(upload.name)
           zip.add(upload.name, upload.file_entity.attach.path)
         end
       end
     end
+
+    FileUtils.chmod(0444, path)
+    path
   end
   
   # 学生提交作业

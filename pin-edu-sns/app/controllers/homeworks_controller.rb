@@ -98,9 +98,8 @@ class HomeworksController < ApplicationController
 
   def download_teacher_zip
     homework = Homework.find(params[:id])
-    homework.build_teacher_attachments_zip
     
-    send_file homework.teacher_attachment_zip_path
+    send_file homework.build_teacher_attachments_zip
   end
 
   def destroy_teacher_attachment

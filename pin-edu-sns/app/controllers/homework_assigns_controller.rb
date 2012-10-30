@@ -11,8 +11,7 @@ class HomeworkAssignsController < ApplicationController
   end
 
   def download_student_zip
-    @homework.build_student_uploads_zip(@assign.user)
-    send_file @assign.student_upload_zip_path
+    send_file @homework.build_student_uploads_zip(@assign)
   end
 
   def set_finished
