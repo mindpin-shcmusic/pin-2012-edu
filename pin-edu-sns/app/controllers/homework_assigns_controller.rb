@@ -3,10 +3,10 @@ class HomeworkAssignsController < ApplicationController
 
   def show
     unless (current_user.is_teacher? || current_user.id == params[:id].to_i)
-      return redirect_to '/'
+      return redirect_to @homework if @assign.user == current_user
+      redirect_to '/'
     end
 
-    @homework = @assign.homework
     @student_user = @assign.user
   end
 
