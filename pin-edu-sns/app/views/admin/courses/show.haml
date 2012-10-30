@@ -8,11 +8,12 @@
 - teachers = @course.get_teachers(:semester=>current_semester)
 
 .page-admin-model-show
-  .field.semesters-nav
+  .semesters-nav
     %label 学期
-    - Semester.get_nav_array.each do |semester|
-      - class_name = current_semester == semester ? "current" : ""
-      = link_to semester.value, "/admin/courses/#{@course.id}?semester=#{semester.value}",:class => class_name
+    .page-tabs
+      - Semester.get_nav_array.each do |semester|
+        - class_name = current_semester == semester ? "current" : ""
+        = link_to semester.value, "/admin/courses/#{@course.id}?semester=#{semester.value}",:class => "tab #{class_name}"
   .field.image
     = jimage @course.cover_url, :width => 160, :height => 96
   .field.name

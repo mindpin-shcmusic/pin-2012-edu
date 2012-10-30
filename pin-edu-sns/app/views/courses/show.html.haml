@@ -15,9 +15,10 @@
         %span= @course.cid
   .semesters-nav
     %label 学期
-    - Semester.get_nav_array.each do |semester|
-      - class_name = current_semester == semester ? "current" : ""
-      = link_to semester.value, "/courses/#{@course.id}?semester=#{semester.value}",:class => class_name
+    .page-tabs
+      - Semester.get_nav_array.each do |semester|
+        - class_name = current_semester == semester ? "current" : ""
+        = link_to semester.value, "/courses/#{@course.id}?semester=#{semester.value}",:class => "tab #{class_name}"
 
   .detail-info
     .tabs
