@@ -108,12 +108,11 @@ ActiveRecord::Base.transaction do
       teachers = t_chunks[week_day-1]
 
       teachers.reduce(1) do |class_no, teacher|
-        course.add_teacher(:semester => semester,
-                           :teacher_user => teacher)
-
-        course.set_course_time(:semester => semester,
-                               :teacher_user => teacher,
-                               :time => [{:weekday => week_day, :number => [class_no, class_no+1]}])
+        CourseTeacher.create(:course => course,
+                             :teacher_user => teacher,
+                             :time_expression => [{:weekday => week_day, :number => [class_no, class_no+1]}].to_json,
+                             :semester_value => semester.value,
+                             :location => "#{%w(东 南 西 北 中 排)[rand 6]}#{[*100..200].to_a.choice}#{%w(多 语 电钢 形 机)[rand 5]}")
 
         puts ">>>>>>>> 为#{semester.value}《#{course.name}》分配#{teachers.map(&:real_name).join('，')}几位老师并分配上课时间"
 
@@ -3199,13 +3198,11 @@ ActiveRecord::Base.transaction do
 
     course_teacher = CourseTeacher.find_or_initialize_by_teacher_user_id_and_course_id(teacher.user_id, course.id)
     if !course_teacher.persisted? || course_teacher.time_expression.blank?
-      course.add_teacher(:semester => semester,
-                         :teacher_user => teacher.user)
-
-      course.set_course_time(:semester => semester,
-                             :teacher_user => teacher.user,
-                             :time => expression[:time_expression])
-
+      CourseTeacher.create(:course => course,
+                           :teacher_user => teacher.user,
+                           :time_expression => expression[:time_expression].to_json,
+                           :semester_value => semester.value,
+                           :location => "#{%w(东 南 西 北 中 排)[rand 6]}#{[*100..200].to_a.choice}#{%w(多 语 电钢 形 机)[rand 5]}")
     end
 
     student = Student.find_or_initialize_by_real_name '吴大刚'
@@ -3497,6 +3494,6 @@ course_group_2
 course_group_3
 category_group
 mentor_group
-media_resource_group
-public_resource_group
+#media_resource_group
+#public_resource_group
 homework_group
