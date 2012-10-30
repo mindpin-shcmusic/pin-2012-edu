@@ -1,4 +1,5 @@
 .page-tabs{
+  @include floatfix;
   a.tab{
     float:left;
     height:30px;line-height:30px;
