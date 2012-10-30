@@ -38,5 +38,5 @@
 
 .page-admin-go-back= link_to '返回列表页', '/questions'
 
-- if current_user.is_student?
+- if current_user.is_student? && @question.answer.blank?
   .page-admin-edit= link_to '编辑修改', "/questions/#{@question.id}/edit"
