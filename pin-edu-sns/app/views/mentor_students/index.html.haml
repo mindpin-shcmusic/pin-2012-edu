@@ -2,8 +2,11 @@
 - hbreadcrumb '导师双向选择'
 
 
+- if @mentor_notes.blank?
+  .blank
+    目前列表内没有内容
+- else
+  .page-paginate= will_paginate @mentor_notes
 
-.page-paginate= will_paginate @mentor_notes
-
-.page-admin-models.mentors
-  = render 'mentor_student_list', :mentor_notes => @mentor_notes
+  .page-admin-models.mentors
+    = render 'mentor_student_list', :mentor_notes => @mentor_notes

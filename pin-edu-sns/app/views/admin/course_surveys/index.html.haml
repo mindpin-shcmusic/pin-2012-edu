@@ -12,7 +12,11 @@
 .page-admin-ops
   %a.create{:href=>'/admin/course_surveys/new'} 增加课程
 
-.page-paginate= will_paginate @course_surveys
+- if @course_surveys.blank?
+  .blank
+    目前列表内没有内容
+- else
+  .page-paginate= will_paginate @course_surveys
 
-.page-admin-models.course_surveys
-  = render 'course_survey_list', :course_surveys => @course_surveys
+  .page-admin-models.course_surveys
+    = render 'course_survey_list', :course_surveys => @course_surveys
