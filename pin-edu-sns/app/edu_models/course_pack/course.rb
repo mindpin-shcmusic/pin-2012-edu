@@ -163,7 +163,7 @@ class Course < ActiveRecord::Base
     end
 
 
-    # 取得接下来一星期内要上课的学生数据
+    # 取得接下来一星期内要上课的数据
     def get_next_course_teachers
       next_course_teachers = []
       
@@ -187,6 +187,32 @@ class Course < ActiveRecord::Base
       next_course_teachers = next_course_teachers.sort_by {|class_detail| class_detail[:weekday]}
       next_course_teachers = next_course_teachers.group_by{|item| item[:weekday]}
     end
+
+    # 取得一星期内要上课的数据
+    def get_week_course_teachers
+      week_course_teachers = []
+      
+      if self.is_student?
+        courses = self.get_student_course_teachers(:semester => Semester.now)
+      end
+
+      if self.is_teacher?
+        courses = self.get_teacher_course_teachers(:semester => Semester.now)
+      end
+
+      if courses.blank?
+        return []
+      end
+
+      courses.each do |course_teacher|
+        week_course_teachers += course_teacher.get_week_courses_by_time_expression
+      end
+
+      week_course_teachers = week_course_teachers.sort_by {|class_detail| class_detail[:weekday]}
+      week_course_teachers = week_course_teachers.group_by{|item| item[:weekday]}
+    end
+
+
   end
 
   define_index do
