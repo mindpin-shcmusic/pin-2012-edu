@@ -1,6 +1,11 @@
 - hbreadcrumb '首页', '/'
 - hbreadcrumb "工作台 - #{current_user.real_name}"
 
+:ruby
+  next_course_teachers = current_user.get_next_course_teachers
+
+  next_one_course_teacher = next_course_teachers.to_a[0]
+
 .page-dashboard
   .block.baseinfo
     .avatar
@@ -18,9 +23,41 @@
       - if current_user.is_student?
         .field.id= current_user.student.sid
 
+  .block.dates
+    .d
+      .today= Time.now.strftime('%Y年%m月%d日')
+      .semester #{Semester.now.to_s}学期
+    - if !next_one_course_teacher.blank?
+      .next
+        :ruby
+          weekday = next_one_course_teacher[0]
+          detail = next_one_course_teacher[1][0]
+
+          course_teacher = detail[:course_teacher]
+          course = course_teacher.course
+        .t 接下来要上的课
+        .c
+          %span.week>= change_to_weekday(weekday)
+          %span> ，
+          %span.time>= detail[:class_time]
+          %span> ，
+          %span.course>= link_to course.name, "/courses/#{course.id}"
+
   .block.courses
     .head 课程信息
     .data
+      - next_course_teachers.each do |weekday, class_details|
+        = change_to_weekday(weekday)
+        .field
+          - class_details.each do |detail|
+            .field
+              :ruby
+                course_teacher = detail[:course_teacher]
+                course = course_teacher.course
+
+              = detail[:class_time]
+              = link_to course.name, "/courses/#{course.id}"
+              = course_teacher.location
 
   .block.notices
     .head 通知信息
