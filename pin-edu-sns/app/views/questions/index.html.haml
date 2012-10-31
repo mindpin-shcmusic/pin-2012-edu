@@ -11,7 +11,12 @@
     %a.tab{:href=>"/questions?type=unanswered"} 未回答
 
 
-.page-paginate= will_paginate @questions
+- if @questions.blank?
+  .blank
+    目前列表内没有内容
+- else
 
-.page-admin-models.questions
-  = render 'question_list', :questions=>@questions
+  .page-paginate= will_paginate @questions
+
+  .page-admin-models.questions
+    = render 'question_list', :questions=>@questions
