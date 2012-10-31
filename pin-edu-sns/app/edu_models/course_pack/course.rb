@@ -161,6 +161,32 @@ class Course < ActiveRecord::Base
       end
       value
     end
+
+
+    # 取得接下来一星期内要上课的学生数据
+    def get_next_course_teachers
+      next_course_teachers = []
+      
+      if self.is_student?
+        courses = self.get_student_course_teachers(:semester => Semester.now)
+      end
+
+      if self.is_teacher?
+        courses = self.get_teacher_course_teachers(:semester => Semester.now)
+      end
+
+      if courses.blank?
+        return []
+      end
+
+      current_cte = CourseTimeExpression.get_by_time(Time.now)
+      courses.each do |course_teacher|
+        next_course_teachers += course_teacher.get_next_courses_by_time_expression(current_cte)
+      end
+
+      next_course_teachers = next_course_teachers.sort_by {|class_detail| class_detail[:weekday]}
+      next_course_teachers = next_course_teachers.group_by{|item| item[:weekday]}
+    end
   end
 
   define_index do
