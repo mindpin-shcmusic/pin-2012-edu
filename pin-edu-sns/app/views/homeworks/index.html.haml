@@ -21,19 +21,23 @@
 
 
   .page-homeworks
-    - @homeworks.each do |homework|
-      :ruby
-        course = homework.course
-      .homework
-        .cell.title
-          = link_to hspan(homework.title), homework
-        .cell.deadline
-          = jtimeformat homework.deadline
-        .cell.attach
-          = homework.homework_teacher_attachments.count
-        .cell.course
-          = link_to hspan(course.name), course
-        .cell.kind
-          = homework.kind_str
-        .cell.count
-          #{homework.assignees.count}/#{homework.submitted_students.count}
+    - if @homeworks.blank?
+      .blank
+        目前列表内没有内容
+    - else
+      - @homeworks.each do |homework|
+        :ruby
+          course = homework.course
+        .homework
+          .cell.title
+            = link_to hspan(homework.title), homework
+          .cell.deadline
+            = jtimeformat homework.deadline
+          .cell.attach
+            = homework.homework_teacher_attachments.count
+          .cell.course
+            = link_to hspan(course.name), course
+          .cell.kind
+            = homework.kind_str
+          .cell.count
+            #{homework.assignees.count}/#{homework.submitted_students.count}

@@ -5,7 +5,10 @@
   - if current_user.is_teacher?
     = link_to '添加课程成绩单', new_course_score_list_path
 
-  - if !@score_lists.blank?
+  - if @score_lists.blank?
+    .blank
+      目前列表内没有内容
+  - else    
     - @score_lists.each do |score_list|
       .score-list.model
         .title= score_list.title
