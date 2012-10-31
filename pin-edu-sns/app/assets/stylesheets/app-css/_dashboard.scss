@@ -1,0 +1,54 @@
+.page-dashboard{
+  width:760px;
+
+  .block{
+    @include floatfix;
+    @include border-radius(3px);
+    box-shadow:0 1px 2px rgba(black, 0.07);
+    padding:15px;margin-bottom:20px;
+    background-color:#fff;
+
+    .head{
+      font-weight:bold;
+      height:20px;line-height:20px;
+      margin-bottom:15px;
+    }
+  }
+
+  .baseinfo{
+    .avatar{
+      float:left;
+    }
+    .data{
+      margin-left:111px;
+
+      .field{
+        padding-bottom:10px;
+        margin-bottom:10px;
+        border-bottom:solid 1px #eee;
+
+        font-size:16px;
+        line-height:24px;
+
+        &:last-child{
+          border:none;
+          padding-bottom:0;
+          margin-bottom:0;
+        }
+
+      }
+
+    }
+  }
+
+  .courses, .homeworks{
+    float:left;
+    width:340px;
+    margin-right:20px;
+  }
+
+  .notices, .faq{
+    float:left;
+    width:340px;
+  }
+}

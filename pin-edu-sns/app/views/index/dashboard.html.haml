@@ -1,0 +1,35 @@
+- hbreadcrumb '首页', '/'
+- hbreadcrumb "工作台 - #{current_user.real_name}"
+
+.page-dashboard
+  .block.baseinfo
+    .avatar
+      = avatar current_user, :medium
+
+    .data
+      .field.name
+        %span= current_user.real_name
+        %span= current_user_title
+
+
+      - if current_user.is_teacher?
+        .field.id= current_user.teacher.tid
+
+      - if current_user.is_student?
+        .field.id= current_user.student.sid
+
+  .block.courses
+    .head 课程信息
+    .data
+
+  .block.notices
+    .head 通知信息
+    .data
+
+  .block.homeworks
+    .head 作业和教学实践
+    .data
+
+  .block.faq
+    .head 在线问答(Q&A)
+    .data
