@@ -1,5 +1,9 @@
-- announcements.each do |announcement|
-  = link_to announcement, :class => 'announcement' do
-    .cell.title= announcement.title
-    .cell.content= announcement.content
-    .cell.creator 发布人: #{announcement.creator.real_name}
+- if announcements.blank?
+  .blank
+    目前列表内没有内容
+- else
+  - announcements.each do |announcement|
+    = link_to announcement, :class => 'announcement' do
+      .cell.title= announcement.title
+      .cell.content= announcement.content
+      .cell.creator 发布人: #{announcement.creator.real_name}

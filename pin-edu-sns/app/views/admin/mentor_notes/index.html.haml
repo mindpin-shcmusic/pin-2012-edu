@@ -7,7 +7,12 @@
 .page-admin-ops
   %a.create{:href=>'/admin/mentor_notes/new'} 增加导师选择
 
-.page-paginate= will_paginate @mentor_notes
 
-.page-admin-models.mentor_notes
-  = render 'mentor_note_list', :mentor_notes => @mentor_notes
+- if @mentor_notes.blank?
+  .blank
+    目前列表内没有内容
+- else
+  .page-paginate= will_paginate @mentor_notes
+
+  .page-admin-models.mentor_notes
+    = render 'mentor_note_list', :mentor_notes => @mentor_notes

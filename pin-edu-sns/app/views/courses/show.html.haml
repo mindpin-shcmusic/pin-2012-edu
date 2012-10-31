@@ -40,23 +40,30 @@
     - when :teacher
       .detail.teacher
         - teacher_users = @course.get_teachers(:semester => current_semester)
-        - teacher_users.each do |teacher_user|
-          .avatar= avatar teacher_user, :medium
-          .name
-            %span= teacher_user.real_name
-            %span= link_to '查看信息', teacher_user
-          .tid
-            %span 教师编号：
-            %span= teacher_user.teacher.tid
+        - if teacher_users.blank?
+          .blank 目前列表内没有内容
+        - else
+          - teacher_users.each do |teacher_user|
+            .avatar= avatar teacher_user, :medium
+            .name
+              %span= teacher_user.real_name
+              %span= link_to '查看信息', teacher_user
+            .tid
+              %span 教师编号：
+              %span= teacher_user.teacher.tid
 
     - when :students
       .detail.students
         .students
-          - @course.get_students(:semester => Semester.now).each do |student_user|
-            .student
-              .avatar= avatar student_user, :tiny
-              .name= student_user.real_name
-              %a.info{:href=>"/users/#{student_user.id}"} 查看信息
+          - student_users = @course.get_students(:semester => Semester.now)
+          - if student_users.blank?
+            .blank 目前列表内没有内容
+          - else
+            - student_users.each do |student_user|
+              .student
+                .avatar= avatar student_user, :tiny
+                .name= student_user.real_name
+                %a.info{:href=>"/users/#{student_user.id}"} 查看信息
 
     - when :image
       .detail.images

@@ -7,7 +7,11 @@
 .page-admin-ops
   %a.create{:href=>'/admin/mentor_courses/new'} 增加导师方向
 
-.page-paginate= will_paginate @mentor_courses
+- if @mentor_courses.blank?
+  .blank
+    目前列表内没有内容
+- else
+  .page-paginate= will_paginate @mentor_courses
 
-.page-admin-models.mentor_courses
-  = render 'mentor_course_list', :mentor_courses => @mentor_courses
+  .page-admin-models.mentor_courses
+    = render 'mentor_course_list', :mentor_courses => @mentor_courses
