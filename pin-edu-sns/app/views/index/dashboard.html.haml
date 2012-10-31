@@ -3,8 +3,9 @@
 
 :ruby
   next_course_teachers = current_user.get_next_course_teachers
-
   next_one_course_teacher = next_course_teachers.to_a[0]
+
+  week_course_teachers = current_user.get_week_course_teachers
 
 .page-dashboard
   .block.baseinfo
@@ -44,20 +45,26 @@
           %span.course>= link_to course.name, "/courses/#{course.id}"
 
   .block.courses
-    .head 课程信息
+    .head 一周课程
     .data
-      - next_course_teachers.each do |weekday, class_details|
-        = change_to_weekday(weekday)
-        .field
+      - week_course_teachers.each do |weekday, class_details|
+        .wd
+          .w= change_to_weekday(weekday)
           - class_details.each do |detail|
             .field
               :ruby
                 course_teacher = detail[:course_teacher]
                 course = course_teacher.course
 
-              = detail[:class_time]
-              = link_to course.name, "/courses/#{course.id}"
-              = course_teacher.location
+              %span.time>= detail[:class_time]
+              %span> ，
+              %span.course>= link_to course.name, "/courses/#{course.id}"
+
+    .see-table
+      - if current_user.is_teacher?
+        = link_to '查看课程表', '/courses/for_teacher'
+      - if current_user.is_student?
+        = link_to '查看课程表', '/courses/for_student'
 
   .block.notices
     .head 通知信息
