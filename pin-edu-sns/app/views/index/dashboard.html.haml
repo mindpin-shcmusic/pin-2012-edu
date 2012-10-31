@@ -1,0 +1,79 @@
+- hbreadcrumb '首页', '/'
+- hbreadcrumb "工作台 - #{current_user.real_name}"
+
+:ruby
+  next_course_teachers = current_user.get_next_course_teachers
+  next_one_course_teacher = next_course_teachers.to_a[0]
+
+  week_course_teachers = current_user.get_week_course_teachers
+
+.page-dashboard
+  .block.baseinfo
+    .avatar
+      = avatar current_user, :medium
+
+    .data
+      .field.name
+        %span= current_user.real_name
+        %span= current_user_title
+
+
+      - if current_user.is_teacher?
+        .field.id= current_user.teacher.tid
+
+      - if current_user.is_student?
+        .field.id= current_user.student.sid
+
+  .block.dates
+    .d
+      .today= Time.now.strftime('%Y年%m月%d日')
+      .semester #{Semester.now.to_s}学期
+    - if !next_one_course_teacher.blank?
+      .next
+        :ruby
+          weekday = next_one_course_teacher[0]
+          detail = next_one_course_teacher[1][0]
+
+          course_teacher = detail[:course_teacher]
+          course = course_teacher.course
+        .t 接下来要上的课
+        .c
+          %span.week>= change_to_weekday(weekday)
+          %span> ，
+          %span.time>= detail[:class_time]
+          %span> ，
+          %span.course>= link_to course.name, "/courses/#{course.id}"
+
+  .block.courses
+    .head 一周课程
+    .data
+      - week_course_teachers.each do |weekday, class_details|
+        .wd
+          .w= change_to_weekday(weekday)
+          - class_details.each do |detail|
+            .field
+              :ruby
+                course_teacher = detail[:course_teacher]
+                course = course_teacher.course
+
+              %span.time>= detail[:class_time]
+              %span> ，
+              %span.course>= link_to course.name, "/courses/#{course.id}"
+
+    .see-table
+      - if current_user.is_teacher?
+        = link_to '查看课程表', '/courses/for_teacher'
+      - if current_user.is_student?
+        = link_to '查看课程表', '/courses/for_student'
+
+  .block.notices
+    .head 通知信息
+    .data
+
+  .block.homeworks
+    .head 作业和教学实践
+    .data
+
+  .block.faq
+    .head 在线问答(Q&A)
+    .data

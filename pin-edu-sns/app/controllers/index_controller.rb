@@ -5,7 +5,11 @@ class IndexController < ApplicationController
     if current_user.is_admin?
       return redirect_to "/admin"
     end
-    redirect_to '/file'
+    redirect_to '/dashboard'
+  end
+
+  def dashboard
+    # 教师和学生的工作台页面
   end
 
   def user_complete_search

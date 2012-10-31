@@ -117,9 +117,13 @@ MindpinEduSns::Application.routes.draw do
     root :to=>"index#index"
   end
   ###
+  # ----------------------------------------------------------------
+
 
   root :to => 'index#index'
-  
+  # 工作台
+  get '/dashboard' => 'index#dashboard'
+
   # --- 用户
   resources :users
 
