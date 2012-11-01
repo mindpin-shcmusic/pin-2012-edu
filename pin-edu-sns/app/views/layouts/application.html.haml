@@ -21,19 +21,17 @@
         .links
           .title 教学
           - if current_user.is_teacher?
+            %a.link.courses{:href=>'/dashboard'} 我的工作台
             %a.link.courses{:href=>'/courses/for_teacher'} 我的课程表
-            %a.link.courses{:href=>'/courses/next_for_teacher'} 我接下来要上的课
-
-            %a.link.homeworks{:href=>'/homeworks'} 布置的作业与实践
+            %a.link.courses{:href=>'/homeworks'} 布置的作业与实践
             %a.link.courses{:href=>'/score_lists'} 成绩单
             %a.link.courses{:href=>'/course_surveys'} 课程调查
             %a.link.courses{:href=>'/questions'} 在线问答
 
           - if current_user.is_student?
+            %a.link.courses{:href=>'/dashboard'} 我的工作台
             %a.link.courses{:href=>'/courses/for_student'} 我的课程表
-            %a.link.courses{:href=>'/courses/next_for_student'} 我接下来要上的课
-
-            %a.link.homeworks{:href=>'/homeworks'} 我的作业与实践
+            %a.link.courses{:href=>'/homeworks'} 我的作业与实践
             %a.link.courses{:href=>'/score_lists/mine'} 成绩单
             %a.link.courses{:href=>'/course_surveys'} 课程调查
             %a.link.courses{:href=>'/questions'} 在线问答
