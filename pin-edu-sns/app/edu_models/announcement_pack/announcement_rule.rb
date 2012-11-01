@@ -21,7 +21,7 @@ class AnnouncementRule < ActiveRecord::Base
   def expression
     exp = read_attribute(:expression)
     exp && JSON.parse(exp, :symbolize_names => true).reduce({}) do |sanitized, (k, v)|
-      sanitized[k] = v.map(&:to_i)
+      sanitized[k] = v.is_a?(Array) ? v.map(&:to_i) : v
       sanitized
     end
   end
@@ -42,9 +42,6 @@ class AnnouncementRule < ActiveRecord::Base
 
 private
 
-  def validate_options(options)
-  end
-
   def teacher_receivers
     Course.find(expression[:courses]).map{|course| course.get_students :semester => Semester.now, :teacher_user => self.creator}.flatten.uniq
   end
@@ -52,7 +49,7 @@ private
   def admin_receivers
     return admin_all_users_receivers if self.expression.blank?
     return admin_all_teachers_receivers if self.expression[:all_teachers]
-    return admin_all_teachers_receivers if self.expression[:all_students]
+    return admin_all_students_receivers if self.expression[:all_students]
     admin_courses_receivers.concat(admin_all_students_receivers)
   end
 
