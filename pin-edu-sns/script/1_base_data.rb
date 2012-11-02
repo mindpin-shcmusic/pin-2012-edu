@@ -3457,51 +3457,13 @@ ActiveRecord::Base.transaction do
 end
 end
 
-def homework_group
-homework_data1 = ['作业1', '画一幅画。', '一幅画', 1.month.from_now]
-homework_data2 = ['作业2', '编一首曲子。', '一首曲子', 2.weeks.from_now]
-homework_data3 = ['作业3', '写一篇论文。', '一篇论文',1.week.ago]
-homework_data4 = ['作业4', '剪辑一段视频。', '一段视频', 4.minute.from_now]
-homeworks_data = [homework_data1, homework_data2, homework_data3, homework_data4]
-teachers       = Teacher.find(:all, :limit => 4)
-
-ActiveRecord::Base.transaction do 
-  (0...4).each {|i|
-    puts "创建作业-#{i}"
-    homework_data = homeworks_data[i]
-    teacher_user  = teachers[i].user
-    courses       = teacher_user.get_teacher_courses(:semester => Semester.get(2012, :B))
-    course        = courses[i]
-
-    homework = Homework.create(:title        => homework_data[0],
-                               :content      => homework_data[1],
-                               :course       => course,
-                               :deadline     => homework_data[3],
-                               :creator      => teacher_user,
-                               :kind         => Homework::KINDS[rand 2])
-
-    HomeworkRequirement.create :title => homework_data[2], :homework => homework
-
-    homework.assign_to({:courses => courses.map(&:id)})
-
-    homework.homework_assign_rule.build_assign
-  }
-end
-end
-
 
 course_group_1
 course_group_2
 course_group_3
 category_group
 mentor_group
-<<<<<<< HEAD
-#media_resource_group
-#public_resource_group
-=======
 if !ARGV.include?('--skip-resources')
   media_resource_group
   public_resource_group
 end
->>>>>>> ec9fcb1b5ba391b64a426dc5feca8fc598bb5854
-homework_group
