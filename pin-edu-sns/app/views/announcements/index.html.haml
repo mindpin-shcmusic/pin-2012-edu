@@ -10,14 +10,15 @@
 
       %a.tab{:href=>announcements_path, :class => klass1} 收到的通知
       %a.tab{:href=>received_announcements_path, :class => klass2} 未读通知 
-      %a.tab{:href=>mine_announcements_path, :class => klass3} 我创建的通知
+      - if current_user.is_teacher?
+        %a.tab{:href=>mine_announcements_path, :class => klass3} 我创建的通知
 
     - if current_user.is_teacher?
       = link_to '创建通知', new_announcement_path, :class => 'generic-new'
 
   .cells
     .cell.title 标题
-    .cell.creator 课程
+    .cell.creator 创建者
     .cell.date 创建时间
 
 .page-announcements
