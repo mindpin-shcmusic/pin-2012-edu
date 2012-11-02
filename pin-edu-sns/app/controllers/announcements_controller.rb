@@ -7,8 +7,12 @@ class AnnouncementsController < ApplicationController
   end
 
   def index
-    @received_announcements = current_user.received_announcements
-    @created_announcements = current_user.created_announcements
+    @announcements = current_user.received_announcements
+  end
+
+  def mine
+    @announcements = current_user.created_announcements
+    render :action => :index
   end
 
   def create
@@ -19,6 +23,7 @@ class AnnouncementsController < ApplicationController
 
   def received
     @announcements = current_user.unread_announcements
+    render :action => :index
   end
 
   def show

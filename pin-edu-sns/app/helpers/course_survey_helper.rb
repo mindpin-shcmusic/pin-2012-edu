@@ -57,4 +57,12 @@ module CourseSurveyHelper
   end
 
 
+  def list_resource_path_for(survey)
+    kind = survey.kind
+    record = (kind == '1' ? survey.course_survey_records : survey.course_survey_es_records)[0]
+    return survey if current_user.is_teacher?
+    return edit_course_survey_record_path(record, :kind => kind) if current_user.has_surveyed?(survey)
+    new_course_survey_course_survey_record_path(survey, :kind => kind)
+  end
+
 end

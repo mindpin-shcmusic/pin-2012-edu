@@ -1,22 +1,38 @@
 - hbreadcrumb '首页', '/'
 - hbreadcrumb '师生问答'
 
+.page-questions-head
+  .btns
+    .page-tabs
+      :ruby
+        klass1 = params[:type].blank? ? 'current' : ''
+        klass2 = params[:type] == 'answered' ? 'current' : ''
+        klass3 = params[:type] == 'unanswered' ? 'current' : ''
+
+      %a.tab{:href=>"/questions", :class => klass1} 全部
+      %a.tab{:href=>"/questions?type=answered", :class => klass2} 已回答
+      %a.tab{:href=>"/questions?type=unanswered", :class => klass3} 未回答
+
+    - if current_user.is_student?
+      %a.generic-new{:href=>"/questions/new"} 提问题
+
+  .cells
+    .cell.title 标题
+    .cell.teacher 教师
+    .cell.answered 回答状态
+
 .page-questions
-  - if current_user.is_student?
-    %a.new{:href=>"/questions/new"} 提问题
+  - if @questions.blank?
+    .blank
+      目前列表内没有内容
+  - else
+    - @questions.each do |question|
+      .question.generic-model
+        .cell.title
+          = link_to hspan(question.title), question
+        .cell.teacher
+          = question.teacher_user.real_name
+        .cell.answered
+          = question.has_answered? ? '已回答' : '未回答'
 
-  .page-tabs
-    %a.tab.current{:href=>"/questions"} 全部
-    %a.tab{:href=>"/questions?type=answered"} 已回答
-    %a.tab{:href=>"/questions?type=unanswered"} 未回答
-
-
-- if @questions.blank?
-  .blank
-    目前列表内没有内容
-- else
-
-  .page-paginate= will_paginate @questions
-
-  .page-admin-models.questions
-    = render 'question_list', :questions=>@questions
+    .page-paginate= will_paginate @questions
