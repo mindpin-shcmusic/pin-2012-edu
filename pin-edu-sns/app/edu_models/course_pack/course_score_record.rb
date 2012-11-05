@@ -18,6 +18,10 @@ class CourseScoreRecord < ActiveRecord::Base
     self.performance_score * 0.3 + self.exam_score * 0.7
   end
 
+  def is_finished?
+    !!general_score
+  end
+
   module UserMethods
     def self.included(base)
       base.has_many :course_score_records,

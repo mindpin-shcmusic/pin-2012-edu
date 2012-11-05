@@ -276,6 +276,7 @@ MindpinEduSns::Application.routes.draw do
   resources :announcements do
     collection do
       get :received
+      get :mine
     end
 
     member do

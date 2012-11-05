@@ -1,16 +1,37 @@
 = render 'nav'
 
+.page-announcements-head
+  .btns
+    .page-tabs
+      :ruby
+        klass1 = request.fullpath == announcements_path ? 'current' : ''
+        klass2 = request.fullpath == received_announcements_path ? 'current' : ''
+        klass3 = request.fullpath == mine_announcements_path ? 'current' : ''
+
+      %a.tab{:href=>announcements_path, :class => klass1} 收到的通知
+      %a.tab{:href=>received_announcements_path, :class => klass2} 未读通知 
+      - if current_user.is_teacher?
+        %a.tab{:href=>mine_announcements_path, :class => klass3} 我创建的通知
+
+    - if current_user.is_teacher?
+      = link_to '创建通知', new_announcement_path, :class => 'generic-new'
+
+  .cells
+    .cell.title 标题
+    .cell.creator 创建者
+    .cell.date 创建时间
+
 .page-announcements
-  .page-tabs
-    = link_to '全部通知', announcements_path, :class => "tab #{request.fullpath == announcements_path ? 'current' : ''}"
+  - if @announcements.blank?
+    .blank
+      目前列表内没有内容
+  - else
+    - @announcements.each do |announcement|
+      .announcement.generic-model
+        .cell.title
+          = link_to hspan(announcement.title), announcement
+        .cell.creator
+          = user_link announcement.creator
+        .cell.date
+          = announcement.created_at
 
-    = link_to '未读通知', received_announcements_path, :class => "tab #{request.fullpath == received_announcements_path ? 'current' : ''}"
-
-  - if current_user.is_teacher?
-    = link_to '创建通知', new_announcement_path
-  - if current_user.is_teacher?
-    %h2.created-announcements 我创建的通知
-    = render 'announcements_list', :announcements => @created_announcements
-
-  %h2.received-announcements 我收到的通知
-  = render 'announcements_list', :announcements => @received_announcements
