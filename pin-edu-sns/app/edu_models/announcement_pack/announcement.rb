@@ -30,12 +30,14 @@ private
     def self.included(base)
       base.has_many :created_announcements,
                     :class_name  => 'Announcement',
+                    :order => 'id DESC',
                     :foreign_key => :creator_id
 
       base.has_many :announcement_users
 
       base.has_many :received_announcements,
                     :through => :announcement_users,
+                    :order => 'id DESC',
                     :source  => :announcement
 
       base.send :include, InstanceMethods

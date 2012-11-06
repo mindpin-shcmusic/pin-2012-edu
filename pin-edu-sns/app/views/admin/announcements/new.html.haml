@@ -10,9 +10,9 @@
     .field.need
       %label 标题
       = f.text_field :title
-    .field.need
+    .field
       %label 内容
-      = f.text_area :content
+      = f.text_area :content, :class => 'KindEditor'
     .field.submit
       = jfsubmit '确定'
       = jfcancel '取消'
