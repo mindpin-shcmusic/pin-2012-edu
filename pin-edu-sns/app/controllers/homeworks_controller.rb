@@ -46,16 +46,16 @@ class HomeworksController < ApplicationController
 
   def index
     if params[:status] == 'expired'
-      @homeworks = current_user.expired_homeworks
+      @homeworks = current_user.expired_homeworks.paginated(params[:page])
       return
     end
 
     if params[:status] == 'unexpired'
-      @homeworks = current_user.unexpired_homeworks
+      @homeworks = current_user.unexpired_homeworks.paginated(params[:page])
       return
     end
 
-    @homeworks = current_user.homeworks
+    @homeworks = current_user.homeworks.paginated(params[:page])
   end
   
   def show

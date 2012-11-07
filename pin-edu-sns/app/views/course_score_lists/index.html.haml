@@ -16,6 +16,8 @@
     - if current_user.is_teacher?
       = link_to '添加课程成绩单', new_course_score_list_path, :class => 'generic-new'
 
+  = table_pagination(@score_lists)
+
   .cells
     .cell.title 标题
     .cell.semester 学期
@@ -37,3 +39,5 @@
           = hspan(score_list.course.name)
         .cell.count
           = score_list.finished_ratio
+
+  = table_pagination(@score_lists)

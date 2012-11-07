@@ -16,6 +16,8 @@
     - if current_user.is_teacher?
       %a.new-homework{:href=>new_homework_path} 布置新作业/艺术实践
 
+  = table_pagination(@homeworks)
+
   .cells
     .cell.title 标题
     .cell.deadline 截止时间
@@ -45,3 +47,5 @@
           = homework.kind_str
         .cell.count
           #{homework.assignees.count}/#{homework.submitted_students.count}
+
+    = table_pagination(@homeworks)

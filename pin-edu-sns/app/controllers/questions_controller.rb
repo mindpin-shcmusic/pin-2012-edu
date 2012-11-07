@@ -31,7 +31,7 @@ class QuestionsController < ApplicationController
     end
 
   
-    @questions = @questions.paginate(:page => params[:page]).order('id DESC')
+    @questions = @questions.paginated(params[:page]).order('id DESC')
   end
 
 

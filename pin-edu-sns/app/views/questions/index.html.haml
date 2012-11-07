@@ -16,6 +16,8 @@
     - if current_user.is_student?
       %a.generic-new{:href=>"/questions/new"} 提问题
 
+  = table_pagination(@questions)
+
   .cells
     .cell.title 标题
     .cell.teacher 教师
@@ -35,4 +37,4 @@
         .cell.answered
           = question.has_answered? ? '已回答' : '未回答'
 
-    .page-paginate= will_paginate @questions
+    = table_pagination(@questions)

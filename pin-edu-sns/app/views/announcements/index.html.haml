@@ -16,6 +16,8 @@
     - if current_user.is_teacher?
       = link_to '创建通知', new_announcement_path, :class => 'generic-new'
 
+  = table_pagination(@announcements)
+
   .cells
     .cell.title 标题
     .cell.creator 创建者
@@ -35,3 +37,4 @@
         .cell.date
           = announcement.created_at
 
+  = table_pagination(@announcements)
