@@ -8,6 +8,7 @@ class CourseScoreList < ActiveRecord::Base
   default_scope order('id DESC')
 
   include CourseTeacherRelativeMethods
+  include Paginated
 
   def finished_ratio
     records = self.course_score_records

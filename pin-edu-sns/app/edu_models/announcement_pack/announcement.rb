@@ -12,6 +12,8 @@ class Announcement < ActiveRecord::Base
   validates :content,
             :presence => true
 
+  include Paginated
+
   def read_by?(user)
     get_announcement_user_by(user).read
   end

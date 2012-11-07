@@ -6,6 +6,7 @@ class CourseSurvey < ActiveRecord::Base
   validates :title, :presence => true
 
   include CourseTeacherRelativeMethods
+  include Paginated
 
   scope :with_kind, lambda {|kind| {:conditions => ['kind = ?', kind]}}
   scope :with_student, lambda { |student_user| 
