@@ -7,7 +7,7 @@
   %a.create{:href=>'/admin/teams/new'} 增加班级
   %a.import{:href=>'/admin/teams/import_from_csv_page'} 批量导入班级
   .search
-    = jsearchbar search_admin_teams_path
+    = jsearchbar '/admin/search/team'
 
 .page-paginate= will_paginate @teams
 
