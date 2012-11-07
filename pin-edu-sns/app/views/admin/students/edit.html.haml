@@ -4,6 +4,9 @@
 - hbreadcrumb '学生维护', '/admin/students'
 - hbreadcrumb '修改学生信息'
 
+
+  
+
 .page-admin-form
   = flash_info
   = form_for [:admin, @student] do |t|
@@ -28,6 +31,154 @@
       .field.need
         %label 确认密码
         = user_f.password_field :password_confirmation, :value=>'', :maxlength=>32
+
+
+
+      .field
+        %label 学院
+        = t.text_field :faculty
+
+      .field
+        %label 专业
+        = t.text_field :major
+
+
+      .field
+        %label 性别
+        = t.text_field :gender
+
+
+      .field
+        %label 年级
+        = t.text_field :grade
+
+
+      .field
+        %label 学生类别
+        = t.text_field :kind
+
+
+
+      .field
+        %label 入学日期
+        = t.text_field :entry_date, :class => 'entry-date'
+
+
+
+      .field
+        %label 毕业年份
+        = t.select(:graduation_year, (2000..2050).to_a, {:include_blank => true}, {:data => {:placeholder => '请选择'}})
+
+
+
+      .field
+        %label 辅修专业
+        = t.text_field :option_course
+
+
+
+      .field
+        %label 考生号
+        = t.text_field :exam_id
+
+
+      .field
+        %label 毕业标注
+        = t.select(:has_graduated, {'已经毕业' => 1, '未毕业' => 0}, {:include_blank => true}, {:data => {:placeholder => '请选择'}})
+
+
+      .field
+        %label 是否已离校
+        = t.select(:has_left, {'已经离校' => 1, '未离校' => 0}, {:include_blank => true}, {:data => {:placeholder => '请选择'}})
+
+
+      .field
+        %label 民族
+        = t.text_field :nation
+
+
+      .field
+        %label 政治面貌
+        = t.text_field :politics_status
+
+
+
+      .field
+        %label 备注
+        = t.text_area :description, :value => ''
+
+
+      .field
+        %label 原籍
+        = t.text_field :native_home
+
+
+      .field
+        %label 家庭详细地址
+        = t.text_field :home_address
+
+
+      .field
+        %label 生源地
+        = t.text_field :source_place
+
+
+      .field
+        %label 出生日期
+        = t.text_field :birthday, :class => 'birthday'
+
+
+      .field
+        %label 联系电话
+        = t.text_field :tel
+
+
+      .field
+        %label 邮政编码
+        = t.text_field :zip_code
+
+
+      .field
+        %label 身份证号
+        = t.text_field :id_card_number
+
+
+      .field
+        %label 文化程度
+        = t.text_field :edu_level
+
+
+      .field
+        %label 异动信息
+        = t.text_field :exception_info
+
+
+      .field
+        %label 异动备注
+        = t.text_area :exception_desc, :value => ''
+
+
+      .field
+        %label 毕业学校
+        = t.text_field :graduated_school
+
+
+      .field
+        %label 毕业时间
+        = t.text_field :graduated_date, :class => 'graduated-date'
+
+
+      .field
+        %label 联系人
+        = t.text_field :contact_person
+
+
+      .field
+        %label 联系电话
+        = t.text_field :contact_tel
+
+
+
 
     .field.submit
       = jfsubmit '确定'
