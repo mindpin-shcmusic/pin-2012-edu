@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121026034254) do
+ActiveRecord::Schema.define(:version => 20121107034446) do
 
   create_table "announcement_rules", :force => true do |t|
     t.integer  "creator_id"
@@ -431,12 +431,40 @@ ActiveRecord::Schema.define(:version => 20121026034254) do
   add_index "short_messages", ["sender_id"], :name => "index_short_messages_on_sender_id"
 
   create_table "students", :force => true do |t|
-    t.string   "real_name",  :default => "",    :null => false
+    t.string   "real_name",        :default => "",    :null => false
     t.string   "sid"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_removed", :default => false
+    t.boolean  "is_removed",       :default => false
+    t.string   "faculty"
+    t.string   "major"
+    t.string   "gender"
+    t.string   "grade"
+    t.string   "kind"
+    t.datetime "entry_date"
+    t.integer  "graduation_year"
+    t.string   "option_course"
+    t.string   "exam_id"
+    t.boolean  "has_graduated"
+    t.boolean  "has_left"
+    t.string   "nation"
+    t.string   "politics_status"
+    t.text     "description"
+    t.string   "native_home"
+    t.string   "home_address"
+    t.string   "source_place"
+    t.datetime "birthday"
+    t.string   "tel"
+    t.string   "zip_code"
+    t.string   "id_card_number"
+    t.string   "edu_level"
+    t.string   "exception_info"
+    t.text     "exception_desc"
+    t.string   "graduated_school"
+    t.datetime "graduated_date"
+    t.string   "contact_person"
+    t.string   "contact_tel"
   end
 
   add_index "students", ["is_removed"], :name => "index_students_on_is_removed"
