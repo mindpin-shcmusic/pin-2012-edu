@@ -32,16 +32,17 @@ MindpinEduSns::Application.routes.draw do
 
   ###
   namespace :admin do
+    get '/search' => 'search#index'
+    get '/search/:kind' => 'search#show'
+
     resources :teachers do
       collection do
-        get :search
         get :import_from_csv_page
         post :import_from_csv
       end
     end
     resources :students do
       collection do
-        get :search
         get :import_from_csv_page
         post :import_from_csv
       end
@@ -57,7 +58,6 @@ MindpinEduSns::Application.routes.draw do
         post :select_cover
       end
       collection do
-        get  :search
         get  :import_from_csv_page
         post :import_from_csv
       end
@@ -69,7 +69,6 @@ MindpinEduSns::Application.routes.draw do
         put  :set_students
       end
       collection do
-        get  :search
         get  :import_from_csv_page
         post :import_from_csv
       end
@@ -77,7 +76,6 @@ MindpinEduSns::Application.routes.draw do
     
     resources :categories do
       collection do
-        get :search
         get :import_from_yaml_page
         post :import_from_yaml
       end

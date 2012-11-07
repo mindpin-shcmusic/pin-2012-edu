@@ -46,11 +46,6 @@ class Admin::StudentsController < ApplicationController
     redirect_to "/admin/students/#{@student.id}/edit"
   end
 
-  def search
-    @result = Student.search params[:query]
-    render :partial => 'student_list', :locals => {:students => @result}, :layout => false
-  end
-
   def import_from_csv_page
   end
 

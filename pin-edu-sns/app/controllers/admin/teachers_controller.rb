@@ -46,11 +46,6 @@ class Admin::TeachersController < ApplicationController
     redirect_to "/admin/teachers/#{@teacher.id}/edit"
   end
 
-  def search
-    @result = Teacher.search params[:query]
-    render :partial => 'teacher_list', :locals => {:teachers => @result}, :layout => false
-  end
-
   def import_from_csv_page
   end
 

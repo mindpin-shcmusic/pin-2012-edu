@@ -1,0 +1,7 @@
+= jsearchbar "/admin/search"
+.page-tabs
+  =link_to "全部(#{@all_count})","/admin/search?query=#{params[:query]}",:class=>"tab #{params[:kind].blank? ? "current" : ""}"
+  =link_to "教师(#{@teachers_count})","/admin/search/teacher?query=#{params[:query]}",:class=>"tab #{params[:kind] == 'teacher' ? "current" : ""}"
+  =link_to "学生(#{@students_count})","/admin/search/student?query=#{params[:query]}",:class=>"tab #{params[:kind] == 'student' ? "current" : ""}"
+  =link_to "课程(#{@courses_count})","/admin/search/course?query=#{params[:query]}",:class=>"tab #{params[:kind] == 'course' ? "current" : ""}"
+  =link_to "班级(#{@teams_count})","/admin/search/team?query=#{params[:query]}",:class=>"tab #{params[:kind] == 'team' ? "current" : ""}"
