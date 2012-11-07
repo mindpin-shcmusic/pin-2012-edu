@@ -121,6 +121,9 @@ MindpinEduSns::Application.routes.draw do
   root :to => 'index#index'
   # 工作台
   get '/dashboard' => 'index#dashboard'
+  # 搜索
+  get '/search' => 'search#index'
+  get '/search/:kind' => 'search#show'
 
   # --- 用户
   resources :users
@@ -224,17 +227,12 @@ MindpinEduSns::Application.routes.draw do
   get '/media_resources/reload_dynatree'       => 'media_resources#reload_dynatree'
   put '/media_resources/move' => 'media_resources#move'
 
-  resources :media_shares do
-    collection do
-      get :search
-    end
-  end
+  resources :media_shares
 
   get '/media_shares/users/:user_id'       => 'media_shares#share'
   get '/media_shares/users/:user_id/*path' => 'media_shares#share'
 
-  # 全文索引
-  get    '/file_search' => 'media_resources#search'
+
   # 结束全文索引
 
   # api
@@ -250,7 +248,6 @@ MindpinEduSns::Application.routes.draw do
     collection do
       post :share
       put :upload
-      get :search
     end
   end
 

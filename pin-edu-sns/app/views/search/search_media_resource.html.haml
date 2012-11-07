@@ -1,0 +1,6 @@
+= render '/search/parts/search_tab', :all_count => @all_count, :media_resources_count => @media_resources_count, :media_shares_count => @media_shares_count, :public_resources_count => @public_resources_count
+
+- @media_resources.each do |media_resource|
+  = media_resource.name
+  
+.page-paginate= will_paginate @media_resources
