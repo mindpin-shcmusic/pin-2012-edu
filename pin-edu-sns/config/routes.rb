@@ -39,6 +39,9 @@ MindpinEduSns::Application.routes.draw do
     get '/search' => 'search#index'
     get '/search/:kind' => 'search#show'
 
+    get '/setting/password'             => "setting#password"
+    put '/setting/password'             => "setting#password_submit"
+
     resources :teachers do
       collection do
         get :import_from_csv_page
