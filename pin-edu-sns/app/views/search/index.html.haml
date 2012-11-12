@@ -1,0 +1,18 @@
+= render '/search/parts/search_tab', :all_count => @all_count, :media_resources_count => @media_resources_count, :media_shares_count => @media_shares_count, :public_resources_count => @public_resources_count
+
+
+.media_resource= "我的资源(#{@media_resources_count})"
+- @media_resources.each do |media_resource|
+  = media_resource.name
+
+.media_share= "共享资源(#{@media_shares_count})"
+- @media_shares.each do |media_share|
+  = media_share.media_resource.name
+
+.public_resource= "公开资源(#{@public_resources_count})"
+- @public_resources.each do |public_resource|
+  = public_resource.name
+
+
+
+

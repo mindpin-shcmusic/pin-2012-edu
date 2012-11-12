@@ -18,7 +18,7 @@
     .v= @announcement.creator.real_name
   .field.content
     %label 内容
-    .v= @announcement.content
+    .v= sanitize @announcement.content
 
 - if current_user == @announcement.creator
   .page-admin-model-show

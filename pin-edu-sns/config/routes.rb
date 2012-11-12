@@ -15,6 +15,10 @@ def match_account_routes
   get  "/setting"                     => "setting#base"
   put  "/setting"                     => "setting#base_submit"
 
+  # 设置密码
+  get '/setting/password'             => "setting#password"
+  put '/setting/password'             => "setting#password_submit"
+
   # 头像设置
   get  "/setting/avatar"              => 'setting#avatar'
   get  '/setting/temp_avatar'         => 'setting#temp_avatar'
@@ -32,18 +36,32 @@ MindpinEduSns::Application.routes.draw do
 
   ###
   namespace :admin do
+    get '/search' => 'search#index'
+    get '/search/:kind' => 'search#show'
+
+    get '/setting/password'             => "setting#password"
+    put '/setting/password'             => "setting#password_submit"
+
     resources :teachers do
       collection do
-        get :search
         get :import_from_csv_page
         post :import_from_csv
       end
+      member do
+        get :password
+        put :password_submit
+        get 'course/:course_id', :action => 'course_students'
+      end
     end
+
     resources :students do
       collection do
-        get :search
         get :import_from_csv_page
         post :import_from_csv
+      end
+      member do
+        get :password
+        put :password_submit
       end
     end
 
@@ -57,7 +75,6 @@ MindpinEduSns::Application.routes.draw do
         post :select_cover
       end
       collection do
-        get  :search
         get  :import_from_csv_page
         post :import_from_csv
       end
@@ -69,7 +86,6 @@ MindpinEduSns::Application.routes.draw do
         put  :set_students
       end
       collection do
-        get  :search
         get  :import_from_csv_page
         post :import_from_csv
       end
@@ -77,7 +93,6 @@ MindpinEduSns::Application.routes.draw do
     
     resources :categories do
       collection do
-        get :search
         get :import_from_yaml_page
         post :import_from_yaml
       end
@@ -123,6 +138,9 @@ MindpinEduSns::Application.routes.draw do
   root :to => 'index#index'
   # 工作台
   get '/dashboard' => 'index#dashboard'
+  # 搜索
+  get '/search' => 'search#index'
+  get '/search/:kind' => 'search#show'
 
   # --- 用户
   resources :users
@@ -226,17 +244,12 @@ MindpinEduSns::Application.routes.draw do
   get '/media_resources/reload_dynatree'       => 'media_resources#reload_dynatree'
   put '/media_resources/move' => 'media_resources#move'
 
-  resources :media_shares do
-    collection do
-      get :search
-    end
-  end
+  resources :media_shares
 
   get '/media_shares/users/:user_id'       => 'media_shares#share'
   get '/media_shares/users/:user_id/*path' => 'media_shares#share'
 
-  # 全文索引
-  get    '/file_search' => 'media_resources#search'
+
   # 结束全文索引
 
   # api
@@ -252,7 +265,6 @@ MindpinEduSns::Application.routes.draw do
     collection do
       post :share
       put :upload
-      get :search
     end
   end
 
@@ -276,6 +288,7 @@ MindpinEduSns::Application.routes.draw do
   resources :announcements do
     collection do
       get :received
+      get :mine
     end
 
     member do

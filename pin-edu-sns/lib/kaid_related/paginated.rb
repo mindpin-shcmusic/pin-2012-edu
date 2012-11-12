@@ -2,9 +2,10 @@ require 'active_support/concern'
 
 module Paginated
   extend ActiveSupport::Concern
+  PERPAGE = 20
 
   included do
-    self.per_page = 20
+    self.per_page = PERPAGE
   end
 
   module ClassMethods

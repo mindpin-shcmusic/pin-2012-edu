@@ -46,17 +46,4 @@ class MediaSharesController < ApplicationController
     @prev = @sharer if @prev.blank?
   end
 
-  # 搜索共享资源
-  def search
-    @keyword = params[:keyword]
-    shared_resources = MediaShare.search(@keyword, 
-      :conditions => {:receiver_id => current_user.id}, 
-      :page => params[:page], :per_page => 20)
-    
-    @media_resources = []
-    shared_resources.each do |shared|
-      @media_resources << shared.media_resource
-    end
-  end
-
 end

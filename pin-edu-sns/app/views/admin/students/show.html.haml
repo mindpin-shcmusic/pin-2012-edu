@@ -25,6 +25,157 @@
       %label 对应邮箱
       .v= @student.user.email
 
+
+    .field
+      %label 学院
+      .v= @student.faculty
+
+    .field
+      %label 专业
+      .v= @student.major
+
+
+    .field
+      %label 性别
+      .v= @student.gender
+
+
+    .field
+      %label 年级
+      .v= @student.grade
+
+
+    .field
+      %label 学生类别
+      .v= @student.kind
+
+
+
+    .field
+      %label 入学日期
+      .v= @student.entry_date
+
+
+
+    .field
+      %label 毕业年份
+      .v= @student.graduation_year
+
+
+
+    .field
+      %label 辅修专业
+      .v= @student.option_course
+
+
+
+    .field
+      %label 考生号
+      .v= @student.exam_id
+
+
+    .field
+      %label 毕业标注
+      - if @student.has_graduated
+        .v= '已经毕业'
+      - else
+        .v= '还没毕业'
+
+
+    .field
+      %label 是否已离校
+      - if @student.has_left
+        .v= '已经离校'
+      - else
+        .v= '还在学校'
+
+
+    .field
+      %label 民族
+      .v= @student.nation
+
+
+    .field
+      %label 政治面貌
+      .v= @student.politics_status
+
+
+
+    .field
+      %label 备注
+      .v= @student.description
+
+
+    .field
+      %label 原籍
+      .v= @student.native_home
+
+
+    .field
+      %label 家庭详细地址
+      .v= @student.home_address
+
+
+    .field
+      %label 生源地
+      .v= @student.source_place
+
+
+    .field
+      %label 出生日期
+      .v= @student.birthday
+
+
+    .field
+      %label 联系电话
+      .v= @student.tel
+
+
+    .field
+      %label 邮政编码
+      .v= @student.zip_code
+
+
+    .field
+      %label 身份证号
+      .v= @student.id_card_number
+
+
+    .field
+      %label 文化程度
+      .v= @student.edu_level
+
+
+    .field
+      %label 异动信息
+      .v= @student.exception_info
+
+
+    .field
+      %label 异动备注
+      .v= @student.exception_desc
+
+
+    .field
+      %label 毕业学校
+      .v= @student.graduated_school
+
+
+    .field
+      %label 毕业时间
+      .v= @student.graduated_date
+
+
+    .field
+      %label 联系人
+      .v= @student.contact_person
+
+
+    .field
+      %label 联系电话
+      .v= @student.contact_tel
+
 .page-admin-go-back= link_to '返回列表页', '/admin/students'
-.page-admin-edit= link_to '编辑修改', "/admin/students/#{@student.id}/edit"
+.page-admin-edit= link_to '修改信息', "/admin/students/#{@student.id}/edit"
+.page-admin-edit= link_to '修改密码', "/admin/students/#{@student.id}/password"
 		

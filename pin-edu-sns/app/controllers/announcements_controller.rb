@@ -7,8 +7,12 @@ class AnnouncementsController < ApplicationController
   end
 
   def index
-    @received_announcements = current_user.received_announcements
-    @created_announcements = current_user.created_announcements
+    @announcements = current_user.received_announcements.paginated(params[:page])
+  end
+
+  def mine
+    @announcements = current_user.created_announcements.paginated(params[:page])
+    render :action => :index
   end
 
   def create
@@ -18,7 +22,8 @@ class AnnouncementsController < ApplicationController
   end
 
   def received
-    @announcements = current_user.unread_announcements
+    @announcements = current_user.unread_announcements.paginated(params[:page])
+    render :action => :index
   end
 
   def show

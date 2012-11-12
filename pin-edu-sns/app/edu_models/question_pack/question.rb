@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Question < ActiveRecord::Base
   belongs_to :creator,
              :class_name  => 'User',
@@ -21,6 +22,7 @@ class Question < ActiveRecord::Base
 
 
   include ModelRemovable
+  include Paginated
   
   after_create :send_tip_message_for_receiver_on_create
   def send_tip_message_for_receiver_on_create

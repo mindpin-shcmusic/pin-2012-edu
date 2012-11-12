@@ -1,0 +1,6 @@
+= render '/admin/search/parts/search_tab', :all_count => @all_count, :teachers_count => @teachers_count, :students_count => @students_count, :courses_count => @courses_count, :teams_count => @teams_count
+
+- @courses.each do |course|
+  = course.name
+
+.page-paginate= will_paginate @courses

@@ -8,6 +8,7 @@
   week_course_teachers = current_user.get_week_course_teachers
 
 .page-dashboard
+  = jsearchbar "/search"
   .block.baseinfo
     .avatar
       = avatar current_user, :medium

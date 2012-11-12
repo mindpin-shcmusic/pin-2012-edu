@@ -1,0 +1,17 @@
+= render '/admin/search/parts/search_tab', :all_count => @all_count, :teachers_count => @teachers_count, :students_count => @students_count, :courses_count => @courses_count, :teams_count => @teams_count
+
+.teacher= "教师(#{@teachers_count})"
+- @teachers.each do |teacher|
+  = teacher.real_name
+
+.student= "学生(#{@students_count})"
+- @students.each do |student|
+  = student.real_name
+
+.course= "课程(#{@courses_count})"
+- @courses.each do |course|
+  = course.name
+
+.team= "班级(#{@teams_count})"
+- @teams.each do |team|
+  = team.name

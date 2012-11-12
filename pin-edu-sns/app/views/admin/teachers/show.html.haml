@@ -29,6 +29,14 @@
       %label 教师介绍
       .v= sanitize @teacher.description
 
+    .field.courses
+      %label 本学期负责课程(点击查看相关课程学生列表)
+      .v
+        - @courses.each do |course|
+          .teacher-course
+            = link_to course.name, "/admin/teachers/#{@teacher.id}/course/#{course.id}"
+
 .page-admin-go-back= link_to '返回列表页', '/admin/teachers'
-.page-admin-edit= link_to '编辑修改', "/admin/teachers/#{@teacher.id}/edit"
-		
+
+.page-admin-edit= link_to '修改信息', "/admin/teachers/#{@teacher.id}/edit"
+.page-admin-edit= link_to '修改密码', "/admin/teachers/#{@teacher.id}/password"

@@ -12,7 +12,9 @@ class CourseScoreListsController < ApplicationController
   end
 
   def index
-    @score_lists = current_user.course_score_lists
+    score_lists = current_user.course_score_lists.paginated(params[:page])
+    return @score_lists = score_lists.with_semester(Semester.get_by_value(params[:semester])) if params[:semester]
+    @score_lists = score_lists
   end
 
   def show
@@ -24,7 +26,6 @@ class CourseScoreListsController < ApplicationController
     score_list = CourseScoreList.find(params[:id])
     score_list.update_attributes(params[:course_score_list])
     score_list.save ? flash[:success] = '成绩单已保存' : flash[:error] = '成绩格式不对'
-    #raise score_list.errors.messages.to_s
     redirect_to score_list
   end
 

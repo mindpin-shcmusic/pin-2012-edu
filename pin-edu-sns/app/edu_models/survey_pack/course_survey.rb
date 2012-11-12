@@ -5,6 +5,9 @@ class CourseSurvey < ActiveRecord::Base
 
   validates :title, :presence => true
 
+  include CourseTeacherRelativeMethods
+  include Paginated
+
   scope :with_kind, lambda {|kind| {:conditions => ['kind = ?', kind]}}
   scope :with_student, lambda { |student_user| 
     joins("inner join course_student_assigns on course_surveys.course_id = course_student_assigns.course_id and course_surveys.semester_value = course_student_assigns.semester_value and course_surveys.teacher_user_id = course_student_assigns.teacher_user_id").
@@ -22,4 +25,12 @@ class CourseSurvey < ActiveRecord::Base
       :teacher_user => course_teacher.teacher_user
     ).include?(student_user)
   end
+
+  def finished_ratio
+    count = (self.kind == '1' ? self.course_survey_records : self.course_survey_es_records).count
+    total = self.course.get_students(:semester     => self.semester,
+                                     :teacher_user => self.teacher_user).count
+    "#{count}/#{total}"
+  end
+
 end

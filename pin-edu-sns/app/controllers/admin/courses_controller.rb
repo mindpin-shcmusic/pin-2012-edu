@@ -8,12 +8,6 @@ class Admin::CoursesController < ApplicationController
     @course = Course.find(params[:id]) if params[:id]  
   end
   
-  def search
-    @result = Course.search params[:query]
-
-    render :partial => 'course_list', :locals => {:courses => @result}, :layout => false
-  end
-
   def index
     @courses = Course.paginated(params[:page])
   end

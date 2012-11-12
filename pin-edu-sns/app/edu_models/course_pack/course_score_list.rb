@@ -3,9 +3,17 @@ class CourseScoreList < ActiveRecord::Base
   has_many :course_score_records
   accepts_nested_attributes_for :course_score_records
 
+  scope :with_semester, lambda {|semester| where('semester_value = ?', semester.value)}
+
   default_scope order('id DESC')
 
   include CourseTeacherRelativeMethods
+  include Paginated
+
+  def finished_ratio
+    records = self.course_score_records
+    "#{records.select(&:is_finished?).count}/#{records.count}"
+  end
 
   module UserMethods
     def self.included(base)

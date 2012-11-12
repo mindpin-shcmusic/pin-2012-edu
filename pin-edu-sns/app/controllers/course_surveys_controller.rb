@@ -11,14 +11,14 @@ class CourseSurveysController < ApplicationController
     kind = params[:kind]
 
     if kind
-      @course_surveys = CourseSurvey.with_kind(kind).with_student(current_user) if current_user.is_student?
-      @course_surveys = CourseSurvey.with_kind(kind).with_teacher(current_user) if current_user.is_teacher?
+      course_surveys = CourseSurvey.with_kind(kind).with_student(current_user) if current_user.is_student?
+      course_surveys = CourseSurvey.with_kind(kind).with_teacher(current_user) if current_user.is_teacher?
     else
-      @course_surveys = CourseSurvey.with_student(current_user) if current_user.is_student?
-      @course_surveys = CourseSurvey.with_teacher(current_user) if current_user.is_teacher?
+      course_surveys = CourseSurvey.with_student(current_user) if current_user.is_student?
+      course_surveys = CourseSurvey.with_teacher(current_user) if current_user.is_teacher?
     end
 
-    @course_surveys = @course_surveys.paginate(:page => params[:page])
+    @course_surveys = course_surveys.paginated(params[:page])
   end
 
 

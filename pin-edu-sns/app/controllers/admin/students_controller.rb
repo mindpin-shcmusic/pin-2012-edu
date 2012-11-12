@@ -46,11 +46,6 @@ class Admin::StudentsController < ApplicationController
     redirect_to "/admin/students/#{@student.id}/edit"
   end
 
-  def search
-    @result = Student.search params[:query]
-    render :partial => 'student_list', :locals => {:students => @result}, :layout => false
-  end
-
   def import_from_csv_page
   end
 
@@ -60,6 +55,16 @@ class Admin::StudentsController < ApplicationController
   rescue Exception=>ex
     flash[:error] = ex.message
     redirect_to "/admin/students/import_from_csv_page"
+  end
+
+  def password;end
+  def password_submit
+    if @student.update_attributes params[:student]
+      return redirect_to "/admin/students/#{@student.id}"
+    end
+    error = @student.errors.first
+    flash[:error] = error[1]
+    redirect_to "/admin/students/#{@student.id}/password"
   end
 
 end

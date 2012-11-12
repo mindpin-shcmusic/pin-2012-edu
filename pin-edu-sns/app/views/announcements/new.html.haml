@@ -7,9 +7,9 @@
     .field.placeholder.need
       %label 标题
       = f.text_field :title
-    .field.need
+    .field
       %label 正文
-      = f.text_area :content
+      = f.text_area :content, :class => 'KindEditor'
     .field.submit
       = jfsubmit '下一步'
       = jfcancel '返回'
