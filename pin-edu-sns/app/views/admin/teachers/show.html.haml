@@ -30,7 +30,7 @@
       .v= sanitize @teacher.description
 
     .field.courses
-      %label 本学期负责课程
+      %label 本学期负责课程(点击查看相关课程学生列表)
       .v
         - @courses.each do |course|
           .teacher-course
