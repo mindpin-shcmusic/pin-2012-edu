@@ -23,7 +23,7 @@ pie.load ->
     dayNames: ['星期一','星期二','星期三','星期四','星期五','星期六','星期天']
     dayNamesShort: ['七', '一','二','三','四','五','六']
     dayNamesMin: ['七', '一','二','三','四','五','六']
-    dateFormat: 'yy.mm.dd'
+    dateFormat: 'yy-mm-dd'
     firstDay: 7
     isRTL: false
     showMonthAfterYear: false
@@ -32,6 +32,4 @@ pie.load ->
   # 统一处理日期时间选择器
   jQuery('form input.datetime-picker').datetimepicker()
 
-  jQuery('form input.date-picker').datepicker({
-    dateFormat: 'yy-mm-dd'
-  })
+  jQuery('form input.date-picker').datepicker()
