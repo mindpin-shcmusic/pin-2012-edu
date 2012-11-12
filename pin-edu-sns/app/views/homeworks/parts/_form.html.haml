@@ -12,7 +12,7 @@
     
     .field
       %label 内容
-      = f.text_area :content, :class => 'KindEditor'
+      = f.text_area :content, :class => 'kind-editor'
     
     .field
       %label 请选择课程
@@ -20,7 +20,7 @@
     
     .field.need
       %label 请选择日期
-      = f.text_field :deadline, :class => 'homework-deadline'
+      = f.text_field :deadline, :class=>'datetime-picker'
     
     .field.attachments
       %label 老师附件
