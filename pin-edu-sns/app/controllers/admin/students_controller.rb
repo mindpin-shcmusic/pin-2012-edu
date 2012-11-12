@@ -57,4 +57,14 @@ class Admin::StudentsController < ApplicationController
     redirect_to "/admin/students/import_from_csv_page"
   end
 
+  def password;end
+  def password_submit
+    if @student.update_attributes params[:student]
+      return redirect_to "/admin/students/#{@student.id}"
+    end
+    error = @student.errors.first
+    flash[:error] = error[1]
+    redirect_to "/admin/students/#{@student.id}/password"
+  end
+
 end
