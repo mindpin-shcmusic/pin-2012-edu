@@ -30,5 +30,6 @@
       .v= sanitize @teacher.description
 
 .page-admin-go-back= link_to '返回列表页', '/admin/teachers'
-.page-admin-edit= link_to '编辑修改', "/admin/teachers/#{@teacher.id}/edit"
+.page-admin-edit= link_to '修改信息', "/admin/teachers/#{@teacher.id}/edit"
+.page-admin-edit= link_to '修改密码', "/admin/teachers/#{@teacher.id}/password"
 		

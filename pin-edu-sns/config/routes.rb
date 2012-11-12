@@ -44,6 +44,10 @@ MindpinEduSns::Application.routes.draw do
         get :import_from_csv_page
         post :import_from_csv
       end
+      member do
+        get :password
+        put :password_submit
+      end
     end
     resources :students do
       collection do
