@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121107034446) do
+ActiveRecord::Schema.define(:version => 20121112015142) do
 
   create_table "announcement_rules", :force => true do |t|
     t.integer  "creator_id"
