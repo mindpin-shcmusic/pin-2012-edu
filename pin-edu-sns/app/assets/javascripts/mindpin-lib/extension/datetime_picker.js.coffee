@@ -32,9 +32,6 @@ pie.load ->
   # 统一处理日期时间选择器
   jQuery('form input.datetime-picker').datetimepicker()
 
-  jQuery('form input.date-picker').datetimepicker({
-    showHour: false
-    showMinute: false
-    showSecond: false
+  jQuery('form input.date-picker').datepicker({
     dateFormat: 'yy-mm-dd'
   })
