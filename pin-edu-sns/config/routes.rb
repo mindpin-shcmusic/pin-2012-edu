@@ -40,7 +40,12 @@ MindpinEduSns::Application.routes.draw do
         get :import_from_csv_page
         post :import_from_csv
       end
+
+      member do
+        get 'course/:course_id', :action => 'course_students'
+      end
     end
+
     resources :students do
       collection do
         get :import_from_csv_page

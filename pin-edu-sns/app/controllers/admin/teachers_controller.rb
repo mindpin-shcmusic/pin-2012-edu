@@ -2,6 +2,7 @@ class Admin::TeachersController < ApplicationController
   layout 'admin'
   before_filter :login_required
   before_filter :per_load
+
   def per_load
     @teacher = Teacher.find(params[:id]) if params[:id]
   end
@@ -32,6 +33,12 @@ class Admin::TeachersController < ApplicationController
   end
 
   def show
+    @courses = @teacher.user.get_teacher_current_courses
+  end
+
+  def course_students
+    @course = Course.find params[:course_id]
+    @students = @course.get_current_students_of(@teacher.user)
   end
 
   def edit
