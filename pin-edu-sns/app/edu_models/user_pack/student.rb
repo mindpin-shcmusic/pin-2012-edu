@@ -35,6 +35,11 @@ class Student < ActiveRecord::Base
     end
   end
 
+  after_update :change_datetime_to_date
+  def change_datetime_to_date
+  end
+
+
   def self.import_from_csv(file)
     ActiveRecord::Base.transaction do
       parse_csv_file(file) do |row,index|

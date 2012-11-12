@@ -7,7 +7,7 @@
   = form_tag '/comments' do
     .field.content.need
       %label 输入评论内容
-      = text_area_tag :content
+      = text_area_tag :content, :class => 'kind-editor'
     .field.submit
       %a.form-submit-button.stop{:href=>'javascript:;'} 评论
     .field.hide

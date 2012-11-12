@@ -13,7 +13,7 @@
   
 .field
   %label 请阐述选择上述答案的理由
-  =f.text_area :attend_class_reason
+  =f.text_area :attend_class_reason, :class => 'kind-editor'
 
 
 
@@ -38,7 +38,7 @@
 
 .field
   %span [内容・印象条目] 对自己来说，印象深刻的内容、自己收获的东西，其关键词是什么
-  =f.text_area :keywords
+  =f.text_area :keywords, :class => 'kind-editor'
 
 
 
@@ -65,11 +65,11 @@
 
 .field
   %span [内容・疑问条目] 觉得难以理解的点・疑问点是什么
-  =f.text_area :student_question
+  =f.text_area :student_question, :class => 'kind-editor'
 
 .field
   %span [内容・疑问条目] 觉得难以理解的点・疑问点是什么
-  =f.text_area :student_response
+  =f.text_area :student_response, :class => 'kind-editor'
 
 
  
