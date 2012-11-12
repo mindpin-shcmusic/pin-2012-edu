@@ -68,6 +68,10 @@ class Course < ActiveRecord::Base
     end
   end
 
+  def get_current_students_of(teacher_user)
+    self.get_students(:semester => Semester.now, :teacher_user => teacher_user)
+  end
+
   def set_course_time(options)
     raise InvalidCourseParams.new if options[:semester].blank? || options[:teacher_user].blank? || options[:time].blank?
 
@@ -132,6 +136,10 @@ class Course < ActiveRecord::Base
 
       Course.joins("inner join course_teachers on course_teachers.course_id = courses.id").
         where("course_teachers.semester_value = '#{options[:semester].value}' and course_teachers.teacher_user_id = #{self.id}")
+    end
+
+    def get_teacher_current_courses
+      self.get_teacher_courses(:semester => Semester.now)
     end
 
     def get_teacher_course_teachers(options)

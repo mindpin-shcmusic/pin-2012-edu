@@ -50,8 +50,10 @@ MindpinEduSns::Application.routes.draw do
       member do
         get :password
         put :password_submit
+        get 'course/:course_id', :action => 'course_students'
       end
     end
+
     resources :students do
       collection do
         get :import_from_csv_page
