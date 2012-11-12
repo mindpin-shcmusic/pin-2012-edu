@@ -176,5 +176,6 @@
       .v= @student.contact_tel
 
 .page-admin-go-back= link_to '返回列表页', '/admin/students'
-.page-admin-edit= link_to '编辑修改', "/admin/students/#{@student.id}/edit"
+.page-admin-edit= link_to '修改信息', "/admin/students/#{@student.id}/edit"
+.page-admin-edit= link_to '修改密码', "/admin/students/#{@student.id}/password"
 		

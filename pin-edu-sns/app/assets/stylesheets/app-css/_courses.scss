@@ -337,7 +337,7 @@
 
     .item{
       height:100px;
-      background-color:rgba(black, 0.05);
+      background-color:#f9f9f9;
       border:solid 1px #ddd;
       padding:10px;
       margin:0 5px 5px 0;
@@ -357,7 +357,7 @@
         &.today{
           border-width:2px;
           padding:9px;
-          border-color:rgba(black, 0.3);
+          border-color:rgba(red, 0.3);
           font-weight:bold;
         }
       }

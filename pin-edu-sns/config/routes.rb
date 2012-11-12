@@ -15,6 +15,10 @@ def match_account_routes
   get  "/setting"                     => "setting#base"
   put  "/setting"                     => "setting#base_submit"
 
+  # 设置密码
+  get '/setting/password'             => "setting#password"
+  put '/setting/password'             => "setting#password_submit"
+
   # 头像设置
   get  "/setting/avatar"              => 'setting#avatar'
   get  '/setting/temp_avatar'         => 'setting#temp_avatar'
@@ -35,13 +39,17 @@ MindpinEduSns::Application.routes.draw do
     get '/search' => 'search#index'
     get '/search/:kind' => 'search#show'
 
+    get '/setting/password'             => "setting#password"
+    put '/setting/password'             => "setting#password_submit"
+
     resources :teachers do
       collection do
         get :import_from_csv_page
         post :import_from_csv
       end
-
       member do
+        get :password
+        put :password_submit
         get 'course/:course_id', :action => 'course_students'
       end
     end
@@ -50,6 +58,10 @@ MindpinEduSns::Application.routes.draw do
       collection do
         get :import_from_csv_page
         post :import_from_csv
+      end
+      member do
+        get :password
+        put :password_submit
       end
     end
 

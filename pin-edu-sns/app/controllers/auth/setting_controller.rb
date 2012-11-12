@@ -10,35 +10,36 @@ class Auth::SettingController <  ApplicationController
   def base_submit
     @user= current_user
 
-      if !params[:old_password].blank?
-        return redirect_error_info("请输入新密码") if params[:new_password].blank?
-
-        if (params[:new_password_confirmation] != params[:new_password])
-          return redirect_error_info("新密码和确认新密码输入不相同")
-        end
-
-        u = User.authenticate(current_user.email,params[:old_password])
-        if u.blank? || u != @user
-          return redirect_error_info("旧密码输入错误")
-        end
-
-        @user.password=params[:new_password]
-        @user.password_confirmation=params[:new_password_confirmation]
-      end
-
     @user.sign = params[:sign]
     @user.name = params[:name]
     if @user.save
-      flash[:success] = "用户 #{@user.email}（#{@user.name}）的信息已经成功修改"
+      flash[:success] = "用户信息修改成功"
     else
       flash[:error] = get_flash_error(@user)
     end
     return redirect_to :action => :base
   end
 
-  def redirect_error_info(error)
-    flash[:error] = error
-    redirect_to :action=>:base
+  # -------------- 密码部分
+  def password;end
+
+  def password_submit
+    @user = current_user
+    u = User.authenticate(@user.email,params[:old_password])
+    if u.blank? || u != @user
+      flash[:error] = "旧密码输入错误"
+      return redirect_to :action => :password
+    end
+
+    @user.password = params[:new_password]
+    @user.password_confirmation = params[:new_password_confirmation]
+
+    if @user.save
+      flash[:success] = "密码修改成功"
+    else
+      flash[:error] = get_flash_error(@user)
+    end
+    redirect_to :action => :password
   end
 
   # -------------- 头像部分

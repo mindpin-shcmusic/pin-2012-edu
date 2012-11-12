@@ -12,7 +12,7 @@ try
   ]
 
   KindEditor.ready (K) ->
-    editor = K.create '.KindEditor',
+    editor = K.create '.kind-editor',
 
       uploadJson : "/kindeditor_upload"
       items      : items

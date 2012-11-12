@@ -25,12 +25,6 @@
       .field.need
         %label 用户名
         = user_f.text_field :name, :maxlength=>50
-      .field.need
-        %label 密码
-        = user_f.password_field :password, :value=>'', :maxlength=>32
-      .field.need
-        %label 确认密码
-        = user_f.password_field :password_confirmation, :value=>'', :maxlength=>32
 
 
 
@@ -61,7 +55,7 @@
 
       .field
         %label 入学日期
-        = t.text_field :entry_date, :class => 'entry-date'
+        = t.text_field :entry_date, :class=>'date-picker'
 
 
 
@@ -125,7 +119,7 @@
 
       .field
         %label 出生日期
-        = t.text_field :birthday, :class => 'birthday'
+        = t.text_field :birthday, :class=>'date-picker'
 
 
       .field
@@ -165,7 +159,7 @@
 
       .field
         %label 毕业时间
-        = t.text_field :graduated_date, :class => 'graduated-date'
+        = t.text_field :graduated_date, :class=>'date-picker'
 
 
       .field
