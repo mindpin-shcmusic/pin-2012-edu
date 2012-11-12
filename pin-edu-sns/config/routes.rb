@@ -15,6 +15,10 @@ def match_account_routes
   get  "/setting"                     => "setting#base"
   put  "/setting"                     => "setting#base_submit"
 
+  # 设置密码
+  get '/setting/password'             => "setting#password"
+  put '/setting/password'             => "setting#password_submit"
+
   # 头像设置
   get  "/setting/avatar"              => 'setting#avatar'
   get  '/setting/temp_avatar'         => 'setting#temp_avatar'
