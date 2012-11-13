@@ -8,7 +8,7 @@ class Admin::AnnouncementsController < ApplicationController
   end
 
   def index
-    @announcements = Announcement.paginated(params[:page])
+    @announcements = sort_scope(Announcement).paginated(params[:page])
   end
 
   def create

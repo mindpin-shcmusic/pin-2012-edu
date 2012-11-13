@@ -46,6 +46,7 @@ class Homework < ActiveRecord::Base
   default_scope order('created_at DESC')
 
   include Paginated
+  include Pacecar
 
   def teacher_attachment_zip_path
     "#{self.class::HOMEWORK_ATTACHMENTS_DIR}/homework_teacher#{self.creator.id}_#{self.id}.zip"

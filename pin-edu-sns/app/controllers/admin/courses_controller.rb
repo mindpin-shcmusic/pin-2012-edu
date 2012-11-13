@@ -9,7 +9,7 @@ class Admin::CoursesController < ApplicationController
   end
   
   def index
-    @courses = Course.paginated(params[:page])
+    @courses = sort_scope(Course).paginated(params[:page])
   end
   
   def new

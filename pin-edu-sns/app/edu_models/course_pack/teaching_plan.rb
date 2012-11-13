@@ -15,6 +15,7 @@ class TeachingPlan < ActiveRecord::Base
 
 
   include ModelRemovable
+  include Pacecar
 
   after_false_remove :remove_teaching_plan_courses
   def remove_teaching_plan_courses

@@ -18,13 +18,11 @@ class CourseSurveysController < ApplicationController
       course_surveys = CourseSurvey.with_teacher(current_user) if current_user.is_teacher?
     end
 
-    @course_surveys = course_surveys.paginated(params[:page])
+    @course_surveys = sort_scope(course_surveys).paginated(params[:page])
   end
 
 
   def show
   end
-
-  
 
 end

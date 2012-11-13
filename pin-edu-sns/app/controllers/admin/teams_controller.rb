@@ -7,7 +7,7 @@ class Admin::TeamsController < ApplicationController
   end
   
   def index
-    @teams = Team.paginated(params[:page])
+    @teams = sort_scope(Team).paginated(params[:page])
   end
   
   def new

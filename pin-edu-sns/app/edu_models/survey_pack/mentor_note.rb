@@ -4,4 +4,5 @@ class MentorNote < ActiveRecord::Base
   validates :title, :presence => true
 
   include ModelRemovable
+  include Pacecar
 end

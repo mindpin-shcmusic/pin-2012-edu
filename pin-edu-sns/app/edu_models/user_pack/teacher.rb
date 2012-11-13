@@ -19,6 +19,8 @@ class Teacher < ActiveRecord::Base
 
   accepts_nested_attributes_for :user
   
+  include Pacecar
+
   def self.import_from_csv(file)
     ActiveRecord::Base.transaction do
       parse_csv_file(file) do |row,index|

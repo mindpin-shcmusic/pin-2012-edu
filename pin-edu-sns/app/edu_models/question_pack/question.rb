@@ -18,11 +18,9 @@ class Question < ActiveRecord::Base
   scope :answered, where(:has_answered => true)
   scope :unanswered, where(:has_answered => false)
 
-
-
-
   include ModelRemovable
   include Paginated
+  include Pacecar
   
   after_create :send_tip_message_for_receiver_on_create
   def send_tip_message_for_receiver_on_create
@@ -43,9 +41,6 @@ class Question < ActiveRecord::Base
       self.creator.answer_tip_message.send_count_to_juggernaut
     end
   end
-
-
-
 
   module UserMethods
     def self.included(base)

@@ -9,6 +9,7 @@ class CourseScoreList < ActiveRecord::Base
 
   include CourseTeacherRelativeMethods
   include Paginated
+  include Pacecar
 
   def finished_ratio
     records = self.course_score_records

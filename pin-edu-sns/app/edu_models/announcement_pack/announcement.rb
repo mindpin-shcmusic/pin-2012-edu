@@ -13,7 +13,8 @@ class Announcement < ActiveRecord::Base
             :presence => true
 
   include Paginated
-
+  include Pacecar
+  
   def read_by?(user)
     get_announcement_user_by(user).read
   end

@@ -10,10 +10,11 @@ class Admin::CourseSurveysController < ApplicationController
 
   def index
     kind = params['kind']
+    course_surveys = sort_scope(CourseSurvey)
     if kind
-      @course_surveys = CourseSurvey.with_kind(kind).paginate(:page => params[:page])
+      @course_surveys = course_surveys.with_kind(kind).paginate(:page => params[:page])
     else
-      @course_surveys = CourseSurvey.paginate(:page => params[:page])
+      @course_surveys = course_surveys.paginate(:page => params[:page])
     end
   end
 

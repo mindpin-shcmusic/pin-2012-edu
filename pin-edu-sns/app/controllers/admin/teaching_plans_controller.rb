@@ -10,7 +10,7 @@ class Admin::TeachingPlansController < ApplicationController
 
 
   def index
-    @teaching_plans = TeachingPlan.paginate(:page => params[:page], :per_page => 20)
+    @teaching_plans = sort_scope(TeachingPlan).paginate(:page => params[:page], :per_page => 20)
   end
 
   def new

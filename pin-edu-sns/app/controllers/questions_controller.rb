@@ -13,25 +13,25 @@ class QuestionsController < ApplicationController
     if current_user.is_student?
       case type
       when 'answered'
-        @questions = current_user.questions.answered
+        questions = current_user.questions.answered
       when 'unanswered'
-        @questions = current_user.questions.unanswered
+        questions = current_user.questions.unanswered
       else
-        @questions = current_user.questions
+        questions = current_user.questions
       end
     else
       case type
       when 'answered'
-        @questions = Question.with_teacher(current_user).answered
+        questions = Question.with_teacher(current_user).answered
       when 'unanswered'
-        @questions = Question.with_teacher(current_user).unanswered
+        questions = Question.with_teacher(current_user).unanswered
       else
-        @questions = Question.with_teacher(current_user)
+        questions = Question.with_teacher(current_user)
       end
     end
 
   
-    @questions = @questions.paginated(params[:page]).order('id DESC')
+    @questions = sort_scope(questions).paginated(params[:page]).order('id DESC')
   end
 
 
