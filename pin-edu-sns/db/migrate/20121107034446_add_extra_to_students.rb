@@ -42,7 +42,7 @@ class AddExtraToStudents < ActiveRecord::Migration
     add_column :students, :politics_status, :string
 
 
-    # 备注
+    # 简介
     add_column :students, :description, :text
 
     # 原籍
