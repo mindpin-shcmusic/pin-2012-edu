@@ -8,7 +8,7 @@ class Admin::TeachersController < ApplicationController
   end
   
   def index
-    @teachers = Teacher.paginated(params[:page])
+    @teachers = sort_scope(Teacher).paginated(params[:page])
   end
 
   def new

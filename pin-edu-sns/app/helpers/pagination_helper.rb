@@ -9,10 +9,10 @@ module PaginationHelper
 
   def current_displaying_items_str_for(collection)
     offset = (params[:page] ? params[:page].to_i : 1) * Paginated::PERPAGE
-    start  = offset - Paginated::PERPAGE + 1
+    start  = collection.blank? ? 0 : offset - Paginated::PERPAGE + 1
     total  = collection.count
     stop   = offset > total ? total : offset
-    "当前显示第#{start}-第#{stop}项(共#{total}项)"
+    "当前显示第#{start}-#{stop}项(共#{total}项)"
   end
 
 end

@@ -9,6 +9,8 @@ class Team < ActiveRecord::Base
   validates :name, :presence => true
   validates :cid, :uniqueness => { :if => Proc.new { |team| !team.cid.blank? } }
 
+  include Pacecar
+
   def get_user_ids
     student_users.map(&:id).sort
   end

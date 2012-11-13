@@ -9,7 +9,7 @@ class Admin::MentorNotesController < ApplicationController
   end
 
   def index
-    @mentor_notes = MentorNote.paginate(:page => params[:page]).order('id DESC')
+    @mentor_notes = sort_scope(MentorNote).paginate(:page => params[:page]).order('id DESC')
   end
 
   def new

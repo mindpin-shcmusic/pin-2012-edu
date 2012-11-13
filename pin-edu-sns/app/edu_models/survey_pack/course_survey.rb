@@ -7,6 +7,7 @@ class CourseSurvey < ActiveRecord::Base
 
   include CourseTeacherRelativeMethods
   include Paginated
+  include Pacecar
 
   scope :with_kind, lambda {|kind| {:conditions => ['kind = ?', kind]}}
   scope :with_student, lambda { |student_user| 

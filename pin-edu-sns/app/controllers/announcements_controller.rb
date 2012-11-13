@@ -1,17 +1,17 @@
 class AnnouncementsController < ApplicationController
   before_filter :login_required
-  before_filter :not_for_students, :only => [:new, :create, :announce]
+  before_filter :not_for_students, :only => [:new, :create, :announce, :mine]
 
   def new
     @announcement = current_user.created_announcements.build
   end
 
   def index
-    @announcements = current_user.received_announcements.paginated(params[:page])
+    @announcements = sort_scope(current_user.received_announcements).paginated(params[:page])
   end
 
   def mine
-    @announcements = current_user.created_announcements.paginated(params[:page])
+    @announcements = sort_scope(current_user.created_announcements).paginated(params[:page])
     render :action => :index
   end
 
@@ -44,7 +44,7 @@ class AnnouncementsController < ApplicationController
 protected
 
   def not_for_students
-    redirect_to received_announcements_path if current_user.is_student?
+    redirect_to announcements_path if current_user.is_student?
   end
 
 end

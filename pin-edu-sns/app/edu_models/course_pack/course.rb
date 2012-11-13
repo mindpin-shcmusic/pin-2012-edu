@@ -20,6 +20,8 @@ class Course < ActiveRecord::Base
   has_many :teaching_plan_courses
   has_many :teaching_plans, :through => :teaching_plan_courses
 
+  include Pacecar
+
   def cover_url
     self.cover ? self.cover.file_entity.http_url : self.default_cover
   end

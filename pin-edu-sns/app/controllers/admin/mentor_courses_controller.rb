@@ -5,7 +5,7 @@ class Admin::MentorCoursesController < ApplicationController
   before_filter :pre_load
 
   def pre_load
-    @mentor_course  = MentorCourse.find params[:id] if params[:id]
+    @mentor_course  = sort_scope(MentorCourse).find params[:id] if params[:id]
   end
 
   def index

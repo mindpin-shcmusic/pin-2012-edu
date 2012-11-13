@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class MentorCourse < ActiveRecord::Base
   belongs_to :user,
              :class_name => 'User',
@@ -12,6 +13,7 @@ class MentorCourse < ActiveRecord::Base
   has_many :mentor_students, 
            :class_name => 'MentorStudent', :foreign_key => :mentor_course3
 
+  include Pacecar
 
   # --- 给其他类扩展的方法
   module UserMethods
