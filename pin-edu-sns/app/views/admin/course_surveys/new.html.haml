@@ -14,11 +14,15 @@
  
     .field
       %label 学期
-      = f.select(:semester_value, Semester.get_nav_array.collect {|p| [ p.value ] }, {:selected => Semester.now.value}, {:data => {:placeholder => '学期'}})
+      = f.select(:semester_value, Semester.get_nav_array.collect {|p| [ p.value ] }, {:prompt => true, :selected => Semester.now.value})
 
-      = f.select(:course_id, '', {:include_blank => true}, {:data => {:placeholder => '课程'}})
+      = f.select(:course_id, @current_courses.collect {|p| [p[:name], p[:id]]}, {:include_blank => true}, {:data => {:placeholder => '请选择课程'}})
+      
+      .span{:id => 'teacher_notice'}
+        选择课程后才能选择老师
 
-      = f.select(:teacher_user_id, '', {:include_blank => true}, {:data => {:placeholder => '教师'}})
+      .span{:id => 'teacher_list', :style => 'display: none;'}
+        = f.select(:teacher_user_id, '', {:include_blank => true})
 
 
 

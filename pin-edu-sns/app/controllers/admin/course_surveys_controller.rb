@@ -19,6 +19,8 @@ class Admin::CourseSurveysController < ApplicationController
   end
 
   def new
+    semester = Semester.get_by_value(Semester.now.value)
+    @current_courses = semester.get_courses.map{|course|{:id => course.id, :name => course.name}}
   end
 
   def create
