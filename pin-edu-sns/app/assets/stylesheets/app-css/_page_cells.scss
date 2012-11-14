@@ -1,0 +1,83 @@
+.generic-page-head, .generic-body-list {
+	&.course-score-lists .cell {
+		&.title{width:400px;}
+		&.semester{width:100px;}
+		&.course{width:200px;}
+		&.count{width:200px;}
+	}
+
+	&.course-surveys .cell {
+		&.title{width:400px;}
+		&.semester{width:100px;}
+		&.course{width:200px;}
+		&.kind{width:100px;}
+		&.count{width:200px;}
+	}
+
+	&.questions .cell {
+		&.title{width:600px;}
+		&.teacher{width:200px;}
+		&.answered{width:100px;}
+	}
+
+  &.announcements .cell {
+    &.title{width:600px;}
+		&.creator{width:200px;}
+    &.date{width:200px;}
+  }
+
+	&.admin-teachers .cell {
+    &.ops{width:200px;}
+		&.real-name{width:200px;}
+		&.tid{width:200px;}
+		&.username{width:200px;}
+		&.email{width:200px;}
+  }
+
+	&.admin-students .cell {
+    &.ops{width:200px;}
+		&.real-name{width:200px;}
+		&.sid{width:200px;}
+		&.username{width:200px;}
+		&.email{width:200px;}
+  }
+
+	&.admin-courses .cell {
+    &.ops{width:200px;}
+		&.name{width:200px;}
+		&.cid{width:200px;}
+  }
+
+	&.admin-teams .cell {
+    &.ops{width:200px;}
+		&.name{width:200px;}
+		&.cid{width:200px;}
+  }
+
+	&.admin-teaching-plans .cell {
+    &.ops{width:200px;}
+		&.title{width:600px;}
+  }
+
+	&.admin-teaching-plans .cell {
+    &.ops{width:200px;}
+		&.title{width:600px;}
+  }
+
+	&.admin-mentor-courses .cell {
+    &.ops{width:200px;}
+		&.teacher{width:200px;}
+		&.course{width:400px;}
+  }
+
+	&.admin-mentor-notes .cell {
+    &.ops{width:200px;}
+		&.title{width:400px;}
+  }
+
+	&.admin-announcements .cell {
+    &.ops{width:200px;}
+		&.title{width:400px;}
+		&.creator{width:200px;}
+  }
+}

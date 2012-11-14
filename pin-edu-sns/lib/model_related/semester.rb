@@ -62,9 +62,9 @@ class Semester
     now_semester_prev_prev = now_semester_prev.prev
 
     [
-      now_semester_prev_prev,
+      now_semester,
       now_semester_prev,
-      now_semester
+      now_semester_prev_prev
     ]
   end
 
