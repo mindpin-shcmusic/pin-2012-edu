@@ -1,7 +1,7 @@
 - hbreadcrumb '首页', '/'
 - hbreadcrumb '成绩单'
 
-.page-score-lists-head
+.generic-page-head.course-score-lists
   .btns
     .page-tabs
       :ruby
@@ -19,12 +19,12 @@
   = table_pagination(@score_lists)
 
   .cells
-    .cell.title 标题
-    .cell.semester 学期
+    .cell.title= sortable 'title', '标题'
+    .cell.semester= sortable 'semester_value', '学期'
     .cell.course 课程
     .cell.count 统计完/未统计完
 
-.page-score-lists
+.generic-body-list.course-score-lists
   - if @score_lists.blank?
     .blank
       目前列表内没有内容

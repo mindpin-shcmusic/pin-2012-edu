@@ -7,7 +7,7 @@ try
           'superscript', 'clearhtml', 'quickformat', 'selectall', '|', 'fullscreen', '/',
           'formatblock', 'fontname', 'fontsize', '|', 'forecolor', 'hilitecolor', 'bold',
           'italic', 'underline', 'strikethrough', 'lineheight', 'removeformat', '|', 'image', 'multiimage',
-          'media', 'insertfile', 'table', 'hr', 'emoticons',
+          'insertfile', 'table', 'hr', 'emoticons',
           'link', 'unlink', '|', 'about'
   ]
 
