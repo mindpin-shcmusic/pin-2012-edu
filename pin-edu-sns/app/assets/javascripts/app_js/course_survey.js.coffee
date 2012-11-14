@@ -28,6 +28,8 @@ pie.load ->
         'semester' : jQuery('#course_survey_semester_value').val()
       }
       success: (res)->
+        $('#teacher_list').show()
+        $('#teacher_notice').hide()
         $('#course_survey_teacher_user_id').empty()
         i = 0
         while i < res.length

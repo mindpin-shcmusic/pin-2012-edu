@@ -1,7 +1,6 @@
 class CourseSurvey < ActiveRecord::Base
   has_many :course_survey_records, :dependent => :destroy
   has_many :course_survey_es_records, :dependent => :destroy
-  belongs_to :course_teacher
 
   validates :title, :presence => true
 
