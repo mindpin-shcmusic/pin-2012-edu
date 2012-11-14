@@ -19,9 +19,9 @@
   = table_pagination(@questions)
 
   .cells
-    .cell.title 标题
+    .cell.title= sortable 'title', '标题'
     .cell.teacher 教师
-    .cell.answered 回答状态
+    .cell.answered= sortable 'has_answered', '回答状态'
 
 .page-questions
   - if @questions.blank?

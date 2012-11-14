@@ -19,11 +19,11 @@
   = table_pagination(@homeworks)
 
   .cells
-    .cell.title 标题
-    .cell.deadline 截止时间
+    .cell.title= sortable 'title', '标题'
+    .cell.deadline= sortable 'deadline', '截止时间'
     .cell.attach 附件
     .cell.course 所属课程
-    .cell.kind 类别
+    .cell.kind= sortable 'kind', '类别'
     .cell.count 已分配/已提交
 
 .page-homeworks

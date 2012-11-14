@@ -19,9 +19,9 @@
   = table_pagination(@announcements)
 
   .cells
-    .cell.title 标题
+    .cell.title= sortable 'title', '标题'
     .cell.creator 创建者
-    .cell.date 创建时间
+    .cell.date= sortable 'created_at', '创建时间'
 
 .page-announcements
   - if @announcements.blank?
