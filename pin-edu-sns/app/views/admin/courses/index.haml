@@ -4,13 +4,35 @@
 - hbreadcrumb '课程维护'
   
 
-.page-admin-ops
-  %a.create{:href=>'/admin/courses/new'} 增加课程
-  %a.import{:href=>'/admin/courses/import_from_csv_page'} 批量导入课程
+.generic-page-head.admin-courses
+  .btns
+    %a.generic-new.create{:href=>'/admin/courses/new'} 增加课程
+    %a.generic-new.import{:href=>'/admin/courses/import_from_csv_page'} 批量导入课程
 
-.page-paginate= will_paginate @courses
+  = table_pagination(@courses)
 
-.page-admin-models.courses
-  = render 'course_list', :courses=>@courses
-  
-.page-paginate= will_paginate @courses
+  .cells
+    .cell.ops 操作
+    .cell.name= sortable 'name', '课程'
+    .cell.cid= sortable 'cid', '课程编号'
+
+.generic-body-list.admin-courses
+  - if @courses.blank?
+    .blank
+      目前列表内没有内容
+  - else
+    - @courses.each do |course|
+      .generic-model
+        .cell.ops
+          - remove_url = admin_course_path(course)
+          %a.remove{:href=>'javascript:;', :'data-url'=>remove_url} 删除
+          %a.edit{:href=>"/admin/courses/#{course.id}/edit"} 编辑
+          %a.open-teachers{:href=>'javascript:;'}
+            %span.open 展开
+            %span.close 收起
+          %a.detail{:href=>"/admin/courses/#{course.id}"} 查看详情
+
+        .cell.name
+          = course.name
+        .cell.cid
+          = course.cid

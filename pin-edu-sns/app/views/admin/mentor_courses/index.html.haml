@@ -3,15 +3,29 @@
 - hbreadcrumb '基础数据管理', '/admin'
 - hbreadcrumb '导师方向'
 
+.generic-page-head.admin-mentor-courses
+  .btns
+    %a.generic-new.create{:href=>'/admin/mentor_courses/new'} 增加导师方向
 
-.page-admin-ops
-  %a.create{:href=>'/admin/mentor_courses/new'} 增加导师方向
+  = table_pagination(@mentor_courses)
 
-- if @mentor_courses.blank?
-  .blank
-    目前列表内没有内容
-- else
-  .page-paginate= will_paginate @mentor_courses
+  .cells
+    .cell.ops 操作
+    .cell.teacher 导师
+    .cell.course= sortable 'course', '课程'
 
-  .page-admin-models.mentor_courses
-    = render 'mentor_course_list', :mentor_courses => @mentor_courses
+.generic-body-list.admin-mentor-courses
+  - if @mentor_courses.blank?
+    .blank
+      目前列表内没有内容
+  - else
+    - @mentor_courses.each do |mentor_course|
+      .generic-model
+        .cell.ops
+          - remove_url = admin_mentor_course_path(mentor_course)
+          %a.remove{:href=>'javascript:;', :'data-url'=>remove_url} 删除
+          %a.edit{:href=>"/admin/mentor_courses/#{mentor_course.id}/edit"} 编辑
+        .cell.teacher
+          = mentor_course.user.real_name
+        .cell.course
+          = mentor_course.course

@@ -79,3 +79,11 @@
   }
 
 }
+
+.generic-page-head {
+	@include generic-page-head;
+}
+
+.generic-body-list {
+  @include generic-body-list;
+}
