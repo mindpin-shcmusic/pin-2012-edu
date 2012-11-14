@@ -19,13 +19,50 @@
       .field.need
         %label 电子邮箱
         = user_f.text_field :email, :maxlength=>50
+
+
       .field.need
         %label 用户名
         = user_f.text_field :name, :maxlength=>50
 
-    .field
-      %label 教师介绍
-      = t.text_area :description
+
+      .field
+        %label 性别
+        = t.text_field :gender
+
+
+      .field
+        %label 部门
+        = t.text_field :department
+
+
+      .field
+        %label 民族
+        = t.select(:nation, nation_options, {:include_blank => true}, {:data => {:placeholder => '请选择'}})
+
+
+      .field
+        %label 政治面貌
+        = t.text_field :politics_status
+
+
+      .field
+        %label 联系电话
+        = t.text_field :tel
+
+
+      .field
+        %label 身份证号
+        = t.text_field :id_card_number
+
+      .field
+        %label 教师介绍
+        = t.text_area :description, :class => 'kind-editor'
+
+
+      .field
+        %label 备注
+        = t.text_area :other_info, :class => 'kind-editor'
 
     .field.submit
       = jfsubmit '确定'
