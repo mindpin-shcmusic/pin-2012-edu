@@ -39,6 +39,7 @@ module MindpinEduSns
     require 'csv'
     
     require File.join(Rails.root, 'lib/mindpin_global_methods.rb')
+    require File.join(Rails.root, 'lib/load_mindpin_sidebar.rb')
 
     config.dev_tweaks.autoload_rules do
       keep :all
