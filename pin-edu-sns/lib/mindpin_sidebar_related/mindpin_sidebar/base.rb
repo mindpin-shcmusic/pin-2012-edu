@@ -1,26 +1,33 @@
 module MindpinSidebar
   class Base
-    def self.config(&block)
-      @@config = {}
-      self.instance_eval(&block)
+    ## parse config build html ##
+    def self.render_sidebar(view, rule_sym)
+      html = "<div class='page-navbar'>"
+
+      MindpinSidebar::Rule.get(rule_sym).groups.each do |group|
+        html << render_group(view, group)
+      end
+      
+      html << "</div>"
+      view.raw(html)
     end
 
-    def self.render_navs(view, rule)
-      html = "<div class='page-navbar'>"
-      
-      @@config[rule].each do |nav|
+    def self.render_group(view, group)
+      html = "<div class='group'>"
+      html << "<div class='title'>#{group.options[:name]}</div>"
+
+      group.navs.each do |nav|
         html << render_nav(view,nav)
       end
 
       html << "</div>"
-
-      view.raw(html)
+      html
     end
 
     def self.render_nav(view, nav)
       klass = nav.is_current?(view) ? "item current" : "item"
       nav_html = "<div class='#{klass}'>"
-      nav_html << "<a href='#{nav.options[:url]}'>#{options[:name]}</a>"
+      nav_html << "<a href='#{nav.options[:url]}'>#{nav.options[:name]}</a>"
       nav_html << render_subnavs(view, nav)
       nav_html << "</div>"
 
@@ -41,12 +48,32 @@ module MindpinSidebar
 
       nav_html
     end
+    ## parse config build html ##
 
     ######## config DSL #########
-    def self.rule(rules, &block)
-      MindpinSidebar::CurrentContext.instance.rules = [rules].flatten
+    def self.config(&block)
+      MindpinSidebar::Rule.init
+      self.instance_eval(&block)
+    end
+
+    def self.rule(rule_syms, &block)
+      rules = [rule_syms].flatten.map{|rule_sym| MindpinSidebar::Rule.get(rule_sym)}
+
+      MindpinSidebar::CurrentContext.instance.rules = rules
       self.instance_eval(&block)
       MindpinSidebar::CurrentContext.instance.rules = nil
+    end
+
+    def self.group(title, options, &block)
+      group = MindpinSidebar::Group.new(title, options)
+      MindpinSidebar::CurrentContext.instance.group = group
+
+      self.instance_eval(&block)
+      MindpinSidebar::CurrentContext.instance.rules.each do |rule|
+        rule.groups << group
+      end
+
+      MindpinSidebar::CurrentContext.instance.group = nil
     end
 
     def self.nav(title, options, &block)
@@ -54,11 +81,7 @@ module MindpinSidebar
       MindpinSidebar::CurrentContext.instance.nav = nav
 
       self.instance_eval(&block)
-
-      MindpinSidebar::CurrentContext.instance.rules.each do |rule|
-        @@config[rule] ||= []
-        @@config[rule] << nav
-      end
+      MindpinSidebar::CurrentContext.instance.group.navs << nav
 
       MindpinSidebar::CurrentContext.instance.nav = nil
     end
@@ -68,7 +91,6 @@ module MindpinSidebar
       MindpinSidebar::CurrentContext.instance.subnav = nav
 
       self.instance_eval(&block)
-
       MindpinSidebar::CurrentContext.instance.nav.subnavs << nav
 
       MindpinSidebar::CurrentContext.instance.subnav = nil
