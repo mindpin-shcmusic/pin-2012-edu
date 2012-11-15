@@ -16,7 +16,7 @@
     - if current_user.is_student?
       %a.generic-new{:href=>"/questions/new"} 提问题
 
-  = table_pagination(@questions)
+  = list_pagination(@questions)
 
   .cells
     .cell.title= sortable 'title', '标题'
@@ -37,4 +37,4 @@
         .cell.answered
           = question.has_answered? ? '已回答' : '未回答'
 
-    = table_pagination(@questions)
+    = list_pagination(@questions)

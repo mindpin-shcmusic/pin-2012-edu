@@ -7,7 +7,7 @@
   .btns
     = link_to '创建通知', new_admin_announcement_path, :class => 'generic-new create'
 
-  = table_pagination(@announcements)
+  = list_pagination(@announcements)
 
   .cells
     .cell.ops 操作
