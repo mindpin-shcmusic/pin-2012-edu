@@ -4,11 +4,24 @@
 - hbreadcrumb '教师维护', '/admin/teachers'
 - hbreadcrumb @teacher.real_name
 
+
+:ruby
+  current_semester = params[:semester].blank? ? Semester.now : Semester.get_by_value(params[:semester])
+
+
 .page-admin-model-show
+  .semesters-nav
+    %label 学期
+    .page-tabs
+      - Semester.get_nav_array.each do |semester|
+        - class_name = current_semester == semester ? "current" : ""
+        = link_to semester.value, "/admin/teacher/#{@teacher.id}?semester=#{semester.value}",:class => "tab #{class_name}"
+
   .field.avatar
     = avatar @teacher.user, :medium
 
   .data
+
     .field.name
       %label 教师姓名
       .v= @teacher.real_name
@@ -40,10 +53,9 @@
             = link_to course.name, "/admin/teachers/#{@teacher.id}/course/#{course.id}"
 
             .field.students
-              %label 学生列表
               .v
                 - students.each do |student|
-                  .student= link_to student.real_name, admin_student_path(student)
+                  .student-box= link_to student.real_name, admin_student_path(student)
 
 
 .page-admin-go-back= link_to '返回列表页', '/admin/teachers'
