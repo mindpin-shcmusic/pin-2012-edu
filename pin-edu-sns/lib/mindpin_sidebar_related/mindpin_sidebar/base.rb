@@ -1,7 +1,7 @@
 module MindpinSidebar
   class Base
     ## parse config build html ##
-    def self.render_sidebar(self, rule_sym)
+    def self.render_sidebar(view, rule_sym)
       html = "<div class='page-navbar'>"
 
       MindpinSidebar::Rule.get(rule_sym).groups.each do |group|
@@ -14,13 +14,12 @@ module MindpinSidebar
 
     def self.render_group(view, group)
       html = "<div class='group'>"
-      html << "<div class='title'>"
+      html << "<div class='title'>#{group.title}</div>"
 
       group.navs.each do |nav|
         html << render_nav(view,nav)
       end
 
-      html << "</div>"
       html << "</div>"
       html
     end
@@ -28,7 +27,7 @@ module MindpinSidebar
     def self.render_nav(view, nav)
       klass = nav.is_current?(view) ? "item current" : "item"
       nav_html = "<div class='#{klass}'>"
-      nav_html << "<a href='#{nav.options[:url]}'>#{options[:name]}</a>"
+      nav_html << "<a href='#{nav.options[:url]}'>#{nav.options[:name]}</a>"
       nav_html << render_subnavs(view, nav)
       nav_html << "</div>"
 
