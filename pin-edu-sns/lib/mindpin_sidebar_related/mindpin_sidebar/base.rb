@@ -14,7 +14,7 @@ module MindpinSidebar
 
     def self.render_group(view, group)
       html = "<div class='group'>"
-      html << "<div class='title'>#{group.title}</div>"
+      html << "<div class='title'>#{group.options[:name]}</div>"
 
       group.navs.each do |nav|
         html << render_nav(view,nav)
