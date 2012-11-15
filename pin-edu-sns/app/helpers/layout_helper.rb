@@ -20,6 +20,17 @@ private
     total  = collection.count
     stop   = offset > total ? total : offset
     "当前显示第#{start}-#{stop}项(共#{total}项)"
+    [_make_span('当前显示第'),
+     _make_span(start, 'count'),
+     _make_span('—第'),
+     _make_span(stop, 'count'),
+     _make_span('条结果（共'),
+     _make_span(total, 'count'),
+     _make_span('条结果）')].reduce(&:+)
+  end
+
+  def _make_span(content, css_class=nil)
+    content_tag :span, content, :class => [css_class]
   end
 
   module LayoutWidget
