@@ -13,7 +13,7 @@
       %a.tab{:href=>course_surveys_path(:kind => 1), :class => klass2} 调查1
       %a.tab{:href=>course_surveys_path(:kind => 2), :class => klass3} 调查2
 
-  = table_pagination(@course_surveys)
+  = list_pagination(@course_surveys)
 
   .cells
     .cell.title= sortable 'title', '标题'
@@ -41,6 +41,6 @@
         .cell.count
           = survey.finished_ratio
                                  
-  = table_pagination(@course_surveys)
+  = list_pagination(@course_surveys)
 
         

@@ -16,7 +16,7 @@
     - if current_user.is_teacher?
       %a.new-homework{:href=>new_homework_path} 布置新作业/艺术实践
 
-  = table_pagination(@homeworks)
+  = list_pagination(@homeworks)
 
   .cells
     .cell.title= sortable 'title', '标题'
@@ -48,4 +48,4 @@
         .cell.count
           #{homework.assignees.count}/#{homework.submitted_students.count}
 
-    = table_pagination(@homeworks)
+    = list_pagination(@homeworks)

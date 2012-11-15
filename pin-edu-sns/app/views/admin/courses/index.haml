@@ -9,7 +9,7 @@
     %a.generic-new.create{:href=>'/admin/courses/new'} 增加课程
     %a.generic-new.import{:href=>'/admin/courses/import_from_csv_page'} 批量导入课程
 
-  = table_pagination(@courses)
+  = list_pagination(@courses)
 
   .cells
     .cell.ops 操作
