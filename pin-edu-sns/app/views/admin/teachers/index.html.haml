@@ -25,18 +25,15 @@
       目前列表内没有内容
   - else
     - @teachers.each do |teacher|
-      .generic-model
-        .cell.ops
+      = page_list_body do |p|
+        = p.checkbox
+        = p.cell :ops, :col => 2 do
           - remove_url = admin_teacher_path(teacher)
           %a.remove{:href=>'javascript:;', :'data-url'=>remove_url} 删除
           %a.edit{:href=>"/admin/teachers/#{teacher.id}/edit"} 编辑
           %a.detail{:href=>"/admin/teachers/#{teacher.id}"} 详情
-          
-        .cell.real-name
-          = teacher.real_name
-        .cell.tid
-          = teacher.tid
-        .cell.username
-          = teacher.user.name
-        .cell.email
-          = teacher.user.email
+
+        = p.cell :real_name, teacher.real_name
+        = p.cell :tid, teacher.tid
+        = p.cell :username, teacher.user.name
+        = p.cell :email, teacher.user.email
