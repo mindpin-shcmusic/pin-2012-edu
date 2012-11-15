@@ -145,11 +145,14 @@ body{
   border-top:1px solid #ccc;
 
   .paginate-info{
+    @include floatfix;
+    width:720px;
     .desc{
-      
+      float:left;
+      padding:15px;
     }
     .pagination{
-      
+
     }
   }
 }
