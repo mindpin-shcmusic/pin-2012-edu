@@ -110,3 +110,55 @@ body{
     margin-bottom:40px;
   }
 }
+
+
+// 11月15日，列表统一布局
+.page-fixed-head{
+  background:#f7f7f7;
+  box-shadow:0 1px 2px rgba(black, 0.07);
+  left:210px;
+  position:fixed;
+  right:0;
+  top:50px;
+  z-index:8;
+  height:62px; // 32 + 15 + 15
+
+  .buttons{
+    @include floatfix;
+    padding:15px;
+    a.button{
+      @include mini-button;
+      margin-right:15px;
+    }
+  }
+}
+
+.page-list-head{
+  background: #e6e6e6;
+  box-shadow: 0 1px 2px rgba(black, 0.07);
+  left: 210px;
+  position:fixed;
+  right:0;
+  top:112px;
+  z-index:8;
+  border-bottom:1px solid #ccc;
+  border-top:1px solid #ccc;
+
+  .paginate-info{
+    @include floatfix;
+    width:720px;
+    .desc{
+      float:left;
+      padding:15px;
+      height:24px;line-height:24px;
+      span.count{
+        font-weight:bold;
+        color:#3E78FD;
+      }
+    }
+    .pagination{
+      float:right;
+      margin-top:15px;
+    }
+  }
+}
