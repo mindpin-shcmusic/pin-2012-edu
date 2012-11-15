@@ -4,9 +4,9 @@
 - hbreadcrumb '教师维护'
 
 .page-fixed-head
-  .buttons
-    %a.button.create{:href=>'/admin/teachers/new'} 增加教师
-    %a.button.import{:href=>'/admin/teachers/import_from_csv_page'} 批量导入教师
+  = page_buttons do |p|
+    = p.button '增加教师记录', '/admin/teachers/new', :class=>'create'
+    = p.button '批量导入教师', '/admin/teachers/import_from_csv_page', :class=>'import'
 
 .page-list-head
   = table_pagination(@teachers)

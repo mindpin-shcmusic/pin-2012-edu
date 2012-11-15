@@ -11,7 +11,7 @@ module LayoutHelper
 
     def self.button(text, path, options={})
       options.assert_valid_keys :class
-      link_to text, path, :class => [:botton, options[:class]]
+      link_to text, path, :class => [:button, options[:class]]
     end
   end
 
