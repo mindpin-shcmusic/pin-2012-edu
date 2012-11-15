@@ -40,6 +40,6 @@
       %form
         .field
           %label 你现在可以提交作业了，如果有附言，写在这里:
-          = text_area_tag :content, :class => 'kind-editor'
+          = text_area_tag :content, nil, :class => 'kind-editor'
         .field.submit
           = jfbutton '确定提交作业'
