@@ -19,9 +19,16 @@ module LayoutHelper
   end
 
   def sortable(column, header)
-    dir       = is_current_sort?(column) && params[:dir] == 'asc' ? 'desc' : 'asc'
-    css_class = is_current_sort?(column) ? "current-sort #{params[:dir] && 'sort-' + params[:dir]}" : nil
+    is_current = is_current_sort?(column)
+    param_dir = params[:dir]
+
+    dir       = is_current && param_dir == 'asc' ? 'desc' : 'asc'
+    css_class = is_current ? "sortable current #{param_dir}" : 'sortable'
     link_to header, {:sort => column, :dir => dir}, {:class => css_class}
+  end
+
+  def _make_span(content, css_class=nil)
+    content_tag :span, content, :class => [css_class]
   end
 
 private
@@ -45,10 +52,6 @@ private
     column.to_s == params[:sort].to_s
   end
 
-  def _make_span(content, css_class=nil)
-    content_tag :span, content, :class => [css_class]
-  end
-
   class LayoutWidget < ActionView::Base
     @@instance = nil
 
@@ -70,7 +73,7 @@ private
       options.assert_valid_keys :col, :sortable
       col = options[:col] ? "col_#{options[:col]}" : 'col_1'
       content_tag :div, :class => [:cell, col, attr_name.to_s.dasherize] do
-        options[:sortable] ? @context.sortable(attr_name, text) : text
+        options[:sortable] ? @context.sortable(attr_name, text) : @context._make_span(text)
       end
     end
 
