@@ -11,12 +11,12 @@
 .page-list-head
   = list_pagination(@teachers)
 
-  .cells
-    .cell.ops 操作
-    .cell.real-name= sortable 'real_name', '教师姓名'
-    .cell.tid= sortable 'tid', '教师编号'
-    .cell.username 用户名
-    .cell.email 用户邮箱
+  = page_list_head do |p|
+    = p.cell :ops, '操作', :col => 2
+    = p.cell :real_name, '教师姓名', :sortable => true
+    = p.cell :tid, '教师编号', :sortable => true
+    = p.cell :username, '用户名'
+    = p.cell :email, '用户邮箱'
 
 .generic-body-list.admin-teachers
   - if @teachers.blank?
