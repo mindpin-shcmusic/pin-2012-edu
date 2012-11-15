@@ -150,9 +150,15 @@ body{
     .desc{
       float:left;
       padding:15px;
+      height:24px;line-height:24px;
+      span.count{
+        font-weight:bold;
+        color:#3E78FD;
+      }
     }
     .pagination{
-
+      float:right;
+      margin-top:15px;
     }
   }
 }
