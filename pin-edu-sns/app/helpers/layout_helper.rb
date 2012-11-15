@@ -42,7 +42,7 @@ private
   end
 
   def is_current_sort?(column)
-    column == params[:sort]
+    column.to_s == params[:sort].to_s
   end
 
   def _make_span(content, css_class=nil)
