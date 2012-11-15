@@ -179,12 +179,54 @@ body{
       border-right:#ccc solid 1px;
       @include gradient(#efefef, #fafafa);
       box-shadow:0 0 5px rgba(#666, 0.1) inset;
-
+      font-weight:bold;
 
       .pie-j-checkbox{
         padding:3px 0;
       }
 
+      a.sortable{
+        display:block;
+        padding:10px 15px 10px 30px;
+        margin:-10px -15px;
+        color:#222;
+        position:relative;
+
+        &:hover{
+          background-color:rgba(#3E78FD, 0.1);
+        }
+
+
+        &:before{
+          content:"";
+          display:block;width:0;height:0;
+          border-top:solid 5px transparent;
+          border-left:solid 5px transparent;
+          border-right:solid 5px transparent;
+          border-bottom:solid 5px #bbb;
+          position:absolute;
+          top:12px;left:9px;
+        }
+
+        &:after{
+          content:"";
+          display:block;width:0;height:0;
+          border-top:solid 5px #bbb;
+          border-left:solid 5px transparent;
+          border-right:solid 5px transparent;
+          border-bottom:solid 5px transparent;
+          position:absolute;
+          top:24px;left:9px;
+        }
+
+        &.asc{
+          &:before{border-bottom:solid 5px #444;}
+        }
+
+        &.desc{
+          &:after{border-top:solid 5px #444;}
+        }
+      }
 
       &.col_1{width:40px;overflow:hidden;}
       &.col_2{width:80px;overflow:hidden;}
