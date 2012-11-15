@@ -74,5 +74,9 @@ private
       end
     end
 
+    def checkbox
+      check_box_tag nil, nil
+    end
+
   end
 end
