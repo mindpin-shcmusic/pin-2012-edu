@@ -13,11 +13,11 @@
 
   = page_list_head do |p|
     = p.checkbox
-    = p.cell :ops, '操作', :col=>2
+    = p.cell :ops, '操作', :col=>3
     = p.cell :real_name, '教师姓名', :col=>2, :sortable => true
-    = p.cell :tid, '教师编号', :col=>2, :sortable => true
+    = p.cell :tid, '教师工号', :col=>2, :sortable => true
     = p.cell :username, '用户名', :col=>2
-    = p.cell :email, '用户邮箱', :col=>2
+    = p.cell :email, '用户邮箱', :col=>4
 
 .page-model-list.admin-teachers
   - if @teachers.blank?
@@ -27,13 +27,13 @@
     - @teachers.each do |teacher|
       = page_list_body do |p|
         = p.checkbox
-        = p.cell :ops, :col => 2 do
+        = p.cell :ops, :col=>3 do
           - remove_url = admin_teacher_path(teacher)
           %a.remove{:href=>'javascript:;', :'data-url'=>remove_url} 删除
           %a.edit{:href=>"/admin/teachers/#{teacher.id}/edit"} 编辑
           %a.detail{:href=>"/admin/teachers/#{teacher.id}"} 详情
 
-        = p.cell :real_name, teacher.real_name
-        = p.cell :tid, teacher.tid
-        = p.cell :username, teacher.user.name
-        = p.cell :email, teacher.user.email
+        = p.cell :real_name, teacher.real_name, :col=>2
+        = p.cell :tid, teacher.tid, :col=>2
+        = p.cell :username, teacher.user.name, :col=>2
+        = p.cell :email, teacher.user.email, :col=>4
