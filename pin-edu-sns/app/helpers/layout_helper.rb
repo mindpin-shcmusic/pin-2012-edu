@@ -23,7 +23,8 @@ private
   end
 
   module LayoutWidget
-    extend ActionView::Helpers
+    extend ActionView::Helpers::UrlHelper
+    extend ActionView::Helpers::TagHelper
 
     def self.button(text, path, options={})
       options.assert_valid_keys :class
