@@ -93,10 +93,11 @@ MindpinSidebar::Base.config do
 
       nav :homeworks, :name => "布置的作业和实践", :url => "/homeworks" do
         controller :homeworks
+        controller :homework_assigns
       end
 
       nav :score_lists, :name => "成绩单", :url => "/score_lists" do
-        controller :score_lists
+        controller :course_score_lists
       end
 
       nav :course_surveys, :name => "课程调查", :url => "/course_surveys" do
