@@ -1,3 +1,26 @@
+.pie-j-checkbox{
+  overflow:hidden;
+  padding:7px 0 0;
+  span.c{
+    display:block;
+    float:left;
+    width:18px;height:18px;
+    overflow:hidden;
+    background:url(mindpin-js-imgs/j.checkbox.png) 0 0 no-repeat;
+    cursor:pointer;
+    &.checked{
+      background:url(mindpin-js-imgs/j.checkbox.png) -26px 0 no-repeat;
+    }
+
+    input[type=checkbox]{visibility:hidden;}
+  }
+  a.text{
+    float:left;
+    margin-left:5px;
+    height:18px;line-height:18px;
+  }
+}
+
 form{
   .flash-info{
     margin-bottom:10px;
@@ -84,29 +107,6 @@ form{
         color:#999;
         cursor:text;
         pointer-events:none;
-      }
-    }
-
-    .pie-j-checkbox{
-      overflow:hidden;
-      padding:7px 0 0;
-      span.c{
-        display:block;
-        float:left;
-        width:18px;height:18px;
-        overflow:hidden;
-        background:url(mindpin-js-imgs/j.checkbox.png) 0 0 no-repeat;
-        cursor:pointer;
-        &.checked{
-          background:url(mindpin-js-imgs/j.checkbox.png) -26px 0 no-repeat;
-        }
-
-        input[type=checkbox]{visibility:hidden;}
-      }
-      a.text{
-        float:left;
-        margin-left:5px;
-        height:18px;line-height:18px;
       }
     }
   }

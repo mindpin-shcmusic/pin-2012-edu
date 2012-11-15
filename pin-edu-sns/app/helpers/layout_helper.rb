@@ -42,7 +42,7 @@ private
   end
 
   def is_current_sort?(column)
-    column == params[:sort]
+    column.to_s == params[:sort].to_s
   end
 
   def _make_span(content, css_class=nil)
@@ -74,8 +74,11 @@ private
       end
     end
 
-    def checkbox
-      check_box_tag nil, nil
+    def checkbox(options={})
+      col = options[:col] ? "col_#{options[:col]}" : 'col_1'
+      content_tag :div, :class => [:cell, col, :ckeckbox] do
+        @context.jcheckbox :checkbox, :check, false, ''
+      end
     end
 
   end
