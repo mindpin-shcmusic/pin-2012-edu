@@ -12,6 +12,12 @@ module LayoutHelper
     end
   end
 
+  def page_list_body
+    content_tag :div, :class => :cells do
+      yield BodyWidget.produce(self)
+    end
+  end
+
   def list_pagination(collection)
     str = content_tag(:span, :class => 'desc') {current_displaying_items_str_for(collection)}
     pagination = will_paginate(collection, :class => 'pagination')
@@ -75,6 +81,45 @@ private
       content_tag :div, :class => [:cell, col, attr_name.to_s.dasherize] do
         options[:sortable] ? @context.sortable(attr_name, text) : @context._make_span(text)
       end
+    end
+
+    def checkbox(options={})
+      col = options[:col] ? "col_#{options[:col]}" : 'col_1'
+      content_tag :div, :class => [:cell, col, :ckeckbox] do
+        @context.jcheckbox :checkbox, :check, false, ''
+      end
+    end
+
+  end
+
+  class BodyWidget < ActionView::Base
+    @@instance = nil
+
+    def initialize(context)
+      @context = context
+    end
+
+    def self.produce(context)
+      return @@instance if @@instance
+      @@instance = self.new(context)
+    end
+
+    def cell(*args, &block)#attr_name, text, options={})
+      attr_name = args.first
+
+      if block_given?
+        options = args.second || {}
+        content = @context.capture(&block)
+      else
+        text = args.second
+        content = @context._make_span(text)
+        options = args.third || {}
+      end
+
+      options.assert_valid_keys :col
+      col = options[:col] ? "col_#{options[:col]}" : 'col_1'
+
+      content_tag :div, content, :class => [:cell, col, attr_name.to_s.dasherize]
     end
 
     def checkbox(options={})
