@@ -16,7 +16,7 @@
     - if current_user.is_teacher?
       = link_to '创建通知', new_announcement_path, :class => 'generic-new'
 
-  = table_pagination(@announcements)
+  = list_pagination(@announcements)
 
   .cells
     .cell.title= sortable 'title', '标题'
@@ -37,4 +37,4 @@
         .cell.date
           = announcement.created_at
 
-  = table_pagination(@announcements)
+  = list_pagination(@announcements)
