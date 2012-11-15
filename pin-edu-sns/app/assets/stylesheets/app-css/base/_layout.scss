@@ -161,4 +161,41 @@ body{
       margin-top:15px;
     }
   }
+
+  .cells{
+    @include floatfix;
+    background-color:#efefef;
+    border-top:white solid 1px;
+    position:relative;
+
+    .cell{
+      float:left;
+      padding:10px 15px;
+      height:24px;line-height:24px;
+      margin-top:-1px;
+
+      border-top:white solid 1px;
+      border-left:white solid 1px;
+      border-right:#ccc solid 1px;
+      @include gradient(#efefef, #fafafa);
+      box-shadow:0 0 5px rgba(#666, 0.1) inset;
+
+
+      .pie-j-checkbox{
+        padding:3px 0;
+      }
+
+
+      &.col_1{width:40px;overflow:hidden;}
+      &.col_2{width:80px;overflow:hidden;}
+      &.col_3{width:120px;overflow:hidden;}
+      &.col_4{width:160px;overflow:hidden;}
+      &.col_5{width:200px;overflow:hidden;}
+      &.col_6{width:240px;overflow:hidden;}
+      &.col_7{width:280px;overflow:hidden;}
+      &.col_8{width:320px;overflow:hidden;}
+      &.col_9{width:360px;overflow:hidden;}
+      &.col_10{width:400px;overflow:hidden;}
+    }
+  }
 }
