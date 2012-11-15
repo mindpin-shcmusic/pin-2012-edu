@@ -7,9 +7,9 @@ module LayoutHelper
   end
 
   def list_pagination(collection)
-    str = content_tag(:span, :class => 'pagination-str') {current_displaying_items_str_for(collection)}
-    pagination = will_paginate(collection)
-    content_tag(:div, :class => 'page-paginate') {str + pagination}
+    str = content_tag(:span, :class => 'desc') {current_displaying_items_str_for(collection)}
+    pagination = will_paginate(collection, :class => 'pagination')
+    content_tag(:div, :class => 'paginate-info') {str + pagination}
   end
 
 private
@@ -23,8 +23,7 @@ private
   end
 
   module LayoutWidget
-    extend ActionView::Helpers::UrlHelper
-    extend ActionView::Helpers::TagHelper
+    extend ActionView::Helpers
 
     def self.button(text, path, options={})
       options.assert_valid_keys :class
