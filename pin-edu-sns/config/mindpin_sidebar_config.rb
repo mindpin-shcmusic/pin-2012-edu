@@ -34,6 +34,7 @@ MindpinSidebar::Base.config do
 
       nav :courses, :name => "课程", :url => "/admin/courses" do
         controller :"admin/courses"
+        controller :"admin/course_teachers"
       end
 
       nav :teams, :name => "班级", :url => "/admin/teams" do
