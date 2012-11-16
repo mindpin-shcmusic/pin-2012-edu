@@ -115,9 +115,9 @@ private
       content_tag :div, content, :class => [:cell, col, attr_name.to_s.dasherize]
     end
 
-    def checkbox(options={})
+    def checkbox(model, options={})
       col = options[:col] ? "col_#{options[:col]}" : 'col_1'
-      content_tag :div, :class => [:cell, col, :checkbox] do
+      content_tag :div, :class => [:cell, col, :checkbox], :'data-model-id' => model.id do
         @context.jcheckbox :checkbox, :check, false, ''
       end
     end

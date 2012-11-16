@@ -39,7 +39,7 @@
   - else
     - @teachers.each do |teacher|
       = page_list_body :cols=>cols_hash do |p|
-        = p.checkbox
+        = p.checkbox(teacher)
         = p.cell :ops do
           %a.edit{:href=>"/admin/teachers/#{teacher.id}/edit"} 编辑
         = p.cell :real_name do
