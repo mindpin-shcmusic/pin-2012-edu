@@ -2,18 +2,18 @@
 - hbreadcrumb '成绩单'
 
 .page-fixed-head
+  = page_buttons do |p|
+    = p.button '添加课程成绩单', new_course_score_list_path, :class => 'create'
+
+  #学期过滤
   .page-tabs
     :ruby
       semesters = Semester.get_nav_array
       klass1 = params[:semester].blank? ? 'current' : ''
 
-    %a.tab{:href=>course_score_lists_path, :class => klass1} 全部
     - semesters.each do |semester|
       - klass2 = params[:semester] == semester.value ? 'current' : ''
       %a.tab{:href=>course_score_lists_path(:semester => semester.value), :class => klass2} #{semester.to_s}
-
-  = page_buttons do |p|
-    = p.button '添加课程成绩单', new_course_score_list_path, :class => 'create'
 
 :ruby
   cols_hash = {
