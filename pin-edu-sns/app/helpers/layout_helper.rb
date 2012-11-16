@@ -67,8 +67,8 @@ private
     end
 
     def button(text, path, options={})
-      options.assert_valid_keys :class
-      link_to text, path, :class => [:button, options[:class]]
+      options.assert_valid_keys :class, :'data-model'
+      link_to text, path, :class => [:button, options[:class]], :'data-model' => options[:'data-model']
     end
 
     def cell(attr_name, text, options={})
@@ -84,6 +84,10 @@ private
       content_tag :div, :class => [:cell, col, :ckeckbox] do
         @context.jcheckbox :checkbox, :check, false, ''
       end
+    end
+
+    def batch_destroy(model)
+      self.button '删除', 'javascript:;', :class => 'batch-destroy', :'data-model' => model.to_s
     end
 
   end
