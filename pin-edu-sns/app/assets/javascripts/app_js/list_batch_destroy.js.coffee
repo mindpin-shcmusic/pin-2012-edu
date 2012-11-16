@@ -17,3 +17,26 @@ pie.load ->
           ids: ids.join(',')
         success: ->
           location.reload()
+
+  # 点击全选，全部选中
+  jQuery(document).delegate '.page-list-head .cell.checkbox span.c', 'click', ->
+    $span = jQuery(this)
+
+    if $span.hasClass('checked')
+      # 取消选中
+      # 选中
+      jQuery('.page-model-list .cell.checkbox span.c').each ->
+        jQuery(this).removeClass('checked')
+        jQuery(this).find('input[type=checkbox]').attr('checked', false)
+    else
+      # 选中
+      jQuery('.page-model-list .cell.checkbox span.c').each ->
+        jQuery(this).addClass('checked')
+        jQuery(this).find('input[type=checkbox]').attr('checked', true)
+
+  jQuery(document).delegate '.page-model-list .cell.checkbox span.c', 'click', ->
+    $span = jQuery(this)
+    if $span.hasClass('checked')
+      jQuery('.page-list-head .cell.checkbox span.c').removeClass('checked')
+      jQuery('.page-list-head .cell.checkbox span.c').find('input[type=checkbox]').attr('checked', false)
+
