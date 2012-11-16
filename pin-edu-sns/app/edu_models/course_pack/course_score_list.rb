@@ -11,6 +11,10 @@ class CourseScoreList < ActiveRecord::Base
   include Paginated
   include Pacecar
 
+  def destroyable_by?(user)
+    user == self.teacher_user
+  end
+
   def finished_ratio
     records = self.course_score_records
     "#{records.select(&:is_finished?).count}/#{records.count}"
