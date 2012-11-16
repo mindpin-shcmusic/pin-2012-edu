@@ -2,19 +2,14 @@
 - hbreadcrumb '作业/艺术实践'
 
 .page-fixed-head
-  .page-tabs
-    :ruby
-      klass1 = params[:status].blank? ? 'current' : ''
-      klass2 = params[:status] == 'unexpired' ? 'current' : ''
-      klass3 = params[:status] == 'expired' ? 'current' : ''
-
-    %a.tab{:href=>homeworks_path, :class=>klass1} 全部
-    %a.tab{:href=>homeworks_path(:status => 'unexpired'), :class=>klass2} 未过期
-    %a.tab{:href=>homeworks_path(:status => 'expired'), :class=>klass3} 已过期
-
   = page_buttons do |p|
     - if current_user.is_teacher?
       = p.button '布置新作业/艺术实践', new_homework_path, :class => 'create'
+
+  = page_filters homeworks_path do |p|
+    = p.filter '全部', :tab => 'all', :default => true
+    = p.filter '未过期', :tab => 'unexpired'
+    = p.filter '已过期', :tab => 'expired'
 
 :ruby
   cols_hash = {

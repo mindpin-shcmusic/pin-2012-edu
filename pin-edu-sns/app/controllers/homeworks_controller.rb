@@ -45,7 +45,7 @@ class HomeworksController < ApplicationController
   end
 
   def index
-    homeworks = case params[:status]
+    homeworks = case params[:tab]
                 when 'expired'
                   current_user.expired_homeworks
                 when 'unexpired'
