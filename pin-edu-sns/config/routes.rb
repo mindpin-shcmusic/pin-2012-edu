@@ -141,7 +141,7 @@ MindpinEduSns::Application.routes.draw do
   # 搜索
   get '/search' => 'search#index'
   get '/search/:kind' => 'search#show'
-  delete '/batch_destroy' => 'index#batch_destroy'
+  post '/batch_destroy' => 'index#batch_destroy'
 
   # --- 用户
   resources :users
