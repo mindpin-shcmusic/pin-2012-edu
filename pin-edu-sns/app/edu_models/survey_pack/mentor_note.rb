@@ -5,4 +5,8 @@ class MentorNote < ActiveRecord::Base
 
   include ModelRemovable
   include Pacecar
+
+  def destroyable_by?(user)
+    user.is_admin?
+  end
 end

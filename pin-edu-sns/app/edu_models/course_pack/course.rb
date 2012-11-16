@@ -22,6 +22,10 @@ class Course < ActiveRecord::Base
 
   include Pacecar
 
+  def destroyable_by?(user)
+    user.is_admin?
+  end
+
   def cover_url
     self.cover ? self.cover.file_entity.http_url : self.default_cover
   end

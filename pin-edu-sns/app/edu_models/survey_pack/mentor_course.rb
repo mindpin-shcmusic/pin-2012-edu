@@ -15,6 +15,10 @@ class MentorCourse < ActiveRecord::Base
 
   include Pacecar
 
+  def destroyable_by?(user)
+    user.is_admin?
+  end
+
   # --- 给其他类扩展的方法
   module UserMethods
     def self.included(base)

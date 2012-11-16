@@ -2,19 +2,21 @@
 module LayoutHelper
   def page_buttons
     content_tag :div, :class => :buttons do
-      yield LayoutWidget.produce(self)
+      yield LayoutWidget.new(self)
     end
   end
 
-  def page_list_head
+  def page_list_head(options={})
+    options.assert_valid_keys :cols
     content_tag :div, :class => :cells do
-      yield LayoutWidget.produce(self)
+      yield LayoutWidget.new(self, options[:cols])
     end
   end
 
-  def page_list_body
+  def page_list_body(options={})
+    options.assert_valid_keys :cols
     content_tag :div, :class => :cells do
-      yield BodyWidget.produce(self)
+      yield BodyWidget.new(self, options[:cols])
     end
   end
 
@@ -59,25 +61,19 @@ private
   end
 
   class LayoutWidget < ActionView::Base
-    @@instance = nil
-
-    def initialize(context)
+    def initialize(context, cols_hash=nil)
       @context = context
-    end
-
-    def self.produce(context)
-      return @@instance if @@instance
-      @@instance = self.new(context)
+      @cols_hash = cols_hash
     end
 
     def button(text, path, options={})
-      options.assert_valid_keys :class
-      link_to text, path, :class => [:button, options[:class]]
+      options.assert_valid_keys :class, :'data-model'
+      link_to text, path, :class => [:button, options[:class]], :'data-model' => options[:'data-model']
     end
 
     def cell(attr_name, text, options={})
-      options.assert_valid_keys :col, :sortable
-      col = options[:col] ? "col_#{options[:col]}" : 'col_1'
+      options.assert_valid_keys :sortable
+      col = @cols_hash[attr_name] ? "col_#{@cols_hash[attr_name]}" : 'col_1'
       content_tag :div, :class => [:cell, col, attr_name.to_s.dasherize] do
         options[:sortable] ? @context.sortable(attr_name, text) : @context._make_span(text)
       end
@@ -90,21 +86,19 @@ private
       end
     end
 
+    def batch_destroy(model)
+      self.button '删除', 'javascript:;', :class => 'batch-destroy', :'data-model' => model.to_s
+    end
+
   end
 
   class BodyWidget < ActionView::Base
-    @@instance = nil
-
-    def initialize(context)
-      @context = context
+    def initialize(context, cols_hash)
+      @context   = context
+      @cols_hash = cols_hash
     end
 
-    def self.produce(context)
-      return @@instance if @@instance
-      @@instance = self.new(context)
-    end
-
-    def cell(*args, &block)#attr_name, text, options={})
+    def cell(*args, &block)
       attr_name = args.first
 
       if block_given?
@@ -116,8 +110,7 @@ private
         options = args.third || {}
       end
 
-      options.assert_valid_keys :col
-      col = options[:col] ? "col_#{options[:col]}" : 'col_1'
+      col = @cols_hash[attr_name] ? "col_#{@cols_hash[attr_name]}" : 'col_1'
 
       content_tag :div, content, :class => [:cell, col, attr_name.to_s.dasherize]
     end
