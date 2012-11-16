@@ -16,6 +16,9 @@ class CourseSurvey < ActiveRecord::Base
 
   scope :with_teacher, lambda {|user| {:conditions => ['teacher_user_id = ?', user.id]}}
 
+  def destroyable_by?(user)
+    user.is_admin?
+  end
 
   def has_permission?(student_user)
     return false if !student_user.is_student?

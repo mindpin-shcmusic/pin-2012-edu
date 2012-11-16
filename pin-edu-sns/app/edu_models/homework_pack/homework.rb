@@ -81,6 +81,10 @@ class Homework < ActiveRecord::Base
     self.homework_student_uploads.where('creator_id = ?', student_user.id).count
   end
 
+  def destroyable_by?(user)
+    user == self.creator
+  end
+
   # 老师创建作业时生成的附件压缩包
   def build_teacher_attachments_zip
     FileUtils.mkdir_p(File.dirname(teacher_attachment_zip_path))
