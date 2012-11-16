@@ -119,9 +119,10 @@ body{
   left:210px;
   position:fixed;
   right:0;
-  top:50px;
+  top:0;
   z-index:8;
   height:62px; // 32 + 15 + 15
+  padding-top:50px;
 
   .buttons{
     @include floatfix;
