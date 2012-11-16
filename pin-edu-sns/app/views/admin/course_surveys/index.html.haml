@@ -5,12 +5,13 @@
 
 
 .page-fixed-head
-  .page-tabs
-    %a.tab{:href=>"/admin/course_surveys"} 所有
-    %a.tab{:href=>"/admin/course_surveys?kind=1"} 调查1
-    %a.tab{:href=>"/admin/course_surveys?kind=2"} 调查2
   = page_buttons do |p|
     = p.button '增加课程', '/admin/course_surveys/new'
+
+  .filters
+    %a.filter{:href=>"/admin/course_surveys"} 所有调查
+    %a.filter{:href=>"/admin/course_surveys?kind=1"} 类型一
+    %a.filter{:href=>"/admin/course_surveys?kind=2"} 类型二
 
 :ruby
   cols_hash = {
