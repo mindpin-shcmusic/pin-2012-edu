@@ -13,7 +13,7 @@ class CourseScoreListsController < ApplicationController
 
   def index
     score_lists = sort_scope(current_user.course_score_lists).paginated(params[:page])
-    return @score_lists = score_lists.with_semester(Semester.get_by_value(params[:semester])) if params[:semester]
+    return @score_lists = score_lists.with_semester(Semester.get_by_value(params[:tab])) if params[:tab]
     @score_lists = score_lists
   end
 
