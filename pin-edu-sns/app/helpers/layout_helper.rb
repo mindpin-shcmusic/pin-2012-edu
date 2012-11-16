@@ -80,7 +80,8 @@ private
 
     def filter(text, options={})
       options.assert_valid_keys :tab, :default
-      current = is_current_tab?(options[:tab]) || options[:default] ? :current : nil
+      default = options[:tab].blank? && options[:default] ? true : false
+      current = is_current_tab?(options[:tab]) || default ? :current : nil
 
       link_to text, "#{@base_url}?tab=#{options[:tab]}", :class => [:filter, current]
     end
