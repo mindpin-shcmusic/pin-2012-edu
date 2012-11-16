@@ -39,9 +39,10 @@ class IndexController < ApplicationController
 
   def batch_destroy
     model = params[:model] ? params[:model].constantize : nil
+    ids   = params[:ids] ? params[:ids].gsub(/\s+/, '').split(',') : []
 
     if model
-      model.find(params[:ids]).each do |instance|
+      model.find(ids).each do |instance|
         instance.destroy if instance.destroyable_by?(current_user)
       end
     end
