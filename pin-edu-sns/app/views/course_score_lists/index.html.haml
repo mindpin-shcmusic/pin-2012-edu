@@ -1,43 +1,56 @@
 - hbreadcrumb '首页', '/'
 - hbreadcrumb '成绩单'
 
-.generic-page-head.course-score-lists
-  .btns
-    .page-tabs
-      :ruby
-        semesters = Semester.get_nav_array
-        klass1 = params[:semester].blank? ? 'current' : ''
+.page-fixed-head
+  .page-tabs
+    :ruby
+      semesters = Semester.get_nav_array
+      klass1 = params[:semester].blank? ? 'current' : ''
 
-      %a.tab{:href=>course_score_lists_path, :class => klass1} 全部
-      - semesters.each do |semester|
-        - klass2 = params[:semester] == semester.value ? 'current' : ''
-        %a.tab{:href=>course_score_lists_path(:semester => semester.value), :class => klass2} #{semester.to_s}
+    %a.tab{:href=>course_score_lists_path, :class => klass1} 全部
+    - semesters.each do |semester|
+      - klass2 = params[:semester] == semester.value ? 'current' : ''
+      %a.tab{:href=>course_score_lists_path(:semester => semester.value), :class => klass2} #{semester.to_s}
 
+  = page_buttons do |p|
+    = p.button '添加课程成绩单', new_course_score_list_path, :class => 'create'
+
+:ruby
+  cols_hash = {
+    :title => 8,
+    :semester_value => 2,
+    :course => 2,
+    :count => 4
+  }
+
+.page-list-head
+  .headtop
+    = page_buttons do |p|
+      = p.batch_destroy CourseScoreList
+
+    = list_pagination(@score_lists)
+
+  = page_list_head :cols=>cols_hash do |p|
     - if current_user.is_teacher?
-      = link_to '添加课程成绩单', new_course_score_list_path, :class => 'generic-new'
+      = p.checkbox
+    = p.cell :title, '标题', :sortable => true
+    = p.cell :semester_value, '学期', :sortable => true
+    = p.cell :course, '课程'
+    = p.cell :count, '统计完/未统计完'
 
-  = list_pagination(@score_lists)
-
-  .cells
-    .cell.title= sortable 'title', '标题'
-    .cell.semester= sortable 'semester_value', '学期'
-    .cell.course 课程
-    .cell.count 统计完/未统计完
-
-.generic-body-list.course-score-lists
+.page-model-list
   - if @score_lists.blank?
     .blank
       目前列表内没有内容
   - else    
     - @score_lists.each do |score_list|
-      .score-list.generic-model
-        .cell.title
+      = page_list_body :cols=>cols_hash do |p|
+        = p.checkbox(score_list)
+        = p.cell :title do
           = link_to hspan(score_list.title), score_list
-        .cell.semester
+        = p.cell :semester_value do
           = score_list.semester.to_s
-        .cell.course
+        = p.cell :course do
           = hspan(score_list.course.name)
-        .cell.count
+        = p.cell :count do
           = score_list.finished_ratio
-
-  = list_pagination(@score_lists)
