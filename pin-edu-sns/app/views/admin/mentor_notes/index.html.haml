@@ -3,27 +3,38 @@
 - hbreadcrumb '基础数据管理', '/admin'
 - hbreadcrumb '导师双向选择'
 
-.generic-page-head.admin-mentor-notes
-  .btns
-    %a.generic-new.create{:href=>'/admin/mentor_notes/new'} 增加导师选择
+.page-fixed-head
+  = page_buttons do |p|
+    = p.button '增加导师选择', '/admin/mentor_notes/new', :class => 'create'
 
-  = list_pagination(@mentor_notes)
+:ruby
+  cols_hash = {
+    :ops => 1,
+    :title => 8
+  }
 
-  .cells
-    .cell.ops 操作
-    .cell.title= sortable 'title', '标题'
+.page-list-head
+  .headtop
+    = page_buttons do |p|
+      = p.batch_destroy MentorNote
 
-.generic-body-list.admin-mentor-notes
+    = list_pagination(@mentor_notes)
+
+  = page_list_head :cols=>cols_hash do |p|
+    = p.checkbox
+    = p.cell :ops, '操作'
+    = p.cell :title, '标题', :sortable => true
+
+.page-model-list
   - if @mentor_notes.blank?
     .blank
       目前列表内没有内容
   - else
     - @mentor_notes.each do |mentor_note|
-      .generic-model
-        .cell.ops
-          - remove_url = admin_mentor_note_path(mentor_note)
-          %a.remove{:href=>'javascript:;', :'data-url'=>remove_url} 删除
+      = page_list_body :cols=>cols_hash do |p|
+        = p.checkbox(mentor_note)
+        = p.cell :ops do
           %a.edit{:href=>"/admin/mentor_notes/#{mentor_note.id}/edit"} 编辑
-          %a.detail{:href=>"/admin/mentor_notes/#{mentor_note.id}"} 查看详情
-        .cell.title
-          = mentor_note.title
+        = p.cell :title do
+          = link_to mentor_note.title, "/admin/mentor_notes/#{mentor_note.id}"
+
