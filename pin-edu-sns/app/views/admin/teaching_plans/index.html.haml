@@ -2,33 +2,39 @@
 
 - hbreadcrumb '基础数据管理', '/admin'
 - hbreadcrumb '教学计划'
-  
-.generic-page-head.admin-teaching-plans
-  .btns
-    %a.generic-new.create{:href=>'/admin/teaching_plans/new'} 增加教学计划
-    %a.generic-new.import{:href=>'/admin/teaching_plans/import_from_csv_page'} 批量导入
 
-  = list_pagination(@teaching_plans)
+.page-fixed-head
+  = page_buttons do |p|
+    = p.button '增加教学计划', '/admin/teaching_plans/new'
+    = p.button '批量导入', '/admin/teaching_plans/import_from_csv_page'
 
-  .cells
-    .cell.ops 操作
-    .cell.name= sortable 'title', '标题'
+:ruby
+  cols_hash = {
+    :ops => 1,
+    :name => 2
+  }
 
-.generic-body-list.admin-teaching-plans
+.page-list-head
+  .headtop
+    = page_buttons do |p|
+      = p.batch_destroy TeachingPlan
+
+    = list_pagination(@teaching_plans)
+
+  = page_list_head :cols=>cols_hash do |p|
+    = p.checkbox
+    = p.cell :ops, '操作'
+    = p.cell :name, '标题', :sortable=>true
+
+.page-model-list.admin-teaching-plans
   - if @teaching_plans.blank?
     .blank
       目前列表内没有内容
   - else
     - @teaching_plans.each do |teaching_plan|
-      .generic-model
-        .cell.ops
-          - remove_url = admin_teaching_plan_path(teaching_plan)
-          %a.remove{:href=>'javascript:;', :'data-url'=>remove_url} 删除
+      = page_list_body :cols=>cols_hash do |p|
+        = p.checkbox(teaching_plan)
+        = p.cell :ops do
           %a.edit{:href=>"/admin/teaching_plans/#{teaching_plan.id}/edit"} 编辑
-          %a.open-teachers{:href=>'javascript:;'}
-            %span.open 展开
-            %span.close 收起
-          %a.detail{:href=>"/admin/teaching_plans/#{teaching_plan.id}"} 查看详情
-
-        .cell.title
-          = teaching_plan.title
+        = p.cell :name do
+          %a.detail{:href=>"/admin/teaching_plans/#{teaching_plan.id}"}= teaching_plan.title
