@@ -30,7 +30,6 @@ class QuestionsController < ApplicationController
       end
     end
 
-  
     @questions = sort_scope(questions).paginated(params[:page]).order('id DESC')
   end
 
@@ -74,7 +73,9 @@ class QuestionsController < ApplicationController
 
 
   def show
-    current_user.answer_tip_message.delete(@question.answer.id) if current_user.is_student?
+    if current_user.is_student? && @question.answer
+      current_user.answer_tip_message.delete(@question.answer.id)
+    end
 
     current_user.question_tip_message.delete(@question.id) if current_user.is_teacher?    
   end

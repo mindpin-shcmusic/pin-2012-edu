@@ -1,40 +1,50 @@
 - hbreadcrumb '首页', '/'
 - hbreadcrumb '师生问答'
 
-.generic-page-head.questions
-  .btns
-    .page-tabs
-      :ruby
-        klass1 = params[:type].blank? ? 'current' : ''
-        klass2 = params[:type] == 'answered' ? 'current' : ''
-        klass3 = params[:type] == 'unanswered' ? 'current' : ''
 
-      %a.tab{:href=>"/questions", :class => klass1} 全部
-      %a.tab{:href=>"/questions?type=answered", :class => klass2} 已回答
-      %a.tab{:href=>"/questions?type=unanswered", :class => klass3} 未回答
+.page-fixed-head
+  = page_buttons do |p|
+    = p.button '提问题', '/questions/new', :class => 'new'
 
-    - if current_user.is_student?
-      %a.generic-new{:href=>"/questions/new"} 提问题
 
-  = list_pagination(@questions)
+:ruby
+  cols_hash = {
+    :ops => 1,
+    :title => 5,
+    :teacher => 2,
+    :answered => 2
+  }
 
-  .cells
-    .cell.title= sortable 'title', '标题'
-    .cell.teacher 教师
-    .cell.answered= sortable 'has_answered', '回答状态'
+.page-list-head
+  .headtop
+    = page_buttons do |p|
+      = p.batch_destroy Question
 
-.generic-body-list.questions
+    = list_pagination(@questions)
+
+  = page_list_head :cols=>cols_hash do |p|
+    = p.checkbox
+    = p.cell :ops, '操作'
+    = p.cell :title, '标题'
+    = p.cell :teacher, '教师'
+    = p.cell :answered, '回答状态'
+
+.page-filter{:style => "display: block;"}
+  =link_to '全部', '/questions'
+  =link_to '已回答', '/questions?type=answered'
+  =link_to '未回答', '/questions?type=unanswered'
+
+.page-model-list.admin-teachers
   - if @questions.blank?
     .blank
       目前列表内没有内容
   - else
     - @questions.each do |question|
-      .question.generic-model
-        .cell.title
-          = link_to hspan(question.title), question
-        .cell.teacher
-          = question.teacher_user.real_name
-        .cell.answered
-          = question.has_answered? ? '已回答' : '未回答'
-
-    = list_pagination(@questions)
+      = page_list_body :cols=>cols_hash do |p|
+        = p.checkbox(question)
+        = p.cell :ops do
+          %a.edit{:href=>"/questions/#{question.id}/edit"} 编辑
+        = p.cell :title do
+          %a.edit{:href=>"/questions/#{question.id}"}= question.title
+        = p.cell :teacher, question.teacher_user.real_name
+        = p.cell :answered, question.has_answered? ? '已回答' : '未回答'
