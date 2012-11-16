@@ -49,13 +49,16 @@ MindpinSidebar::Base.config do
         controller :"admin/course_surveys"
       end
 
-      nav :mentor_courses, :name => "导师方向", :url => "/admin/mentor_courses" do
-        controller :"admin/mentor_courses"
+      nav :mentor, :name => "导师", :url => "/admin/mentor_courses" do
+        subnav :mentor_courses, :name => "导师方向", :url => "/admin/mentor_courses" do
+          controller :"admin/mentor_courses"
+        end
+
+        subnav :mentor_notes, :name => "导师双向选择", :url => "/admin/mentor_notes" do
+          controller :"admin/mentor_notes"
+        end
       end
 
-      nav :mentor_notes, :name => "导师双向选择", :url => "/admin/mentor_notes" do
-        controller :"admin/mentor_notes"
-      end
 
       nav :categories, :name => "资源分类", :url => "/admin/categories" do
         controller :"admin/categories"

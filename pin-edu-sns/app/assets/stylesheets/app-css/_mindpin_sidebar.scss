@@ -18,7 +18,7 @@
     }
 
     .item{
-      a{
+      a.lv1{
         display:block;
         height:40px;line-height:40px;
         padding:0 0 0 60px;
@@ -44,10 +44,11 @@
       }
 
       .subitem{
-        a{
+        a.lv2{
           display:block;
-          height:40px;line-height:40px;
-          padding:0 0 0 60px;
+          height:30px;line-height:30px;
+          margin:0 0 0 35px;
+          padding:0 0 0 35px;
           font-weight:bold;
           color:#555;
           border-top:solid 1px transparent;
@@ -68,7 +69,9 @@
             top:11px;left:30px;
           }
 
-          &.current{
+        }
+        &.current{
+          a.lv2{
             color:#333;
             background-color:rgba(black, 0.05);
             border-color:#ddd;
@@ -76,9 +79,11 @@
         }
       }
       &.current{
-        color:#333;
-        background-color:rgba(black, 0.05);
-        border-color:#ddd;
+        a.lv1{
+          color:#333;
+          background-color:rgba(black, 0.05);
+          border-color:#ddd;
+        }
       }
     }
   }

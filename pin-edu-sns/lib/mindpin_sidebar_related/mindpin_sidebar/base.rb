@@ -27,7 +27,7 @@ module MindpinSidebar
     def self.render_nav(view, nav)
       klass = nav.is_current?(view) ? "item current" : "item"
       nav_html = "<div class='#{klass}'>"
-      nav_html << "<a href='#{nav.options[:url]}'>#{nav.options[:name]}</a>"
+      nav_html << "<a href='#{nav.options[:url]}' class='lv1'>#{nav.options[:name]}</a>"
       nav_html << render_subnavs(view, nav)
       nav_html << "</div>"
 
@@ -41,7 +41,7 @@ module MindpinSidebar
       nav.subnavs.each do |subnav|
         klass = subnav.is_current?(view) ? "subitem current" : "subitem"
         nav_html << "<div class='#{klass}'>"
-        nav_html << "<a href='#{subnav.options[:url]}'>#{subnav.options[:name]}</a>"
+        nav_html << "<a href='#{subnav.options[:url]}' class='lv2'>#{subnav.options[:name]}</a>"
         nav_html << "</div>"
       end
       nav_html << "</div>"
