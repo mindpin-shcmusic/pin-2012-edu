@@ -6,6 +6,11 @@
   = page_buttons do |p|
     = p.button '提问题', '/questions/new', :class => 'new'
 
+  = page_filters '/questions' do |p|
+    = p.filter '全部', :default=>true
+    = p.filter '已回答', :tab => 'answered'
+    = p.filter '未回答', :tab => 'unanswered'
+
 
 :ruby
   cols_hash = {
@@ -29,11 +34,6 @@
     = p.cell :title, '标题'
     = p.cell :teacher, '教师'
     = p.cell :answered, '回答状态'
-
-.page-filter{:style => "display: block;"}
-  =link_to '全部', '/questions'
-  =link_to '已回答', '/questions?type=answered'
-  =link_to '未回答', '/questions?type=unanswered'
 
 .page-model-list.admin-teachers
   - if @questions.blank?

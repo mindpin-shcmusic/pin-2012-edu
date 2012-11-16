@@ -8,7 +8,7 @@ class QuestionsController < ApplicationController
   end
 
   def index
-    type = params[:type]
+    type = params[:tab]
 
     if current_user.is_student?
       case type

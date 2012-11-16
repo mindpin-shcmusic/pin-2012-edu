@@ -1,17 +1,16 @@
 = render 'nav'
 
-.page-fixed-head
-  .page-tabs
-    %a.tab{:href=>announcements_path} 收到的通知
-    %a.tab{:href=>received_announcements_path} 未读通知
-    - if current_user.is_teacher?
-      %a.tab{:href=>mine_announcements_path} 我创建的通知
-
 
 .page-fixed-head
   - if current_user.is_teacher?
     = page_buttons do |p|
       = p.button '创建通知', new_announcement_path, :class => 'generic-new'
+
+  = page_filters '/announcements' do |p|
+    = p.filter '收到的通知', :tab => 'received', :default=>true
+    = p.filter '未读通知', :tab => 'unread'
+    - if current_user.is_teacher?
+      = p.filter '我创建的通知', :tab => 'mine'
 
 
 :ruby
@@ -27,6 +26,7 @@
     
     = page_buttons do |p|
       = p.batch_destroy Announcement
+
 
     = list_pagination(@announcements)
 
