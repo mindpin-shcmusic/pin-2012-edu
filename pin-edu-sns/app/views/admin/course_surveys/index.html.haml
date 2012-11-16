@@ -3,31 +3,38 @@
 - hbreadcrumb '基础数据管理', '/admin'
 - hbreadcrumb '课程调查'
 
-.generic-page-head.admin-course-surveys
-  .btns
-    .page-tabs
-      %a.tab{:href=>"/admin/course_surveys"} 所有
-      %a.tab{:href=>"/admin/course_surveys?kind=1"} 调查1
-      %a.tab{:href=>"/admin/course_surveys?kind=2"} 调查2
 
-    %a.generic-new.create{:href=>'/admin/course_surveys/new'} 增加课程
+.page-fixed-head
+  .page-tabs
+    %a.tab{:href=>"/admin/course_surveys"} 所有
+    %a.tab{:href=>"/admin/course_surveys?kind=1"} 调查1
+    %a.tab{:href=>"/admin/course_surveys?kind=2"} 调查2
+  = page_buttons do |p|
+    = p.button '增加课程', '/admin/course_surveys/new'
 
-  = list_pagination(@course_surveys)
+:ruby
+  cols_hash = {
+    :name => 3
+  }
 
-  .cells
-    .cell.ops 操作
-    .cell.title= sortable 'title', '标题'
+.page-list-head
+  .headtop
+    = page_buttons do |p|
+      = p.batch_destroy CourseSurvey
 
-.generic-body-list.admin-course-surveys
+    = list_pagination(@course_surveys)
+
+  = page_list_head :cols=>cols_hash do |p|
+    = p.checkbox
+    = p.cell :name, '标题', :sortable=>true
+
+.page-model-list.admin-course-surveys
   - if @course_surveys.blank?
     .blank
       目前列表内没有内容
   - else
     - @course_surveys.each do |course_survey|
-      .generic-model
-        .cell.ops
-          - remove_url = admin_course_survey_path(course_survey)
-          %a.remove{:href=>'javascript:;', :'data-url'=>remove_url} 删除
-          %a.detail{:href=>"/admin/course_surveys/#{course_survey.id}"} 查看详情
-        .cell.title
-          = course_survey.title
+      = page_list_body :cols=>cols_hash do |p|
+        = p.checkbox(course_survey)
+        = p.cell :name do
+          %a.detail{:href=>"/admin/course_surveys/#{course_survey.id}"}= course_survey.title
