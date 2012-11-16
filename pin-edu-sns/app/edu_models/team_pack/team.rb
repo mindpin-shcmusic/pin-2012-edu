@@ -11,6 +11,10 @@ class Team < ActiveRecord::Base
 
   include Pacecar
 
+  def destroyable_by?(user)
+    user.is_admin?
+  end
+
   def get_user_ids
     student_users.map(&:id).sort
   end
