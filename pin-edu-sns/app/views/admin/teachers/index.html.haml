@@ -10,7 +10,7 @@
 
 :ruby
   cols_hash = {
-    :ops => 3,
+    :ops => 1,
     :real_name => 2,
     :tid => 2,
     :username => 2,
@@ -18,7 +18,12 @@
   }
 
 .page-list-head
-  = list_pagination(@teachers)
+  .headtop
+    = page_buttons do |p|
+      = p.button '删除', 'javascript:;', :class=>'batch-destroy'
+
+
+    = list_pagination(@teachers)
 
   = page_list_head :cols=>cols_hash do |p|
     = p.checkbox
@@ -37,12 +42,10 @@
       = page_list_body :cols=>cols_hash do |p|
         = p.checkbox
         = p.cell :ops do
-          - remove_url = admin_teacher_path(teacher)
-          %a.remove{:href=>'javascript:;', :'data-url'=>remove_url} 删除
           %a.edit{:href=>"/admin/teachers/#{teacher.id}/edit"} 编辑
-          %a.detail{:href=>"/admin/teachers/#{teacher.id}"} 详情
-
-        = p.cell :real_name, teacher.real_name
+        = p.cell :real_name do
+          %a.edit{:href=>"/admin/teachers/#{teacher.id}"}= teacher.real_name
         = p.cell :tid, teacher.tid
         = p.cell :username, teacher.user.name
         = p.cell :email, teacher.user.email
+
