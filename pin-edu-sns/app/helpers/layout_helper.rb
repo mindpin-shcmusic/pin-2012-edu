@@ -108,7 +108,7 @@ private
   private
 
     def is_current_tab?(tab)
-      @context.params[:tab] == tab
+      @context.params[:tab].to_s == tab.to_s
     end
 
   end
