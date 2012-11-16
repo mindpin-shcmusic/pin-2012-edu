@@ -3,29 +3,41 @@
 - hbreadcrumb '基础数据管理', '/admin'
 - hbreadcrumb '导师方向'
 
-.generic-page-head.admin-mentor-courses
-  .btns
-    %a.generic-new.create{:href=>'/admin/mentor_courses/new'} 增加导师方向
 
-  = list_pagination(@mentor_courses)
+.page-fixed-head
+  = page_buttons do |p|
+    = p.button '增加导师方向', '/admin/mentor_courses/new'
 
-  .cells
-    .cell.ops 操作
-    .cell.teacher 导师
-    .cell.course= sortable 'course', '课程'
+:ruby
+  cols_hash = {
+    :ops => 1,
+    :teacher => 2,
+    :course => 3
+  }
 
-.generic-body-list.admin-mentor-courses
+.page-list-head
+  .headtop
+    = page_buttons do |p|
+      = p.batch_destroy MentorCourse
+
+    = list_pagination(@mentor_courses)
+
+  = page_list_head :cols=>cols_hash do |p|
+    = p.checkbox
+    = p.cell :ops, '操作'
+    = p.cell :teacher, '导师', :sortable=>true
+    = p.cell :course, '课程', :sortable=>true
+
+
+.page-model-list.admin-teams
   - if @mentor_courses.blank?
     .blank
       目前列表内没有内容
   - else
     - @mentor_courses.each do |mentor_course|
-      .generic-model
-        .cell.ops
-          - remove_url = admin_mentor_course_path(mentor_course)
-          %a.remove{:href=>'javascript:;', :'data-url'=>remove_url} 删除
+      = page_list_body :cols=>cols_hash do |p|
+        = p.checkbox(mentor_course)
+        = p.cell :ops do
           %a.edit{:href=>"/admin/mentor_courses/#{mentor_course.id}/edit"} 编辑
-        .cell.teacher
-          = mentor_course.user.real_name
-        .cell.course
-          = mentor_course.course
+        = p.cell :teacher, mentor_course.user.real_name 
+        = p.cell :course, mentor_course.course
