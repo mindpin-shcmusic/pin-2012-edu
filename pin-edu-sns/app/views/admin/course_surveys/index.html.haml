@@ -8,10 +8,10 @@
   = page_buttons do |p|
     = p.button '增加课程', '/admin/course_surveys/new'
 
-  .filters
-    %a.filter{:href=>"/admin/course_surveys"} 所有调查
-    %a.filter{:href=>"/admin/course_surveys?kind=1"} 类型一
-    %a.filter{:href=>"/admin/course_surveys?kind=2"} 类型二
+  = page_filters '/admin/course_surveys' do |p|
+    = p.filter '所有调查', :tab=>0, :default=>true
+    = p.filter '类型一', :tab=>1
+    = p.filter '类型二', :tab=>2
 
 :ruby
   cols_hash = {

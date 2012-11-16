@@ -9,9 +9,9 @@ class Admin::CourseSurveysController < ApplicationController
   end
 
   def index
-    kind = params['kind']
+    kind = params['tab']
     course_surveys = sort_scope(CourseSurvey)
-    if kind
+    if kind != "0"
       @course_surveys = course_surveys.with_kind(kind).paginate(:page => params[:page])
     else
       @course_surveys = course_surveys.paginate(:page => params[:page])
