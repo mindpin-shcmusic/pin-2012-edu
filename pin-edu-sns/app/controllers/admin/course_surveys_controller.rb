@@ -9,7 +9,7 @@ class Admin::CourseSurveysController < ApplicationController
   end
 
   def index
-    kind = params['tab']
+    kind = params['tab'] || "0"
     course_surveys = sort_scope(CourseSurvey)
     if kind != "0"
       @course_surveys = course_surveys.with_kind(kind).paginate(:page => params[:page])
