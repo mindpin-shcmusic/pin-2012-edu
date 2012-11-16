@@ -11,7 +11,7 @@ pie.load ->
     jQuery(this).confirm_dialog '确定要删除吗？', ->
       jQuery.ajax
         url: '/batch_destroy'
-        type: 'delete'
+        type: 'POST'
         data:
           model: model
           ids: ids.join(',')
