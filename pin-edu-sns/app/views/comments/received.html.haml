@@ -5,31 +5,45 @@
 
 - do_clear_comment_tip_message!
 
-.page-received-comments
-  - @comments.each do |comment|
-    .comment
-      .avatar= avatar comment.creator
-      .name>
-        %span>= user_link comment.creator
-        %span>= ":"
 
-      .content.wordwrap>
-        = comment_ct comment
-        %span.time> (#{jtime comment.created_at})
-      .from
-        - if !comment.reply_comment.blank?
-          - reply_user = comment.reply_user
-          - name_link = reply_user == current_user ? '我' : user_link(reply_user)
-
-          %span 回复
-          %span= name_link
-          %span 的评论：
-          %span= link_to "“#{truncate_u comment.reply_comment.content, 16}”", comment.model
-
-        - else
-          %span 评论我的
-          %span #{comment.model.class}：
-          %span= link_to "“#{comment_from_content comment}”", comment.model
+:ruby
+  cols_hash = {
+    :ops => 1,
+    :real_name => 2,
+    :created_at => 2,
+    :title => 8,
+    :source => 2
+  }
 
 
-.page-paginate= will_paginate @comments
+.page-fixed-head
+
+
+.page-list-head
+  .headtop
+    = page_buttons do |p|
+      = p.batch_destroy Comment
+
+    = list_pagination(@comments)
+
+  = page_list_head :cols=>cols_hash do |p|
+    = p.checkbox
+    = p.cell :real_name, '评论用户'
+    = p.cell :created_at, '时间'
+    = p.cell :title, '内容'
+    = p.cell :source, '评论来源'
+
+.page-model-list.admin-comments
+  - if @comments.blank?
+    .blank
+      目前列表内没有内容
+  - else
+    - @comments.each do |comment|
+      = page_list_body :cols=>cols_hash do |p|
+        = p.checkbox(comment)
+        = p.cell :real_name do
+          %a.edit{:href=>"/users/#{comment.creator.id}"}= comment.creator.real_name
+        = p.cell :created_at, jtime(comment.created_at)
+        = p.cell :title, comment.content
+        = p.cell :source do
+          %a.edit{:href=> "/homework_assigns/#{comment.model.id}"} 查看

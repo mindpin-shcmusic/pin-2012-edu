@@ -1,8 +1,15 @@
 = render 'nav'
 
+.page-fixed-head
+  .page-tabs
+    %a.tab{:href=>announcements_path} 收到的通知
+    %a.tab{:href=>received_announcements_path} 未读通知
+    - if current_user.is_teacher?
+      %a.tab{:href=>mine_announcements_path} 我创建的通知
 
-- if current_user.is_teacher?
-  .page-fixed-head
+
+.page-fixed-head
+  - if current_user.is_teacher?
     = page_buttons do |p|
       = p.button '创建通知', new_announcement_path, :class => 'generic-new'
 
@@ -10,13 +17,14 @@
 :ruby
   cols_hash = {
     :ops => 1,
-    :title => 5,
+    :title => 6,
     :teacher => 2,
     :created_at => 2
   }
 
 .page-list-head
   .headtop
+    
     = page_buttons do |p|
       = p.batch_destroy Announcement
 
@@ -28,11 +36,8 @@
     = p.cell :teacher, '教师'
     = p.cell :created_at, '创建时间'
 
-.page-filter{:style => "display: block;"}
-  =link_to '收到的通知', announcements_path
-  =link_to '未读通知', received_announcements_path
-  - if current_user.is_teacher?
-    =link_to '我创建的通知', mine_announcements_path
+
+
 
 .page-model-list.admin-teachers
   - if @announcements.blank?
