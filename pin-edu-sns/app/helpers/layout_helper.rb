@@ -81,7 +81,7 @@ private
 
     def checkbox(options={})
       col = options[:col] ? "col_#{options[:col]}" : 'col_1'
-      content_tag :div, :class => [:cell, col, :ckeckbox] do
+      content_tag :div, :class => [:cell, col, :checkbox] do
         @context.jcheckbox :checkbox, :check, false, ''
       end
     end
@@ -117,7 +117,7 @@ private
 
     def checkbox(options={})
       col = options[:col] ? "col_#{options[:col]}" : 'col_1'
-      content_tag :div, :class => [:cell, col, :ckeckbox] do
+      content_tag :div, :class => [:cell, col, :checkbox] do
         @context.jcheckbox :checkbox, :check, false, ''
       end
     end

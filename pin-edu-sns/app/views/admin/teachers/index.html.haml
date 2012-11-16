@@ -20,8 +20,7 @@
 .page-list-head
   .headtop
     = page_buttons do |p|
-      = p.button '删除', 'javascript:;', :class=>'batch-destroy', :'data-model'=>'Teacher'
-
+      = p.batch_destroy Teacher
 
     = list_pagination(@teachers)
 
