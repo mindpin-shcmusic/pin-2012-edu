@@ -8,7 +8,7 @@ class CourseSurveysController < ApplicationController
   end
 
   def index
-    kind = params[:kind]
+    kind = params[:tab]
 
     if kind
       course_surveys = CourseSurvey.with_kind(kind).with_student(current_user) if current_user.is_student?
