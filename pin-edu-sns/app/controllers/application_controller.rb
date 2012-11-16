@@ -20,9 +20,9 @@ protected
   def sort_scope(resource)
     return resource if sort_params_to_scope.blank?
     resource.send(*sort_params_to_scope)
-  # rescue NoMethodError
-  #   redirect_to :action => :index
-  #   resource
+  rescue NoMethodError
+    redirect_to :action => :index
+    resource
   end
 
 end
