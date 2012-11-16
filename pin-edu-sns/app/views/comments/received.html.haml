@@ -8,7 +8,6 @@
 
 :ruby
   cols_hash = {
-    :ops => 1,
     :real_name => 2,
     :created_at => 2,
     :title => 8,
@@ -21,13 +20,9 @@
 
 .page-list-head
   .headtop
-    = page_buttons do |p|
-      = p.batch_destroy Comment
-
     = list_pagination(@comments)
 
   = page_list_head :cols=>cols_hash do |p|
-    = p.checkbox
     = p.cell :real_name, '评论用户'
     = p.cell :created_at, '时间'
     = p.cell :title, '内容'
@@ -40,7 +35,6 @@
   - else
     - @comments.each do |comment|
       = page_list_body :cols=>cols_hash do |p|
-        = p.checkbox(comment)
         = p.cell :real_name do
           %a.edit{:href=>"/users/#{comment.creator.id}"}= comment.creator.real_name
         = p.cell :created_at, jtime(comment.created_at)
