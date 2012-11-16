@@ -3,33 +3,41 @@
 - hbreadcrumb '基础数据管理', '/admin'
 - hbreadcrumb '班级维护'
 
-.generic-page-head.admin-teams
-  .btns
-    %a.generic-new.create{:href=>'/admin/teams/new'} 增加班级
-    %a.generic-new.import{:href=>'/admin/teams/import_from_csv_page'} 批量导入班级
-    .search
-      = jsearchbar '/admin/search/team'
+.page-fixed-head
+  = page_buttons do |p|
+    = p.button '增加班级', '/admin/teams/new'
+    = p.button '批量导入班级', '/admin/teams/import_from_csv_page'
 
-  = list_pagination(@teams)
+:ruby
+  cols_hash = {
+    :ops => 1,
+    :name => 3,
+    :cid => 2
+  }
 
-  .cells
-    .cell.ops 操作
-    .cell.name= sortable 'name', '班级'
-    .cell.cid= sortable 'cid', '班级编号'
+.page-list-head
+  .headtop
+    = page_buttons do |p|
+      = p.batch_destroy Team
 
-.generic-body-list.admin-teams
+    = list_pagination(@teams)
+
+  = page_list_head :cols=>cols_hash do |p|
+    = p.checkbox
+    = p.cell :ops, '操作'
+    = p.cell :name, '班级名', :sortable=>true
+    = p.cell :cid, '班级编号', :sortable=>true
+
+.page-model-list.admin-teams
   - if @teams.blank?
     .blank
       目前列表内没有内容
   - else
     - @teams.each do |team|
-      .generic-model
-        .cell.ops
-          - remove_url = admin_team_path(team)
-          %a.remove{:href=>'javascript:;', :'data-url'=>remove_url} 删除
+      = page_list_body :cols=>cols_hash do |p|
+        = p.checkbox(team)
+        = p.cell :ops do
           %a.edit{:href=>"/admin/teams/#{team.id}/edit"} 编辑
-          %a.detail{:href=>"/admin/teams/#{team.id}"} 详情
-        .cell.name
-          = team.name
-        .cell.cid
-          = team.cid
+        = p.cell :name do
+          %a.detail{:href=>"/admin/teams/#{team.id}"}=team.name
+        = p.cell :cid, team.cid
