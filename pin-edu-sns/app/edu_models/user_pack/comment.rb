@@ -76,6 +76,11 @@ class Comment < ActiveRecord::Base
   def set_receiver_on_create
     self.receiver = self.model.comment_receiver
   end
+
+
+  def destroyable_by?(user)
+    user == self.creator
+  end
   
   module CommentableMethods
     def self.included(base)

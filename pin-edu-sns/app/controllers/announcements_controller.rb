@@ -7,13 +7,22 @@ class AnnouncementsController < ApplicationController
   end
 
   def index
-    @announcements = sort_scope(current_user.received_announcements).paginated(params[:page])
+    tab = params[:tab]
+
+    case tab
+    when 'received'
+      @announcements = sort_scope(current_user.received_announcements).paginated(params[:page])
+    when 'unread'
+      @announcements = current_user.unread_announcements.paginated(params[:page])
+    when 'mine'
+      @announcements = sort_scope(current_user.created_announcements).paginated(params[:page])
+    else
+      @announcements = sort_scope(current_user.received_announcements).paginated(params[:page])
+    end
+
   end
 
-  def mine
-    @announcements = sort_scope(current_user.created_announcements).paginated(params[:page])
-    render :action => :index
-  end
+
 
   def create
     @announcement = current_user.created_announcements.build params[:announcement]
@@ -21,10 +30,7 @@ class AnnouncementsController < ApplicationController
     render :action => :new
   end
 
-  def received
-    @announcements = current_user.unread_announcements.paginated(params[:page])
-    render :action => :index
-  end
+
 
   def show
     @announcement = Announcement.find(params[:id])
