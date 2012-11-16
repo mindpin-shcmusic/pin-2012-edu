@@ -39,6 +39,10 @@ class Student < ActiveRecord::Base
   def change_datetime_to_date
   end
 
+  def destroyable_by?(user)
+    user.is_admin?
+  end
+
   include Pacecar
 
   def self.import_from_csv(file)

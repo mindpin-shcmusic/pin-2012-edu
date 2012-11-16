@@ -15,6 +15,10 @@ class Announcement < ActiveRecord::Base
   include Paginated
   include Pacecar
   
+  def destroyable_by?(user)
+    user.is_admin? || user == self.creator
+  end
+
   def read_by?(user)
     get_announcement_user_by(user).read
   end

@@ -2,28 +2,33 @@
 
 - hbreadcrumb '基础数据管理', '/admin'
 - hbreadcrumb '教师维护'
-:ruby
-  cols_hash = {
-    :ops => 3,
-    :real_name => 2,
-    :tid => 2,
-    :username => 2,
-    :email => 4
-  }
 
 .page-fixed-head
   = page_buttons do |p|
     = p.button '增加教师记录', '/admin/teachers/new', :class=>'create'
     = p.button '批量导入教师', '/admin/teachers/import_from_csv_page', :class=>'import'
 
-.page-list-head
-  = list_pagination(@teachers)
+:ruby
+  cols_hash = {
+    :ops => 1,
+    :real_name => 2,
+    :tid => 2,
+    :username => 2,
+    :email => 4
+  }
 
-  = page_list_head :cols => cols_hash do |p|
+.page-list-head
+  .headtop
+    = page_buttons do |p|
+      = p.batch_destroy Teacher
+
+    = list_pagination(@teachers)
+
+  = page_list_head :cols=>cols_hash do |p|
     = p.checkbox
     = p.cell :ops, '操作'
-    = p.cell :real_name, '教师姓名', :sortable => true
-    = p.cell :tid, '教师工号', :sortable => true
+    = p.cell :real_name, '教师姓名', :sortable=>true
+    = p.cell :tid, '教师工号', :sortable=>true
     = p.cell :username, '用户名'
     = p.cell :email, '用户邮箱'
 
@@ -33,15 +38,13 @@
       目前列表内没有内容
   - else
     - @teachers.each do |teacher|
-      = page_list_body :cols => cols_hash do |p|
-        = p.checkbox
+      = page_list_body :cols=>cols_hash do |p|
+        = p.checkbox(teacher)
         = p.cell :ops do
-          - remove_url = admin_teacher_path(teacher)
-          %a.remove{:href=>'javascript:;', :'data-url'=>remove_url} 删除
           %a.edit{:href=>"/admin/teachers/#{teacher.id}/edit"} 编辑
-          %a.detail{:href=>"/admin/teachers/#{teacher.id}"} 详情
-
-        = p.cell :real_name, teacher.real_name
+        = p.cell :real_name do
+          %a.edit{:href=>"/admin/teachers/#{teacher.id}"}= teacher.real_name
         = p.cell :tid, teacher.tid
         = p.cell :username, teacher.user.name
         = p.cell :email, teacher.user.email
+

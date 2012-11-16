@@ -12,6 +12,10 @@ class AnnouncementUser < ActiveRecord::Base
 
   validate :exclude_creator
 
+  def destroyable_by?(user)
+    user == self.user
+  end
+
 private
 
   def send_count_to_juggernaut

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class IndexController < ApplicationController
   before_filter :login_required
   
@@ -34,5 +35,18 @@ class IndexController < ApplicationController
       :comments_count => current_user.comment_tip_message.count,
       :short_messages_count => current_user.unread_messages.count
     }
+  end
+
+  def batch_destroy
+    model = params[:model] ? params[:model].constantize : nil
+    ids   = params[:ids] ? params[:ids].gsub(/\s+/, '').split(',') : []
+
+    if model
+      model.find(ids).each do |instance|
+        instance.destroy if instance.destroyable_by?(current_user)
+      end
+    end
+
+    redirect_to :back
   end
 end

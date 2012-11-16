@@ -19,6 +19,10 @@ class Teacher < ActiveRecord::Base
 
   accepts_nested_attributes_for :user
   
+  def destroyable_by?(user)
+    user.is_admin?
+  end
+
   include Pacecar
 
   def self.import_from_csv(file)

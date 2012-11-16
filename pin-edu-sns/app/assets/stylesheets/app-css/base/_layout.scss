@@ -119,9 +119,10 @@ body{
   left:210px;
   position:fixed;
   right:0;
-  top:50px;
+  top:0;
   z-index:8;
   height:62px; // 32 + 15 + 15
+  padding-top:50px;
 
   .buttons{
     @include floatfix;
@@ -157,21 +158,37 @@ body{
   border-bottom:1px solid #ccc;
   border-top:1px solid #ccc;
 
-  .paginate-info{
+  .headtop{
     @include floatfix;
-    width:720px;
-    .desc{
+    .buttons{
       float:left;
       padding:15px;
-      height:24px;line-height:24px;
-      span.count{
-        font-weight:bold;
-        color:#3E78FD;
+      a.button{
+        @include mini-button-black;
+        height:22px;line-height:22px;
+        font-size:12px;
       }
     }
-    .pagination{
+    .paginate-info{
+      @include floatfix;
       float:right;
-      margin-top:15px;
+      //width:720px;
+      .desc{
+        float:left;
+        padding:15px;
+        height:24px;line-height:24px;
+        font-size:12px;
+        span.count{
+          font-weight:bold;
+          color:#3E78FD;
+        }
+      }
+      .pagination{
+        float:left;
+        padding:15px;
+        padding-left:0;
+        font-size:12px !important;
+      }
     }
   }
 
@@ -183,7 +200,7 @@ body{
 
     .cell{
       float:left;
-      padding:10px 15px;
+      padding:7px 15px;
       height:24px;line-height:24px;
       margin-top:-1px;
 
@@ -191,7 +208,7 @@ body{
       border-left:white solid 1px;
       border-right:#ccc solid 1px;
       @include gradient(#efefef, #fafafa);
-      box-shadow:0 0 5px rgba(#666, 0.1) inset;
+      //box-shadow:0 0 5px rgba(#666, 0.1) inset;
       font-weight:bold;
 
       .pie-j-checkbox{
@@ -248,8 +265,7 @@ body{
 
 .page-model-list{
   margin:-20px;
-  margin-top:143px;
-  border-top:solid 1px #ccc;
+  margin-top:137px;
   background-color:#f7f7f7;
 
   .cells{
@@ -281,7 +297,13 @@ body{
 
       white-space:nowrap; 
 
+      font-size:12px;
+
       @include cell-cols;
+
+      .pie-j-checkbox{
+        padding:3px 0;
+      }
     }
   }
 }

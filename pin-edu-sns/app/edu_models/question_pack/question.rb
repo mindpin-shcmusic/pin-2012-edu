@@ -42,6 +42,10 @@ class Question < ActiveRecord::Base
     end
   end
 
+  def destroyable_by?(user)
+    user == self.creator || user == self.teacher_user
+  end
+
   module UserMethods
     def self.included(base)
       base.has_many :questions, :class_name => 'Question', :foreign_key => :creator_id
