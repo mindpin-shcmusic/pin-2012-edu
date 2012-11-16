@@ -2,14 +2,20 @@
 module LayoutHelper
   def page_buttons
     content_tag :div, :class => :buttons do
-      yield LayoutWidget.new(self)
+      yield HeadWidget.new(self)
+    end
+  end
+
+  def page_filters(base_url)
+    content_tag :div, :class => :filters do
+      yield HeadWidget.new(self, nil, base_url)
     end
   end
 
   def page_list_head(options={})
     options.assert_valid_keys :cols
     content_tag :div, :class => :cells do
-      yield LayoutWidget.new(self, options[:cols])
+      yield HeadWidget.new(self, options[:cols])
     end
   end
 
@@ -60,15 +66,24 @@ private
     column.to_s == params[:sort].to_s
   end
 
-  class LayoutWidget < ActionView::Base
-    def initialize(context, cols_hash=nil)
+  class HeadWidget < ActionView::Base
+    def initialize(context, cols_hash=nil, base_url=nil)
       @context = context
       @cols_hash = cols_hash
+      @base_url = base_url
     end
 
     def button(text, path, options={})
       options.assert_valid_keys :class, :'data-model'
       link_to text, path, :class => [:button, options[:class]], :'data-model' => options[:'data-model']
+    end
+
+    def filter(text, options={})
+      options.assert_valid_keys :tab, :default
+      default = !@context.params[:tab] && options[:default] ? true : false
+      current = is_current_tab?(options[:tab]) || default ? :current : nil
+
+      link_to text, "#{@base_url}?tab=#{options[:tab]}", :class => [:filter, current]
     end
 
     def cell(attr_name, text, options={})
@@ -88,6 +103,12 @@ private
 
     def batch_destroy(model)
       self.button '删除', 'javascript:;', :class => 'batch-destroy', :'data-model' => model.to_s
+    end
+
+  private
+
+    def is_current_tab?(tab)
+      @context.params[:tab].to_s == tab.to_s
     end
 
   end
