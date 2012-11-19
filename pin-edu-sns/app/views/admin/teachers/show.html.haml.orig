@@ -47,42 +47,49 @@
 
     .field.courses
       %label 本学期负责课程(点击查看相关课程学生列表)
-      - @courses.each do |course|
-        :ruby
-          students = course.get_current_students_of(@teacher.user)
+      .v
+        - @courses.each do |course|
+          :ruby
+            students = course.get_current_students_of(@teacher.user)
 
-        .teacher-course
-          = link_to course.name, "/admin/courses/#{course.id}"
-          = link_to "分配学生", ""
-
-
-        .field{:id => "a-notice-#{course.id}"}
-          - students[0..3].each do |student|
-            .student-box
-              = avatar student, :mini
-              = link_to student.real_name, admin_student_path(student)
-
-          = "等 #{students.length} 个学生"
-
-          %a.student-detail{:href => "javascript: void(0);", :'data-id' => course.id} >>
-
-        .field{:style => "display: none;", :id => "b-notice-#{course.id}"}
-          = "总共 #{students.length} 个学生"
-
-          %a.student-detail{:href => "javascript: void(0);", :'data-id' => course.id} >>
+          .teacher-course
+            = link_to course.name, "/admin/courses/#{course.id}"
+            = link_to "分配学生", ""
 
 
-        .field.students{:style => "display: none;", :id => "course-#{course.id}"}
-          .v
-            - students.each do |student|
+          .field{:id => "a-notice-#{course.id}"}
+            - students[0..3].each do |student|
               .student-box
                 = avatar student, :mini
                 = link_to student.real_name, admin_student_path(student)
 
+            = "等 #{students.length} 个学生"
+
+            %a.student-detail{:href => "javascript: void(0);", :'data-id' => course.id} >>
+
+          .field{:style => "display: none;", :id => "b-notice-#{course.id}"}
+            = "总共 #{students.length} 个学生"
+
+            %a.student-detail{:href => "javascript: void(0);", :'data-id' => course.id} >>
+
+
+          .field.students{:style => "display: none;", :id => "course-#{course.id}"}
+            .v
+              - students.each do |student|
+                .student-box
+                  = avatar student, :mini
+                  = link_to student.real_name, admin_student_path(student)
+
+<<<<<<< HEAD
 
 
 .page-admin-go-back= link_to '返回列表页', '/admin/teachers'
 
 .page-admin-edit= link_to '修改信息', "/admin/teachers/#{@teacher.id}/edit"
 .page-admin-edit= link_to '修改密码', "/admin/teachers/#{@teacher.id}/password"
- 
+=======
+            .field.students{:style => "display: none;", :id => "course-#{course.id}"}
+              .v
+                - students.each do |student|
+                  .student-box= link_to student.real_name, admin_student_path(student)
+>>>>>>> f4cece9dc4bc7544a7f99fd4bf6cc7bfdbaad5cc
