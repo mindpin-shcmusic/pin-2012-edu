@@ -16,6 +16,9 @@
     survey_list = 'survey_2_list'
   end
 
+
+.page-admin-go-back= link_to '返回列表页', '/admin/course_surveys'
+
 .page-admin-model-show
   .field.title
     %label 标题
@@ -26,6 +29,3 @@
     
   
   = render survey_list, :survey_count => survey_count, :course_survey_records => course_survey_records
-
-
-.page-admin-go-back= link_to '返回列表页', '/admin/course_surveys'

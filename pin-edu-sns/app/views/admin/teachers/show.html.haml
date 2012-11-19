@@ -6,15 +6,18 @@
 
 
 :ruby
-  current_semester = params[:semester].blank? ? Semester.now : Semester.get_by_value(params[:semester])
+  selected_semester = params[:semester].blank? ? Semester.now : Semester.get_by_value(params[:semester])
 
+.page-admin-go-back= link_to '返回列表页', '/admin/teachers'
+.page-admin-edit= link_to '修改信息', "/admin/teachers/#{@teacher.id}/edit"
+.page-admin-edit= link_to '修改密码', "/admin/teachers/#{@teacher.id}/password"
 
 .page-admin-model-show
   .semesters-nav
     %label 学期
     .page-tabs
       - Semester.get_nav_array.each do |semester|
-        - class_name = current_semester == semester ? "current" : ""
+        - class_name = selected_semester == semester ? "current" : ""
         = link_to semester.value, "/admin/teachers/#{@teacher.id}?semester=#{semester.value}",:class => "tab #{class_name}"
 
   .field.avatar
@@ -57,9 +60,3 @@
               .v
                 - students.each do |student|
                   .student-box= link_to student.real_name, admin_student_path(student)
-
-
-.page-admin-go-back= link_to '返回列表页', '/admin/teachers'
-
-.page-admin-edit= link_to '修改信息', "/admin/teachers/#{@teacher.id}/edit"
-.page-admin-edit= link_to '修改密码', "/admin/teachers/#{@teacher.id}/password"
