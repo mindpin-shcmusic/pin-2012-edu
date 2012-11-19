@@ -18,9 +18,19 @@
 - students = Student.all - selected_course_students + selected_current_students
 .page-course-teacher-select-students
   = form_tag "/admin/course_teachers/#{@course_teacher.id}/select_students", :method=>:put do
-    - students.each do |student|
-      = check_box_tag "user_ids[]", student.user_id, selected_current_students.include?(student)
-      %label= student.real_name
+
+    %ul.select-students#fcbklist
+      - students.each do |student|
+        %li
+          .info
+            .avatar= avatar student.user 
+            .name= student.real_name
+          - if selected_current_students.include?(student)
+            %input{:type=>"hidden", :value=>student.user_id, :checked=>"checked"}
+          - else
+            %input{:type=>"hidden", :value=>student.user_id}
+
     .field.submit
       = jfsubmit '确定'
       = jfcancel '取消'
+

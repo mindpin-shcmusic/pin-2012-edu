@@ -9,6 +9,7 @@
     %title= title
     = csrf_meta_tags
     = stylesheet_link_tag 'application'
+    = stylesheet_link_tag '/fcbkListSelection/fcbklistselection.css'
 
   %body.echo.gray
     - if logged_in? && (current_user.is_teacher? || current_user.is_student?)
@@ -42,6 +43,7 @@
       = javascript_include_tag '/kindeditor/kindeditor'
       = javascript_include_tag "http://#{request.host}/juggernaut/application.js"
       = javascript_include_tag 'application'
+      = javascript_include_tag '/fcbkListSelection/fcbklistselection.min.js'
       = yield :javascript
 
     - else
