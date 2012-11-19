@@ -5,6 +5,8 @@
 = render 'nav'
 - hbreadcrumb @announcement.title
 
+.page-admin-go-back= link_to '返回列表页', '/announcements'
+
 .page-announcement-show
   %h1.title= @announcement.title
   - creator = @announcement.creator

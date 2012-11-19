@@ -30,7 +30,8 @@ class CourseScoreListsController < ApplicationController
   end
 
   def new
-    @semester = Semester.get_nav_array
+    @semesters = Semester.get_nav_array
+    @current_semester_courses = current_user.get_teacher_courses(:semester => current_semester)
   end
 
   def create

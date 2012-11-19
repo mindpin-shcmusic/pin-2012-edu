@@ -3,8 +3,8 @@ pie.load ->
   jQuery(document).delegate '.student-detail', 'click', ->
     id = $(this).data('id')
     $('#course-' + id).toggle()
-    $('.a-notice-' + id).toggle()
-    $('.b-notice-' + id).toggle()
+    $('#a-notice-' + id).toggle()
+    $('#b-notice-' + id).toggle()
 
   
   # 课程，任课老师页面
@@ -13,8 +13,8 @@ pie.load ->
     $("#teacher-#{id}").toggle()
 
     if $("#teacher-#{id}:visible")
-      $('#a-notice-' + id).hide()
-      $('#b-notice-' + id).show()
+      $('#a-notice-' + id).css('display', 'none')
+      $('#b-notice-' + id).css('display', 'block')
 
     if $("#teacher-#{id}:hidden")
       $('#a-notice-' + id).show()
