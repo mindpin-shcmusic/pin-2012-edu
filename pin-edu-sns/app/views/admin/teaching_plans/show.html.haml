@@ -4,6 +4,10 @@
 - hbreadcrumb '教学计划', '/admin/teaching_plans'
 - hbreadcrumb @teaching_plan.title
   
+
+.page-admin-go-back= link_to '返回列表页', '/admin/teaching_plans'
+.page-admin-edit= link_to '编辑修改', "/admin/teaching_plans/#{@teaching_plan.id}/edit"
+
 .page-admin-model-show
   .field.title
     = @teaching_plan.title
@@ -11,7 +15,3 @@
   .field.courses
     - @teaching_plan.courses.each do |course|
       = course.name
-
-
-.page-admin-go-back= link_to '返回列表页', '/admin/teaching_plans'
-.page-admin-edit= link_to '编辑修改', "/admin/teaching_plans/#{@teaching_plan.id}/edit"

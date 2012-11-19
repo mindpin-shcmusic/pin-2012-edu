@@ -2,6 +2,8 @@
 - hbreadcrumb '成绩单', course_score_lists_path
 - hbreadcrumb '创建成绩单'
 
+.page-admin-go-back= link_to '返回列表页', '/score_lists'
+
 .page-new-course-score-list
   = form_tag course_score_lists_path do
     = flash_info
@@ -14,4 +16,3 @@
       = select_tag :course_id, options_from_collection_for_select(@current_semester_courses, :id, :name, nil), :class => 'course-selector', :style => 'width:320px;', :include_blank => true, :data => {:placeholder => '请选择课程'}
     .field.submit
       = jfsubmit '为该课程创建成绩单'
-      = jfcancel '取消'

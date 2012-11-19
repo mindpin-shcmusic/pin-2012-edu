@@ -4,6 +4,8 @@
 - hbreadcrumb '老师问答', '/questions'
 - hbreadcrumb @question.title
 
+.page-admin-go-back= link_to '返回列表页', '/questions'
+
 .page-question-show
   .field.title
     %label 标题
@@ -35,8 +37,6 @@
         = flash_info
         = form_for Answer.new, :url => "/questions/#{@question.id}/answers" do |f|
           =render 'answer_form', :f => f
-
-.page-admin-go-back= link_to '返回列表页', '/questions'
 
 - if current_user.is_student? && @question.answer.blank?
   .page-admin-edit= link_to '编辑修改', "/questions/#{@question.id}/edit"

@@ -13,6 +13,9 @@
     margin: 5px;
   }
 
+  
+.page-admin-go-back= link_to '返回列表页', '/admin/mentor_notes'
+
 .page-admin-model-show
   .field.title
     %label 标题
@@ -40,6 +43,4 @@
           %td= mentor_student.mentor_course_1.course
           %td= mentor_student.mentor_course_2.course
           %td= mentor_student.mentor_course_3.course
-  
 
-.page-admin-go-back= link_to '返回列表页', '/admin/mentor_notes'
