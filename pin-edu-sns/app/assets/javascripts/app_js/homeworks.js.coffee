@@ -1,9 +1,9 @@
 pie.load ->
   # 布置作业时，选择班级
-  jQuery('.page-homework-form .teams-selector').chosen()
+  jQuery('.page-homework-form .teams-selector').select2()
 
   # 布置作业时，选择课程
-  jQuery('.page-homework-form .courses-selector').chosen()
+  jQuery('.page-homework-form .courses-selector').select2()
 
   # -------------------
 

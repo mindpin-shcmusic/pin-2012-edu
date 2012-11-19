@@ -1,5 +1,6 @@
 pie.load ->
-  jQuery('.page-new-course-score-list').find('.semester-selector, .course-selector').chosen()
+  jQuery('.page-new-course-score-list .field').find('select').select2()
+  $course_selector = jQuery('select.course-selector')
 
   append_to_options = ($selector, res)->
     $selector.empty()
@@ -7,9 +8,8 @@ pie.load ->
     $selector.trigger('liszt:updated')
 
   jQuery('.semester-selector').change ->
-    semester         = jQuery(this).val()
-    $course_selector = jQuery('.course-selector')
-    url              = jQuery(this).data('url')
+    semester = jQuery(this).val()
+    url      = jQuery(this).data('url')
 
     jQuery.ajax
       url     : url

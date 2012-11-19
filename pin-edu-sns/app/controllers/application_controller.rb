@@ -1,9 +1,14 @@
 class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   include ApplicationMethods
+  helper_method :current_semester
   helper :all
 
 protected
+
+  def current_semester
+    Semester.now
+  end
 
   def sort_dir
     ['asc', 'desc'].include?(params[:dir].to_s) ? params[:dir] : nil

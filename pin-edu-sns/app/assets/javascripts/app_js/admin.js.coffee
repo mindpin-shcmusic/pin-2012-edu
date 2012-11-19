@@ -44,7 +44,7 @@ pie.load ->
 
 # 构建form中的 select 控件
 pie.load ->
-  jQuery('.page-admin-form .field select').chosen()
+  jQuery('.page-admin-form .field select').select2()
 
 
 # 展开课程教师信息
