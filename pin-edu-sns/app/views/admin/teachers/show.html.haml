@@ -47,38 +47,37 @@
 
     .field.courses
       %label 本学期负责课程(点击查看相关课程学生列表)
-      .v
-        - @courses.each do |course|
-          :ruby
-            students = course.get_current_students_of(@teacher.user)
+      - @courses.each do |course|
+        :ruby
+          students = course.get_current_students_of(@teacher.user)
 
-          .teacher-course
-            = link_to course.name, "/admin/courses/#{course.id}"
-            = link_to "分配学生", ""
+        .teacher-course
+          = link_to course.name, "/admin/courses/#{course.id}"
+          = link_to "分配学生", ""
 
 
-          .field{:id => "a-notice-#{course.id}"}
-            - students[0..3].each do |student|
+        .field{:id => "a-notice-#{course.id}"}
+          - students[0..3].each do |student|
+            .student-box
+              = avatar student, :mini
+              = link_to student.real_name, admin_student_path(student)
+
+          = "等 #{students.length} 个学生"
+
+          %a.student-detail{:href => "javascript: void(0);", :'data-id' => course.id} >>
+
+        .field{:style => "display: none;", :id => "b-notice-#{course.id}"}
+          = "总共 #{students.length} 个学生"
+
+          %a.student-detail{:href => "javascript: void(0);", :'data-id' => course.id} >>
+
+
+        .field.students{:style => "display: none;", :id => "course-#{course.id}"}
+          .v
+            - students.each do |student|
               .student-box
                 = avatar student, :mini
                 = link_to student.real_name, admin_student_path(student)
-
-            = "等 #{students.length} 个学生"
-
-            %a.student-detail{:href => "javascript: void(0);", :'data-id' => course.id} >>
-
-          .field{:style => "display: none;", :id => "b-notice-#{course.id}"}
-            = "总共 #{students.length} 个学生"
-
-            %a.student-detail{:href => "javascript: void(0);", :'data-id' => course.id} >>
-
-
-          .field.students{:style => "display: none;", :id => "course-#{course.id}"}
-            .v
-              - students.each do |student|
-                .student-box
-                  = avatar student, :mini
-                  = link_to student.real_name, admin_student_path(student)
 
 
 
