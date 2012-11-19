@@ -80,16 +80,10 @@
                   = avatar student, :mini
                   = link_to student.real_name, admin_student_path(student)
 
-<<<<<<< HEAD
 
 
 .page-admin-go-back= link_to '返回列表页', '/admin/teachers'
 
 .page-admin-edit= link_to '修改信息', "/admin/teachers/#{@teacher.id}/edit"
 .page-admin-edit= link_to '修改密码', "/admin/teachers/#{@teacher.id}/password"
-=======
-            .field.students{:style => "display: none;", :id => "course-#{course.id}"}
-              .v
-                - students.each do |student|
-                  .student-box= link_to student.real_name, admin_student_path(student)
->>>>>>> f4cece9dc4bc7544a7f99fd4bf6cc7bfdbaad5cc
+ 
