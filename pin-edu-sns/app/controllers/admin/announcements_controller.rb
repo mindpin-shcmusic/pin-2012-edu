@@ -13,7 +13,12 @@ class Admin::AnnouncementsController < ApplicationController
 
   def create
     @announcement = current_user.created_announcements.build params[:announcement]
-    return redirect_to [:admin, @announcement] if @announcement.save
+    if @announcement.save
+      courses = params[:course_ids] || []
+      teams = params[:team_ids] || []
+      @announcement.announce_to(:courses => courses, :teams => teams)
+      return redirect_to [:admin, @announcement]
+    end
     render :action => :new
   end
 

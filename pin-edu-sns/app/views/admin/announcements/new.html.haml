@@ -13,6 +13,18 @@
     .field
       %label 内容
       = f.text_area :content, :class => 'kind-editor'
+    .assign
+      .courses
+        .info 请选择要发布通知的课程
+        - Course.all.each do |course|
+          = check_box_tag 'course_ids[]', course.id
+          %label= course.name
+
+        .teams        
+          .info 请选择要发布通知的班级
+          - Team.all.each do |team|
+            = check_box_tag 'team_ids[]', team.id
+            %label= team.name
 
     .field.submit
       = jfsubmit '确定'
