@@ -18,6 +18,16 @@ module LayoutHelper
     end
   end
 
+  def page_field(css_class, options={}, &block)
+    options.assert_valid_keys :title
+    content_tag :div, :class => ['page-field', css_class] do
+      content_tag(:div, options[:title], :class => 'field-title') +
+      content_tag(:div, :class => 'field-data') do
+        capture(&block)
+      end
+    end
+  end
+
   def page_list_head(options={})
     options.assert_valid_keys :cols
     content_tag :div, :class => :cells do
