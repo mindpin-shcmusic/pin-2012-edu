@@ -10,14 +10,16 @@
 .page-admin-students-selector
 
   = form_tag "/admin/teams/#{@team.id}/set_students", :method=>:put do |f|
-
-    .page-form-user-selector
+    .list-selector
       .search
         .field
           %input.search{:type=>'text'}
         .desc
           小提示：可以输入中文或拼音来快速查找
-
+      .filter
+        %a.all.view{:href=>'javascript:;'} 全部
+        %a.selected{:href=>'javascript:;'} 已选
+        %a.unselected{:href=>'javascript:;'} 未选
       .selector
         .list
           - (Student.of_team(@team)+Student.no_team).each do |student|
@@ -30,25 +32,8 @@
                 :name => student.real_name
               }
 
-            .user{:class=>klass, :data=>html_data}
+            .item{:class=>klass, :data=>html_data}
               .name= student.real_name
-      .result
-        .list
-          - @team.student_users.each do |user|
-            :ruby
-              html_data = {
-                :id => user.id,
-                :name => user.real_name
-              }
-
-            .user{:class=>'selected', :data=>html_data}
-              .name= user.real_name
-
-        .count
-          %span 已经选择
-          %span.c= student_user_ids.count
-          %span 人
-
       - selected_ids_str = student_user_ids*','
       %input.ids{:name=>:student_user_ids, :type=>'hidden', :value=>selected_ids_str}
 
