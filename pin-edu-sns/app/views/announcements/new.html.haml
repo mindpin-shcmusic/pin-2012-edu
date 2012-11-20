@@ -12,5 +12,12 @@
     .field
       %label 正文
       = f.text_area :content, :class => 'kind-editor'
+    .assign
+      .courses
+        .info 请选择要发布通知的课程
+        - current_user.get_teacher_courses(:semester => Semester.now).each do |course|
+          = check_box_tag 'course_ids[]', course.id
+          %label= course.name
+
     .field.submit
-      = jfsubmit '下一步'
+      = jfsubmit '确定'

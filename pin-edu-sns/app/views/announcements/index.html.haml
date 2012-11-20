@@ -48,7 +48,7 @@
       = page_list_body :cols=>cols_hash do |p|
         = p.checkbox(announcement)
         = p.cell :title do
-          %a.edit{:href => "/admin/announcements/#{announcement.id}"}= announcement.title
+          %a.edit{:href => "/announcements/#{announcement.id}"}= announcement.title
         = p.cell :teacher, announcement.creator.real_name
         = p.cell :created_at, announcement.created_at
 
