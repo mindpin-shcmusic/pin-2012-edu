@@ -76,6 +76,7 @@ class Comment < ActiveRecord::Base
   def set_receiver_on_create
     self.receiver = self.model.comment_receiver
   end
+
   
   module CommentableMethods
     def self.included(base)

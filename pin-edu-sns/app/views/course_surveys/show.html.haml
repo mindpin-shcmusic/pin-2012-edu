@@ -16,6 +16,8 @@
     survey_list = 'survey_2_list'
   end
 
+.page-admin-go-back= link_to '返回列表页', '/course_surveys'
+
 .page-admin-model-show
   .field.title
     %label 标题
@@ -23,10 +25,5 @@
 
     %label 学生人数
     .student_count= course_survey_records.count
-    
   
   = render survey_list, :survey_count => survey_count, :course_survey_records => course_survey_records
-
-
-.page-admin-go-back= link_to '返回列表页', '/course_surveys'
-

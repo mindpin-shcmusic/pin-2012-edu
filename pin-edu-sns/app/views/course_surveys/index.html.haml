@@ -2,15 +2,10 @@
 - hbreadcrumb '课程调查'
 
 .page-fixed-head
-  .page-tabs
-    :ruby
-      klass1 = params[:kind].blank? ? 'current' : ''
-      klass2 = params[:kind] == '1' ? 'current' : ''
-      klass3 = params[:kind] == '2' ? 'current' : ''
-
-    %a.tab{:href=>course_surveys_path, :class => klass1} 全部
-    %a.tab{:href=>course_surveys_path(:kind => 1), :class => klass2} 调查1
-    %a.tab{:href=>course_surveys_path(:kind => 2), :class => klass3} 调查2
+  = page_filters course_surveys_path do |p|
+    = p.filter '全部', :tab => 0, :default => true
+    = p.filter '调查1', :tab => 1
+    = p.filter '调查2', :tab => 2
 
 :ruby
   cols_hash = {

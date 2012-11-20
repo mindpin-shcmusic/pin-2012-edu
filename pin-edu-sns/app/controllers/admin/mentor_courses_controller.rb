@@ -5,11 +5,11 @@ class Admin::MentorCoursesController < ApplicationController
   before_filter :pre_load
 
   def pre_load
-    @mentor_course  = sort_scope(MentorCourse).find params[:id] if params[:id]
+    @mentor_course  = MentorCourse.find params[:id] if params[:id]
   end
 
   def index
-    @mentor_courses = MentorCourse.paginate(:page => params[:page]).order('id DESC')
+    @mentor_courses = sort_scope(MentorCourse).paginate(:page => params[:page]).order('id DESC')
   end
 
   def new

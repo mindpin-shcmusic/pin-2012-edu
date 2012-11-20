@@ -1,6 +1,8 @@
 = render 'nav'
 - hbreadcrumb '创建新通知'
 
+.page-admin-go-back= link_to '返回列表页', '/announcements'
+
 .page-new-announcement
   = form_for @announcement do |f|
     = flash_info
@@ -12,4 +14,3 @@
       = f.text_area :content, :class => 'kind-editor'
     .field.submit
       = jfsubmit '下一步'
-      = jfcancel '返回'

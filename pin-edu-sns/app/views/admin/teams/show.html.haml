@@ -4,6 +4,9 @@
 - hbreadcrumb '班级维护', '/admin/teams'
 - hbreadcrumb @team.name
 
+.page-admin-go-back= link_to '返回列表页', '/admin/teams'
+.page-admin-edit= link_to '编辑修改', "/admin/teams/#{@team.id}/edit"
+
 .page-admin-model-show
   .field.name
     %label 班级名
@@ -24,6 +27,3 @@
       .avatar= avatar student.user, :mini
       .name= student.real_name
       .show= link_to '查看信息', [:admin, student]
-
-.page-admin-go-back= link_to '返回列表页', '/admin/teams'
-.page-admin-edit= link_to '编辑修改', "/admin/teams/#{@team.id}/edit"

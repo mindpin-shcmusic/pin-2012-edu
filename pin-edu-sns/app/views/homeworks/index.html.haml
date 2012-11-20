@@ -2,8 +2,8 @@
 - hbreadcrumb '作业/艺术实践'
 
 .page-fixed-head
-  = page_buttons do |p|
-    - if current_user.is_teacher?
+  - if current_user.is_teacher?
+    = page_buttons do |p|
       = p.button '布置新作业/艺术实践', new_homework_path, :class => 'create'
 
   = page_filters homeworks_path do |p|
