@@ -14,21 +14,37 @@
 
 - selected_current_student_users = course.get_students(:semester => semester,:teacher_user=>@course_teacher.teacher_user)
 - selected_current_students = selected_current_student_users.map{|user|user.student}
+- selected_current_user_ids = selected_current_student_users.map{|user|user.id}
 
 - students = Student.all - selected_course_students + selected_current_students
 .page-course-teacher-select-students
   = form_tag "/admin/course_teachers/#{@course_teacher.id}/select_students", :method=>:put do
+    .list-selector
+      .search
+        .field
+          %input.search{:type=>'text'}
+        .desc
+          小提示：可以输入中文或拼音来快速查找
+      .filter
+        %a.all.view{:href=>'javascript:;'} 全部
+        %a.selected{:href=>'javascript:;'} 已选
+        %a.unselected{:href=>'javascript:;'} 未选
+      .selector
+        .list
+          - students.each do |student|
+            :ruby
+              selected = selected_current_user_ids.include?(student.user_id)
 
-    %ul.select-students#fcbklist
-      - students.each do |student|
-        %li
-          .info
-            .avatar= avatar student.user 
-            .name= student.real_name
-          - if selected_current_students.include?(student)
-            %input{:type=>"hidden", :value=>student.user_id, :checked=>"checked"}
-          - else
-            %input{:type=>"hidden", :value=>student.user_id}
+              klass = selected ? 'selected' : ''
+              html_data = {
+                :id => student.user_id,
+                :name => student.real_name
+              }
+
+            .item{:class=>klass, :data=>html_data}
+              .name= student.real_name
+      - selected_ids_str = selected_current_user_ids*','
+      %input.ids{:name=>:user_ids, :type=>'hidden', :value=>selected_ids_str}
 
     .field.submit
       = jfsubmit '确定'

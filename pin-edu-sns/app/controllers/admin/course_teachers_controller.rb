@@ -58,7 +58,7 @@ class Admin::CourseTeachersController < ApplicationController
   end
 
   def select_students
-    users = params[:user_ids].map{|id|User.find(id)}
+    users = params[:user_ids].split(',').map{|id|User.find(id)}
     @course_teacher.set_students(users)
     redirect_to "/admin/courses/#{@course_teacher.course.id}"
   end
