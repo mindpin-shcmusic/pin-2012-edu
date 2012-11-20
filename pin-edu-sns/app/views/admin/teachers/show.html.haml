@@ -4,10 +4,6 @@
 - hbreadcrumb '教师维护', '/admin/teachers'
 - hbreadcrumb @teacher.real_name
 
-
-:ruby
-  selected_semester = params[:semester].blank? ? Semester.now : Semester.get_by_value(params[:semester])
-
 .page-unfixed-head
   = page_buttons do |p|
     = p.button '返回列表页', '/admin/teachers'
@@ -34,7 +30,7 @@
     = page_field :desc, :title=>'教师简介' do
       = sanitize @teacher.description
 
-    = page_semester_filters '/admin/course_surveys'
+    = page_semester_filters "/admin/teachers/#{@teacher.id}"
 
     = page_field :courses, :title=>'该学期下负责的课程' do
       - @courses.each do |course|
