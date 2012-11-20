@@ -1,21 +1,8 @@
+# 此js用来控制任课教师show页面的课程学生信息展开和折叠
+
 pie.load ->
-  # 老师 show 页面
-  jQuery(document).delegate '.student-detail', 'click', ->
-    id = $(this).data('id')
-    $('#course-' + id).toggle()
-    $('#a-notice-' + id).toggle()
-    $('#b-notice-' + id).toggle()
+  jQuery(document).delegate '.page-admin-teacher .course a.open', 'click', ->
+    jQuery(this).closest('.course').addClass('opened')
 
-  
-  # 课程，任课老师页面
-  jQuery(document).delegate '.student-detail', 'click', ->
-    id = $(this).data('id')
-    $("#teacher-#{id}").toggle()
-
-    if $("#teacher-#{id}:visible")
-      $('#a-notice-' + id).css('display', 'none')
-      $('#b-notice-' + id).css('display', 'block')
-
-    if $("#teacher-#{id}:hidden")
-      $('#a-notice-' + id).show()
-      $('#b-notice-' + id).hide()
+  jQuery(document).delegate '.page-admin-teacher .course a.close', 'click', ->
+    jQuery(this).closest('.course').removeClass('opened')

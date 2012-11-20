@@ -23,12 +23,13 @@
 
 @mixin mini-button{
   @include base-mini-button;
-  @include gradient(#87C221, #6F9A1F);
+  @include gradient(#8AC524, #87C221);
+  box-shadow:0 0 1px #FBFBFB inset;
   border-color:rgba(black, 0.3);
   height:30px;line-height:30px;
   padding:0 14px;
   &:hover{
-    @include gradient(lighten(#87C221, 10%), lighten(#6F9A1F, 10%));
+    @include gradient(lighten(#8AC524, 10%), lighten(#87C221, 10%));
   }
 }
 
@@ -65,12 +66,28 @@
 
 @mixin mini-button-blue{
   @include base-mini-button;
-  @include gradient(#2079C1, #1F659A);
+  @include gradient(#7FA9C8, #799FBC);
+  box-shadow:0 0 1px #FBFBFB inset;
   border-color:rgba(black, 0.3);
   height:30px;line-height:30px;
   padding:0 14px;
   &:hover{
     @include gradient(lighten(#2079C1, 10%), lighten(#1F659A, 10%));
+  }
+}
+
+@mixin mini-button-gray{
+  @include base-mini-button;
+  @include gradient(#F3F3F3, #ECECEC);
+  box-shadow:0 0 1px #FBFBFB inset;
+  border-color:rgba(black, 0.3);
+  height:30px;line-height:30px;
+  padding:0 14px;
+  color:#73797C;
+  text-shadow:none;
+  &:hover{
+    @include gradient(#F8F8F8, #F1F1F1);
+    color:#73797C;
   }
 }
 

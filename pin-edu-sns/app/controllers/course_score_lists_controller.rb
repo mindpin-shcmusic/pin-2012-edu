@@ -3,17 +3,16 @@ class CourseScoreListsController < ApplicationController
   before_filter :teacher_only, :only => [:create, :new, :course_candidates]
 
   def mine
-    @semesters = Semester.get_nav_array
+    @semesters = Semester.get_recent_semesters
   end
 
   def student_semester
-    @semester = params[:semester]
-    @score_records = current_user.course_score_records.joins(:course_score_list).where('course_score_lists.semester_value = ?', @semester)
+    @score_records = current_user.course_score_records.joins(:course_score_list).where('course_score_lists.semester_value = ?', params[:semester])
   end
 
   def index
     score_lists = sort_scope(current_user.course_score_lists).paginated(params[:page])
-    return @score_lists = score_lists.with_semester(Semester.get_by_value(params[:semester])) if params[:semester]
+    return @score_lists = score_lists.with_semester(get_semester) if params[:semester]
     @score_lists = score_lists
   end
 
@@ -30,7 +29,7 @@ class CourseScoreListsController < ApplicationController
   end
 
   def new
-    @semesters = Semester.get_nav_array
+    @semesters = Semester.get_recent_semesters
     @current_semester_courses = current_user.get_teacher_courses(:semester => current_semester)
   end
 

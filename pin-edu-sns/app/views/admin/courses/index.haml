@@ -40,4 +40,4 @@
           %a.edit{:href=>"/admin/courses/#{course.id}/edit"} 编辑
         = p.cell :name do
           %a.detail{:href=>"/admin/courses/#{course.id}"}=course.name
-        = p.cell :sid, course.cid
+        = p.cell :cid, course.cid

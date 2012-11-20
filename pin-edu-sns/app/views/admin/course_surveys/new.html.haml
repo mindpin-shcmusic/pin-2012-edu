@@ -14,7 +14,7 @@
  
     .field
       %label 学期
-      = f.select(:semester_value, Semester.get_nav_array.collect {|p| [ p.value ] }, {:prompt => true, :selected => Semester.now.value})
+      = f.select(:semester_value, Semester.get_recent_semesters.collect {|p| [ p.value ] }, {:prompt => true, :selected => Semester.now.value})
 
       = f.select(:course_id, @current_courses.collect {|p| [p[:name], p[:id]]}, {:include_blank => true}, {:data => {:placeholder => '请选择课程'}})
       

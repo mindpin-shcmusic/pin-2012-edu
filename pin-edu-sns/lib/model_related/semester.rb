@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Semester
   class UnknowSectionError < Exception; end
 
@@ -56,16 +57,11 @@ class Semester
     end
   end
 
-  def self.get_nav_array
-    now_semester = self.now
-    now_semester_prev = now_semester.prev
-    now_semester_prev_prev = now_semester_prev.prev
+  def self.get_recent_semesters
+    3.times.reduce([self.now]) do |semesters, _|
+      semesters << semesters[-1].prev
+    end
 
-    [
-      now_semester,
-      now_semester_prev,
-      now_semester_prev_prev
-    ]
   end
 
   def get_courses

@@ -8,7 +8,13 @@ module LayoutHelper
 
   def page_filters(base_url)
     content_tag :div, :class => :filters do
-      yield HeadWidget.new(self, nil, base_url)
+      yield PageFilter.new(self, base_url)
+    end
+  end
+
+  def page_semester_filters(base_url)
+    content_tag :div, :class => 'semester-filters' do
+      SemesterFilter.new(self, base_url).semester_filters
     end
   end
 
@@ -45,6 +51,10 @@ module LayoutHelper
     content_tag :span, content, :class => [css_class]
   end
 
+  def is_current_sort?(column)
+    column.to_s == params[:sort].to_s
+  end
+
 private
 
   def current_displaying_items_str_for(collection)
@@ -62,28 +72,68 @@ private
      _make_span('条结果）')].reduce(&:+)
   end
 
-  def is_current_sort?(column)
-    column.to_s == params[:sort].to_s
+  class BaseFilter < ActionView::Base
+    def initialize(context, base_url, filter_key, options={})
+      options.assert_valid_keys :filter_class
+      @context = context
+      @base_url = base_url
+      @filter_key = filter_key
+      @filter_class = options[:filter_class] || :filter
+    end
+
+    def filter(text, options={})
+      css_class = self.is_current_filter?(options) ? :current : nil
+      path = "#{@base_url}?#{@filter_key.to_s}=#{options[@filter_key]}"
+
+      link_to text, path, :class => [@filter_class, css_class]
+    end
+
+    def is_current_filter?(options={})
+      options.assert_valid_keys @filter_key, :default
+      options[@filter_key].to_s == @context.params[@filter_key].to_s || is_default_filter?(options[:default])
+    end
+
+  private
+
+    def is_default_filter?(default)
+      !@context.params[@filter_key] && default ? true : false
+    end
+
+  end
+
+  class SemesterFilter < BaseFilter
+    def initialize(context, base_url)
+      super(context, base_url, :semester, :filter_class => :semester)
+    end
+
+    def semester_filters
+      Semester.get_recent_semesters.map do |semester|
+        is_default = Semester.now == semester
+        self.filter(semester.to_s,
+                    :semester => semester.value,
+                    :default  => is_default)
+      end.reduce(&:+)
+
+    end
+
+  end
+
+  class PageFilter < BaseFilter
+    def initialize(context, base_url)
+      super(context, base_url, :tab)
+    end
+
   end
 
   class HeadWidget < ActionView::Base
-    def initialize(context, cols_hash=nil, base_url=nil)
+    def initialize(context, cols_hash=nil)
       @context = context
       @cols_hash = cols_hash
-      @base_url = base_url
     end
 
     def button(text, path, options={})
       options.assert_valid_keys :class, :'data-model'
       link_to text, path, :class => [:button, options[:class]], :'data-model' => options[:'data-model']
-    end
-
-    def filter(text, options={})
-      options.assert_valid_keys :tab, :default
-      default = !@context.params[:tab] && options[:default] ? true : false
-      current = is_current_tab?(options[:tab]) || default ? :current : nil
-
-      link_to text, "#{@base_url}?tab=#{options[:tab]}", :class => [:filter, current]
     end
 
     def cell(attr_name, text, options={})
@@ -92,6 +142,7 @@ private
       content_tag :div, :class => [:cell, col, attr_name.to_s.dasherize] do
         options[:sortable] ? @context.sortable(attr_name, text) : @context._make_span(text)
       end
+
     end
 
     def checkbox(options={})
@@ -99,16 +150,11 @@ private
       content_tag :div, :class => [:cell, col, :checkbox] do
         @context.jcheckbox :checkbox, :check, false, ''
       end
+
     end
 
     def batch_destroy(model)
       self.button '删除', 'javascript:;', :class => 'batch-destroy', :'data-model' => model.to_s
-    end
-
-  private
-
-    def is_current_tab?(tab)
-      @context.params[:tab].to_s == tab.to_s
     end
 
   end
@@ -141,7 +187,9 @@ private
       content_tag :div, :class => [:cell, col, :checkbox], :'data-model-id' => model.id do
         @context.jcheckbox :checkbox, :check, false, ''
       end
+
     end
 
   end
+
 end

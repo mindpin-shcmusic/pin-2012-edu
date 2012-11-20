@@ -24,6 +24,8 @@
 @import 'app-css/base/override';
 @import 'app-css/base/layout';
 
+@import 'app-css/sidebar/mindpin_sidebar';
+
 @import 'app-css/media_resources';
 @import 'app-css/uploader';
 @import 'app-css/auth';
@@ -45,11 +47,6 @@
 @import 'app-css/page_cells';
 
 //fushang318 added this
-@import 'app-css/mindpin_sidebar';
 @import 'app-css/dynatree/ui.dynatree';
 @import 'app-css/avatar_crop/jquery.jcrop';
 @import 'app-css/setting';
-
-//arlyxiao added this
-@import 'app-css/by_arly_xiao/students';
-
