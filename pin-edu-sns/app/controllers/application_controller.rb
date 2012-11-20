@@ -1,13 +1,18 @@
 class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   include ApplicationMethods
-  helper_method :current_semester
+  helper_method :current_semester, :get_semester
   helper :all
 
 protected
 
   def current_semester
     Semester.now
+  end
+
+  def get_semester
+    semester = params[:semester].blank?? Semester.now.value : params[:semester]
+    Semester.get_by_value(semester)
   end
 
   def sort_dir

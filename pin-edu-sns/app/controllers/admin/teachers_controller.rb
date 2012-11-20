@@ -33,10 +33,7 @@ class Admin::TeachersController < ApplicationController
   end
 
   def show
-    semester = params[:semester].blank?? Semester.now.value : params[:semester]
-    semester = Semester.get_by_value(semester)
-
-    @courses = @teacher.user.get_teacher_courses :semester => semester
+    @courses = @teacher.user.get_teacher_courses :semester => get_semester
   end
 
   def course_students

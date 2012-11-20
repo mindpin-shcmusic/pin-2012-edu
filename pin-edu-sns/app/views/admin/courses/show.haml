@@ -4,16 +4,13 @@
 - hbreadcrumb '课程维护', '/admin/courses'
 - hbreadcrumb @course.name
 
-- current_semester = params[:semester].blank? ? Semester.now : Semester.get_by_value(params[:semester])
-- teachers = @course.get_teachers(:semester=>current_semester)
+- teachers = @course.get_teachers(:semester=> get_semester)
 
 .page-admin-model-show
   .semesters-nav
     %label 学期
-    .page-tabs
-      - Semester.get_nav_array.each do |semester|
-        - class_name = current_semester == semester ? "current" : ""
-        = link_to semester.value, "/admin/courses/#{@course.id}?semester=#{semester.value}",:class => "tab #{class_name}"
+    = page_semester_filters "/admin/courses/#{@course.id}"
+
   .field.image
     = jimage @course.cover_url, :width => 160, :height => 96
   .field.name
@@ -33,7 +30,7 @@
 
     .field
       %label 教学大纲
-      = @course.syllabus.html_safe
+      = sanitize @course.syllabus
 
     .field
       %label 任课教师

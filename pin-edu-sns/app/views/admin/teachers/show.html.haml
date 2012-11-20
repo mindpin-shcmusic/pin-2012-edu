@@ -15,10 +15,7 @@
 .page-admin-model-show
   .semesters-nav
     %label 学期
-    .page-tabs
-      - Semester.get_nav_array.each do |semester|
-        - class_name = selected_semester == semester ? "current" : ""
-        = link_to semester.value, "/admin/teachers/#{@teacher.id}?semester=#{semester.value}",:class => "tab #{class_name}"
+    = page_semester_filters "/admin/teachers/#{@teacher.id}"
 
   .field.avatar
     = avatar @teacher.user, :medium
@@ -66,7 +63,6 @@
             = "等 #{students.length} 个学生"
 
             %a.student-detail{:href => "javascript: void(0);", :'data-id' => course.id} >>
-
           .field{:style => "display: none;", :id => "b-notice-#{course.id}"}
             = "总共 #{students.length} 个学生"
 
@@ -79,11 +75,3 @@
                 .student-box
                   = avatar student, :mini
                   = link_to student.real_name, admin_student_path(student)
-
-
-
-.page-admin-go-back= link_to '返回列表页', '/admin/teachers'
-
-.page-admin-edit= link_to '修改信息', "/admin/teachers/#{@teacher.id}/edit"
-.page-admin-edit= link_to '修改密码', "/admin/teachers/#{@teacher.id}/password"
- 

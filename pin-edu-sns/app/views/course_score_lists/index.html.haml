@@ -6,14 +6,7 @@
     = p.button '添加课程成绩单', new_course_score_list_path, :class => 'create'
 
   #学期过滤
-  .page-tabs
-    :ruby
-      semesters = Semester.get_nav_array
-      klass1 = params[:semester].blank? ? 'current' : ''
-
-    - semesters.each do |semester|
-      - klass2 = params[:semester] == semester.value ? 'current' : ''
-      %a.tab{:href=>course_score_lists_path(:semester => semester.value), :class => klass2} #{semester.to_s}
+  = page_semester_filters course_score_lists_path
 
 :ruby
   cols_hash = {
