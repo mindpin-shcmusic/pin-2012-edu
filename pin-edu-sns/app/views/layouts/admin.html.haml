@@ -9,7 +9,6 @@
     %title= title
     = csrf_meta_tags
     = stylesheet_link_tag 'application'
-    = stylesheet_link_tag '/fcbkListSelection/fcbklistselection.css'
 
   %body.echo.gray
     - if logged_in?
@@ -33,5 +32,4 @@
     = render 'layouts/parts/current_user_js_info'
     = javascript_include_tag '/kindeditor/kindeditor'
     = javascript_include_tag 'application'
-    = javascript_include_tag '/fcbkListSelection/fcbklistselection.min.js'
     = yield :javascript
