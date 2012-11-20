@@ -51,11 +51,12 @@
         :ruby
           students = course.get_current_students_of(@teacher.user)
           count = students.count
+          course_teacher = CourseTeacher.get_by_params(course, Semester.now, @teacher.user)
 
         .course
           .course-info
             .name= link_to course.name, "/admin/courses/#{course.id}"
-            .ops= link_to "分配学生", ""
+            .ops= link_to "分配学生", "/admin/course_teachers/#{course_teacher.id}/select_students_page"
 
           .students-brief
             - students[0..4].each do |student|
