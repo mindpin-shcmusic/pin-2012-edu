@@ -1,0 +1,97 @@
+.page-navbar{
+  position:fixed;
+  left:0px;top:0px;bottom:0px;
+  width:215px;
+  padding-top:65px;
+  padding-left:0px;
+  z-index:9;
+
+  .group{
+    margin-bottom:10px;
+
+    .title{
+      background-color:#265672;
+      box-shadow:0 1px 0 #4B748B inset;
+      @include border-radius(0 5px 0 0);
+      border:1px solid #284352;
+      border-left:none;
+
+      color:#fff;
+      padding-left:20px;
+      height:39px;line-height:39px;
+    }
+
+    .items{
+      padding-top:10px;
+      padding-bottom:10px;
+      background-color:#F2F2F2;
+      border-right:solid 1px #b1b1b1;
+      border-bottom:solid 1px #b1b1b1;
+      @include border-radius(0 0 5px 0);
+
+      &:after{
+        content:"";
+        display:block;
+        height:10px;
+        border-top:1px solid #DADDE0;
+        box-shadow:0 1px 0 #FBFBFB inset;
+      }
+
+      .item{
+        a.lv1{
+          display:block;
+          height:52px;line-height:52px;
+          background-color:#F2F2F2;
+          border-top:1px solid #DADDE0;
+          box-shadow:0 1px 0 #FBFBFB inset;
+          font-size:15px;
+          padding-left:55px;
+
+          color:#333;
+          text-shadow:0 1px 1px #fff;
+
+          @include transition(background-color 0.5s ease 0s);
+
+          &:hover{background-color:#f9f9f9}
+        }
+
+        &.current a.lv1{
+          background-color:#C8E4F3;
+          box-shadow:none;
+        }
+
+        &.current .subitems{
+          display:block;
+        }
+        .subitems{
+          display:none;
+          background-color:#fff;
+          border-top:1px solid #D1D1D1;
+          box-shadow:0 4px 8px rgba(black, 0.1) inset;
+          overflow:hidden;
+          padding:8px 0;
+
+          .subitem{
+
+            a.lv2{
+              display:block;
+              height:30px;line-height:30px;
+              padding-left:65px;
+              color:#666;
+
+              @include transition(background-color 0.5s ease 0s);
+
+              &:hover{background-color:#f0f5f9;}
+            }
+
+            &.current a.lv2{
+              background-color:#f0f5f9;
+              font-weight:bold;
+            }
+
+          }
+        }
+      }
+    }
+  }
+}
