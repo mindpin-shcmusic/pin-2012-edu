@@ -47,6 +47,30 @@ class Course < ActiveRecord::Base
     end
   end
 
+  def set_teachers(options)
+    raise InvalidCourseParams.new if options[:semester].blank? || options[:teacher_users].nil?
+    old_teacher_users = self.get_teachers :semester => options[:semester]
+    new_teacher_users = options[:teacher_users]
+
+    remove_teacher_users = old_teacher_users - new_teacher_users
+    add_teacher_users = new_teacher_users - old_teacher_users
+    # 删除
+    remove_teacher_users.each do |user|
+      course_teacher = self.course_teachers.where(
+        :semester_value => options[:semester].value,
+        :teacher_user_id => user.id
+      ).first
+      course_teacher.destroy
+    end
+    # 增加
+    add_teacher_users.each do |user|
+      self.add_teacher(
+        :semester => options[:semester],
+        :teacher_user => user
+      )
+    end
+  end
+
   def add_teacher(options)
     raise InvalidCourseParams.new if options[:semester].blank? || options[:teacher_user].blank?
     CourseTeacher.create(

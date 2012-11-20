@@ -83,14 +83,14 @@ class Admin::CoursesController < ApplicationController
   end
 
   def add_teacher
-    users = params[:user_ids].map{|id|User.find(id)}
+    users = params[:user_ids].split(',').map{|id|User.find(id)}
     semester = Semester.now
-    users.each do |user|
-      @course.add_teacher(
-        :semester => semester,
-        :teacher_user => user
-      )
-    end
+
+    @course.set_teachers(
+      :semester => semester,
+      :teacher_users => users
+    )
+
     redirect_to "/admin/courses/#{@course.id}"
   end
 end

@@ -69,6 +69,24 @@ describe Course do
     teachers_2012_b.include?(teacher_zhao).should == true
   end
 
+  it '能够在一个学期的某个课程下设置任课老师' do
+    course_3d.set_teachers :semester     => semester_2012_a,
+                          :teacher_users => [teacher_zhang,teacher_wang]
+
+    teachers_2012_a = course_3d.get_teachers(:semester => semester_2012_a)
+    teachers_2012_a.length.should == 2
+    teachers_2012_a.include?(teacher_zhang).should == true
+    teachers_2012_a.include?(teacher_wang).should == true
+
+    course_3d.set_teachers :semester     => semester_2012_a,
+                          :teacher_users => [teacher_li,teacher_wang]
+
+    teachers_2012_a = course_3d.get_teachers(:semester => semester_2012_a)
+    teachers_2012_a.length.should == 2
+    teachers_2012_a.include?(teacher_li).should == true
+    teachers_2012_a.include?(teacher_wang).should == true             
+  end
+
   it '能够在指定的学期下，给一个学生指定他要上的课，以及指定任课老师' do
     course_3d.add_teacher :semester     => semester_2012_a,
                           :teacher_user => teacher_zhang
