@@ -15,47 +15,38 @@
     = p.button '修改密码', "/admin/teachers/#{@teacher.id}/password"
 
 .page-model-show
-  = page_semester_filters '/admin/course_surveys'
-
   .page-admin-teacher
+    = page_field :'base-info', :title=>'教师基础信息' do
+      .base
+        .avatar= avatar @teacher.user, :medium
+        .name= @teacher.real_name
+        .tid
+          %span 工号：
+          %span= @teacher.tid
+      .detail
+        .f
+          .k 系统用户名：
+          .v= @teacher.user.name
+        .f
+          .k 邮箱：
+          .v= @teacher.user.email
 
-    .field.avatar
-      = avatar @teacher.user, :medium
+    = page_field :desc, :title=>'教师简介' do
+      = sanitize @teacher.description
 
-    .data
-      .field.name
-        %label 教师姓名
-        .v= @teacher.real_name
+    = page_semester_filters '/admin/course_surveys'
 
-      .field.tid
-        %label 教师编号 
-        .v= @teacher.tid
-
-      .field.user
-        %label 对应用户
-        .v= @teacher.user.name
-
-      .field.email
-        %label 对应邮箱
-        .v= @teacher.user.email
-
-      .field.description
-        %label 教师介绍
-        .v= sanitize @teacher.description
-
-    
-    .field.courses
-      .title 该学期下负责的课程
-
+    = page_field :courses, :title=>'该学期下负责的课程' do
       - @courses.each do |course|
         :ruby
           students = course.get_current_students_of(@teacher.user)
           count = students.count
+          course_teacher = CourseTeacher.get_by_params(course, Semester.now, @teacher.user)
 
         .course
           .course-info
             .name= link_to course.name, "/admin/courses/#{course.id}"
-            .ops= link_to "分配学生", ""
+            .ops= link_to "分配学生", "/admin/course_teachers/#{course_teacher.id}/select_students_page"
 
           .students-brief
             - students[0..4].each do |student|
