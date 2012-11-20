@@ -6,3 +6,11 @@ pie.load ->
 
   jQuery(document).delegate '.page-admin-teacher .course a.close', 'click', ->
     jQuery(this).closest('.course').removeClass('opened')
+
+
+
+  jQuery(document).delegate '.page-admin-course .teacher a.open', 'click', ->
+    jQuery(this).closest('.teacher').addClass('opened')
+
+  jQuery(document).delegate '.page-admin-course .teacher a.close', 'click', ->
+    jQuery(this).closest('.teacher').removeClass('opened')
