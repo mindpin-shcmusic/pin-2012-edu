@@ -47,7 +47,6 @@ body{
   .page-content{
     margin-top:50px;
     margin-left:230px;
-    padding:20px 0;
     margin-bottom:40px;
   }
 }
@@ -104,6 +103,13 @@ body{
       }
     }
   }
+}
+
+.page-unfixed-head{
+  @extend .page-fixed-head;
+  position:static;
+  left:auto;top:auto;right:auto;
+  width:auto;
 }
 
 @mixin cell-cols{
@@ -303,4 +309,11 @@ body{
       }
     }
   }
+}
+
+.page-model-show{
+  border-left:solid 1px #b1b1b1;
+  border-bottom:solid 1px #b1b1b1;
+  padding:15px;
+  background-color:#fff;
 }

@@ -318,13 +318,113 @@
   float:left;margin-right:10px;
 }
 
-.page-admin-model-show{
-  .teachers{
-    .teacher{
-      @include floatfix;
-      .field{
-        float:left;
-        margin-right:10px;
+
+.page-admin-teacher{
+  width:720px;
+
+  .field>.title{
+    height:29px;line-height:29px;
+    border-top:solid 1px #e2e2e2;
+    background-color:#F2F2F2;
+    padding:0 10px;
+    font-weight:bold;
+    margin-top:30px;
+    color:#666;
+  }
+
+  .field.courses{
+    .course{
+      border:solid 1px #EDEDED;
+      margin-top:15px;
+
+      .course-info{
+        border-bottom:solid 1px #ededed;
+        background-color:#F9F9F9;
+        height:24px;line-height:24px;
+        padding:4px 4px 4px 10px;
+        @include floatfix;
+
+        .name{
+          float:left;
+        }
+        .ops{
+          float:right;
+          a{
+            @include mini-button-blue;
+            height:22px;line-height:22px;
+            padding:0 7px;
+            font-size:12px !important;
+          }
+        }
+      }
+
+      .students-brief{display:block;}
+      .students-detail{display:none;}
+
+      &.opened{
+        .students-brief{display:none;}
+        .students-detail{display:block;}
+      }
+
+      .students-brief{
+        @include floatfix;
+        padding:10px;
+
+        .student{
+          float:left;
+          width:32px;height:32px;
+          margin-right:10px;
+        }
+
+        .desc{
+          float:left;
+          height:32px;line-height:32px;
+        }
+
+        a.open{
+          @include mini-button-gray;
+          float:right;
+          height:22px;line-height:22px;
+          padding:0 7px;
+          font-size:12px !important;
+          margin-top:4px;
+        }
+      }
+
+      .students-detail{
+        .h{
+          @include floatfix;
+          padding:10px;
+          border-bottom:solid 1px #ededed;
+          .desc{
+            float:left;
+            height:32px;line-height:32px;
+          }
+          a.close{
+            @include mini-button-gray;
+            float:right;
+            height:22px;line-height:22px;
+            padding:0 7px;
+            font-size:12px !important;
+            margin-top:4px;
+          }
+        }
+
+        .students{
+          @include floatfix;
+          padding:5px 0 0 5px;
+          .student{
+            @include floatfix;
+            float:left;
+            border:solid 1px #ededed;
+            background-color:#F9F9F9;
+            height:42px;line-height:42px;
+            width:110px;
+            margin:0 5px 5px 0;
+            .avatar{float:left;margin:5px;}
+            .name{margin-left:37px;}
+          }
+        }
       }
     }
   }
