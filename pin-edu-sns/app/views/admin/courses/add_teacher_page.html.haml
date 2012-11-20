@@ -6,13 +6,38 @@
 - hbreadcrumb '增加任课教师'
 
 - selected_teacher_users = @course.get_teachers(:semester=>Semester.now)
-- selected_teachers = selected_teacher_users.map{|user|user.teacher}
-- teachers = Teacher.all - selected_teachers
+- selected_teacher_user_ids = selected_teacher_users.map{|user|user.id}
+
 .page-admin-course-add-teacher
   = form_tag "/admin/courses/#{@course.id}/add_teacher", :method=>:put do
-    - teachers.each do |teacher|
-      = check_box_tag "user_ids[]", teacher.user_id
-      %label= teacher.real_name
+
+    .list-selector
+      .search
+        .field
+          %input.search{:type=>'text'}
+        .desc
+          小提示：可以输入中文或拼音来快速查找
+      .filter
+        %a.all.view{:href=>'javascript:;'} 全部
+        %a.selected{:href=>'javascript:;'} 已选
+        %a.unselected{:href=>'javascript:;'} 未选
+      .selector
+        .list
+          - Teacher.all.each do |teacher|
+            :ruby
+              selected = selected_teacher_user_ids.include?(teacher.user_id)
+
+              klass = selected ? 'selected' : ''
+              html_data = {
+                :id => teacher.user_id,
+                :name => teacher.real_name
+              }
+
+            .item{:class=>klass, :data=>html_data}
+              .name= teacher.real_name
+      - selected_ids_str = selected_teacher_user_ids*','
+      %input.ids{:name=>:user_ids, :type=>'hidden', :value=>selected_ids_str}
+
     .field.submit
       = jfsubmit '确定'
       = jfcancel '取消'
