@@ -6,111 +6,115 @@
 
 - teachers = @course.get_teachers(:semester=> get_semester)
 
+  
+
 .page-admin-model-show
-  .semesters-nav
-    %label 学期
-    = page_semester_filters "/admin/courses/#{@course.id}"
 
-  .field.image
-    = jimage @course.cover_url, :width => 160, :height => 96
-  .field.name
-    %label 课程名
-    .v= @course.name
-  .field.cid
-    %label 课程编号
-    .v= @course.cid
-  .field.desc
-    %label 课程简介
-    .v= sanitize @course.desc
+  .page-admin-course
 
+    .semesters-nav
+      %label 学期
+      = page_semester_filters "/admin/courses/#{@course.id}"
 
-  .detail-info
-    .field
-      %label 基础信息
-
-    .field
-      %label 教学大纲
-      = sanitize @course.syllabus
-
-    .field
-      %label 任课教师
-
-      .add-teacher
-        - if current_semester == Semester.now
-          = link_to "增加任课教师","/admin/courses/#{@course.id}/add_teacher_page"
-
-      .teachers
-        - if teachers.blank?
-          .blank 目前列表内没有内容
-        - else
-          - teachers.each do |user|
-            :ruby
-              students = @course.get_students(:semester => current_semester,:teacher_user => user)
-              count = students.count
-              course_teacher = CourseTeacher.get_by_params(@course, current_semester, user)
-
-            .teacher-student
-              = avatar user, :mini
-              = user.teacher.real_name
-              = user.teacher.tid
-              
-              = # render '/admin/courses/parts/course_location', :course_teacher => course_teacher
-              = link_to "分配学生", "/admin/course_teachers/#{course_teacher.id}/select_students_page"
-              = link_to "取消任课", "/admin/course_teachers/#{course_teacher.id}",:method=>:delete,:confirm => "确定取消该教师的任课吗?"
-
-            .field{:id => "a-notice-#{user.id}"}
-              - students[0..3].each do |student|
-                .student-box
-                  = avatar student, :mini
-                  = link_to student.real_name, admin_student_path(student)
-
-              = "等 #{students.length} 个学生"
-
-              %a.student-detail{:href => "javascript: void(0);", :'data-id' => user.id} >>
+    .field.image
+      = jimage @course.cover_url, :width => 160, :height => 96
+    .field.name
+      %label 课程名
+      .v= @course.name
+    .field.cid
+      %label 课程编号
+      .v= @course.cid
+    .field.desc
+      %label 课程简介
+      .v= sanitize @course.desc
 
 
-            .field{:style => "display: none;", :id => "b-notice-#{user.id}"}
-              = "总共 #{count} 个学生"
+    .detail-info
+      .field
+        %label 基础信息
 
-              %a.student-detail{:href => "javascript: void(0);", :'data-id' => user.id} >>
+      .field
+        %label 教学大纲
+        = sanitize @course.syllabus
 
-            .students{:style => "display: none;", :id => "teacher-#{user.id}"}
-              .v
-                - students.each do |student|
-                  .student-box
-                    = avatar student, :mini
-                    = link_to student.real_name, admin_student_path(student)
+      .field
+        %label 任课教师
+
+        .add-teacher
+          - if current_semester == Semester.now
+            = link_to "增加任课教师","/admin/courses/#{@course.id}/add_teacher_page"
+
+        .teachers
+          - if teachers.blank?
+            .blank 目前列表内没有内容
+          - else
+            - teachers.each do |user|
+              :ruby
+                students = @course.get_students(:semester => current_semester,:teacher_user => user)
+                count = students.count
+                course_teacher = CourseTeacher.get_by_params(@course, current_semester, user)
 
 
+              .teacher
+                .student-info
+                  .name
+                    = avatar user, :mini
+                    = link_to user.teacher.real_name, "/admin/teachers/#{user.teacher.id}"
+                    = user.teacher.tid
+                  .ops
+                    = link_to "取消任课", "/admin/course_teachers/#{course_teacher.id}", :method=>:delete,:confirm => "确定取消该教师的任课吗?"
+                    = link_to "分配学生", ""
+                    = # render '/admin/courses/parts/course_location', :course_teacher => course_teacher
 
-    .field
-      %label 课程照片
+                .students-brief
+                  - students[0..4].each do |student|
+                    .student= avatar_link student, :tiny
+                  .desc= "等 #{count} 个学生"
 
-      .detail.images
-        .upload= jupload_button '上传照片'
-        = render '/admin/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_IMAGE).with_semester(current_semester)
-        = render '/admin/courses/parts/uploader', :course=>@course, :kind=>:image, :semester => current_semester
-      .field.select-cover
-        = link_to '选择课程封面图片', "/admin/courses/#{@course.id}/select_cover_page"
+                  %a.open{:href=>'javascript:;'} 展开
+
+                .students-detail
+                  .h
+                    .desc= "总共 #{count} 个学生"
+                    %a.close{:href=>'javascript:;'} 关闭
+
+                  .students
+                    - students.each do |student|
+                      .student
+                        .avatar= avatar student, :tiny
+                        .name= link_to student.real_name, admin_student_path(student)
 
 
 
-    .field
-      %label 课程课件
 
-      .detail.images
-        .upload= jupload_button '上传课件'
-        = render '/admin/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_COURSEWARE).with_semester(current_semester)
-        = render '/admin/courses/parts/uploader', :course=>@course, :kind=>:courseware, :semester => current_semester
+      .field
+        %label 课程照片
+
+        .detail.images
+          .upload= jupload_button '上传照片'
+          = render '/admin/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_IMAGE).with_semester(current_semester)
+          = render '/admin/courses/parts/uploader', :course=>@course, :kind=>:image, :semester => current_semester
+        .field.select-cover
+          = link_to '选择课程封面图片', "/admin/courses/#{@course.id}/select_cover_page"
 
 
-    .field
-      %label 课程音频
 
-      .detail.images
-        .upload= jupload_button '上传音频'
-        = render '/admin/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_AUDIO).with_semester(current_semester)
-        = render '/admin/courses/parts/uploader', :course=>@course, :kind=>:audio, :semester => current_semester
+      .field
+        %label 课程课件
+
+        .detail.images
+          .upload= jupload_button '上传课件'
+          = render '/admin/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_COURSEWARE).with_semester(current_semester)
+          = render '/admin/courses/parts/uploader', :course=>@course, :kind=>:courseware, :semester => current_semester
+
+
+      .field
+        %label 课程音频
+
+        .detail.images
+          .upload= jupload_button '上传音频'
+          = render '/admin/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_AUDIO).with_semester(current_semester)
+          = render '/admin/courses/parts/uploader', :course=>@course, :kind=>:audio, :semester => current_semester
 
 
 
