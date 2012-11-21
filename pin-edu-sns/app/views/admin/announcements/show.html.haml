@@ -9,7 +9,6 @@
 - course_ids = expression.blank? ? [] : expression[:courses]
 - team_ids = expression.blank? ? [] : expression[:teams]
 
-
 .page-unfixed-head
   = page_buttons do |p|
     = p.button '返回列表页', '/admin/announcements'
@@ -49,6 +48,5 @@
               %label
                 = check_box_tag 'team_ids[]', team.id, is_announced, :disabled => is_announced
                 = team.name
-
 
 
