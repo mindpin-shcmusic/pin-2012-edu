@@ -7,7 +7,9 @@
 - rule = @announcement.announcement_rule
 - expression = rule ? rule.expression : {}
 - course_ids = expression.blank? ? [] : expression[:courses]
+- courses = course_ids.map{|id|Course.find_by_id(id)}.compact
 - team_ids = expression.blank? ? [] : expression[:teams]
+- teams = team_ids.map{|id|Team.find_by_id(id)}.compact
 
 .page-unfixed-head
   = page_buttons do |p|

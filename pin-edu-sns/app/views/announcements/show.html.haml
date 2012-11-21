@@ -1,26 +1,31 @@
 - rule = @announcement.announcement_rule
 - expression = rule ? rule.expression : {}
 - course_ids = expression.blank? ? [] : expression[:courses]
+- courses = course_ids.map{|id|Course.find_by_id(id)}.compact
 
 = render 'nav'
 - hbreadcrumb @announcement.title
 
-.page-admin-go-back= link_to '返回列表页', '/announcements'
+.page-unfixed-head
+  = page_buttons do |p|
+    = p.button '返回列表页', '/announcements'
 
-.page-announcement-show
-  %h1.title= @announcement.title
-  - creator = @announcement.creator
-  .creator 发布人: #{user_link creator}
-  .content= @announcement.content
-  .receivers-selector
-    
+.page-model-show
+  = page_field :title, :title => '标题' do
+    %h1.title= @announcement.title
+  = page_field :creator, :title => '发布人' do
+    = user_link @announcement.creator
+  = page_field :content, :title => '内容' do
+    .content= @announcement.content
+    .receivers-selector
+
     - if current_user == @announcement.creator
-      = form_tag announce_announcement_path(@announcement), :method => :put do
+      .assign
+        %label 通知范围
         .courses
-          请选择要发布通知的课程
-          - creator.get_teacher_courses(:semester => Semester.now).each do |course|
-            - is_announced = course_ids.include?(course.id)
-            %label
-              = check_box_tag 'course_ids[]', course.id, is_announced, :disabled => is_announced
-              = course.name
-        = jfsubmit '发布通知'
+          .info 课程
+          - if courses.blank?
+            没有选择课程
+          - else
+            - courses.each do |course|
+              .name= course.name

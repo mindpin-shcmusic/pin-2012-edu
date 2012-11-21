@@ -12,5 +12,37 @@
     .field
       %label 正文
       = f.text_area :content, :class => 'kind-editor'
+
+    .assign
+      .page-float-box-list-selector.course
+        %div 选择发送的课程
+        = jfbox_link :courses, '已选择了0个'
+        = jfbox :courses, '选择要发送的课程' do
+          .list-selector
+            .search
+              .field
+                %input.search{:type=>'text'}
+              .desc
+                小提示：可以输入中文或拼音来快速查找
+            .filter
+              %a.all.view{:href=>'javascript:;'} 全部
+              %a.selected{:href=>'javascript:;'} 已选
+              %a.unselected{:href=>'javascript:;'} 未选
+            .selector
+              .list
+                - current_user.get_teacher_courses(:semester => Semester.now).each do |course|
+                  :ruby
+                    html_data = {
+                      :id => course.id,
+                      :name => course.name
+                    }
+
+                  .item{:data=>html_data}
+                    .name= course.name
+            %input.ids{:name=>:course_ids, :type=>'hidden', :value=>''}
+
+            %a.submit-fbox{:href=>'javascript:;'} 确定
+            %a.close-fbox{:href=>'javascript:;'} 取消
+
     .field.submit
-      = jfsubmit '下一步'
+      = jfsubmit '确定'

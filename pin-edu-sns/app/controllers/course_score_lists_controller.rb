@@ -3,11 +3,7 @@ class CourseScoreListsController < ApplicationController
   before_filter :teacher_only, :only => [:create, :new, :course_candidates]
 
   def mine
-    @semesters = Semester.get_recent_semesters
-  end
-
-  def student_semester
-    @score_records = current_user.course_score_records.joins(:course_score_list).where('course_score_lists.semester_value = ?', params[:semester])
+    @score_records = current_user.course_score_records.joins(:course_score_list).where('course_score_lists.semester_value = ?', get_semester.value)
   end
 
   def index

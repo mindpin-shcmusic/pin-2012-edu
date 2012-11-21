@@ -4,14 +4,17 @@
 - hbreadcrumb '导师双向选择', '/mentor_students'
 - hbreadcrumb @mentor_student.mentor_note.title
 
+.page-unfixed-head
+  = page_buttons do |p|
+    = p.button '返回列表页', '/admin/teachers'
 
-.page-course-show
-  .base-info
+.page-model-show
+  = page_field :'base-info', :title => "基础信息" do
     .field
-      %span 名字
+      %label 学生名字
       .name= @mentor_student.user.real_name
 
-  .detail-info
+  = page_field :details, :title => "支援详情" do
     .field
       %label 第一志愿
 
@@ -24,27 +27,27 @@
         = @mentor_student.mentor_course_1.user.real_name
 
 
-      .field
-        %label 第二志愿
+    .field
+      %label 第二志愿
 
-        .field.need
-          %span 课程
-          = @mentor_student.mentor_course_2.course
+      .field.need
+        %span 课程
+        = @mentor_student.mentor_course_2.course
 
-        .field.need
-          %span 导师
-          = @mentor_student.mentor_course_2.user.real_name
+      .field.need
+        %span 导师
+        = @mentor_student.mentor_course_2.user.real_name
 
- 
 
-      .field
-        %label 第三志愿
 
-        .field.need
-          %span 课程
-          = @mentor_student.mentor_course_2.course
+    .field
+      %label 第三志愿
 
-        .field.need
-          %span 导师
-          = @mentor_student.mentor_course_2.user.real_name
+      .field.need
+        %span 课程
+        = @mentor_student.mentor_course_2.course
+
+      .field.need
+        %span 导师
+        = @mentor_student.mentor_course_2.user.real_name
 
