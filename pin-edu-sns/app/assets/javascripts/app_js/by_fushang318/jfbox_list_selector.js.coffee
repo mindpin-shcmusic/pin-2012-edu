@@ -1,20 +1,21 @@
 pie.load ->
-  $list_selector_box = jQuery('.page-float-box-list-selector')
-  $list_selector = $list_selector_box.find('.list-selector')
+  jQuery('.page-float-box-list-selector').each ->
+    $list_selector_float_box = jQuery(this)
 
-  if $list_selector_box.exists()
-    $jfbox_link = $list_selector_box.find('.page-float-box-link[data-jfbox-id=courses]')
-    $jfbox = $list_selector_box.find('.page-float-box[data-jfbox-id=courses]')
+    $list_selector = $list_selector_float_box.find('.list-selector')
 
-    $list_selector_box.find('.submit-fbox').on 'click', ->
+    $jfbox_link = $list_selector_float_box.find('.page-float-box-link[data-jfbox-id]')
+    $jfbox = $list_selector_float_box.find('.page-float-box[data-jfbox-id]')
+
+    jfbox_id = $jfbox_link.attr('data-jfbox-id')
+
+    $list_selector_float_box.find('.submit-fbox').on 'click', ->
       ids = $list_selector.data('list_selector').get_selected_ids()
       $jfbox_link.data('ids',ids)
-      pie.close_fbox('courses')
+      pie.close_fbox(jfbox_id)
 
-    $list_selector_box.find('.close-fbox').on 'click', ->
-      pie.close_fbox('courses')
-
-    $jfbox.on 'mindpin:open-fbox', ->
+    $list_selector_float_box.find('.close-fbox').on 'click', ->
+      pie.close_fbox(jfbox_id)
 
     $jfbox.on 'mindpin:close-fbox', ->
       selector = $list_selector.data('list_selector')
