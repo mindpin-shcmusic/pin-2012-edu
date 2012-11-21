@@ -76,66 +76,7 @@ MindpinSidebar::Base.config do
   end
 
   rule :teacher do
-    group :resources, :name => '媒体资源…' do
-      nav :media_resources, :name => '我的文件夹', :url => '/file' do
-        controller :media_resources
-      end
-
-      nav :media_shares, :name => '收到的共享', :url => '/media_shares' do
-        controller :media_shares
-      end
-
-      nav :public_resources, :name => '公共资源库', :url => '/public_resources' do
-        controller :public_resources
-      end
-    end
-
-    group :teaching, :name => '教学功能…' do
-      nav :dashboard, :name => '我的工作台', :url => '/dashboard' do
-        controller :index, :only => :dashboard
-      end
-
-      nav :curriculum, :name => '我的课程表', :url => '/courses/for_teacher' do
-        controller :courses
-      end
-
-      nav :homeworks, :name => '布置的作业和实践', :url => '/homeworks' do
-        controller :homeworks
-        controller :homework_assigns
-      end
-
-      nav :score_lists, :name => '成绩单', :url => '/score_lists' do
-        controller :course_score_lists
-      end
-
-      nav :course_surveys, :name => '课程调查', :url => '/course_surveys' do
-        controller :course_surveys
-      end
-
-      nav :questions, :name => '在线问答', :url => '/questions' do
-        controller :questions
-      end
-    end
-
-    group :interactive, :name => '评论互动…' do
-      nav :comments, :name => '收到的评论', :url => '/comments/received' do
-        controller :comments
-      end
-
-      nav :announcements, :name => '通知', :url => '/announcements' do
-        controller :announcements
-      end
-    end
-  end
-
-  # ------------------
-  # 学生
-  rule :student do
-    group :resources, :name => '功能选择…' do
-
-      nav :dashboard, :name => '我的工作台', :url => '/dashboard' do
-        controller :index, :only => :dashboard
-      end
+    group :resources, :name => '教师功能…' do
 
       nav :media_resources, :name => '媒体资源', :url => '/file' do
         controller :media_resources
@@ -152,44 +93,110 @@ MindpinSidebar::Base.config do
           controller :public_resources
         end
       end
-    end
 
+      nav :dashboard, :name => '教学工作台', :url => '/dashboard' do
+        controller :index, :only => :dashboard
 
-    group :teaching, :name => '教学功能…' do
+        subnav :dashboard, :name => '信息概览', :url => '/dashboard' do
+          controller :index, :only => :dashboard
+        end
 
+        subnav :curriculum, :name => '我的课程表', :url => '/courses/for_teacher' do
+          controller :courses
+        end
 
-      nav :curriculum, :name => '我的课程表', :url => '/courses/for_student' do
-        controller :courses
+        subnav :homeworks, :name => '布置的作业和实践', :url => '/homeworks' do
+          controller :homeworks
+          controller :homework_assigns
+        end
+
+        subnav :score_lists, :name => '成绩单', :url => '/score_lists' do
+          controller :course_score_lists
+        end
+
+        subnav :course_surveys, :name => '课程调查', :url => '/course_surveys' do
+          controller :course_surveys
+        end
+
+        subnav :questions, :name => '在线问答', :url => '/questions' do
+          controller :questions
+        end
       end
 
-      nav :homeworks, :name => '我的作业和实践', :url => '/homeworks' do
-        controller :homeworks
-      end
-
-      nav :score_lists, :name => '成绩单', :url => '/score_lists/mine' do
-        controller :score_lists
-      end
-
-      nav :course_surveys, :name => '课程调查', :url => '/course_surveys' do
-        controller :course_surveys
-      end
-
-      nav :questions, :name => '在线问答', :url => '/questions' do
-        controller :questions
-      end
-
-      nav :mentor_students, :name => '导师双向选择', :url => '/mentor_students' do
-        controller :mentor_students
-      end
-    end
-
-    group :interactive, :name => '评论与通知…' do
-      nav :comments, :name => '收到的评论', :url => '/comments/received' do
-        controller :comments
-      end
-
-      nav :announcements, :name => '通知', :url => '/announcements' do
+      nav :notice, :name => '系统通知', :url => '/announcements' do
         controller :announcements
+
+        subnav :announcements, :name => '通知', :url => '/announcements' do
+          controller :announcements
+        end
+
+        subnav :comments, :name => '收到的评论', :url => '/comments/received' do
+          controller :comments
+        end
+      end
+    end
+  end
+
+  # ------------------
+  # 学生
+  rule :student do
+    group :resources, :name => '学生功能…' do
+      nav :media_resources, :name => '媒体资源', :url => '/file' do
+        subnav :my_resources, :name => '我的文件夹', :url => '/file' do
+          controller :media_resources
+        end
+
+        subnav :media_shares, :name => '收到的共享', :url => '/media_shares' do
+          controller :media_shares
+        end
+
+        subnav :public_resources, :name => '公共资源库', :url => '/public_resources' do
+          controller :public_resources
+        end
+      end
+
+      nav :dashboard, :name => '我的工作台', :url => '/dashboard' do
+        controller :index, :only => :dashboard
+
+        subnav :dashboard, :name => '信息概览', :url => '/dashboard' do
+          controller :index, :only => :dashboard
+        end
+
+        subnav :curriculum, :name => '我的课程表', :url => '/courses/for_student' do
+          controller :courses
+        end
+
+        subnav :homeworks, :name => '我的作业和实践', :url => '/homeworks' do
+          controller :homeworks
+        end
+
+        subnav :score_lists, :name => '成绩单', :url => '/score_lists/mine' do
+          controller :score_lists
+        end
+
+        subnav :course_surveys, :name => '课程调查', :url => '/course_surveys' do
+          controller :course_surveys
+        end
+
+        subnav :questions, :name => '在线问答', :url => '/questions' do
+          controller :questions
+        end
+
+        subnav :mentor_students, :name => '导师双向选择', :url => '/mentor_students' do
+          controller :mentor_students
+        end
+      end
+
+      nav :notice, :name => '系统通知', :url => '/announcements' do
+        controller :announcements
+
+        subnav :announcements, :name => '通知', :url => '/announcements' do
+          controller :announcements
+        end
+
+        subnav :comments, :name => '收到的评论', :url => '/comments/received' do
+          controller :comments
+        end
       end
     end
   end
