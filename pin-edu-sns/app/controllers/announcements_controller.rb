@@ -27,9 +27,8 @@ class AnnouncementsController < ApplicationController
   def create
     @announcement = current_user.created_announcements.build params[:announcement]
     if @announcement.save
-      courses = params[:course_ids] || []
-      teams = params[:team_ids] || []
-      @announcement.announce_to(:courses => courses, :teams => teams)
+      courses = (params[:course_ids]||'').split(',')
+      @announcement.announce_to(:courses => courses)
       return redirect_to @announcement 
     end
     render :action => :new
