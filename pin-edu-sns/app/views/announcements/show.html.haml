@@ -6,15 +6,19 @@
 = render 'nav'
 - hbreadcrumb @announcement.title
 
-.page-admin-go-back= link_to '返回列表页', '/announcements'
+.page-unfixed-head
+  = page_buttons do |p|
+    = p.button '返回列表页', '/announcements'
 
-.page-announcement-show
-  %h1.title= @announcement.title
-  - creator = @announcement.creator
-  .creator 发布人: #{user_link creator}
-  .content= @announcement.content
-  .receivers-selector
-    
+.page-model-show
+  = page_field :title, :title => '标题' do
+    %h1.title= @announcement.title
+  = page_field :creator, :title => '发布人' do
+    = user_link @announcement.creator
+  = page_field :content, :title => '内容' do
+    .content= @announcement.content
+    .receivers-selector
+
     - if current_user == @announcement.creator
       .assign
         %label 通知范围

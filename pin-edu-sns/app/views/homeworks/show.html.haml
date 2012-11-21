@@ -5,40 +5,41 @@
 :ruby
   attachments = @homework.homework_teacher_attachments
 
-.page-homework-show
-  .common-info
+.page-unfixed-head
+  = page_buttons do |p|
+    = p.button '返回列表页', '/homeworks'
+
+.page-model-show
+  = page_field :'base-info', :title => '作业信息' do
     .head
       .title= @homework.title
       .user #{user_link @homework.creator} 创建，#{jtime @homework.created_at}
 
-    .content
-      .title #{@homework.kind_str}要求
-      //.ct= jct @homework.content
-      .ct= sanitize @homework.content
+  = page_field :requirements, :title => '作业要求' do
+    .ct= sanitize @homework.content
 
-    .deadline
-      .title 过期时间
-      .time= jtimeformat @homework.deadline
-      .state
-        = Time.now < @homework.deadline ? '未过期' : '已过期'
+  = page_field :deadline, :title => '作业过期时间' do
+    .time= jtimeformat @homework.deadline
+    .state= Time.now < @homework.deadline ? '未过期' : '已过期'
 
-    - if !attachments.blank?
-      .attachments
-        .title #{@homework.kind_str}参考附件
-        .list
-          - attachments.each do |attachment|
-            .file
-              .cover
+  - if !attachments.blank?
+    = page_field :attachements, :title => '作业参考附件' do
+      .list
+        - attachments.each do |attachment|
+          .file
+            .cover
               .name= link_to attachment.name, 'javascript:;'
-        .zip
-          %a.down{:href=>"/homeworks/#{@homework.id}/download_teacher_zip"} 打包下载附件
+      .zip
+        %a.down{:href=>"/homeworks/#{@homework.id}/download_teacher_zip"} 打包下载附件
 
   - if current_user.is_student?
-    = render '/homeworks/parts/show_student_info', :homework => @homework
+    = page_field :'student-info', :title => '作业提交及完成情况' do
+      = render '/homeworks/parts/show_student_info', :homework => @homework
 
   - if current_user.is_teacher?
-    = render '/homeworks/parts/show_teacher_info', :homework => @homework
+    = page_field :'student-list', :title => '学生作业情况' do
+      = render '/homeworks/parts/show_teacher_info', :homework => @homework
 
-
-- if current_user.is_student?
-  = jcomments @homework.assign_record_of(current_user)
+  - if current_user.is_student?
+    = page_field :comments, :title => '发表评论' do
+      = jcomments @homework.assign_record_of(current_user)
