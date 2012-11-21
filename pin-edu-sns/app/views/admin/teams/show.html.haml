@@ -4,26 +4,37 @@
 - hbreadcrumb '班级维护', '/admin/teams'
 - hbreadcrumb @team.name
 
-.page-admin-go-back= link_to '返回列表页', '/admin/teams'
-.page-admin-edit= link_to '编辑修改', "/admin/teams/#{@team.id}/edit"
 
-.page-admin-model-show
-  .field.name
-    %label 班级名
-    .v= @team.name
-  .field.cid
-    %label 班级编号
-    .v= @team.cid
 
-- students = @team.students
-.page-admin-model-show
-  .field.students-count
-    %label 班级学生名单
-    .v 总共 #{students.count} 个学生
-    .assign= link_to "给班级指定学生", "/admin/teams/#{@team.id}/select_students"
+.page-unfixed-head
+  = page_buttons do |p|
+    = p.button '返回列表页', '/admin/teams'
+    = p.button '修改信息', "/admin/teams/#{@team.id}/edit"
 
-  - students.each do |student|
-    .field.student
-      .avatar= avatar student.user, :mini
-      .name= student.real_name
-      .show= link_to '查看信息', [:admin, student]
+
+
+.page-model-show
+
+  .page-admin-course
+
+    = page_field :'team-info', :title=>'班级名' do
+      .v= @team.name
+
+
+    = page_field :'team-info', :title=>'班级编号' do
+      .v= @team.cid
+
+
+    = page_field :'team-info', :title=>'班级学生' do
+
+      - students = @team.students
+      .page-admin-model-show
+        .field.students-count
+          .v 总共 #{students.count} 个学生
+          .assign= link_to "给班级指定学生", "/admin/teams/#{@team.id}/select_students"
+
+        - students.each do |student|
+          .field.student
+            .avatar= avatar student.user, :mini
+            .name= student.real_name
+            .show= link_to '查看信息', [:admin, student]
