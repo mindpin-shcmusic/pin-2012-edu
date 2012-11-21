@@ -1,7 +1,7 @@
 # 用户选择器
 
 pie.load ->
-  class UserSelector
+  class ListSelector
     constructor: (list_selector)->
       @$list_selector = jQuery(list_selector)
       @$mode = 'all'
@@ -123,6 +123,14 @@ pie.load ->
 
         that.search_timer = setTimeout func, 40
 
+    get_selected_ids: ->
+      ids = []
+      @$list.find('.item.selected').each ->
+        $item = jQuery(this)
+        id = $item.data('id')
+        ids.push(id)
+      return ids
+
     set_selected_ids: (ids)->
       that = this
       $old_selected_items = @$list.find('.item.selected')
@@ -149,5 +157,5 @@ pie.load ->
 
   jQuery('.list-selector').each ->
     ele = jQuery(this)
-    ele.data('user_selector',new UserSelector(ele))
+    ele.data('list_selector',new ListSelector(ele))
     
