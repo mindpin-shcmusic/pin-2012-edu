@@ -2,8 +2,8 @@
 
 pie.load ->
   class UserSelector
-    constructor: ->
-      @$list_selector = jQuery('.list-selector')
+    constructor: (list_selector)->
+      @$list_selector = jQuery(list_selector)
       @$mode = 'all'
 
       @$filter = @$list_selector.find('.filter')
@@ -16,10 +16,18 @@ pie.load ->
 
       @$list = @$selector.find('.list')
       @$items = @$list.find('.item')
+      @build_items_hash()
       @build_filter()
       @build_pinyin_engine()
       @bind_search_input()
       @bind()
+
+    build_items_hash: ->
+      @$items_hash = {}
+      that = this
+      @$items.each ->
+        $item = jQuery(this)
+        that.$items_hash[$item.data('id')] = $item
 
     build_filter: ->
       that = this
@@ -115,5 +123,31 @@ pie.load ->
 
         that.search_timer = setTimeout func, 40
 
+    set_selected_ids: (ids)->
+      that = this
+      $old_selected_items = @$list.find('.item.selected')
+      $new_selected_items = jQuery.map ids, (id)->
+        that.$items_hash[id]
 
-  new UserSelector()
+      # 取消选择
+      $old_selected_items.each ->
+        $item = jQuery(this)
+        $item.removeClass('selected')
+        if that.$mode == 'selected'
+          $item.hide()
+        else if that.$mode == 'unselected'
+          $item.show()
+      # 选择
+      jQuery.each $new_selected_items, (index,$item)->
+        $item.addClass('selected')
+        if that.$mode == 'selected'
+          $item.show()
+        else if that.$mode == 'unselected'
+          $item.hide()
+      @refresh_count()
+
+
+  jQuery('.list-selector').each ->
+    ele = jQuery(this)
+    ele.data('user_selector',new UserSelector(ele))
+    
