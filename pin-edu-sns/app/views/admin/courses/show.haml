@@ -6,43 +6,40 @@
 
 - teachers = @course.get_teachers(:semester=> get_semester)
 
-  
+.page-unfixed-head
+  = page_buttons do |p|
+    = p.button '返回列表页', '/admin/courses'
+    = p.button '修改信息', "/admin/courses/#{@course.id}/edit"
+
 
 .page-admin-model-show
 
   .page-admin-course
+    = page_field :'course-info', :title=>'课程信息' do
+      .field.image
+        = jimage @course.cover_url, :width => 160, :height => 96
+      .field.name
+        %label 课程名
+        .v= @course.name
+      .field.cid
+        %label 课程编号
+        .v= @course.cid
+      .field.desc
+        %label 课程简介
+        .v= sanitize @course.desc
 
-    .semesters-nav
-      %label 学期
-      = page_semester_filters "/admin/courses/#{@course.id}"
+    = page_field :'base-info', :title=>'基础信息' do
+      = ''
 
-    .field.image
-      = jimage @course.cover_url, :width => 160, :height => 96
-    .field.name
-      %label 课程名
-      .v= @course.name
-    .field.cid
-      %label 课程编号
-      .v= @course.cid
-    .field.desc
-      %label 课程简介
-      .v= sanitize @course.desc
+    = page_field :'base-info', :title=>'教学大纲' do
+      = sanitize @course.syllabus
 
-
-    .detail-info
-      .field
-        %label 基础信息
-
-      .field
-        %label 教学大纲
-        = sanitize @course.syllabus
-
-      .field
-        %label 任课教师
-
-        .add-teacher
-          - if current_semester == Semester.now
-            = link_to "增加任课教师","/admin/courses/#{@course.id}/add_teacher_page"
+    
+    = page_semester_filters "/admin/courses/#{@course.id}"
+    = page_field :'base-info', :title=>'任课教师' do
+      .add-teacher
+        - if current_semester == Semester.now
+          = link_to "增加任课教师","/admin/courses/#{@course.id}/add_teacher_page"
 
         .teachers
           - if teachers.blank?
@@ -85,11 +82,7 @@
                         .name= link_to student.real_name, admin_student_path(student)
 
 
-
-
-      .field
-        %label 课程照片
-
+      = page_field :'base-info', :title=>'课程照片' do
         .detail.images
           .upload= jupload_button '上传照片'
           = render '/admin/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_IMAGE).with_semester(current_semester)
@@ -98,26 +91,19 @@
           = link_to '选择课程封面图片', "/admin/courses/#{@course.id}/select_cover_page"
 
 
-
-      .field
-        %label 课程课件
-
+      = page_field :'base-info', :title=>'课程课件' do
         .detail.images
           .upload= jupload_button '上传课件'
           = render '/admin/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_COURSEWARE).with_semester(current_semester)
           = render '/admin/courses/parts/uploader', :course=>@course, :kind=>:courseware, :semester => current_semester
 
 
-      .field
-        %label 课程音频
 
+      = page_field :'base-info', :title=>'课程音频' do
         .detail.images
           .upload= jupload_button '上传音频'
           = render '/admin/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_AUDIO).with_semester(current_semester)
           = render '/admin/courses/parts/uploader', :course=>@course, :kind=>:audio, :semester => current_semester
 
 
-
-
-.page-admin-go-back= link_to '返回列表页', '/admin/courses'
-.page-admin-edit= link_to '编辑修改', "/admin/courses/#{@course.id}/edit"
+ 
