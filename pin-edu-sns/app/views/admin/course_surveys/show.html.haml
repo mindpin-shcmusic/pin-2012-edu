@@ -17,15 +17,24 @@
   end
 
 
-.page-admin-go-back= link_to '返回列表页', '/admin/course_surveys'
 
-.page-admin-model-show
-  .field.title
-    %label 标题
-    .v= @course_survey.title
 
-    %label 学生人数
-    .student_count= course_survey_records.count
-    
-  
-  = render survey_list, :survey_count => survey_count, :course_survey_records => course_survey_records
+.page-unfixed-head
+  = page_buttons do |p|
+    = p.button '返回列表页', '/admin/course_surveys'
+
+
+
+
+.page-model-show
+
+  .page-admin-course-survey
+
+    = page_field :'course-survey-info', :title=>'标题' do
+      = @course_survey.title
+
+    = page_field :'course-survey-info', :title=>'学生人数' do
+      = course_survey_records.count
+
+    = page_field :'course-survey-info', :title=>'调查详情' do
+      = render survey_list, :survey_count => survey_count, :course_survey_records => course_survey_records
