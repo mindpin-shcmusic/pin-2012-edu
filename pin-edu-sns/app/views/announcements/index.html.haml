@@ -36,10 +36,7 @@
     = p.cell :teacher, '教师'
     = p.cell :created_at, '创建时间'
 
-
-
-
-.page-model-list.admin-teachers
+.page-model-list
   - if @announcements.blank?
     .blank
       目前列表内没有内容
@@ -48,7 +45,7 @@
       = page_list_body :cols=>cols_hash do |p|
         = p.checkbox(announcement)
         = p.cell :title do
-          %a.edit{:href => "/admin/announcements/#{announcement.id}"}= announcement.title
+          %a.edit{:href => "/announcements/#{announcement.id}"}= announcement.title
         = p.cell :teacher, announcement.creator.real_name
         = p.cell :created_at, announcement.created_at
 

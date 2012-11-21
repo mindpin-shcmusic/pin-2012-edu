@@ -2,38 +2,41 @@
 - hbreadcrumb '成绩单', course_score_lists_path
 - hbreadcrumb @score_list.title
 
-.page-course-score-list
+.page-unfixed-head
+  = page_buttons do |p|
+    = p.button '返回列表页', '/score_lists'
+
+.page-model-show
   = form_for @score_list do |f|
     = flash_info
-    .field.title
-      %label 课程
+    = page_field :course, :title => '课程' do
       = @score_list.course.name
-    .field.title
-      %label 标题
+    = page_field :title, :title => '标题' do
       = f.text_field :title
-    .field.score-list
-      %label 学生成绩单
-      %table
-        %thead
-          %tr
-            %th 学号
-            %th 姓名
-            %th 平时成绩
-            %th 考试成绩
-            %th 总评成绩
-            %th 备注
-        %tbody
-          - @score_list.course_score_records.each do |record|
-            - student_user = record.student_user
+    = page_field :'score-list', :title => '成绩单' do
+      .field.score-list
+        %label 学生成绩单
+        %table
+          %thead
             %tr
-              %td= student_user.student.sid
-              %td= student_user.real_name
-              = f.fields_for :course_score_records, record do |record_fields|
-                %td= record_fields.text_field :performance_score
-                %td= record_fields.text_field :exam_score
-                %td= record.general_score
-                %td= record_fields.text_field :remark
+              %th 学号
+              %th 姓名
+              %th 平时成绩
+              %th 考试成绩
+              %th 总评成绩
+              %th 备注
+          %tbody
+            - @score_list.course_score_records.each do |record|
+              - student_user = record.student_user
+              %tr
+                %td= student_user.student.sid
+                %td= student_user.real_name
+                = f.fields_for :course_score_records, record do |record_fields|
+                  %td= record_fields.text_field :performance_score
+                  %td= record_fields.text_field :exam_score
+                  %td= record.general_score
+                  %td= record_fields.text_field :remark
 
-
+    = page_field :submit, :title => '提交成绩单' do
       .field.submit
         = jfsubmit '保存成绩单'

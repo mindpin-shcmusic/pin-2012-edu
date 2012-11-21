@@ -303,6 +303,4 @@ MindpinEduSns::Application.routes.draw do
     end
   end
 
-  get '/score_lists/mine/:semester' => 'course_score_lists#student_semester'
-
 end

@@ -16,14 +16,16 @@
     survey_list = 'survey_2_list'
   end
 
-.page-admin-go-back= link_to '返回列表页', '/course_surveys'
+.page-unfixed-head
+  = page_buttons do |p|
+    = p.button '返回列表页', '/course_surveys'
 
-.page-admin-model-show
-  .field.title
-    %label 标题
-    .v= @course_survey.title
+.page-model-show
+  = page_field :title, :title=>'标题' do
+    = @course_survey.title
 
-    %label 学生人数
-    .student_count= course_survey_records.count
+  = page_field :'student-count', :title=>'学生人数' do
+    = course_survey_records.count
   
-  = render survey_list, :survey_count => survey_count, :course_survey_records => course_survey_records
+  = page_field :content, :title => '调查表内容' do
+    = render survey_list, :survey_count => survey_count, :course_survey_records => course_survey_records
