@@ -1,29 +1,65 @@
 - hbreadcrumb '首页', '/'
 - hbreadcrumb @user.real_name
 
-.page-admin-model-show
-  .field.avatar
-    = avatar @user, :medium
+.page-unfixed-head
+  = page_buttons do |p|
+    - list_url =  @user.is_teacher? ? '/teachers' : '/students'
+    = p.button '返回列表页', list_url
 
-  .data
-    .field.name
-      %label 教师姓名
-      .v= @user.real_name
+.page-model-show
+  .page-admin-teacher
+    = page_field :'base-info', :title => "#{@user.role_str}基础信息" do
+      .base
+        .avatar= avatar @user, :medium
+        .name= @user.real_name
+        .tid
+          - if @user.is_student?
+            %span 学号
+            %span= @user.student.sid
+          - else
+            %span 工号
+            %span= @user.teacher.tid
 
-    - if @user.is_teacher?
-      .field.tid
-        %label 教师编号 
-        .v= @user.teacher.tid
+      .detail
+        .f
+          .k 系统用户名：
+          .v= @user.real_name
+        .f
+          .k 邮箱：
+          .v= @user.email
 
-      .field.description
-        %label 简介
-        .v= sanitize @user.teacher.description
+    - if @user.is_teacher?      
+      - teacher = @user.teacher
+      = page_field :description, :title => '教师简介' do
+        = sanitize teacher.description
 
-    - if @user.is_student?
-      .field.tid
-        %label 学生编号 
-        .v= @user.student.sid
+      = page_semester_filters "/users/#{@user.id}"
 
-    .field.email
-      %label 邮箱
-      .v= @user.email
+      = page_field :courses, :title=>'该学期下负责的课程' do
+        - @user.get_teacher_courses(:semester => get_semester).each do |course|
+          :ruby
+            students = course.get_current_students_of(teacher.user)
+            count = students.count
+            course_teacher = CourseTeacher.get_by_params(course, Semester.now, @user)
+
+          .course
+            .course-info
+              .name= link_to course.name, "/courses/#{course.id}"
+
+            .students-brief
+              - students[0..4].each do |student|
+                .student= avatar_link student, :tiny
+              .desc= "等 #{count} 个学生"
+
+              %a.open{:href=>'javascript:;'} 展开
+
+            .students-detail
+              .h
+                .desc= "总共 #{count} 个学生"
+                %a.close{:href=>'javascript:;'} 关闭
+
+              .students
+                - students.each do |student|
+                  .student
+                    .avatar= avatar student, :tiny
+                    .name= link_to student.real_name, student

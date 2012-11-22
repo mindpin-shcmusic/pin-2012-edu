@@ -103,11 +103,11 @@ MindpinSidebar::Base.config do
         end
 
         subnav :students, :name => '学生浏览', :url => '/students' do
-          controller :index
+          controller :index, :only => :students
         end
 
         subnav :teachers, :name => '老师浏览', :url => '/teachers' do
-          controller :index
+          controller :index, :only => :teachers
         end
 
         subnav :curriculum, :name => '我的课程表', :url => '/courses/curriculum' do

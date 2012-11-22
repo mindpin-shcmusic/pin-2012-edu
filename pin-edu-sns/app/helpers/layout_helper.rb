@@ -70,7 +70,7 @@ private
   def current_displaying_items_str_for(collection)
     offset = (params[:page] ? params[:page].to_i : 1) * Paginated::PERPAGE
     start  = collection.blank? ? 0 : offset - Paginated::PERPAGE + 1
-    total  = collection.count
+    total  = collection.all.count
     stop   = offset > total ? total : offset
     "当前显示第#{start}-#{stop}项(共#{total}项)"
     [_make_span('当前显示第'),
