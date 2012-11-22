@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 class AnswersController < ApplicationController
   before_filter :login_required
-  before_filter :per_load
-  def per_load
+  before_filter :pre_load
+  def pre_load
     @answer = Answer.find(params[:id]) if params[:id]
     @question = Question.find(params[:question_id]) if params[:question_id]
 
@@ -15,7 +15,7 @@ class AnswersController < ApplicationController
     @answer = current_user.answers.build(params[:answer])
     @answer.question = @question
     if @answer.save
-      return redirect_to "/questions"
+      return redirect_to "/questions/#{@question.id}"
     end
     
     error = @question.errors.first

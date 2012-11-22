@@ -6,7 +6,7 @@
 
 .page-unfixed-head
   = page_buttons do |p|
-    = p.button '返回列表页', '/admin/questions'
+    = p.button '返回列表页', '/questions'
     - if current_user.is_student? && @question.answer.blank?
       = p.button '编辑修改', "/questions/#{@question.id}/edit"
 
@@ -29,11 +29,11 @@
   = page_field :answer, :title => '答案' do
     - if !@question.answer.blank?
       .field
-        .v= html_escape(@question.answer.content).gsub(/\n/, '<br />').html_safe
+        .v= html_escape(sanitize(@question.answer.content)).gsub(/\n/, '<br />').html_safe
 
       - if current_user.is_teacher?
         .field
-          .link.edit= link_to '编辑', 'javascript:;'
+          .link.edit= link_to '编辑', "javascript:;"
 
       .page-edit-form.hide
         = flash_info
