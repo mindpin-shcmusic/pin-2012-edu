@@ -4,7 +4,7 @@ class QuestionTipMessage < UserTipMessage
   end
 
   def path
-    "/questions?type=unanswered"
+    '/questions?tab=unanswered'
   end
 
   module UserMethods

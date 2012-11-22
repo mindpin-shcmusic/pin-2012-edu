@@ -60,7 +60,7 @@ private
       end
 
       def announcement_path
-        '/announcements/received'
+        '/announcements?tab=received'
       end
 
     end
