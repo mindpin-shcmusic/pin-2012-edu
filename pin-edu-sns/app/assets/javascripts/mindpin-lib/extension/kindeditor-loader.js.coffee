@@ -12,13 +12,19 @@ try
   ]
 
   KindEditor.ready (K) ->
-    editor = K.create '.kind-editor',
+    jQuery('.kind-editor').each ->
+      $ele = jQuery(this)
+      width = $ele.data('width') || '650px'
+      height = $ele.data('height') || '350px'
 
-      uploadJson : "/kindeditor_upload"
-      items      : items
+      editor = K.create $ele,
+        uploadJson : "/kindeditor_upload"
+        items      : items
+        width : width
+        height : height
 
-    jQuery(document).on 'form-ready-submit', ->
-      try
-        editor.sync()
-      catch e
+      jQuery(document).on 'form-ready-submit', ->
+        try
+          editor.sync()
+        catch e
 catch e
