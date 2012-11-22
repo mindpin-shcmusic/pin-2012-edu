@@ -6,41 +6,44 @@
   uploaded_count = @homework.uploaded_count_of(@student_user)
   
   
-.page-homework-student
-  %h1 学生:#{@student_user.student.real_name} #{@homework.kind_str}:#{@homework.title} 完成情况
+.page-unfixed-head
+  = page_buttons do |p|
+    = p.button '返回作业描述页面', homework_path(@homework)
 
-  = link_to "返回#{@homework.kind_str}描述页面", @homework
+.page-model-show
+  %h1 #{@student_user.student.real_name}#{@homework.title}完成情况
+  = page_field :detail, :title => '作业内容' do
+    = sanitize @homework.content
 
-  %div #{@homework.kind_str}内容
-  %p= sanitize @homework.content
+  = page_field :'finished-status', :title => '学生作业要求完成情况' do
+    .finished-ratio
+      = uploaded_count.to_s + "/" + student_attachments_count.to_s
+      - if uploaded_count == student_attachments_count
+        %span 完成
+        %span.signed{:class => @homework.has_finished_by?(@student_user) ? '' : 'hide'} 已签收
+      - else
+        %span 未完成
 
-  .student-home-work-status
-    = uploaded_count.to_s + "/" + student_attachments_count.to_s
-    - if uploaded_count == student_attachments_count
-      %span 完成
-      %span.signed{:class => @homework.has_finished_by?(@student_user) ? '' : 'hide'} 已签收
-    - else
-      %span 未完成
-
-  %div
-    %h4
-      学生是否已确定提交: #{@homework.has_submitted_by?(@student_user) ? '是' : '否'}
     - @homework.homework_requirements.each do |requirement|
       = requirement.title
       - if requirement.is_uploaded_by?(@student_user)
         - current_upload = requirement.upload_of_user(@student_user)
         .upload{:'data-id' => current_upload.id}
-          %span 已提交
+          %span 已上传
           %a{:href => "#{current_upload.file_entity.http_url}"} 下载
 
       - else
-        %span 未提交
+        %span 未上传
 
+  = page_field :attachement, :title => '下载学生作业提交物' do
     .student-upload-zip= link_to 'zip包下载', download_student_zip_homework_assign_path
 
+  = page_field :'submited-status', :title => '学生作业提交情况' do
+    学生是否已确定提交: #{@homework.has_submitted_by?(@student_user) ? '是' : '否'}
+
   - if !@homework.has_finished_by?(@student_user) && current_user == @homework.creator && @homework.has_submitted_by?(@student_user)
-    .set-finished
-      %h3 验收作业
+    = page_field :'set-finished', :title => '学生作业验收' do
       = link_to '标记为已验收', 'javascript:;', :data => {:url => set_finished_homework_assign_path}
 
-  .homework-assign-comments= jcomments @assign
+  = page_field :comments, :title => '评论' do
+    .homework-assign-comments= jcomments @assign

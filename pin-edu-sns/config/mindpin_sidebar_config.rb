@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 MindpinSidebar::Base.config do
   # example
   # 
@@ -101,7 +102,7 @@ MindpinSidebar::Base.config do
           controller :index, :only => :dashboard
         end
 
-        subnav :curriculum, :name => '我的课程表', :url => '/courses/for_teacher' do
+        subnav :curriculum, :name => '我的课程表', :url => '/courses/curriculum' do
           controller :courses
         end
 
@@ -162,7 +163,7 @@ MindpinSidebar::Base.config do
           controller :index, :only => :dashboard
         end
 
-        subnav :curriculum, :name => '我的课程表', :url => '/courses/for_student' do
+        subnav :curriculum, :name => '我的课程表', :url => '/courses/curriculum' do
           controller :courses
         end
 

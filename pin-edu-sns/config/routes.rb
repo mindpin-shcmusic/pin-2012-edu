@@ -213,8 +213,7 @@ MindpinEduSns::Application.routes.draw do
 
   resources :courses do
     collection do
-      get :for_student
-      get :for_teacher
+      get :curriculum
       get :next_for_student
       get :next_for_teacher
     end

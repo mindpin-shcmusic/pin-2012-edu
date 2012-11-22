@@ -15,7 +15,7 @@
 :ruby
   cols_hash = {
     :ops => 1,
-    :title => 5,
+    :title => 10,
     :teacher => 2,
     :answered => 2
   }
@@ -46,6 +46,6 @@
         = p.cell :ops do
           %a.edit{:href=>"/questions/#{question.id}/edit"} 编辑
         = p.cell :title do
-          %a.edit{:href=>"/questions/#{question.id}"}= question.title
+          %a.edit{:href=>"/questions/#{question.id}"}= truncate_u question.title
         = p.cell :teacher, question.teacher_user.real_name
         = p.cell :answered, question.has_answered? ? '已回答' : '未回答'

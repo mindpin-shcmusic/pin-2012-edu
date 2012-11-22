@@ -99,6 +99,11 @@ class User < ActiveRecord::Base
     teacher_or_student_real_name if is_teacher_or_student?
   end
 
+  def title_str
+    return '同学' if self.is_student?
+    '老师'
+  end
+
 private
 
   def teacher_or_student_real_name
