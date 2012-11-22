@@ -1,29 +1,35 @@
 - hbreadcrumb '首页', '/'
-- hbreadcrumb '课程'
+- hbreadcrumb '课程浏览'
 
-.page-courses-head
-  .tab
-    %a.item.mine{:href=>'/courses/mine'} 我的课程
-    %a.item.all{:href=>'/courses'} 全部课程
+.page-fixed-head
+  = page_filters '/courses' do |p|
+    = p.filter '全部课程', :tab => 'all', :default => true
+    = p.filter '我的课程', :tab => 'mine'
 
-  .cells
-    .cell.name 名称
-    .cell.cid 编号
-    .cell.department 开课院系
-    .cell.location 上课地点
-    .cell.teacher 任课老师
+:ruby
+  cols_hash = {
+    :name => 4,
+    :cid => 2
+  }
 
-.page-courses
-  - @courses.each do |course|
-    .course
-      .cell.name
-        = link_to hspan(course.name), course
-      .cell.cid
-        = link_to hspan(course.cid), course
-      -# .cell.location
-      -#   = hspan(course.location)
-      -# .cell.teacher
-      -#   .avatar= avatar_link course.teacher_user, :tiny
-      -#   .name= user_link course.teacher_user
+.page-list-head
+  = page_semester_filters '/courses'
 
-.page-paginate= will_paginate @courses
+  .headtop
+    = list_pagination(@courses)
+
+  = page_list_head :cols => cols_hash do |p|
+    = p.cell :name, '名称', :sortable => true
+    = p.cell :cid, '编号', :sortable => true
+
+.page-model-list
+  - if @courses.blank?
+    .blank
+      目前列表内没有内容
+  - else
+    - @courses.each do |course|
+      = page_list_body :cols => cols_hash do |p|
+        = p.cell :name do
+          = link_to hspan(course.name), course
+        = p.cell :cid do
+          = link_to hspan(course.cid), course

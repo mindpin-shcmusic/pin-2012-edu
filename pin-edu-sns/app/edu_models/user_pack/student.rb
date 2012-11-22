@@ -4,6 +4,14 @@ class Student < ActiveRecord::Base
   scope :no_team, joins('left join team_students on team_students.student_user_id = students.user_id').where('team_students.team_id is null')
   scope :of_team,lambda{|team|joins("inner join team_students on team_students.student_user_id = students.user_id").where("team_students.team_id = #{team.id}")}
 
+  scope :with_teacher, lambda {|teacher_user|
+    joins('inner join course_student_assigns on course_student_assigns.student_user_id = students.user_id').where('course_student_assigns.teacher_user_id = ?', teacher_user.id).group('students.user_id')
+  }
+
+  scope :with_semester, lambda {|semester|
+    joins('inner join course_student_assigns on course_student_assigns.student_user_id = students.user_id').where('course_student_assigns.semester_value = ?', semester.value).group('students.user_id')
+  }
+
   # --- 校验方法
   validates :real_name, :presence => true
   validates :sid, :uniqueness => { :if => Proc.new { |student| !student.sid.blank? } }

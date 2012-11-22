@@ -138,6 +138,8 @@ MindpinEduSns::Application.routes.draw do
   root :to => 'index#index'
   # 工作台
   get '/dashboard' => 'index#dashboard'
+  get '/students'  => 'index#students'
+  get '/teachers'  => 'index#teachers'
   # 搜索
   get '/search' => 'search#index'
   get '/search/:kind' => 'search#show'
