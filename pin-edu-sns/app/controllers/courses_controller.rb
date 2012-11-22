@@ -9,7 +9,18 @@ class CoursesController < ApplicationController
 
 
   def index
-    @courses = Course.paginated(params[:page])
+    courses = if current_user.is_teacher?
+                current_user.get_teacher_courses(:semester => get_semester)
+              else
+                current_user.get_student_courses(:semester => get_semester)
+              end
+
+    @courses = case params[:tab]
+               when 'mine'
+                 courses
+               else
+                 Course.with_semester(get_semester)
+               end.paginated(params[:page])
   end
 
   def show
