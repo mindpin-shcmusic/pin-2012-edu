@@ -3,8 +3,9 @@
 
 
 .page-fixed-head
-  = page_buttons do |p|
-    = p.button '提问题', '/questions/new', :class => 'new'
+  - if current_user.is_student?
+    = page_buttons do |p|
+      = p.button '提问题', '/questions/new', :class => 'new'
 
   = page_filters '/questions' do |p|
     = p.filter '全部', :default=>true

@@ -1,4 +1,3 @@
-= jsearchbar "/search"
 .page-tabs
   =link_to "全部(#{all_count})","/search?query=#{params[:query]}",:class=>"tab #{params[:kind].blank? ? "current" : ""}"
   =link_to "我的资源(#{media_resources_count})","/search/media_resource?query=#{params[:query]}",:class=>"tab #{params[:kind] == 'media_resource' ? "current" : ""}"
