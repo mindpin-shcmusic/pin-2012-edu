@@ -34,6 +34,7 @@
     = p.cell :ops, '操作'
     = p.cell :title, '标题'
     = p.cell :teacher, '教师'
+    = p.cell :asker, '提问者'
     = p.cell :answered, '回答状态'
 
 .page-model-list.admin-teachers
@@ -49,4 +50,5 @@
         = p.cell :title do
           %a.edit{:href=>"/questions/#{question.id}"}= truncate_u question.title
         = p.cell :teacher, question.teacher_user.real_name
+        = p.cell :asker, question.creator.real_name
         = p.cell :answered, question.has_answered? ? '已回答' : '未回答'

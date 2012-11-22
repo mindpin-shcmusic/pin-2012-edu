@@ -40,7 +40,7 @@ class QuestionsController < ApplicationController
   def create
     @question = current_user.questions.build(params[:question])
     if @question.save
-      return redirect_to "/questions"
+      return redirect_to "/questions/#{@question.id}"
     end
     
     error = @question.errors.first
