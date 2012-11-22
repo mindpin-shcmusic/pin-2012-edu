@@ -11,6 +11,15 @@
       = p.button '编辑修改', "/questions/#{@question.id}/edit"
 
 .page-model-show
+  = page_field :title, :title => '提问者' do
+    .field.avatar
+      = avatar @question.creator, :tiny
+
+    .data
+      .field.name
+        .v= link_to @question.creator.real_name, "/users/#{@question.creator.id}"
+
+
   = page_field :title, :title => '标题' do
     = @question.title
 
@@ -20,7 +29,6 @@
   = page_field :answer, :title => '答案' do
     - if !@question.answer.blank?
       .field
-        %label 答案
         .v= html_escape(@question.answer.content).gsub(/\n/, '<br />').html_safe
 
       - if current_user.is_teacher?
