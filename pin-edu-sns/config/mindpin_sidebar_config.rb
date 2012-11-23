@@ -178,14 +178,6 @@ MindpinSidebar::Base.config do
           controller :index, :only => :dashboard
         end
 
-        subnav :curriculum, :name => '我的课程表', :url => '/courses/curriculum' do
-          controller :courses, :only => :curriculum
-        end
-
-        subnav :courses, :name => '课程浏览', :url => '/courses' do
-          controller :courses, :only => :index
-        end
-
         subnav :students, :name => '学生浏览', :url => '/students' do
           controller :students, :only => :index
         end
