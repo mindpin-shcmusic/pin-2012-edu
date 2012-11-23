@@ -123,7 +123,7 @@ MindpinSidebar::Base.config do
           controller :homework_assigns
         end
 
-        subnav :score_lists, :name => '成绩单', :url => '/score_lists/mine' do
+        subnav :score_lists, :name => '成绩单', :url => '/score_lists' do
           controller :course_score_lists
         end
 
