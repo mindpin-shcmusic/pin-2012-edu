@@ -28,7 +28,7 @@
 .page-model-list.admin-comments
   - if @comments.blank?
     .blank
-      = @error_message ? @error_message : 目前列表内没有内容
+      = @error_message ? @error_message : '目前列表内没有内容'
   - else
     - @comments.each do |comment|
       = page_list_body :cols=>cols_hash do |p|

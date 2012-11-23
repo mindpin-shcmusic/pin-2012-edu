@@ -13,19 +13,6 @@ class IndexController < ApplicationController
     # 教师和学生的工作台页面
   end
 
-  def students
-    return redirect_to '/dashboard' if current_user.is_student?
-    @students = case params[:tab]
-                when 'mine'
-                  Student.with_teacher(current_user)
-                else 
-                  Student
-                end.with_semester(get_semester).paginated(params[:page])
-  end
-
-  def teachers
-    @teachers = Teacher.paginated(params[:page])
-  end
 
   def user_complete_search
     # user_ids = User.complete_search(params[:q]).map { |doc|
