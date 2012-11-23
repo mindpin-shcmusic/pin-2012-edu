@@ -8,13 +8,12 @@ class StudentsController < ApplicationController
 
 
   def index
-    return redirect_to '/dashboard' if current_user.is_student?
     @students = case params[:tab]
-                when 'mine'
-                  Student.with_teacher(current_user)
-                else 
-                  Student
-                end.with_semester(get_semester).paginated(params[:page])
+      when 'mine'
+        Student.with_teacher(current_user) if current_user.is_teacher?
+      else 
+        Student
+      end.with_semester(get_semester).paginated(params[:page])
   end
 
 
