@@ -110,21 +110,13 @@ MindpinSidebar::Base.config do
           controller :index, :only => :teachers
         end
 
-        subnav :curriculum, :name => '我的课程表', :url => '/courses/curriculum' do
-          controller :courses, :only => :curriculum
-        end
-
-        subnav :couses, :name => '课程浏览', :url => '/courses' do
-          controller :courses, :only => :index
-        end
-
         subnav :homeworks, :name => '布置的作业和实践', :url => '/homeworks' do
           controller :homeworks
           controller :homework_assigns
         end
 
         subnav :score_lists, :name => '成绩单', :url => '/score_lists' do
-          controller :course_score_lists
+          controller :score_lists
         end
 
         subnav :course_surveys, :name => '课程调查', :url => '/course_surveys' do
@@ -134,6 +126,17 @@ MindpinSidebar::Base.config do
         subnav :questions, :name => '在线问答', :url => '/questions' do
           controller :questions
         end
+      end
+
+      nav :course, :name => '课程', :url => '/courses/curriculum' do
+        subnav :curriculum, :name => '我的课程表', :url => '/courses/curriculum' do
+          controller :courses, :only => :curriculum
+        end
+
+        subnav :couses, :name => '课程浏览', :url => '/courses' do
+          controller :courses, :only => :index
+        end
+
       end
 
       nav :notice, :name => '系统通知', :url => '/announcements' do
@@ -175,16 +178,8 @@ MindpinSidebar::Base.config do
           controller :index, :only => :dashboard
         end
 
-        subnav :curriculum, :name => '我的课程表', :url => '/courses/curriculum' do
-          controller :courses, :only => :curriculum
-        end
-
-        subnav :courses, :name => '课程浏览', :url => '/courses' do
-          controller :courses, :only => :index
-        end
-
         subnav :teachers, :name => '老师浏览', :url => '/teachers' do
-          controller :index
+          controller :index, :only => :teachers
         end
 
         subnav :homeworks, :name => '我的作业和实践', :url => '/homeworks' do
@@ -206,6 +201,17 @@ MindpinSidebar::Base.config do
         subnav :mentor_students, :name => '导师双向选择', :url => '/mentor_students' do
           controller :mentor_students
         end
+      end
+
+      nav :course, :name => '课程', :url => '/courses/curriculum' do
+        subnav :curriculum, :name => '我的课程表', :url => '/courses/curriculum' do
+          controller :courses, :only => :curriculum
+        end
+
+        subnav :couses, :name => '课程浏览', :url => '/courses' do
+          controller :courses, :only => :index
+        end
+
       end
 
       nav :notice, :name => '系统通知', :url => '/announcements' do

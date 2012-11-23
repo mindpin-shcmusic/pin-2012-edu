@@ -1,0 +1,21 @@
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '成绩单', score_lists_path
+- hbreadcrumb '创建成绩单'
+
+.page-unfixed-head
+  = page_buttons do |p|
+    = p.button '返回列表页', '/score_lists'
+
+.page-model-show.page-new-course-score-list
+  = page_field :'new-score-list', :title => '创建成绩单' do
+    = form_tag score_lists_path do
+      = flash_info
+      .field.placeholder
+        %label 请输入成绩单标题
+        = text_field_tag :title
+      .field
+        %label 选择要创建成绩单的课程
+        = select_tag :semester, options_from_collection_for_select(@semesters, :value, :to_s, current_semester.value), :class => 'semester-selector', :style => 'width:64px;', :data => {:url => course_candidates_score_lists_path}
+        = select_tag :course_id, options_from_collection_for_select(@current_semester_courses, :id, :name, nil), :class => 'course-selector', :style => 'width:320px;', :include_blank => true, :data => {:placeholder => '请选择课程'}
+      .field.submit
+        = jfsubmit '为该课程创建成绩单'

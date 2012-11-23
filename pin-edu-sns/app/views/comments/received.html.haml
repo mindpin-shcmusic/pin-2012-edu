@@ -3,9 +3,6 @@
 - hbreadcrumb '首页', '/'
 - hbreadcrumb '收到的评论', '/comments/received'
 
-- do_clear_comment_tip_message!
-
-
 :ruby
   cols_hash = {
     :real_name => 2,
@@ -31,7 +28,7 @@
 .page-model-list.admin-comments
   - if @comments.blank?
     .blank
-      目前列表内没有内容
+      = @error_message ? @error_message : 目前列表内没有内容
   - else
     - @comments.each do |comment|
       = page_list_body :cols=>cols_hash do |p|

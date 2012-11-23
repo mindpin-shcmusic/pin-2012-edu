@@ -47,5 +47,18 @@ class CommentsController < ApplicationController
   def received
     @comments = current_user.received_comments.paginate :page => params[:page],
                                                         :per_page => 20
+    do_clear_comment_tip_message!
+  rescue Redis::CannotConnectError
+    @error_message = '无法获取收到的评论。'
   end
+
+protected
+
+  def do_clear_comment_tip_message!
+    if logged_in?
+      current_user.comment_tip_message.clear
+      current_user.comment_tip_message.send_count_to_juggernaut
+    end
+  end
+
 end

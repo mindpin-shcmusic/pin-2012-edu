@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-class CourseScoreListsController < ApplicationController
+class ScoreListsController < ApplicationController
   before_filter :teacher_only, :only => [:create, :new, :course_candidates]
 
   def mine

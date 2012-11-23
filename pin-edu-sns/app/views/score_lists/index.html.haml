@@ -3,10 +3,10 @@
 
 .page-fixed-head
   = page_buttons do |p|
-    = p.button '添加课程成绩单', new_course_score_list_path, :class => 'create'
+    = p.button '添加课程成绩单', new_score_list_path, :class => 'create'
 
   #学期过滤
-  = page_semester_filters course_score_lists_path
+  = page_semester_filters score_lists_path
 
 :ruby
   cols_hash = {
@@ -40,7 +40,7 @@
       = page_list_body :cols=>cols_hash do |p|
         = p.checkbox(score_list)
         = p.cell :title do
-          = link_to hspan(score_list.title), score_list
+          = link_to hspan(score_list.title), score_list_path(score_list)
         = p.cell :semester_value do
           = score_list.semester.to_s
         = p.cell :course do

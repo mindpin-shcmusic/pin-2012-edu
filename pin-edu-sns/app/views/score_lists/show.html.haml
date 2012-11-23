@@ -1,5 +1,5 @@
 - hbreadcrumb '首页', '/'
-- hbreadcrumb '成绩单', course_score_lists_path
+- hbreadcrumb '成绩单', score_lists_path
 - hbreadcrumb @score_list.title
 
 .page-unfixed-head
@@ -7,7 +7,7 @@
     = p.button '返回列表页', '/score_lists'
 
 .page-model-show
-  = form_for @score_list do |f|
+  = form_for score_list_path(@score_list) do |f|
     = flash_info
     = page_field :course, :title => '课程' do
       = @score_list.course.name

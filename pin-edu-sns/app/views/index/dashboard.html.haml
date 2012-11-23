@@ -78,34 +78,17 @@
 
 
     = page_field :'notices-info', :title=>'通知信息' do
-      .field
-        上海音乐学院85周年校庆公告
-      .field
-        关于参加“唱响海南”全国歌曲
-      .field
-        第五届全国钢琴师资培训班
-      .field
-        学生汉字知识网络竞答活动
-      .field 
-        零陵校区宿舍铝合金窗采购招标
-      .field
-        上音教师门户启用通知
-
+      - Announcement.all.each do |announcement|
+        .field
+          = link_to truncate_u(announcement.title), announcement
 
     = page_field :'homeworks-info', :title=>'作业和教学实践' do
-      .field
-        管乐作品比赛决赛音乐会
-      .field
-        上海音乐学院爵士研讨会专场
-      .field
-        综合音乐会
-
+      - Homework.all.each do |homework|
+        .field
+          = link_to truncate_u(homework.title), homework
 
     = page_field :'faq-info', :title=>'在线问答(Q&A)' do
-      .field
-        外国留学生中国民乐二胡大赛结果怎么样
-      .field
-        上海音乐学院2013届毕业生就业形势如何
-      .field
-        上音2012年第九届国际钢琴大师班具体情况
+      - Question.all.each do |question|
+        .field
+          = link_to truncate_u(question.title), question
 

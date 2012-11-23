@@ -294,10 +294,7 @@ MindpinEduSns::Application.routes.draw do
     end
   end
 
-  resources :score_lists,
-            :as         => :course_score_lists,
-            :controller => :course_score_lists do
-
+  resources :score_lists do
     collection do
       get :mine
       get :course_candidates
