@@ -51,7 +51,7 @@ body.auth{
 
 
     .fields{
-      overflow:hidden;
+      @include floatfix;
       margin-bottom:7px;
 
       $mr:6px;
@@ -59,7 +59,6 @@ body.auth{
         float:left;
         margin-right:$mr;
         position:relative;
-        
         text-shadow:none;
 
         label{
@@ -79,6 +78,12 @@ body.auth{
           padding:6px 12px;
           height:24px;line-height:24px;
           width:240px;
+          box-shadow:none;
+          @include border-radius(2px);
+
+          @media screen and (-webkit-min-device-pixel-ratio:0) {
+            margin-top:1px;
+          }
 
           &:focus{
             box-shadow:none;
@@ -88,6 +93,7 @@ body.auth{
       }
       .field.subm{
         float:left;
+
         a.form-submit-ajax-button{
           @include border-radius(2px);
           @include gradient(#FDA034, #FF8201);

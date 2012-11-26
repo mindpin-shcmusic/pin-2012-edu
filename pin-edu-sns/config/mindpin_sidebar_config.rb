@@ -76,38 +76,16 @@ MindpinSidebar::Base.config do
     end
   end
 
+  # -------------------------
+  # 教师
   rule :teacher do
     group :resources, :name => '教师功能…' do
-
-      nav :media_resources, :name => '媒体资源', :url => '/file' do
-        controller :media_resources
-
-        subnav :my_resources, :name => '我的文件夹', :url => '/file' do
-          controller :media_resources
-        end
-
-        subnav :media_shares, :name => '收到的共享', :url => '/media_shares' do
-          controller :media_shares
-        end
-
-        subnav :public_resources, :name => '公共资源库', :url => '/public_resources' do
-          controller :public_resources
-        end
-      end
 
       nav :dashboard, :name => '教学工作台', :url => '/dashboard' do
         controller :index, :only => :dashboard
 
         subnav :dashboard, :name => '信息概览', :url => '/dashboard' do
           controller :index, :only => :dashboard
-        end
-
-        subnav :students, :name => '学生浏览', :url => '/students' do
-          controller :students, :only => :index
-        end
-
-        subnav :teachers, :name => '老师浏览', :url => '/teachers' do
-          controller :teachers, :only => :index
         end
 
         subnav :homeworks, :name => '布置的作业和实践', :url => '/homeworks' do
@@ -125,6 +103,36 @@ MindpinSidebar::Base.config do
 
         subnav :questions, :name => '在线问答', :url => '/questions' do
           controller :questions
+        end
+      end
+
+      nav :info, :name => '教学信息', :url => '/teachers' do
+        subnav :courses, :name => '课程浏览' do
+          controller :courses, :only => :index
+        end
+
+        subnav :students, :name => '学生浏览', :url => '/students' do
+          controller :students, :only => :index
+        end
+
+        subnav :teachers, :name => '教师浏览', :url => '/teachers' do
+          controller :teachers, :only => :index
+        end
+      end
+
+      nav :media_resources, :name => '媒体资源', :url => '/file' do
+        controller :media_resources
+
+        subnav :my_resources, :name => '我的文件夹', :url => '/file' do
+          controller :media_resources
+        end
+
+        subnav :media_shares, :name => '收到的共享', :url => '/media_shares' do
+          controller :media_shares
+        end
+
+        subnav :public_resources, :name => '公共资源库', :url => '/public_resources' do
+          controller :public_resources
         end
       end
 
