@@ -107,7 +107,7 @@ MindpinSidebar::Base.config do
       end
 
       nav :info, :name => '教学信息', :url => '/teachers' do
-        subnav :courses, :name => '课程浏览' do
+        subnav :courses, :name => '课程浏览', :url => '/courses' do
           controller :courses, :only => :index
         end
 

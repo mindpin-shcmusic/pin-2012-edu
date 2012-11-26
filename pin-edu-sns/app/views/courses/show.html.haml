@@ -2,61 +2,68 @@
 - hbreadcrumb '课程', '/courses'
 - hbreadcrumb @course.name
 
+- teachers = @course.get_teachers(:semester=> get_semester)
+
 .page-unfixed-head
   = page_buttons do |p|
     = p.button '返回课程浏览', '/courses'
 
 .page-model-show
-  = page_field :'base-info', :title => '课程基础信息' do
-    .cover
-      = jimage @course.cover_url, :width => 160, :height => 120
-    .meta
-      .name= @course.name
+  .page-admin-course
+    = page_field :'course-info', :title=>'课程信息' do
+      .field.image
+        = jimage @course.cover_url, :width => 160, :height => 96
+      .field.name
+        %label 课程名
+        .v= @course.name
       .field.cid
-        %span 课程编号：
-        %span= @course.cid
+        %label 课程编号
+        .v= @course.cid
+      .field.desc
+        %label 课程简介
+        .v= sanitize @course.desc
 
-  = page_semester_filters "/courses/#{@course.id}"
+    = page_field :'base-info', :title=>'基础信息' do
+      = ''
 
-  = page_field :syllabus, :title => '教学大纲' do
-    = sanitize @course.syllabus
+    = page_field :'base-info', :title=>'教学大纲' do
+      = sanitize @course.syllabus
 
-  = page_field :teachers, :title => '任课教师' do
-    - teacher_users = @course.get_teachers(:semester => get_semester)
-    - if teacher_users.blank?
-      .blank 目前列表内没有内容
-    - else
-      - teacher_users.each do |teacher_user|
-        .teacher
-          .avatar= avatar teacher_user, :tiny
-          .name= teacher_user.real_name
-          = link_to '查看信息', teacher_user, :class => 'info'
-          .tid
-            %span 教师编号：
-            %span= teacher_user.teacher.tid
+    
+    = page_semester_filters "/courses/#{@course.id}"
+    = page_field :'base-info', :title=>'任课教师' do
+      .add-teacher
+        .teachers
+          - if teachers.blank?
+            .blank 目前列表内没有内容
+          - else
+            - teachers.each do |user|
+              :ruby
+                students = @course.get_students(:semester => current_semester,:teacher_user => user)
+                count = students.count
+                course_teacher = CourseTeacher.get_by_params(@course, current_semester, user)
 
-  = page_field :students, :title => '课程学生' do
-    - student_users = @course.get_students(:semester => Semester.now)
-    - if student_users.blank?
-      .blank 目前列表内没有内容
-    - else
-      - student_users.each do |student_user|
-        .student
-          .avatar= avatar student_user, :tiny
-          .name= student_user.real_name
-          %a.info{:href=>"/users/#{student_user.id}"} 查看信息
+              .teacher
+                .student-info
+                  .name
+                    = avatar user, :mini
+                    = link_to user.teacher.real_name, "/teachers/#{user.teacher.id}"
+                    = user.teacher.tid
 
-  = page_field :images, :title => '课程照片' do
-    .upload= jupload_button '上传照片'
-    = render '/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_IMAGE).with_semester(get_semester)
-    = render '/courses/parts/uploader', :course=>@course, :kind=>:image, :semester => get_semester
+                .students-brief
+                  - students[0..4].each do |student|
+                    .student= avatar_link student, :tiny
+                  .desc= "等 #{count} 个学生"
 
-  = page_field :courseware, :title => '课程课件' do
-    .upload= jupload_button '上传课件'
-    = render '/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_COURSEWARE).with_semester(get_semester)
-    = render '/courses/parts/uploader', :course=>@course, :kind=>:courseware, :semester => get_semester
+                  %a.open{:href=>'javascript:;'} 展开
 
-  = page_field :audios, :title => '课程音频' do
-    .upload= jupload_button '上传音频'
-    = render '/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_AUDIO).with_semester(get_semester)
-    = render '/courses/parts/uploader', :course=>@course, :kind=>:audio, :semester => get_semester
+                .students-detail
+                  .h
+                    .desc= "总共 #{count} 个学生"
+                    %a.close{:href=>'javascript:;'} 关闭
+
+                  .students
+                    - students.each do |student|
+                      .student
+                        .avatar= avatar student, :tiny
+                        .name= user_link student
