@@ -1,12 +1,14 @@
 - htitle '老师问答'
 
+
+- hgoback '/questions'
 - hbreadcrumb '首页', '/'
 - hbreadcrumb '老师问答', '/questions'
 - hbreadcrumb @question.title
 
+
 .page-unfixed-head
   = page_buttons do |p|
-    = p.button '返回列表页', '/questions'
     - if current_user.is_student? && @question.answer.blank?
       = p.button '编辑修改', "/questions/#{@question.id}/edit"
 

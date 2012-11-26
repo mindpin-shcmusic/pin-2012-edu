@@ -1,12 +1,13 @@
-- hgoback '/'
+:ruby
+  list_url =  @user.is_teacher? ? '/teachers' : '/students'
+
+
+- hgoback list_url
 - hbreadcrumb '首页', '/'
 - hbreadcrumb @user.real_name
 
 
 .page-unfixed-head
-  = page_buttons do |p|
-    - list_url =  @user.is_teacher? ? '/teachers' : '/students'
-    = p.button '返回列表页', list_url
 
 .page-model-show
   .page-admin-teacher
