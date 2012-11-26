@@ -1,10 +1,10 @@
 - htitle '学生维护'
 
-- hbreadcrumb '基础数据管理', '/admin'
-- hbreadcrumb '学生维护', '/admin/students'
+- hgoback admin_students_path
+- hbreadcrumb '首页', '/admin'
+- hbreadcrumb '基础数据', '/admin'
+- hbreadcrumb '学生维护', admin_students_path
 - hbreadcrumb '修改学生信息'
-
-
 
 .page-admin-form
   = flash_info
