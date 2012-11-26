@@ -1,3 +1,4 @@
+- hgoback '/'
 - hbreadcrumb '首页', '/'
 - hbreadcrumb "工作台 - #{current_user.real_name}"
 
@@ -6,11 +7,6 @@
   next_one_course_teacher = next_course_teachers.to_a[0]
 
   week_course_teachers = current_user.get_week_course_teachers
-
-
-.page-unfixed-head
-  = page_buttons do |p|
-    = p.button '返回列表页', '/admin/course_surveys'
 
 
 .page-model-show

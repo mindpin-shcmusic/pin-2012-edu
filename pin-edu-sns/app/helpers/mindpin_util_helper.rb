@@ -33,6 +33,14 @@ module MindpinUtilHelper
       end
     end
 
+    def hgoback(url)
+      content_for :breadcrumb do
+        content_tag :div, :class => 'link goback' do
+          content_tag(:a, '返回上级', :href => url)
+        end
+      end
+    end
+
   end
 
   module FlashInfoMethods

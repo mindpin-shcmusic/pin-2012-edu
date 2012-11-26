@@ -13,20 +13,36 @@ body{
 
   .page-topbar{
     @include floatfix;
+  }
+
+  .page-content{
     .page-breadcrumb{
-      float:left;
-      margin-top:(50px - 32px) / 2;
-      margin-right:20px;
+      position:fixed;
+      top:50px;left:230px;right:0px;
+      height:55px;
+      background-color:#f2f2f2;
+      border-left:solid 1px #B1B1B1;
+      border-bottom:solid 1px #B1B1B1;
+      padding-left:17px;
+
       .link{
-        height:32px;line-height:32px;
+        height:55px;line-height:55px;
         font-size:16px;
         a{
-          color:#ccc;
-          &:hover{color:white;}
+          color:#333333;
+          &:hover{color:#333333;text-decoration:underline;}
         }
         &:last-child{
-          a{color:white;}
+          a{}
         }
+      }
+
+      .link.goback{
+        &:after{display:none;}
+        margin-right:17px;
+        padding-right:17px;
+        border-right:solid 1px #DADDE0;
+        box-shadow:-1px 0 0 #FBFBFB inset;
       }
     }
   }
