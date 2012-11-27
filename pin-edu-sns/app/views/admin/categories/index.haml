@@ -1,11 +1,13 @@
 - htitle '资源分类维护'
 
-- hbreadcrumb '基础数据管理', '/admin'
-- hbreadcrumb '资源分类维护'
+- hgoback '/admin'
+- hbreadcrumb '首页', '/admin'
+- hbreadcrumb '资源分类'
 
-.page-admin-ops
-  %a.create{:href=>'/admin/categories/new'} 增加资源分类
-  %a.import{:href=>'/admin/categories/import_from_yaml_page'} 批量导入资源分类
+.page-fixed-head
+  = page_buttons do |p|
+    = p.button '增加资源分类', '/admin/categories/new', :class => :create
+    = p.button '批量导入资源分类', '/admin/categories/import_from_yaml_page', :class => :import
 
 .page-admin-categories
   = render 'categories_list', :categories => @level1_categories

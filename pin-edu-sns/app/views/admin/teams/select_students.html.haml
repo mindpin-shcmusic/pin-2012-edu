@@ -1,8 +1,10 @@
 - htitle '班级维护'
 
-- hbreadcrumb '基础数据管理', '/admin'
+- hgoback admin_team_path(@team)
+- hbreadcrumb '首页', '/admin'
+- hbreadcrumb '基础数据', '/admin'
 - hbreadcrumb '班级维护', '/admin/teams'
-- hbreadcrumb @team.name, "/admin/teams/#{@team.id}"
+- hbreadcrumb @team.name, admin_team_path(@team)
 - hbreadcrumb '分配学生'
 
 - student_user_ids = @team.student_user_ids

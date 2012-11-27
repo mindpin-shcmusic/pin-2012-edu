@@ -2,12 +2,13 @@
 - semester = @course_teacher.semester
 - htitle '课程维护'
 
-- hbreadcrumb '基础数据管理', '/admin'
+- hgoback admin_course_path(course, :semester => semester.value)
+- hbreadcrumb '首页', '/admin'
+- hbreadcrumb '基础数据', '/admin'
 - hbreadcrumb '课程维护', '/admin/courses'
-- hbreadcrumb course.name, "/admin/courses/#{course.id}"
-- hbreadcrumb semester.value, "/admin/courses/#{course.id}?semester=#{semester.value}"
-- hbreadcrumb @course_teacher.teacher_user.real_name
-- hbreadcrumb "分配学生"
+- hbreadcrumb course.name, admin_course_path(course)
+- hbreadcrumb semester.to_s, admin_course_path(course, :semester => semester.value)
+- hbreadcrumb "#{@course_teacher.teacher_user.real_name}老师分配学生"
 
 - selected_course_student_users = course.get_students :semester => semester
 - selected_course_students = selected_course_student_users.map{|user|user.student}

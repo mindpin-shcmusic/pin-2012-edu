@@ -1,13 +1,12 @@
 - htitle '教学计划'
 
-- hbreadcrumb '基础数据管理', '/admin'
-- hbreadcrumb '教学计划', '/admin/teaching_plans'
+- hgoback admin_teaching_plans_path
+- hbreadcrumb '首页', '/admin'
+- hbreadcrumb '教学计划', admin_teaching_plans_path
 - hbreadcrumb @teaching_plan.title
-
 
 .page-unfixed-head
   = page_buttons do |p|
-    = p.button '返回列表页', '/admin/teaching_plans'
     = p.button '修改信息', "/admin/teaching_plans/#{@teaching_plan.id}/edit"
 
 

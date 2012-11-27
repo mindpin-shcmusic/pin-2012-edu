@@ -1,18 +1,15 @@
 - htitle '学生维护'
 
-- hbreadcrumb '基础数据管理', '/admin'
+- hgoback '/admin/students'
+- hbreadcrumb '首页', '/admin'
+- hbreadcrumb '基础数据', '/admin'
 - hbreadcrumb '学生维护', '/admin/students'
 - hbreadcrumb @student.real_name
 
-
-
-
 .page-unfixed-head
   = page_buttons do |p|
-    = p.button '返回列表页', '/admin/students'
     = p.button '修改信息', "/admin/students/#{@student.id}/edit"
     = p.button '修改密码', "/admin/students/#{@student.id}/password"
-
 
 .page-model-show
 
