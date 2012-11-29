@@ -1,12 +1,14 @@
+- hgoback '/courses'
 - hbreadcrumb '首页', '/'
 - hbreadcrumb '课程', '/courses'
+
 - hbreadcrumb @course.name
+
+
 
 - teachers = @course.get_teachers(:semester=> get_semester)
 
 .page-unfixed-head
-  = page_buttons do |p|
-    = p.button '返回课程浏览', '/courses'
 
 .page-model-show
   .page-admin-course

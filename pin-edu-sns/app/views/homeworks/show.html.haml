@@ -1,13 +1,17 @@
+
+
+- hgoback '/homeworks'
 - hbreadcrumb '首页', '/'
 - hbreadcrumb '作业/艺术实践', '/homeworks'
 - hbreadcrumb @homework.title
+
+
 
 :ruby
   attachments = @homework.homework_teacher_attachments
 
 .page-unfixed-head
-  = page_buttons do |p|
-    = p.button '返回列表页', '/homeworks'
+
 
 .page-model-show
   = page_field :'base-info', :title => '作业信息' do
