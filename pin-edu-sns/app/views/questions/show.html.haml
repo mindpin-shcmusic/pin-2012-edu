@@ -12,7 +12,7 @@
     - if current_user.is_student? && @question.answer.blank?
       = p.button '编辑修改', "/questions/#{@question.id}/edit"
 
-.page-model-show
+.page-model-show.question
   = page_field :title, :title => '提问者' do
     .field.avatar
       = avatar @question.creator, :tiny
@@ -35,9 +35,9 @@
 
       - if current_user.is_teacher?
         .field
-          .link.edit= link_to '编辑', "javascript:;"
+          .link.edit-answer= link_to '编辑', "javascript:;"
 
-      .page-edit-form
+      .page-edit-form.hide
         = flash_info
         = form_for @question.answer do |f|
           =render 'answer_form', :f => f

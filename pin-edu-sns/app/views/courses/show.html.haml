@@ -28,12 +28,12 @@
     = page_field :'base-info', :title=>'基础信息' do
       = ''
 
-    = page_field :'base-info', :title=>'教学大纲' do
+    = page_field :'syllabus-info', :title=>'教学大纲' do
       = sanitize @course.syllabus
 
     
     = page_semester_filters "/courses/#{@course.id}"
-    = page_field :'base-info', :title=>'任课教师' do
+    = page_field :'teacher-list', :title=>'任课教师' do
       .add-teacher
         .teachers
           - if teachers.blank?
@@ -69,3 +69,21 @@
                       .student
                         .avatar= avatar student, :tiny
                         .name= user_link student
+
+    = page_field :'image-list', :title=>'课程照片' do
+      .detail.images
+        .upload= jupload_button '上传照片'
+        = render '/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_IMAGE).with_semester(current_semester)
+        = render '/courses/parts/uploader', :course=>@course, :kind=>:image, :semester => current_semester
+
+    = page_field :'courseware-list', :title=>'课程课件' do
+      .detail.images
+        .upload= jupload_button '上传课件'
+        = render '/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_COURSEWARE).with_semester(current_semester)
+        = render '/courses/parts/uploader', :course=>@course, :kind=>:courseware, :semester => current_semester
+
+    = page_field :'audio-list', :title=>'课程音频' do
+      .detail.images
+        .upload= jupload_button '上传音频'
+        = render '/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_AUDIO).with_semester(current_semester)
+        = render '/courses/parts/uploader', :course=>@course, :kind=>:audio, :semester => current_semester

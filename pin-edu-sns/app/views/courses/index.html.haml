@@ -14,7 +14,8 @@
   }
 
 .page-list-head
-  = page_semester_filters '/courses'
+  - if params[:tab] == 'mine'
+    = page_semester_filters '/courses'
 
   .headtop
     = list_pagination(@courses)
