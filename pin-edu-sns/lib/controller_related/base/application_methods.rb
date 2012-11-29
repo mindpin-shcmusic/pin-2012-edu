@@ -42,6 +42,10 @@ module ApplicationMethods
 
   def catch_some_exception
     yield
+  rescue ActionController::RoutingError=>ex
+    render_status_page(404,ex,'正在访问的页面不存在，或者已被删除。')
+  rescue AbstractController::ActionNotFound=>ex
+    render_status_page(404,ex,'正在访问的页面不存在，或者已被删除。')
   rescue ActiveRecord::RecordNotFound=>ex
     render_status_page(404,ex,'正在访问的页面不存在，或者已被删除。')
   rescue Redis::CannotConnectError=>ex
