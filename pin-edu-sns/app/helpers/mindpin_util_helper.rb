@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 module MindpinUtilHelper
   def self.included(base)
     base.send(:include, LayoutMethods)
@@ -64,7 +65,7 @@ module MindpinUtilHelper
         src   = User.new.logo.url(style)
         meta  = 'unknown-user'
       else
-        alt   = user.name
+        alt   = user.real_name
         src   = user.logo.url(style)
         meta  = dom_id(user)
       end
@@ -80,7 +81,7 @@ module MindpinUtilHelper
   
     def avatar_link(user, style = :normal)
       href  = user.blank? ? 'javascript:;' : "/users/#{user.id}"
-      title = user.blank? ? '未知用户' : user.name
+      title = user.blank? ? '未知用户' : user.real_name
       
       link_to href, :title=>title do
         avatar(user, style)
