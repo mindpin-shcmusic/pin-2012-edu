@@ -48,6 +48,8 @@
             %span.time>= detail[:class_time]
             %span> ，
             %span.course>= link_to course.name, "/courses/#{course.id}"
+            %span> ，
+            %span.location>= detail[:course_teacher].location
 
 
 
@@ -65,6 +67,8 @@
                 %span.time>= detail[:class_time]
                 %span> ，
                 %span.course>= link_to course.name, "/courses/#{course.id}"
+                %span> ，
+                %span.location>= detail[:course_teacher].location
 
       .see-table
         = link_to '查看课程表', '/courses/curriculum'
