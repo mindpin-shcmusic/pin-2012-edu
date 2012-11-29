@@ -67,10 +67,7 @@
                 %span.course>= link_to course.name, "/courses/#{course.id}"
 
       .see-table
-        - if current_user.is_teacher?
-          = link_to '查看课程表', '/courses/for_teacher'
-        - if current_user.is_student?
-          = link_to '查看课程表', '/courses/for_student'
+        = link_to '查看课程表', '/courses/curriculum'
 
 
     = page_field :'notices-info', :title=>'通知信息' do

@@ -1,11 +1,9 @@
-
+- htitle "作业/艺术实践 - #{@homework.title}"
 
 - hgoback '/homeworks'
 - hbreadcrumb '首页', '/'
 - hbreadcrumb '作业/艺术实践', '/homeworks'
 - hbreadcrumb @homework.title
-
-
 
 :ruby
   attachments = @homework.homework_teacher_attachments
