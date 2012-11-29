@@ -14,9 +14,9 @@
   }
 
 .page-fixed-head
-  = page_filters '/students' do |p|
-    = p.filter '全部学生', :tab => 'all', :default => true
-    - if current_user.is_teacher?
+  - if current_user.is_teacher?
+    = page_filters '/students' do |p|
+      = p.filter '全部学生', :tab => 'all', :default => true
       = p.filter '我的学生', :tab => 'mine'
 
 .page-list-head
