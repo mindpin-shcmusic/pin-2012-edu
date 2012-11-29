@@ -7,20 +7,13 @@ class CoursesController < ApplicationController
     @course  = Course.find params[:id] if params[:id]
   end
 
-
   def index
-    courses = if current_user.is_teacher?
-                current_user.get_teacher_courses(:semester => get_semester)
-              else
-                current_user.get_student_courses(:semester => get_semester)
-              end
-
-    @courses = case params[:tab]
-               when 'mine'
-                 courses
-               else
-                 Course.with_semester(get_semester)
-               end.paginated(params[:page])
+    case params[:tab]
+    when 'mine'
+      _index_mine
+    else
+      _index_all
+    end
   end
 
   def show
@@ -44,4 +37,18 @@ class CoursesController < ApplicationController
     @next_course_teachers = current_user.get_next_course_teachers
   end
 
+
+  private
+  def _index_mine
+    courses = if current_user.is_teacher?
+                current_user.get_teacher_courses(:semester => get_semester)
+              else
+                current_user.get_student_courses(:semester => get_semester)
+              end
+    @courses = courses.paginated(params[:page])
+  end
+
+  def _index_all
+    @courses = sort_scope(Course).paginated(params[:page])
+  end
 end
