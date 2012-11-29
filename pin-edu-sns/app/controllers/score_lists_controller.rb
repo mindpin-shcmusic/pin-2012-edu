@@ -21,7 +21,7 @@ class ScoreListsController < ApplicationController
     score_list = CourseScoreList.find(params[:id])
     score_list.update_attributes(params[:course_score_list])
     score_list.save ? flash[:success] = '成绩单已保存' : flash[:error] = '成绩格式不对'
-    redirect_to score_list
+    redirect_to score_list_path(score_list)
   end
 
   def new
@@ -30,9 +30,10 @@ class ScoreListsController < ApplicationController
   end
 
   def create
-    redirect_to current_user.create_score_list(:semester => Semester.get_by_value(params[:semester]),
-                                               :course   => Course.find(params[:course_id]),
-                                               :title    => params[:title])
+    score_list = current_user.create_score_list(:semester => Semester.get_by_value(params[:semester]),
+                                                :course   => Course.find(params[:course_id]),
+                                                :title    => params[:title])
+    redirect_to score_list_path(score_list)
   end
 
   def course_candidates
