@@ -100,8 +100,7 @@ class User < ActiveRecord::Base
   end
 
   def title_str
-    return '同学' if self.is_student?
-    '老师'
+    "#{self.real_name}#{self.is_student? ? '同学' : '老师'}"
   end
 
   def role_str

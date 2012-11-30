@@ -30,6 +30,8 @@ class Student < ActiveRecord::Base
 
   accepts_nested_attributes_for :user
 
+  after_save :set_student_role
+
   after_save :destroy_homework_assigns_after_remove
   def destroy_homework_assigns_after_remove
     self.user.homework_assigns.destroy_all if self.is_removed?
@@ -70,6 +72,12 @@ class Student < ActiveRecord::Base
         end
       end
     end
+  end
+
+private
+
+  def set_student_role
+    self.user.set_role :student
   end
 
   module UserMethods
