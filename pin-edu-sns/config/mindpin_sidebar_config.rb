@@ -216,7 +216,7 @@ MindpinSidebar::Base.config do
         end
 
         subnav :couses, :name => '课程浏览', :url => '/courses' do
-          controller :courses, :only => :index
+          controller :courses, :only => [:index,:show]
         end
 
       end
