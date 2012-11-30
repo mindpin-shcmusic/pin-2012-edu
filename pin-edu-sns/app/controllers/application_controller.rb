@@ -35,4 +35,8 @@ protected
     resource
   end
 
+  def flash_error(arg)
+    flash[:error] = arg.is_a?(String) ? arg : arg.errors.messages.values.first
+  end
+
 end

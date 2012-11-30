@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 module SessionsControllerMethods
   # 登录
   def new
@@ -24,7 +25,7 @@ module SessionsControllerMethods
       after_logged_in()
       redirect_back_or_default('/')
     else
-      flash[:error]='登录失败：邮箱/密码不正确'
+      flash_error '登录失败：邮箱/密码不正确'
       redirect_to '/'
     end
   end
