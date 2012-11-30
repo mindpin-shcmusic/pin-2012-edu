@@ -24,7 +24,9 @@ class FileEntitiesController < ApplicationController
   def download
     item = FileEntityDownloadItem.new(params[:download_id])
     file_entity = FileEntity.find(item.file_entity_id)
-    redirect_to file_entity.http_url
+    #redirect_to file_entity.http_url
+    send_file file_entity.attach.path, :type => file_entity.attach_content_type, :disposition => 'attachment',
+      :filename => item.real_file_name
   end
 
   def re_encode
