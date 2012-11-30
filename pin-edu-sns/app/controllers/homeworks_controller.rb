@@ -45,16 +45,9 @@ class HomeworksController < ApplicationController
   end
 
   def index
-    homeworks = case params[:tab]
-                when 'expired'
-                  current_user.expired_homeworks
-                when 'unexpired'
-                  current_user.unexpired_homeworks
-                else
-                  current_user.homeworks
-                end
-
-    @homeworks = sort_scope(homeworks).paginated(params[:page])
+    @homeworks = filter(current_user.homeworks,
+                        :expired   => current_user.expired_homeworks,
+                        :unexpired => current_user.unexpired_homeworks)
   end
   
   def show

@@ -11,7 +11,7 @@ module TabFilter
     end
 
     def current_collection
-      tab = @container[@context.params[:tab].to_sym]
+      tab = @container[@context.params[:tab] && @context.params[:tab].to_sym]
 
       result = case tab
                when nil, :default
