@@ -42,7 +42,7 @@ class MediaResource < ActiveRecord::Base
     if !self.dir.blank?
       media_resource = self.dir.media_resources.where(:name => self.name).first
       if !media_resource.blank? && media_resource != self
-        self.errors.add(:dir_id,'移动失败，文件已存在于目标文件夹中')
+        self.errors.add(:dir_id,'移动失败，目标文件夹中已经有同名文件')
       end
     end
   end
