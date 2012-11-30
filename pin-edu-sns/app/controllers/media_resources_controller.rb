@@ -44,7 +44,7 @@ class MediaResourcesController < ApplicationController
       resource = MediaResource.create_folder(current_user, resource_path)
 
       if resource.blank?
-        return render :status => 401,
+        return render :status => 422,
                       :text => '文件夹创建失败'
       end
 
@@ -54,11 +54,11 @@ class MediaResourcesController < ApplicationController
                     }
     end
 
-    render :status => 401,
+    render :status => 422,
            :text => '文件夹名不符合规范'
 
   rescue MediaResource::RepeatedlyCreateFolderError
-    render :status => 401,
+    render :status => 422,
            :text => '文件夹名重复'
   end
 
