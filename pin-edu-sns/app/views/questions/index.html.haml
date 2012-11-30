@@ -47,7 +47,8 @@
       = page_list_body :cols=>cols_hash do |p|
         = p.checkbox(question)
         = p.cell :ops do
-          %a.edit{:href=>"/questions/#{question.id}/edit"} 编辑
+          - if !question.has_answered?
+            %a.edit{:href=>"/questions/#{question.id}/edit"} 编辑
         = p.cell :title do
           %a.edit{:href=>"/questions/#{question.id}"}= truncate_u question.title
         = p.cell :teacher, question.teacher_user.real_name
