@@ -3,12 +3,14 @@
 - course_ids = expression.blank? ? [] : expression[:courses]
 - courses = course_ids.map{|id|Course.find_by_id(id)}.compact
 
-= render 'nav'
+- hgoback '/announcements'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb "通知", "/announcements"
+
 - hbreadcrumb @announcement.title
 
 .page-unfixed-head
-  = page_buttons do |p|
-    = p.button '返回列表页', '/announcements'
+
 
 .page-model-show
   = page_field :title, :title => '标题' do

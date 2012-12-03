@@ -1,12 +1,12 @@
+- hgoback '/'
 - hbreadcrumb '首页', '/'
-- hbreadcrumb '我的课程表'
+- hbreadcrumb "我的课程表"
+
 
 .page-unfixed-head
-  = page_buttons do |p|
-    = p.button '返回工作台', '/dashboard'
 
 .page-model-show
-  - title = "#{current_user.real_name}#{current_user.title_str}，#{Semester.now.to_s} 学期课程表"
+  - title = "#{current_user.title_str}，#{Semester.now.to_s} 学期课程表"
   = page_field :'page-courses-table', :title => title do
     .field  
       - 13.times do |number|

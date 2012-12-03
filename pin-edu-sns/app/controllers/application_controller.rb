@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   include ApplicationMethods
+  include CreateHelper
+  include TabFilter
   helper_method :current_semester, :get_semester
   helper :all
 
@@ -33,6 +35,10 @@ protected
   rescue NoMethodError
     redirect_to :action => :index
     resource
+  end
+
+  def flash_error(arg)
+    flash[:error] = arg.is_a?(String) ? arg : arg.errors.messages.values.first
   end
 
 end

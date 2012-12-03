@@ -1,7 +1,9 @@
 - htitle '课程调查'
 
-- hbreadcrumb '基础数据管理', '/admin'
-- hbreadcrumb '导师双向选择', '/admin/mentor_notes'
+- hgoback admin_mentor_notes_path
+- hbreadcrumb '首页', '/admin'
+- hbreadcrumb '导师', admin_mentor_courses_path
+- hbreadcrumb '导师双向选择', admin_mentor_notes_path
 - hbreadcrumb @mentor_note.title
 
 
@@ -15,9 +17,6 @@
 
   
 .page-unfixed-head
-  = page_buttons do |p|
-    = p.button '返回列表页', '/admin/mentor_notes'
-
 
 .page-model-show
 

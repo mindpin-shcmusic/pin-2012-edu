@@ -1,8 +1,10 @@
 - htitle '课程维护'
 
-- hbreadcrumb '基础数据管理', '/admin'
+- hgoback admin_course_path(@course)
+- hbreadcrumb '首页', '/admin'
+- hbreadcrumb '基础数据', '/admin'
 - hbreadcrumb '课程维护', '/admin/courses'
-- hbreadcrumb @course.name, "/admin/courses/#{@course.id}"
+- hbreadcrumb @course.name, admin_course_path(@course)
 - hbreadcrumb '增加任课教师'
 
 - selected_teacher_users = @course.get_teachers(:semester=>Semester.now)

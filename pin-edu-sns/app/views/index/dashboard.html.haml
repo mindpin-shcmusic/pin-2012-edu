@@ -47,8 +47,6 @@
               %span> ，
               %span.course>= link_to course.name, "/courses/#{course.id}"
 
-
-
     = page_field :'courses-info', :title=>'一周课程' do
       .data
         - week_course_teachers.each do |weekday, class_details|
@@ -63,12 +61,11 @@
                 %span.time>= detail[:class_time]
                 %span> ，
                 %span.course>= link_to course.name, "/courses/#{course.id}"
+                %span> ，
+                %span.location>= detail[:course_teacher].location
 
       .see-table
-        - if current_user.is_teacher?
-          = link_to '查看课程表', '/courses/for_teacher'
-        - if current_user.is_student?
-          = link_to '查看课程表', '/courses/for_student'
+        = link_to '查看课程表', '/courses/curriculum'
 
 
     = page_field :'notices-info', :title=>'通知信息' do

@@ -29,8 +29,7 @@ class Admin::CourseSurveysController < ApplicationController
       return redirect_to "/admin/course_surveys/#{@course_survey.id}"
     end
     
-    error = @course_survey.errors.first
-    flash[:error] = error[1]
+    flash_error @course_survey
     redirect_to "/admin/course_surveys/new"
   end
 

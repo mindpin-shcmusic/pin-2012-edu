@@ -7,31 +7,20 @@ class AnnouncementsController < ApplicationController
   end
 
   def index
-    tab = params[:tab]
-
-    case tab
-    when 'received'
-      @announcements = sort_scope(current_user.received_announcements).paginated(params[:page])
-    when 'unread'
-      @announcements = current_user.unread_announcements.paginated(params[:page])
-    when 'mine'
-      @announcements = sort_scope(current_user.created_announcements).paginated(params[:page])
-    else
-      @announcements = sort_scope(current_user.received_announcements).paginated(params[:page])
-    end
-
+    @announcements = filter(current_user.received_announcements,
+                            :received => :default,
+                            :unread   => current_user.unread_announcements,
+                            :mine     => current_user.created_announcements)
   end
 
 
 
   def create
-    @announcement = current_user.created_announcements.build params[:announcement]
-    if @announcement.save
+    create_resource current_user.created_announcements.build params[:announcement] do |announcement|
       courses = (params[:course_ids]||'').split(',')
-      @announcement.announce_to(:courses => courses)
-      return redirect_to @announcement 
+      announcement.announce_to(:courses => courses)
     end
-    render :action => :new
+
   end
 
 

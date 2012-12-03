@@ -1,5 +1,6 @@
+- hgoback '/'
 - hbreadcrumb '首页', '/'
-- hbreadcrumb '课程浏览'
+- hbreadcrumb "课程浏览"
 
 .page-fixed-head
   = page_filters '/courses' do |p|
@@ -13,7 +14,8 @@
   }
 
 .page-list-head
-  = page_semester_filters '/courses'
+  - if params[:tab] == 'mine'
+    = page_semester_filters '/courses'
 
   .headtop
     = list_pagination(@courses)

@@ -1,7 +1,8 @@
 - htitle '课程调查'
 
-- hbreadcrumb '基础数据管理', '/admin'
-- hbreadcrumb '课程调查', '/admin/course_surveys'
+- hgoback admin_course_surveys_path
+- hbreadcrumb '首页', '/admin'
+- hbreadcrumb '课程调查', admin_course_surveys_path
 - hbreadcrumb @course_survey.title
 
 :ruby
@@ -16,13 +17,7 @@
     survey_list = 'survey_2_list'
   end
 
-
-
-
 .page-unfixed-head
-  = page_buttons do |p|
-    = p.button '返回列表页', '/admin/course_surveys'
-
 
 .page-model-show
 

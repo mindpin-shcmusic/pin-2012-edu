@@ -2,22 +2,26 @@ module ApplicationMethods
   def self.included(base)
     # 拦截ie6的访问
     base.before_filter :hold_ie678
-    # 捕捉一些特定异常
-    # base.around_filter :catch_some_exception 开发时先注掉了
     # 修正IE浏览器请求头问题
     base.before_filter :fix_ie_accept
     # 对错误显示友好的页面
-    base.around_filter :catch_template_exception
+    base.around_filter :catch_some_exception
   end
 
   #-----------------------
-  
-  def render_status_page(code, text = '')
-    @status_code = code.to_i
-    @status_text = text.to_s
-    render "layouts/status_page/status_page", :status=>@status_code, :layout => false
-  end
+  def render_status_page(code, exception, message)
+    p exception.message
+    puts exception.backtrace*"\n"
 
+    case code
+    when 404
+      render "layouts/status_page/404_page", :status=>404, :layout => false,
+        :locals=>{:exception=>exception,:message=>message}
+    when 500
+      render "layouts/status_page/500_page", :status=>500, :layout => false,
+        :locals=>{:exception=>exception,:message=>message}
+    end
+  end
   #----------------------
 
   def hold_ie678
@@ -38,14 +42,18 @@ module ApplicationMethods
 
   def catch_some_exception
     yield
-  rescue ActiveRecord::RecordNotFound
-    render_status_page(404,"正在访问的页面不存在，或者已被删除。")
-  rescue Exception => e
-    if Rails.env.production?
-      return render_status_page(500,e.message)
-    else
-      raise e
-    end
+  rescue ActionController::RoutingError=>ex
+    render_status_page(404,ex,'正在访问的页面不存在，或者已被删除。')
+  rescue AbstractController::ActionNotFound=>ex
+    render_status_page(404,ex,'正在访问的页面不存在，或者已被删除。')
+  rescue ActiveRecord::RecordNotFound=>ex
+    render_status_page(404,ex,'正在访问的页面不存在，或者已被删除。')
+  rescue Redis::CannotConnectError=>ex
+    render_status_page(500,ex,'redis 服务出现了错误')
+  rescue Riddle::ConnectionError=>ex
+    render_status_page(500,ex,'sphinx 服务出现了错误')
+  rescue Exception=>ex
+    render_status_page(500,ex,'未知错误')
   end
 
   def fix_ie_accept
@@ -53,18 +61,6 @@ module ApplicationMethods
       if !/.*\.gif/.match(request.url)
         request.env["HTTP_ACCEPT"] = '*/*'
       end
-    end
-  end
-
-  def catch_template_exception
-    yield
-  rescue ActionView::TemplateError=>ex
-    p ex.message
-    puts ex.backtrace*"\n"
-    if Rails.env.development?
-      raise ex
-    else
-      return render_status_page(500,ex.message)
     end
   end
 

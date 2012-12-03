@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class PublicResourcesController < ApplicationController
   # 公共资源列表
   def index
@@ -27,7 +28,7 @@ class PublicResourcesController < ApplicationController
   # 上传到公共资源 
   def upload
     if params[:file].blank?
-      flash[:error] = "先选择一个文件上传"
+      flash_error "先选择一个文件上传"
     else
       PublicResource.upload_by_user(current_user, params[:file])
     end

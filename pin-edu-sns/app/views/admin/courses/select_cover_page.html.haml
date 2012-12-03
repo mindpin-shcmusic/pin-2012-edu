@@ -1,4 +1,12 @@
-= link_to "返回","/admin/courses/#{@course.id}"
+- htitle '课程选择封面'
+
+- hgoback admin_course_path(@course)
+- hbreadcrumb '首页', '/admin'
+- hbreadcrumb '基础数据', '/admin'
+- hbreadcrumb '课程维护', '/admin/courses'
+- hbreadcrumb @course.name, admin_course_path(@course)
+- hbreadcrumb '选择课程封面图片'
+
 .page-select-cover-forms
   = flash[:error]
   - current_id = @course.cover.blank? ? -1 : @course.cover.id 
