@@ -19,6 +19,8 @@ class Teacher < ActiveRecord::Base
 
   accepts_nested_attributes_for :user
   
+  after_save :set_teacher_role
+
   def destroyable_by?(user)
     user.is_admin?
   end
@@ -44,6 +46,12 @@ class Teacher < ActiveRecord::Base
     end
   end
 
+private
+
+  def set_teacher_role
+    self.user.set_role :teacher
+  end
+
   module UserMethods
     def self.included(base)
       base.has_one :teacher
@@ -55,11 +63,6 @@ class Teacher < ActiveRecord::Base
         role? "teacher"
       end
       
-      def real_name
-        self.teacher.real_name if is_teacher?
-        self.student.real_name if is_student?
-        self.name
-      end
     end
     
   end
