@@ -29,7 +29,7 @@
     .user-data{
       float:left;
       overflow:hidden;
-      width:359px;
+      width:320px;height:180px;
       border-right:solid 1px white;
       position:relative;
 
@@ -55,6 +55,7 @@
         margin-left:133px;
         .name{
           font-size:22px;
+          margin-bottom:10px;
         }
         .id{
           color:#888;
@@ -65,9 +66,84 @@
     .course-data{
       float:left;
       padding-left:15px;
+
       .today{
-        font-size:16px;
-        margin-bottom:5px;
+        background-color:white;
+        @include border-radius(4px);
+        border:solid 1px #e5e5e5;
+        overflow:hidden;
+        padding:10px 5px;
+        position:relative;
+
+        .day{
+          float:left;
+          font-size:64px;
+          color:#2C86D4;
+          line-height:70px;height:70px;
+          width:100px;
+          text-align:center;
+          margin-right:5px;
+        }
+        .d{
+          float:left;
+          .weekday{
+            color:#2C86D4;
+            font-size:24px;
+            height:40px;line-height:40px;
+          }
+          .date{
+            height:30px;line-height:30px;
+            color:#888;
+            font-size:16px;
+          }
+        }
+
+        .icon{
+          position:absolute;
+          @include gradient(#fafafa, #F2F2F2);
+          top:0;bottom:0;right:0;
+          width:90px;
+          border-left:solid 1px #E5E5E5;
+
+          &:after{
+            content:"";
+            position:absolute;
+            @include xicon(2, 1, 1);
+            top:21px;left:21px;
+          }
+        }
+      }
+      .next{
+        background-color:white;
+        @include border-radius(4px);
+        border:solid 1px #e5e5e5;
+        padding:10px;
+        margin-top:10px;
+        width:362px;
+        position:relative;
+
+        .t{
+          height:24px;line-height:24px;
+          font-weight:bold;
+          margin-bottom:5px;
+          border-bottom:dashed 1px #ccc;
+          padding-bottom:5px;
+        }
+
+        .icon{
+          position:absolute;
+          @include gradient(#fafafa, #F2F2F2);
+          top:0;bottom:0;right:0;
+          width:90px;
+          border-left:solid 1px #E5E5E5;
+
+          &:after{
+            content:"";
+            position:absolute;
+            @include xicon(2, 3, 1);
+            top:14px;left:21px;
+          }
+        }
       }
     }
   }

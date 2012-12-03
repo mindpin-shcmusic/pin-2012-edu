@@ -1,3 +1,10 @@
+@mixin xicon($size, $x, $y){
+  height:$size*24px;
+  width:$size*24px;
+  background:url(/assets/icons1203.png) no-repeat;
+  background-position:$x*-24px+24px $y*-24px+24px;
+}
+
 body{
   background:url(bg_body.png);
   font-size:14px;
