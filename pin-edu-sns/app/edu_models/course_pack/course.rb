@@ -238,7 +238,7 @@ class Course < ActiveRecord::Base
 
     # 取得接下来一星期内要上课的数据
     def get_next_course_teachers
-      next_course_teachers = []
+      next_course_time_expressions = []
       
       if self.is_student?
         courses = self.get_student_course_teachers(:semester => Semester.now)
@@ -254,11 +254,11 @@ class Course < ActiveRecord::Base
 
       current_cte = CourseTimeExpression.get_by_time(Time.now)
       courses.each do |course_teacher|
-        next_course_teachers += course_teacher.get_next_courses_by_time_expression(current_cte)
+        next_course_time_expressions += course_teacher.get_next_courses_by_time_expression(current_cte)
       end
 
-      next_course_teachers = next_course_teachers.sort_by {|class_detail| class_detail[:weekday]}
-      next_course_teachers = next_course_teachers.group_by{|item| item[:weekday]}
+      next_course_time_expressions = next_course_time_expressions.sort_by {|course_time_expression| course_time_expression.weekday}
+      next_course_time_expressions = next_course_time_expressions.group_by{|course_time_expression| course_time_expression.weekday}
     end
 
     # 取得一星期内要上课的数据
