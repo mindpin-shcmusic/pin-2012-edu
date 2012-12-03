@@ -37,35 +37,35 @@
           .next
             :ruby
               weekday = next_one_course_teacher[0]
-              detail = next_one_course_teacher[1][0]
+              course_time_expression = next_one_course_teacher[1][0]
 
-              course_teacher = detail[:course_teacher]
+              course_teacher = course_time_expression.course_teacher
               course = course_teacher.course
             .t 下一节课：
             .c
               %span.week>= change_to_weekday(weekday)
               %span> ，
-              %span.time>= detail[:class_time]
+              %span.time>= course_time_expression.class_time
               %span> ，
               %span.course>= link_to course.name, "/courses/#{course.id}"
             .icon
 
     = page_field :'courses-info', :title=>'一周课程' do
       .data
-        - week_course_teachers.each do |weekday, class_details|
+        - week_course_teachers.each do |weekday, course_time_expressions|
           .wd
             .w= change_to_weekday(weekday)
-            - class_details.each do |detail|
+            - course_time_expressions.each do |course_time_expression|
               .field
                 :ruby
-                  course_teacher = detail[:course_teacher]
+                  course_teacher = course_time_expression.course_teacher
                   course = course_teacher.course
 
-                %span.time>= detail[:class_time]
+                %span.time>= course_time_expression.class_time
                 %span> ，
                 %span.course>= link_to course.name, "/courses/#{course.id}"
                 %span> ，
-                %span.location>= detail[:course_teacher].location
+                %span.location>= course_teacher.location
 
       .see-table
         = link_to '查看课程表', '/courses/curriculum'

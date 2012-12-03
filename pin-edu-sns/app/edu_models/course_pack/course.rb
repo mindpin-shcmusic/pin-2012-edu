@@ -183,8 +183,39 @@ class Course < ActiveRecord::Base
     end
 
     def get_teachers(options)
+      raise '该用户不是 student' if !self.is_student?
+
       User.joins("inner join course_student_assigns on course_student_assigns.teacher_user_id = users.id").
-        where("course_student_assigns.semester_value = '#{options[:semester].value}' and course_student_assigns.student_user_id = #{self.id}")
+        where("course_student_assigns.semester_value = '#{options[:semester].value}' and course_student_assigns.student_user_id = #{self.id}").group('users.id')
+    end
+
+    def get_students(options)
+      raise '该用户不是 teacher' if !self.is_teacher?
+
+      User.joins("inner join course_student_assigns on course_student_assigns.student_user_id = users.id").
+        where("course_student_assigns.semester_value = '#{options[:semester].value}' and course_student_assigns.teacher_user_id = #{self.id}").group('users.id')
+    end
+
+    def get_students_of_the_same_teachers(options)
+      raise '该用户不是 student' if !self.is_student?
+
+      users = User.joins('inner join course_student_assigns as a1 on a1.student_user_id = users.id').
+        joins('inner join course_student_assigns as a2 on a2.teacher_user_id = a1.teacher_user_id and a2.semester_value = a1.semester_value and a2.course_id = a1.course_id').
+        where("a2.semester_value = '#{options[:semester].value}' and a2.student_user_id = #{self.id}").group('users.id')
+
+      users = users - [self]
+      users
+    end
+
+    def get_teachers_of_the_same_courses(options)
+      raise '该用户不是 teacher' if !self.is_teacher?
+
+      users = User.joins('inner join course_teachers on course_teachers.teacher_user_id = users.id').
+        joins('inner join course_teachers as ct1 on ct1.course_id = course_teachers.course_id and ct1.semester_value = course_teachers.semester_value').
+        where("ct1.semester_value = '#{options[:semester].value}' and ct1.teacher_user_id = #{self.id}").group('users.id')
+
+      users = users - [self]
+      users
     end
 
     def get_course_time(options)
@@ -207,7 +238,7 @@ class Course < ActiveRecord::Base
 
     # 取得接下来一星期内要上课的数据
     def get_next_course_teachers
-      next_course_teachers = []
+      next_course_time_expressions = []
       
       if self.is_student?
         courses = self.get_student_course_teachers(:semester => Semester.now)
@@ -223,16 +254,16 @@ class Course < ActiveRecord::Base
 
       current_cte = CourseTimeExpression.get_by_time(Time.now)
       courses.each do |course_teacher|
-        next_course_teachers += course_teacher.get_next_courses_by_time_expression(current_cte)
+        next_course_time_expressions += course_teacher.get_next_courses_by_time_expression(current_cte)
       end
 
-      next_course_teachers = next_course_teachers.sort_by {|class_detail| class_detail[:weekday]}
-      next_course_teachers = next_course_teachers.group_by{|item| item[:weekday]}
+      next_course_time_expressions = next_course_time_expressions.sort
+      next_course_time_expressions = next_course_time_expressions.group_by{|course_time_expression| course_time_expression.weekday}
     end
 
     # 取得一星期内要上课的数据
     def get_week_course_teachers
-      week_course_teachers = []
+      week_course_time_expressions = []
       
       if self.is_student?
         courses = self.get_student_course_teachers(:semester => Semester.now)
@@ -247,11 +278,11 @@ class Course < ActiveRecord::Base
       end
 
       courses.each do |course_teacher|
-        week_course_teachers += course_teacher.get_week_courses_by_time_expression
+        week_course_time_expressions += course_teacher.get_week_courses_by_time_expression
       end
 
-      week_course_teachers = week_course_teachers.sort_by {|class_detail| class_detail[:weekday]}
-      week_course_teachers = week_course_teachers.group_by{|item| item[:weekday]}
+      week_course_time_expressions = week_course_time_expressions.sort
+      week_course_time_expressions = week_course_time_expressions.group_by{|course_time_expression| course_time_expression.weekday}
     end
 
     # 一周需要去听的课（学生 / 老师）的课时数
@@ -261,11 +292,11 @@ class Course < ActiveRecord::Base
       i = 0
       if week_courses.any?
         week_courses.each do |day_courses|
-          day_course = day_courses[1][0][:course_teacher].time_expression
-          day_course = JSON.parse(day_course)
-          day_course = day_course[0]['number']
-
-          i = i + day_course.length
+          arr = day_courses[1]
+          arr.each do |course|
+            numbers = course[:course_teacher].time_expression_array[0]['number']
+            i = i + numbers.length
+          end
         end
       end
 

@@ -18,21 +18,103 @@
 
 .page-media-share-form
   = form_tag form_action, :method=>:post do
-    = render 'aj/user_selector', :users=>@users, :selected_users=>@shared_receivers, :name=>'user_ids'
+    .field.page-float-box-list-selector.course_teachers
+      %div 选择发送的课程
+      = jfbox_link :course_teachers, "已选择了#{@shared_course_teacher_ids.length}个"
+      = jfbox :course_teachers, '选择要发送的课程' do
+        .list-selector
+          .search
+            .field
+              %input.search{:type=>'text'}
+            .desc
+              小提示：可以输入中文或拼音来快速查找
+          .filter
+            %a.all.view{:href=>'javascript:;'} 全部
+            %a.selected{:href=>'javascript:;'} 已选
+            %a.unselected{:href=>'javascript:;'} 未选
+          .selector
+            .list
+              - @scope_course_teachers.each do |course_teacher|
+                :ruby
+                  selected = @shared_course_teacher_ids.include?(course_teacher.id)
+                  klass = selected ? 'selected' : ''
 
-    .field.course
-      %label 我的课程
-      .courses
-        - current_user.courses.each do |course|
-          .course
-            = jcheckbox 'receivers[courses][]', course.id, false, course.name
+                  html_data = {
+                    :id => course_teacher.id,
+                    :name => course_teacher.course.name
+                  }
 
-    .field.team
-      %label 我的班级
-      .teams
-        - current_user.teams.each do |team|
-          .team
-            = jcheckbox 'receivers[teams][]', team.id, false, team.name
+                .item{:data=>html_data,:class=>klass}
+                  .name= course_teacher.course.name
+          %input.ids{:name=>:course_teacher_ids, :type=>'hidden', :value=>@shared_course_teacher_ids*','}
+          %a.submit-fbox{:href=>'javascript:;'} 确定
+          %a.close-fbox{:href=>'javascript:;'} 取消
+
+    .field.page-float-box-list-selector.student_users
+      %div 选择发送的学生
+      = jfbox_link :student_users, "已选择了#{@shared_student_user_ids.length}个"
+      = jfbox :student_users, '选择发送的学生' do
+        .list-selector
+          .search
+            .field
+              %input.search{:type=>'text'}
+            .desc
+              小提示：可以输入中文或拼音来快速查找
+          .filter
+            %a.all.view{:href=>'javascript:;'} 全部
+            %a.selected{:href=>'javascript:;'} 已选
+            %a.unselected{:href=>'javascript:;'} 未选
+          .selector
+            .list
+              - @student_users.each do |user|
+
+                :ruby
+                  selected = @shared_student_user_ids.include?(user.id)
+                  klass = selected ? 'selected' : ''
+
+                  html_data = {
+                    :id => user.id,
+                    :name => user.real_name
+                  }
+
+                .item{:data=>html_data,:class=>klass}
+                  .name= user.real_name
+          %input.ids{:name=>:student_user_ids, :type=>'hidden', :value=>@shared_student_user_ids*','}
+          %a.submit-fbox{:href=>'javascript:;'} 确定
+          %a.close-fbox{:href=>'javascript:;'} 取消
+
+    .field.page-float-box-list-selector.teacher_users
+      %div 选择发送的老师
+      = jfbox_link :teacher_users, "已选择了#{@shared_teacher_user_ids.length}个"
+      = jfbox :teacher_users, '选择发送的老师' do
+        .list-selector
+          .search
+            .field
+              %input.search{:type=>'text'}
+            .desc
+              小提示：可以输入中文或拼音来快速查找
+          .filter
+            %a.all.view{:href=>'javascript:;'} 全部
+            %a.selected{:href=>'javascript:;'} 已选
+            %a.unselected{:href=>'javascript:;'} 未选
+          .selector
+            .list
+              - @teacher_users.each do |user|
+
+                :ruby
+                  selected = @shared_teacher_user_ids.include?(user.id)
+                  klass = selected ? 'selected' : ''
+
+                  html_data = {
+                    :id => user.id,
+                    :name => user.real_name
+                  }
+
+                .item{:data=>html_data,:class=>klass}
+                  .name= user.real_name
+          %input.ids{:name=>:teacher_user_ids, :type=>'hidden', :value=>@shared_teacher_user_ids*','}
+          %a.submit-fbox{:href=>'javascript:;'} 确定
+          %a.close-fbox{:href=>'javascript:;'} 取消
 
     .field.submit
       = jfsubmit '确定'

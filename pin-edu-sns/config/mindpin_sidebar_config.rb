@@ -108,7 +108,7 @@ MindpinSidebar::Base.config do
 
       nav :info, :name => '教学信息', :url => '/teachers' do
         subnav :courses, :name => '课程浏览', :url => '/courses' do
-          controller :courses, :only => :index
+          controller :courses, :only => [:index,:show]
         end
 
         subnav :students, :name => '学生浏览', :url => '/students' do
@@ -140,11 +140,6 @@ MindpinSidebar::Base.config do
         subnav :curriculum, :name => '我的课程表', :url => '/courses/curriculum' do
           controller :courses, :only => :curriculum
         end
-
-        subnav :couses, :name => '课程浏览', :url => '/courses' do
-          controller :courses, :only => :index
-        end
-
       end
 
       nav :notice, :name => '系统通知', :url => '/announcements' do
@@ -221,7 +216,7 @@ MindpinSidebar::Base.config do
         end
 
         subnav :couses, :name => '课程浏览', :url => '/courses' do
-          controller :courses, :only => :index
+          controller :courses, :only => [:index,:show]
         end
 
       end

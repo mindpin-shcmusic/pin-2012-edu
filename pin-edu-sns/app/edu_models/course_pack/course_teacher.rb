@@ -61,6 +61,11 @@ class CourseTeacher < ActiveRecord::Base
     )
   end
 
+  def student_users
+    User.joins('inner join course_student_assigns as csa on csa.student_user_id = users.id').
+      where("csa.course_id = #{self.course_id} and csa.teacher_user_id = #{self.teacher_user_id} and csa.semester_value = '#{self.semester_value}'")
+  end
+
   def set_students(users)
     students = self.course.get_students(:semester=>self.semester,:teacher_user=>self.teacher_user)
 
@@ -96,48 +101,38 @@ class CourseTeacher < ActiveRecord::Base
 
 
   def get_next_courses_by_time_expression(current_cte)
-    courses = []
+    course_time_expressions = []
+
     self.time_expression_array.each do |expression|
       
       expression['number'].each do |number|
         cte = CourseTimeExpression.new(expression['weekday'], [number])
         if cte >= current_cte
-          class_detail = Hash.new(0)
-
-          class_detail[:weekday] = cte.weekday
-          class_detail[:weekday_str] = cte.weekday_str
-          class_detail[:class_time] = "#{cte.start_time_str} - #{cte.end_time_str}"
-          class_detail[:course_teacher] = self
-
-          courses << class_detail
+          cte.course_teacher = self
+          course_time_expressions << cte
         end
       end
       
     end
 
-    courses
+    course_time_expressions
   end
 
 
   def get_week_courses_by_time_expression
-    courses = []
+    course_time_expressions = []
     self.time_expression_array.each do |expression|
       
       expression['number'].each do |number|
         cte = CourseTimeExpression.new(expression['weekday'], [number])
-        class_detail = Hash.new(0)
+        cte.course_teacher = self
 
-        class_detail[:weekday] = cte.weekday
-        class_detail[:weekday_str] = cte.weekday_str
-        class_detail[:class_time] = "#{cte.start_time_str} - #{cte.end_time_str}"
-        class_detail[:course_teacher] = self
-
-        courses << class_detail
+        course_time_expressions << cte
        end
       
     end
 
-    courses
+    course_time_expressions
   end
 
 

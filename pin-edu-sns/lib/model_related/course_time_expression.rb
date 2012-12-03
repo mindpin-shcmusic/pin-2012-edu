@@ -1,5 +1,6 @@
 class CourseTimeExpression
   attr_reader :weekday, :numbers, :weekday_str, :start_time_str, :end_time_str
+  attr_accessor :course_teacher
   def initialize(weekday, numbers)
     @weekday = weekday.to_i
     @numbers = numbers.map{|n|n.to_i}
@@ -54,6 +55,10 @@ class CourseTimeExpression
     end
   end
 
+  def class_time
+    "#{self.start_time_str} - #{self.end_time_str}"
+  end
+
   def >=(other)
     self > other || self == other
   end
@@ -80,6 +85,12 @@ class CourseTimeExpression
 
   def <(other)
     other > self
+  end
+
+  def <=>(other)
+    return 1 if self > other
+    return -1 if self < other
+    return 0
   end
 
   def self.get_by_time(time)

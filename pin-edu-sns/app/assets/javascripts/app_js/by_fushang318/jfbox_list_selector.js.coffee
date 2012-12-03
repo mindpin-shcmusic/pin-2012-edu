@@ -17,10 +17,16 @@ pie.load ->
     $list_selector_float_box.find('.close-fbox').on 'click', ->
       pie.close_fbox(jfbox_id)
 
+    $jfbox.on 'mindpin:open-fbox', ->
+      ids = $jfbox_link.data('ids')
+      if ids == undefined
+        ids = $list_selector.data('list_selector').get_selected_ids()
+        $jfbox_link.data('ids',ids)
+
     $jfbox.on 'mindpin:close-fbox', ->
       selector = $list_selector.data('list_selector')
-      ids = $jfbox_link.data('ids')
+      ids = $jfbox_link.data('ids') || []
       ui_ids = selector.get_selected_ids()
-      if ids != undefined && ids != ui_ids
+      if ids != ui_ids
         selector.set_selected_ids(ids)
-      $jfbox_link.text("已选择了#{ids.length}个")
+        $jfbox_link.text("已选择了#{ids.length}个")

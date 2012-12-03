@@ -20,7 +20,8 @@
       = p.filter '我的学生', :tab => 'mine'
 
 .page-list-head
-  = page_semester_filters '/students'
+  - if current_user.is_teacher? && params[:tab] == 'mine'
+    = page_semester_filters '/students'
 
   .headtop
     = list_pagination(@students)
