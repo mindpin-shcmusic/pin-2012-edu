@@ -1,5 +1,6 @@
 class CourseTimeExpression
   attr_reader :weekday, :numbers, :weekday_str, :start_time_str, :end_time_str
+  attr_accessor :course_teacher
   def initialize(weekday, numbers)
     @weekday = weekday.to_i
     @numbers = numbers.map{|n|n.to_i}
@@ -52,6 +53,10 @@ class CourseTimeExpression
     when 11 then '18:45'
     when 12 then '19:30'
     end
+  end
+
+  def class_time
+    "#{self.start_time_str} - #{self.end_time_str}"
   end
 
   def >=(other)

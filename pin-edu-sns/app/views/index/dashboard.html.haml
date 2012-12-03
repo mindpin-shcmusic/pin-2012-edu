@@ -35,15 +35,15 @@
           .next
             :ruby
               weekday = next_one_course_teacher[0]
-              detail = next_one_course_teacher[1][0]
+              course_time_expression = next_one_course_teacher[1][0]
 
-              course_teacher = detail[:course_teacher]
+              course_teacher = course_time_expression.course_teacher
               course = course_teacher.course
             .t 接下来要上的课
             .c
               %span.week>= change_to_weekday(weekday)
               %span> ，
-              %span.time>= detail[:class_time]
+              %span.time>= course_time_expression.class_time
               %span> ，
               %span.course>= link_to course.name, "/courses/#{course.id}"
 
