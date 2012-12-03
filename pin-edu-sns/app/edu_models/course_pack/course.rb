@@ -257,13 +257,13 @@ class Course < ActiveRecord::Base
         next_course_time_expressions += course_teacher.get_next_courses_by_time_expression(current_cte)
       end
 
-      next_course_time_expressions = next_course_time_expressions.sort_by {|course_time_expression| course_time_expression.weekday}
+      next_course_time_expressions = next_course_time_expressions.sort
       next_course_time_expressions = next_course_time_expressions.group_by{|course_time_expression| course_time_expression.weekday}
     end
 
     # 取得一星期内要上课的数据
     def get_week_course_teachers
-      week_course_teachers = []
+      week_course_time_expressions = []
       
       if self.is_student?
         courses = self.get_student_course_teachers(:semester => Semester.now)
@@ -278,11 +278,11 @@ class Course < ActiveRecord::Base
       end
 
       courses.each do |course_teacher|
-        week_course_teachers += course_teacher.get_week_courses_by_time_expression
+        week_course_time_expressions += course_teacher.get_week_courses_by_time_expression
       end
 
-      week_course_teachers = week_course_teachers.sort_by {|class_detail| class_detail[:weekday]}
-      week_course_teachers = week_course_teachers.group_by{|item| item[:weekday]}
+      week_course_time_expressions = week_course_time_expressions.sort
+      week_course_time_expressions = week_course_time_expressions.group_by{|course_time_expression| course_time_expression.weekday}
     end
 
     # 一周需要去听的课（学生 / 老师）的课时数
@@ -292,11 +292,11 @@ class Course < ActiveRecord::Base
       i = 0
       if week_courses.any?
         week_courses.each do |day_courses|
-          day_course = day_courses[1][0][:course_teacher].time_expression
-          day_course = JSON.parse(day_course)
-          day_course = day_course[0]['number']
-
-          i = i + day_course.length
+          arr = day_courses[1]
+          arr.each do |course|
+            numbers = course[:course_teacher].time_expression_array[0]['number']
+            i = i + numbers.length
+          end
         end
       end
 

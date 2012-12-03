@@ -87,6 +87,12 @@ class CourseTimeExpression
     other > self
   end
 
+  def <=>(other)
+    return 1 if self > other
+    return -1 if self < other
+    return 0
+  end
+
   def self.get_by_time(time)
     number = case time.strftime("%H%M").to_i
     when 0...800 then 0
