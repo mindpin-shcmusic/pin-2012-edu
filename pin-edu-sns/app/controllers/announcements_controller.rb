@@ -7,19 +7,10 @@ class AnnouncementsController < ApplicationController
   end
 
   def index
-    tab = params[:tab]
-
-    case tab
-    when 'received'
-      @announcements = sort_scope(current_user.received_announcements).paginated(params[:page])
-    when 'unread'
-      @announcements = current_user.unread_announcements.paginated(params[:page])
-    when 'mine'
-      @announcements = sort_scope(current_user.created_announcements).paginated(params[:page])
-    else
-      @announcements = sort_scope(current_user.received_announcements).paginated(params[:page])
-    end
-
+    @announcements = filter(current_user.received_announcements,
+                            :received => :default,
+                            :unread   => current_user.unread_announcements,
+                            :mine     => current_user.created_announcements)
   end
 
 
