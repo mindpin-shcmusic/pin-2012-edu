@@ -8,20 +8,19 @@ class HomeworksController < ApplicationController
   end
   
   def create
-    homework = current_user.teacher_homeworks.build(params[:homework])
-    if homework.save
+    create_resource current_user.teacher_homeworks.build(params[:homework]) do |homework|
       homework.assign_to_expression({:courses => [homework.course_id]}.to_json)
       
       if params[:file_entities]
         params[:file_entities].each do |file|
-          attach = HomeworkTeacherAttachment.create(:creator => current_user, :name => file[:name], :file_entity_id => file[:id], :homework => homework)
+          attach = HomeworkTeacherAttachment.create(:creator        => current_user,
+                                                    :name           => file[:name],
+                                                    :file_entity_id => file[:id],
+                                                    :homework       => homework)
         end
       end
 
-      return redirect_to homework
     end
-    
-    redirect_to '/homeworks/new'
   end
   
   def create_student_upload
