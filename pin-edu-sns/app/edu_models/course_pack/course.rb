@@ -257,7 +257,7 @@ class Course < ActiveRecord::Base
         next_course_time_expressions += course_teacher.get_next_courses_by_time_expression(current_cte)
       end
 
-      next_course_time_expressions = next_course_time_expressions.sort_by {|course_time_expression| course_time_expression.weekday}
+      next_course_time_expressions = next_course_time_expressions.sort
       next_course_time_expressions = next_course_time_expressions.group_by{|course_time_expression| course_time_expression.weekday}
     end
 
@@ -281,7 +281,7 @@ class Course < ActiveRecord::Base
         week_course_time_expressions += course_teacher.get_week_courses_by_time_expression
       end
 
-      week_course_time_expressions = week_course_time_expressions.sort_by {|course_time_expression| course_time_expression.weekday}
+      week_course_time_expressions = week_course_time_expressions.sort
       week_course_time_expressions = week_course_time_expressions.group_by{|course_time_expression| course_time_expression.weekday}
     end
 
