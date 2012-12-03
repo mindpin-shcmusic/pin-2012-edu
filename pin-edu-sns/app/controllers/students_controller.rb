@@ -6,15 +6,26 @@ class StudentsController < ApplicationController
   def pre_load
   end
 
-
   def index
-    @students = case params[:tab]
-      when 'mine'
-        Student.with_teacher(current_user) if current_user.is_teacher?
-      else 
-        Student
-      end.with_semester(get_semester).paginated(params[:page])
+    if current_user.is_student?
+      _index_student
+    elsif current_user.is_teacher?
+      _index_teacher
+    end
   end
 
+  private
+  def _index_student
+    @students = sort_scope(Student).paginated(params[:page])
+  end
+
+  def _index_teacher
+    @students = case params[:tab]
+      when 'mine'
+        sort_scope(Student).with_teacher(current_user)
+      else
+        sort_scope(Student)
+      end.with_semester(get_semester).paginated(params[:page])
+  end
 
 end

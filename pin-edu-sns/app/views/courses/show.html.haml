@@ -1,6 +1,6 @@
 - hgoback '/courses'
 - hbreadcrumb '首页', '/'
-- hbreadcrumb '课程', '/courses'
+- hbreadcrumb '课程浏览', '/courses'
 
 - hbreadcrumb @course.name
 
@@ -49,7 +49,7 @@
                 .student-info
                   .name
                     = avatar user, :mini
-                    = link_to user.teacher.real_name, "/teachers/#{user.teacher.id}"
+                    = link_to user.teacher.real_name, "/users/#{user.id}"
                     = user.teacher.tid
 
                 .students-brief

@@ -183,8 +183,39 @@ class Course < ActiveRecord::Base
     end
 
     def get_teachers(options)
+      raise '该用户不是 student' if !self.is_student?
+
       User.joins("inner join course_student_assigns on course_student_assigns.teacher_user_id = users.id").
-        where("course_student_assigns.semester_value = '#{options[:semester].value}' and course_student_assigns.student_user_id = #{self.id}")
+        where("course_student_assigns.semester_value = '#{options[:semester].value}' and course_student_assigns.student_user_id = #{self.id}").group('users.id')
+    end
+
+    def get_students(options)
+      raise '该用户不是 teacher' if !self.is_teacher?
+
+      User.joins("inner join course_student_assigns on course_student_assigns.student_user_id = users.id").
+        where("course_student_assigns.semester_value = '#{options[:semester].value}' and course_student_assigns.teacher_user_id = #{self.id}").group('users.id')
+    end
+
+    def get_students_of_the_same_teachers(options)
+      raise '该用户不是 student' if !self.is_student?
+
+      users = User.joins('inner join course_student_assigns as a1 on a1.student_user_id = users.id').
+        joins('inner join course_student_assigns as a2 on a2.teacher_user_id = a1.teacher_user_id and a2.semester_value = a1.semester_value and a2.course_id = a1.course_id').
+        where("a2.semester_value = '#{options[:semester].value}' and a2.student_user_id = #{self.id}").group('users.id')
+
+      users = users - [self]
+      users
+    end
+
+    def get_teachers_of_the_same_courses(options)
+      raise '该用户不是 teacher' if !self.is_teacher?
+
+      users = User.joins('inner join course_teachers on course_teachers.teacher_user_id = users.id').
+        joins('inner join course_teachers as ct1 on ct1.course_id = course_teachers.course_id and ct1.semester_value = course_teachers.semester_value').
+        where("ct1.semester_value = '#{options[:semester].value}' and ct1.teacher_user_id = #{self.id}").group('users.id')
+
+      users = users - [self]
+      users
     end
 
     def get_course_time(options)

@@ -61,6 +61,11 @@ class CourseTeacher < ActiveRecord::Base
     )
   end
 
+  def student_users
+    User.joins('inner join course_student_assigns as csa on csa.student_user_id = users.id').
+      where("csa.course_id = #{self.course_id} and csa.teacher_user_id = #{self.teacher_user_id} and csa.semester_value = '#{self.semester_value}'")
+  end
+
   def set_students(users)
     students = self.course.get_students(:semester=>self.semester,:teacher_user=>self.teacher_user)
 

@@ -1,6 +1,8 @@
 class MediaShareRule < ActiveRecord::Base
-  attr_reader :deleting
   after_save :enqueue_build_share
+  def enqueue_build_share
+    BuildMediaShareResqueQueue.enqueue(self.id)
+  end
 
   belongs_to :media_resource
 
@@ -9,15 +11,17 @@ class MediaShareRule < ActiveRecord::Base
              :foreign_key => 'creator_id'
 
   def build_expression(options = {})
-    options.assert_valid_keys :users, :courses, :teams
+    options.assert_valid_keys :student_user_ids, :teacher_user_ids, :course_teacher_ids
 
-    options[:users]   ||= []
-    options[:courses] ||= []
-    options[:teams]   ||= []
+    options[:student_user_ids]     ||= []
+    options[:teacher_user_ids]     ||= []
+    options[:course_teacher_ids]   ||= []
+    user_ids = options[:student_user_ids] + options[:teacher_user_ids]
 
-    @deleting = persisted? ? deleting_receiver_ids(options) : []
-
-    delete_share
+    if persisted? && !expression.blank?
+      delete_ids = ArrayDiff.deleted(expression_receiver_ids, user_ids.map(&:to_i))
+      MediaShare.where('media_resource_id = ? and receiver_id in (?)', self.media_resource_id, delete_ids).delete_all
+    end
     
     self.expression = options.to_json
   end
@@ -31,9 +35,16 @@ class MediaShareRule < ActiveRecord::Base
   end
 
   def expression_receiver_ids
-    user_ids = (expression[:users]                  +
-                courses_or_teams_receiver_ids(Team) +
-                courses_or_teams_receiver_ids(Course)).flatten.compact.uniq
+    user_ids = []
+
+    user_ids += expression[:student_user_ids]
+    user_ids += expression[:teacher_user_ids]
+    user_ids += CourseTeacher.find(expression[:course_teacher_ids]).map do |course_teacher|
+      users = []
+      users += course_teacher.student_users
+      users << course_teacher.teacher_user
+      users
+    end.flatten.compact.uniq.map{|user|user.id}
 
     user_ids.delete(self.media_resource.creator.id)
 
@@ -44,14 +55,6 @@ class MediaShareRule < ActiveRecord::Base
     User.find expression_receiver_ids
   end
 
-  def deleting_receivers
-    User.find deleting_receiver_ids
-  end
-
-  def delete_share
-    MediaShare.where('media_resource_id = ? and receiver_id in (?)', self.media_resource_id, self.deleting).delete_all
-  end
-
   def build_share
     expression_receivers.each {|receiver|
       share = MediaShare.find_or_initialize_by_media_resource_id_and_receiver_id self.media_resource.id,
@@ -59,21 +62,6 @@ class MediaShareRule < ActiveRecord::Base
       share.creator = self.creator
       share.save
     }
-  end
-
-  private
-
-  def deleting_receiver_ids(options)
-    return [] if expression.nil?
-    ArrayDiff.deleted(expression_receiver_ids, options[:users].map(&:to_i))
-  end
-
-  def courses_or_teams_receiver_ids(team_or_course)
-    team_or_course.find(expression[team_or_course.to_s.tableize.to_sym]).map(&:get_user_ids).flatten.sort
-  end
-
-  def enqueue_build_share
-    BuildMediaShareResqueQueue.enqueue(self.id)
   end
 
   module UserMethods
@@ -115,6 +103,21 @@ class MediaShareRule < ActiveRecord::Base
 
       def share_to_expression(expression_string)
         share_to(JSON.parse expression_string, :symbolize_names => true)
+      end
+
+      def shared_course_teacher_ids
+        return [] if self.media_share_rule.blank?
+        self.media_share_rule.expression[:course_teacher_ids]
+      end
+
+      def shared_student_user_ids
+        return [] if self.media_share_rule.blank?
+        self.media_share_rule.expression[:student_user_ids]
+      end
+
+      def shared_teacher_user_ids
+        return [] if self.media_share_rule.blank?
+        self.media_share_rule.expression[:teacher_user_ids]
       end
     end
   end
