@@ -254,6 +254,24 @@ class Course < ActiveRecord::Base
       week_course_teachers = week_course_teachers.group_by{|item| item[:weekday]}
     end
 
+    # 一周需要去听的课（学生 / 老师）的课时数
+    def get_course_hours_count
+      week_courses = self.get_week_course_teachers
+
+      i = 0
+      if week_courses.any?
+        week_courses.each do |day_courses|
+          day_course = day_courses[1][0][:course_teacher].time_expression
+          day_course = JSON.parse(day_course)
+          day_course = day_course[0]['number']
+
+          i = i + day_course.length
+        end
+      end
+
+      i
+    end
+
 
   end
 
