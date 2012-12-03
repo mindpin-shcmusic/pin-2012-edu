@@ -13,8 +13,12 @@ class Question < ActiveRecord::Base
 
   validates :creator, :teacher_user, :title, :content, :presence => true
 
+  default_scope order('id DESC')
 
-  scope :with_teacher, lambda {|teacher| {:conditions => ['teacher_user_id = ?', teacher.id]}}
+  scope :with_user, lambda {|user|
+    return {:conditions => ['teacher_user_id = ?', user.id]} if user.is_teacher?
+    {:conditions => ['creator_id = ?', user.id]}
+  }
   scope :answered, where(:has_answered => true)
   scope :unanswered, where(:has_answered => false)
 

@@ -22,7 +22,7 @@ body{
       height:55px;
       background-color:#f2f2f2;
       border-left:solid 1px #B1B1B1;
-      border-bottom:solid 1px #B1B1B1;
+      border-bottom:solid 1px #DADDE0;
       padding-left:17px;
       z-index:8;
 
@@ -42,8 +42,8 @@ body{
         &:after{display:none;}
         margin-right:17px;
         padding-right:17px;
-        border-right:solid 1px #DADDE0;
-        box-shadow:-1px 0 0 #FBFBFB inset;
+        border-right:solid 1px #FBFBFB;
+        box-shadow:-1px 0 0 #DADDE0 inset;
       }
     }
   }

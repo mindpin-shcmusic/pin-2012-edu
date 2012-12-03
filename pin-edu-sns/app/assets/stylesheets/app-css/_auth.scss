@@ -63,23 +63,23 @@ body.auth{
 
         label{
           position:absolute;
-          font-size:14px;font-weight:bold;
+          font-size:18px;//font-weight:bold;
           color:#43474B;
           padding:6px 12px;
           top:1px;left:2px;
-          height:24px;line-height:24px;
+          height:30px;line-height:30px;
           pointer-events:none;
         }
         input[type=text], input[type=password]{
-          border:solid 1px rgba(white, 0.5);
+          border:solid 1px rgba(white, 0.3);
           background-color:#25282b;
-          color:#aaa;font-weight:bold;
-          font-size:14px;
+          color:#aaa;//font-weight:bold;
+          font-size:18px;
           padding:6px 12px;
-          height:24px;line-height:24px;
+          height:30px;line-height:30px;
           width:240px;
-          box-shadow:none;
-          @include border-radius(2px);
+          box-shadow:0 0 8px rgba(black, 0.4) inset;
+          @include border-radius(4px);
 
           @media screen and (-webkit-min-device-pixel-ratio:0) {
             margin-top:1px;
@@ -95,27 +95,28 @@ body.auth{
         float:left;
 
         a.form-submit-ajax-button{
-          @include border-radius(2px);
-          @include gradient(#FDA034, #FF8201);
-          border:solid 1px rgba(white, 0.3);
-          height:36px;line-height:36px;
-          font-weight:bold;
-          width:80px;padding:0 16px 0 0;
-          text-align:center;
+          @include border-radius(4px);
+          background-color:#FF8201;
+          box-shadow:0 0 5px rgba(black, 0.3) inset;
+          height:44px;line-height:44px;
+          font-size:20px;
+          //font-weight:bold;
+          width:70px;padding:0 16px 0 20px;
+          text-align:left;
           margin:0;
           position:relative;
           text-shadow:0 0 3px black;
           display:inline-block;
 
           &:hover{
-            @include gradient(#FDA034, #FDA034);
+            background-color:#FDA034;
           }
 
           &:before{
             content:"";
             position:absolute;
             width:0;height:0;
-            right:8px;top:10px;
+            right:8px;top:15px;
             border:solid 8px transparent;
             border-left-color:white;
           }
@@ -129,6 +130,7 @@ body.auth{
       .field.remember{
         float:left;
         margin-right:28px;
+        a.text{text-shadow:0 0 2px black;}
         input[type=checkbox]{
           position:relative;top:1px;
         }

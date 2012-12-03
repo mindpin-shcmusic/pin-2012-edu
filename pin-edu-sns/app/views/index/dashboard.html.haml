@@ -5,53 +5,47 @@
 :ruby
   next_course_teachers = current_user.get_next_course_teachers
   next_one_course_teacher = next_course_teachers.to_a[0]
-
   week_course_teachers = current_user.get_week_course_teachers
 
 
 .page-model-show
-
   .page-dashboard
 
     = page_field :'base-info', :title=>'基本信息' do
-      .avatar
-        = avatar current_user, :medium
+      .user-data
+        .avatar= avatar current_user, :medium
+        .data
+          .name
+            %span= current_user.real_name
+            %span= current_user_title
+          .id
+            - if current_user.is_teacher?
+              %span 工号：
+              %span= current_user.teacher.tid
+            - if current_user.is_student?
+              %span 学号：
+              %span= current_user.student.sid
+      .course-data
+        .today
+          %span> #{Semester.now.to_s}学期
+          %span> ，
+          %span>= Time.now.strftime('%m月%d日')
 
-      .data
-        .field.name
-          %span= current_user.real_name
-          %span= current_user_title
+        - if !next_one_course_teacher.blank?
+          .next
+            :ruby
+              weekday = next_one_course_teacher[0]
+              detail = next_one_course_teacher[1][0]
 
-
-        - if current_user.is_teacher?
-          .field.id= current_user.teacher.tid
-
-        - if current_user.is_student?
-          .field.id= current_user.student.sid
-
-    = page_field :'dates-info', :title=>'学期' do
-      .d
-        .today= Time.now.strftime('%Y年%m月%d日')
-        .semester #{Semester.now.to_s}学期
-      - if !next_one_course_teacher.blank?
-        .next
-          :ruby
-            weekday = next_one_course_teacher[0]
-            detail = next_one_course_teacher[1][0]
-
-            course_teacher = detail[:course_teacher]
-            course = course_teacher.course
-          .t 接下来要上的课
-          .c
-            %span.week>= change_to_weekday(weekday)
-            %span> ，
-            %span.time>= detail[:class_time]
-            %span> ，
-            %span.course>= link_to course.name, "/courses/#{course.id}"
-            %span> ，
-            %span.location>= detail[:course_teacher].location
-
-
+              course_teacher = detail[:course_teacher]
+              course = course_teacher.course
+            .t 接下来要上的课
+            .c
+              %span.week>= change_to_weekday(weekday)
+              %span> ，
+              %span.time>= detail[:class_time]
+              %span> ，
+              %span.course>= link_to course.name, "/courses/#{course.id}"
 
     = page_field :'courses-info', :title=>'一周课程' do
       .data

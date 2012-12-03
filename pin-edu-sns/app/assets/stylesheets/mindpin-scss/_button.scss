@@ -7,6 +7,7 @@
   border : 1px solid rgba(black, 0.3);
 
   font-size:14px;
+  font-weight:bold;
   color:white;&:hover{color:white;text-decoration:none;};
 
   display:inline-block;float:left;
@@ -23,14 +24,25 @@
 
 @mixin mini-button{
   @include base-mini-button;
-  @include gradient(#8AC524, #87C221);
-  box-shadow:0 0 1px #FBFBFB inset;
-  border-color:rgba(black, 0.3);
+  // @include gradient(#BCEB47, #87C500);
+  // &:hover{@include gradient(lighten(#BCEB47, 5%), lighten(#87C500, 5%));}
+  // box-shadow:0 1px 0 #D2F080 inset;
+  // border-top-color:#87D100;
+  // border-left-color:#70B000;
+  // border-right-color:#70B000;
+  // border-bottom-color:#5E9200;
+
+  @include gradient(#A4D800, #71B600);
+  &:hover{@include gradient(lighten(#A4D800, 5%), lighten(#71B600, 5%));}
+  box-shadow:0 1px 0 #C0E500 inset;
+  border-top-color:#6EBC00;
+  border-left-color:#60A800;
+  border-right-color:#60A800;
+  border-bottom-color:#4D8A00;
+
   height:30px;line-height:30px;
   padding:0 14px;
-  &:hover{
-    @include gradient(lighten(#8AC524, 10%), lighten(#87C221, 10%));
-  }
+  text-shadow:-1px -1px rgba(black, 0.3);
 }
 
 @mixin mini-button-close{
@@ -44,12 +56,13 @@
 
 @mixin mini-button-black{
   @include base-mini-button;
-  @include gradient(#666, #555);
+  @include gradient(#777, #555);
+  box-shadow:0 1px 0 rgba(white, 0.3) inset;
   border-color:rgba(black, 0.3);
   height:30px;line-height:30px;
   padding:0 14px;
   &:hover{
-    @include gradient(lighten(#666, 10%), lighten(#555, 10%));
+    @include gradient(lighten(#777, 10%), lighten(#555, 10%));
   }
 }
 

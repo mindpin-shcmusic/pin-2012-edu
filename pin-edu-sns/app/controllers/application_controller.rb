@@ -1,6 +1,8 @@
 class ApplicationController < ActionController::Base
   include AuthenticatedSystem
   include ApplicationMethods
+  include CreateHelper
+  include TabFilter
   helper_method :current_semester, :get_semester
   helper :all
 

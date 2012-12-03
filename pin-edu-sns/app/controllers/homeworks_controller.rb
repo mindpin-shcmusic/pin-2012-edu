@@ -8,20 +8,19 @@ class HomeworksController < ApplicationController
   end
   
   def create
-    homework = current_user.teacher_homeworks.build(params[:homework])
-    if homework.save
+    create_resource current_user.teacher_homeworks.build(params[:homework]) do |homework|
       homework.assign_to_expression({:courses => [homework.course_id]}.to_json)
       
       if params[:file_entities]
         params[:file_entities].each do |file|
-          attach = HomeworkTeacherAttachment.create(:creator => current_user, :name => file[:name], :file_entity_id => file[:id], :homework => homework)
+          attach = HomeworkTeacherAttachment.create(:creator        => current_user,
+                                                    :name           => file[:name],
+                                                    :file_entity_id => file[:id],
+                                                    :homework       => homework)
         end
       end
 
-      return redirect_to homework
     end
-    
-    redirect_to '/homeworks/new'
   end
   
   def create_student_upload
@@ -45,16 +44,9 @@ class HomeworksController < ApplicationController
   end
 
   def index
-    homeworks = case params[:tab]
-                when 'expired'
-                  current_user.expired_homeworks
-                when 'unexpired'
-                  current_user.unexpired_homeworks
-                else
-                  current_user.homeworks
-                end
-
-    @homeworks = sort_scope(homeworks).paginated(params[:page])
+    @homeworks = filter(current_user.homeworks,
+                        :expired   => current_user.expired_homeworks,
+                        :unexpired => current_user.unexpired_homeworks)
   end
   
   def show
