@@ -16,13 +16,11 @@ class AnnouncementsController < ApplicationController
 
 
   def create
-    @announcement = current_user.created_announcements.build params[:announcement]
-    if @announcement.save
+    create_resource current_user.created_announcements.build params[:announcement] do |announcement|
       courses = (params[:course_ids]||'').split(',')
-      @announcement.announce_to(:courses => courses)
-      return redirect_to @announcement 
+      announcement.announce_to(:courses => courses)
     end
-    render :action => :new
+
   end
 
 

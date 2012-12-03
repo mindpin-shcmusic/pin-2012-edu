@@ -5,9 +5,9 @@ module TabFilter
 
   class Filter
     def initialize(default, tabs, context)
-      @default = default
+      @default   = default
       @container = tabs
-      @context = context
+      @context   = context
     end
 
     def current_collection

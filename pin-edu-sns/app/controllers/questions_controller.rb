@@ -8,29 +8,10 @@ class QuestionsController < ApplicationController
   end
 
   def index
-    type = params[:tab]
-
-    if current_user.is_student?
-      case type
-      when 'answered'
-        questions = current_user.questions.answered
-      when 'unanswered'
-        questions = current_user.questions.unanswered
-      else
-        questions = current_user.questions
-      end
-    else
-      case type
-      when 'answered'
-        questions = Question.with_teacher(current_user).answered
-      when 'unanswered'
-        questions = Question.with_teacher(current_user).unanswered
-      else
-        questions = Question.with_teacher(current_user)
-      end
-    end
-
-    @questions = sort_scope(questions).paginated(params[:page]).order('id DESC')
+    questions  = Question.with_user(current_user)
+    @questions = filter(questions,
+                        :answered   => questions.answered,
+                        :unanswered => questions.unanswered)
   end
 
 
@@ -38,17 +19,8 @@ class QuestionsController < ApplicationController
   end
 
   def create
-    @question = current_user.questions.build(params[:question])
-    if @question.save
-      return redirect_to "/questions/#{@question.id}"
-    end
-    
-    error = @question.errors.first
-    flash[:error] = error[1]
-
-    redirect_to "/questions/new"
+    create_resource current_user.questions.build(params[:question])
   end
-
 
   def edit
     if @question.has_answered
