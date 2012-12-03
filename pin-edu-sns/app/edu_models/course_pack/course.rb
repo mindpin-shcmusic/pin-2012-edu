@@ -292,11 +292,11 @@ class Course < ActiveRecord::Base
       i = 0
       if week_courses.any?
         week_courses.each do |day_courses|
-          day_course = day_courses[1][0][:course_teacher].time_expression
-          day_course = JSON.parse(day_course)
-          day_course = day_course[0]['number']
-
-          i = i + day_course.length
+          arr = day_courses[1]
+          arr.each do |course|
+            numbers = course[:course_teacher].time_expression_array[0]['number']
+            i = i + numbers.length
+          end
         end
       end
 
