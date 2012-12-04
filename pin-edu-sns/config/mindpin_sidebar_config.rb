@@ -45,8 +45,8 @@ MindpinSidebar::Base.config do
           controller :'admin/teams'
         end
 
-        subnav :upload_documents, :name => '文档目录', :url => '/admin/upload_documents' do
-          controller :'admin/upload_documents'
+        subnav :upload_document_dirs, :name => '文档目录', :url => '/admin/upload_document_dirs' do
+          controller :'admin/upload_document_dirs'
         end
 
       end

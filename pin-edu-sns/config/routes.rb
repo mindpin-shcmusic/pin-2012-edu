@@ -42,6 +42,15 @@ MindpinEduSns::Application.routes.draw do
     get '/setting/password'             => "setting#password"
     put '/setting/password'             => "setting#password_submit"
 
+
+    # 管理员多级目录
+    resources :upload_document_dirs do
+      collection do
+        post :create_folder
+      end
+    end
+
+
     resources :teachers do
       collection do
         get :import_from_csv_page
@@ -254,7 +263,6 @@ MindpinEduSns::Application.routes.draw do
   get '/media_shares/users/:user_id/*path' => 'media_shares#share'
 
 
-  # 结束全文索引
 
   # api
   get    '/api/file/*path'            => 'media_resources_api#get_file'
@@ -263,6 +271,10 @@ MindpinEduSns::Application.routes.draw do
   get    '/api/delta'                 => 'media_resources_api#get_delta'
   post   '/api/fileops/create_folder' => 'media_resources_api#create_folder'
   delete '/api/fileops/delete'        => 'media_resources_api#delete'
+
+
+
+
 
   # 公共资源
   resources :public_resources do

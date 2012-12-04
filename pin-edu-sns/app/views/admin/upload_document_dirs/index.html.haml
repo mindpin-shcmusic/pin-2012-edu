@@ -1,0 +1,20 @@
+- htitle '文档目录'
+
+- hgoback '/admin'
+- hbreadcrumb '首页', '/admin'
+- hbreadcrumb '文档目录', '/admin/uploadfile'
+
+
+
+.page-fixed-head
+  = page_buttons do |p|
+    = p.button '新建文件夹', 'javascript:;', :class => 'create-folder-button'
+    = p.button '创建文本', '/admin/upload_documents/new', :class => 'create-text'
+    
+  = jupload_button '上传文件'
+
+
+= render 'admin/upload_document_dirs/parts/create_folder_box', :current_dir => @current_dir
+= render 'admin/upload_document_dirs/parts/upload_file_box', :current_dir => @current_dir
+= render 'admin/upload_document_dirs/parts/resources', :upload_document_dirs => @upload_document_dirs
+
