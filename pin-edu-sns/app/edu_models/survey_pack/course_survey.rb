@@ -9,12 +9,11 @@ class CourseSurvey < ActiveRecord::Base
   include Pacecar
 
   scope :with_kind, lambda {|kind| {:conditions => ['kind = ?', kind]}}
-  scope :with_student, lambda { |student_user| 
-    joins("inner join course_student_assigns on course_surveys.course_id = course_student_assigns.course_id and course_surveys.semester_value = course_student_assigns.semester_value and course_surveys.teacher_user_id = course_student_assigns.teacher_user_id").
-      where("course_student_assigns.student_user_id = #{student_user.id}")
+  scope :with_user, lambda {|user|
+    return joins("inner join course_student_assigns on course_surveys.course_id = course_student_assigns.course_id and course_surveys.semester_value = course_student_assigns.semester_value and course_surveys.teacher_user_id = course_student_assigns.teacher_user_id").
+      where("course_student_assigns.student_user_id = #{user.id}") if user.is_student?
+    {:conditions => ['teacher_user_id = ?', user.id]}
   }
-
-  scope :with_teacher, lambda {|user| {:conditions => ['teacher_user_id = ?', user.id]}}
 
   def destroyable_by?(user)
     user.is_admin?
