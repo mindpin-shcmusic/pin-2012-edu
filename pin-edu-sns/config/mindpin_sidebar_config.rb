@@ -45,6 +45,10 @@ MindpinSidebar::Base.config do
           controller :'admin/teams'
         end
 
+        subnav :upload_documents, :name => '文档目录', :url => '/admin/upload_documents' do
+          controller :'admin/upload_documents'
+        end
+
       end
 
       nav :teaching_plans, :name => '教学计划', :url => '/admin/teaching_plans' do

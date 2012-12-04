@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121113030909) do
+ActiveRecord::Schema.define(:version => 20121204030829) do
 
   create_table "announcement_rules", :force => true do |t|
     t.integer  "creator_id"
@@ -555,6 +555,25 @@ ActiveRecord::Schema.define(:version => 20121113030909) do
   end
 
   add_index "teams", ["is_removed"], :name => "index_teams_on_is_removed"
+
+  create_table "upload_document_dirs", :force => true do |t|
+    t.integer  "dir_id"
+    t.string   "name"
+    t.boolean  "is_removed"
+    t.integer  "files_count"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "upload_documents", :force => true do |t|
+    t.integer  "dir_id"
+    t.string   "title"
+    t.string   "kind"
+    t.text     "content"
+    t.integer  "file_entity_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", :force => true do |t|
     t.string   "name",                      :default => "", :null => false
