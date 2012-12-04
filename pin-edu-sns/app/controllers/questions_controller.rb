@@ -10,6 +10,7 @@ class QuestionsController < ApplicationController
   def index
     questions  = Question.with_user(current_user)
     @questions = filter(questions,
+                        :all        => :default,
                         :answered   => questions.answered,
                         :unanswered => questions.unanswered)
   end
