@@ -220,6 +220,11 @@ MindpinEduSns::Application.routes.draw do
       get :curriculum
       get :next_for_student
       get :next_for_teacher
+      get :subscriptions
+    end
+
+    member do
+      put :subscribe
     end
     resources :course_resources, :shallow => true
   end

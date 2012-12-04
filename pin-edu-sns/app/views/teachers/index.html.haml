@@ -7,6 +7,10 @@
 
 
 .page-fixed-head
+  - if current_user.is_student?
+    = page_filters '/teachers' do |p|
+      = p.filter '全部教师', :tab => 'all', :default => true
+      = p.filter '我的教师', :tab => 'mine'
 
 :ruby
   cols_hash = {
@@ -17,6 +21,8 @@
   }
 
 .page-list-head
+  - if current_user.is_student? && params[:tab] == 'mine'
+    = page_semester_filters '/teachers'
   .headtop
     = list_pagination(@teachers)
 
