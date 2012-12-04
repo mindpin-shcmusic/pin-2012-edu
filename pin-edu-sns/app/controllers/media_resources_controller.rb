@@ -1,5 +1,4 @@
 # encoding: utf-8
-
 class MediaResourcesController < ApplicationController
   before_filter :login_required
 
@@ -77,9 +76,8 @@ class MediaResourcesController < ApplicationController
   def update_tag
     resource_path = "/#{params[:path]}"
     @media_resource = MediaResource.get(current_user, resource_path)
-    @media_resource.tag_list = params[:tag_names]
-    @media_resource.save
-    render :json=>@media_resource.tags.map{|tag|tag.name}
+    @media_resource.set_tags_by!(current_user, params[:tag_names])
+    render :json => @media_resource.tag_list
   end
 
   def file_show

@@ -15,7 +15,6 @@ class CourseSurveysController < ApplicationController
                              :'2' => surveys.with_kind('2'))
   end
 
-
   def show
   end
 
