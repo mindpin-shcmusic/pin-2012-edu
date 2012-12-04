@@ -2,6 +2,14 @@
 class Teacher < ActiveRecord::Base
   belongs_to :user
   has_many   :courses
+
+  scope :with_student, lambda {|student_user|
+    joins('inner join course_student_assigns on course_student_assigns.teacher_user_id = teachers.user_id').where('course_student_assigns.student_user_id = ?', student_user.id).group('teachers.id')
+  }
+
+  scope :with_semester, lambda {|semester|
+    joins('inner join course_student_assigns on course_student_assigns.teacher_user_id = teachers.user_id').where('course_student_assigns.semester_value = ?', semester.value).group('teachers.id')
+  }
   
   validates :real_name, :presence => true
   validates :tid, :uniqueness => { :if => Proc.new { |teacher| !teacher.tid.blank? } }
