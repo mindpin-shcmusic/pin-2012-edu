@@ -37,6 +37,14 @@ class CoursesController < ApplicationController
     @next_course_teachers = current_user.get_next_course_teachers
   end
 
+  def subscribe
+    current_user.subscribe_course(@course)
+    redirect_to :action => :show
+  end
+
+  def subscriptions
+    @courses = current_user.subscribed_courses
+  end
 
   private
   def _index_mine

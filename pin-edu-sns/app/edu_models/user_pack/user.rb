@@ -17,6 +17,7 @@ class User < ActiveRecord::Base
   include Course::UserMethods
   include CourseScoreRecord::UserMethods
   include CourseScoreList::UserMethods
+  include CourseSubscription::UserMethods
 
   include Comment::UserMethods
   include UserCommentTipMessage::UserMethods
