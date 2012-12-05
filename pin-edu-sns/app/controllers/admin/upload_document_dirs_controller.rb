@@ -10,7 +10,7 @@ class Admin::UploadDocumentDirsController < ApplicationController
   end
 
   def index
-    @upload_document_dirs = sort_scope(UploadDocumentDir).sub_dirs(@dir_id).
+    @dirs = sort_scope(UploadDocumentDir).sub_dirs(@dir_id).
                             web_order.paginated(params[:page])
 
     @texts = UploadDocument.dir_texts(@dir_id)
