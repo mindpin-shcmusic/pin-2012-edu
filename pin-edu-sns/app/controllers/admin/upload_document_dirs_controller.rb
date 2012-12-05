@@ -24,13 +24,13 @@ class Admin::UploadDocumentDirsController < ApplicationController
 
 
   def create_folder
-    if params[:folder].match(/^([A-Za-z0-9一-龥\-\_\.]+)$/)
+    dir = UploadDocumentDir.create(:dir_id => params[:dir_id], :name => params[:folder])
 
-      dir = UploadDocumentDir.create(:dir_id => params[:dir_id], :name => params[:folder])
-
-      return render :partial => '/admin/upload_document_dirs/parts/dirs', 
+    return render :partial => '/admin/upload_document_dirs/parts/dirs', 
                     :locals => {:dirs => [dir]}
-    end
+
+  rescue
+    render :status => 422, :text => '请填写正确的文件名'
   end
   
   
