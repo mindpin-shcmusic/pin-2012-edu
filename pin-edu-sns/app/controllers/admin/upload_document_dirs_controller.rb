@@ -33,11 +33,14 @@ class Admin::UploadDocumentDirsController < ApplicationController
   end
 
   def create_folder
-    if params[:folder].match(/^([A-Za-z0-9一-龥\-\_\.]+)$/)
-      UploadDocumentDir.new(:dir_id => params[:dir_id], :name => params[:folder])
-      return sort_scope(UploadDocumentDir).root_res.web_order.paginated(params[:page])
-    end
 
+    if params[:folder].match(/^([A-Za-z0-9一-龥\-\_\.]+)$/)
+
+      doc = UploadDocumentDir.create(:dir_id => params[:dir_id], :name => params[:folder])
+
+      return render :partial => '/admin/upload_document_dirs/parts/resources', 
+                    :locals => {:upload_document_dirs => [doc]}
+    end
   end
   
   

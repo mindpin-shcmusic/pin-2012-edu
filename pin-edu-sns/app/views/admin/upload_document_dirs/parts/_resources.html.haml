@@ -4,20 +4,7 @@
     :name => 3
   }
 
-
-.page-list-head
-  .headtop
-    = page_buttons do |p|
-      = p.batch_destroy UploadDocumentDir
-
-    = list_pagination(upload_document_dirs)
-
-  = page_list_head :cols=>cols_hash do |p|
-    = p.checkbox
-    = p.cell :name, '目录', :sortable=>true
-
-
-.page-model-list.admin-teams
+.page-model-list.admin-upload-document-dirs
   - if upload_document_dirs.blank?
     .blank
       目前列表内没有内容

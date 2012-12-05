@@ -1,11 +1,10 @@
 
-.page-create-folder-box{:style=>'display:none;', :'data-default-name'=>'新建文件夹'}
-  .form-title 新建文件夹
-  = form_tag '/admin/upload_document_dirs/create_folder', :method => 'post' do
-    = hidden_field_tag :dir_id, dir_id
-    .field.need
-      %label 文件夹：
-      = text_field_tag :folder
-    .field.submit
-      %a.form-submit-button.stop{:href=>'javascript:;'} 确定
-      %a.form-cancel-button{:href=>'javascript:;'} 取消
+= jfbox :'create-upload-doc-folder', '创建目录' do
+  .page-create-doc-folder
+    = form_tag '/admin/upload_document_dirs/create_folder', :method => 'post' do
+      = hidden_field_tag :dir_id, dir_id
+      .field.need
+        %label 文件夹：
+        = text_field_tag :folder
+      .field.submit
+        %a.form-submit-button.stop{:href=>'javascript:;'} 确定
