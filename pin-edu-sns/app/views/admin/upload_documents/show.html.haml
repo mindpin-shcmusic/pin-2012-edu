@@ -1,0 +1,18 @@
+- htitle "文档目录 > #{@upload_document.title}"
+
+- hgoback '/admin/upload_document_dirs'
+- hbreadcrumb '首页', '/admin'
+- hbreadcrumb '文档目录', '/admin/upload_document_dirs'
+- hbreadcrumb "#{@upload_document.dir.name}", "/admin/upload_document_dirs?dir_id=#{@upload_document.dir_id}"
+- hbreadcrumb @upload_document.title
+
+.page-unfixed-head
+
+.page-model-show
+  .page-admin-upload-document
+    = page_field :'title', :title=>'标题' do
+      = @upload_document.title
+
+    = page_field :'content', :title=>'内容' do
+      = sanitize @upload_document.content
+
