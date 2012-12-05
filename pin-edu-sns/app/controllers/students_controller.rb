@@ -22,10 +22,10 @@ class StudentsController < ApplicationController
   def _index_teacher
     @students = case params[:tab]
       when 'mine'
-        sort_scope(Student).with_teacher(current_user)
+        sort_scope(Student).with_teacher(current_user).with_semester(get_semester)
       else
         sort_scope(Student)
-      end.with_semester(get_semester).paginated(params[:page])
+      end.paginated(params[:page])
   end
 
 end

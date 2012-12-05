@@ -7,11 +7,6 @@ class UploadDocumentDir < ActiveRecord::Base
 
 
 
-  def self.create_folder(resource_path)
-    
-  end
-
-
   include ModelRemovable
   include Paginated
 end

@@ -14,7 +14,7 @@
   = jupload_button '上传文件'
 
 
-= render 'admin/upload_document_dirs/parts/create_folder_box', :current_dir => @current_dir
-= render 'admin/upload_document_dirs/parts/upload_file_box', :current_dir => @current_dir
+= render 'admin/upload_document_dirs/parts/create_folder_box', :dir_id => @dir_id
+= render 'admin/upload_document_dirs/parts/upload_file_box', :dir_id => @dir_id
 = render 'admin/upload_document_dirs/parts/resources', :upload_document_dirs => @upload_document_dirs
 

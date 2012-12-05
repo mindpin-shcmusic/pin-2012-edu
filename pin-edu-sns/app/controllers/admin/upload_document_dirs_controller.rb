@@ -2,13 +2,15 @@
 class Admin::UploadDocumentDirsController < ApplicationController
   layout 'admin'
   before_filter :login_required
+  before_filter :pre_load
 
   def pre_load
+    @dir_id = 0
+    @dir_id = params['dir_id'] if params['dir_id']
   end
 
   def index
-    @upload_document_dirs = sort_scope(UploadDocumentDir).
-    root_res.web_order.paginated(params[:page])
+    @upload_document_dirs = sort_scope(UploadDocumentDir).root_res.web_order.paginated(params[:page])
   end
 
 
@@ -32,22 +34,10 @@ class Admin::UploadDocumentDirsController < ApplicationController
 
   def create_folder
     if params[:folder].match(/^([A-Za-z0-9一-龥\-\_\.]+)$/)
-      resource_path = File.join(params[:current_path], params[:folder])
-      resource = UploadDocumentDir.create_folder(resource_path)
+      UploadDocumentDir.new(:dir_id => params[:dir_id], :name => params[:folder])
+      return sort_scope(UploadDocumentDir).root_res.web_order.paginated(params[:page])
+    end
 
-      if resource.blank?
-        return render :status => 422,
-                      :text => '文件夹创建失败'
-      end
-
-  end
-
-    render :status => 422,
-           :text => '文件夹名不符合规范'
-
-  rescue UploadDocumentDir::RepeatedlyCreateFolderError
-    render :status => 422,
-           :text => '文件夹名重复'
   end
   
   

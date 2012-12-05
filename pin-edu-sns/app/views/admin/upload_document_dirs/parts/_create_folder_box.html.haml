@@ -1,9 +1,8 @@
-- current_path = current_dir.blank? ? '/' : current_dir.path
 
 .page-create-folder-box{:style=>'display:none;', :'data-default-name'=>'新建文件夹'}
   .form-title 新建文件夹
   = form_tag '/admin/upload_document_dirs/create_folder', :method => 'post' do
-    = hidden_field_tag :current_path, current_path
+    = hidden_field_tag :dir_id, dir_id
     .field.need
       %label 文件夹：
       = text_field_tag :folder
