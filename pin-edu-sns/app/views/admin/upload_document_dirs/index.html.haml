@@ -15,7 +15,8 @@
 
 
 = render 'admin/upload_document_dirs/parts/create_folder_box', :dir_id => @dir_id
-= render 'admin/upload_document_dirs/parts/upload_file_box', :dir_id => @dir_id
+.page-upload-document-head
+  = render 'admin/upload_document_dirs/parts/upload_file_box', :dir_id => @dir_id
 
 :ruby
   cols_hash = {
@@ -35,6 +36,7 @@
     = p.cell :name, '标题 / 目录', :sortable=>true
 
 
-= render 'admin/upload_document_dirs/parts/resources', 
-         :upload_document_dirs => @upload_document_dirs
+= render 'admin/upload_document_dirs/parts/dirs', :dirs => @upload_document_dirs
+
+= render 'admin/upload_document_dirs/parts/text_files', :upload_documents => @upload_documents
 

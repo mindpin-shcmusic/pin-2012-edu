@@ -12,34 +12,21 @@ class Admin::UploadDocumentDirsController < ApplicationController
   def index
     @upload_document_dirs = sort_scope(UploadDocumentDir).sub_dirs(@dir_id).
                             web_order.paginated(params[:page])
+
+    @upload_documents = UploadDocument.dir_files(@dir_id)
   end
 
 
   def file
-    resource_path = Base64Plus.decode64(params[:path])
-    current_resource = UploadDocumentDir.get(current_user, resource_path)
-
-    if current_resource.is_dir?
-      @current_dir = current_resource
-      @media_resources = @current_dir.media_resources.web_order
-      return render :action => 'index'
-    end
-    
-    if current_resource.is_file?
-      return send_file current_resource.attach.path
-    end
   end
 
-  def new
-  end
 
   def create_folder
-
     if params[:folder].match(/^([A-Za-z0-9一-龥\-\_\.]+)$/)
 
       doc = UploadDocumentDir.create(:dir_id => params[:dir_id], :name => params[:folder])
 
-      return render :partial => '/admin/upload_document_dirs/parts/resources', 
+      return render :partial => '/admin/upload_document_dirs/parts/dirs', 
                     :locals => {:upload_document_dirs => [doc]}
     end
   end

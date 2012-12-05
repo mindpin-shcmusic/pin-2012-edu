@@ -215,6 +215,85 @@ pie.load ->
         $wrapper.addClass 'cancel'
         $wrapper.find('.state').html '已取消'
 
+
+
+
+# 管理员上传多级目录资源
+pie.load ->
+  
+  $upload_button = jQuery('.page-upload-document-head .page-upload-button')
+  $uploader_elm = jQuery('.page-upload-document-file-uploader')
+
+  if $upload_button.exists() && $uploader_elm.exists()
+
+    uploader = new FileUploader $upload_button,
+      render: (file_wrapper)->
+        # 显示上传框
+        pie.open_fbox 'upload_resource'
+
+        # 添加上传进度条
+        $file = $uploader_elm.find('.progress-bar-sample .file').clone()
+        $list = $uploader_elm.find('.uploading-files-list').append($file)
+
+        $file.find('.name').html file_wrapper.file_name
+        $file.find('.size').html file_wrapper.get_size_str()
+
+        $file.find('a.close').click ->
+          file_wrapper.close()
+
+        $file
+          .hide()
+          .fadeIn(100)
+          .appendTo $list
+
+        return $file
+
+      set_progress: ($wrapper, percent)->
+        pstr = "#{percent}%"
+
+        $wrapper.find('.percent').html(pstr)
+
+        if 0 == percent
+          $wrapper.find('.bar .p').css('width', pstr)
+        else
+          $wrapper.find('.bar .p').animate({'width': pstr}, 100)
+
+      set_speed: ($wrapper, speed)->
+        $wrapper.find('.speed').html("#{speed}KB/s")
+
+      success: (file_wrapper)->
+        # 创建媒体资源记录
+        FILE_PUT_URL = '/admin/upload_documents/file_put'
+        dir_id = $uploader_elm.data('dir-id')
+        file_name = file_wrapper.file_name
+        url = FILE_PUT_URL + '?dir_id=' + dir_id + '&file_name=' + file_name
+
+        file_wrapper.$elm.addClass 'success'
+        file_wrapper.$elm.find('.state').html '上传完毕'
+
+        jQuery.ajax
+          url:  url
+          type: 'PUT'
+          data:
+            'file_entity_id' : file_wrapper.FILE_ENTITY_ID
+
+          success: (res)->
+
+
+          error: ->
+            file_wrapper.error()
+
+      error: ($wrapper, msg)->
+        $wrapper.addClass 'error'
+        $wrapper.find('.state').html msg || '上传出错'
+
+      close: ($wrapper)->
+        $wrapper.addClass 'cancel'
+        $wrapper.find('.state').html '已取消'
+
+
+
+
 # -------------------
 # 作业附件上传
 pie.load ->

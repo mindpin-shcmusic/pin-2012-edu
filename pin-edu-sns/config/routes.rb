@@ -50,7 +50,11 @@ MindpinEduSns::Application.routes.draw do
       end
     end
 
-    resources :upload_documents
+    resources :upload_documents do
+      collection do
+        post :file_put
+      end
+    end
 
 
     resources :teachers do
