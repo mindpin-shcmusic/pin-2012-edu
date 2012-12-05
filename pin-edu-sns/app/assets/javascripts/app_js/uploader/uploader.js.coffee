@@ -222,7 +222,7 @@ pie.load ->
 pie.load ->
   
   $upload_button = jQuery('.page-upload-document-head .page-upload-button')
-  $uploader_elm = jQuery('.page-upload-document-file-uploader')
+  $uploader_elm = jQuery('.page-media-file-uploader')
 
   if $upload_button.exists() && $uploader_elm.exists()
 
@@ -273,7 +273,7 @@ pie.load ->
 
         jQuery.ajax
           url:  url
-          type: 'PUT'
+          type: 'POST'
           data:
             'file_entity_id' : file_wrapper.FILE_ENTITY_ID
 
