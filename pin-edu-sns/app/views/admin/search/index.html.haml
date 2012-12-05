@@ -15,3 +15,10 @@
 .team= "班级(#{@teams_count})"
 - @teams.each do |team|
   = team.name
+
+.media_resource= "资源(#{@media_resources_count})"
+- @media_resources.each do |media_resource|
+  = media_resource.name
+.media_resource= "按标签查找的资源(#{@tag_media_reources_count})"
+- @tag_media_reources.each do |media_resource|
+  = media_resource.name

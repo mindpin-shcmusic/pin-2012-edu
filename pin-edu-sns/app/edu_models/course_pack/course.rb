@@ -128,6 +128,11 @@ class Course < ActiveRecord::Base
      self.get_students(:semester => semester)).flatten.uniq
   end
 
+  def get_teacher_of(student_user,semester = Semester.now)
+    User.joins("inner join course_student_assigns on course_student_assigns.teacher_user_id = users.id").
+      where("course_student_assigns.student_user_id = #{student_user.id} and course_student_assigns.course_id = #{self.id} and course_student_assigns.semester_value = '#{semester.value}'").first
+  end
+
   module UserMethods
     def add_course(options)
       raise InvalidCourseParams.new if options[:course].blank? || options[:semester].blank? || options[:teacher_user].blank?

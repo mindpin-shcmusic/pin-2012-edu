@@ -1,0 +1,18 @@
+:ruby
+  cols_hash = {
+    :ops => 1,
+    :name => 3
+  }
+
+
+.page-model-list.admin-upload-documents
+
+  - if upload_documents.blank?
+    .blank
+      目前列表内没有内容
+  - else
+    - upload_documents.each do |doc|
+      = page_list_body :cols => cols_hash do |p|
+        = p.checkbox(doc)
+        = p.cell :name do
+          %a.edit{:href=>"/admin/upload_documents/#{doc.id}"}= doc.title

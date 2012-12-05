@@ -73,6 +73,11 @@ class MediaResource < ActiveRecord::Base
   scope :web_order, order('is_dir DESC, name ASC')
   scope :of_creator, lambda{|user| where(:creator_id => user.id)}
   scope :public_share, joins("inner join public_resources on public_resources.media_resource_id = media_resources.id")
+  scope :with_tag_name, lambda {|tag_name|
+    joins("inner join taggings on taggings.taggable_type = 'MediaResource' and taggings.taggable_id = media_resources.id").
+      joins("inner join tags on tags.id = taggings.tag_id").
+      where("tags.name = '#{tag_name}'")
+  }
 
   def is_file?
     !is_dir?
@@ -398,12 +403,12 @@ class MediaResource < ActiveRecord::Base
   # 设置全文索引字段
   define_index do
     # fields
-    indexes name, :sortable => true
-    indexes creator_id
-    indexes is_removed
+    indexes :name, :sortable => true
+    indexes :creator_id
+    indexes :is_removed
     
-    # attributes
-    has created_at, updated_at
+    # # attributes
+    has :created_at, :updated_at
 
     set_property :delta => true
   end

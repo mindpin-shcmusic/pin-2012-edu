@@ -1,0 +1,40 @@
+- htitle '文档目录'
+
+- hgoback '/admin'
+- hbreadcrumb '首页', '/admin'
+- hbreadcrumb '文档目录', '/admin/uploadfile'
+
+
+
+.page-fixed-head.page-upload-document-head
+  = page_buttons do |p|
+    = jfbox_link :'create-upload-doc-folder', '创建文件夹'
+    = p.button '创建文本', "/admin/upload_documents/new?dir_id=#{@dir_id}", :class => 'create-text'
+  = jupload_button '上传文件'
+
+
+= render 'admin/upload_document_dirs/parts/create_folder_box', :dir_id => @dir_id
+= render 'admin/upload_document_dirs/parts/upload_file_box', :dir_id => @dir_id
+
+:ruby
+  cols_hash = {
+    :ops => 1,
+    :name => 3
+  }
+
+.page-list-head
+  .headtop
+    = page_buttons do |p|
+      = p.batch_destroy UploadDocumentDir
+
+    = list_pagination(@upload_document_dirs)
+
+  = page_list_head :cols=>cols_hash do |p|
+    = p.checkbox
+    = p.cell :name, '标题 / 目录', :sortable=>true
+
+
+= render 'admin/upload_document_dirs/parts/dirs', :dirs => @upload_document_dirs
+
+= render 'admin/upload_document_dirs/parts/text_files', :upload_documents => @upload_documents
+
