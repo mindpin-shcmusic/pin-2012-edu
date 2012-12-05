@@ -83,26 +83,45 @@
         .hours
           :ruby
             count = current_user.get_course_hours_count
-            p = count/84
-          .count= count
-          .b
-            .p{:style=>"width:#{p}%;"}
+            p = count*100/84.to_f
+          .count
+            %span 每周上课
+            %span.c= count
+            %span 课时
 
         %a.see{:href=>'/courses/curriculum'} 查看课程表
 
-
-    = page_field :'notices-info', :title=>'通知信息' do
-      - Announcement.all.each do |announcement|
-        .field
-          = link_to truncate_u(announcement.title), announcement
-
     = page_field :'homeworks-info', :title=>'作业和教学实践' do
-      - Homework.all.each do |homework|
-        .field
-          = link_to truncate_u(homework.title), homework
+      - homeworks = current_user.homeworks[0...4]
+      - 0.upto 3 do |i|        
+        - homework = homeworks[i]
+        - if !homework.blank?
+          .homework
+            - course = homework.course
+            - stat = "#{homework.submitted_students.count}/#{homework.assignees.count}"
+
+            .title= link_to truncate_u(homework.title), homework
+            .course= link_to course.name, course
+            .stat= stat
+        - else
+          .homework.blank
 
     = page_field :'faq-info', :title=>'在线问答(Q&A)' do
-      - Question.all.each do |question|
-        .field
-          = link_to truncate_u(question.title), question
+      - questions = Question.with_user(current_user)
+      - 0.upto 3 do |i| 
+        - question = questions[i]
+        - if !question.blank?
+          .question
+            .title= link_to truncate_u(question.title), question
+        - else
+          .question.blank
 
+    = page_field :'notices-info', :title=>'通知信息' do
+      - announcements = current_user.received_announcements
+      - 0.upto 3 do |i|
+        - announcement = announcements[i]
+        - if !announcement.blank?
+          .notice
+            = link_to truncate_u(announcement.title), announcement
+        - else
+          .notice.blank
