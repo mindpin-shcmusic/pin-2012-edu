@@ -25,7 +25,7 @@ module TabFilter
                  tab
                end
 
-      @context.send(:sort_scope, result).paginated(@context.params[:page])
+      @context.instance_eval {sort_scope(result).paginated(params[:page])}
     end
 
   private
@@ -35,7 +35,7 @@ module TabFilter
     end
 
     def _get_collection
-      block = @tabs[_tab_name] && @tabs[_tab_name]
+      block = @tabs[_tab_name]
       @context.instance_eval &block if block
     end
 
