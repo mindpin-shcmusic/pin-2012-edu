@@ -278,7 +278,8 @@ pie.load ->
             'file_entity_id' : file_wrapper.FILE_ENTITY_ID
 
           success: (res)->
-
+            $cells = jQuery(res).find('.cells')[0]
+            jQuery('.admin-upload-document-files').prepend($cells)
 
           error: ->
             file_wrapper.error()

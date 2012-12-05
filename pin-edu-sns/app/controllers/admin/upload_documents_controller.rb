@@ -26,11 +26,17 @@ class Admin::UploadDocumentsController < ApplicationController
 
   def file_put
     file_entity = FileEntity.find(params[:file_entity_id])
-    
 
-    return render :partial => '/upload_document_dirs/parts/files.html.haml',
+    file = UploadDocument.create(
+      :dir_id => params[:dir_id], 
+      :file_entity => file_entity,
+      :title => params[:file_name]
+    )
+
+
+    return render :partial => '/admin/upload_document_dirs/parts/files.html.haml',
                   :locals => {
-                    :resources => [resource]
+                    :files => [file]
                   }
   end
   
