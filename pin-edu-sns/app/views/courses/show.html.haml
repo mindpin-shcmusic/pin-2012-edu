@@ -24,6 +24,11 @@
       .field.desc
         %label 课程简介
         .v= sanitize @course.desc
+    = page_field :'resource-subscription', :title=> '订阅课程资源' do
+      - if current_user.subscribed_course?(@course)
+        = '已订阅'
+      - else
+        = link_to '订阅', "/courses/#{@course.id}/subscribe", :method => :put
 
     = page_field :'base-info', :title=>'基础信息' do
       = ''

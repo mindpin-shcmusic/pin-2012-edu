@@ -128,6 +128,11 @@ class Course < ActiveRecord::Base
      self.get_students(:semester => semester)).flatten.uniq
   end
 
+  def get_teacher_of(student_user,semester = Semester.now)
+    User.joins("inner join course_student_assigns on course_student_assigns.teacher_user_id = users.id").
+      where("course_student_assigns.student_user_id = #{student_user.id} and course_student_assigns.course_id = #{self.id} and course_student_assigns.semester_value = '#{semester.value}'").first
+  end
+
   module UserMethods
     def add_course(options)
       raise InvalidCourseParams.new if options[:course].blank? || options[:semester].blank? || options[:teacher_user].blank?
@@ -287,16 +292,13 @@ class Course < ActiveRecord::Base
 
     # 一周需要去听的课（学生 / 老师）的课时数
     def get_course_hours_count
-      week_courses = self.get_week_course_teachers
+      week_course_time_expressions_hash = self.get_week_course_teachers
 
       i = 0
-      if week_courses.any?
-        week_courses.each do |day_courses|
-          arr = day_courses[1]
-          arr.each do |course|
-            numbers = course[:course_teacher].time_expression_array[0]['number']
-            i = i + numbers.length
-          end
+      week_course_time_expressions_hash.each do |weekday,week_course_time_expressions|
+        week_course_time_expressions.each do |week_course_time_expression|
+          numbers = week_course_time_expression.course_teacher.time_expression_array[0]['number']
+          i = i + numbers.length
         end
       end
 

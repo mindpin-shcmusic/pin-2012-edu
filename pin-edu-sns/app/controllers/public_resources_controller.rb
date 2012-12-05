@@ -25,6 +25,12 @@ class PublicResourcesController < ApplicationController
     render :text => 'ok'
   end
 
+  def update_tag
+    resource = PublicResource.find(params[:id])
+    resource.set_tags_by!(current_user, params[:tag_names])
+    render :json => resource.tag_list
+  end
+
   # 上传到公共资源 
   def upload
     if params[:file].blank?

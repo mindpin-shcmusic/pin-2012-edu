@@ -8,19 +8,12 @@ class CourseSurveysController < ApplicationController
   end
 
   def index
-    kind = params[:tab]
-
-    if kind
-      course_surveys = CourseSurvey.with_kind(kind).with_student(current_user) if current_user.is_student?
-      course_surveys = CourseSurvey.with_kind(kind).with_teacher(current_user) if current_user.is_teacher?
-    else
-      course_surveys = CourseSurvey.with_student(current_user) if current_user.is_student?
-      course_surveys = CourseSurvey.with_teacher(current_user) if current_user.is_teacher?
-    end
-
-    @course_surveys = sort_scope(course_surveys).paginated(params[:page])
+    surveys = CourseSurvey.with_user(current_user)
+    @course_surveys = filter(surveys,
+                             :'0' => :default,
+                             :'1' => surveys.with_kind('1'),
+                             :'2' => surveys.with_kind('2'))
   end
-
 
   def show
   end

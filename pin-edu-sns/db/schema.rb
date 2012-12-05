@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121113030909) do
+ActiveRecord::Schema.define(:version => 20121204025258) do
 
   create_table "announcement_rules", :force => true do |t|
     t.integer  "creator_id"
@@ -120,6 +120,13 @@ ActiveRecord::Schema.define(:version => 20121113030909) do
   add_index "course_student_assigns", ["course_id"], :name => "index_course_student_assigns_on_course_id"
   add_index "course_student_assigns", ["student_user_id"], :name => "index_course_student_assigns_on_student_user_id"
   add_index "course_student_assigns", ["teacher_user_id"], :name => "index_course_student_assigns_on_teacher_user_id"
+
+  create_table "course_subscriptions", :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "course_survey_es_records", :force => true do |t|
     t.integer  "course_survey_id"
@@ -547,14 +554,18 @@ ActiveRecord::Schema.define(:version => 20121113030909) do
   add_index "team_students", ["team_id"], :name => "index_team_students_on_team_id"
 
   create_table "teams", :force => true do |t|
-    t.string   "name",       :default => "",    :null => false
+    t.string   "name",                   :default => "",    :null => false
     t.string   "cid"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_removed", :default => false
+    t.boolean  "is_removed",             :default => false
+    t.integer  "teaching_plan_id"
+    t.integer  "course_teacher_team_id"
   end
 
+  add_index "teams", ["course_teacher_team_id"], :name => "index_teams_on_course_teacher_team_id"
   add_index "teams", ["is_removed"], :name => "index_teams_on_is_removed"
+  add_index "teams", ["teaching_plan_id"], :name => "index_teams_on_teaching_plan_id"
 
   create_table "users", :force => true do |t|
     t.string   "name",                      :default => "", :null => false

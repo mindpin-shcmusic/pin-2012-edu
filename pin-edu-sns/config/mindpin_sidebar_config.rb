@@ -118,6 +118,10 @@ MindpinSidebar::Base.config do
         subnav :teachers, :name => '教师浏览', :url => '/teachers' do
           controller :teachers, :only => :index
         end
+
+        subnav :couse_subscriptions, :name => '订阅的课程', :url => '/courses/subscriptions' do
+          controller :courses, :only => :subscriptions
+        end
       end
 
       nav :media_resources, :name => '媒体资源', :url => '/file' do
@@ -219,6 +223,9 @@ MindpinSidebar::Base.config do
           controller :courses, :only => [:index,:show]
         end
 
+        subnav :couse_subscriptions, :name => '订阅的课程', :url => '/courses/subscriptions' do
+          controller :courses, :only => :subscriptions
+        end
       end
 
       nav :notice, :name => '系统通知', :url => '/announcements' do

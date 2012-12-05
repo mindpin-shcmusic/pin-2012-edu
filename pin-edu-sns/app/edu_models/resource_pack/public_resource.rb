@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
 class PublicResource < ActiveRecord::Base
+  acts_as_taggable
+
   class Kind
     UPLOAD = "UPLOAD"
     LINK = "LINK"
@@ -11,6 +13,12 @@ class PublicResource < ActiveRecord::Base
 
   scope :of_category, lambda{|category| where(:category_id => category.id)}
   scope :no_category, where(:category_id=>nil)
+
+  def set_tags_by!(user, tags)
+    return if user != self.creator && self.is_dir?
+    self.tag_list = tags.split(%r{,\s*}).uniq
+    self.save
+  end
 
   def is_upload?
     self.kind == PublicResource::Kind::UPLOAD
