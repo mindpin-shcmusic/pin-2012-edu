@@ -1,0 +1,6 @@
+= render '/admin/search/parts/search_tab'
+
+- @tag_media_reources.each do |media_resource|
+  = media_resource.name
+
+.page-paginate= will_paginate @tag_media_reources
