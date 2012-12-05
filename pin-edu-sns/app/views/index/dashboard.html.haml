@@ -51,38 +51,77 @@
             .icon
 
     = page_field :'courses-info', :title=>'一周课程' do
-      .data
-        - week_course_teachers.each do |weekday, course_time_expressions|
-          .wd
+      - week_course_teachers.each do |weekday, course_time_expressions|
+        .weekday
+          .t
             .w= change_to_weekday(weekday)
-            - course_time_expressions.each do |course_time_expression|
-              .field
-                :ruby
-                  course_teacher = course_time_expression.course_teacher
-                  course = course_teacher.course
+            .d= change_to_weekdate(weekday)
+          - course_time_expressions.each do |course_time_expression|
+            .course-time
+              :ruby
+                course_teacher = course_time_expression.course_teacher
+                course = course_teacher.course
+                students_count = course.get_students(:semester=>Semester.now, :teacher_user=>current_user).length
+                location = course_teacher.location
+                location = '地点待定' if location.blank?
 
-                %span.time>= course_time_expression.class_time
-                %span> ，
-                %span.course>= link_to course.name, "/courses/#{course.id}"
-                %span> ，
-                %span.location>= course_teacher.location
+              .time
+                %span.start= course_time_expression.start_time_str
+                %span -
+                %span.end= course_time_expression.end_time_str
+              .course>= link_to course.name, "/courses/#{course.id}"
+              - if current_user.is_teacher?
+                .students
+                  %span.count>= students_count
+                  %span 个学生
+              - if current_user.is_student?
+                .teacher
+              
+              .location>= location
 
-      .see-table
-        = link_to '查看课程表', '/courses/curriculum'
+      .see-curriculum
+        .hours
+          :ruby
+            count = current_user.get_course_hours_count
+            p = count*100/84.to_f
+          .count
+            %span 每周上课
+            %span.c= count
+            %span 课时
 
-
-    = page_field :'notices-info', :title=>'通知信息' do
-      - Announcement.all.each do |announcement|
-        .field
-          = link_to truncate_u(announcement.title), announcement
+        %a.see{:href=>'/courses/curriculum'} 查看课程表
 
     = page_field :'homeworks-info', :title=>'作业和教学实践' do
-      - Homework.all.each do |homework|
-        .field
-          = link_to truncate_u(homework.title), homework
+      - homeworks = current_user.homeworks[0...4]
+      - 0.upto 3 do |i|        
+        - homework = homeworks[i]
+        - if !homework.blank?
+          .homework
+            - course = homework.course
+            - stat = "#{homework.submitted_students.count}/#{homework.assignees.count}"
+
+            .title= link_to truncate_u(homework.title), homework
+            .course= link_to course.name, course
+            .stat= stat
+        - else
+          .homework.blank
 
     = page_field :'faq-info', :title=>'在线问答(Q&A)' do
-      - Question.all.each do |question|
-        .field
-          = link_to truncate_u(question.title), question
+      - questions = Question.with_user(current_user)
+      - 0.upto 3 do |i| 
+        - question = questions[i]
+        - if !question.blank?
+          .question
+            .title= link_to truncate_u(question.title), question
+        - else
+          .question.blank
 
+    = page_field :'notices-info', :title=>'通知信息' do
+      - announcements = current_user.received_announcements
+      - 0.upto 3 do |i|
+        - announcement = announcements[i]
+        - if !announcement.blank?
+          .notice
+            = link_to truncate_u(announcement.title), announcement
+        - else
+          .notice.blank
