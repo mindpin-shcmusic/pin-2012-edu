@@ -240,7 +240,7 @@ MindpinEduSns::Application.routes.draw do
   delete '/file/*path' => 'media_resources#destroy'
 
   get    '/file_attr/*path/edit_tag' => 'media_resources#edit_tag'
-  post   '/file_attr/*path/update_tag' => 'media_resources#update_tag'
+  put    '/file_attr/*path/update_tag' => 'media_resources#update_tag'
 
   get  'file_show/*path' => 'media_resources#file_show', :format => false
 
@@ -274,6 +274,10 @@ MindpinEduSns::Application.routes.draw do
     collection do
       post :share
       put :upload
+    end
+
+    member do
+      put :update_tag
     end
   end
 

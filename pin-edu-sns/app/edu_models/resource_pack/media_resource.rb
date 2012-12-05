@@ -312,6 +312,12 @@ class MediaResource < ActiveRecord::Base
     self.save
   end
 
+  def set_tags_by!(user, tags)
+    return if user != self.creator && self.is_dir?
+    self.tag_list = tags.split(%r{,\s*}).uniq
+    self.save
+  end
+
   private
     def self.process_same_file_name(creator,resource_path)
       resource = self.get(creator,resource_path)

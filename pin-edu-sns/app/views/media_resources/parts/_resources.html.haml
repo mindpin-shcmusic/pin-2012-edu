@@ -39,6 +39,8 @@
           .link.delete= link_to '删　除', 'javascript:;'
 
         .title= link_to title, open_url
+        - if !resource.is_dir?
+          .tags= render 'media_resources/parts/resource_tag', :resource=> resource
 
   
 = jfbox :move_dir, '移动到文件夹' do
