@@ -12,4 +12,5 @@
     - upload_document_dirs.each do |dir|
       = page_list_body :cols => cols_hash do |p|
         = p.checkbox(dir)
-        = p.cell :name, dir.name 
+        = p.cell :name do
+          %a.edit{:href=>"/admin/upload_document_dirs?dir_id=#{dir.id}"}= dir.name

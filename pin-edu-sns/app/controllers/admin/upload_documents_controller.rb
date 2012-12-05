@@ -5,15 +5,22 @@ class Admin::UploadDocumentsController < ApplicationController
   before_filter :pre_load
 
   def pre_load
+    @upload_document = UploadDocument.find(params[:id]) if params[:id]
+
+    @dir_id = 0
+    @dir_id = params['dir_id'] if params['dir_id']
   end
 
-  def index
-  end
 
   def new
+    @upload_document = UploadDocument.new
   end
 
   def create
+    create_resource UploadDocument.new(params[:upload_document])
+  end
+
+  def show
   end
   
   

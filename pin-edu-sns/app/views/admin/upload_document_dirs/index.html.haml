@@ -9,7 +9,7 @@
 .page-fixed-head
   = page_buttons do |p|
     = jfbox_link :'create-upload-doc-folder', '创建文件夹'
-    = p.button '创建文本', '/admin/upload_documents/new', :class => 'create-text'
+    = p.button '创建文本', "/admin/upload_documents/new?dir_id=#{@dir_id}", :class => 'create-text'
     
   = jupload_button '上传文件'
 
@@ -32,8 +32,9 @@
 
   = page_list_head :cols=>cols_hash do |p|
     = p.checkbox
-    = p.cell :name, '目录', :sortable=>true
+    = p.cell :name, '标题 / 目录', :sortable=>true
 
 
-= render 'admin/upload_document_dirs/parts/resources', :upload_document_dirs => @upload_document_dirs
+= render 'admin/upload_document_dirs/parts/resources', 
+         :upload_document_dirs => @upload_document_dirs
 
