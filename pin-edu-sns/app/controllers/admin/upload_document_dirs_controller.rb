@@ -26,10 +26,10 @@ class Admin::UploadDocumentDirsController < ApplicationController
   def create_folder
     if params[:folder].match(/^([A-Za-z0-9一-龥\-\_\.]+)$/)
 
-      doc = UploadDocumentDir.create(:dir_id => params[:dir_id], :name => params[:folder])
+      dir = UploadDocumentDir.create(:dir_id => params[:dir_id], :name => params[:folder])
 
       return render :partial => '/admin/upload_document_dirs/parts/dirs', 
-                    :locals => {:upload_document_dirs => [doc]}
+                    :locals => {:dirs => [dir]}
     end
   end
   
