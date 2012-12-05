@@ -7,13 +7,12 @@ class AnnouncementsController < ApplicationController
   end
 
   def index
-    @announcements = filter(current_user.received_announcements,
-                            :received => :default,
-                            :unread   => current_user.unread_announcements,
-                            :mine     => current_user.created_announcements)
+    @announcements = filter current_user.received_announcements do
+      received {:default}
+      unread   {current_user.unread_announcements}
+      mine     {current_user.created_announcements}
+    end
   end
-
-
 
   def create
     create_resource current_user.created_announcements.build params[:announcement] do |announcement|

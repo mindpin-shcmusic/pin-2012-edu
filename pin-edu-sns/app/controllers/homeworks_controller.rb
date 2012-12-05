@@ -44,9 +44,10 @@ class HomeworksController < ApplicationController
   end
 
   def index
-    @homeworks = filter(current_user.homeworks,
-                        :expired   => current_user.expired_homeworks,
-                        :unexpired => current_user.unexpired_homeworks)
+    @homeworks = filter current_user.homeworks do
+      expired   {current_user.expired_homeworks}
+      unexpired {current_user.unexpired_homeworks}
+    end
   end
   
   def show

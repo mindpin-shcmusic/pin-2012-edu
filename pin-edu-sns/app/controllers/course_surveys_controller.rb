@@ -9,10 +9,12 @@ class CourseSurveysController < ApplicationController
 
   def index
     surveys = CourseSurvey.with_user(current_user)
-    @course_surveys = filter(surveys,
-                             :'0' => :default,
-                             :'1' => surveys.with_kind('1'),
-                             :'2' => surveys.with_kind('2'))
+
+    @course_surveys = filter surveys do
+      send('0') {:default}
+      send('1') {surveys.with_kind('1')}
+      send('2') {surveys.with_kind('2')}
+    end
   end
 
   def show
