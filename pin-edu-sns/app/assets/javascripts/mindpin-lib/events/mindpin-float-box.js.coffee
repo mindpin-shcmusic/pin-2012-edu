@@ -58,6 +58,8 @@ pie.load ->
         type: 'POST'
         data: $form.serialize()
         success: (res)=>
+          cells = jQuery(res).find('.cells')[0]
+          jQuery('.page-model-list').prepend(cells)
           _close($box)
         error: (xhr)=>
           console.log(xhr.responseText)

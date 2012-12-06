@@ -16,26 +16,17 @@
         = text_field_tag :'upload_document_dir[name]'
 
     = p.button '创建文本', "/admin/upload_documents/new?dir_id=#{@dir_id}", :class => 'create-text'
-  = jupload_button '上传文件'
+    = jupload_button '上传文件'
 
 = render 'admin/upload_document_dirs/parts/upload_file_box', :dir_id => @dir_id
 
 :ruby
   cols_hash = {
-    :ops => 1,
-    :name => 8
+    :name => 10
   }
 
-.page-list-head
-  .headtop
-    = page_buttons do |p|
-      = p.batch_destroy UploadDocumentDir
-
+.page-list-head.no-headtop
   = page_list_head :cols=>cols_hash do |p|
-    = p.checkbox
-    = p.cell :name, '标题/目录'
+    = p.cell :name, '文件夹/标题'
 
-
-= render 'admin/upload_document_dirs/parts/dirs', :dirs => @dirs
-= render 'admin/upload_document_dirs/parts/documents', :documents => @documents
-
+= render 'admin/upload_document_dirs/parts/cells', :models => @dirs + @documents

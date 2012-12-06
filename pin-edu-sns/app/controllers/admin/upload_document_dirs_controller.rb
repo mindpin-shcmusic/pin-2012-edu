@@ -13,13 +13,7 @@ class Admin::UploadDocumentDirsController < ApplicationController
   end
 
   def create_folder
-    dir = UploadDocumentDir.create(params[:upload_document_dir])
-
-    return render :partial => '/admin/upload_document_dirs/parts/dirs', 
-                  :locals => {:dirs => [dir]}
-
-  rescue
-    render :status => 422, :text => '请填写正确的文件名'
+    return create_resource_ajax UploadDocumentDir.new(params[:upload_document_dir]), :partial => '/admin/upload_document_dirs/parts/cells'    
   end
   
   

@@ -3,7 +3,6 @@
   line-height : 38px;
   padding : 0 24px;
   box-shadow : none;
-  text-shadow : 0 0 2px black;
   border : 1px solid rgba(black, 0.3);
 
   font-size:14px;
@@ -25,17 +24,11 @@
 
 @mixin mini-button{
   @include base-mini-button;
-  // @include gradient(#BCEB47, #87C500);
-  // &:hover{@include gradient(lighten(#BCEB47, 5%), lighten(#87C500, 5%));}
-  // box-shadow:0 1px 0 #D2F080 inset;
-  // border-top-color:#87D100;
-  // border-left-color:#70B000;
-  // border-right-color:#70B000;
-  // border-bottom-color:#5E9200;
 
   @include gradient(#A4D800, #71B600);
   &:hover{@include gradient(lighten(#A4D800, 5%), lighten(#71B600, 5%));}
   box-shadow:0 1px 0 #C0E500 inset;
+  text-shadow:-1px -1px rgba(black, 0.4);
   border-top-color:#6EBC00;
   border-left-color:#60A800;
   border-right-color:#60A800;
@@ -43,7 +36,6 @@
 
   height:30px;line-height:30px;
   padding:0 14px;
-  text-shadow:-1px -1px rgba(black, 0.3);
 }
 
 @mixin mini-button-close{
@@ -60,6 +52,7 @@
   @include gradient(#777, #555);
   box-shadow:0 1px 0 rgba(white, 0.3) inset;
   border-color:rgba(black, 0.3);
+  border-bottom-color:#333;
   height:30px;line-height:30px;
   padding:0 14px;
   &:hover{
@@ -105,6 +98,20 @@
   }
 }
 
+@mixin mini-button-orange{
+  @include base-mini-button;
+  @include gradient(#fda034, #FF8201);
+  box-shadow:0 1px 0 rgba(white, 0.3) inset;
+  text-shadow:-1px -1px rgba(black, 0.4);
+  border-color:rgba(black, 0.2);
+  height:30px;line-height:30px;
+  padding:0 14px;
+  color:white;
+  &:hover{
+    @include gradient(lighten(#fda034, 10%), lighten(#FF8201, 10%));
+  }
+}
+
 @mixin icon-close-24($color){
   width:24px;height:24px;
   overflow:hidden;line-height:20em;
@@ -142,15 +149,11 @@
   overflow:hidden;
 
   a.button{
+    @include mini-button-orange;
     display:block;
     height:$h - 2px;line-height:$h - 2px;
     width:$w - 2px;
-    @include gradient(#fda034, #FF8201);
-    border:1px solid rgba(black, 0.2);
-    @include border-radius(3px);
-    color:white;text-align: center;
-    text-shadow:0 -1px 1px rgba(black, 0.3);
-    font-size:14px;
+    margin:0;padding:0;
   }
   input[type=file]{
     position:absolute;

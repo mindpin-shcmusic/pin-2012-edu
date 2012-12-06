@@ -70,8 +70,24 @@ body{
     @include floatfix;
     float:left;
     padding:15px;
-    a.button{
+    
+    &>a.button{
       @include mini-button;
+      margin-right:15px;
+      &:last-child{
+        margin-right:0;
+      }
+    }
+    a.page-float-box-link{
+      @include mini-button;
+      margin-right:15px;
+      &:last-child{
+        margin-right:0;
+      }
+    }
+
+    .page-upload-button{
+      float:left;
       margin-right:15px;
       &:last-child{
         margin-right:0;
@@ -150,6 +166,12 @@ body{
   background: #fff;
   border-left:solid 1px #b1b1b1;
   border-bottom:solid 1px #CACDD4;
+
+  &.no-headtop{
+    .cells{
+      border-top:none;
+    }
+  }
 
   .headtop{
     @include floatfix;
@@ -269,6 +291,10 @@ body{
   background-color:#f7f7f7;
   border-left:solid 1px #b1b1b1;
   border-bottom:solid 1px #b1b1b1;
+
+  &.no-headtop{
+    margin-top:210px;
+  }
 
   .blank{
     padding:15px;
