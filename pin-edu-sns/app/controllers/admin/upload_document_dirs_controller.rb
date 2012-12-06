@@ -13,7 +13,8 @@ class Admin::UploadDocumentDirsController < ApplicationController
   end
 
   def create_folder
-    return create_resource_ajax UploadDocumentDir.new(params[:upload_document_dir]), :partial => '/admin/upload_document_dirs/parts/cells'    
+    create_resource_ajax UploadDocumentDir.new(params[:upload_document_dir]), 
+                         :partial => '/admin/upload_document_dirs/parts/cells'    
   end
   
   

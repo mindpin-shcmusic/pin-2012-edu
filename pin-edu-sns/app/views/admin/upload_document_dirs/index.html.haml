@@ -9,7 +9,7 @@
 .page-fixed-head.page-upload-document-head
   = page_buttons do |p|
 
-    = p.ajax_create_button :'create-upload-doc-folder','创建文件夹', '/admin/upload_document_dirs/create_folder' do
+    = p.ajax_create_button :'create-upload-doc-folder', '创建文件夹', '/admin/upload_document_dirs/create_folder' do
       = hidden_field_tag :'upload_document_dir[dir_id]', @dir_id
       .field.need
         %label 文件夹名称
@@ -26,7 +26,7 @@
   }
 
 .page-list-head.no-headtop
-  = page_list_head :cols=>cols_hash do |p|
+  = page_list_head :cols => cols_hash do |p|
     = p.cell :name, '文件夹/标题'
 
 = render 'admin/upload_document_dirs/parts/cells', :models => @dirs + @documents
