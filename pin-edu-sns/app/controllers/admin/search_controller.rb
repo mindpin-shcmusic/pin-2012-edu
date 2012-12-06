@@ -11,7 +11,8 @@ class Admin::SearchController < ApplicationController
     @teams_count = Team.search_count @query
     @media_resources_count = MediaResource.search_count @query
     @tag_media_reources_count = MediaResource.with_tag_name(@query).count
-    @all_count = @teachers_count + @students_count + @courses_count + @teams_count
+    
+    @all_count = @teachers_count + @students_count + @courses_count + @teams_count + @media_resources_count + @tag_media_reources_count
   end
 
   def index

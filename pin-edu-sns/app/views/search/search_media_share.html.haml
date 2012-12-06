@@ -1,4 +1,4 @@
-= render '/search/parts/search_tab', :all_count => @all_count, :media_resources_count => @media_resources_count, :media_shares_count => @media_shares_count, :public_resources_count => @public_resources_count
+= render '/search/parts/search_tab'
 
 - @media_shares.each do |media_share|
   = media_share.media_resource.name

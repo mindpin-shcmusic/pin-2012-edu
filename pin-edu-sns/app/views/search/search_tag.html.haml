@@ -1,0 +1,14 @@
+= render '/search/parts/search_tab'
+
+.media-resource= "自己的资源"
+- @tag_media_resources.each do |media_resource|
+  = media_resource.name
+.share-media-resource= "收到的共享资源"
+- @tag_share_media_resources.each do |media_resource|
+  = media_resource.name
+.public-media-resource= "公共资源库的资源"
+- @tag_public_media_resources.each do |media_resource|
+  = media_resource.name
+    
+/ 其实这些资源需要分页，具体如何设计UI，交给亮哥你了(by 李飞) 
+/ .page-paginate= will_paginate @tag_media_resources

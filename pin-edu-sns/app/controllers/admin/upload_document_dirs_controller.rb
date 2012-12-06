@@ -10,10 +10,12 @@ class Admin::UploadDocumentDirsController < ApplicationController
   end
 
   def index
-    @upload_document_dirs = sort_scope(UploadDocumentDir).sub_dirs(@dir_id).
+    @dirs = sort_scope(UploadDocumentDir).sub_dirs(@dir_id).
                             web_order.paginated(params[:page])
 
-    @upload_documents = UploadDocument.dir_files(@dir_id)
+    @texts = UploadDocument.dir_texts(@dir_id)
+
+    @files = UploadDocument.dir_files(@dir_id)
   end
 
 
@@ -22,13 +24,13 @@ class Admin::UploadDocumentDirsController < ApplicationController
 
 
   def create_folder
-    if params[:folder].match(/^([A-Za-z0-9一-龥\-\_\.]+)$/)
+    dir = UploadDocumentDir.create(:dir_id => params[:dir_id], :name => params[:folder])
 
-      doc = UploadDocumentDir.create(:dir_id => params[:dir_id], :name => params[:folder])
+    return render :partial => '/admin/upload_document_dirs/parts/dirs', 
+                    :locals => {:dirs => [dir]}
 
-      return render :partial => '/admin/upload_document_dirs/parts/dirs', 
-                    :locals => {:upload_document_dirs => [doc]}
-    end
+  rescue
+    render :status => 422, :text => '请填写正确的文件名'
   end
   
   

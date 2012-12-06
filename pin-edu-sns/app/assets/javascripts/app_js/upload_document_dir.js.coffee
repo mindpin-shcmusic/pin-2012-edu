@@ -13,3 +13,7 @@ pie.load ->
           $cells = jQuery(res).find('.cells')[0]
           jQuery('.page-model-list').prepend($cells)
           pie.close_fbox('create-upload-doc-folder')
+
+        error: (request, status, error)->
+          alert(request.responseText)
+
