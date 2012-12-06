@@ -1,5 +1,21 @@
 # -*- coding: utf-8 -*-
 module LayoutHelper
+  def page_model_list(models, options={}, &block)
+    options.assert_valid_keys :cols, :class
+    cols = options[:cols] || {}
+
+    content_tag :div, :class => ['page-model-list', options[:class]] do
+      if models.blank?
+        content_tag :div, '目前列表没有内容', :class => :blank
+      else
+        models.map do |model|
+          page_list_body :cols => cols, :model => model,  &block
+        end.reduce(&:+)
+      end
+
+    end
+  end
+
   def page_buttons
     content_tag :div, :class => :buttons do
       yield HeadWidget.new(self)
@@ -36,9 +52,10 @@ module LayoutHelper
   end
 
   def page_list_body(options={})
-    options.assert_valid_keys :cols
+    options.assert_valid_keys :cols, :model
+
     content_tag :div, :class => :cells do
-      yield BodyWidget.new(self, options[:cols])
+      yield BodyWidget.new(self, options[:cols], options[:model])
     end
   end
 
@@ -193,9 +210,12 @@ private
   end
 
   class BodyWidget < ActionView::Base
-    def initialize(context, cols_hash)
+    attr_reader :model
+
+    def initialize(context, cols_hash, model=nil)
       @context   = context
       @cols_hash = cols_hash
+      @model     = model
     end
 
     def cell(*args, &block)

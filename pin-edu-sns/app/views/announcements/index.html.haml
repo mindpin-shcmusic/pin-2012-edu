@@ -36,17 +36,11 @@
     = p.cell :teacher, '教师'
     = p.cell :created_at, '创建时间'
 
-.page-model-list
-  - if @announcements.blank?
-    .blank
-      目前列表内没有内容
-  - else
-    - @announcements.each do |announcement|
-      = page_list_body :cols=>cols_hash do |p|
-        = p.checkbox(announcement)
-        = p.cell :title do
-          %a.edit{:href => "/announcements/#{announcement.id}"}= announcement.title
-        = p.cell :teacher, announcement.creator.real_name
-        = p.cell :created_at, announcement.created_at
+= page_model_list(@announcements, :cols => cols_hash) do |p|
+  = p.checkbox(p.model)
+  = p.cell :title do
+    %a.edit{:href => "/announcements/#{p.model.id}"}= p.model.title
+  = p.cell :teacher, p.model.creator.real_name
+  = p.cell :created_at, p.model.created_at
 
 
