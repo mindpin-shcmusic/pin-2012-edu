@@ -1,17 +1,15 @@
 :ruby
   cols_hash = {
     :ops => 1,
-    :name => 3
+    :name => 8
   }
 
-
 .page-model-list.admin-upload-documents
-
-  - if texts.blank?
+  - if documents.blank?
     .blank
       目前列表内没有内容
   - else
-    - texts.each do |doc|
+    - documents.each do |doc|
       = page_list_body :cols => cols_hash do |p|
         = p.checkbox(doc)
         = p.cell :name do

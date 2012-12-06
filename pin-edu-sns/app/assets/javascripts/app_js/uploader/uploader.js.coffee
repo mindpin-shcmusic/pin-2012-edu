@@ -266,16 +266,17 @@ pie.load ->
         FILE_PUT_URL = '/admin/upload_documents/file_put'
         dir_id = $uploader_elm.data('dir-id')
         file_name = file_wrapper.file_name
-        url = FILE_PUT_URL + '?dir_id=' + dir_id + '&file_name=' + file_name
 
         file_wrapper.$elm.addClass 'success'
         file_wrapper.$elm.find('.state').html '上传完毕'
 
         jQuery.ajax
-          url:  url
+          url:  FILE_PUT_URL
           type: 'POST'
           data:
-            'file_entity_id' : file_wrapper.FILE_ENTITY_ID
+            'upload_document[file_entity_id]' : file_wrapper.FILE_ENTITY_ID
+            'upload_document[dir_id]' : dir_id
+            'upload_document[file_name]' : file_name
 
           success: (res)->
             $cells = jQuery(res).find('.cells')[0]

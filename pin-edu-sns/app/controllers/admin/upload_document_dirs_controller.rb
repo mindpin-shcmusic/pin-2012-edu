@@ -2,32 +2,21 @@
 class Admin::UploadDocumentDirsController < ApplicationController
   layout 'admin'
   before_filter :login_required
-  before_filter :pre_load
-
-  def pre_load
-    @dir_id = 0
-    @dir_id = params['dir_id'] if params['dir_id']
-  end
 
   def index
-    @dirs = sort_scope(UploadDocumentDir).sub_dirs(@dir_id).
-                            web_order.paginated(params[:page])
+    @dir_id = params['dir_id'] || 0
 
-    @texts = UploadDocument.dir_texts(@dir_id)
-
-    @files = UploadDocument.dir_files(@dir_id)
+    # 目的
+    dir = UploadDocumentDir.get_by_id(@dir_id)
+    @dirs = dir.sub_dirs
+    @documents = dir.documents
   end
-
-
-  def file
-  end
-
 
   def create_folder
-    dir = UploadDocumentDir.create(:dir_id => params[:dir_id], :name => params[:folder])
+    dir = UploadDocumentDir.create(params[:upload_document_dir])
 
     return render :partial => '/admin/upload_document_dirs/parts/dirs', 
-                    :locals => {:dirs => [dir]}
+                  :locals => {:dirs => [dir]}
 
   rescue
     render :status => 422, :text => '请填写正确的文件名'

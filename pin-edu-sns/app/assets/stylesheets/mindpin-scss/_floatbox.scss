@@ -32,5 +32,30 @@
     border:solid 1px #ddd;
     padding:0 14px;
     color:#666;
+    font-weight:bold;
+  }
+
+  .box-body{
+    position:absolute;
+    top:40px;
+    left:3px;right:3px;
+    bottom:3px;
+
+    background-color:white;
+    border:solid 1px #ddd;
+    padding:14px;
+
+    .box-buttons{
+      position:absolute;
+      bottom:0;left:0;right:0;
+      border-top:solid 1px #ddd;
+      overflow:hidden;
+      background-color:#fafafa;
+      padding:14px;
+
+
+      a.ajax-submit{@include mini-button;width:50px;margin-right:14px;}
+      a.ajax-cancel{@include mini-button-black;width:50px;margin-right:14px;}
+    }
   }
 }

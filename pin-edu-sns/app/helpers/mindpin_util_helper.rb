@@ -251,7 +251,7 @@ module MindpinUtilHelper
 
       content_tag :div, 
                   :'data-jfbox-id' => jfbox_id,
-                  :class => 'page-float-box',
+                  :class => "page-float-box #{jfbox_id}",
                   :style => style do
         tag_close + tag_title + tag_body
       end

@@ -7,18 +7,17 @@
 
 .page-admin-form
   = flash_info
-  = form_for [:admin, @upload_document] do |t|
+  = form_for [:admin, UploadDocument.new] do |t|
+    = t.hidden_field :dir_id, :value => @dir_id
+    = t.hidden_field :kind, :value => 'TEXT'
+
     .field
       %label 标题
       = t.text_field :title
  
     .field
       %label 内容
-      = t.hidden_field :dir_id, :value => @dir_id
-      = t.hidden_field :kind, :value => 'TEXT'
-      = t.text_area :content, :value => '', :class => 'kind-editor'
-
-
+      = t.text_area :content, :class => 'kind-editor'
 
     .field.submit
       = jfsubmit '确定'
