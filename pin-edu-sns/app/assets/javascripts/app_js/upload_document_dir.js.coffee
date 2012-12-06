@@ -16,4 +16,3 @@ pie.load ->
 
         error: (request, status, error)->
           alert(request.responseText)
-

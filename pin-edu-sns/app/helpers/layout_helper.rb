@@ -184,6 +184,29 @@ private
       self.button '删除', 'javascript:;', :class => 'batch-destroy', :'data-model' => model.to_s
     end
 
+    # 用于封装使用fbox进行model create的行为逻辑
+    def ajax_create_button(name, title, url, &block)
+      c1 = @context.jfbox_link name, title
+
+      block_content = @context.capture(&block)
+
+      form_buttons_content = @context.content_tag :div, :class=>'box-buttons' do
+        b1 = link_to '确定', 'javascript:;', :class => 'ajax-submit'
+        b2 = link_to '取消', 'javascript:;', :class => 'ajax-cancel'
+        b1 + b2
+      end
+
+      @context.content_for :fbox do
+        @context.jfbox name, title do
+          @context.form_tag url, :method=>:post do
+            block_content + form_buttons_content
+          end
+        end
+      end
+
+      return c1
+    end
+
   end
 
   class BodyWidget < ActionView::Base

@@ -39,3 +39,25 @@ pie.load ->
   pie.open_fbox = (jfbox_id)->
     $box = jQuery(".page-float-box[data-jfbox-id=#{jfbox_id}]")
     _open($box)
+
+
+  # 12月6日新增，一些扩展的通用事件
+  # =====================================
+  jQuery(document).delegate '.page-float-box .box-buttons a.ajax-cancel', 'click', ->
+    $box = jQuery(this).closest('.page-float-box')
+    _close($box)
+
+  jQuery(document).delegate '.page-float-box .box-buttons a.ajax-submit', 'click', ->
+    $box = jQuery(this).closest('.page-float-box')
+    $form = jQuery(this).closest('form')
+    url = $form.attr('action')
+
+    if pie.is_form_all_need_filled($form)
+      jQuery.ajax
+        url: url
+        type: 'POST'
+        data: $form.serialize()
+        success: (res)=>
+          _close($box)
+        error: (xhr)=>
+          console.log(xhr.responseText)
