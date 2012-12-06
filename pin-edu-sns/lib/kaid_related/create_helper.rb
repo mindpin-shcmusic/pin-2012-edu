@@ -20,11 +20,11 @@ module CreateHelper
     def request
       if @resource.save
         @block && @block.call(@resource)
-        return @context.redirect_to (@success_url || {:action => :show, :id => @resource.id})
+        return @context.redirect_to(@success_url || {:action => :show, :id => @resource.id})
       end
 
-      @context.flash_error (@error_message && @resource)
-      @context.redirect_to (@error_url || {:action => :new})
+      @context.flash_error(@error_message && @resource)
+      @context.redirect_to(@error_url || {:action => :new})
     end
 
   end
