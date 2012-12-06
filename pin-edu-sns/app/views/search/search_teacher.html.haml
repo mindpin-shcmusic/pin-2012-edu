@@ -1,0 +1,6 @@
+= render '/search/parts/search_tab'
+
+- @teachers.each do |teacher|
+  = teacher.name
+  
+.page-paginate= will_paginate @teachers

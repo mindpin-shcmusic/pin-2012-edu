@@ -3,3 +3,7 @@
   =link_to "我的资源(#{@media_resources_count})","/search/media_resource?query=#{params[:query]}",:class=>"tab #{params[:kind] == 'media_resource' ? "current" : ""}"
   =link_to "共享资源(#{@media_shares_count})","/search/media_share?query=#{params[:query]}",:class=>"tab #{params[:kind] == 'media_share' ? "current" : ""}"
   =link_to "公开资源(#{@public_resources_count})","/search/public_resource?query=#{params[:query]}",:class=>"tab #{params[:kind] == 'public_resource' ? "current" : ""}"
+  =link_to "课程(#{@courses_count})","/search/course?query=#{params[:query]}",:class=>"tab #{params[:kind] == 'course' ? "current" : ""}"
+  =link_to "老师(#{@teachers_count})","/search/teacher?query=#{params[:query]}",:class=>"tab #{params[:kind] == 'teacher' ? "current" : ""}"
+  =link_to "学生(#{@students_count})","/search/student?query=#{params[:query]}",:class=>"tab #{params[:kind] == 'student' ? "current" : ""}"
+  =link_to "标签","/search/tag?query=#{params[:query]}",:class=>"tab #{params[:kind] == 'tag' ? 'current' : ''}"

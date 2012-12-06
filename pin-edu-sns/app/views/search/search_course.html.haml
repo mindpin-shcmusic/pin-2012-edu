@@ -1,0 +1,6 @@
+= render '/search/parts/search_tab'
+
+- @courses.each do |course|
+  = course.name
+  
+.page-paginate= will_paginate @courses
