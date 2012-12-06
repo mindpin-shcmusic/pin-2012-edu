@@ -1,18 +1,38 @@
-= render '/search/parts/search_tab', :all_count => @all_count, :media_resources_count => @media_resources_count, :media_shares_count => @media_shares_count, :public_resources_count => @public_resources_count
+= render '/search/parts/search_tab'
 
 
-.media_resource= "我的资源(#{@media_resources_count})"
+.media-resource= "我的资源(#{@media_resources_count})"
 - @media_resources.each do |media_resource|
   = media_resource.name
 
-.media_share= "共享资源(#{@media_shares_count})"
+.media-share= "共享资源(#{@media_shares_count})"
 - @media_shares.each do |media_share|
   = media_share.media_resource.name
 
-.public_resource= "公开资源(#{@public_resources_count})"
+.public-resource= "公开资源(#{@public_resources_count})"
 - @public_resources.each do |public_resource|
   = public_resource.name
 
+.tag-media-resource= "按标签查找自己的资源(#{@tag_media_resources_count})"
+- @tag_media_resources.each do |media_resource|
+  = media_resource.name
+.tag-share-media-resource= "按标签查找收到的共享资源(#{@tag_share_media_resources_count})"
+- @tag_share_media_resources.each do |media_resource|
+  = media_resource.name
+.tag-public-media-resource= "按标签查找公共资源库的资源(#{@tag_public_media_resources_count})"
+- @tag_public_media_resources.each do |media_resource|
+  = media_resource.name
 
+.course= "课程(#{@courses_count})"
+- @courses.each do |course|
+  = course.name
+
+.teacher= "老师(#{@teachers_count})"
+- @teachers.each do |teacher|
+  = teacher.name
+
+.student= "学生(#{@students_count})"
+- @students.each do |student|
+  = student.name
 
 
