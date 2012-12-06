@@ -1,17 +1,22 @@
 module TabFilter
-  def filter(default, tabs)
-    Filter.new(default, tabs, self).current_collection
+  def filter(default, &block)
+    Filter.new(default, self, &block)._current_collection
   end
 
   class Filter
-    def initialize(default, tabs, context)
-      @default   = default
-      @container = tabs
-      @context   = context
+    def initialize(default, context, &block)
+      @default = default
+      @context = context
+      @tabs    = {}
+      self.instance_eval(&block)
     end
 
-    def current_collection
-      tab = @container[@context.params[:tab] && @context.params[:tab].to_sym]
+    def method_missing(name, *_, &block)
+      @tabs[name] = block
+    end
+
+    def _current_collection
+      tab = _get_collection
 
       result = case tab
                when nil, :default
@@ -20,9 +25,19 @@ module TabFilter
                  tab
                end
 
-      @context.send(:sort_scope, result).paginated(@context.params[:page])
+      @context.instance_eval {sort_scope(result).paginated(params[:page])}
+    end
+
+  private
+
+    def _tab_name
+      @context.params[:tab] && @context.params[:tab].to_sym
+    end
+
+    def _get_collection
+      block = @tabs[_tab_name]
+      @context.instance_eval &block if block
     end
 
   end
-
 end

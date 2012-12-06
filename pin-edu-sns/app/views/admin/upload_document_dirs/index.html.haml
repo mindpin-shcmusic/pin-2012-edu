@@ -27,14 +27,16 @@
     = page_buttons do |p|
       = p.batch_destroy UploadDocumentDir
 
-    = list_pagination(@upload_document_dirs)
+    = list_pagination(@dirs)
 
   = page_list_head :cols=>cols_hash do |p|
     = p.checkbox
     = p.cell :name, '标题 / 目录', :sortable=>true
 
 
-= render 'admin/upload_document_dirs/parts/dirs', :dirs => @upload_document_dirs
+= render 'admin/upload_document_dirs/parts/dirs', :dirs => @dirs
 
-= render 'admin/upload_document_dirs/parts/text_files', :upload_documents => @upload_documents
+= render 'admin/upload_document_dirs/parts/texts', :texts => @texts
+
+= render 'admin/upload_document_dirs/parts/files', :files => @files
 
