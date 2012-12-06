@@ -36,6 +36,8 @@ class IndexController < ApplicationController
       :comments_count => current_user.comment_tip_message.count,
       :short_messages_count => current_user.unread_messages.count
     }
+  rescue Redis::CannotConnectError
+    render :json => 'redis服务没有启动'
   end
 
   def batch_destroy
