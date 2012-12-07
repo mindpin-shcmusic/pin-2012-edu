@@ -95,3 +95,93 @@
     }
   }
 }
+
+// 图标
+.page-navbar .group .items .item{
+  position:relative;
+  &:after{
+    content:"";
+    width:24px;height:24px;
+    @include xicon(1,2,5);
+    position:absolute;
+    right:14px;top:16px;
+  }
+  &.current{
+    &:after{
+      @include xicon(1,3,5);
+    }
+  }
+
+  a.lv1{
+    position:relative;
+    &:before{
+      content:"";
+      width:24px;height:24px;
+      @include border-radius(3px);
+      background-color:#8DB6CD;
+      position:absolute;
+      top:14px;left:18px;
+    }
+    &:after{
+      content:"";
+      width:24px;height:24px;
+      @include border-radius(3px);
+      position:absolute;
+      top:14px;left:18px;
+      @include xicon(1,1,4);
+    }
+  }
+
+  &.current a.lv1{
+    &:before{
+      width:22px;height:22px;
+      border:solid 1px #2079A2;
+      @include gradient(#70AAC5, #317EAA);
+    }
+  }
+
+  &.dashboard       a.lv1:after{@include xicon(1,1,4);}
+  &.teaching-info   a.lv1:after{@include xicon(1,2,4);}
+  &.media-resources a.lv1:after{@include xicon(1,3,4);}
+  &.course          a.lv1:after{@include xicon(1,4,4);}
+  &.notice          a.lv1:after{@include xicon(1,1,5);}
+
+  .subitem{
+    a.lv2{
+      position:relative;
+      &:before{
+        content:"";
+        width:24px;height:24px;
+        position:absolute;
+        top:4px;left:32px;
+        @include xicon(1,6,8);
+      }
+    }
+    &.current a.lv2:before{@include xicon(1,5,8)};
+
+    @mixin subicon($y){
+      a.lv2:before{@include xicon(1,6,$y);}
+      &.current a.lv2:before{@include xicon(1,5,$y);}
+    }
+
+    &.dashboard{@include subicon(1)}
+    &.homeworks{@include subicon(2)}
+    &.score_lists{@include subicon(3)}
+    &.course_surveys{@include subicon(4)}
+    &.questions{@include subicon(5)}
+
+    &.courses{@include subicon(6)}
+    &.students{@include subicon(7)}
+    &.teachers{@include subicon(7)}
+    &.couse_subscriptions{@include subicon(8)}
+
+    &.my_resources{@include subicon(9)}
+    &.media_shares{@include subicon(9)}
+    &.public_resources{@include subicon(9)}
+
+    &.curriculum{@include subicon(10)}
+
+    &.announcements{@include subicon(11)}
+    &.comments{@include subicon(12)}
+  }
+}

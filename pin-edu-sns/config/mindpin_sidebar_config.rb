@@ -110,7 +110,7 @@ MindpinSidebar::Base.config do
         end
       end
 
-      nav :info, :name => '教学信息', :url => '/teachers' do
+      nav :'teaching-info', :name => '教学信息', :url => '/teachers' do
         subnav :courses, :name => '课程浏览', :url => '/courses' do
           controller :courses, :only => [:index,:show]
         end
@@ -128,7 +128,7 @@ MindpinSidebar::Base.config do
         end
       end
 
-      nav :media_resources, :name => '媒体资源', :url => '/file' do
+      nav :'media-resources', :name => '媒体资源', :url => '/file' do
         controller :media_resources
 
         subnav :my_resources, :name => '我的文件夹', :url => '/file' do

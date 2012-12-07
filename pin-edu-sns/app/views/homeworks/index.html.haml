@@ -54,7 +54,7 @@
         = p.cell :title do
           = link_to hspan(homework.title), homework
         = p.cell :deadline do
-          = jtimeformat homework.deadline
+          = homework.deadline.to_s
         = p.cell :attach do
           = homework.homework_teacher_attachments.count
         = p.cell :course do
