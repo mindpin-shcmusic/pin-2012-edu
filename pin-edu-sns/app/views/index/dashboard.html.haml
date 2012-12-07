@@ -132,3 +132,13 @@
             = link_to truncate_u(announcement.title), announcement
         - else
           .notice.blank
+
+    = page_field :'subscriptions-info', :title=>'订阅信息' do
+      - courses = current_user.subscribed_courses
+      - 0.upto 3 do |i|
+        - course = courses[i]
+        - if !course.blank?
+          .subscription
+            = link_to truncate_u(course.name), subscriptions_courses_path(:course_id => course.id)
+        - else
+          .subscription.blank
