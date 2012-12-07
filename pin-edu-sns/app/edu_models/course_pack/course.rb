@@ -307,14 +307,12 @@ class Course < ActiveRecord::Base
 
     # 一周需要去听的课（学生 / 老师）的课时数
     def get_course_hours_count
-      week_course_time_expressions_hash = self.get_week_course_time_expressions_hash
+      week_course_time_expressions = self.get_week_course_time_expressions
 
       i = 0
-      week_course_time_expressions_hash.each do |weekday,week_course_time_expressions|
-        week_course_time_expressions.each do |week_course_time_expression|
-          numbers = week_course_time_expression.course_teacher.time_expression_array[0]['number']
-          i = i + numbers.length
-        end
+      week_course_time_expressions.each do |week_course_time_expression|
+        numbers = week_course_time_expression.course_teacher.time_expression_array[0]['number']
+        i = i + numbers.length
       end
 
       i
