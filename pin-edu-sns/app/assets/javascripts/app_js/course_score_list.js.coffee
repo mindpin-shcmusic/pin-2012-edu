@@ -1,5 +1,5 @@
 pie.load ->
-  jQuery('.page-new-course-score-list .field').find('select').select2()
+  jQuery('.new-score-list select').select2()
   $course_selector = jQuery('select.course-selector')
 
   append_to_options = ($selector, res)->

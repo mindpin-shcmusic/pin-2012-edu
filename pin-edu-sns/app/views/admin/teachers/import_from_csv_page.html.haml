@@ -6,11 +6,11 @@
 - hbreadcrumb '教师维护', '/admin/teachers'
 - hbreadcrumb '批量导入教师数据'
 
-.page-admin-form-info
-  .desc 请先下载 CSV 示例文件，按照给定格式填充数据，然后上传导入
-  %a.download{:href=>'/csv_demo/teachers.csv'} 下载示例文件
+.page-model-form
+  .page-admin-form-info
+    .desc 请先下载 CSV 示例文件，按照给定格式填充数据，然后上传导入
+    %a.download{:href=>'/csv_demo/teachers.csv'} 下载示例文件
 
-.page-admin-form
   = flash_info
   = form_tag "/admin/teachers/import_from_csv",:method=>:post,:multipart => true do
     .field
