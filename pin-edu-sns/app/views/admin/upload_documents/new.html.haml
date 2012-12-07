@@ -4,8 +4,7 @@
 - hbreadcrumb '首页', '/admin'
 - hbreadcrumb '文档目录', '/admin/upload_document_dirs'
 
-
-.page-admin-form
+.page-model-form
   = flash_info
   = form_for [:admin, UploadDocument.new] do |t|
     = t.hidden_field :dir_id, :value => @dir_id

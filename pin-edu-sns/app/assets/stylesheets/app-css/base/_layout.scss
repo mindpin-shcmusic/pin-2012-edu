@@ -367,6 +367,10 @@ body{
   background-color:#fff;
 }
 
+.page-model-form{
+  @extend .page-model-show;
+}
+
 .page-field{
   width:720px;
 
