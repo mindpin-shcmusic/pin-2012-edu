@@ -2,29 +2,31 @@
 
 .page-unfixed-head
   .filters
-    - course_id = (params[:course_id] || @courses[0].id).to_i
-    - current_course = Course.find(course_id)
-    - @courses.each do |course|
-      - klass = course_id == course.id ? 'current' : ''
-      %a.filter{:href=>"/courses/subscriptions?course_id=#{course.id}", :class=>klass}= course.name
+    - if !@courses.blank?
+      - course_id = (params[:course_id] || @courses[0].id).to_i
+      - current_course = Course.find(course_id)
+      - @courses.each do |course|
+        - klass = course_id == course.id ? 'current' : ''
+        %a.filter{:href=>"/courses/subscriptions?course_id=#{course.id}", :class=>klass}= course.name
 
 .page-model-show
-  = page_semester_filters "/courses/subscriptions"
+  - if !@courses.blank?
+    = page_semester_filters "/courses/subscriptions"
 
-  = page_field :'image-list', :title=>'课程照片' do
-    .detail.images
-      .upload= jupload_button '上传照片'
-      = render '/courses/parts/resources', :course_resources => current_course.course_resources.with_kind(CourseResource::KIND_IMAGE).with_semester(current_semester)
-      = render '/courses/parts/uploader', :course=>current_course, :kind=>:image, :semester => current_semester
-
-    = page_field :'courseware-list', :title=>'课程课件' do
+    = page_field :'image-list', :title=>'课程照片' do
       .detail.images
-        .upload= jupload_button '上传课件'
-        = render '/courses/parts/resources', :course_resources => current_course.course_resources.with_kind(CourseResource::KIND_COURSEWARE).with_semester(current_semester)
-        = render '/courses/parts/uploader', :course=>current_course, :kind=>:courseware, :semester => current_semester
+        .upload= jupload_button '上传照片'
+        = render '/courses/parts/resources', :course_resources => current_course.course_resources.with_kind(CourseResource::KIND_IMAGE).with_semester(current_semester)
+        = render '/courses/parts/uploader', :course=>current_course, :kind=>:image, :semester => current_semester
 
-    = page_field :'audio-list', :title=>'课程音频' do
-      .detail.images
-        .upload= jupload_button '上传音频'
-        = render '/courses/parts/resources', :course_resources => current_course.course_resources.with_kind(CourseResource::KIND_AUDIO).with_semester(current_semester)
-        = render '/courses/parts/uploader', :course=>current_course, :kind=>:audio, :semester => current_semester
+      = page_field :'courseware-list', :title=>'课程课件' do
+        .detail.images
+          .upload= jupload_button '上传课件'
+          = render '/courses/parts/resources', :course_resources => current_course.course_resources.with_kind(CourseResource::KIND_COURSEWARE).with_semester(current_semester)
+          = render '/courses/parts/uploader', :course=>current_course, :kind=>:courseware, :semester => current_semester
+
+      = page_field :'audio-list', :title=>'课程音频' do
+        .detail.images
+          .upload= jupload_button '上传音频'
+          = render '/courses/parts/resources', :course_resources => current_course.course_resources.with_kind(CourseResource::KIND_AUDIO).with_semester(current_semester)
+          = render '/courses/parts/uploader', :course=>current_course, :kind=>:audio, :semester => current_semester

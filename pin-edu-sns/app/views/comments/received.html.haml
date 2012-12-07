@@ -28,16 +28,13 @@
     = p.cell :title, '内容'
     = p.cell :source, '评论来源'
 
-.page-model-list.admin-comments
-  - if @comments.blank?
-    .blank
-      = @error_message ? @error_message : '目前列表内没有内容'
-  - else
-    - @comments.each do |comment|
-      = page_list_body :cols=>cols_hash do |p|
-        = p.cell :real_name do
-          %a.edit{:href=>"/users/#{comment.creator.id}"}= comment.creator.real_name
-        = p.cell :created_at, jtime(comment.created_at)
-        = p.cell :title, comment.content
-        = p.cell :source do
-          %a.edit{:href=> "/homework_assigns/#{comment.model.id}"} 查看
+
+= page_model_list @comments, :cols=>cols_hash, :class=>'comments' do |p|
+  - comment = p.model
+
+  = p.cell :real_name do
+    %a.edit{:href=>"/users/#{comment.creator.id}"}= comment.creator.real_name
+  = p.cell :created_at, jtime(comment.created_at)
+  = p.cell :title, comment.content
+  = p.cell :source do
+    %a.edit{:href=> "/homework_assigns/#{comment.model.id}"} 查看

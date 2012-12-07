@@ -40,26 +40,20 @@
     = p.cell :kind, '类别', :sortable => true
     = p.cell :count, '已分配/已提交'
 
-.page-model-list
-  - if @homeworks.blank?
-    .blank
-      目前列表内没有内容
-  - else
-    - @homeworks.each do |homework|
-      :ruby
-        course = homework.course
-      = page_list_body :cols=>cols_hash do |p|      
-        - if current_user.is_teacher?
-          = p.checkbox(homework)
-        = p.cell :title do
-          = link_to hspan(homework.title), homework
-        = p.cell :deadline do
-          = jtimeformat homework.deadline
-        = p.cell :attach do
-          = homework.homework_teacher_attachments.count
-        = p.cell :course do
-          = link_to hspan(course.name), course
-        = p.cell :kind do
-          = homework.kind_str
-        = p.cell :count do
-          #{homework.assignees.count}/#{homework.submitted_students.count}
+= page_model_list @homeworks, :cols=>cols_hash, :class=>'homeworks' do |p|
+  - homework = p.model
+  - course = homework.course
+  - if current_user.is_teacher?
+    = p.checkbox(homework)
+  = p.cell :title do
+    = link_to hspan(homework.title), homework
+  = p.cell :deadline do
+    = jtimeformat homework.deadline
+  = p.cell :attach do
+    = homework.homework_teacher_attachments.count
+  = p.cell :course do
+    = link_to hspan(course.name), course
+  = p.cell :kind do
+    = homework.kind_str
+  = p.cell :count do
+    #{homework.assignees.count}/#{homework.submitted_students.count}

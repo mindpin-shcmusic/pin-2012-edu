@@ -38,19 +38,15 @@
     = p.cell :asker, '提问者'
     = p.cell :answered, '回答状态'
 
-.page-model-list.admin-teachers
-  - if @questions.blank?
-    .blank
-      目前列表内没有内容
-  - else
-    - @questions.each do |question|
-      = page_list_body :cols=>cols_hash do |p|
-        = p.checkbox(question)
-        = p.cell :ops do
-          - if !question.has_answered?
-            %a.edit{:href=>"/questions/#{question.id}/edit"} 编辑
-        = p.cell :title do
-          %a.edit{:href=>"/questions/#{question.id}"}= truncate_u question.title
-        = p.cell :teacher, question.teacher_user.real_name
-        = p.cell :asker, question.creator.real_name
-        = p.cell :answered, question.has_answered? ? '已回答' : '未回答'
+= page_model_list @questions, :cols=>cols_hash, :class=>'questions' do |p|
+  - question = p.model
+
+  = p.checkbox(question)
+  = p.cell :ops do
+    - if !question.has_answered?
+      %a.edit{:href=>"/questions/#{question.id}/edit"} 编辑
+  = p.cell :title do
+    %a.edit{:href=>"/questions/#{question.id}"}= truncate_u question.title
+  = p.cell :teacher, question.teacher_user.real_name
+  = p.cell :asker, question.creator.real_name
+  = p.cell :answered, question.has_answered? ? '已回答' : '未回答'

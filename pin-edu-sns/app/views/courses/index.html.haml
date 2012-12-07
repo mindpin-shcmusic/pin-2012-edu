@@ -24,14 +24,10 @@
     = p.cell :name, '名称', :sortable => true
     = p.cell :cid, '编号', :sortable => true
 
-.page-model-list
-  - if @courses.blank?
-    .blank
-      目前列表内没有内容
-  - else
-    - @courses.each do |course|
-      = page_list_body :cols => cols_hash do |p|
-        = p.cell :name do
-          = link_to hspan(course.name), course
-        = p.cell :cid do
-          = link_to hspan(course.cid), course
+= page_model_list @courses, :cols=>cols_hash, :class=>'courses' do |p|
+  - course = p.model
+
+  = p.cell :name do
+    = link_to hspan(course.name), course
+  = p.cell :cid do
+    = link_to hspan(course.cid), course
