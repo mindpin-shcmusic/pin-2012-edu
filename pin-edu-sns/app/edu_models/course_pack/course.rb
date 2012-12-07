@@ -242,7 +242,12 @@ class Course < ActiveRecord::Base
 
     def get_next_course_time_expression
       course_time_expressions = self.get_next_course_time_expressions
-      course_time_expressions.first
+      if !course_time_expressions.blank?
+        return course_time_expressions.first
+      else
+        # 显示一周的第一节课
+        return self.get_week_course_teachers.to_a[0][1][0]
+      end
     end
 
     # 取得接下来一星期内要上课的数据
