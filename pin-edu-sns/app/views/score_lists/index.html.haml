@@ -33,19 +33,15 @@
     = p.cell :course, '课程'
     = p.cell :count, '统计完/未统计完'
 
-.page-model-list
-  - if @score_lists.blank?
-    .blank
-      目前列表内没有内容
-  - else    
-    - @score_lists.each do |score_list|
-      = page_list_body :cols=>cols_hash do |p|
-        = p.checkbox(score_list)
-        = p.cell :title do
-          = link_to hspan(score_list.title), score_list_path(score_list)
-        = p.cell :semester_value do
-          = score_list.semester.to_s
-        = p.cell :course do
-          = hspan(score_list.course.name)
-        = p.cell :count do
-          = score_list.finished_ratio
+= page_model_list @score_lists, :cols=>cols_hash, :class=>'score-lists' do |p|
+  - score_list = p.model
+
+  = p.checkbox(score_list)
+  = p.cell :title do
+    = link_to hspan(score_list.title), score_list_path(score_list)
+  = p.cell :semester_value do
+    = score_list.semester.to_s
+  = p.cell :course do
+    = hspan(score_list.course.name)
+  = p.cell :count do
+    = score_list.finished_ratio

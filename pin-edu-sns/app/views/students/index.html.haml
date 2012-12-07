@@ -32,17 +32,13 @@
     = p.cell :username, '用户名'
     = p.cell :email, '用户邮箱'
 
-.page-model-list.admin-students
-  - if @students.blank?
-    .blank
-      目前列表内没有内容
-  - else
-    - @students.each do |student|
-      - user = student.user
-      = page_list_body :cols=>cols_hash do |p|
-        = p.cell :real_name do
-          = avatar_link user, :tiny
-          = user_link user
-        = p.cell :sid, student.sid
-        = p.cell :username, user.name
-        = p.cell :email, user.email
+= page_model_list @students, :cols=>cols_hash, :class=>'students' do |p|
+  - student = p.model
+  - user = student.user
+
+  = p.cell :real_name do
+    = avatar_link user, :tiny
+    = user_link user
+  = p.cell :sid, student.sid
+  = p.cell :username, user.name
+  = p.cell :email, user.email

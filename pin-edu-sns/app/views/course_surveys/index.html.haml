@@ -28,23 +28,20 @@
     = p.cell :kind, '类型', :sortable => true
     = p.cell :count, '统计完/未统计完'
 
-.page-model-list
-  - if @course_surveys.blank?
-    .blank
-      目前列表内没有内容
-  - else
-    - @course_surveys.each do |survey|
-      - path = list_resource_path_for(survey)
-      = page_list_body :cols=>cols_hash do |p|
-        = p.cell :title do
-          = link_to hspan(survey.title), path
-        = p.cell :semester_value do
-          = survey.semester.to_s
-        = p.cell :course do
-          = survey.course.name
-        = p.cell :kind do
-          = survey.kind
-        = p.cell :count do
-          = survey.finished_ratio
+
+= page_model_list @course_surveys, :cols=>cols_hash, :class=>'course-surveys' do |p|
+  - survey = p.model
+  - path = list_resource_path_for(survey)
+  
+  = p.cell :title do
+    = link_to hspan(survey.title), path
+  = p.cell :semester_value do
+    = survey.semester.to_s
+  = p.cell :course do
+    = survey.course.name
+  = p.cell :kind do
+    = survey.kind
+  = p.cell :count do
+    = survey.finished_ratio
 
         

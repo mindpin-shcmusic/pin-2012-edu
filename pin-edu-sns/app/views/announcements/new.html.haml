@@ -4,12 +4,10 @@
 
 - hbreadcrumb '创建新通知'
 
-.page-admin-go-back= link_to '返回列表页', '/announcements'
-
-.page-new-announcement
+.page-model-form
   = form_for @announcement do |f|
     = flash_info
-    .field.placeholder.need
+    .field.need
       %label 标题
       = f.text_field :title
     .field
@@ -49,3 +47,4 @@
 
     .field.submit
       = jfsubmit '确定'
+      = jfcancel '取消'

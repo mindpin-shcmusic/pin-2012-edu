@@ -37,10 +37,12 @@
     = p.cell :created_at, '创建时间'
 
 = page_model_list(@announcements, :cols => cols_hash) do |p|
-  = p.checkbox(p.model)
+  - announcement = p.model
+  
+  = p.checkbox(announcement)
   = p.cell :title do
-    %a.edit{:href => "/announcements/#{p.model.id}"}= p.model.title
-  = p.cell :teacher, p.model.creator.real_name
-  = p.cell :created_at, p.model.created_at
+    %a.edit{:href => "/announcements/#{p.model.id}"}= announcement.title
+  = p.cell :teacher, announcement.creator.real_name
+  = p.cell :created_at, announcement.created_at
 
 

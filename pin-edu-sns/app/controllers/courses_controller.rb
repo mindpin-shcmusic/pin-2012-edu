@@ -30,11 +30,11 @@ class CoursesController < ApplicationController
 
   # 从现在时间开始，本周内上的课程，包括当前正在进行的课程
   def next_for_student
-    @next_course_teachers = current_user.get_next_course_teachers
+    @next_course_teachers = current_user.get_next_course_time_expressions_hash
   end
 
   def next_for_teacher
-    @next_course_teachers = current_user.get_next_course_teachers
+    @next_course_teachers = current_user.get_next_course_time_expressions_hash
   end
 
   def subscribe
