@@ -3,7 +3,7 @@
 - hbreadcrumb "工作台 - #{current_user.real_name}"
 
 :ruby
-  next_course_teachers = current_user.get_next_course_teachers
+  next_course_teachers = current_user.get_next_course_time_expressions_hash
   next_one_course_teacher = next_course_teachers.to_a[0]
   week_course_teachers = current_user.get_week_course_teachers
 

@@ -242,24 +242,28 @@ class Course < ActiveRecord::Base
 
 
     # 取得接下来一星期内要上课的数据
-    def get_next_course_teachers
+    #{
+      #weekday => [course_time_expression,course_time_expression],
+      # ......
+    #}
+    def get_next_course_time_expressions_hash
       next_course_time_expressions = []
       
       if self.is_student?
-        courses = self.get_student_course_teachers(:semester => Semester.now)
+        course_teachers = self.get_student_course_teachers(:semester => Semester.now)
       end
 
       if self.is_teacher?
-        courses = self.get_teacher_course_teachers(:semester => Semester.now)
+        course_teachers = self.get_teacher_course_teachers(:semester => Semester.now)
       end
 
-      if courses.blank?
+      if course_teachers.blank?
         return []
       end
 
       current_cte = CourseTimeExpression.get_by_time(Time.now)
-      courses.each do |course_teacher|
-        next_course_time_expressions += course_teacher.get_next_courses_by_time_expression(current_cte)
+      course_teachers.each do |course_teacher|
+        next_course_time_expressions += course_teacher.get_next_course_time_expressions(current_cte)
       end
 
       next_course_time_expressions = next_course_time_expressions.sort

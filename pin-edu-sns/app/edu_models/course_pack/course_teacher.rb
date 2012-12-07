@@ -98,13 +98,11 @@ class CourseTeacher < ActiveRecord::Base
     )
   end
 
-
-
-  def get_next_courses_by_time_expression(current_cte)
+  def get_next_course_time_expressions(current_cte)
     course_time_expressions = []
 
     self.time_expression_array.each do |expression|
-      
+
       expression['number'].each do |number|
         cte = CourseTimeExpression.new(expression['weekday'], [number])
         if cte >= current_cte
