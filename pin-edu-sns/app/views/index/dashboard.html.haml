@@ -3,8 +3,7 @@
 - hbreadcrumb "工作台 - #{current_user.real_name}"
 
 :ruby
-  next_course_teachers = current_user.get_next_course_time_expressions_hash
-  next_one_course_teacher = next_course_teachers.to_a[0]
+  course_time_expression = current_user.get_next_course_time_expression
   week_course_teachers = current_user.get_week_course_teachers
 
 
@@ -33,12 +32,10 @@
             .date #{Time.now.strftime('%m-%d')}，#{Semester.now.to_s}学期
           .icon
 
-        - if !next_one_course_teacher.blank?
+        - if !course_time_expression.blank?
           .next
             :ruby
-              weekday = next_one_course_teacher[0]
-              course_time_expression = next_one_course_teacher[1][0]
-
+              weekday = course_time_expression.weekday
               course_teacher = course_time_expression.course_teacher
               course = course_teacher.course
             .t 下一节课：

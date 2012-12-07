@@ -240,13 +240,13 @@ class Course < ActiveRecord::Base
       value
     end
 
+    def get_next_course_time_expression
+      course_time_expressions = self.get_next_course_time_expressions
+      course_time_expressions.first
+    end
 
     # 取得接下来一星期内要上课的数据
-    #{
-      #weekday => [course_time_expression,course_time_expression],
-      # ......
-    #}
-    def get_next_course_time_expressions_hash
+    def get_next_course_time_expressions
       next_course_time_expressions = []
       
       if self.is_student?
@@ -266,8 +266,7 @@ class Course < ActiveRecord::Base
         next_course_time_expressions += course_teacher.get_next_course_time_expressions(current_cte)
       end
 
-      next_course_time_expressions = next_course_time_expressions.sort
-      next_course_time_expressions = next_course_time_expressions.group_by{|course_time_expression| course_time_expression.weekday}
+      next_course_time_expressions.sort
     end
 
     # 取得一星期内要上课的数据
