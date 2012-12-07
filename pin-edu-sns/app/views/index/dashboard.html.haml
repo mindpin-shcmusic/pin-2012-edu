@@ -49,6 +49,16 @@
               %span> ，
               %span.course>= link_to course.name, "/courses/#{course.id}"
             .icon
+        - else
+          .next
+            .t 下一节课：
+            .c
+              %span.week
+              %span
+              %span.time
+              %span
+              %span.course 无
+            .icon
 
     = page_field :'courses-info', :title=>'一周课程' do
       - week_course_teachers.each do |weekday, course_time_expressions|
