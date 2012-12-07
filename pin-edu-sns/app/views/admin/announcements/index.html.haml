@@ -25,15 +25,13 @@
     = p.cell :title, '标题', :sortable => true
     = p.cell :creator, '发布人'
 
-.page-model-list
-  - if @announcements.blank?
-    .blank
-      目前列表内没有内容
-  - else
-    - @announcements.each do |announcement|
-      = page_list_body :cols=>cols_hash do |p|
-        = p.checkbox(announcement)
-        = p.cell :title do
-          = link_to announcement.title, admin_announcement_path(announcement)
-        = p.cell :creator do
-          = announcement.creator.real_name
+
+
+= page_model_list @announcements, :cols=>cols_hash, :class=>'admin-announcements' do |p|
+  - announcement = p.model
+
+  = p.checkbox(announcement)
+  = p.cell :title do
+    = link_to announcement.title, admin_announcement_path(announcement)
+  = p.cell :creator do
+    = announcement.creator.real_name
