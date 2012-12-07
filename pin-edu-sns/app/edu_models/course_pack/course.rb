@@ -245,8 +245,7 @@ class Course < ActiveRecord::Base
       if !course_time_expressions.blank?
         return course_time_expressions.first
       else
-        # 显示一周的第一节课
-        return self.get_week_course_teachers.to_a[0][1][0]
+        return get_week_course_time_expressions.first
       end
     end
 
@@ -275,7 +274,16 @@ class Course < ActiveRecord::Base
     end
 
     # 取得一星期内要上课的数据
-    def get_week_course_teachers
+    # {
+    #   :weekday => [course_time_expression,course_time_expression]
+    # ...................
+    # }
+    def get_week_course_time_expressions_hash
+      course_time_expressions = get_week_course_time_expressions
+      course_time_expressions.group_by{|course_time_expression| course_time_expression.weekday}
+    end
+
+    def get_week_course_time_expressions
       week_course_time_expressions = []
       
       if self.is_student?
@@ -294,13 +302,12 @@ class Course < ActiveRecord::Base
         week_course_time_expressions += course_teacher.get_week_courses_by_time_expression
       end
 
-      week_course_time_expressions = week_course_time_expressions.sort
-      week_course_time_expressions = week_course_time_expressions.group_by{|course_time_expression| course_time_expression.weekday}
+      week_course_time_expressions.sort
     end
 
     # 一周需要去听的课（学生 / 老师）的课时数
     def get_course_hours_count
-      week_course_time_expressions_hash = self.get_week_course_teachers
+      week_course_time_expressions_hash = self.get_week_course_time_expressions_hash
 
       i = 0
       week_course_time_expressions_hash.each do |weekday,week_course_time_expressions|
