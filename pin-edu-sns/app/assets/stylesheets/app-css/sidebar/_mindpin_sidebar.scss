@@ -96,6 +96,11 @@
   }
 }
 
+@mixin subicon($y){
+  a.lv2:before{@include xicon(1,6,$y);}
+  &.current a.lv2:before{@include xicon(1,5,$y);}
+}
+
 // 图标
 .page-navbar .group .items .item{
   position:relative;
@@ -158,11 +163,6 @@
       }
     }
     &.current a.lv2:before{@include xicon(1,5,8)};
-
-    @mixin subicon($y){
-      a.lv2:before{@include xicon(1,6,$y);}
-      &.current a.lv2:before{@include xicon(1,5,$y);}
-    }
 
     &.dashboard{@include subicon(1)}
     &.homeworks{@include subicon(2)}
