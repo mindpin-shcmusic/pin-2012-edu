@@ -19,7 +19,7 @@ jQuery.fn.confirm_dialog = function(str, func){
 
   jQuery('.page-confirm-dialog').remove();
   dialog_elm
-    .css('left', off.left - 100 + elm.outerWidth()/2)
+    .css('left', off.left - 100 + elm.outerWidth(true)/2)
     .css('top', off.top - 83);
   jQuery('body').append(dialog_elm);
 
