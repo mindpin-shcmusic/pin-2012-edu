@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-def homework_group
+def pack3_1
   names = ['作曲', '编曲', '混音', '声乐']
 
   ActiveRecord::Base.transaction do
@@ -38,7 +38,7 @@ def homework_group
 
 end
 
-def question_group
+def pack3_2
   ActiveRecord::Base.transaction do
     Question.where('title like "%这门课%"').destroy_all
 
@@ -69,7 +69,7 @@ def question_group
   end
 end
 
-def announcement_group
+def pack3_3
   ActiveRecord::Base.transaction do
     announcements = Announcement.where('title like "[dev通知]%"')
     announcements.each do |a|
@@ -112,6 +112,10 @@ def announcement_group
   end
 end
 
-homework_group
-question_group
-announcement_group
+def pack3
+  depends_on [1, 2]
+  pack3_1
+  pack3_2
+  pack3_3
+  touch_pack_record(3)
+end
