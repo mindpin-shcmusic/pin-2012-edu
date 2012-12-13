@@ -2966,201 +2966,193 @@ $course_expressions = [
   :time_expression=>[{:weekday=>2, :number=>[5, 6]}]}]
 
 def pack2_1
-  ActiveRecord::Base.transaction do
-    $courses.reduce(1) do |count, name|
-      course = Course.create(:name => name,
-                             :cid => "cid-#{count}")
+  $courses.reduce(1) do |count, name|
+    course = Course.create(:name => name,
+                           :cid => "cid-#{count}")
 
-      puts ">>>>>>>> 创建课程《#{course.name}》"
+    puts ">>>>>>>> 创建课程《#{course.name}》"
 
-      count + 1
-    end
+    count + 1
+  end
 
-    student_users = Student.all.map(&:user)
+  student_users = Student.all.map(&:user)
 
-    1.upto(5).each do |count|
-      team = Team.create(:name => "2012级#{count}班",
-                         :cid => "cid-#{count}")
+  1.upto(5).each do |count|
+    team = Team.create(:name => "2012级#{count}班",
+                       :cid => "cid-#{count}")
 
-      team.student_users = student_users[(count-1)*30, 30]
+    team.student_users = student_users[(count-1)*30, 30]
 
-      puts ">>>>>>>> 创建班级#{team.name}，共#{team.student_users.count}名学生"
-    end
+    puts ">>>>>>>> 创建班级#{team.name}，共#{team.student_users.count}名学生"
+  end
 
-    student_chunks = student_users.each_slice(30)
-    teacher_chunks = Teacher.all.map(&:user).each_slice(4).to_a
-    course_chunks = Course.all.each_slice(5).to_a
+  student_chunks = student_users.each_slice(30)
+  teacher_chunks = Teacher.all.map(&:user).each_slice(4).to_a
+  course_chunks = Course.all.each_slice(5).to_a
 
-    course_chunks.reduce(teacher_chunks) do |t_chunks, courses|
-      courses.reduce(1) do |week_day, course|
-        teachers = t_chunks[week_day-1]
+  course_chunks.reduce(teacher_chunks) do |t_chunks, courses|
+    courses.reduce(1) do |week_day, course|
+      teachers = t_chunks[week_day-1]
 
-        teachers.reduce(1) do |class_no, teacher|
-          CourseTeacher.create(:course => course,
-                               :teacher_user => teacher,
-                               :time_expression => [{:weekday => week_day, :number => [class_no, class_no+1]}].to_json,
-                               :semester_value => semester.value,
-                               :location => "#{%w(东 南 西 北 中 排)[rand 6]}#{[*100..200].to_a.choice}#{%w(多 语 电钢 形 机)[rand 5]}")
+      teachers.reduce(1) do |class_no, teacher|
+        CourseTeacher.create(:course => course,
+                             :teacher_user => teacher,
+                             :time_expression => [{:weekday => week_day, :number => [class_no, class_no+1]}].to_json,
+                             :semester_value => semester.value,
+                             :location => "#{%w(东 南 西 北 中 排)[rand 6]}#{[*100..200].to_a.choice}#{%w(多 语 电钢 形 机)[rand 5]}")
 
-          puts ">>>>>>>> 为#{semester.value}《#{course.name}》分配#{teachers.map(&:real_name).join('，')}几位老师并分配上课时间"
+        puts ">>>>>>>> 为#{semester.value}《#{course.name}》分配#{teachers.map(&:real_name).join('，')}几位老师并分配上课时间"
 
-          class_no + 2
-        end
-
-        week_day + 1
+        class_no + 2
       end
 
-      tail_to_head(t_chunks)
+      week_day + 1
     end
 
-    student_chunks.reduce(0) do |index, students|
-      courses = course_chunks[index]
+    tail_to_head(t_chunks)
+  end
 
-      students.reduce(0) do |offset, student|
-        offset = 0 if offset > 3
-        courses.each do |course|
-          teacher_users = course.get_teachers(:semester => semester)
-          x = student.add_course(:semester => semester,
-                                 :course => course,
-                                 :teacher_user => teacher_users[offset])
-        end
+  student_chunks.reduce(0) do |index, students|
+    courses = course_chunks[index]
 
-        puts ">>>>>>> 为学生#{student.real_name}选择课程"
-
-        offset + 1
+    students.reduce(0) do |offset, student|
+      offset = 0 if offset > 3
+      courses.each do |course|
+        teacher_users = course.get_teachers(:semester => semester)
+        x = student.add_course(:semester => semester,
+                               :course => course,
+                               :teacher_user => teacher_users[offset])
       end
 
-      index + 1
+      puts ">>>>>>> 为学生#{student.real_name}选择课程"
+
+      offset + 1
     end
+
+    index + 1
   end
 end
 
 def pack2_2
-  ActiveRecord::Base.transaction do
-    User.where('name = "yedx" or name = "xiao"').destroy_all
-    Student.where('sid like "sid-y%"').destroy_all
-    Teacher.where('tid like "tid-x%"').destroy_all
-    courses = Course.where('cid like "cid-x%"')
-    courses.each do |course|
-      user_id = course.course_teachers[0].teacher_user_id
-      course.course_teachers.destroy_all
-      CourseStudentAssign.where('teacher_user_id = ?', user_id).destroy_all
-    end
-    courses.destroy_all
-
-    teacherx = Teacher.create do |teacher|
-      user = User.create(:name => 'xiao',
-                         :password => '1234',
-                         :email => 'xiao@edu.dev')
-
-      user.set_role :teacher
-
-      teacher.real_name = '肖少富'
-      teacher.tid = 'tid-x'
-      teacher.user = user
-    end
-
-    studenty = Student.create do |student|
-      user = User.create(:name => 'yedx',
-                         :password => '1234',
-                         :email => 'ye@edu.dev')
-
-      user.set_role :student
-
-      student.real_name = '叶大雄'
-      student.sid = 'sid-y'
-      student.user = user
-    end
-
-    $course_hashes.reduce([1, [], []]) do |array, hash|
-      name = hash[:course]
-      id = array[0]
-      course_names = array[1]
-      time_expressions = array[2]
-      semester = Semester.now
-      location = hash[:locations][0]
-      time_expression = hash[:time_expression]
-
-      next [id, course_names.uniq, time_expressions.uniq] if course_names.include?(hash[:course]) ||
-        time_expressions.include?(hash[:time_expression])
-      
-      course = Course.create(:name => name,
-                             :cid => "cid-x#{id}")
-
-      CourseTeacher.create(:course => course,
-                           :teacher_user => teacherx.user,
-                           :time_expression => time_expression.to_json,
-                           :semester_value => semester.value,
-                           :location => location)
-
-      studenty.user.add_course(:semester => semester,
-                               :teacher_user => teacherx.user,
-                               :course => course)
-
-      course_names << name
-      time_expressions << time_expression
-
-      [id + 1, course_names.uniq, time_expressions.uniq]
-    end
-
+  User.where('name = "yedx" or name = "xiao"').destroy_all
+  Student.where('sid like "sid-y%"').destroy_all
+  Teacher.where('tid like "tid-x%"').destroy_all
+  courses = Course.where('cid like "cid-x%"')
+  courses.each do |course|
+    user_id = course.course_teachers[0].teacher_user_id
+    course.course_teachers.destroy_all
+    CourseStudentAssign.where('teacher_user_id = ?', user_id).destroy_all
   end
+  courses.destroy_all
+
+  teacherx = Teacher.create do |teacher|
+    user = User.create(:name => 'xiao',
+                       :password => '1234',
+                       :email => 'xiao@edu.dev')
+
+    user.set_role :teacher
+
+    teacher.real_name = '肖少富'
+    teacher.tid = 'tid-x'
+    teacher.user = user
+  end
+
+  studenty = Student.create do |student|
+    user = User.create(:name => 'yedx',
+                       :password => '1234',
+                       :email => 'ye@edu.dev')
+
+    user.set_role :student
+
+    student.real_name = '叶大雄'
+    student.sid = 'sid-y'
+    student.user = user
+  end
+
+  $course_hashes.reduce([1, [], []]) do |array, hash|
+    name = hash[:course]
+    id = array[0]
+    course_names = array[1]
+    time_expressions = array[2]
+    semester = Semester.now
+    location = hash[:locations][0]
+    time_expression = hash[:time_expression]
+
+    next [id, course_names.uniq, time_expressions.uniq] if course_names.include?(hash[:course]) ||
+      time_expressions.include?(hash[:time_expression])
+    
+    course = Course.create(:name => name,
+                           :cid => "cid-x#{id}")
+
+    CourseTeacher.create(:course => course,
+                         :teacher_user => teacherx.user,
+                         :time_expression => time_expression.to_json,
+                         :semester_value => semester.value,
+                         :location => location)
+
+    studenty.user.add_course(:semester => semester,
+                             :teacher_user => teacherx.user,
+                             :course => course)
+
+    course_names << name
+    time_expressions << time_expression
+
+    [id + 1, course_names.uniq, time_expressions.uniq]
+  end
+
 end
 
 def pack2_3
-  ActiveRecord::Base.transaction do
-    $course_expressions.reduce(1) do |id, expression|
-      teacher = Teacher.find_or_initialize_by_real_name expression[:teacher]
-      if !teacher.persisted?
-        teacher.tid = "tid-n#{id}"
-        teacher.user = User.create(:name => "teachern#{id}",
-                                   :password => '1234',
-                                   :email => "#{teacher.tid}@edu.dev")
-        teacher.user.set_role :teacher
-        teacher.save
-      end
-
-      course = Course.find_or_initialize_by_name(expression[:name])
-      if !course.persisted?
-        course.cid = "cid-n#{id}"
-        course.save
-      end
-
-      course_teacher = CourseTeacher.find_or_initialize_by_teacher_user_id_and_course_id(teacher.user_id, course.id)
-      if !course_teacher.persisted? || course_teacher.time_expression.blank?
-        CourseTeacher.create(:course => course,
-                             :teacher_user => teacher.user,
-                             :time_expression => expression[:time_expression].to_json,
-                             :semester_value => semester.value,
-                             :location => "#{%w(东 南 西 北 中 排)[rand 6]}#{[*100..200].to_a.choice}#{%w(多 语 电钢 形 机)[rand 5]}")
-      end
-
-      student = Student.find_or_initialize_by_real_name '吴大刚'
-      if !student.persisted?
-        student.sid = "sid-n#{id}"
-        student.user = User.create(:name => "studentn#{id}",
-                                   :password => '1234',
-                                   :email => "#{student.sid}@edu.dev")
-        student.user.set_role :student
-        student.save
-      end
-
-      course_assign = CourseStudentAssign.find_or_initialize_by_student_user_id_and_course_id(student.user_id, course.id)
-      if !course_assign.persisted?
-        student.user.add_course(:semester => semester,
-                                :teacher_user => teacher.user,
-                                :course => course)
-        
-      end
-
-      id + 1
+  $course_expressions.reduce(1) do |id, expression|
+    teacher = Teacher.find_or_initialize_by_real_name expression[:teacher]
+    if !teacher.persisted?
+      teacher.tid = "tid-n#{id}"
+      teacher.user = User.create(:name => "teachern#{id}",
+                                 :password => '1234',
+                                 :email => "#{teacher.tid}@edu.dev")
+      teacher.user.set_role :teacher
+      teacher.save
     end
+
+    course = Course.find_or_initialize_by_name(expression[:name])
+    if !course.persisted?
+      course.cid = "cid-n#{id}"
+      course.save
+    end
+
+    course_teacher = CourseTeacher.find_or_initialize_by_teacher_user_id_and_course_id(teacher.user_id, course.id)
+    if !course_teacher.persisted? || course_teacher.time_expression.blank?
+      CourseTeacher.create(:course => course,
+                           :teacher_user => teacher.user,
+                           :time_expression => expression[:time_expression].to_json,
+                           :semester_value => semester.value,
+                           :location => "#{%w(东 南 西 北 中 排)[rand 6]}#{[*100..200].to_a.choice}#{%w(多 语 电钢 形 机)[rand 5]}")
+    end
+
+    student = Student.find_or_initialize_by_real_name '吴大刚'
+    if !student.persisted?
+      student.sid = "sid-n#{id}"
+      student.user = User.create(:name => "studentn#{id}",
+                                 :password => '1234',
+                                 :email => "#{student.sid}@edu.dev")
+      student.user.set_role :student
+      student.save
+    end
+
+    course_assign = CourseStudentAssign.find_or_initialize_by_student_user_id_and_course_id(student.user_id, course.id)
+    if !course_assign.persisted?
+      student.user.add_course(:semester => semester,
+                              :teacher_user => teacher.user,
+                              :course => course)
+      
+    end
+
+    id + 1
   end
 end
 
-def pack2
-  depends_on [1]
+defpack 2, :depends => [1] do
   pack2_1
   pack2_2
   pack2_3
-  touch_pack_record(2)
 end

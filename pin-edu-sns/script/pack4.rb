@@ -61,70 +61,66 @@ categories = [
 ]
 
 def pack4_1
-  ActiveRecord::Base.transaction do
-    c = categories.dup
+  c = categories.dup
 
-    if Category
-      ActiveRecord::Base.connection.execute("TRUNCATE categories")
+  if Category
+    ActiveRecord::Base.connection.execute("TRUNCATE categories")
 
-      c = c.flatten.uniq.map do |name|
-        Category.create(:name => name)
-      end
-
-      c[0].move_to_root
-      c[1].move_to_child_of(c[0])
-      c[2, 5].each {|i| i.move_to_child_of(c[1])}
-      c[7].move_to_child_of(c[0])
-      c[8, 3].each {|i| i.move_to_child_of(c[7])}
-      c[11].move_to_child_of(c[0])
-      c[12, 6].each {|i| i.move_to_child_of(c[11])}
-      c[18].move_to_child_of(c[0])
-      c[19, 5].each {|i| i.move_to_child_of(c[18])}
-      c[24].move_to_root
-      c[25, 34].each {|i| i.move_to_child_of(c[24])}
-      c[59].move_to_root
-      c[60].move_to_child_of(c[59])
-      c[61, 12].each {|i| i.move_to_child_of(c[60])}
-      c[73, 3].each {|i| i.move_to_child_of(c[59])}
-      c[76].move_to_child_of(c[59])
-      c[77, 8].each {|i| i.move_to_child_of(c[76])}
-      c[85].move_to_child_of(c[59])
-      c[86, 11].each {|i| i.move_to_child_of(c[85])}
-      c[97, 4].each {|i| i.move_to_child_of(c[59])}
-      c[101].move_to_child_of(c[59])
-      c[102, 8].each {|i| i.move_to_child_of(c[101])}
-
+    c = c.flatten.uniq.map do |name|
+      Category.create(:name => name)
     end
+
+    c[0].move_to_root
+    c[1].move_to_child_of(c[0])
+    c[2, 5].each {|i| i.move_to_child_of(c[1])}
+    c[7].move_to_child_of(c[0])
+    c[8, 3].each {|i| i.move_to_child_of(c[7])}
+    c[11].move_to_child_of(c[0])
+    c[12, 6].each {|i| i.move_to_child_of(c[11])}
+    c[18].move_to_child_of(c[0])
+    c[19, 5].each {|i| i.move_to_child_of(c[18])}
+    c[24].move_to_root
+    c[25, 34].each {|i| i.move_to_child_of(c[24])}
+    c[59].move_to_root
+    c[60].move_to_child_of(c[59])
+    c[61, 12].each {|i| i.move_to_child_of(c[60])}
+    c[73, 3].each {|i| i.move_to_child_of(c[59])}
+    c[76].move_to_child_of(c[59])
+    c[77, 8].each {|i| i.move_to_child_of(c[76])}
+    c[85].move_to_child_of(c[59])
+    c[86, 11].each {|i| i.move_to_child_of(c[85])}
+    c[97, 4].each {|i| i.move_to_child_of(c[59])}
+    c[101].move_to_child_of(c[59])
+    c[102, 8].each {|i| i.move_to_child_of(c[101])}
+
   end
 end
 
 path = '/media_samples/resources'
 
 def pack4_2
-  ActiveRecord::Base.transaction do
-    pic_paths = Dir.entries(path).delete_if {|a| a == '.' || a== '..'}.map {|file_name|
-      File.join path, file_name
-    }
+  pic_paths = Dir.entries(path).delete_if {|a| a == '.' || a== '..'}.map {|file_name|
+    File.join path, file_name
+  }
 
-    puts pic_paths
+  puts pic_paths
 
-    users  = User.where('id > ?', 1).limit(8)
-    user_ids = users.map(&:id)
+  users  = User.where('id > ?', 1).limit(8)
+  user_ids = users.map(&:id)
 
-    pic_paths.each {|path|
-      pic  = File.open(path)
-      user = users[rand 8]
-      resource = MediaResource.put(user, File.join('/', File.basename(path)), pic)
-      pic.close
-      puts "**#{user.name}**上传了文件: #{File.basename pic.path}"
-    }
+  pic_paths.each {|path|
+    pic  = File.open(path)
+    user = users[rand 8]
+    resource = MediaResource.put(user, File.join('/', File.basename(path)), pic)
+    pic.close
+    puts "**#{user.name}**上传了文件: #{File.basename pic.path}"
+  }
 
-    MediaResource.all.each do |resource|
-      resource.share_to(:users => user_ids)
-      resource.media_share_rule.build_share
-      resource.share_public
-      puts "已经分享#{resource.name}"
-    end
+  MediaResource.all.each do |resource|
+    resource.share_to(:users => user_ids)
+    resource.media_share_rule.build_share
+    resource.share_public
+    puts "已经分享#{resource.name}"
   end
 end
 
@@ -173,24 +169,19 @@ def list_file_from_dir(path, category = nil)
 end
 
 def pack4_3
-  ActiveRecord::Base.transaction do
+  # file
+  file_dir = File.join(public_resources_path,"file")
+  list_root_dir(file_dir)
 
-    # file
-    file_dir = File.join(public_resources_path,"file")
-    list_root_dir(file_dir)
+  audio_dir = File.join(public_resources_path,"audio")
+  list_root_dir(audio_dir)
 
-    audio_dir = File.join(public_resources_path,"audio")
-    list_root_dir(audio_dir)
-
-    image_dir = File.join(public_resources_path,"image")
-    list_root_dir(image_dir)
-  end
+  image_dir = File.join(public_resources_path,"image")
+  list_root_dir(image_dir)
 end
 
-def pack4
-  depends_on [1]
+defpack 4, :depends => [1] do
   pack4_1
   pack4_2
   pack4_3
-  touch_pack_record(4)
 end

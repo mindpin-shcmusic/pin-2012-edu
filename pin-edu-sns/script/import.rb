@@ -12,7 +12,7 @@ when 'clear-pack-records'
   puts '删除脚本运行记录....'
   `rm -rf tmp/scripts`
   exit
-when 'clear-database'
+when 'clear-db'
   puts '清空数据库....'
   `rake db:drop && rake db:create && rake db:migrate > /dev/null`
   exit
