@@ -99,9 +99,7 @@
         %a.see{:href=>'/courses/curriculum'} 查看课程表
 
     = page_field :'homeworks-info', :title=>'作业和教学实践' do
-      - homeworks = current_user.homeworks[0...4]
-      - 0.upto 3 do |i|        
-        - homework = homeworks[i]
+      - get_dashboard_arr(current_user.homeworks).each do |homework|
         - if !homework.blank?
           .homework
             - course = homework.course
@@ -114,9 +112,7 @@
           .homework.blank
 
     = page_field :'faq-info', :title=>'在线问答(Q&A)' do
-      - questions = Question.with_user(current_user)
-      - 0.upto 3 do |i| 
-        - question = questions[i]
+      - get_dashboard_arr(Question.with_user(current_user)).each do |question|
         - if !question.blank?
           .question
             .title= link_to truncate_u(question.title), question
@@ -124,9 +120,7 @@
           .question.blank
 
     = page_field :'notices-info', :title=>'通知信息' do
-      - announcements = current_user.received_announcements
-      - 0.upto 3 do |i|
-        - announcement = announcements[i]
+      - get_dashboard_arr(current_user.received_announcements).each do |announcement|
         - if !announcement.blank?
           .notice
             = link_to truncate_u(announcement.title), announcement
@@ -134,9 +128,7 @@
           .notice.blank
 
     = page_field :'subscriptions-info', :title=>'订阅信息' do
-      - courses = current_user.subscribed_courses
-      - 0.upto 3 do |i|
-        - course = courses[i]
+      - get_dashboard_arr(current_user.subscribed_courses).each do |course|
         - if !course.blank?
           .subscription
             = link_to truncate_u(course.name), subscriptions_courses_path(:course_id => course.id)
