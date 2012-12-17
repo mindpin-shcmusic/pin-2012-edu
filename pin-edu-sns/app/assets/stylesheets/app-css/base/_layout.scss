@@ -60,10 +60,10 @@ body{
   z-index:8;
   
   background:#f2f2f2;
-  border-top:solid 1px #fbfbfb;
+  box-shadow:0 1px #FBFBFB inset;
   border-left:solid 1px #b1b1b1;
   border-bottom:solid 1px #DADDE0;
-  height:62px; // 32 + 15 + 15
+  height:63px; // 32 + 15 + 15
   @include floatfix;
 
   .buttons{
@@ -100,8 +100,8 @@ body{
     float:left;
     padding:15px;
     padding-left:16px;
-    border-left:solid 1px #DADDE0;
-    box-shadow:1px 0 0 #FBFBFB inset;
+    //border-left:solid 1px #DADDE0;
+    //box-shadow:1px 0 0 #FBFBFB inset;
 
     a.filter{
       float:left;
@@ -291,7 +291,7 @@ body{
 }
 
 .page-model-list{
-  margin-top:263px;
+  margin-top:265px;
   background-color:#f7f7f7;
   border-left:solid 1px #b1b1b1;
   border-bottom:solid 1px #b1b1b1;

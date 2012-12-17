@@ -181,7 +181,7 @@ private
     end
 
     def batch_destroy(model)
-      self.button '删除', 'javascript:;', :class => 'batch-destroy', :'data-model' => model.to_s
+      self.button '删除选中项', 'javascript:;', :class => 'batch-destroy', :'data-model' => model.to_s
     end
 
     # 用于封装使用fbox进行model create的行为逻辑

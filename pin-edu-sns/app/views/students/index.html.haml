@@ -13,13 +13,14 @@
     :email => 4
   }
 
-.page-fixed-head
-  - if current_user.is_teacher?
+- if current_user.is_teacher?
+  .page-fixed-head
     = page_filters '/students' do |p|
       = p.filter '全部学生', :tab => 'all', :default => true
       = p.filter '我的学生', :tab => 'mine'
 
-.page-list-head
+- klass = current_user.is_teacher? ? '' : 'no-fixed-head'
+.page-list-head{:class=>klass}
   - if current_user.is_teacher? && params[:tab] == 'mine'
     = page_semester_filters '/students'
 
@@ -32,12 +33,13 @@
     = p.cell :username, '用户名'
     = p.cell :email, '用户邮箱'
 
-= page_model_list @students, :cols=>cols_hash, :class=>'students' do |p|
+- klass = current_user.is_teacher? ? 'students' : 'students no-fixed-head'
+= page_model_list @students, :cols=>cols_hash, :class=>klass do |p|
   - student = p.model
   - user = student.user
 
   = p.cell :real_name do
-    = avatar_link user, :tiny
+    = avatar_link user, :mini
     = user_link user
   = p.cell :sid, student.sid
   = p.cell :username, user.name
