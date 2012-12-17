@@ -111,16 +111,16 @@ MindpinSidebar::Base.config do
       end
 
       nav :'teaching-info', :name => '教学信息', :url => '/teachers' do
-        subnav :courses, :name => '课程浏览', :url => '/courses' do
-          controller :courses, :only => [:index,:show]
+        subnav :teachers, :name => '教师浏览', :url => '/teachers' do
+          controller :teachers, :only => :index
         end
 
         subnav :students, :name => '学生浏览', :url => '/students' do
           controller :students, :only => :index
         end
 
-        subnav :teachers, :name => '教师浏览', :url => '/teachers' do
-          controller :teachers, :only => :index
+        subnav :courses, :name => '课程浏览', :url => '/courses' do
+          controller :courses, :only => [:index,:show]
         end
 
         subnav :couse_subscriptions, :name => '订阅的课程', :url => '/courses/subscriptions' do

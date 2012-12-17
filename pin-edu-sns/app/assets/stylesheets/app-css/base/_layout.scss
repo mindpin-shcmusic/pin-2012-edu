@@ -173,6 +173,10 @@ body{
     }
   }
 
+  &.no-fixed-head{
+    top:106px;
+  }
+
   .headtop{
     @include floatfix;
     .buttons{
@@ -296,6 +300,10 @@ body{
     margin-top:210px;
   }
 
+  &.no-fixed-head{
+    margin-top:201px;
+  }
+
   .blank{
     padding:15px;
     height:24px;line-height:24px;
@@ -358,6 +366,10 @@ body{
 
       .pie-j-checkbox{
         padding:3px 0;
+      }
+
+      .page-avatar-img.mini{
+        margin-right:7px;
       }
     }
   }
