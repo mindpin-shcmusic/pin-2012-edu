@@ -25,11 +25,10 @@ class MediaResourcesController < ApplicationController
 
   def upload_file
     file_entity = FileEntity.find(params[:file_entity_id])
-    resource_path = URI.decode(request.fullpath).sub('/file_put', '')
+    resource_path = params[:path]
 
     resource = MediaResource.put_file_entity(current_user, resource_path, file_entity)
     
-    #resource = MediaResource.get(current_user, resource_path)
     return render :partial => '/media_resources/parts/resources',
                   :locals => {:resources => [resource]}
   end
@@ -46,9 +45,7 @@ class MediaResourcesController < ApplicationController
       end
 
       return render :partial => '/media_resources/parts/resources',
-                    :locals => {
-                      :resources => [resource]
-                    }
+                    :locals => {:resources => [resource]}
     end
 
     render :status => 422,

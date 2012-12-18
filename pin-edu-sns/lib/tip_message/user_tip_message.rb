@@ -16,6 +16,8 @@ class UserTipMessage < RedisDatabase
 
   def put(message_str, key = randstr)
     self.instance.hset self.hash_name, key, message_str
+  rescue Redis::CannotConnectError
+    p "can not connect redis"
   end
 
   def count
@@ -28,10 +30,14 @@ class UserTipMessage < RedisDatabase
 
   def clear
     self.instance.del self.hash_name
+  rescue Redis::CannotConnectError
+    p "can not connect redis"
   end
 
   def delete(key)
     self.instance.hdel self.hash_name, key
+  rescue Redis::CannotConnectError
+    p "can not connect redis"
   end
 
   def path
@@ -46,6 +52,8 @@ class UserTipMessage < RedisDatabase
 
   def send_count_to_juggernaut
     Juggernaut.publish self.hash_name, {:count => self.count}
+  rescue Redis::CannotConnectError
+    p "can not connect redis"
   end
 
   class UnimplementedMethodError < Exception; end;

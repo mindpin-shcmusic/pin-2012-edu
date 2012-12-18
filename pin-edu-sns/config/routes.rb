@@ -250,7 +250,7 @@ MindpinEduSns::Application.routes.draw do
   get    '/file' => 'media_resources#index'
   get    '/file/*path' => 'media_resources#file', :format => false
 
-  put    '/file_put/*path' => 'media_resources#upload_file'
+  put    '/file_put' => 'media_resources#upload_file'
   post   '/file/create_folder' => 'media_resources#create_folder'
   delete '/file/*path' => 'media_resources#destroy'
 
