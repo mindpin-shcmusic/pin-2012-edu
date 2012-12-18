@@ -30,10 +30,8 @@ class MediaResourcesController < ApplicationController
     resource = MediaResource.put_file_entity(current_user, resource_path, file_entity)
     
     #resource = MediaResource.get(current_user, resource_path)
-    return render :partial => '/media_resources/parts/resources.html.haml',
-                  :locals => {
-                    :resources => [resource]
-                  }
+    return render :partial => '/media_resources/parts/resources',
+                  :locals => {:resources => [resource]}
   end
 
   # for ajax

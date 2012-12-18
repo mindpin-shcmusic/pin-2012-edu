@@ -30,6 +30,9 @@
             - if current_user.is_student?
               %span> 同学
 
+        = jsearchbar '/search', :placeholder=>'站内搜索…', :default=>params[:query]
+        
+        .ops
           %a.setting{:href=>'/auth/setting'} 设置
           %a.logout{:href=>'/auth/logout'} 退出登录
 

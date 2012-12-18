@@ -1,38 +1,47 @@
-= render '/search/parts/search_tab'
+- htitle '搜索结果'
+
+- hgoback '/'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '搜索结果'
+
+.page-unfixed-head
+  = render '/search/parts/search_tab'
+
+.page-model-show
+
+  = page_field :'media-resource', :title=>"我的资源(#{@media_resources_count})" do
+    - @media_resources.each do |media_resource|
+      = media_resource.name
 
 
-.media-resource= "我的资源(#{@media_resources_count})"
-- @media_resources.each do |media_resource|
-  = media_resource.name
+  = page_field :'media-share', :title=>"共享资源(#{@media_shares_count})" do
+    - @media_shares.each do |media_share|
+      = media_share.media_resource.name
 
-.media-share= "共享资源(#{@media_shares_count})"
-- @media_shares.each do |media_share|
-  = media_share.media_resource.name
+  = page_field :"public-resource", :title=>"公共资源(#{@public_resources_count})" do
+    - @public_resources.each do |public_resource|
+      = public_resource.name
 
-.public-resource= "公开资源(#{@public_resources_count})"
-- @public_resources.each do |public_resource|
-  = public_resource.name
+  = page_field :course, :title=>"课程(#{@courses_count})" do
+    - @courses.each do |course|
+      = course.name
 
-.tag-media-resource= "按标签查找自己的资源(#{@tag_media_resources_count})"
-- @tag_media_resources.each do |media_resource|
-  = media_resource.name
-.tag-share-media-resource= "按标签查找收到的共享资源(#{@tag_share_media_resources_count})"
-- @tag_share_media_resources.each do |media_resource|
-  = media_resource.name
-.tag-public-media-resource= "按标签查找公共资源库的资源(#{@tag_public_media_resources_count})"
-- @tag_public_media_resources.each do |media_resource|
-  = media_resource.name
+  = page_field :teacher, :title=>"老师(#{@teachers_count})" do
+    - @teachers.each do |teacher|
+      = teacher.name
 
-.course= "课程(#{@courses_count})"
-- @courses.each do |course|
-  = course.name
+  = page_field :student, :title=>"学生(#{@students_count})" do
+    - @students.each do |student|
+      = student.name
 
-.teacher= "老师(#{@teachers_count})"
-- @teachers.each do |teacher|
-  = teacher.name
+  = page_field :"tag-media-resource", :title=>"按标签查找到的个人资源(#{@tag_media_resources_count})" do
+    - @tag_media_resources.each do |media_resource|
+      = media_resource.name
 
-.student= "学生(#{@students_count})"
-- @students.each do |student|
-  = student.name
+  = page_field :"tag-share-media-resource", :title=>"按标签查找收到的共享资源(#{@tag_share_media_resources_count})" do
+    - @tag_share_media_resources.each do |media_resource|
+      = media_resource.name
 
-
+  = page_field :"tag-public-media-resource", :title=>"按标签查找公共资源库的资源(#{@tag_public_media_resources_count})" do
+    - @tag_public_media_resources.each do |media_resource|
+      = media_resource.name
