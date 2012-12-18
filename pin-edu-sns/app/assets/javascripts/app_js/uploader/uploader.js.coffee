@@ -182,15 +182,16 @@ pie.load ->
         FILE_PUT_URL = '/file_put'
         CURRENT_PATH = $uploader_elm.data('current-path')
         file_name = file_wrapper.file_name
-        url = jQuery.path_join(FILE_PUT_URL, CURRENT_PATH, file_name)
+        file_path = jQuery.path_join(CURRENT_PATH, file_name)
 
         file_wrapper.$elm.addClass 'success'
         file_wrapper.$elm.find('.state').html '上传完毕'
 
         jQuery.ajax
-          url:  url
+          url:  FILE_PUT_URL
           type: 'PUT'
           data:
+            'path' : file_path
             'file_entity_id' : file_wrapper.FILE_ENTITY_ID
 
           success: (res)->
