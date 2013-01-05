@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121206051223) do
+ActiveRecord::Schema.define(:version => 20130105081105) do
 
   create_table "announcement_rules", :force => true do |t|
     t.integer  "creator_id"
@@ -81,6 +81,18 @@ ActiveRecord::Schema.define(:version => 20121206051223) do
   add_index "comments", ["model_id", "model_type"], :name => "index_comments_on_model_id_and_model_type"
   add_index "comments", ["reply_comment_id"], :name => "index_comments_on_reply_comment_id"
   add_index "comments", ["reply_comment_user_id"], :name => "index_comments_on_reply_comment_user_id"
+
+  create_table "course_change_records", :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "teacher_user_id"
+    t.string   "location"
+    t.string   "time_expression"
+    t.string   "semester_value"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "course_resources", :force => true do |t|
     t.integer  "course_id"
@@ -554,14 +566,18 @@ ActiveRecord::Schema.define(:version => 20121206051223) do
   add_index "team_students", ["team_id"], :name => "index_team_students_on_team_id"
 
   create_table "teams", :force => true do |t|
-    t.string   "name",       :default => "",    :null => false
+    t.string   "name",                   :default => "",    :null => false
     t.string   "cid"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_removed", :default => false
+    t.boolean  "is_removed",             :default => false
+    t.integer  "teaching_plan_id"
+    t.integer  "course_teacher_team_id"
   end
 
+  add_index "teams", ["course_teacher_team_id"], :name => "index_teams_on_course_teacher_team_id"
   add_index "teams", ["is_removed"], :name => "index_teams_on_is_removed"
+  add_index "teams", ["teaching_plan_id"], :name => "index_teams_on_teaching_plan_id"
 
   create_table "upload_document_dirs", :force => true do |t|
     t.integer  "dir_id"
