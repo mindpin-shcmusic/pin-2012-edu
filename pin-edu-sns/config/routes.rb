@@ -122,6 +122,8 @@ MindpinEduSns::Application.routes.draw do
         put :update_time_expression
         put :update_location
       end
+
+      resources :course_change_records, :shallow => true
     end
 
     resources :teaching_plans do

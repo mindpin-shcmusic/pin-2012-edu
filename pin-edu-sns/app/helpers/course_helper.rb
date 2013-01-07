@@ -52,4 +52,28 @@ module CourseHelper
     "第#{%w{ 一 二 三 四 五 六 七 八 九 十 十一 十二}[number + 1]}节"
   end
 
+  def course_change_record_times
+    now_time = Time.now
+    now_wday = now_time.wday
+    now_wday = 7 if now_wday == 0
+
+    week_start_time = now_time + (now_wday - 1).day
+    week_end_time = now_time + (7 - now_wday).day
+    times = []
+    times << [week_start_time,week_end_time]
+    4.times do |i|
+      start_time = week_start_time + ((i+1)*7).day
+      end_time = week_end_time + ((i+1)*7).day
+
+      times << [start_time, end_time]
+    end
+
+    times.map do |time|
+      [
+        "#{time[0].strftime('%Y%m%d')} - #{time[1].strftime('%Y%m%d')}",
+        "#{time[0].strftime('%Y%m%d')},#{time[1].strftime('%Y%m%d')}",
+      ]
+    end
+  end
+
 end

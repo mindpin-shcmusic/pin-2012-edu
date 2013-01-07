@@ -1,4 +1,5 @@
 class CourseTeacher < ActiveRecord::Base
+  include CourseChangeRecord::CourseTeacherMethods
   belongs_to :course
   belongs_to :teacher_user,
              :class_name  => 'User',
@@ -104,7 +105,7 @@ class CourseTeacher < ActiveRecord::Base
     self.time_expression_array.each do |expression|
 
       expression['number'].each do |number|
-        cte = CourseTimeExpression.new(expression['weekday'], [number])
+        cte = CourseTimeExpression.new(expression['weekday'], number)
         if cte >= current_cte
           cte.course_teacher = self
           course_time_expressions << cte
@@ -122,7 +123,7 @@ class CourseTeacher < ActiveRecord::Base
     self.time_expression_array.each do |expression|
       
       expression['number'].each do |number|
-        cte = CourseTimeExpression.new(expression['weekday'], [number])
+        cte = CourseTimeExpression.new(expression['weekday'], number)
         cte.course_teacher = self
 
         course_time_expressions << cte
