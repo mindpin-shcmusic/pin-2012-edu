@@ -107,13 +107,6 @@ class CourseTeacher < ActiveRecord::Base
     end
   end
 
-  def next_course_time_expressions(current_cte)
-    course_time_expressions.select do |course_time_expression|
-      course_time_expression >= current_cte
-    end
-  end
-
-
   module UserMethods
     def self.included(base)
       base.has_many :course_teachers, :foreign_key => :teacher_user_id
