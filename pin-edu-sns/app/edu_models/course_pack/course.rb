@@ -223,61 +223,27 @@ class Course < ActiveRecord::Base
       users
     end
 
-    def get_next_course_time_expression
-      course_time_expressions = self.get_next_course_time_expressions
-      if !course_time_expressions.blank?
-        return course_time_expressions.first
-      else
-        return get_week_course_time_expressions.first
-      end
-    end
-
-    # 取得接下来一星期内要上课的数据
-    def get_next_course_time_expressions
-      if self.is_student?
-        course_teachers = self.get_student_course_teachers(:semester => Semester.now)
-      end
-
-      if self.is_teacher?
-        course_teachers = self.get_teacher_course_teachers(:semester => Semester.now)
-      end
-
-      current_cte = CourseTimeExpression.get_by_time(Time.now)
-
-      course_teachers.map do |course_teacher|
-        course_teacher.next_course_time_expressions(current_cte)
-      end.flatten.sort
-    end
-
-    # 取得一星期内要上课的数据
-    # {
-    #   :weekday => [course_time_expression,course_time_expression]
-    # ...................
-    # }
-    def get_week_course_time_expressions_hash
-      course_time_expressions = get_week_course_time_expressions
-      course_time_expressions.group_by{|course_time_expression| course_time_expression.weekday}
-    end
-
-    def get_week_course_time_expressions
-      if self.is_student?
-        course_teachers = self.get_student_course_teachers(:semester => Semester.now)
-      end
-
-      if self.is_teacher?
-        course_teachers = self.get_teacher_course_teachers(:semester => Semester.now)
-      end
-
-      course_teachers.map do |course_teacher|
-        course_teacher.course_time_expressions
-      end.flatten.sort
+    def course_time_expression_collection_map
+      course_teachers = __current_semester_course_teachers
+      CourseTimeExpressionCollectionMap.new(course_teachers)
     end
 
     # 一周需要去听的课（学生 / 老师）的课时数
     def get_course_hours_count
-      self.get_week_course_time_expressions.count
+      course_time_expression_collection_map.course_hours_count
     end
 
+    def __current_semester_course_teachers
+      if self.is_student?
+        course_teachers = self.get_student_course_teachers(:semester => Semester.now)
+      end
+
+      if self.is_teacher?
+        course_teachers = self.get_teacher_course_teachers(:semester => Semester.now)
+      end
+
+      course_teachers
+    end
 
   end
 

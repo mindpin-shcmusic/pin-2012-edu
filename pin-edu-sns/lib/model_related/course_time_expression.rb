@@ -1,5 +1,7 @@
 class CourseTimeExpression
-  attr_reader :weekday, :number, :weekday_str, :number_str, :start_time_str, :end_time_str
+  attr_reader :weekday, :number, :weekday_str, 
+    :number_str, :start_time_str, :end_time_str,
+    :weekday_number_str
   attr_accessor :course_teacher
   def initialize(weekday, number)
     @weekday = weekday.to_i
@@ -8,6 +10,7 @@ class CourseTimeExpression
     set_start_time
     set_end_time
     set_number_str
+    set_weekday_number_str
   end
 
   def set_number_str
@@ -59,6 +62,10 @@ class CourseTimeExpression
     when 11 then '18:45'
     when 12 then '19:30'
     end
+  end
+
+  def set_weekday_number_str
+    @weekday_number_str = "#{@weekday}_#{@number}"
   end
 
   def class_time

@@ -20,20 +20,6 @@ module CourseHelper
     link_to link_text, "/admin/courses/#{course.id}?tab=#{name}&semester=#{semester.value}", :class=>klass
   end
 
-  def get_teacher_course_by_weekday_and_number(teacher_courses, weekday, number)
-    teacher_courses.each do |course_teacher|
-      course_time_expressions = course_teacher.course_time_expressions
-      course_time_expressions.each do |expression|
-        if (expression.weekday == weekday) && (expression.number == number)
-          return course_teacher.course
-        end
-      end
-      
-    end
-
-    return nil
-  end
-
   # 根据 0-7 获得星期字符串
   def change_to_weekday(weekday)
     "星期#{%w{ 日 一 二 三 四 五 六 }[weekday]}"
@@ -49,7 +35,8 @@ module CourseHelper
   end
 
   def change_to_course_number(number)
-    "第#{%w{ 一 二 三 四 五 六 七 八 九 十 十一 十二}[number + 1]}节"
+    return "" if number == 0
+    "第#{%w{一 二 三 四 五 六 七 八 九 十 十一 十二}[number - 1]}节"
   end
 
   def course_change_record_times
