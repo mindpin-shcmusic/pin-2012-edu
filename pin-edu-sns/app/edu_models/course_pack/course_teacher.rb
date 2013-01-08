@@ -47,19 +47,6 @@ class CourseTeacher < ActiveRecord::Base
     self.time_expression = time_expression_array.to_json
   end
 
-  #{
-  # :weekday1 => numbers,
-  # :weekday2 => numbers
-  # }
-  #TODO 待删除
-  def time_expression_hash
-    value = {}
-    self.time_expression_array.each do |item|
-      value[item["weekday"]] = item["number"]
-    end
-    value
-  end
-
   def course_student_assigns
     CourseStudentAssign.where(
       :course_id => self.course_id,

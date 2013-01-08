@@ -223,23 +223,6 @@ class Course < ActiveRecord::Base
       users
     end
 
-    def get_course_time(options)
-      raise InvalidCourseParams.new if options[:semester].blank? || options[:teacher_user].blank? || options[:course].blank?
-
-      course_teacher = CourseTeacher.get_by_params(options[:course], options[:semester], options[:teacher_user])
-      course_teacher.time_expression_hash
-    end
-
-    def get_all_course_time(options)
-      raise InvalidCourseParams.new if options[:semester].blank?
-      course_teachers = CourseTeacher.get_all_by_semester(options[:semester])
-      value = {}
-      course_teachers.each do |course_teacher|
-        value[course_teacher.course.name] = course_teacher.time_expression_hash
-      end
-      value
-    end
-
     def get_next_course_time_expression
       course_time_expressions = self.get_next_course_time_expressions
       if !course_time_expressions.blank?
