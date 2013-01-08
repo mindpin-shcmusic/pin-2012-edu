@@ -5,6 +5,17 @@ class CourseChangeRecord < ActiveRecord::Base
   validates :teacher_user_id, :presence => true,
     :uniqueness => {:scope => [:course_id,:semester_value, :start_date, :end_date]}
 
+  validate   :not_the_same_time_expression
+  def not_the_same_time_expression
+    if self.course_teacher.blank?
+      errors.add :base, "没有对应的课程"
+    end
+
+    if course_teacher.time_expression_array == self.time_expression_array
+      errors.add :base, '调的课不能没有变化'
+    end
+  end
+
   def time_expression_array
     array = JSON.parse(self.time_expression || "[]")
     array.map do |item|
