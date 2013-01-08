@@ -17,7 +17,8 @@ class Admin::CourseChangeRecordsController < ApplicationController
     end_date = Time.parse(end_date_str)
 
     time_expression_array = params[:value].map do |index,item|
-      item["number"] = [item["number"].to_i]
+      item["number"] = item["number"].to_i
+      item["weekday"] = item["weekday"].to_i
       item
     end
 
