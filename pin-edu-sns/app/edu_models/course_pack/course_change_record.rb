@@ -6,7 +6,12 @@ class CourseChangeRecord < ActiveRecord::Base
     :uniqueness => {:scope => [:course_id,:semester_value, :start_date, :end_date]}
 
   def time_expression_array
-    JSON.parse(self.time_expression || "[]")
+    array = JSON.parse(self.time_expression || "[]")
+    array.map do |item|
+      [item["number"]].flatten.map do |number|
+        {:weekday => item["weekday"].to_i, :number => number}
+      end
+    end.flatten
   end
 
   def time_expression_array=(time_expression_array)

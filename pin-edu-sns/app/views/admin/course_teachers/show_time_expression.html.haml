@@ -9,8 +9,8 @@
       :ruby
         checked = false
         @course_teacher.time_expression_array.each do |time|
-          if time['weekday'] == weekday
-            checked = time['number'].include?(hour + 1)
+          if time[:weekday] == weekday
+            checked = time[:number] == hour + 1
           end
         end
       = check_box_tag "time_expressions[]", "#{weekday},#{hour + 1}", checked

@@ -31,11 +31,16 @@ class CourseTeacher < ActiveRecord::Base
 
   # 格式
   # [
-  #   {:weekday => weekday, :number => [hour,hour2]},
-  #   {:weekday => weekday, :number => [hour]}
+  #   {:weekday => weekday, :number => hour},
+  #   {:weekday => weekday, :number => hour}
   # ]
   def time_expression_array
-    JSON.parse(self.time_expression || "[]")
+    array = JSON.parse(self.time_expression || "[]")
+    array.map do |item|
+      [item["number"]].flatten.map do |number|
+        {:weekday => item["weekday"].to_i, :number => number}
+      end
+    end.flatten
   end
 
   def time_expression_array=(time_expression_array)
@@ -46,6 +51,7 @@ class CourseTeacher < ActiveRecord::Base
   # :weekday1 => numbers,
   # :weekday2 => numbers
   # }
+  #TODO 待删除
   def time_expression_hash
     value = {}
     self.time_expression_array.each do |item|
@@ -103,13 +109,13 @@ class CourseTeacher < ActiveRecord::Base
     course_time_expressions = []
 
     self.time_expression_array.each do |expression|
+      number = expression[:number]
+      weekday = expression[:weekday]
 
-      expression['number'].each do |number|
-        cte = CourseTimeExpression.new(expression['weekday'], number)
-        if cte >= current_cte
-          cte.course_teacher = self
-          course_time_expressions << cte
-        end
+      cte = CourseTimeExpression.new(weekday, number)
+      if cte >= current_cte
+        cte.course_teacher = self
+        course_time_expressions << cte
       end
       
     end
@@ -121,13 +127,13 @@ class CourseTeacher < ActiveRecord::Base
   def get_week_courses_by_time_expression
     course_time_expressions = []
     self.time_expression_array.each do |expression|
+      number = expression[:number]
+      weekday = expression[:weekday]
       
-      expression['number'].each do |number|
-        cte = CourseTimeExpression.new(expression['weekday'], number)
-        cte.course_teacher = self
+      cte = CourseTimeExpression.new(weekday, number)
+      cte.course_teacher = self
 
-        course_time_expressions << cte
-       end
+      course_time_expressions << cte
       
     end
 
