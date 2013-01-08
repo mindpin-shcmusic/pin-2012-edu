@@ -92,39 +92,22 @@ class CourseTeacher < ActiveRecord::Base
     )
   end
 
-  def get_next_course_time_expressions(current_cte)
-    course_time_expressions = []
-
-    self.time_expression_array.each do |expression|
-      number = expression[:number]
-      weekday = expression[:weekday]
-
-      cte = CourseTimeExpression.new(weekday, number)
-      if cte >= current_cte
-        cte.course_teacher = self
-        course_time_expressions << cte
-      end
-      
-    end
-
-    course_time_expressions
-  end
-
-
-  def get_week_courses_by_time_expression
-    course_time_expressions = []
-    self.time_expression_array.each do |expression|
+  def course_time_expressions
+    self.time_expression_array.map do |expression|
       number = expression[:number]
       weekday = expression[:weekday]
       
       cte = CourseTimeExpression.new(weekday, number)
       cte.course_teacher = self
 
-      course_time_expressions << cte
-      
+      cte
     end
+  end
 
-    course_time_expressions
+  def next_course_time_expressions(current_cte)
+    course_time_expressions.select do |course_time_expression|
+      course_time_expression >= current_cte
+    end
   end
 
 

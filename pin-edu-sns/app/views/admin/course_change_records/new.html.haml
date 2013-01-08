@@ -13,7 +13,7 @@
     %label 调整时间
     = select "course_change_record","week_expression", course_change_record_times
   %label 调整课程
-  - @course_teacher.get_week_courses_by_time_expression.each_with_index do |course_time_expression, index|
+  - @course_teacher.course_time_expressions.each_with_index do |course_time_expression, index|
     - weekday = course_time_expression.weekday
     - number = course_time_expression.number
     .field
