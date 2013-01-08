@@ -57,7 +57,7 @@ module CourseHelper
     now_wday = now_time.wday
     now_wday = 7 if now_wday == 0
 
-    week_start_time = now_time + (now_wday - 1).day
+    week_start_time = now_time - (now_wday - 1).day
     week_end_time = now_time + (7 - now_wday).day
     times = []
     times << [week_start_time,week_end_time]
