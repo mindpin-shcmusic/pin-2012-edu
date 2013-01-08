@@ -16,6 +16,8 @@ class CourseChangeRecord < ActiveRecord::Base
     end
   end
 
+  scope :of_time, lambda { |time| where("start_date < ? and end_date > ?", time,time ) }
+
   def time_expression_array
     array = JSON.parse(self.time_expression || "[]")
     array.map do |item|
@@ -29,7 +31,34 @@ class CourseChangeRecord < ActiveRecord::Base
     self.time_expression = time_expression_array.to_json
   end
 
+  def course_time_expressions
+    self.time_expression_array.map do |expression|
+      number = expression[:number]
+      weekday = expression[:weekday]
+      
+      cte = CourseTimeExpression.new(weekday, number)
+      cte.course_teacher = self
+
+      cte
+    end
+  end
+
   module CourseTeacherMethods
+    def change_course_time_expressions
+      course_change_record = course_change_record_of_time(Time.now)
+      return nil if course_change_record.blank?
+
+      course_change_record.course_time_expressions
+    end
+
+    def course_change_record_of_time(time)
+      CourseChangeRecord.of_time(time).where(
+        :course_id => self.course_id,
+        :teacher_user_id => self.teacher_user_id,
+        :semester_value => self.semester_value
+        ).first
+    end
+
     def course_change_records
       CourseChangeRecord.where(
         :course_id => self.course_id,

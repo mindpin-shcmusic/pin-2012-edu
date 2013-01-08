@@ -22,9 +22,9 @@ module CourseHelper
 
   def get_teacher_course_by_weekday_and_number(teacher_courses, weekday, number)
     teacher_courses.each do |course_teacher|
-      time_expression = JSON.parse(course_teacher.time_expression)
-      time_expression.each do |expression|
-        if (expression['weekday'] == weekday) && (expression['number'].include?(number))
+      course_time_expressions = course_teacher.course_time_expressions
+      course_time_expressions.each do |expression|
+        if (expression.weekday == weekday) && (expression.number == number)
           return course_teacher.course
         end
       end

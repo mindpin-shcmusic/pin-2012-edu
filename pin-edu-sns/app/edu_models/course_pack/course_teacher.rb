@@ -93,6 +93,9 @@ class CourseTeacher < ActiveRecord::Base
   end
 
   def course_time_expressions
+    change_result = change_course_time_expressions
+    return change_result if !change_result.blank?
+
     self.time_expression_array.map do |expression|
       number = expression[:number]
       weekday = expression[:weekday]
