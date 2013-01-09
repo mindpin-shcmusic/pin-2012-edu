@@ -12,6 +12,10 @@
       %label 计划标题
       = t.text_field :title
 
+    .field
+      %label 学期
+      = t.select(:semester_value, Semester.get_recent_semesters.collect {|p| [ p.value ] }, :selected => Semester.now.value)
+
     .field.submit
       = jfsubmit '确定'
       = jfcancel '取消'
