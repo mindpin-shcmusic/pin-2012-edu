@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130105081105) do
+ActiveRecord::Schema.define(:version => 20130109075227) do
 
   create_table "announcement_rules", :force => true do |t|
     t.integer  "creator_id"
@@ -527,25 +527,6 @@ ActiveRecord::Schema.define(:version => 20130105081105) do
   add_index "teachers", ["is_removed"], :name => "index_teachers_on_is_removed"
   add_index "teachers", ["user_id"], :name => "index_teachers_on_user_id"
 
-  create_table "teaching_plan_courses", :force => true do |t|
-    t.integer  "teaching_plan_id"
-    t.integer  "course_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "teaching_plan_courses", ["teaching_plan_id"], :name => "index_teaching_plan_courses_on_teaching_plan_id"
-
-  create_table "teaching_plan_students", :force => true do |t|
-    t.integer  "teaching_plan_id"
-    t.integer  "student_user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "teaching_plan_students", ["student_user_id"], :name => "index_teaching_plan_students_on_student_user_id"
-  add_index "teaching_plan_students", ["teaching_plan_id"], :name => "index_teaching_plan_students_on_teaching_plan_id"
-
   create_table "teaching_plans", :force => true do |t|
     t.string   "title"
     t.datetime "created_at"
@@ -571,13 +552,11 @@ ActiveRecord::Schema.define(:version => 20130105081105) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_removed",             :default => false
-    t.integer  "teaching_plan_id"
     t.integer  "course_teacher_team_id"
   end
 
   add_index "teams", ["course_teacher_team_id"], :name => "index_teams_on_course_teacher_team_id"
   add_index "teams", ["is_removed"], :name => "index_teams_on_is_removed"
-  add_index "teams", ["teaching_plan_id"], :name => "index_teams_on_teaching_plan_id"
 
   create_table "upload_document_dirs", :force => true do |t|
     t.integer  "dir_id"

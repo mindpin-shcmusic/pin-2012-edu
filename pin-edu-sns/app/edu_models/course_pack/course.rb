@@ -17,9 +17,6 @@ class Course < ActiveRecord::Base
   has_many :course_teachers
   has_many :teacher_users, :through => :course_teachers
 
-  has_many :teaching_plan_courses
-  has_many :teaching_plans, :through => :teaching_plan_courses
-
   scope :with_semester, lambda {|semester|
     joins(:course_teachers).where('course_teachers.semester_value = ?', semester.value)
   }

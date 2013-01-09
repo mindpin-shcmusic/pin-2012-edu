@@ -12,10 +12,6 @@
       %label 计划标题
       = t.text_field :title
 
-    .field
-      - Course.all.each do |course|
-        = jcheckbox 'teaching_plan[teaching_plan_courses_attributes][][course_id]', course.id, false, course.name
-
     .field.submit
       = jfsubmit '确定'
       = jfcancel '取消'
