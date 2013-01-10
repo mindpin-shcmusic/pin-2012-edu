@@ -157,7 +157,13 @@ module MindpinUtilHelper
 
     def semester_selector(t, value)
       value ||= Semester.now.value
-      t.select(:semester_value, Semester.get_recent_semesters.collect {|p| [ p.to_s,p.value ] }, :selected => value)
+      arr = Semester.get_recent_semesters.collect do |p| 
+        [ p.to_s, p.value ] 
+      end
+
+      t.select(:semester_value, arr, 
+        {:selected => value}, 
+        {:class => 'semester-select'})
     end
   end
 

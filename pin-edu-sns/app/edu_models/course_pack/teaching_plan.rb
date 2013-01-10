@@ -26,4 +26,8 @@ class TeachingPlan < ActiveRecord::Base
     )
   end
 
+  def destroyable_by?(user)
+    user.is_admin?
+  end
+
 end
