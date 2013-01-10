@@ -594,12 +594,10 @@ body{
 }
 
 .semester-filters{
-  width:718px;
+  border-left:solid 1px #B1B1B1;
   height:32px;
   @include gradient(#FDFDFD, #F9F9F9);
-  border:solid 1px #EDEDED;
   border-bottom:solid 1px #DCDCDC;
-  margin-top:30px;
   @include floatfix;
 
   a.semester{
@@ -615,7 +613,7 @@ body{
       background-color:#fff;
       border:solid 1px #DCDCDC;
       border-bottom:solid 1px #fff;
-      margin:-1px 0 0 -1px;
+      margin:-1px 0 0 0px;
     }
   }
 }

@@ -5,6 +5,21 @@ class TeachingPlan < ActiveRecord::Base
 
   validates :title, :semester_value, :content, :presence => true
   has_many :teams
+  
+  scope :with_semester, lambda {|semester_param|
+    if semester_param.blank?
+      semester = Semester.now
+    else
+      semester = case semester_param
+      when String
+        Semester.get_by_value(semester_param)
+      when Semester
+        semester_param
+      end
+    end
+
+    where('semester_value = ?', semester.value)
+  }
 
   validate :checkout_semester
   def checkout_semester
