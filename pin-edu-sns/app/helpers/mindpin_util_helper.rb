@@ -154,6 +154,11 @@ module MindpinUtilHelper
                             :'data-jconfirm' => confirm_text,
                             :'data-jhref' => href
     end
+
+    def semester_selector(t, value)
+      value ||= Semester.now.value
+      t.select(:semester_value, Semester.get_recent_semesters.collect {|p| [ p.to_s,p.value ] }, :selected => value)
+    end
   end
 
   module ImageMethods
@@ -288,6 +293,10 @@ module MindpinUtilHelper
         return content_tag :span, replace, :class => 'quiet'
       end
       return content_tag :span, text
+    end
+
+    def rich_text(text)
+      text.html_safe
     end
   end
 

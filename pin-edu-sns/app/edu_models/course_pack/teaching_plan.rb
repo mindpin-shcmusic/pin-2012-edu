@@ -3,7 +3,7 @@ class TeachingPlan < ActiveRecord::Base
   include Pacecar
   class AddStudentToMultiTeachingPlanError < Exception;end
 
-  validates :title, :semester_value, :presence => true
+  validates :title, :semester_value, :content, :presence => true
   has_many :teams
 
   validate :checkout_semester

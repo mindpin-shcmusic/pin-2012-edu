@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130109091502) do
+ActiveRecord::Schema.define(:version => 20130110085133) do
 
   create_table "announcement_rules", :force => true do |t|
     t.integer  "creator_id"
@@ -536,6 +536,7 @@ ActiveRecord::Schema.define(:version => 20130109091502) do
     t.datetime "updated_at"
     t.boolean  "is_removed"
     t.string   "semester_value"
+    t.text     "content"
   end
 
   add_index "teaching_plans", ["is_removed"], :name => "index_teaching_plans_on_is_removed"

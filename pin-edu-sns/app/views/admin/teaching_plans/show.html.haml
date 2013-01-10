@@ -18,4 +18,7 @@
     = page_field :'plan-info', :title=>'标题' do
       = @teaching_plan.title
     = page_field :'semester-info', :title=>'学期' do
-      = @teaching_plan.semester.value
+      = @teaching_plan.semester
+    = page_field :'plan-content', :title => '正文' do
+      = rich_text @teaching_plan.content
+
