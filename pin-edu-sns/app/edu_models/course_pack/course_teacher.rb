@@ -1,4 +1,5 @@
 class CourseTeacher < ActiveRecord::Base
+  include CourseChangeRecord::CourseTeacherMethods
   belongs_to :course
   belongs_to :teacher_user,
              :class_name  => 'User',
@@ -30,27 +31,20 @@ class CourseTeacher < ActiveRecord::Base
 
   # 格式
   # [
-  #   {:weekday => weekday, :number => [hour,hour2]},
-  #   {:weekday => weekday, :number => [hour]}
+  #   {:weekday => weekday, :number => hour},
+  #   {:weekday => weekday, :number => hour}
   # ]
   def time_expression_array
-    JSON.parse(self.time_expression || "[]")
+    array = JSON.parse(self.time_expression || "[]")
+    array.map do |item|
+      [item["number"]].flatten.map do |number|
+        {:weekday => item["weekday"].to_i, :number => number}
+      end
+    end.flatten
   end
 
   def time_expression_array=(time_expression_array)
     self.time_expression = time_expression_array.to_json
-  end
-
-  #{
-  # :weekday1 => numbers,
-  # :weekday2 => numbers
-  # }
-  def time_expression_hash
-    value = {}
-    self.time_expression_array.each do |item|
-      value[item["weekday"]] = item["number"]
-    end
-    value
   end
 
   def course_student_assigns
@@ -98,41 +92,20 @@ class CourseTeacher < ActiveRecord::Base
     )
   end
 
-  def get_next_course_time_expressions(current_cte)
-    course_time_expressions = []
+  def course_time_expressions
+    change_result = change_course_time_expressions
+    return change_result if !change_result.blank?
 
-    self.time_expression_array.each do |expression|
-
-      expression['number'].each do |number|
-        cte = CourseTimeExpression.new(expression['weekday'], [number])
-        if cte >= current_cte
-          cte.course_teacher = self
-          course_time_expressions << cte
-        end
-      end
+    self.time_expression_array.map do |expression|
+      number = expression[:number]
+      weekday = expression[:weekday]
       
+      cte = CourseTimeExpression.new(weekday, number)
+      cte.course_teacher = self
+
+      cte
     end
-
-    course_time_expressions
   end
-
-
-  def get_week_courses_by_time_expression
-    course_time_expressions = []
-    self.time_expression_array.each do |expression|
-      
-      expression['number'].each do |number|
-        cte = CourseTimeExpression.new(expression['weekday'], [number])
-        cte.course_teacher = self
-
-        course_time_expressions << cte
-       end
-      
-    end
-
-    course_time_expressions
-  end
-
 
   module UserMethods
     def self.included(base)

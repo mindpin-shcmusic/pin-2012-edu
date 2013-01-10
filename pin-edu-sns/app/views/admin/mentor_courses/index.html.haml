@@ -36,5 +36,5 @@
   = p.checkbox(mentor_course)
   = p.cell :ops do
     %a.edit{:href=>"/admin/mentor_courses/#{mentor_course.id}/edit"} 编辑
-  = p.cell :teacher, mentor_course.user.real_name 
+  = p.cell :teacher, user_link(mentor_course.user)
   = p.cell :course, mentor_course.course

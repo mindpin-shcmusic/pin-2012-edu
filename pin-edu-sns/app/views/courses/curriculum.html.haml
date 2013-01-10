@@ -9,7 +9,7 @@
   - title = "#{current_user.title_str}，#{Semester.now.to_s} 学期课程表"
   = page_field :'page-courses-table', :title => title do
     .field  
-      - 13.times do |number|
+      - 0.upto(12) do |number|
         .item.number
           = change_to_course_number(number)
 
@@ -23,13 +23,20 @@
         .item.wd{:class=>klass}
           %span= weekday_label
 
-        - 1.upto 12 do |number|
+        - 1.upto(12) do |number|
           :ruby
             course_label = change_to_course_number(number)
-            course = get_teacher_course_by_weekday_and_number(@teacher_courses, weekday, number)
+            course_time_expression_collection = @course_time_expression_collection_map.find_by_weekday_and_number(weekday,number)
 
-          - if course.blank?
+          - if course_time_expression_collection.blank?
             .item.blank
-          - else
+          - elsif !course_time_expression_collection.conflict?
+            - course_time_expression = course_time_expression_collection.course_time_expression
+            - course = course_time_expression.course_teacher.course
             .item.course
               = link_to course.name, "/courses/#{course.id}"
+          - elsif
+            .item.course.conflict
+              - course_time_expression_collection.course_time_expressions.each do |course_time_expression|
+                - course = course_time_expression.course_teacher.course
+                = link_to course.name, "/courses/#{course.id}"

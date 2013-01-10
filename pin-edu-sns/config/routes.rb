@@ -77,6 +77,7 @@ MindpinEduSns::Application.routes.draw do
       member do
         get :password
         put :password_submit
+        put :upload_attachment
       end
     end
 
@@ -122,6 +123,8 @@ MindpinEduSns::Application.routes.draw do
         put :update_time_expression
         put :update_location
       end
+
+      resources :course_change_records, :shallow => true
     end
 
     resources :teaching_plans do

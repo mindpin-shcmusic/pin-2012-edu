@@ -186,6 +186,19 @@
           %label 联系电话
           .v= @student.contact_tel
 
+    - if @student.is_graduated?
+      = page_field :'student-bi-ye', :title=>'毕业归档' do
+        .bi-ye-xie-yi.upload-attachment
+          = jupload_button '上传毕业协议'
+          = render '/admin/students/parts/uploader', :student => @student, :kind => Student::ATTACHMENT::KIND_JIU_YE_XIE_YI
+          - if !@student.jiu_ye_xie_yi.blank?
+            = link_to "下载毕业协议", download_link(@student.jiu_ye_xie_yi,"#{@student.real_name}_就业协议")
+        .bi_ye_jian_ding.upload-attachment
+          = jupload_button '上传毕业鉴定'
+          = render '/admin/students/parts/uploader', :student => @student, :kind => Student::ATTACHMENT::KIND_BI_YE_JIAN_DING
+          - if !@student.bi_ye_jian_ding.blank?
+            = link_to "下载毕业鉴定", download_link(@student.bi_ye_jian_ding,"#{@student.real_name}_毕业鉴定")
+
 
 
 

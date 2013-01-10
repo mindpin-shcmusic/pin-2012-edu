@@ -21,11 +21,7 @@ class CoursesController < ApplicationController
   end
 
   def curriculum
-    @teacher_courses = if current_user.is_teacher?
-                         current_user.get_teacher_course_teachers(:semester => Semester.now)
-                       else
-                         current_user.get_student_course_teachers(:semester => Semester.now)
-                       end
+    @course_time_expression_collection_map = current_user.course_time_expression_collection_map
   end
 
   # 从现在时间开始，本周内上的课程，包括当前正在进行的课程

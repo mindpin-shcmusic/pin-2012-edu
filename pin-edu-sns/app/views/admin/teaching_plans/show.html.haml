@@ -17,7 +17,5 @@
 
     = page_field :'plan-info', :title=>'标题' do
       = @teaching_plan.title
-
-    = page_field :'plan-info', :title=>'课程列表' do
-      - @teaching_plan.courses.each do |course|
-        = course.name
+    = page_field :'semester-info', :title=>'学期' do
+      = @teaching_plan.semester.value
