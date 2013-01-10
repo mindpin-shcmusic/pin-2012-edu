@@ -11,7 +11,8 @@
     = stylesheet_link_tag 'application'
 
   %body.echo.gray
-    - if logged_in?
+    .page-sider
+      = render 'layouts/parts/time_and_calendar'
       = mindpin_sidebar :admin
 
     .page-topbar
@@ -19,13 +20,13 @@
 
       .current-user
         .name>
-          %span> 系统管理员
+          %span> 教务管理
+      .ops
         %a.setting{:href=>'/admin/setting/password'} 设置密码
-
         %a.logout{:href=>'/auth/logout'} 退出登录
 
     .page-content
-      .page-breadcrumb
+      .page-breadcrumb.page-top-fixed
         = yield :breadcrumb
       = yield
 

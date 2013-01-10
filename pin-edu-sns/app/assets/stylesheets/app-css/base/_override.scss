@@ -24,9 +24,7 @@ body{
 
   .page-content{
     .page-breadcrumb{
-      position:fixed;
-      top:50px;left:230px;right:0px;
-      height:55px;
+      height:32px;
       background-color:#f2f2f2;
       border-left:solid 1px #B1B1B1;
       border-bottom:solid 1px #DADDE0;
@@ -34,8 +32,8 @@ body{
       z-index:8;
 
       .link{
-        height:55px;line-height:55px;
-        font-size:16px;
+        height:32px;line-height:32px;
+        font-size:14px;
         a{
           color:#333333;
           &:hover{
@@ -56,7 +54,7 @@ body{
           content:"";
           position:absolute;
           @include xicon(1,4,3);
-          left:-6px;top:16px;
+          left:-6px;top:5px;
         }
         position:relative;
         margin-right:17px;

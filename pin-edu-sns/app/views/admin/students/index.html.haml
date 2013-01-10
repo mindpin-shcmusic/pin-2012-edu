@@ -38,12 +38,11 @@
 = page_model_list @students, :cols=>cols_hash, :class=>'admin-students' do |p|
   - student = p.model
 
-  = page_list_body :cols=>cols_hash do |p|
-    = p.checkbox(student)
-    = p.cell :ops do
-      %a.edit{:href=>"/admin/students/#{student.id}/edit"} 编辑
-    = p.cell :real_name do
-      %a.show{:href=>"/admin/students/#{student.id}"}= student.real_name
-    = p.cell :sid, student.sid
-    = p.cell :username, student.user.name
-    = p.cell :email, student.user.email
+  = p.checkbox(student)
+  = p.cell :ops do
+    %a.edit{:href=>"/admin/students/#{student.id}/edit"} 编辑
+  = p.cell :real_name do
+    %a.show{:href=>"/admin/students/#{student.id}"}= student.real_name
+  = p.cell :sid, student.sid
+  = p.cell :username, student.user.name
+  = p.cell :email, student.user.email

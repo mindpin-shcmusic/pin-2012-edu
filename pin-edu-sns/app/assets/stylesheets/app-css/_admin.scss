@@ -317,3 +317,91 @@
   a{@include mini-button;}
   float:left;margin-right:10px;
 }
+
+.page-admin-index-announcements {
+  background-color:#F2F2F2;
+  border-left:solid 1px #B1B1B1;
+  height:48px;line-height:48px;
+  border-bottom:solid 1px #DADDE0;
+  box-shadow:0 1px 0 white inset;
+  padding:0 15px;
+
+  .box{
+    width:600px;
+    @include floatfix;
+    .title {
+      font-weight:bold;font-size:15px;
+      position:relative;
+      padding-left:28px;
+      float:left;
+      &:before{
+        content:"";
+        position:absolute;
+        width:24px;height:24px;
+        background:url('/assets/icons/sound_low_24.png');
+        top:12px;
+        left:0px;
+      }
+    }
+    a.more{
+      @include mini-button-black;
+      float:right;
+      height:22px;line-height:22px;
+      margin-top:12px;font-size:12px;
+      padding:0 12px;
+    }
+  }
+}
+
+.page-admin-index-announcements-list{
+  .head{
+    border-left:solid 1px #B1B1B1;
+    border-bottom:solid 1px #E5E5E5;
+    background-color:#F8F8F8;
+
+    .cells{
+      @include floatfix;
+      .cell{
+        float:left;
+        padding:0 15px;
+        height:24px;line-height:24px;
+        border-right:#E5E5E5 solid 1px;
+        background-color:#F8F8F8;
+        font-weight:bold;
+
+        @include cell-cols;
+        font-size:12px;
+      }
+    }
+  }
+
+  .tbody {
+    border-left:solid 1px #B1B1B1;
+    background-color:white;
+
+    .cells{
+      @include floatfix;
+      border-bottom:#E5E5E5 solid 1px;
+
+      .cell{
+        float:left;
+        padding:0 15px;
+        height:24px;line-height:24px;
+
+        border-right:#E5E5E5 solid 1px;
+        background-color:white;
+
+        @include cell-cols;
+        font-size:12px;
+      }
+    }
+  }
+}
+
+.page-admin-index-todolist, .page-admin-teaching-plan{
+  @extend .page-admin-index-announcements;
+}
+
+.page-admin-index-todolist-list, .page-admin-teaching-plan-list{
+  @extend .page-admin-index-announcements-list;
+}
