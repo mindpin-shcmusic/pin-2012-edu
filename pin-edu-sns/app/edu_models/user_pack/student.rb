@@ -1,6 +1,18 @@
 # -*- coding: utf-8 -*-
 class Student < ActiveRecord::Base
+  class ATTACHMENT
+    KIND_JIU_YE_XIE_YI = "jiu_ye_xie_yi"
+    KIND_BI_YE_JIAN_DING = "bi_ye_jian_ding"
+  end
+
   belongs_to :user
+
+  belongs_to :jiu_ye_xie_yi, 
+    :class_name => "FileEntity", :foreign_key => :jiu_ye_xie_yi_file_entity_id
+
+  belongs_to :bi_ye_jian_ding, 
+    :class_name => "FileEntity", :foreign_key => :bi_ye_jian_ding_file_entity_id
+
   scope :no_team, joins('left join team_students on team_students.student_user_id = students.user_id').where('team_students.team_id is null')
   scope :of_team,lambda{|team|joins("inner join team_students on team_students.student_user_id = students.user_id").where("team_students.team_id = #{team.id}")}
 
@@ -71,6 +83,15 @@ class Student < ActiveRecord::Base
           raise "第 #{index+1} 行解析出错,可能的错误原因 #{message} ,请修改后重新导入"
         end
       end
+    end
+  end
+
+  def save_attachment(kind,file_entity)
+    case kind
+    when Student::ATTACHMENT::KIND_BI_YE_JIAN_DING
+      self.update_attributes :bi_ye_jian_ding => file_entity
+    when Student::ATTACHMENT::KIND_JIU_YE_XIE_YI
+      self.update_attributes :jiu_ye_xie_yi => file_entity
     end
   end
 

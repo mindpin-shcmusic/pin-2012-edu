@@ -77,6 +77,7 @@ MindpinEduSns::Application.routes.draw do
       member do
         get :password
         put :password_submit
+        put :upload_attachment
       end
     end
 

@@ -67,4 +67,10 @@ class Admin::StudentsController < ApplicationController
     redirect_to "/admin/students/#{@student.id}/password"
   end
 
+  def upload_attachment
+    file_entity = FileEntity.find(params[:file_entity_id])
+    @student.save_attachment(params[:kind],file_entity)
+    render :text=>"OK"
+  end
+
 end
