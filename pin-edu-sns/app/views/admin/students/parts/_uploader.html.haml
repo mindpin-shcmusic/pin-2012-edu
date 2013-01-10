@@ -1,4 +1,4 @@
-= jfbox :upload_resource, '上传文件' do
+= jfbox :"upload-resource-#{kind}", '上传文件' do
   .page-media-file-uploader{:data=>{:'student-id'=>student.id, :kind=>kind}}
     .progress-bar-sample.hide
       .file{:'data-name'=>'', :'data-size'=>''}
