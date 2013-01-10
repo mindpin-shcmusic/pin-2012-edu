@@ -95,6 +95,10 @@ class Student < ActiveRecord::Base
     end
   end
 
+  def team
+    user.student_team
+  end
+
 private
 
   def set_student_role

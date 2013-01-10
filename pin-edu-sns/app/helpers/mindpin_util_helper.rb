@@ -165,6 +165,13 @@ module MindpinUtilHelper
         {:selected => value}, 
         {:class => 'semester-select'})
     end
+
+    def team_selector
+      select_tag("by_team_id", 
+        options_from_collection_for_select(Team.all, "id", "name"),
+        :class => 'team-selector'
+      )
+    end
   end
 
   module ImageMethods

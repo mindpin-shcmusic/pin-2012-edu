@@ -5,21 +5,37 @@
 - hbreadcrumb '基础数据', '/admin'
 - hbreadcrumb '学生维护'
 
+
+= page_top_fixed 'buttons' do
+  = page_buttons do |p|
+    = p.button '增加学生记录', '/admin/students/new', :class => 'create'
+    = p.button '批量导入学生', '/admin/students/import_from_csv_page', :class => 'import'
+
+= page_top_fixed 'filter' do
+  = form_tag '/admin/students', :method => :get do
+    .field
+      %label 姓名
+      = text_field_tag "by_name"
+    .field
+      = jfsubmit '查找'
+
+  = form_tag '/admin/students', :method => :get do
+    .field
+      %label 班级
+      = team_selector
+    .field
+      = jfsubmit '查找'
+
 :ruby
   cols_hash = {
     :ops => 1,
     :real_name => 2,
     :sid => 2,
+    :team => 2,
     :username => 2,
     :email => 4
   }
-
-.page-fixed-head
-  = page_buttons do |p|
-    = p.button '增加学生记录', '/admin/students/new', :class => 'create'
-    = p.button '批量导入学生', '/admin/students/import_from_csv_page', :class => 'import'
-
-.page-list-head
+= page_top_fixed 'list-head' do
   .headtop
     = page_buttons do |p|
       = p.batch_destroy Student
@@ -31,6 +47,7 @@
     = p.cell :ops, '操作'
     = p.cell :real_name, '学生姓名', :sortable=>true
     = p.cell :sid, '学生编号', :sortable=>true
+    = p.cell :team, '班级名'
     = p.cell :username, '用户名'
     = p.cell :email, '用户邮箱'
 
@@ -44,5 +61,6 @@
   = p.cell :real_name do
     %a.show{:href=>"/admin/students/#{student.id}"}= student.real_name
   = p.cell :sid, student.sid
+  = p.cell :team, student.team.name
   = p.cell :username, student.user.name
   = p.cell :email, student.user.email

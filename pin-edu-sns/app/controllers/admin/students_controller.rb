@@ -7,7 +7,18 @@ class Admin::StudentsController < ApplicationController
   end
   
   def index
-    @students = sort_scope(Student).paginated(params[:page])
+    if params[:by_name]
+      @students = sort_scope(Student).real_name_equals(params[:by_name]).paginated(params[:page])
+      return
+    end
+
+    if params[:by_team_id]
+      team = Team.find(params[:by_team_id])
+      @students = sort_scope(Student).of_team(team).paginated(params[:page])
+      return
+    end
+
+    @students = sort_scope(Student).paginated(params[:page])    
   end
   
   def new

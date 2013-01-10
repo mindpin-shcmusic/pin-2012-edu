@@ -45,6 +45,7 @@ pie.load ->
 # 构建form中的 select 控件
 pie.load ->
   jQuery('.page-model-form .field select').select2()
+  jQuery('select.team-selector').select2()
 
 
 # 展开课程教师信息
