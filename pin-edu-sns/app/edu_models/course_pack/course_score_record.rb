@@ -1,4 +1,7 @@
 class CourseScoreRecord < ActiveRecord::Base
+  include Pacecar
+  include Paginated
+
   belongs_to :student_user,
              :class_name  => 'User',
              :foreign_key => :student_user_id
@@ -21,6 +24,10 @@ class CourseScoreRecord < ActiveRecord::Base
 
   def is_finished?
     !!general_score
+  end
+
+  def destroyable_by?(user)
+    user.is_admin?
   end
 
   module UserMethods

@@ -12,6 +12,7 @@ module MindpinUtilHelper
     base.send(:include, FloatBoxMethods)
     base.send(:include, UploadMethods)
     base.send(:include, TextMethods)
+    base.send(:include, CourseMethods)
   end
 
   module LayoutMethods
@@ -93,6 +94,11 @@ module MindpinUtilHelper
     def user_link(user)
       return '未知用户' if user.blank?
       link_to user.real_name, "/users/#{user.id}", :class=>'u-name'
+    end
+
+    def current_user_title
+      return '老师' if current_user.is_teacher?
+      return '同学' if current_user.is_student?
     end
 
     def user_name(user)
@@ -320,6 +326,13 @@ module MindpinUtilHelper
 
     def rich_text(text)
       text.html_safe
+    end
+  end
+
+  module CourseMethods
+    def course_name(course)
+      return '未知课程' if course.blank?
+      course.name
     end
   end
 
