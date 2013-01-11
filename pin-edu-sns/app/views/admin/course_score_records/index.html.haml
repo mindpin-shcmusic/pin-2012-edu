@@ -8,6 +8,7 @@
 
 :ruby
   cols_hash = {
+    :ops => 1,
     :student => 2,
     :course => 2,
     :performance_score => 2,
@@ -24,6 +25,7 @@
 
   = page_list_head :cols=>cols_hash do |p|
     = p.checkbox
+    = p.cell :ops, '操作'
     = p.cell :student, '姓名'
     = p.cell :course, '课程名'
     = p.cell :performance_score, '平时成绩'
@@ -34,6 +36,8 @@
   - course_score_record = p.model
 
   = p.checkbox(course_score_record)
+  = p.cell :ops do
+    %a.edit{:href=>"/admin/course_score_records/#{course_score_record.id}/edit"} 编辑
   = p.cell :student, user_real_name(course_score_record.student_user)
   = p.cell :course, course_name(course_score_record.course)
   = p.cell :performance_score, course_score_record.performance_score
