@@ -4,7 +4,7 @@
 - hbreadcrumb '首页', '/admin'
 - hbreadcrumb '资源分类'
 
-.page-fixed-head
+= page_top_fixed 'buttons' do
   = page_buttons do |p|
     = p.button '增加资源分类', '/admin/categories/new', :class => :create
     = p.button '批量导入资源分类', '/admin/categories/import_from_yaml_page', :class => :import

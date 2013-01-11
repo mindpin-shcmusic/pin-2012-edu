@@ -1,0 +1,25 @@
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '成绩单', '/admin/course_score_records'
+- hbreadcrumb '创建成绩单'
+
+.page-model-form.new-course-score-record
+  = flash_info
+  = form_for [:admin,@course_score_record] do |f|
+    .field
+      %label 课程
+      = course_selector(f)
+    .field
+      %label 学生
+      = student_selector(f)
+    .field
+      %label 平时成绩
+      =f.text_field :performance_score
+    .field
+      %label 考试成绩
+      =f.text_field :exam_score
+    .field
+      %label 评语
+      =f.text_area :remark, :class => 'kind-editor'
+    .field
+      = jfsubmit '确定'
+      = jfcancel '取消'

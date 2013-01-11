@@ -59,6 +59,6 @@
   = p.cell :real_name do
     %a.show{:href=>"/admin/students/#{student.id}"}= student.real_name
   = p.cell :sid, student.sid
-  = p.cell :team, student.team.name
-  = p.cell :username, student.user.name
-  = p.cell :email, student.user.email
+  = p.cell :team, student.team_name
+  = p.cell :username, user_name(student.user)
+  = p.cell :email, user_email(student.user)

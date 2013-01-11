@@ -144,6 +144,11 @@ MindpinEduSns::Application.routes.draw do
 
     resources :mentor_courses
 
+    resources :course_score_records do
+      collection do
+        get :get_students_by_course
+      end
+    end
     
     resources :announcements
     
@@ -323,13 +328,6 @@ MindpinEduSns::Application.routes.draw do
 
     member do
       put :announce
-    end
-  end
-
-  resources :score_lists do
-    collection do
-      get :mine
-      get :course_candidates
     end
   end
 

@@ -1,0 +1,45 @@
+- hgoback '/'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb "成绩单"
+
+= page_top_fixed 'buttons' do
+  = page_buttons do |p|
+    = p.button '添加课程成绩单', '/admin/course_score_records/new'
+
+:ruby
+  cols_hash = {
+    :ops => 1,
+    :student => 2,
+    :course => 2,
+    :performance_score => 2,
+    :exam_score => 2,
+    :remark => 5
+  }
+
+= page_top_fixed 'list-head' do
+  .headtop
+    = page_buttons do |p|
+      = p.batch_destroy CourseScoreRecord
+
+    = list_pagination(@course_score_records)
+
+  = page_list_head :cols=>cols_hash do |p|
+    = p.checkbox
+    = p.cell :ops, '操作'
+    = p.cell :student, '姓名'
+    = p.cell :course, '课程名'
+    = p.cell :performance_score, '平时成绩'
+    = p.cell :exam_score, '考试成绩'
+    = p.cell :remark, '评语'
+
+= page_model_list @course_score_records, :cols=>cols_hash, :class=>'course-score-records' do |p|
+  - course_score_record = p.model
+
+  = p.checkbox(course_score_record)
+  = p.cell :ops do
+    %a.edit{:href=>"/admin/course_score_records/#{course_score_record.id}/edit"} 编辑
+  = p.cell :student, user_real_name(course_score_record.student_user)
+  = p.cell :course, course_name(course_score_record.course)
+  = p.cell :performance_score, course_score_record.performance_score
+  = p.cell :exam_score, course_score_record.exam_score
+  = p.cell :remark, rich_text(course_score_record.remark)

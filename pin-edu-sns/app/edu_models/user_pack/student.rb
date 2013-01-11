@@ -95,8 +95,10 @@ class Student < ActiveRecord::Base
     end
   end
 
-  def team
-    user.student_team
+  def team_name
+    team = user.student_team 
+    return "无" if team.blank?
+    team.name
   end
 
 private

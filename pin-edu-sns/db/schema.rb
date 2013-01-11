@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130110085133) do
+ActiveRecord::Schema.define(:version => 20130111033635) do
 
   create_table "announcement_rules", :force => true do |t|
     t.integer  "creator_id"
@@ -105,19 +105,13 @@ ActiveRecord::Schema.define(:version => 20130110085133) do
     t.string   "semester_value"
   end
 
-  create_table "course_score_lists", :force => true do |t|
-    t.integer "course_id"
-    t.integer "teacher_user_id"
-    t.string  "semester_value"
-    t.string  "title"
-  end
-
   create_table "course_score_records", :force => true do |t|
-    t.integer "course_score_list_id"
     t.integer "student_user_id"
     t.integer "performance_score"
     t.integer "exam_score"
-    t.string  "remark"
+    t.text    "remark"
+    t.integer "course_id"
+    t.integer "creator_id"
   end
 
   create_table "course_student_assigns", :force => true do |t|
