@@ -4,7 +4,7 @@
 - hbreadcrumb '首页', '/admin'
 - hbreadcrumb '课程调查', admin_course_surveys_path
 
-.page-fixed-head
+= page_top_fixed 'buttons' do
   = page_buttons do |p|
     = p.button '新增课程调查', '/admin/course_surveys/new'
 
@@ -18,7 +18,7 @@
     :name => 3
   }
 
-.page-list-head
+= page_top_fixed 'list-head' do
   .headtop
     = page_buttons do |p|
       = p.batch_destroy CourseSurvey

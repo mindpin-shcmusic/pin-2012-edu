@@ -4,7 +4,7 @@
 - hbreadcrumb '首页', '/admin'
 - hbreadcrumb '通知管理'
 
-.page-fixed-head
+= page_top_fixed 'buttons' do
   = page_buttons do |p|
     = p.button '创建通知', new_admin_announcement_path, :class => 'create'
 
@@ -14,7 +14,7 @@
     :creator => 4
   }
 
-.page-list-head
+= page_top_fixed 'list-head' do
   .headtop
     = page_buttons do |p|
       = p.batch_destroy Announcement
