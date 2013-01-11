@@ -10,6 +10,8 @@ class CourseScoreRecord < ActiveRecord::Base
 
   belongs_to :creator, :class_name => 'User'
 
+  validates :student_user, :course, :creator, :presence => true
+
   validates :performance_score,
             :exam_score,
             :numericality => {

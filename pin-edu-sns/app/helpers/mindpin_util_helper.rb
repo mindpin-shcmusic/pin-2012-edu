@@ -106,6 +106,11 @@ module MindpinUtilHelper
       user.name
     end
 
+    def user_real_name(user)
+      return "未知用户" if user.blank?
+      user.real_name
+    end
+
     def user_email(user)
       return "未知用户" if user.blank?
       user.email
@@ -186,6 +191,22 @@ module MindpinUtilHelper
       select_tag("by_team_id", 
         options_from_collection_for_select(Team.all, "id", "name"),
         :class => 'team-selector'
+      )
+    end
+
+    def course_selector(f)
+      arr = Course.all.map{|course|[course.name,course.id]}
+
+      f.select(:course_id, arr,{:include_blank => true},
+        {:data => {:placeholder => '请选择课程'}, :class => 'course-select'}
+      )
+    end
+
+    def student_selector(f)
+      arr = []
+
+      f.select(:student_user_id, arr,{:include_blank => true},
+        {:data => {:placeholder => '请选择学生'}, :class => 'student-select'}
       )
     end
   end

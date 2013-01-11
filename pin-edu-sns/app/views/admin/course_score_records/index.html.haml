@@ -34,8 +34,8 @@
   - course_score_record = p.model
 
   = p.checkbox(course_score_record)
-  = p.cell :student, user_name(course_score_record.student_user)
+  = p.cell :student, user_real_name(course_score_record.student_user)
   = p.cell :course, course_name(course_score_record.course)
   = p.cell :performance_score, course_score_record.performance_score
   = p.cell :exam_score, course_score_record.exam_score
-  = p.cell :remark, course_score_record.remark
+  = p.cell :remark, rich_text(course_score_record.remark)
