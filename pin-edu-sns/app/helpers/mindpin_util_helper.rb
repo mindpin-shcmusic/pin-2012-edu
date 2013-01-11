@@ -94,6 +94,16 @@ module MindpinUtilHelper
       return '未知用户' if user.blank?
       link_to user.real_name, "/users/#{user.id}", :class=>'u-name'
     end
+
+    def user_name(user)
+      return "未知用户" if user.blank?
+      user.name
+    end
+
+    def user_email(user)
+      return "未知用户" if user.blank?
+      user.email
+    end
   end
 
   module FormDomsMethods

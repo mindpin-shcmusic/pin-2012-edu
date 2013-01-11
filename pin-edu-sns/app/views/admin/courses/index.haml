@@ -5,7 +5,7 @@
 - hbreadcrumb '基础数据', '/admin'
 - hbreadcrumb '课程维护'
   
-.page-fixed-head
+= page_top_fixed 'buttons' do
   = page_buttons do |p|
     = p.button '增加课程', '/admin/courses/new'
     = p.button '批量导入课程', '/admin/courses/import_from_csv_page'
@@ -17,7 +17,7 @@
     :cid => 2
   }
 
-.page-list-head
+= page_top_fixed 'list-head' do
   .headtop
     = page_buttons do |p|
       = p.batch_destroy Course
