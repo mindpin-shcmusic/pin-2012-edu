@@ -11,19 +11,17 @@
     = p.button '增加学生记录', '/admin/students/new', :class => 'create'
     = p.button '批量导入学生', '/admin/students/import_from_csv_page', :class => 'import'
 
-= page_top_fixed 'filter' do
+= page_top_fixed 'page-admin-student-filter' do
   = form_tag '/admin/students', :method => :get do
     .field
       %label 姓名
       = text_field_tag "by_name"
-    .field
       = jfsubmit '查找'
 
   = form_tag '/admin/students', :method => :get do
     .field
       %label 班级
       = team_selector
-    .field
       = jfsubmit '查找'
 
 :ruby
