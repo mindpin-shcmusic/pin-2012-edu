@@ -1,10 +1,11 @@
 class CourseScoreRecord < ActiveRecord::Base
-  belongs_to :course_score_list
   belongs_to :student_user,
              :class_name  => 'User',
              :foreign_key => :student_user_id
 
-  attr_protected :general_score
+  belongs_to :course
+
+  belongs_to :creator, :class_name => 'User'
 
   validates :performance_score,
             :exam_score,
