@@ -2,11 +2,12 @@
 - hbreadcrumb '首页', '/'
 - hbreadcrumb '作业/艺术实践'
 
-.page-fixed-head
-  - if current_user.is_teacher?
+- if current_user.is_teacher?
+  = page_top_fixed 'buttons' do
     = page_buttons do |p|
       = p.button '布置新作业/艺术实践', new_homework_path, :class => 'create'
 
+= page_top_fixed 'filters' do
   = page_filters homeworks_path do |p|
     = p.filter '全部', :tab => 'all', :default => true
     = p.filter '未过期', :tab => 'unexpired'
@@ -22,7 +23,7 @@
     :count => 4    
   }
 
-.page-list-head
+= page_top_fixed 'list-head' do
   .headtop
     - if current_user.is_teacher?
       = page_buttons do |p|

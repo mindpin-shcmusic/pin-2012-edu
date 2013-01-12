@@ -22,7 +22,7 @@
             - empty_days-=1
             .day
           - elsif d < last_day.day
-            - klass = d == time.day ? 'today' : ''
+            - klass = d == time.day-1 ? 'today' : ''
             .day{:class=>klass}= d+=1
           - else
             .day

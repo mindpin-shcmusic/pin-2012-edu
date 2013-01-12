@@ -8,9 +8,6 @@
 :ruby
   attachments = @homework.homework_teacher_attachments
 
-.page-unfixed-head
-
-
 .page-model-show
   = page_field :'base-info', :title => '作业信息' do
     .head
@@ -35,11 +32,11 @@
         %a.down{:href=>"/homeworks/#{@homework.id}/download_teacher_zip"} 打包下载附件
 
   - if current_user.is_student?
-    = page_field :'student-info', :title => '作业提交及完成情况' do
+    = page_field :'homework-student-info', :title => '作业完成情况' do
       = render '/homeworks/parts/show_student_info', :homework => @homework
 
   - if current_user.is_teacher?
-    = page_field :'student-list', :title => '学生作业情况' do
+    = page_field :'page-homework-students-list', :title => '学生作业完成情况' do
       = render '/homeworks/parts/show_teacher_info', :homework => @homework
 
   - if current_user.is_student?
