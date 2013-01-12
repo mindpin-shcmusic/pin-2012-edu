@@ -475,3 +475,13 @@
     }
   }
 }
+
+.page-float-box-list-selector.media-share{
+  a.submit-fbox{
+    @include mini-button;
+    margin-right:10px;
+  }
+  a.close-fbox{
+    @include mini-button-black;
+  }
+}

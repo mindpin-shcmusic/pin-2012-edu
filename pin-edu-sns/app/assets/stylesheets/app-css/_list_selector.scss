@@ -51,6 +51,8 @@
         cursor:pointer;
         margin:0 1px 1px 0;
         border:solid 2px transparent;
+        overflow:hidden;
+        font-size:12px;
 
         @include border-radius(3px);
 

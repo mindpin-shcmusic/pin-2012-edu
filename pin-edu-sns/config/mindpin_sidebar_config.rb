@@ -184,10 +184,6 @@ MindpinSidebar::Base.config do
           controller :homeworks
         end
 
-        subnav :score_lists, :name => '成绩单', :url => '/score_lists/mine' do
-          controller :score_lists
-        end
-
         subnav :course_surveys, :name => '课程调查', :url => '/course_surveys' do
           controller :course_surveys
         end

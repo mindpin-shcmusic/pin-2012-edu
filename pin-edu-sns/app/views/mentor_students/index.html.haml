@@ -3,17 +3,13 @@
 - hbreadcrumb '首页', '/'
 - hbreadcrumb '导师双向选择'
 
-
-
-.page-fixed-head
-
 :ruby
   cols_hash = {
     :ops => 1,
     :title => 6    
   }
 
-.page-list-head
+= page_top_fixed 'list-head' do
   .headtop
     = list_pagination(@mentor_notes)
 
