@@ -41,8 +41,8 @@ MindpinSidebar::Base.config do
         controller :'admin/course_teachers'
       end
 
-      nav :score_lists, :name => '成绩管理', :url => '/score_lists' do
-        controller :score_lists
+      nav :course_score_records, :name => '成绩管理', :url => '/admin/course_score_records' do
+        controller :course_score_records
       end
 
       nav :teachers, :name => '教师管理', :url => '/admin/teachers' do
@@ -82,10 +82,6 @@ MindpinSidebar::Base.config do
         subnav :homeworks, :name => '布置的作业和实践', :url => '/homeworks' do
           controller :homeworks
           controller :homework_assigns
-        end
-
-        subnav :score_lists, :name => '成绩单', :url => '/score_lists' do
-          controller :score_lists
         end
 
         subnav :course_surveys, :name => '课程调查', :url => '/course_surveys' do
