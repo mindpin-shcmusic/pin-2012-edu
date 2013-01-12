@@ -2,7 +2,7 @@
 - hbreadcrumb '首页', '/'
 - hbreadcrumb "课程浏览"
 
-.page-fixed-head
+= page_top_fixed 'filters' do
   = page_filters '/courses' do |p|
     = p.filter '全部课程', :tab => 'all', :default => true
     = p.filter '我的课程', :tab => 'mine'
@@ -13,7 +13,7 @@
     :cid => 2
   }
 
-.page-list-head
+= page_top_fixed 'list-head' do
   - if params[:tab] == 'mine'
     = page_semester_filters '/courses'
 
