@@ -143,9 +143,12 @@
 
 // ----------
 
+.page-media-resources-head{
+  border-left:solid 1px #B1B1B1;
+}
+
 .page-media-resources{
   @include floatfix;
-  margin-top:230px;
   border-left:1px solid transparent;
   background:url(bodybg.gif);
   padding:30px 20px 0;
