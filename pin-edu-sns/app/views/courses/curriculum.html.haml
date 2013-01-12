@@ -2,9 +2,6 @@
 - hbreadcrumb '首页', '/'
 - hbreadcrumb "我的课程表"
 
-
-.page-unfixed-head
-
 .page-model-show
   - title = "#{current_user.title_str}，#{Semester.now.to_s} 学期课程表"
   = page_field :'page-courses-table', :title => title do
