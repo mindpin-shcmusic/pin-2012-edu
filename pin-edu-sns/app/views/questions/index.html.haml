@@ -2,12 +2,12 @@
 - hbreadcrumb '首页', '/'
 - hbreadcrumb '在线问答'
 
-
-.page-fixed-head
-  - if current_user.is_student?
+- if current_user.is_student?
+  = page_top_fixed 'buttons' do
     = page_buttons do |p|
       = p.button '提问题', '/questions/new', :class => 'new'
 
+= page_top_fixed 'filters' do
   = page_filters '/questions' do |p|
     = p.filter '全部', :tab => 'all', :default=>true
     = p.filter '已回答', :tab => 'answered'
@@ -22,7 +22,7 @@
     :answered => 2
   }
 
-.page-list-head
+= page_top_fixed 'list-head' do
   .headtop
     = page_buttons do |p|
       = p.batch_destroy Question
