@@ -5,7 +5,7 @@
 - hbreadcrumb "教师浏览"
 
 - if current_user.is_student?
-  .page-fixed-head
+  = page_top_fixed 'filters' do
     = page_filters '/teachers' do |p|
       = p.filter '全部教师', :tab => 'all', :default => true
       = p.filter '我的教师', :tab => 'mine'
@@ -18,8 +18,8 @@
     :email => 4
   }
 
-- klass = current_user.is_student? ? '' : 'no-fixed-head'
-.page-list-head{:class=>klass}
+= page_top_fixed 'list-head' do
+
   - if current_user.is_student? && params[:tab] == 'mine'
     = page_semester_filters '/teachers'
   .headtop
@@ -31,8 +31,7 @@
     = p.cell :username, '用户名'
     = p.cell :email, '用户邮箱'
 
-- klass = current_user.is_student? ? 'teachers' : 'teachers no-fixed-head'
-= page_model_list @teachers, :cols=>cols_hash, :class=>klass do |p|
+= page_model_list @teachers, :cols=>cols_hash, :class=>'teachers' do |p|
   - teacher = p.model
   - user = teacher.user
 
