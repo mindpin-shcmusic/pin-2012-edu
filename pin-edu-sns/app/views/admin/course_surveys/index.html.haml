@@ -8,6 +8,7 @@
   = page_buttons do |p|
     = p.button '新增课程调查', '/admin/course_surveys/new'
 
+= page_top_fixed 'filters' do
   = page_filters '/admin/course_surveys' do |p|
     = p.filter '所有调查', :tab=>0, :default=>true
     = p.filter '类型一', :tab=>1

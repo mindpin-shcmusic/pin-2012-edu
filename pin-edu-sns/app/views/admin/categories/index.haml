@@ -9,5 +9,6 @@
     = p.button '增加资源分类', '/admin/categories/new', :class => :create
     = p.button '批量导入资源分类', '/admin/categories/import_from_yaml_page', :class => :import
 
-.page-admin-categories
-  = render 'categories_list', :categories => @level1_categories
+.page-model-show
+  .page-admin-categories
+    = render 'categories_list', :categories => @level1_categories

@@ -3,20 +3,26 @@
 
 -htitle '设置头像'
 
-.page-title 上传一张图片，然后选择要裁剪的部分，系统会自动替您裁好
+.page-model-form
+  .page-title 上传一张图片，然后选择要裁剪的部分，系统会自动替你裁好
 
-.page-setting
-  .crop-avatars
-    = avatar current_user, :large
-    = avatar current_user, :medium
-    = avatar current_user, :normal
-    = avatar current_user, :tiny
-    = avatar current_user, :mini
+  .page-setting
+    .crop-avatars{:style=>'overflow:hidden;margin-top:10px;'}
+      .f{:style=>'float:left;margin-right:10px;'}
+        = avatar current_user, :large
+      .f{:style=>'float:left;margin-right:10px;'}
+        = avatar current_user, :medium
+      .f{:style=>'float:left;margin-right:10px;'}
+        = avatar current_user, :normal
+      .f{:style=>'float:left;margin-right:10px;'}
+        = avatar current_user, :tiny
+      .f{:style=>'float:left;margin-right:10px;'}
+        = avatar current_user, :mini
 
-  = flash_info
-  = form_tag '/auth/setting/avatar_submit_raw', :multipart => true do
-    .field
-      %label 选择一张图片并上传
-      .ip=file_field_tag :logo
-    .field
-      %a.form-submit-button{:href=>'javascript:;'} 上传图片
+    = flash_info
+    = form_tag '/auth/setting/avatar_submit_raw', :multipart => true do
+      .field
+        %label 选择一张图片并上传
+        .ip=file_field_tag :logo
+      .field
+        %a.form-submit-button{:href=>'javascript:;'} 上传图片

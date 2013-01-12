@@ -42,7 +42,7 @@ MindpinSidebar::Base.config do
       end
 
       nav :course_score_records, :name => '成绩管理', :url => '/admin/course_score_records' do
-        controller :course_score_records
+        controller :'admin/course_score_records'
       end
 
       nav :teachers, :name => '教师管理', :url => '/admin/teachers' do
@@ -53,11 +53,7 @@ MindpinSidebar::Base.config do
         controller :'admin/course_surveys'
       end
 
-      nav :students, :name => '毕业管理', :url => '/admin/students' do
-        controller :'admin/students'
-      end
-
-      nav :categories, :name => '媒体资源管理', :url => '/admin/categories' do
+      nav :categories, :name => '资源分类管理', :url => '/admin/categories' do
         controller :'admin/categories'
       end
 

@@ -1,4 +1,4 @@
-- htitle "教师维护 > #{@teacher.real_name}"
+- htitle "教师维护 - #{@teacher.real_name}"
 
 - hgoback '/admin/teachers'
 - hbreadcrumb '首页', '/admin'
@@ -44,6 +44,7 @@
           .course-info
             .name= link_to course.name, "/admin/courses/#{course.id}"
             .ops= link_to "分配学生", "/admin/course_teachers/#{course_teacher.id}/select_students_page"
+            .ops{:style=>'margin-right:6px;'}= link_to "课时调整", "/admin/course_teachers/#{course_teacher.id}/course_change_records/new"
 
           .students-brief
             - students[0..4].each do |student|
@@ -63,7 +64,6 @@
                   .avatar= avatar student, :tiny
                   .name= link_to student.real_name, admin_student_path(student)
           .course_change_records
-            = link_to "临时调课", "/admin/course_teachers/#{course_teacher.id}/course_change_records/new"
             - course_teacher.course_change_records.each do |course_change_record|
               = course_change_record.start_date
               = course_change_record.end_date

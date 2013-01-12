@@ -8,19 +8,19 @@
 
 -htitle '基本信息设置'
 
-.page-title 这里显示你的基本信息。你可以修改你的用户名。
+.page-model-form
+  .page-title 这里显示你的基本信息。你可以修改你的用户名。
+  .page-setting
+    = flash_info
+    = form_for user,:url=>"/auth/setting", :html=>{:method=>:put} do |f|
+      .field
+        .mail.bold 你的电子邮箱是 #{email}
+      .field.need
+        %label 用户名
+        =text_field_tag :name, name
+      .field
+        %a.form-submit-button{:href=>'javascript:;'} 确定
 
-.page-setting
-  = flash_info
-  = form_for user,:url=>"/auth/setting", :html=>{:method=>:put} do |f|
-    .field
-      .mail.bold 你的电子邮箱是 #{email}
-    .field.need
-      %label 用户名
-      =text_field_tag :name, name
-    .field
-      %a.form-submit-button{:href=>'javascript:;'} 确定
-
-.page-avatar-setting-link
-  = link_to '修改密码', '/auth/setting/password'
-  = link_to '设置头像', '/auth/setting/avatar'
+  .page-avatar-setting-link
+    = link_to '修改密码', '/auth/setting/password'
+    = link_to '设置头像', '/auth/setting/avatar'

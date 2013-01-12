@@ -12,8 +12,6 @@
 - team_ids = expression.blank? ? [] : expression[:teams]
 - teams = team_ids.map{|id|Team.find_by_id(id)}.compact
 
-.page-unfixed-head
-
 .page-model-show
 
   .page-admin-mentor-notes
