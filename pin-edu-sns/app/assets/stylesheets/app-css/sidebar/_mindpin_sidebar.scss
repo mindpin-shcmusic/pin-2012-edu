@@ -19,11 +19,45 @@
 
     .cb{
       border-top:solid 1px white;
-      padding:6px;
+      padding:5px;
       .calendar{
         border:solid 1px #DADDE0;
         background-color:white;
-        height:150px;
+        width:202px;
+        border-bottom:none;
+
+        .weekday{
+          height:25px;line-height:25px;
+          @include floatfix;
+          .wd{
+            float:left;
+            border-bottom:solid 1px #DADDE0;
+            text-align:center;
+            width:28px;
+            border-right:solid 1px #dadde0;
+            font-size:12px;
+            &:last-child{border-right:none;color:red;}
+          }
+        }
+        .days{
+          @include floatfix;
+          .day{
+            width:28px;
+            text-align:center;
+            border-bottom:solid 1px #DADDE0;
+            border-right:solid 1px #dadde0;
+            float:left;
+            height:25px;line-height:25px;
+            font-size:12px;
+
+            &:nth-child(7n){border-right:none;color:red;}
+
+            &.today{
+              background-color:#3192DA;
+              color:white;
+            }
+          }
+        }
       }
     }
   }
