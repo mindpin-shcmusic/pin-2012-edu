@@ -13,6 +13,8 @@
     = p.filter '未过期', :tab => 'unexpired'
     = p.filter '已过期', :tab => 'expired'
 
+  = timeline_button
+
 :ruby
   cols_hash = {
     :title => 6,
