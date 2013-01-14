@@ -2,7 +2,7 @@
 module HomeworksHelper
 
   def timeline_button
-    timeline_open? ? button_template('收起作业时间线', nil) : button_template('展开作业时间线', true)
+    timeline_open? ? button_template('切换到列表视图', nil) : button_template('切换到时间线视图', true)
   end
 
 private
