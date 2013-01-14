@@ -16,7 +16,13 @@
   = timeline_button
 
 - if timeline_open?
-  = render 'homeworks/parts/timeline'
+  - case params[:t]
+  - when nil
+    = render 'homeworks/parts/timeline'
+  - when '1'
+    = render 'homeworks/parts/timeline1'
+  - when '2'
+    = render 'homeworks/parts/timeline2'
 
 - else
 
