@@ -1,14 +1,23 @@
 class CourseTimeExpression
-  attr_reader :weekday, :numbers, :weekday_str, :start_time_str, :end_time_str
+  attr_reader :weekday, :number, :weekday_str, 
+    :number_str, :start_time_str, :end_time_str,
+    :weekday_number_str
   attr_accessor :course_teacher
-  def initialize(weekday, numbers)
+  def initialize(weekday, number)
     @weekday = weekday.to_i
-    @numbers = numbers.map{|n|n.to_i}
+    @number = number.to_i
     set_weekday_str
     set_start_time
     set_end_time
+    set_number_str
+    set_weekday_number_str
   end
 
+  def set_number_str
+    @number_str = "第 #{@number} 节"
+  end
+
+  #TODO 重构
   def set_weekday_str
     @weekday_str = case @weekday
     when 1 then '周一'
@@ -22,7 +31,7 @@ class CourseTimeExpression
   end
 
   def set_start_time
-    @start_time_str = case @numbers.first
+    @start_time_str = case @number
     when 1 then '8:00'
     when 2 then '8:45'
     when 3 then '10:00'
@@ -39,7 +48,7 @@ class CourseTimeExpression
   end
 
   def set_end_time
-    @end_time_str = case @numbers.last
+    @end_time_str = case @number
     when 1 then '8:45'
     when 2 then '9:30'
     when 3 then '10:45'
@@ -55,6 +64,10 @@ class CourseTimeExpression
     end
   end
 
+  def set_weekday_number_str
+    @weekday_number_str = "#{@weekday}_#{@number}"
+  end
+
   def class_time
     "#{self.start_time_str} - #{self.end_time_str}"
   end
@@ -68,7 +81,7 @@ class CourseTimeExpression
   end
 
   def ==(other)
-    return true if self.weekday == other.weekday && !(self.numbers & other.numbers).blank?
+    return true if self.weekday == other.weekday && self.number == other.number
     return false
   end
 
@@ -80,7 +93,7 @@ class CourseTimeExpression
       return ((self.weekday+7)%8) > ((other.weekday+7)%8)
     end
 
-    self.numbers.first > other.numbers.first
+    self.number > other.number
   end
 
   def <(other)
@@ -115,6 +128,6 @@ class CourseTimeExpression
     when 1845...1930 then 12
     when 1930...2400 then 13
     end
-    self.new(time.wday,[number])
+    self.new(time.wday,number)
   end
 end

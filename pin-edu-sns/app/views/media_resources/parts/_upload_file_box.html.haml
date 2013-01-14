@@ -1,6 +1,6 @@
 - current_path = current_dir.blank? ? '/' : current_dir.path
 
-= jfbox :upload_resource, '上传文件' do
+= jfbox :upload_resource, '上传文件', :height => 440 do
   .page-media-file-uploader{:'data-current-path' => current_path}
     .progress-bar-sample.hide
       .file{:'data-name'=>'', :'data-size'=>''}

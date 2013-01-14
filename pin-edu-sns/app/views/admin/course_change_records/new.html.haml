@@ -1,0 +1,34 @@
+- htitle "课时调整 - #{@course_teacher.course.name}"
+
+- hgoback '/admin/teachers'
+- hbreadcrumb '首页', '/admin'
+- hbreadcrumb '课程管理', '/admin/courses'
+- hbreadcrumb '课时调整'
+
+:ruby
+  weekday_values = [
+    ["周一",1], ["周二",2], ["周三",3], ["周四",4], ["周五",5], ["周六",6], ["周日",7]
+  ]
+  number_values = [
+    ["第1节",1], ["第2节",2], ["第3节",3], ["第4节",4], ["第5节",5], ["第6节",6], ["第7节",7], ["第8节",8], ["第9节",9], ["第10节",10], ["第11节",11], ["第12节",12]
+  ]
+
+.page-model-form
+  = flash_info
+  = form_tag "/admin/course_teachers/#{@course_teacher.id}/course_change_records", :methods => :post do
+    .field
+      %label 调整时间（周）
+      = select "course_change_record","week_expression", course_change_record_times
+    
+    - @course_teacher.course_time_expressions.each_with_index do |course_time_expression, index|
+      - weekday = course_time_expression.weekday
+      - number = course_time_expression.number
+      .field
+        %label 调整课时#{index+1}
+        = select "value[#{index}]","weekday", weekday_values, :selected => weekday
+        = select "value[#{index}]","number", number_values, :selected => number
+
+    .field
+      = jfsubmit '确定'
+      = jfcancel '取消'
+    

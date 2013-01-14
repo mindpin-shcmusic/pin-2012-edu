@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121206051223) do
+ActiveRecord::Schema.define(:version => 20130111033635) do
 
   create_table "announcement_rules", :force => true do |t|
     t.integer  "creator_id"
@@ -82,6 +82,18 @@ ActiveRecord::Schema.define(:version => 20121206051223) do
   add_index "comments", ["reply_comment_id"], :name => "index_comments_on_reply_comment_id"
   add_index "comments", ["reply_comment_user_id"], :name => "index_comments_on_reply_comment_user_id"
 
+  create_table "course_change_records", :force => true do |t|
+    t.integer  "course_id"
+    t.integer  "teacher_user_id"
+    t.string   "location"
+    t.string   "time_expression"
+    t.string   "semester_value"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "course_resources", :force => true do |t|
     t.integer  "course_id"
     t.integer  "file_entity_id"
@@ -93,19 +105,13 @@ ActiveRecord::Schema.define(:version => 20121206051223) do
     t.string   "semester_value"
   end
 
-  create_table "course_score_lists", :force => true do |t|
-    t.integer "course_id"
-    t.integer "teacher_user_id"
-    t.string  "semester_value"
-    t.string  "title"
-  end
-
   create_table "course_score_records", :force => true do |t|
-    t.integer "course_score_list_id"
     t.integer "student_user_id"
     t.integer "performance_score"
     t.integer "exam_score"
-    t.string  "remark"
+    t.text    "remark"
+    t.integer "course_id"
+    t.integer "creator_id"
   end
 
   create_table "course_student_assigns", :force => true do |t|
@@ -438,12 +444,12 @@ ActiveRecord::Schema.define(:version => 20121206051223) do
   add_index "short_messages", ["sender_id"], :name => "index_short_messages_on_sender_id"
 
   create_table "students", :force => true do |t|
-    t.string   "real_name",        :default => "",    :null => false
+    t.string   "real_name",                      :default => "",    :null => false
     t.string   "sid"
     t.integer  "user_id"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_removed",       :default => false
+    t.boolean  "is_removed",                     :default => false
     t.string   "faculty"
     t.string   "major"
     t.string   "gender"
@@ -473,6 +479,9 @@ ActiveRecord::Schema.define(:version => 20121206051223) do
     t.string   "contact_person"
     t.string   "contact_tel"
     t.text     "other_info"
+    t.boolean  "is_graduated",                   :default => false
+    t.integer  "jiu_ye_xie_yi_file_entity_id"
+    t.integer  "bi_ye_jian_ding_file_entity_id"
   end
 
   add_index "students", ["is_removed"], :name => "index_students_on_is_removed"
@@ -515,30 +524,13 @@ ActiveRecord::Schema.define(:version => 20121206051223) do
   add_index "teachers", ["is_removed"], :name => "index_teachers_on_is_removed"
   add_index "teachers", ["user_id"], :name => "index_teachers_on_user_id"
 
-  create_table "teaching_plan_courses", :force => true do |t|
-    t.integer  "teaching_plan_id"
-    t.integer  "course_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "teaching_plan_courses", ["teaching_plan_id"], :name => "index_teaching_plan_courses_on_teaching_plan_id"
-
-  create_table "teaching_plan_students", :force => true do |t|
-    t.integer  "teaching_plan_id"
-    t.integer  "student_user_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "teaching_plan_students", ["student_user_id"], :name => "index_teaching_plan_students_on_student_user_id"
-  add_index "teaching_plan_students", ["teaching_plan_id"], :name => "index_teaching_plan_students_on_teaching_plan_id"
-
   create_table "teaching_plans", :force => true do |t|
     t.string   "title"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "is_removed"
+    t.string   "semester_value"
+    t.text     "content"
   end
 
   add_index "teaching_plans", ["is_removed"], :name => "index_teaching_plans_on_is_removed"

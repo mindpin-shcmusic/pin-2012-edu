@@ -1,0 +1,28 @@
+= page_top_fixed 'page-admin-teaching-plan' do
+  .box
+    .title 教学计划
+    %a.more{:href=>'javascript:;'} 查看更多…
+
+.page-admin-teaching-plan-list
+  :ruby
+    cols_hash = {
+      :title => 7,
+      :time => 3,
+      :creator => 2
+    }
+
+    todos = []
+
+  .head
+    = page_list_head :cols=>cols_hash do |p|
+      = p.cell :title, '主题'
+      = p.cell :time, '发布时间'
+      = p.cell :creator, '发起人'
+  .tbody
+    = page_filled_list todos, :cols=>cols_hash, :length=>10 do |p|
+      - model = p.model
+
+      = p.cell :title, model.title
+      = p.cell :time, model.updated_at.to_s
+      = p.cell :creator do
+        = link_to '打开查看', 'javascript:;'

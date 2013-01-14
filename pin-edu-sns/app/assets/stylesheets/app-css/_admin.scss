@@ -168,7 +168,6 @@
 }
 
 .page-admin-categories{
-  background-color:rgba(black, 0.05);
   padding:10px;
 
   .category{
@@ -316,4 +315,139 @@
   @include floatfix;
   a{@include mini-button;}
   float:left;margin-right:10px;
+}
+
+.page-admin-index-announcements {
+  background-color:#F2F2F2;
+  border-left:solid 1px #B1B1B1;
+  height:48px;line-height:48px;
+  border-bottom:solid 1px #DADDE0;
+  box-shadow:0 1px 0 white inset;
+  padding:0 15px;
+
+  .box{
+    width:600px;
+    @include floatfix;
+    .title {
+      font-weight:bold;font-size:15px;
+      position:relative;
+      padding-left:28px;
+      float:left;
+      &:before{
+        content:"";
+        position:absolute;
+        width:24px;height:24px;
+        background:url('/assets/icons/sound_low_24.png');
+        top:12px;
+        left:0px;
+      }
+    }
+    a.more{
+      @include mini-button-black;
+      float:right;
+      height:22px;line-height:22px;
+      margin-top:12px;font-size:12px;
+      padding:0 12px;
+    }
+  }
+}
+
+.page-admin-index-announcements-list{
+  .head{
+    border-left:solid 1px #B1B1B1;
+    border-bottom:solid 1px #E5E5E5;
+    background-color:#F8F8F8;
+
+    .cells{
+      @include floatfix;
+      .cell{
+        float:left;
+        padding:0 15px;
+        height:24px;line-height:24px;
+        border-right:#E5E5E5 solid 1px;
+        background-color:#F8F8F8;
+        font-weight:bold;
+
+        @include cell-cols;
+        font-size:12px;
+      }
+    }
+  }
+
+  .tbody {
+    border-left:solid 1px #B1B1B1;
+    background-color:white;
+
+    .cells{
+      @include floatfix;
+      border-bottom:#E5E5E5 solid 1px;
+
+      .cell{
+        float:left;
+        padding:0 15px;
+        height:24px;line-height:24px;
+
+        border-right:#E5E5E5 solid 1px;
+        background-color:white;
+
+        @include cell-cols;
+        font-size:12px;
+      }
+    }
+  }
+}
+
+.page-admin-index-todolist, .page-admin-teaching-plan{
+  @extend .page-admin-index-announcements;
+}
+
+.page-admin-index-todolist-list, .page-admin-teaching-plan-list{
+  @extend .page-admin-index-announcements-list;
+}
+
+.page-admin-student-filter{
+  border-left:solid 1px #B1B1B1;
+  background-color:#f8f8f8;
+  border-top:solid 1px white;
+  border-bottom:solid 1px #DADDE0;
+  padding:15px 15px 5px;
+
+  @include floatfix;
+
+  form{
+    float:left;
+    margin-right:20px;
+
+    .field{
+      @include floatfix;
+      margin:0;
+      margin-bottom:10px;
+
+      label{
+        float:left;
+        height:28px;line-height:28px;
+        width:40px;
+        margin:0;
+      }
+      input{
+        float:left;
+        width:120px;
+        margin-right:10px;
+        padding-top:3px;
+        padding-bottom:3px;
+      }
+      .team-selector{
+        float:left;
+        width:136px;
+        margin-right:10px;
+      }
+      a.form-submit-button{
+        @include mini-button-black;
+        float:left;
+        height:26px;line-height:26px;
+        margin:0;
+        padding:0 12px;
+      }
+    }
+  }
 }

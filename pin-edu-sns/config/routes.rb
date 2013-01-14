@@ -77,6 +77,7 @@ MindpinEduSns::Application.routes.draw do
       member do
         get :password
         put :password_submit
+        put :upload_attachment
       end
     end
 
@@ -122,6 +123,8 @@ MindpinEduSns::Application.routes.draw do
         put :update_time_expression
         put :update_location
       end
+
+      resources :course_change_records, :shallow => true
     end
 
     resources :teaching_plans do
@@ -141,6 +144,11 @@ MindpinEduSns::Application.routes.draw do
 
     resources :mentor_courses
 
+    resources :course_score_records do
+      collection do
+        get :get_students_by_course
+      end
+    end
     
     resources :announcements
     
@@ -250,7 +258,7 @@ MindpinEduSns::Application.routes.draw do
   get    '/file' => 'media_resources#index'
   get    '/file/*path' => 'media_resources#file', :format => false
 
-  put    '/file_put/*path' => 'media_resources#upload_file'
+  put    '/file_put' => 'media_resources#upload_file'
   post   '/file/create_folder' => 'media_resources#create_folder'
   delete '/file/*path' => 'media_resources#destroy'
 
@@ -320,13 +328,6 @@ MindpinEduSns::Application.routes.draw do
 
     member do
       put :announce
-    end
-  end
-
-  resources :score_lists do
-    collection do
-      get :mine
-      get :course_candidates
     end
   end
 

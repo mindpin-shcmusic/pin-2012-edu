@@ -3,8 +3,10 @@
 - hbreadcrumb "工作台 - #{current_user.real_name}"
 
 :ruby
-  course_time_expression = current_user.get_next_course_time_expression
-  week_course_teachers = current_user.get_week_course_time_expressions_hash
+  map = current_user.course_time_expression_collection_map
+  next_course_time_expression_collection = map.next_course_time_expression_collection
+
+  line_course_time_expression_collections = map.line_course_time_expression_collections
 
 
 .page-model-show
@@ -32,20 +34,28 @@
             .date #{Time.now.strftime('%m-%d')}，#{Semester.now.to_s}学期
           .icon
 
-        - if !course_time_expression.blank?
+        - if !next_course_time_expression_collection.blank?
           .next
-            :ruby
-              weekday = course_time_expression.weekday
-              course_teacher = course_time_expression.course_teacher
-              course = course_teacher.course
-            .t 下一节课：
-            .c
-              %span.week>= change_to_weekday(weekday)
-              %span> ，
-              %span.time>= course_time_expression.class_time
-              %span> ，
-              %span.course>= link_to course.name, "/courses/#{course.id}"
-            .icon
+            - if !next_course_time_expression_collection.conflict?
+              :ruby
+                course_time_expression = next_course_time_expression_collection.course_time_expression
+                weekday = course_time_expression.weekday
+                course_teacher = course_time_expression.course_teacher
+                course = course_teacher.course
+              .t 下一节课：
+              .c
+                %span.week>= change_to_weekday(weekday)
+                %span> ，
+                %span.time>= course_time_expression.class_time
+                %span> ，
+                %span.course>= link_to course.name, "/courses/#{course.id}"
+              .icon
+            - else
+              - expressions = next_course_time_expression_collection.course_time_expressions
+              - expressions.each do |expression|
+                - course = expression.course_teacher.course
+                %span.course>= link_to course.name, "/courses/#{course.id}"
+
         - else
           .next
             .t 下一节课：
@@ -58,33 +68,49 @@
             .icon
 
     = page_field :'courses-info', :title=>'一周课程' do
-      - week_course_teachers.each do |weekday, course_time_expressions|
+      - line_course_time_expression_collections.each do |array|
+        - weekday = array[0]
+        - course_time_expression_collections = array[1]
         .weekday
           .t
             .w= change_to_weekday(weekday)
             .d= change_to_weekdate(weekday)
-          - course_time_expressions.each do |course_time_expression|
-            .course-time
-              :ruby
-                course_teacher = course_time_expression.course_teacher
-                course = course_teacher.course
-                students_count = course.get_students(:semester=>Semester.now, :teacher_user=>current_user).length
-                location = course_teacher.location
-                location = '地点待定' if location.blank?
+          - course_time_expression_collections.each do |course_time_expression_collection|
+            - if !course_time_expression_collection.conflict?
+              .course-time
+                :ruby
+                  course_time_expression = course_time_expression_collection.course_time_expression
+                  course_teacher = course_time_expression.course_teacher
+                  course = course_teacher.course
+                  students_count = course.get_students(:semester=>Semester.now, :teacher_user=>current_user).length
+                  location = course_teacher.location
+                  location = '地点待定' if location.blank?
 
-              .time
-                %span.start= course_time_expression.start_time_str
-                %span -
-                %span.end= course_time_expression.end_time_str
-              .course>= link_to course.name, "/courses/#{course.id}"
-              - if current_user.is_teacher?
-                .students
-                  %span.count>= students_count
-                  %span 个学生
-              - if current_user.is_student?
-                .teacher
-              
-              .location>= location
+                .time
+                  %span.start= course_time_expression.start_time_str
+                  %span -
+                  %span.end= course_time_expression.end_time_str
+                .course>= link_to course.name, "/courses/#{course.id}"
+                - if current_user.is_teacher?
+                  .students
+                    %span.count>= students_count
+                    %span 个学生
+                - if current_user.is_student?
+                  .teacher
+                
+                .location>= location
+            - else
+              .course-time
+                .time
+                  %span.start= course_time_expression_collection.start_time_str
+                  %span -
+                  %span.end= course_time_expression_collection.end_time_str
+                - course_time_expressions = course_time_expression_collection.course_time_expressions
+                - course_time_expressions.each do |expression|
+                  - course_teacher = expression.course_teacher
+                  - course = course_teacher.course
+                  .course>= link_to course.name, "/courses/#{course.id}"
+
 
       .see-curriculum
         .hours
@@ -99,9 +125,7 @@
         %a.see{:href=>'/courses/curriculum'} 查看课程表
 
     = page_field :'homeworks-info', :title=>'作业和教学实践' do
-      - homeworks = current_user.homeworks[0...4]
-      - 0.upto 3 do |i|        
-        - homework = homeworks[i]
+      - get_dashboard_arr(current_user.homeworks).each do |homework|
         - if !homework.blank?
           .homework
             - course = homework.course
@@ -114,9 +138,7 @@
           .homework.blank
 
     = page_field :'faq-info', :title=>'在线问答(Q&A)' do
-      - questions = Question.with_user(current_user)
-      - 0.upto 3 do |i| 
-        - question = questions[i]
+      - get_dashboard_arr(Question.with_user(current_user)).each do |question|
         - if !question.blank?
           .question
             .title= link_to truncate_u(question.title), question
@@ -124,9 +146,7 @@
           .question.blank
 
     = page_field :'notices-info', :title=>'通知信息' do
-      - announcements = current_user.received_announcements
-      - 0.upto 3 do |i|
-        - announcement = announcements[i]
+      - get_dashboard_arr(current_user.received_announcements).each do |announcement|
         - if !announcement.blank?
           .notice
             = link_to truncate_u(announcement.title), announcement
@@ -134,9 +154,7 @@
           .notice.blank
 
     = page_field :'subscriptions-info', :title=>'订阅信息' do
-      - courses = current_user.subscribed_courses
-      - 0.upto 3 do |i|
-        - course = courses[i]
+      - get_dashboard_arr(current_user.subscribed_courses).each do |course|
         - if !course.blank?
           .subscription
             = link_to truncate_u(course.name), subscriptions_courses_path(:course_id => course.id)

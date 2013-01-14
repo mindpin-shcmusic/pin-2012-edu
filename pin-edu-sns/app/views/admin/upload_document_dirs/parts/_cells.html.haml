@@ -8,6 +8,6 @@
   = p.cell :name do
     - case model
     - when UploadDocumentDir
-      %a{:href=>"/admin/upload_document_dirs/#{model.id}"}= model.name
+      %a{:href=>"/admin/upload_document_dirs?dir_id=#{model.id}"}= model.name
     - when UploadDocument
       %a{:href=>"/admin/upload_documents/#{model.id}"}= model.title

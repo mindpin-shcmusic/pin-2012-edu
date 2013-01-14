@@ -4,18 +4,21 @@
 - hbreadcrumb '首页', '/admin'
 - hbreadcrumb '教学计划'
 
-.page-fixed-head
+= page_top_fixed 'buttons' do
   = page_buttons do |p|
     = p.button '增加教学计划', '/admin/teaching_plans/new'
-    = p.button '批量导入', '/admin/teaching_plans/import_from_csv_page'
+
+= page_top_fixed 'semester-filter' do
+  = page_semester_filters "/admin/teaching_plans"
+
 
 :ruby
   cols_hash = {
     :ops => 1,
-    :name => 2
+    :title => 2
   }
 
-.page-list-head
+= page_top_fixed 'list-head' do
   .headtop
     = page_buttons do |p|
       = p.batch_destroy TeachingPlan
@@ -25,7 +28,7 @@
   = page_list_head :cols=>cols_hash do |p|
     = p.checkbox
     = p.cell :ops, '操作'
-    = p.cell :name, '标题', :sortable=>true
+    = p.cell :title, '标题', :sortable=>true
 
 
 = page_model_list @teaching_plans, :cols=>cols_hash, :class=>'admin-teaching-plans' do |p|
@@ -34,5 +37,5 @@
   = p.checkbox(teaching_plan)
   = p.cell :ops do
     %a.edit{:href=>"/admin/teaching_plans/#{teaching_plan.id}/edit"} 编辑
-  = p.cell :name do
+  = p.cell :title do
     %a.detail{:href=>"/admin/teaching_plans/#{teaching_plan.id}"}= teaching_plan.title

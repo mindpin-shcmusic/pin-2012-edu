@@ -8,8 +8,9 @@
   .uploading-files-list, .progress-bar-sample{
     .file{
       border-bottom:solid 1px #ccc;
-      padding:0 12px;
+      padding:0;
       position:relative;
+      height:30px;
 
       &.error{
         background-color:white;
@@ -54,7 +55,6 @@
         position:absolute;
         top:0;bottom:0;left:0;right:0;
         background-color:white;
-        z-index:-1;
         .p{
           position:absolute;
           top:0;bottom:0;
@@ -63,9 +63,11 @@
       }
 
       .data{
-        overflow:hidden;
+        position:absolute;
+        top:0;left:0;
         height:30px;line-height:30px;
         font-size:12px;
+        padding-left:12px;
 
         .name, .size, .percent, .speed, .state{
           text-overflow:ellipsis;

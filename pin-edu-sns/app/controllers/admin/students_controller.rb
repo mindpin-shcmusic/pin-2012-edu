@@ -7,7 +7,18 @@ class Admin::StudentsController < ApplicationController
   end
   
   def index
-    @students = sort_scope(Student).paginated(params[:page])
+    if params[:by_name]
+      @students = sort_scope(Student).real_name_equals(params[:by_name]).paginated(params[:page])
+      return
+    end
+
+    if params[:by_team_id]
+      team = Team.find(params[:by_team_id])
+      @students = sort_scope(Student).of_team(team).paginated(params[:page])
+      return
+    end
+
+    @students = sort_scope(Student).paginated(params[:page])    
   end
   
   def new
@@ -65,6 +76,12 @@ class Admin::StudentsController < ApplicationController
     error = @student.errors.first
     flash[:error] = error[1]
     redirect_to "/admin/students/#{@student.id}/password"
+  end
+
+  def upload_attachment
+    file_entity = FileEntity.find(params[:file_entity_id])
+    @student.save_attachment(params[:kind],file_entity)
+    render :text=>"OK"
   end
 
 end

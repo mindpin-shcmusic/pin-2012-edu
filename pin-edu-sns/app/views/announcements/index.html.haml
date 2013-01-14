@@ -1,11 +1,11 @@
 = render 'nav'
 
-
-.page-fixed-head
-  - if current_user.is_teacher?
+- if current_user.is_teacher?
+  = page_top_fixed 'buttons' do
     = page_buttons do |p|
       = p.button '创建通知', new_announcement_path, :class => 'generic-new'
 
+= page_top_fixed 'filters' do
   = page_filters '/announcements' do |p|
     = p.filter '收到的通知', :tab => 'received', :default=>true
     = p.filter '未读通知', :tab => 'unread'
@@ -21,9 +21,8 @@
     :created_at => 2
   }
 
-.page-list-head
+= page_top_fixed 'list-head' do
   .headtop
-    
     = page_buttons do |p|
       = p.batch_destroy Announcement
 

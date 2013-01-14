@@ -2,11 +2,11 @@
 - hbreadcrumb '首页', '/'
 - hbreadcrumb "课程调查"
 
-.page-fixed-head
+= page_top_fixed 'filters' do
   = page_filters course_surveys_path do |p|
     = p.filter '全部', :tab => 0, :default => true
-    = p.filter '调查1', :tab => 1
-    = p.filter '调查2', :tab => 2
+    = p.filter '调查类型1', :tab => 1
+    = p.filter '调查类型2', :tab => 2
 
 :ruby
   cols_hash = {
@@ -17,7 +17,7 @@
     :count => 4
   }
 
-.page-list-head
+= page_top_fixed 'list-head' do
   .headtop
     = list_pagination(@course_surveys)
 

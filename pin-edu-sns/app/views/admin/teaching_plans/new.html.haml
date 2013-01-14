@@ -13,8 +13,12 @@
       = t.text_field :title
 
     .field
-      - Course.all.each do |course|
-        = jcheckbox 'teaching_plan[teaching_plan_courses_attributes][][course_id]', course.id, false, course.name
+      %label 学期
+      = semester_selector(t, Semester.now.value)
+
+    .field
+      %label 正文
+      = t.text_area :content, :class => 'kind-editor'
 
     .field.submit
       = jfsubmit '确定'

@@ -17,9 +17,6 @@ class Course < ActiveRecord::Base
   has_many :course_teachers
   has_many :teacher_users, :through => :course_teachers
 
-  has_many :teaching_plan_courses
-  has_many :teaching_plans, :through => :teaching_plan_courses
-
   scope :with_semester, lambda {|semester|
     joins(:course_teachers).where('course_teachers.semester_value = ?', semester.value)
   }
@@ -90,7 +87,12 @@ class Course < ActiveRecord::Base
       where("course_teachers.course_id = #{self.id} and course_teachers.semester_value = '#{options[:semester].value}'")
   end
 
-  def get_students(options)
+  def get_students(options = {})
+    if options.blank?
+      return User.joins("inner join course_student_assigns on course_student_assigns.student_user_id = users.id").
+        where("course_student_assigns.course_id = #{self.id}").uniq
+    end
+
     raise InvalidCourseParams.new if options[:semester].blank?
 
     if options[:teacher_user].blank?
@@ -223,36 +225,17 @@ class Course < ActiveRecord::Base
       users
     end
 
-    def get_course_time(options)
-      raise InvalidCourseParams.new if options[:semester].blank? || options[:teacher_user].blank? || options[:course].blank?
-
-      course_teacher = CourseTeacher.get_by_params(options[:course], options[:semester], options[:teacher_user])
-      course_teacher.time_expression_hash
+    def course_time_expression_collection_map
+      course_teachers = __current_semester_course_teachers
+      CourseTimeExpressionCollectionMap.new(course_teachers)
     end
 
-    def get_all_course_time(options)
-      raise InvalidCourseParams.new if options[:semester].blank?
-      course_teachers = CourseTeacher.get_all_by_semester(options[:semester])
-      value = {}
-      course_teachers.each do |course_teacher|
-        value[course_teacher.course.name] = course_teacher.time_expression_hash
-      end
-      value
+    # 一周需要去听的课（学生 / 老师）的课时数
+    def get_course_hours_count
+      course_time_expression_collection_map.course_hours_count
     end
 
-    def get_next_course_time_expression
-      course_time_expressions = self.get_next_course_time_expressions
-      if !course_time_expressions.blank?
-        return course_time_expressions.first
-      else
-        return get_week_course_time_expressions.first
-      end
-    end
-
-    # 取得接下来一星期内要上课的数据
-    def get_next_course_time_expressions
-      next_course_time_expressions = []
-      
+    def __current_semester_course_teachers
       if self.is_student?
         course_teachers = self.get_student_course_teachers(:semester => Semester.now)
       end
@@ -261,63 +244,8 @@ class Course < ActiveRecord::Base
         course_teachers = self.get_teacher_course_teachers(:semester => Semester.now)
       end
 
-      if course_teachers.blank?
-        return []
-      end
-
-      current_cte = CourseTimeExpression.get_by_time(Time.now)
-      course_teachers.each do |course_teacher|
-        next_course_time_expressions += course_teacher.get_next_course_time_expressions(current_cte)
-      end
-
-      next_course_time_expressions.sort
+      course_teachers
     end
-
-    # 取得一星期内要上课的数据
-    # {
-    #   :weekday => [course_time_expression,course_time_expression]
-    # ...................
-    # }
-    def get_week_course_time_expressions_hash
-      course_time_expressions = get_week_course_time_expressions
-      course_time_expressions.group_by{|course_time_expression| course_time_expression.weekday}
-    end
-
-    def get_week_course_time_expressions
-      week_course_time_expressions = []
-      
-      if self.is_student?
-        courses = self.get_student_course_teachers(:semester => Semester.now)
-      end
-
-      if self.is_teacher?
-        courses = self.get_teacher_course_teachers(:semester => Semester.now)
-      end
-
-      if courses.blank?
-        return []
-      end
-
-      courses.each do |course_teacher|
-        week_course_time_expressions += course_teacher.get_week_courses_by_time_expression
-      end
-
-      week_course_time_expressions.sort
-    end
-
-    # 一周需要去听的课（学生 / 老师）的课时数
-    def get_course_hours_count
-      week_course_time_expressions = self.get_week_course_time_expressions
-
-      i = 0
-      week_course_time_expressions.each do |week_course_time_expression|
-        numbers = week_course_time_expression.course_teacher.time_expression_array[0]['number']
-        i = i + numbers.length
-      end
-
-      i
-    end
-
 
   end
 

@@ -1,41 +1,7 @@
 - htitle '系统数据概览'
 
-- hgoback '/admin'
-- hbreadcrumb '首页', '/admin'
-- hbreadcrumb '基础数据', '/admin'
-- hbreadcrumb '统计概览'
+- hbreadcrumb '教务管理首页'
 
-.page-model-show
-  .page-admin-stat
-    .data
-      .title 教师
-      .count= Teacher.count
-      = link_to '打开维护', '/admin/teachers'
-    .data
-      .title 学生
-      .count= Student.count
-      = link_to '打开维护', '/admin/students'
-    .data
-      .title 课程
-      .count= Course.count
-      = link_to '打开维护', '/admin/courses'
-    .data
-      .title 班级
-      .count= Team.count
-      = link_to '打开维护', '/admin/teams'
-    .data
-      .title 教学计划
-      .count= TeachingPlan.count
-      = link_to '打开维护', '/admin/teaching_plans'
-    .data
-      .title 课程调查
-      .count= CourseSurvey.count
-      = link_to '打开维护', '/admin/course_surveys'
-    .data
-      .title 资源分类
-      .count= Category.count
-      = link_to '打开维护', '/admin/categories'
-    .data
-      .title 通知管理
-      .count= Announcement.count
-      = link_to '打开维护', '/admin/announcements'
+= render 'admin/index/announcements'
+= render 'admin/index/todolist'
+= render 'admin/index/teaching_plans'

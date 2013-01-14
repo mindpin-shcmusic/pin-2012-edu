@@ -1,5 +1,5 @@
 pie.load ->
-  jQuery(document).delegate '.page-list-head .headtop .buttons a.button.batch-destroy', 'click', ->
+  jQuery(document).delegate '.page-top-fixed.list-head .headtop .buttons a.button.batch-destroy', 'click', ->
     # 获取ids和model
     model = jQuery(this).data('model')
 
@@ -19,7 +19,7 @@ pie.load ->
           location.reload()
 
   # 点击全选，全部选中
-  jQuery(document).delegate '.page-list-head .cell.checkbox span.c', 'click', ->
+  jQuery(document).delegate '.page-top-fixed.list-head .cell.checkbox span.c', 'click', ->
     $span = jQuery(this)
 
     if $span.hasClass('checked')

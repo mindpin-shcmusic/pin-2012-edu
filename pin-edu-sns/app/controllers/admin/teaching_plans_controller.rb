@@ -10,7 +10,8 @@ class Admin::TeachingPlansController < ApplicationController
 
 
   def index
-    @teaching_plans = sort_scope(TeachingPlan).paginate(:page => params[:page], :per_page => 20)
+    @teaching_plans = sort_scope(TeachingPlan).with_semester(params[:semester]).
+      paginate(:page => params[:page], :per_page => 20)
   end
 
   def new
@@ -36,8 +37,6 @@ class Admin::TeachingPlansController < ApplicationController
 
   def update
     if @teaching_plan.update_attributes params[:teaching_plan]
-      @teaching_plan.course_ids = params[:courses]
-      @teaching_plan.save
       return redirect_to "/admin/teaching_plans/#{@teaching_plan.id}"
     end
     error = @teaching_plan.errors.first

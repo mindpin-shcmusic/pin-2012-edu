@@ -2,15 +2,21 @@
   .link{
     float:left;
     height:20px;line-height:20px;
+    position:relative;
+    padding-right:30px;
+    margin-right:5px;
+
     &:after{
-      content:">";
+      content:"";
       color:#999;
-      margin-left:8px;
-      margin-right:8px;
+      right:0px;top:5px;
+      position:absolute;
+      width:24px;height:24px;
+      background:url(/assets/icons1203.png) no-repeat -75px -100px;
     }
 
     &:last-child{
-      &:after{content:"";}
+      &:after{display:none;}
       a{font-weight:bold;}
     }
   }

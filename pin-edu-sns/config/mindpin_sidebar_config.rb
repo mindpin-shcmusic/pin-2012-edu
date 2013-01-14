@@ -19,62 +19,45 @@ MindpinSidebar::Base.config do
   # end
 
   rule :admin do
-    group :default, :name => '管理员功能…' do
-
-      nav :basic, :name => '基础数据', :url => '/admin' do
-        controller :'admin/index', :only => :index
-
-        subnav :overview, :name => '统计概览', :url => '/admin' do
-          controller :'admin/index', :only => :index
-        end
-
-        subnav :teachers, :name => '教师数据', :url => '/admin/teachers' do
-          controller :'admin/teachers'
-        end
-
-        subnav :students, :name => '学生数据', :url => '/admin/students' do
-          controller :'admin/students'
-        end
-
-        subnav :courses, :name => '课程数据', :url => '/admin/courses' do
-          controller :'admin/courses'
-          controller :'admin/course_teachers'
-        end
-
-        subnav :teams, :name => '班级数据', :url => '/admin/teams' do
-          controller :'admin/teams'
-        end
-
-        subnav :upload_document_dirs, :name => '文档目录', :url => '/admin/upload_document_dirs' do
-          controller :'admin/upload_document_dirs'
-        end
-
+    group :default, :name => '教务功能…' do
+      nav :home, :name => '首页', :url => '/admin' do
+        controller :'admin/index'
       end
 
       nav :teaching_plans, :name => '教学计划', :url => '/admin/teaching_plans' do
         controller :'admin/teaching_plans'
       end
 
-      nav :course_surveys, :name => '课程调查', :url => '/admin/course_surveys' do
+      nav :students, :name => '学籍管理', :url => '/admin/students' do
+        controller :'admin/students'
+      end
+
+      nav :teams, :name => '班级管理', :url => '/admin/teams' do
+        controller :'admin/teams'
+      end
+
+      nav :courses, :name => '课程管理', :url => '/admin/courses' do
+        controller :'admin/courses'
+        controller :'admin/course_teachers'
+      end
+
+      nav :course_score_records, :name => '成绩管理', :url => '/admin/course_score_records' do
+        controller :'admin/course_score_records'
+      end
+
+      nav :teachers, :name => '教师管理', :url => '/admin/teachers' do
+        controller :'admin/teachers'
+      end
+
+      nav :course_surveys, :name => '课堂教学评价', :url => '/admin/course_surveys' do
         controller :'admin/course_surveys'
       end
 
-      nav :mentor, :name => '导师', :url => '/admin/mentor_courses' do
-        subnav :mentor_courses, :name => '导师方向', :url => '/admin/mentor_courses' do
-          controller :'admin/mentor_courses'
-        end
-
-        subnav :mentor_notes, :name => '导师双向选择', :url => '/admin/mentor_notes' do
-          controller :'admin/mentor_notes'
-        end
-      end
-
-
-      nav :categories, :name => '资源分类', :url => '/admin/categories' do
+      nav :categories, :name => '资源分类管理', :url => '/admin/categories' do
         controller :'admin/categories'
       end
 
-      nav :announcements, :name => '通知管理', :url => '/admin/announcements' do
+      nav :announcements, :name => '公告', :url => '/admin/announcements' do
         controller :'admin/announcements'
       end
     end
@@ -97,10 +80,6 @@ MindpinSidebar::Base.config do
           controller :homework_assigns
         end
 
-        subnav :score_lists, :name => '成绩单', :url => '/score_lists' do
-          controller :score_lists
-        end
-
         subnav :course_surveys, :name => '课程调查', :url => '/course_surveys' do
           controller :course_surveys
         end
@@ -111,16 +90,16 @@ MindpinSidebar::Base.config do
       end
 
       nav :'teaching-info', :name => '教学信息', :url => '/teachers' do
-        subnav :courses, :name => '课程浏览', :url => '/courses' do
-          controller :courses, :only => [:index,:show]
+        subnav :teachers, :name => '教师浏览', :url => '/teachers' do
+          controller :teachers, :only => :index
         end
 
         subnav :students, :name => '学生浏览', :url => '/students' do
           controller :students, :only => :index
         end
 
-        subnav :teachers, :name => '教师浏览', :url => '/teachers' do
-          controller :teachers, :only => :index
+        subnav :courses, :name => '课程浏览', :url => '/courses' do
+          controller :courses, :only => [:index,:show]
         end
 
         subnav :couse_subscriptions, :name => '订阅的课程', :url => '/courses/subscriptions' do
@@ -199,10 +178,6 @@ MindpinSidebar::Base.config do
 
         subnav :homeworks, :name => '我的作业和实践', :url => '/homeworks' do
           controller :homeworks
-        end
-
-        subnav :score_lists, :name => '成绩单', :url => '/score_lists/mine' do
-          controller :score_lists
         end
 
         subnav :course_surveys, :name => '课程调查', :url => '/course_surveys' do

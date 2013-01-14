@@ -1,13 +1,11 @@
 - htitle '教师浏览'
 
-
 - hgoback '/'
 - hbreadcrumb '首页', '/'
 - hbreadcrumb "教师浏览"
 
-
-.page-fixed-head
-  - if current_user.is_student?
+- if current_user.is_student?
+  = page_top_fixed 'filters' do
     = page_filters '/teachers' do |p|
       = p.filter '全部教师', :tab => 'all', :default => true
       = p.filter '我的教师', :tab => 'mine'
@@ -20,7 +18,8 @@
     :email => 4
   }
 
-.page-list-head
+= page_top_fixed 'list-head' do
+
   - if current_user.is_student? && params[:tab] == 'mine'
     = page_semester_filters '/teachers'
   .headtop
@@ -37,7 +36,7 @@
   - user = teacher.user
 
   = p.cell :real_name do
-    = avatar_link user, :tiny
+    = avatar_link user, :mini
     = user_link user
   = p.cell :tid, teacher.tid
   = p.cell :username, user.name

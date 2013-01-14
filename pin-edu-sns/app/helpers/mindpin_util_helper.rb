@@ -12,6 +12,7 @@ module MindpinUtilHelper
     base.send(:include, FloatBoxMethods)
     base.send(:include, UploadMethods)
     base.send(:include, TextMethods)
+    base.send(:include, CourseMethods)
   end
 
   module LayoutMethods
@@ -94,6 +95,26 @@ module MindpinUtilHelper
       return '未知用户' if user.blank?
       link_to user.real_name, "/users/#{user.id}", :class=>'u-name'
     end
+
+    def current_user_title
+      return '老师' if current_user.is_teacher?
+      return '同学' if current_user.is_student?
+    end
+
+    def user_name(user)
+      return "未知用户" if user.blank?
+      user.name
+    end
+
+    def user_real_name(user)
+      return "未知用户" if user.blank?
+      user.real_name
+    end
+
+    def user_email(user)
+      return "未知用户" if user.blank?
+      user.email
+    end
   end
 
   module FormDomsMethods
@@ -153,6 +174,40 @@ module MindpinUtilHelper
                             :class => 'page-jdelete',
                             :'data-jconfirm' => confirm_text,
                             :'data-jhref' => href
+    end
+
+    def semester_selector(t, value)
+      value ||= Semester.now.value
+      arr = Semester.get_recent_semesters.collect do |p| 
+        [ p.to_s, p.value ] 
+      end
+
+      t.select(:semester_value, arr, 
+        {:selected => value}, 
+        {:class => 'semester-select'})
+    end
+
+    def team_selector
+      select_tag("by_team_id", 
+        options_from_collection_for_select(Team.all, "id", "name"),
+        :class => 'team-selector'
+      )
+    end
+
+    def course_selector(f)
+      arr = Course.all.map{|course|[course.name,course.id]}
+
+      f.select(:course_id, arr,{:include_blank => true},
+        {:data => {:placeholder => '请选择课程'}, :class => 'course-select'}
+      )
+    end
+
+    def student_selector(f)
+      arr = []
+
+      f.select(:student_user_id, arr,{:include_blank => true},
+        {:data => {:placeholder => '请选择学生'}, :class => 'student-select'}
+      )
     end
   end
 
@@ -288,6 +343,17 @@ module MindpinUtilHelper
         return content_tag :span, replace, :class => 'quiet'
       end
       return content_tag :span, text
+    end
+
+    def rich_text(text)
+      text.html_safe
+    end
+  end
+
+  module CourseMethods
+    def course_name(course)
+      return '未知课程' if course.blank?
+      course.name
     end
   end
 

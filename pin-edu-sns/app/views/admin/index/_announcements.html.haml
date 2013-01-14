@@ -1,0 +1,28 @@
+= page_top_fixed 'page-admin-index-announcements' do
+  .box
+    .title 公告
+    %a.more{:href=>'/admin/announcements'} 查看更多…
+
+= page_top_fixed 'page-admin-index-announcements-list' do
+  :ruby
+    cols_hash = {
+      :title => 7,
+      :time => 3,
+      :detail => 2
+    }
+
+    announcements = Announcement.all(:limit => 4)
+
+  .head
+    = page_list_head :cols=>cols_hash do |p|
+      = p.cell :title, '主题'
+      = p.cell :time, '发布时间'
+      = p.cell :detail, '详细信息'
+  .tbody
+    = page_filled_list announcements, :cols=>cols_hash, :length=>3 do |p|
+      - announcement = p.model
+
+      = p.cell :title, announcement.title
+      = p.cell :time, announcement.updated_at.to_s
+      = p.cell :detail do
+        = link_to '打开查看', 'javascript:;'

@@ -1,9 +1,31 @@
-.page-tabs
-  =link_to "全部(#{@all_count})","/search?query=#{params[:query]}",:class=>"tab #{params[:kind].blank? ? "current" : ""}"
-  =link_to "我的资源(#{@media_resources_count})","/search/media_resource?query=#{params[:query]}",:class=>"tab #{params[:kind] == 'media_resource' ? "current" : ""}"
-  =link_to "共享资源(#{@media_shares_count})","/search/media_share?query=#{params[:query]}",:class=>"tab #{params[:kind] == 'media_share' ? "current" : ""}"
-  =link_to "公开资源(#{@public_resources_count})","/search/public_resource?query=#{params[:query]}",:class=>"tab #{params[:kind] == 'public_resource' ? "current" : ""}"
-  =link_to "课程(#{@courses_count})","/search/course?query=#{params[:query]}",:class=>"tab #{params[:kind] == 'course' ? "current" : ""}"
-  =link_to "老师(#{@teachers_count})","/search/teacher?query=#{params[:query]}",:class=>"tab #{params[:kind] == 'teacher' ? "current" : ""}"
-  =link_to "学生(#{@students_count})","/search/student?query=#{params[:query]}",:class=>"tab #{params[:kind] == 'student' ? "current" : ""}"
-  =link_to "标签","/search/tag?query=#{params[:query]}",:class=>"tab #{params[:kind] == 'tag' ? 'current' : ''}"
+:ruby
+  page_arr = [
+    ['我的资源' , @media_resources_count  , 'media_resource'],
+    ['共享资源' , @media_shares_count     , 'media_share'],
+    ['公共资源' , @public_resources_count , 'public_resource'],
+    ['课程'     , @courses_count          , 'course'],
+    ['老师'     , @teachers_count         , 'teacher'],
+    ['学生'     , @students_count         , 'student'],
+    ['标签'     , 0                       , 'tag']
+  ]
+
+.filters
+  :ruby
+    klass = params[:kind].blank? ? "filter current" : "filter"
+  = link_to "全部(#{@all_count})","/search?query=#{params[:query]}",:class=>klass
+
+  - page_arr.each do |page|
+    :ruby
+      title = page[0]
+      count = page[1]
+      name  = page[2]
+
+      str = "#{title}(#{count})"
+      str = title if name == 'tag'
+
+      url = "/search/#{name}?query=#{params[:query]}"
+      is_current = params[:kind] == name
+
+      klass = is_current ? "filter current" : "filter"
+
+    = link_to str, url, :class=>klass

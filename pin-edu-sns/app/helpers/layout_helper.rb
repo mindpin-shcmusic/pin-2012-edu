@@ -1,5 +1,31 @@
 # -*- coding: utf-8 -*-
 module LayoutHelper
+  def page_top_fixed(klass, &block)
+    css_class = [klass, 'page-top-fixed'] * ' '
+    content_tag :div, :class => css_class, &block
+  end
+
+  def page_filled_list(models, options={}, &block)
+    options.assert_valid_keys :cols, :class, :length
+    cols = options[:cols] || {}
+    length = options[:length] || 4
+
+    content_tag :div, :class => ['page-filled-list', options[:class]] do
+      items = []
+      length.times do |i|
+        items << models[i]
+      end
+
+      items.map do |model|
+        if model.blank?
+          page_list_body_empty :cols => cols, :model => EmptyModel.new, &block
+        else
+          page_list_body :cols => cols, :model => model, &block
+        end
+      end.reduce(&:+)
+    end
+  end
+
   def page_model_list(models, options={}, &block)
     options.assert_valid_keys :cols, :class
     cols = options[:cols] || {}
@@ -9,10 +35,9 @@ module LayoutHelper
         content_tag :div, '目前列表没有内容', :class => :blank
       else
         models.map do |model|
-          page_list_body :cols => cols, :model => model,  &block
+          page_list_body :cols => cols, :model => model, &block
         end.reduce(&:+)
       end
-
     end
   end
 
@@ -53,9 +78,15 @@ module LayoutHelper
 
   def page_list_body(options={})
     options.assert_valid_keys :cols, :model
-
     content_tag :div, :class => :cells do
       yield BodyWidget.new(self, options[:cols], options[:model])
+    end
+  end
+
+  def page_list_body_empty(options={})
+    options.assert_valid_keys :cols, :model
+    content_tag :div, :class => :cells do
+      yield BodyWidgetEmpty.new(self, options[:cols], options[:model])
     end
   end
 
@@ -120,12 +151,10 @@ private
       options[@filter_key].to_s == @context.params[@filter_key].to_s || is_default_filter?(options[:default])
     end
 
-  private
-
+    private
     def is_default_filter?(default)
       !@context.params[@filter_key] && default ? true : false
     end
-
   end
 
   class SemesterFilter < BaseFilter
@@ -142,14 +171,12 @@ private
       end.reduce(&:+)
 
     end
-
   end
 
   class PageFilter < BaseFilter
     def initialize(context, base_url)
       super(context, base_url, :tab)
     end
-
   end
 
   class HeadWidget < ActionView::Base
@@ -169,7 +196,6 @@ private
       content_tag :div, :class => [:cell, col, attr_name.to_s.dasherize] do
         options[:sortable] ? @context.sortable(attr_name, text) : @context._make_span(text)
       end
-
     end
 
     def checkbox(options={})
@@ -181,7 +207,7 @@ private
     end
 
     def batch_destroy(model)
-      self.button '删除', 'javascript:;', :class => 'batch-destroy', :'data-model' => model.to_s
+      self.button '删除选中项', 'javascript:;', :class => 'batch-destroy', :'data-model' => model.to_s
     end
 
     # 用于封装使用fbox进行model create的行为逻辑
@@ -206,7 +232,6 @@ private
 
       return c1
     end
-
   end
 
   class BodyWidget < ActionView::Base
@@ -242,7 +267,20 @@ private
       end
 
     end
+  end
 
+  class BodyWidgetEmpty < BodyWidget
+    def cell(*args, &block)
+      attr_name = args.first
+      col = @cols_hash[attr_name] ? "col_#{@cols_hash[attr_name]}" : 'col_1'
+      content_tag :div, '', :class => [:cell, col, attr_name.to_s.dasherize]
+    end
+  end
+
+  class EmptyModel
+    def method_missing(name)
+      return '-'
+    end
   end
 
 end

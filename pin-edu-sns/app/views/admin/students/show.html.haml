@@ -15,177 +15,121 @@
 
   .page-admin-students
 
-    = page_field :'student-info', :title=>'标题' do
+    = page_field :'student-info', :title=>'学生照片' do
       .field.avatar
         = avatar @student.user, :medium
 
-      .data
-        .field.name
-          %label 学生姓名
-          .v= @student.real_name
+    = page_field :'real-name', :title=>'学生姓名' do
+      .v= @student.real_name
 
-        .field.sid
-          %label 学生编号 
-          .v= @student.sid
+    = page_field :'real-name', :title=>'学生编号' do
+      .v= @student.sid
 
-        .field.user
-          %label 对应用户
-          .v= @student.user.name
+    = page_field :'real-name', :title=>'系统对应用户' do
+      .v= @student.user.name
 
-        .field.email
-          %label 对应邮箱
-          .v= @student.user.email
+    = page_field :'real-name', :title=>'登录邮箱' do
+      .v= @student.user.email
 
+    = page_field :'real-name', :title=>'学院' do
+      .v= @student.faculty
 
-        .field
-          %label 学院
-          .v= @student.faculty
+    = page_field :'real-name', :title=>'专业' do
+      .v= @student.major
 
-        .field
-          %label 专业
-          .v= @student.major
+    = page_field :'real-name', :title=>'性别' do
+      .v= @student.gender
 
+    = page_field :'real-name', :title=>'年级' do
+      .v= @student.grade
 
-        .field
-          %label 性别
-          .v= @student.gender
+    = page_field :'real-name', :title=>'学生类别' do
+      .v= @student.kind
 
+    = page_field :'real-name', :title=>'入学日期' do
+      .v= @student.entry_date
 
-        .field
-          %label 年级
-          .v= @student.grade
+    = page_field :'real-name', :title=>'毕业年份' do
+      .v= @student.graduation_year
 
+    = page_field :'real-name', :title=>'辅修专业' do
+      .v= @student.option_course
 
-        .field
-          %label 学生类别
-          .v= @student.kind
+    = page_field :'real-name', :title=>'考生号' do
+      .v= @student.exam_id
 
+    = page_field :'real-name', :title=>'毕业标注' do
+      - if @student.has_graduated
+        .v= '已经毕业'
+      - else
+        .v= '还没毕业'
 
+    = page_field :'real-name', :title=>'是否离校' do
+      - if @student.has_left
+        .v= '已经离校'
+      - else
+        .v= '还在学校'
 
-        .field
-          %label 入学日期
-          .v= @student.entry_date
+    = page_field :'real-name', :title=>'民族' do
+      .v= @student.nation
 
+    = page_field :'real-name', :title=>'政治面貌' do
+      .v= @student.politics_status
 
+    = page_field :'real-name', :title=>'备注' do
+      .v= @student.description
 
-        .field
-          %label 毕业年份
-          .v= @student.graduation_year
+    = page_field :'real-name', :title=>'原籍' do
+      .v= @student.native_home
 
+    = page_field :'real-name', :title=>'家庭详细地址' do
+      .v= @student.home_address
 
+    = page_field :'real-name', :title=>'生源地' do
+      .v= @student.source_place
 
-        .field
-          %label 辅修专业
-          .v= @student.option_course
+    = page_field :'real-name', :title=>'出生日期' do
+      .v= @student.birthday
 
+    = page_field :'real-name', :title=>'联系电话' do
+      .v= @student.tel
 
+    = page_field :'real-name', :title=>'邮政编码' do
+      .v= @student.zip_code
 
-        .field
-          %label 考生号
-          .v= @student.exam_id
+    = page_field :'real-name', :title=>'身份证号' do
+      .v= @student.id_card_number
 
+    = page_field :'real-name', :title=>'文化程度' do
+      .v= @student.edu_level
 
-        .field
-          %label 毕业标注
-          - if @student.has_graduated
-            .v= '已经毕业'
-          - else
-            .v= '还没毕业'
+    = page_field :'real-name', :title=>'异动信息' do
+      .v= @student.exception_info
 
+    = page_field :'real-name', :title=>'异动备注' do
+      .v= @student.exception_desc
 
-        .field
-          %label 是否已离校
-          - if @student.has_left
-            .v= '已经离校'
-          - else
-            .v= '还在学校'
+    = page_field :'real-name', :title=>'毕业学校' do
+      .v= @student.graduated_school
 
+    = page_field :'real-name', :title=>'毕业时间' do
+      .v= @student.graduated_date
 
-        .field
-          %label 民族
-          .v= @student.nation
+    = page_field :'real-name', :title=>'联系人' do
+      .v= @student.contact_person
 
-
-        .field
-          %label 政治面貌
-          .v= @student.politics_status
-
-
-
-        .field
-          %label 备注
-          .v= @student.description
-
-
-        .field
-          %label 原籍
-          .v= @student.native_home
-
-
-        .field
-          %label 家庭详细地址
-          .v= @student.home_address
-
-
-        .field
-          %label 生源地
-          .v= @student.source_place
-
-
-        .field
-          %label 出生日期
-          .v= @student.birthday
-
-
-        .field
-          %label 联系电话
-          .v= @student.tel
-
-
-        .field
-          %label 邮政编码
-          .v= @student.zip_code
-
-
-        .field
-          %label 身份证号
-          .v= @student.id_card_number
-
-
-        .field
-          %label 文化程度
-          .v= @student.edu_level
-
-
-        .field
-          %label 异动信息
-          .v= @student.exception_info
-
-
-        .field
-          %label 异动备注
-          .v= @student.exception_desc
-
-
-        .field
-          %label 毕业学校
-          .v= @student.graduated_school
-
-
-        .field
-          %label 毕业时间
-          .v= @student.graduated_date
-
-
-        .field
-          %label 联系人
-          .v= @student.contact_person
-
-
-        .field
-          %label 联系电话
-          .v= @student.contact_tel
-
-
-
-
+    = page_field :'real-name', :title=>'联系电话' do
+      .v= @student.contact_tel
+
+- if @student.is_graduated?
+  = page_field :'student-bi-ye', :title=>'毕业归档' do
+    .bi-ye-xie-yi.upload-attachment
+      = jupload_button '上传毕业协议'
+      = render '/admin/students/parts/uploader', :student => @student, :kind => Student::ATTACHMENT::KIND_JIU_YE_XIE_YI
+      - if !@student.jiu_ye_xie_yi.blank?
+        = link_to "下载毕业协议", download_link(@student.jiu_ye_xie_yi,"#{@student.real_name}_就业协议")
+    .bi_ye_jian_ding.upload-attachment
+      = jupload_button '上传毕业鉴定'
+      = render '/admin/students/parts/uploader', :student => @student, :kind => Student::ATTACHMENT::KIND_BI_YE_JIAN_DING
+      - if !@student.bi_ye_jian_ding.blank?
+        = link_to "下载毕业鉴定", download_link(@student.bi_ye_jian_ding,"#{@student.real_name}_毕业鉴定")
