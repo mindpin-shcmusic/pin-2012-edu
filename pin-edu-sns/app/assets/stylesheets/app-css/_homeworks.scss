@@ -332,3 +332,132 @@
     }
   }
 }
+
+.page-homework-timeline{
+  min-height:100px;
+  background-color:white;
+  border-left:solid 1px #B1B1B1;
+  border-bottom:solid 1px #B1B1B1;
+  padding:15px;
+
+  .teacher{
+    background-color:#f7f7f7;
+    @include floatfix;
+    margin:-15px;
+    margin-bottom:0;
+    padding:15px;
+    .avatar{
+      float:left;
+      margin-right:15px;
+      border:solid 1px #DADDE0;
+      padding:3px;
+      background-color:white;
+      img{
+        @include border-radius(0);
+      }
+    }
+    .title{
+      float:left;
+      font-size:16px;
+      font-weight:bold;
+      height:48px;line-height:48px;
+    }
+  }
+
+  .homeworks{
+    .homework{
+      @include floatfix;
+      position:relative;
+      height:120px + 6px + 120px;
+      border-top:solid 1px #DADDE0;
+      background-color:#F7F7F7;
+      margin:0 -15px;
+
+      .title{
+        height:24px;line-height:24px;
+        background-color:#F2F2F2;
+        border:solid 1px #DADDE0;
+        padding:0 7px;
+        float:left;
+        margin-top:(120px + 6px + 120px - 26px) / 2;
+        position:relative;
+      }
+      .line{
+        width:1600px;
+        height:6px;background-color:#D6D6D6;
+        position:absolute;
+        top:120px;left:1px;
+      }
+      .events{
+        .event{
+          background-color:white;
+          font-size:12px;
+          position:absolute;
+          height:90px;top:10px;
+          width:120px;
+          border:solid 1px #b1b1b1;
+
+          .t{
+            @include floatfix;
+            padding:5px;
+            border-bottom:solid 1px #DADDE0;
+            .avatar{float:left;margin-right:10px;}
+            .name{font-weight:bold;height:24px;line-height:24px;}
+          }
+          .c{
+            padding:5px;
+          }
+
+          &:after{
+            position:absolute;
+            content:"";
+            top:90px;
+            left:-1px;
+            height:10px;
+            width:10px;
+            background:url(/assets/timeline_c_up.png)
+          }
+
+          &:before{
+            position:absolute;
+            content:"";
+            top:105px;
+            left:-7px;
+            height:10px;
+            width:10px;
+            border:solid 2px white;
+            background-color:#3F6EBF;
+            box-shadow:0 0 1px rgba(black, 0.7);
+            @include border-radius(10px);
+          }
+
+          &.down{
+            top:143px;
+            &:after{
+              position:absolute;
+              content:"";
+              top:-10px;
+              left:-1px;
+              height:10px;
+              width:10px;
+              background:url(/assets/timeline_c_down.png)
+            }
+
+            &:before{
+              position:absolute;
+              content:"";
+              top:-28px;
+              left:-7px;
+              height:10px;
+              width:10px;
+              border:solid 2px white;
+              background-color:#DC6147;
+              box-shadow:0 0 1px rgba(black, 0.7);
+              @include border-radius(10px);
+            }
+          }
+        }
+      }
+    }
+  }
+}
