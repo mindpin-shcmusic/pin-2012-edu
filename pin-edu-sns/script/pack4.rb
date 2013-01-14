@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'pp'
 
-categories = [
+CATEGORIES = [
   #level1
   [
     '中国传统音乐',
@@ -61,7 +61,7 @@ categories = [
 ]
 
 def pack4_1
-  c = categories.dup
+  c = CATEGORIES.dup
 
   if Category
     ActiveRecord::Base.connection.execute("TRUNCATE categories")
@@ -96,11 +96,11 @@ def pack4_1
   end
 end
 
-path = '/media_samples/resources'
+PATH = '/media_samples/resources'
 
 def pack4_2
-  pic_paths = Dir.entries(path).delete_if {|a| a == '.' || a== '..'}.map {|file_name|
-    File.join path, file_name
+  pic_paths = Dir.entries(PATH).delete_if {|a| a == '.' || a== '..'}.map {|file_name|
+    File.join PATH, file_name
   }
 
   puts pic_paths
