@@ -6,6 +6,8 @@
   map = current_user.course_time_expression_collection_map
   next_course_time_expression_collection = map.next_course_time_expression_collection
 
+  next_course_time_expression_collections = map.next_course_time_expression_collections
+
   line_course_time_expression_collections = map.line_course_time_expression_collections
 
 
@@ -125,17 +127,32 @@
         %a.see{:href=>'/courses/curriculum'} 查看课程表
 
     = page_field :'homeworks-info', :title=>'作业和教学实践' do
-      - get_dashboard_arr(current_user.homeworks).each do |homework|
-        - if !homework.blank?
-          .homework
-            - course = homework.course
-            - stat = "#{homework.submitted_students.count}/#{homework.assignees.count}"
-
-            .title= link_to truncate_u(homework.title), homework
-            .course= link_to course.name, course
-            .stat= stat
-        - else
-          .homework.blank
+      .tabs
+        .navs
+          = link_to "要上的课",'javascript:void(0);',:class=>"nav current"
+          = link_to "作业",'javascript:void(0);',:class=>"nav"
+          = link_to "自定义",'javascript:void(0);',:class=>"nav"
+        .contents
+          .content.current
+            - get_dashboard_arr(next_course_time_expression_collections).each do |collection|
+              :ruby
+                course_time_expression = collection.course_time_expression
+                weekday = course_time_expression.weekday
+                course_teacher = course_time_expression.course_teacher
+                course = course_teacher.course
+              .item= course.name
+          .content
+            - get_dashboard_arr(current_user.homeworks).each do |homework|
+              .homework
+                - course = homework.course
+                - stat = "#{homework.submitted_students.count}/#{homework.assignees.count}"
+                .title= link_to truncate_u(homework.title), homework
+                .course= link_to course.name, course
+                .stat= stat
+          .content
+            - customs = ['预习编译原理第二章','参加计算机爱好社团组织的活动','去图书馆借阅操作系统相关的一些书籍','向数据结构老师询问几个疑惑的问题']
+            - get_dashboard_arr(customs).each do |custom|
+              .item= custom
 
     = page_field :'faq-info', :title=>'在线问答(Q&A)' do
       - get_dashboard_arr(Question.with_user(current_user)).each do |question|
