@@ -1,0 +1,18 @@
+.tabs{
+  .navs{
+    .nav{
+      &.current{
+
+      }
+    }
+  }
+
+  .contents{
+    .content{
+      display: none;
+      &.current{
+        display: block;  
+      }
+    }
+  }
+}

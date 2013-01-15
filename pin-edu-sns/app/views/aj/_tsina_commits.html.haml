@@ -1,0 +1,38 @@
+:ruby
+  commits = [
+    "做的不错，继续努力",
+    "不错看看了",
+    "不错的呢！~~~"]
+  user_names = ["大灰狼","我为卿狂","ccc"]
+  user_logos = [
+   "http://storage.aliyun.com/edu_dev/users/logos/3/medium/103.jpg?1358165944",
+   "http://storage.aliyun.com/edu_dev/users/logos/4/medium/104.jpg?1358165948",
+   "http://storage.aliyun.com/edu_dev/users/logos/5/medium/105.jpg?1358165951"
+  ]
+  times = [
+    Time.now-1.day-23.minute,
+    Time.now-1.day-3.hour-12.minute,
+    Time.now-1.day-4.hour-56.minute,
+  ]
+
+ 
+- 0.upto(2) do |i|
+  :ruby
+    comment_content = commits[i]
+    created_at = times[i]
+    user_name = user_names[i]
+    user_logo = user_logos[i]
+
+  .comment
+    .avatar
+      %img.page-avatar-img.tiny{:src=>user_logo}
+    .cmain
+      .cdata
+        .meta
+          .name.quiet
+            = link_to user_name,"javascript:;"
+          .ops
+            = link_to '回复', 'javascript:;', :class=>'reply'
+        .ctext.wordwrap>
+          = html_escape(comment_content).gsub(/\n/, '<br />').html_safe
+          %span.time> (#{jtime created_at})
