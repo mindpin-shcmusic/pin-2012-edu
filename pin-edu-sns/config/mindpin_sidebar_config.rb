@@ -80,7 +80,7 @@ MindpinSidebar::Base.config do
           controller :homework_assigns
         end
 
-        subnav :course_surveys, :name => '课程调查', :url => '/course_surveys' do
+        subnav :course_surveys, :name => '在线调查', :url => '/course_surveys' do
           controller :course_surveys
         end
 
@@ -180,7 +180,7 @@ MindpinSidebar::Base.config do
           controller :homeworks
         end
 
-        subnav :course_surveys, :name => '课程调查', :url => '/course_surveys' do
+        subnav :course_surveys, :name => '在线调查', :url => '/course_surveys' do
           controller :course_surveys
         end
 

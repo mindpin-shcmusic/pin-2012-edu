@@ -1,12 +1,12 @@
 - hgoback '/'
 - hbreadcrumb '首页', '/'
-- hbreadcrumb "课程调查"
+- hbreadcrumb "在线调查"
 
 = page_top_fixed 'filters' do
   = page_filters course_surveys_path do |p|
     = p.filter '全部', :tab => 0, :default => true
-    = p.filter '调查类型1', :tab => 1
-    = p.filter '调查类型2', :tab => 2
+    = p.filter '单选类型', :tab => 1
+    = p.filter '复合类型', :tab => 2
 
 :ruby
   cols_hash = {
@@ -24,9 +24,9 @@
   = page_list_head :cols=>cols_hash do |p|
     = p.cell :title, '标题', :sortable => true
     = p.cell :semester_value, '学期', :sortable => true
-    = p.cell :course, '课程'
+    = p.cell :teacher, '发起人'
     = p.cell :kind, '类型', :sortable => true
-    = p.cell :count, '统计完/未统计完'
+    = p.cell :count, '已收集数目'
 
 
 = page_model_list @course_surveys, :cols=>cols_hash, :class=>'course-surveys' do |p|
@@ -37,11 +37,11 @@
     = link_to hspan(survey.title), path
   = p.cell :semester_value do
     = survey.semester.to_s
-  = p.cell :course do
-    = survey.course.name
+  = p.cell :teacher do
+    = '张三丰'
   = p.cell :kind do
-    = survey.kind
+    = '单选'
   = p.cell :count do
-    = survey.finished_ratio
+    = '20/20'
 
         
