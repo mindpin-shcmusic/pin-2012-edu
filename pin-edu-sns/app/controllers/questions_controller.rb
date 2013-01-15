@@ -15,6 +15,8 @@ class QuestionsController < ApplicationController
       answered   {questions.answered}
       unanswered {questions.unanswered}
     end
+
+    return render 'demo_index' if params[:demo]
   end
 
 
