@@ -244,6 +244,7 @@ MindpinEduSns::Application.routes.draw do
       get :next_for_student
       get :next_for_teacher
       get :subscriptions
+      get :curriculum_demo
     end
 
     member do
