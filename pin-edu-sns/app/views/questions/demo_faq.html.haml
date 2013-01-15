@@ -1,0 +1,38 @@
+- htitle 'Java编程语言问答FAQ'
+
+- hgoback '/questions'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '老师问答', '/questions'
+- hbreadcrumb 'Java编程语言问答FAQ'
+
+.page-unfixed-head
+
+.page-model-show.faqs
+  = page_field :'faq-toc', :title => '内容列表' do
+    .link= link_to 'java如不想么每次都判空 if(o !=null) 怎么做？', '#faq1'
+    .link= link_to 'Java里ClassName.this和this有什么不一样', '#faq2'
+    .link= link_to 'Java反射调用一个类，是在编译时执行还是在运行时执行？', '#faq3'
+    .link= link_to 'NullPointerException的原因?', '#faq4'
+    .link= link_to 'throw和throws有什么不同？', '#faq5'
+
+  = page_field :'faq-contents', :title => '内容' do
+    #faq1.faq
+      .title java如不想每次都判空 if(o !=null) 怎么做？
+      .answer 建议使用NullObject模式。
+
+    #faq2.faq
+      .title Java里ClassName.this和this有什么不一样？
+      .answer this是当前类的实例，而ClassName.this是在内部类里内联它的那个类的实例。
+
+    #faq3.faq
+      .title Java反射调用一个类，是在编译时执行还是在运行时执行？
+      .answer= sanitize '<p>一定是在运行时。<br> 反射的原理是，在运行时，通过反射，可以获取到虚拟机的方法区内装载的所有类信息，从而调用这些类。如果某个类没有被装载，是反射不到的。<br> 至于什么时候适合用到反射，视你的应用场景而定，当有一些类的结构是你无法预知的，但又要视其结构不同而进行不同的调用。<br> 举个例子，做框架，对于使用这个框架的开发者的类的调用。</p>'
+
+    #faq4.faq
+      .title NullPointerException的原因?
+      .answer NullPointerException发生的原因是操作了一个为null的变量。
+
+    #faq5.faq
+      .title throw和throws有什么不同？
+      .answer throws用于声明一个方法会抛出哪些异常。而throw是在方法体中实际执行抛出异常的动作。如果你在方法中throw一个异常，却没有在方法声明中声明之，编译器会报错。注意error和runtimeexception的子类是例外，无需特别声明。
+
