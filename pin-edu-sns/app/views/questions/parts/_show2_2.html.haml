@@ -1,0 +1,26 @@
+= page_field :answers, :title => '2个答案' do
+  .answser
+    .vote
+      .score 0
+      .up= link_to '顶', 'javascript:;'
+      .down= link_to '踩', 'javascript:;'
+
+    .content
+      = sanitize '<p>如果你的程序里面包含了内部匿名类之类，比如线程</p><pre class="prettyprint"><span class="kwd">class</span><span class="pln"> A </span><span class="pun">{</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> callSomething</span><span class="pun">(){</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">new</span><span class="pln"> </span><span class="typ">Thread</span><span class="pun">(){</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="kwd">public</span><span class="pln"> </span><span class="kwd">void</span><span class="pln"> run</span><span class="pun">(){</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="com">// 这里的this 代表 匿名类的上下文， A.this 代表A实例化后对象的上下文</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">}.</span><span class="pln">start</span><span class="pun">();</span><span class="pln"><br>&nbsp; &nbsp; &nbsp; &nbsp; </span><span class="pun">}</span><span class="pln"> &nbsp; &nbsp;<br>&nbsp; &nbsp; </span><span class="pun">}</span></pre>'
+
+    .answerer
+      = avatar User.first, :tiny
+      .name= link_to '曾涛', '/users/hmm'
+
+  .answser
+    .vote
+      .score 0
+      .up= link_to '顶', 'javascript:;'
+      .down= link_to '踩', 'javascript:;'
+
+    .content
+      = sanitize '<p>这应该是在内部类里面调用的吧<br> 如果在内部类里面的this就是这个内部类的实例，而OuterClassName.this就是它外面的那个类的实例</p><p>看起来是Android编程吧，应该是写了一个listener的匿名类？<br> 如果是的话，那么this就是指这个listener实例，而LunchList.this就是外面的类，可能是Activity吧</p>'
+
+    .answerer
+      = avatar User.first, :tiny
+      .name= link_to '郭朝阳', '/users/hmm'
