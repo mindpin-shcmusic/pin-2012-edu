@@ -6,6 +6,7 @@ class CourseTimeExpressionCollectionMap
   attr_reader :line_course_time_expression_collections
 
   attr_reader :next_course_time_expression_collection
+  attr_reader :next_course_time_expression_collections
   attr_reader :course_hours_count
 
 
@@ -21,6 +22,8 @@ class CourseTimeExpressionCollectionMap
     __set_table_course_time_expression_collections
 
     __set_next_course_time_expression_collection
+
+    __set_next_course_time_expression_collections
 
     __set_course_hours_count
   end
@@ -58,6 +61,16 @@ class CourseTimeExpressionCollectionMap
     end.first
     if @next_course_time_expression_collection.blank?
       @next_course_time_expression_collection = @course_time_expression_collections.first
+    end
+  end
+
+  def __set_next_course_time_expression_collections
+    current_collection = CourseTimeExpressionCollection.new([CourseTimeExpression.get_by_time(Time.now)])
+    @next_course_time_expression_collections = @course_time_expression_collections.select do |collection|
+      collection >= current_collection
+    end[0..3]
+    if @next_course_time_expression_collections.blank?
+      @next_course_time_expression_collections = @course_time_expression_collections[0..3]
     end
   end
 

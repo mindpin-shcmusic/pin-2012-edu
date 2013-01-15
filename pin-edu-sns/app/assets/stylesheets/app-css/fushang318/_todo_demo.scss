@@ -1,0 +1,12 @@
+.page-dashboard .todo{
+  .filters{
+
+  }
+
+  .list{
+    display: none;
+    &.current{
+      display: block;
+    }
+  }
+}
