@@ -161,6 +161,9 @@
             - get_dashboard_arr(customs)[0...3].each do |custom|
               .item= link_to custom, 'javascript:;'
 
+    = page_field :'xxt', :title=>'资源贡献统计' do
+      .xxt
+
     = page_field :'faq-info', :title=>'在线问答(Q&A)' do
       - questions = ["java内部是如何处理判断一个对象是否被实例化的？","Java里ClassName.this和this有什么不一样","关于电梯算法","插值查找的问题"]
       - get_dashboard_arr(questions).each do |question|
@@ -180,7 +183,6 @@
       .notice
         = link_to truncate_u('即将举办网页制作大赛'), 'javascript:;'
 
-
     = page_field :'subscriptions-info', :title=>'订阅信息' do
       .subscription
         = link_to truncate_u('上海的故事：第三辑（64年版65印）'), 'javascript:;'
@@ -190,43 +192,3 @@
         = link_to truncate_u('气球上的五星期'), 'javascript:;'
       .subscription
         = link_to truncate_u('thinking in java 中文版'), 'javascript:;'
-
-    =page_field :'comments', :title=>"评论汇总" do
-      - comments = Comment.all[0..2]
-      .comments
-        .tabs
-          .navs
-            =link_to "本地","javascript:void(0);",:class=> "nav current"
-            =link_to "新浪微博","javascript:void(0);",:class=> "nav"
-          .contents
-            .content.local.current
-              - if comments.blank?
-                .comment.blank 现在还没有评论
-              - else
-                - prev_user = nil
-                - comments.each do |comment|
-                  :ruby
-                    user = comment.creator
-                    created_at = comment.created_at
-                    can_be_delete = ( user == current_user )
-                    klass = (user == prev_user ? 'same-user' : '')
-                    prev_user = user
-
-                  .comment{:'data-id'=>comment.id, :'data-user-name'=>user.name, :class=>klass}
-                    .avatar
-                      = avatar_link user, :tiny
-                    .cmain
-                      .cdata
-                        .meta
-                          .name.quiet
-                            = user_link user
-                          .ops
-                            - if can_be_delete
-                              = link_to '删除', 'javascript:;', :class=>'delete'
-                              %span.quiet -
-                            = link_to '回复', 'javascript:;', :class=>'reply'
-                        .ctext.wordwrap>
-                          = comment_ct comment
-                          %span.time> (#{jtime created_at})
-            .content.tsina
-              = render 'aj/tsina_commits'    
