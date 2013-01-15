@@ -445,4 +445,23 @@
     }
   }
 
+  .page-field.xxt{
+    background-color:white;
+    width:334px;
+    float:left;margin-right:20px;
+    .field-title{
+      border-bottom:solid 1px #E8E8E8;
+      &:before{
+        @include xicon(1, 2, 3);
+      }
+    }
+    .field-data{
+      margin-left:-15px;
+      margin-right:-15px;
+      margin-bottom:0;
+      height:163px;
+      background:url(/assets/canvas1.png) 0 -24px no-repeat #FEFEFE;
+    }
+  }
+
 }

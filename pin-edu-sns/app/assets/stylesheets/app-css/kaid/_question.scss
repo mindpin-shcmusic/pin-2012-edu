@@ -1,70 +1,145 @@
-.question {
-  .title {
-    font-size: 20px;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 8px;
-    margin-bottom: 12px;
-  }
-
-  .asker {
-    border-top: 1px solid #ccc;
-    padding-top: 8px;
-    margin-top: 12px;
-    height: 32px;
-
-    .name {
-      margin-top: 4px;
-      margin-left: 12px;
-      float: left;
+.page-demo-question{
+  .question {
+    .title {
+      font-size: 20px;
+      border-bottom: 1px solid #E5E5E5;
+      margin:0 -15px;
+      padding:0 15px;
+      margin-bottom: 12px;
     }
-  }
 
-  .comments {
-    border-top: 1px solid #ccc;
-    padding-top: 8px;
-    margin-top: 10px;
-      
-    .comment {margin-left: 24px; border-bottom: 1px solid #ccc; margin-bottom: 12px;}
-    .comment:last-child {border: none; margin-bottom:none;}
+    .ct{
+      margin:0 -15px;
+      padding:0 15px;
+      border-bottom: 1px solid #E5E5E5;
+    }
+
+    .asker {
+      height: 32px;
+      margin:0 -15px;
+      padding:15px;
+      border-bottom: 1px solid #E5E5E5;
+
+      .name {
+        margin-top: 4px;
+        margin-left: 12px;
+        float: left;
+      }
+    }
   }
 
   .answers {
-    .number {
-      border-bottom: 1px solid #ccc;
-      margin-bottom: 20px;
-    }
 
     .answser {
       position: relative;
-      border-bottom: 1px solid #000;
-      margin-bottom: 32px;
-      &:last-child {border: none;}
+      border-bottom: 1px solid #E5E5E5;
+      position:relative;
+      margin:0 -15px;
+      padding:0 15px;
+      padding-left:43px;
+      margin-bottom: 15px;
+
+      &:last-child {
+        margin-bottom:0;
+        border:none;
+
+        .answerer{
+          border:none;
+        }
+      }
 
       .vote {
-        text-align: center;
-        padding: 12px;
-        width: 20px;
-        border: 1px solid #ccc;
-        display: inline-block;
-        vertical-align: top;
+        position:absolute;
+        top:0;left:15px;
+        width:30px;
+
+        .score{
+          width:30px;height:30px;
+          background-color:#EAFF7E;
+          @include border-radius(4px);
+          line-height:30px;
+          text-align:center;
+          font-size:20px;
+          font-weight:bold;
+          margin-bottom:5px;
+        }
+        .up{
+          width:30px;height:20px;
+          background-color:#F8F8F8;
+          @include border-radius(4px);
+          line-height:20px;
+          text-align:center;
+          font-size:24px;
+          font-weight:bold;
+          font-size:0;
+          line-height:20em;
+          position:relative;
+          margin-bottom:5px;
+          &:before{
+            content:"";
+            top:-3px;left:7px;
+            position:absolute;
+            border-top:solid 8px transparent;
+            border-left:solid 8px transparent;
+            border-right:solid 8px transparent;
+            border-bottom:solid 8px #444444;
+          }
+        }
+        .down{
+          width:30px;height:20px;
+          background-color:#F8F8F8;
+          @include border-radius(4px);
+          line-height:20px;
+          text-align:center;
+          font-size:24px;
+          font-weight:bold;
+          font-size:0;
+          line-height:20em;
+          position:relative;
+          &:before{
+            content:"";
+            top:7px;left:7px;
+            position:absolute;
+            border-top:solid 8px #444444;
+            border-left:solid 8px transparent;
+            border-right:solid 8px transparent;
+            border-bottom:solid 8px transparent;
+          }
+        }
       }
 
       .content {display: inline-block; margin-left: 12px; width: 640px;}
 
       .answerer {
-        .page-avatar-img {float: right;}
-        .name {float: right;}
+        height: 32px;
+        margin:0 -15px 0 -43px;
+        padding:15px;
+        border-bottom: 1px solid #E5E5E5;
+        padding-left:600px;
 
-        &:after {
-          clear: both;
-          content: ".";
-          display: block;
-          height: 0;
-          visibility: hidden;
-          font-size: 0;
+        .name {
+          margin-top: 4px;
+          margin-left: 12px;
+          float: left;
         }
+      }
 
+      .comments{
+        margin-left:-43px;
+        padding-left:15px;
       }
     }
   }
+
+  .comments {
+    padding-top: 8px;
+    margin-top: 10px;
+    .number{
+      margin-bottom: 10px;
+    }
+      
+    .comment {margin-left: 24px; border-bottom: 1px solid #ccc; margin-bottom: 12px;}
+    .comment:last-child {border:none;margin-bottom:0px;}
+  }
+
 }
