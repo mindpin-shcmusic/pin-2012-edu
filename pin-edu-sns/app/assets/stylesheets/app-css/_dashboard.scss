@@ -357,7 +357,7 @@
           }
 
           &.homework{
-            .title, .course, .stat{float:left;}
+            .title, .course, .stat{float:left;overflow:hidden;white-space:nowrap;}
             .title{width:100px;}
             .course{width:100px;}
             .stat{float:right;text-align:right;}
