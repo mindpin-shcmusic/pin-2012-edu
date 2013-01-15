@@ -134,25 +134,32 @@
           = link_to "自定义",'javascript:void(0);',:class=>"nav"
         .contents
           .content.current
-            - get_dashboard_arr(next_course_time_expression_collections).each do |collection|
-              :ruby
-                course_time_expression = collection.course_time_expression
-                weekday = course_time_expression.weekday
-                course_teacher = course_time_expression.course_teacher
-                course = course_teacher.course
-              .item= course.name
+            - get_dashboard_arr(next_course_time_expression_collections)[0...3].each do |collection|
+              - if !collection.blank?
+                :ruby
+                  course_time_expression = collection.course_time_expression
+                  weekday = course_time_expression.weekday
+                  course_teacher = course_time_expression.course_teacher
+                  course = course_teacher.course
+                .item= link_to course.name, course
+              - else
+                .item.blank
           .content
-            - get_dashboard_arr(current_user.homeworks).each do |homework|
-              .homework
-                - course = homework.course
-                - stat = "#{homework.submitted_students.count}/#{homework.assignees.count}"
-                .title= link_to truncate_u(homework.title), homework
-                .course= link_to course.name, course
-                .stat= stat
+            - get_dashboard_arr(current_user.homeworks)[0...3].each do |homework|
+              - if !homework.blank?
+                .item.homework
+                  - course = homework.course
+                  - stat = "#{homework.submitted_students.count}/#{homework.assignees.count}"
+
+                  .title= link_to truncate_u(homework.title), homework
+                  .course= link_to course.name, course
+                  .stat= stat
+              - else
+                .item.blank
           .content
             - customs = ['预习编译原理第二章','参加计算机爱好社团组织的活动','去图书馆借阅操作系统相关的一些书籍','向数据结构老师询问几个疑惑的问题']
-            - get_dashboard_arr(customs).each do |custom|
-              .item= custom
+            - get_dashboard_arr(customs)[0...3].each do |custom|
+              .item= link_to custom, 'javascript:;'
 
     = page_field :'faq-info', :title=>'在线问答(Q&A)' do
       - get_dashboard_arr(Question.with_user(current_user)).each do |question|
@@ -163,17 +170,22 @@
           .question.blank
 
     = page_field :'notices-info', :title=>'通知信息' do
-      - get_dashboard_arr(current_user.received_announcements).each do |announcement|
-        - if !announcement.blank?
-          .notice
-            = link_to truncate_u(announcement.title), announcement
-        - else
-          .notice.blank
+      .notice
+        = link_to truncate_u('本周举办乒乓球比赛'), 'javascript:;'
+      .notice
+        = link_to truncate_u('本周辩论赛通知'), 'javascript:;'
+      .notice
+        = link_to truncate_u('上周卫生调查结果公告'), 'javascript:;'
+      .notice
+        = link_to truncate_u('即将举办网页制作大赛'), 'javascript:;'
+
 
     = page_field :'subscriptions-info', :title=>'订阅信息' do
-      - get_dashboard_arr(current_user.subscribed_courses).each do |course|
-        - if !course.blank?
-          .subscription
-            = link_to truncate_u(course.name), subscriptions_courses_path(:course_id => course.id)
-        - else
-          .subscription.blank
+      .subscription
+        = link_to truncate_u('上海的故事：第三辑（64年版65印）'), 'javascript:;'
+      .subscription
+        = link_to truncate_u('漫游植物王国：蕨类（彩图）'), 'javascript:;'
+      .subscription
+        = link_to truncate_u('气球上的五星期'), 'javascript:;'
+      .subscription
+        = link_to truncate_u('thinking in java 中文版'), 'javascript:;'
