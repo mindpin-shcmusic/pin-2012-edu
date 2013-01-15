@@ -171,9 +171,11 @@
           .notice.blank
 
     = page_field :'subscriptions-info', :title=>'订阅信息' do
-      - get_dashboard_arr(current_user.subscribed_courses).each do |course|
-        - if !course.blank?
-          .subscription
-            = link_to truncate_u(course.name), subscriptions_courses_path(:course_id => course.id)
-        - else
-          .subscription.blank
+      .subscription
+        = link_to truncate_u('上海的故事：第三辑（64年版65印）'), 'javascript:;'
+      .subscription
+        = link_to truncate_u('漫游植物王国：蕨类（彩图）'), 'javascript:;'
+      .subscription
+        = link_to truncate_u('气球上的五星期'), 'javascript:;'
+      .subscription
+        = link_to truncate_u('thinking in java 中文版'), 'javascript:;'
