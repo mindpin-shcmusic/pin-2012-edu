@@ -143,12 +143,16 @@
               .item= course.name
           .content
             - get_dashboard_arr(current_user.homeworks).each do |homework|
-              .homework
-                - course = homework.course
-                - stat = "#{homework.submitted_students.count}/#{homework.assignees.count}"
-                .title= link_to truncate_u(homework.title), homework
-                .course= link_to course.name, course
-                .stat= stat
+              - if !homework.blank?
+                .homework
+                  - course = homework.course
+                  - stat = "#{homework.submitted_students.count}/#{homework.assignees.count}"
+
+                  .title= link_to truncate_u(homework.title), homework
+                  .course= link_to course.name, course
+                  .stat= stat
+              - else
+                .homework.blank
           .content
             - customs = ['预习编译原理第二章','参加计算机爱好社团组织的活动','去图书馆借阅操作系统相关的一些书籍','向数据结构老师询问几个疑惑的问题']
             - get_dashboard_arr(customs).each do |custom|
