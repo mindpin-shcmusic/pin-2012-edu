@@ -15,11 +15,12 @@
   = page_buttons do |p|
     = p.button '编辑修改', "/questions/demo/edit"
 
-.page-model-show.question
+.page-model-show.page-demo-question
   = page_field :question, :title => '问题' do
     .title= @question.title
 
-    = sanitize '<p>今天再看一个Android LunchList的tutorial<br> 发现有两种写法：<br> 都是在 LunchList 这个类里，不同的方法</p><pre class="prettyprint"><span class="kwd">new</span><span class="pln"> </span><span class="typ">Intent</span><span class="pun">(</span><span class="kwd">this</span><span class="pun">,</span><span class="pln"> </span><span class="typ">EditPreferences</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">);</span></pre><p>和</p><pre class="prettyprint"><span class="kwd">new</span><span class="pln"> </span><span class="typ">Intent</span><span class="pun">(</span><span class="typ">LunchList</span><span class="pun">.</span><span class="kwd">this</span><span class="pun">,</span><span class="pln"> </span><span class="typ">DetailForm</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">);</span></pre><p>LunchList.this和this有什么区别？</p>'
+    .ct
+      = sanitize '<p>今天再看一个Android LunchList的tutorial<br> 发现有两种写法：<br> 都是在 LunchList 这个类里，不同的方法</p><pre class="prettyprint"><span class="kwd">new</span><span class="pln"> </span><span class="typ">Intent</span><span class="pun">(</span><span class="kwd">this</span><span class="pun">,</span><span class="pln"> </span><span class="typ">EditPreferences</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">);</span></pre><p>和</p><pre class="prettyprint"><span class="kwd">new</span><span class="pln"> </span><span class="typ">Intent</span><span class="pun">(</span><span class="typ">LunchList</span><span class="pun">.</span><span class="kwd">this</span><span class="pun">,</span><span class="pln"> </span><span class="typ">DetailForm</span><span class="pun">.</span><span class="kwd">class</span><span class="pun">);</span></pre><p>LunchList.this和this有什么区别？</p>'
 
     .asker
       = avatar User.first, :tiny

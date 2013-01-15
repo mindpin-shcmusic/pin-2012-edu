@@ -15,11 +15,12 @@
   = page_buttons do |p|
     = p.button '编辑修改', "/questions/demo/edit"
 
-.page-model-show.question
+.page-model-show.page-demo-question
   = page_field :question, :title => '问题' do
     .title= @question.title
 
-    = sanitize "<p>涉及到对象操作 object.xxxx(),如果对象为null则会抛异常，如果每次都if(o !=null) 代码很丑陋</p><p>一种做法是创建对象或者方法返回对象时都new一个对象而不是返回null<br>\n不过这样有时也不太好，比如结果为空的时候返回null更合理一点</p><p>有更好的建议么 ？</p>"
+    .ct
+      = sanitize "<p>涉及到对象操作 object.xxxx(),如果对象为null则会抛异常，如果每次都if(o !=null) 代码很丑陋</p><p>一种做法是创建对象或者方法返回对象时都new一个对象而不是返回null<br>\n不过这样有时也不太好，比如结果为空的时候返回null更合理一点</p><p>有更好的建议么 ？</p>"
 
     .asker
       = avatar User.first, :tiny
