@@ -1,0 +1,13 @@
+= page_field :answers, :title => '1个答案' do
+  .answser
+    .vote
+      .score 0
+      .up= link_to '顶', 'javascript:;'
+      .down= link_to '踩', 'javascript:;'
+
+    .content
+      = sanitize '<p>三元运算符</p>'
+
+    .answerer
+      = avatar User.first, :tiny
+      .name= link_to '李建', '/users/hmm'
