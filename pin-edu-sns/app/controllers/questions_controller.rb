@@ -16,7 +16,14 @@ class QuestionsController < ApplicationController
       unanswered {questions.unanswered}
     end
 
-    return render 'demo_index' if params[:demo]
+    case params[:demo]
+    when 'index'
+      render 'demo_index'
+    when 'show1'
+      render 'demo_show1'
+    when 'show2'
+      render 'demo_show2'
+    end
   end
 
 
