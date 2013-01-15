@@ -334,7 +334,7 @@
 
 .page-homework-timeline{
   min-height:100px;
-  background-color:white;
+  background-color:#F7F7F7;
   border-left:solid 1px #B1B1B1;
   border-bottom:solid 1px #B1B1B1;
   padding:15px;
@@ -366,33 +366,39 @@
   .homeworks{
     .homework{
       @include floatfix;
+      $line-top:140px;
+      $homework-height:$line-top + 6px + $line-top;
+
       position:relative;
-      height:120px + 6px + 120px;
+      height:$homework-height;
       border-top:solid 1px #DADDE0;
       background-color:#F7F7F7;
       margin:0 -15px;
+      margin-bottom:30px;
 
       .title{
         height:24px;line-height:24px;
         background-color:#F2F2F2;
-        border:solid 1px #DADDE0;
+        border:solid 1px #b1b1b1;
         padding:0 7px;
-        float:left;
-        margin-top:(120px + 6px + 120px - 26px) / 2;
+        float:left;margin-left:5px;
+        margin-top:($homework-height - 26px) / 2;
         position:relative;
       }
       .line{
         width:1600px;
         height:6px;background-color:#D6D6D6;
         position:absolute;
-        top:120px;left:1px;
+        top:$line-top;left:1px;
       }
       .events{
         .event{
+          $event-height:100px;
+
           background-color:white;
           font-size:12px;
           position:absolute;
-          height:90px;top:10px;
+          height:$event-height;top:$line-top - 118px;
           width:120px;
           border:solid 1px #b1b1b1;
 
@@ -400,17 +406,111 @@
             @include floatfix;
             padding:5px;
             border-bottom:solid 1px #DADDE0;
-            .avatar{float:left;margin-right:10px;}
+            position:relative;
+            background-color:#F9F9F9;
+            .avatar{float:left;margin-right:10px;img{@include border-radius(0);}}
             .name{font-weight:bold;height:24px;line-height:24px;}
           }
           .c{
             padding:5px;
           }
 
+          &.question{
+            .t{
+              &:before{
+                content:"";
+                width:24px;height:24px;
+                background-color:white;
+                position:absolute;
+                top:3px;
+                right:-4px;
+                border:solid 2px white;
+                box-shadow:0px 0px 1px rgba(black, 0.5);
+              }
+              &:after{
+                content:"";
+                width:24px;height:24px;
+                position:absolute;
+                top:5px;
+                right:-2px;
+                background:url(/assets/question_frame.png);
+              }
+            }
+          }
+
+          // &.comment{
+          //   .t{
+          //     &:before{
+          //       content:"";
+          //       width:24px;height:24px;
+          //       background-color:white;
+          //       position:absolute;
+          //       top:3px;
+          //       right:-4px;
+          //       border:solid 2px white;
+          //       box-shadow:0px 0px 1px rgba(black, 0.5);
+          //     }
+          //     &:after{
+          //       content:"";
+          //       width:24px;height:24px;
+          //       position:absolute;
+          //       top:5px;
+          //       right:-2px;
+          //       background:url(/assets/comment.png);
+          //     }
+          //   }
+          // }
+
+          &.word{
+            .t{
+              &:before{
+                content:"";
+                width:24px;height:24px;
+                background-color:white;
+                position:absolute;
+                top:3px;
+                right:-4px;
+                border:solid 2px white;
+                box-shadow:0px 0px 1px rgba(black, 0.5);
+              }
+              &:after{
+                content:"";
+                width:24px;height:24px;
+                position:absolute;
+                top:5px;
+                right:-2px;
+                background:url(/assets/word.png);
+              }
+            }
+          }
+
+          &.code{
+            .t{
+              &:before{
+                content:"";
+                width:24px;height:24px;
+                background-color:white;
+                position:absolute;
+                top:3px;
+                right:-4px;
+                border:solid 2px white;
+                box-shadow:0px 0px 1px rgba(black, 0.5);
+              }
+              &:after{
+                content:"";
+                width:24px;height:24px;
+                position:absolute;
+                top:5px;
+                right:-2px;
+                background:url(/assets/code.png);
+              }
+            }
+          }
+
           &:after{
             position:absolute;
             content:"";
-            top:90px;
+            top:$event-height;
             left:-1px;
             height:10px;
             width:10px;
@@ -420,7 +520,7 @@
           &:before{
             position:absolute;
             content:"";
-            top:105px;
+            top:$event-height + 13px;
             left:-7px;
             height:10px;
             width:10px;
@@ -431,7 +531,7 @@
           }
 
           &.down{
-            top:143px;
+            top:$line-top + 22px;
             &:after{
               position:absolute;
               content:"";
@@ -445,7 +545,7 @@
             &:before{
               position:absolute;
               content:"";
-              top:-28px;
+              top:-27px;
               left:-7px;
               height:10px;
               width:10px;
