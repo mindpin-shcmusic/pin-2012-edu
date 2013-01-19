@@ -1,8 +1,8 @@
 - hgoback '/courses'
 - hbreadcrumb '首页', '/'
 - hbreadcrumb 'Java程序设计', 'javascript:;'
-- hbreadcrumb '方案一', "/courses?demo=show"
-- hbreadcrumb '第一章', 'javascript:;'
+- hbreadcrumb '方案一', "/courses?demo=show&hide=false"
+- hbreadcrumb '第一章节', 'javascript:;'
 - hbreadcrumb '编辑'
 
 :ruby
@@ -14,7 +14,7 @@
           :title => '课件', :isFolder => true, :expand => false,
           :children=>[
             {
-              :title => 'xxx.ppt'
+              :title => '介绍深入生活的JAVA语言.ppt'
             }
           ]
         }
@@ -26,18 +26,18 @@
   .base-info
     .title.editcontent
       = link_to "编辑","javascript:void(0);", :class => "edit"
-      .info1{:style => "display:inline;"} 章节标题
-      .info2{:style => "display:none;"} 第一章
+      .info1{:style => "display:inline;"} 第一章节
+      .info2{:style => "display:none;"} java语言与对象
       .form{:style => "display:none;"}
-        = text_field_tag "title","章节标题"
+        = text_field_tag "title","第一章节"
         = link_to "保存","javascript:void(0);", :class => "save"
 
     .desc.editcontent
       = link_to "编辑","javascript:void(0);", :class => "edit"
-      .info1{:style => "display:inline;"} 章节描述信息
-      .info2{:style => "display:none;"} 第二章描述
+      .info1{:style => "display:inline;"} 章节还没有简介信息
+      .info2{:style => "display:none;"} 讲述java语言中的对象
       .form{:style => "display:none;"}
-        = text_area_tag "desc","章节描述"
+        = text_area_tag "desc","章节还没有简介信息"
         = link_to "保存","javascript:void(0);", :class => "save"
 
   .desc-info
@@ -53,14 +53,14 @@
             .title.editcontent
               = link_to "编辑","javascript:void(0);", :class => "edit"
               .info1{:style => "display:inline;"} 课件标题
-              .info2{:style => "display:none;"} 课件标题save
+              .info2{:style => "display:none;"} JAVA语言的基本概念
               .form{:style => "display:none;"}
                 = text_field_tag "desc","课件标题"
                 = link_to "保存","javascript:void(0);", :class => "save"
             .desc.editcontent
               = link_to "编辑","javascript:void(0);", :class => "edit"
               .info1{:style => "display:inline;"} 课件描述
-              .info2{:style => "display:none;"} 课件描述save
+              .info2{:style => "display:none;"} 详细讲解JAVA语言的基本概念
               .form{:style => "display:none;"}
                 = text_area_tag "desc","课件描述"
                 = link_to "保存","javascript:void(0);", :class => "save"
@@ -69,22 +69,20 @@
             = link_to "从我的资源盘选取","#"
             = render '/c1/parts/upload'
             %ul.kejian-list{:style=>"display:none;"}
-              %li PPT1
-              %li PPT2
-              %li PPT3
+              %li JAVA语言的基本概念.ppt
         .content
           .kejian-base-info{:style=>"float:left;"}
             .title.editcontent
               = link_to "编辑","javascript:void(0);", :class => "edit"
-              .info1{:style => "display:inline;"} 课件标题2
-              .info2{:style => "display:none;"} 课件标题save2
+              .info1{:style => "display:inline;"} 课件标题
+              .info2{:style => "display:none;"} 深入生活的JAVA语言
               .form{:style => "display:none;"}
                 = text_field_tag "desc","课件标题"
                 = link_to "保存","javascript:void(0);", :class => "save"
             .desc.editcontent
               = link_to "编辑","javascript:void(0);", :class => "edit"
-              .info1{:style => "display:inline;"} 课件描述2
-              .info2{:style => "display:none;"} 课件描述save2
+              .info1{:style => "display:inline;"} 课件描述
+              .info2{:style => "display:none;"} 介绍深入生活的JAVA语言
               .form{:style => "display:none;"}
                 = text_area_tag "desc","课件描述"
                 = link_to "保存","javascript:void(0);", :class => "save"
@@ -98,4 +96,4 @@
               .submit= link_to "确定", "javascript:;"
 
             %ul.kejian-list{:style=>"display:none;"}
-              %li PPT1
+              %li 介绍深入生活的JAVA语言.ppt
