@@ -1,7 +1,12 @@
-= page_field :'audio-list', :title=>'教学方案表单' do
-      .detail.images
+- hgoback '/courses'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb 'Java程序设计', 'javascript:;'
+- hbreadcrumb '添加教学方案'
 
-      = form_tag(:url => { :action => 'forgot' })  do
+.page-model-show
+  = page_field :'audio-list', :title=>'教学方案表单' do
+    .detail.images
+      = form_tag(:url => {:action => 'forgot'})  do
         .field
           %label 标题
           = text_field_tag :title
