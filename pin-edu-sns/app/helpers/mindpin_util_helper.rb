@@ -88,6 +88,12 @@ module MindpinUtilHelper
         avatar(user, style)
       end
     end
+
+    def demo_avatar_by_name(str)
+      id = str.hash%20+2
+      user = User.find(id)
+      avatar user, :mini
+    end
   end
 
   module UserSignMethods

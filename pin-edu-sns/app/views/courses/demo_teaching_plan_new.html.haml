@@ -1,0 +1,13 @@
+= page_field :'audio-list', :title=>'教学方案表单' do
+      .detail.images
+
+      = form_tag(:url => { :action => 'forgot' })  do
+        .field
+          %label 标题
+          = text_field_tag :title
+
+        .field
+          %label 描述
+          = text_area_tag :title
+
+        = link_to '提交', '/courses?demo=show'
