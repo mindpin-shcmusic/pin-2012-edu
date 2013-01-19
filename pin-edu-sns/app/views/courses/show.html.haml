@@ -71,20 +71,23 @@
                         .avatar= avatar student, :tiny
                         .name= user_link student
 
-    = page_field :'image-list', :title=>'课程照片' do
-      .detail.images
-        .upload= jupload_button '上传照片'
-        = render '/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_IMAGE).with_semester(current_semester)
-        = render '/courses/parts/uploader', :course=>@course, :kind=>:image, :semester => current_semester
+    / = page_field :'image-list', :title=>'课程照片' do
+    /   .detail.images
+    /     .upload= jupload_button '上传照片'
+    /     = render '/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_IMAGE).with_semester(current_semester)
+    /     = render '/courses/parts/uploader', :course=>@course, :kind=>:image, :semester => current_semester
 
-    = page_field :'courseware-list', :title=>'课程课件' do
-      .detail.images
-        .upload= jupload_button '上传课件'
-        = render '/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_COURSEWARE).with_semester(current_semester)
-        = render '/courses/parts/uploader', :course=>@course, :kind=>:courseware, :semester => current_semester
+    / = page_field :'courseware-list', :title=>'课程课件' do
+    /   .detail.images
+    /     .upload= jupload_button '上传课件'
+    /     = render '/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_COURSEWARE).with_semester(current_semester)
+    /     = render '/courses/parts/uploader', :course=>@course, :kind=>:courseware, :semester => current_semester
 
-    = page_field :'audio-list', :title=>'课程音频' do
-      .detail.images
-        .upload= jupload_button '上传音频'
-        = render '/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_AUDIO).with_semester(current_semester)
-        = render '/courses/parts/uploader', :course=>@course, :kind=>:audio, :semester => current_semester
+    / = page_field :'audio-list', :title=>'课程音频' do
+    /   .detail.images
+    /     .upload= jupload_button '上传音频'
+    /     = render '/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_AUDIO).with_semester(current_semester)
+    /     = render '/courses/parts/uploader', :course=>@course, :kind=>:audio, :semester => current_semester
+
+    = page_field :'audio-list', :title=>'教学方案' do
+      .add-teaching-plan= link_to '添加教学方案', '/courses?demo=new'
