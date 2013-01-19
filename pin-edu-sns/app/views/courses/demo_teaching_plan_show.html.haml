@@ -3,6 +3,10 @@
 - hbreadcrumb 'Java程序设计', 'javascript:;'
 - hbreadcrumb '教学方案'
 
+- hide = params[:hide] == false ? 'inherit' : 'none'
+:css
+  .page-teaching-plan-show.page-model-show .chapter {display: #{hide};}
+
 .page-teaching-plan-show.page-model-show
   %h1.title Java程序设计教学方案
   = page_field :description, :title => '教学方案描述' do
