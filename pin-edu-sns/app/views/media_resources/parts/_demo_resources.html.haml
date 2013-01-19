@@ -1,0 +1,52 @@
+.page-media-resources
+  - if resources.blank?
+    .media-resource-blank.quiet
+      这个文件夹下没有资源
+
+  - resources.each do |resource|
+    :ruby
+      cover_src = '/assets/covers/ppt.small.png'
+      title = resource.name
+      uploaded_at = resource.created_at
+
+      open_url = '/file?demo=show'
+      download_url = 'javascript:;'
+      share_url = 'javascript:;'
+
+      html_data = {
+        :'id'     => resource.id,
+        :'path'   => resource.path
+      } 
+
+    .media-resource{:href=>'javascript:;', :data=>html_data}
+      .meta-box
+        .cover{:'data-src'=>cover_src}
+        .detail
+          .ftime= jtime uploaded_at
+          
+          .link.share= link_to '共享给…', share_url
+          .link.move-dir= jfbox_link :move_dir, '移动到…'
+          .link.delete= link_to '删　除', 'javascript:;'
+
+        .title= link_to title, open_url
+        .course-ware 课件
+
+  
+= jfbox :move_dir, '移动到文件夹' do
+  :ruby
+    is_root = @current_dir.blank?
+
+    dynatree_data = is_root ? MediaResource.root_dynatree(current_user) : @current_dir.preload_dynatree
+    current_dir_path = is_root ? '' : @current_dir.path
+
+    html_data = {
+      :children => dynatree_data.to_json,
+      :current_dir => current_dir_path
+    }
+
+  .page-resource-tree
+    .box
+      .dynatree{:data=>html_data}
+    .ops
+      .submit-selected-dir= link_to '确定移动', 'javascript:;'
+      %a.close-fbox{:href=>'javascript:;', :onclick=>"pie.close_fbox('move_dir')"} 关闭
