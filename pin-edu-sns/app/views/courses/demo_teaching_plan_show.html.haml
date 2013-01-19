@@ -3,6 +3,9 @@
 - hbreadcrumb 'Java程序设计', 'javascript:;'
 - hbreadcrumb '教学方案'
 
+- hide = params[:hide] == 'false'
+- style = hide ? '' : 'display:none;'
+
 .page-model-show
   .page-teaching-plan-show
     .head
@@ -13,7 +16,7 @@
 
     .chapters
       .chs
-        .chapter
+        .chapter{:style=>style}
           .title 第一章节
           .desc 章节还没有简介信息
           .ops
@@ -28,7 +31,7 @@
               .count 0个课件
               .edit= link_to '管理', 'javascript:;'
 
-        .chapter
+        .chapter{:style=>style}
           .title 第二章节
           .desc 章节还没有简介信息
           .ops
@@ -43,7 +46,7 @@
               .count 0个课件
               .edit= link_to '管理', 'javascript:;'
 
-        .chapter
+        .chapter{:style=>style}
           .title 第三章节
           .desc 章节还没有简介信息
           .ops

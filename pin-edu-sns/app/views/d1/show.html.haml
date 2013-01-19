@@ -1,3 +1,42 @@
-教学方案的浏览页面
+:css
+  .top {
+    float: left;
+    width: 100%;
+  }
 
-=link_to "到B1","/courses?demo=show"
+  .sidebar {
+    float: left;
+    width: 120px;
+  }
+
+  .preview {
+    float: left;
+    width: 500px;
+  }
+
+.page-fangan-review
+  .top
+    .title= "方案一"
+    .desc= "这个方案是给第一批学员准备的 主要是学习课程的基础部分以及给与空余时间来熟悉学校环境"
+
+  .sidebar
+    .label="章节选项"
+    .chapter= link_to "面向对象程序设计","javascript:void(0);",:class=>"zhangjie1"
+    .chapter= link_to "数组与字符串","javascript:void(0);",:class=>"zhangjie2"
+    .chapter= link_to "常用Java系统类和接口",""
+    .chapter= link_to "泛型、枚举与for语句的简化写法",""
+    .chapter= link_to "异常处理",""
+    .chapter= link_to "文件与数据流",""
+    .chapter= link_to "图形用户界面程序设计",""
+    .chapter= link_to "多线程程序设计",""
+    
+  .preview1
+    .label="课件在线预览"
+    %ul.list
+      %li 类和对象的基本概念.ppt
+      %li 面向对象程序设计.avi
+  .preview2{:style=>"display:none;"}
+    .label="课件在线预览"
+    %ul.list
+      %li 数组与字符串.ppt
+

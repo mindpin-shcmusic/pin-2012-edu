@@ -634,3 +634,63 @@ pie.load ->
         close: ($wrapper)->
           $wrapper.addClass 'cancel'
           $wrapper.find('.state').html '已取消'
+
+
+#--------------------- 演示 教学方案 的章节编辑页面 上传课件
+pie.load ->
+  $upload_kejian = jQuery('.page-zhangjie-edit .kejian-file')
+  $upload_kejian.each ->
+    $this_ele = jQuery(this)
+
+    $upload_button = $this_ele.find('.page-upload-button')
+    $uploader_elm = $this_ele.find('.page-media-file-uploader')
+    jfbox_id = $this_ele.find('.page-float-box').data('jfbox-id')
+    $kejian_list = $this_ele.find('.kejian-list')
+
+    uploader = new FileUploader $upload_button,
+      render: (file_wrapper)->
+        # 显示上传框
+        pie.open_fbox jfbox_id
+
+        # 添加上传进度条
+        $file = $uploader_elm.find('.progress-bar-sample .file').clone()
+        $list = $uploader_elm.find('.uploading-files-list').append($file)
+
+        $file.find('.name').html file_wrapper.file_name
+        $file.find('.size').html file_wrapper.get_size_str()
+
+        $file.find('a.close').click ->
+          file_wrapper.close()
+
+        $file
+          .hide()
+          .fadeIn(100)
+          .appendTo $list
+
+        return $file
+
+      set_progress: ($wrapper, percent)->
+        pstr = "#{percent}%"
+
+        $wrapper.find('.percent').html(pstr)
+
+        if 0 == percent
+          $wrapper.find('.bar .p').css('width', pstr)
+        else
+          $wrapper.find('.bar .p').animate({'width': pstr}, 100)
+
+      set_speed: ($wrapper, speed)->
+        $wrapper.find('.speed').html("#{speed}KB/s")
+
+      success: (file_wrapper)->
+        pie.close_fbox(jfbox_id)
+        $kejian_list.show()
+        
+
+      error: ($wrapper, msg)->
+        $wrapper.addClass 'error'
+        $wrapper.find('.state').html msg || '上传出错'
+
+      close: ($wrapper)->
+        $wrapper.addClass 'cancel'
+        $wrapper.find('.state').html '已取消'

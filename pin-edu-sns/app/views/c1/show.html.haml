@@ -1,12 +1,101 @@
-%div
-  编辑第一章节的标题和描述
-%div
-  增加三个课件资源
+- hgoback '/courses'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb 'Java程序设计', 'javascript:;'
+- hbreadcrumb '方案一', "/courses?demo=show"
+- hbreadcrumb '第一章', 'javascript:;'
+- hbreadcrumb '编辑'
 
-%div
-  给第一个课件资源上传PPT
+:ruby
+  resources = [
+    {
+      :title => '个人资源库', :isFolder => true, :activate => true, :expand => true,
+      :children=>[
+        {
+          :title => '课件', :isFolder => true, :expand => false,
+          :children=>[
+            {
+              :title => 'xxx.ppt'
+            }
+          ]
+        }
+      ]
+    }
+  ]
 
-%div
-  给第二个课件关联文件
+.page-zhangjie-edit
+  .base-info
+    .title.editcontent
+      = link_to "编辑","javascript:void(0);", :class => "edit"
+      .info1{:style => "display:inline;"} 章节标题
+      .info2{:style => "display:none;"} 第一章
+      .form{:style => "display:none;"}
+        = text_field_tag "title","章节标题"
+        = link_to "保存","javascript:void(0);", :class => "save"
 
-= link_to "到B2的链接","/courses?demo=show"
+    .desc.editcontent
+      = link_to "编辑","javascript:void(0);", :class => "edit"
+      .info1{:style => "display:inline;"} 章节描述信息
+      .info2{:style => "display:none;"} 第二章描述
+      .form{:style => "display:none;"}
+        = text_area_tag "desc","章节描述"
+        = link_to "保存","javascript:void(0);", :class => "save"
+
+  .desc-info
+    .tabs
+      .navs
+        = link_to "1",'javascript:void(0);',:class=>"nav current",:style=>"display:none;"
+        = link_to "2",'javascript:void(0);',:class=>"nav",:style=>"display:none;"
+        = link_to "3",'javascript:void(0);',:class=>"nav",:style=>"display:none;"
+        = link_to "+",'javascript:void(0);',:class=>"add"
+      .contents
+        .content.clearfix
+          .kejian-base-info{:style=>"float:left;"}
+            .title.editcontent
+              = link_to "编辑","javascript:void(0);", :class => "edit"
+              .info1{:style => "display:inline;"} 课件标题
+              .info2{:style => "display:none;"} 课件标题save
+              .form{:style => "display:none;"}
+                = text_field_tag "desc","课件标题"
+                = link_to "保存","javascript:void(0);", :class => "save"
+            .desc.editcontent
+              = link_to "编辑","javascript:void(0);", :class => "edit"
+              .info1{:style => "display:inline;"} 课件描述
+              .info2{:style => "display:none;"} 课件描述save
+              .form{:style => "display:none;"}
+                = text_area_tag "desc","课件描述"
+                = link_to "保存","javascript:void(0);", :class => "save"
+          .kejian-file{:style=>"float:left;"}
+            = jupload_button "上传课件文件"
+            = link_to "从我的资源盘选取","#"
+            = render '/c1/parts/upload'
+            %ul.kejian-list{:style=>"display:none;"}
+              %li PPT1
+              %li PPT2
+              %li PPT3
+        .content
+          .kejian-base-info{:style=>"float:left;"}
+            .title.editcontent
+              = link_to "编辑","javascript:void(0);", :class => "edit"
+              .info1{:style => "display:inline;"} 课件标题2
+              .info2{:style => "display:none;"} 课件标题save2
+              .form{:style => "display:none;"}
+                = text_field_tag "desc","课件标题"
+                = link_to "保存","javascript:void(0);", :class => "save"
+            .desc.editcontent
+              = link_to "编辑","javascript:void(0);", :class => "edit"
+              .info1{:style => "display:inline;"} 课件描述2
+              .info2{:style => "display:none;"} 课件描述save2
+              .form{:style => "display:none;"}
+                = text_area_tag "desc","课件描述"
+                = link_to "保存","javascript:void(0);", :class => "save"
+          .kejian-file{:style=>"float:left;"}
+            = jupload_button "上传课件文件"
+            =jfbox_link :select, "从我的资源盘选取"
+            = render '/c1/parts/upload'
+
+            = jfbox :select, "选择课件" do
+              .dynatree{:data=>{:children=>resources.to_json}}
+              .submit= link_to "确定", "javascript:;"
+
+            %ul.kejian-list{:style=>"display:none;"}
+              %li PPT1

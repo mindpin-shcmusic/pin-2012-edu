@@ -3,6 +3,7 @@ class MediaResourcesController < ApplicationController
   before_filter :login_required
 
   def index
+    return render "demo_#{params[:demo]}" if params[:demo]
     @dir = nil
     @media_resources = current_user.media_resources.root_res.web_order
     render :action => 'index'

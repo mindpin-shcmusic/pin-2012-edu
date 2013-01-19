@@ -1,0 +1,46 @@
+.page-media-resources
+  - if resources.blank?
+    .media-resource-blank.quiet
+      这个文件夹下没有资源
+
+  - if !params[:step]      
+    .media-resource{:href=>'javascript:;'}
+      .meta-box
+        .cover{:'data-src'=> '/assets/covers/folder.small.png'}
+        .detail
+          .ftime= jtime 5.days.ago
+
+          .link.share= link_to '共享给…', 'javascript:;'
+          .link.move-dir= jfbox_link :move_dir, '移动到…'
+          .link.delete= link_to '删　除', 'javascript:;'
+
+        .title= link_to 'Java程序设计', '/file?demo=index&step=1'
+
+  - else    
+    - resources.each do |resource|
+      :ruby
+        cover_src = '/assets/covers/ppt.small.png'
+        title = resource.name
+        uploaded_at = resource.created_at
+
+        open_url = '/file?demo=show'
+        download_url = 'javascript:;'
+        share_url = 'javascript:;'
+
+        html_data = {
+          :'id'     => resource.id,
+          :'path'   => resource.path
+        } 
+
+      .media-resource{:href=>'javascript:;', :data=>html_data}
+        .meta-box
+          .cover{:'data-src'=>cover_src}
+          .detail
+            .ftime= jtime uploaded_at
+
+            .link.share= link_to '共享给…', share_url
+            .link.move-dir= jfbox_link :move_dir, '移动到…'
+            .link.delete= link_to '删　除', 'javascript:;'
+
+          .title= link_to title, open_url
+          .course-ware 课件

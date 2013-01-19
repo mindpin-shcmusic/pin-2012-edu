@@ -1,3 +1,41 @@
-分配学生页面
+- hgoback '/courses'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb 'Java程序设计', 'javascript:;'
+- hbreadcrumb '方案一', "/courses?demo=show"
+- hbreadcrumb '第一章', 'javascript:;'
+- hbreadcrumb '分配学生'
 
-= jfsubmit '确定'
+:ruby
+  student_names = "关平,关彝,张嶷,周仓,魏延,关索,关统,夏侯霸,关兴,赵云,黄月英,张飞,关羽,王平,黄盖,张翼,黄崇,吕凯,黄忠,黄承彦,张苞,姜维"
+
+  students = student_names.split(',').map{|name|Student.find_by_real_name(name)}
+
+.page-admin-students-selector
+
+  = form_tag "#", :method=>:put do |f|
+    .list-selector
+      .search
+        .field
+          %input.search{:type=>'text'}
+        .desc
+          小提示：可以输入中文或拼音来快速查找
+      .filter
+        %a.all.view{:href=>'javascript:;'} 全部
+        %a.selected{:href=>'javascript:;'} 已选
+        %a.unselected{:href=>'javascript:;'} 未选
+      .selector
+        .list
+          - (students).each do |student|
+            :ruby
+              html_data = {
+                :id => student.user_id,
+                :name => student.real_name
+              }
+
+            .item{:class=>'selected', :data=>html_data}
+              .name= student.real_name
+      - selected_ids_str = ""
+      %input.ids{:name=>:student_user_ids, :type=>'hidden', :value=>selected_ids_str}
+
+    .field.submit
+      = link_to "确定","/courses?demo=show&hide=false"

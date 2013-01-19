@@ -1,5 +1,3 @@
-jQuery('.page-teaching-plan-show .chapter').hide()
-
 jQuery('.page-teaching-plan-show .chapter .publish a').click ->
   text = if jQuery(this).text() == '发布' then '不发布' else '发布'
   jQuery(this).text(text)
