@@ -8,12 +8,15 @@ class CoursesController < ApplicationController
   end
 
   def index
+    return render "demo_teaching_plan_#{params[:demo]}" if params[:demo]
+
     case params[:tab]
     when 'mine'
       _index_mine
     else
       _index_all
     end
+
   end
 
   def show
