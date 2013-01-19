@@ -92,7 +92,7 @@
                   %span.start= course_time_expression.start_time_str
                   %span -
                   %span.end= course_time_expression.end_time_str
-                .course>= link_to course.name, "/courses/#{course.id}"
+                .course>= link_to truncate_u(course.name, 10), "/courses/#{course.id}"
                 - if current_user.is_teacher?
                   .students
                     %span.count>= students_count
