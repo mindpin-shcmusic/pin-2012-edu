@@ -17,13 +17,14 @@
 
   = page_field :'chapters', :title => '章节信息' do
     .create-button= link_to '新增章节', 'javascript:;'
+    =link_to "预览","/d1/show"
     - case params[:step]
     - when '1'
       .chapter
         .title 第一章节
-        .edit= link_to '编辑', 'javascript:;'
+        .edit= link_to '编辑', '/c1/show'
         .remove= link_to '删除', 'javascript:;'
-        .students= link_to '分配学生', 'javascript:;'
+        .students= link_to '分配学生', '/f1/show'
         .homeworks= link_to '管理学生', 'javascript:;'
         .publish= link_to '发布', 'javascript:;'
       .chapter
