@@ -21,7 +21,8 @@
     .navs
       %span= link_to '根文件夹', '/file'
       %span= link_to '我的课件资源', 'javascript:;'
-      %span= link_to 'Java程序设计', 'javascript:;'
+      - if params[:step]    
+        %span= link_to 'Java程序设计', 'javascript:;'
 
 = render 'media_resources/parts/create_folder_box', :current_dir=>@current_dir
 = render 'media_resources/parts/upload_file_box', :current_dir=>@current_dir
