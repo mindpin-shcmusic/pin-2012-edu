@@ -15,28 +15,25 @@
 
   = page_field :'chapters', :title => '章节信息' do
     .create-button= link_to '新增章节', 'javascript:;'
-    - case params[:step]
-    - when '1'
-      .chapter
-        .title 第一章节
-        .edit= link_to '编辑', 'javascript:;'
-        .remove= link_to '删除', 'javascript:;'
-        .students= link_to '分配学生', 'javascript:;'
-        .homeworks= link_to '管理学生', 'javascript:;'
-        .publish= link_to '发布', 'javascript:;'
-      .chapter
-        .title 第二章节
-        .edit= link_to '编辑', 'javascript:;'
-        .remove= link_to '删除', 'javascript:;'
-        .students= link_to '分配学生', 'javascript:;'
-        .homeworks= link_to '管理学生', 'javascript:;'
-        .publish= link_to '发布', 'javascript:;'
-      .chapter
-        .title 第三章节
-        .edit= link_to '编辑', 'javascript:;'
-        .remove= link_to '删除', 'javascript:;'
-        .students= link_to '分配学生', 'javascript:;'
-        .homeworks= link_to '管理学生', 'javascript:;'
-        .publish= link_to '发布', 'javascript:;'
-    - else
-      还没有添加任何章节信息
+    .chapter
+      .title 第一章节
+      .edit= link_to '编辑', 'javascript:;'
+      .remove= link_to '删除', 'javascript:;'
+      .students= link_to '分配学生', 'javascript:;'
+      .homeworks= link_to '管理学生', 'javascript:;'
+      .publish= link_to '发布', 'javascript:;'
+    .chapter
+      .title 第二章节
+      .edit= link_to '编辑', 'javascript:;'
+      .remove= link_to '删除', 'javascript:;'
+      .students= link_to '分配学生', 'javascript:;'
+      .homeworks= link_to '管理学生', 'javascript:;'
+      .publish= link_to '发布', 'javascript:;'
+    .chapter
+      .title 第三章节
+      .edit= link_to '编辑', 'javascript:;'
+      .remove= link_to '删除', 'javascript:;'
+      .students= link_to '分配学生', 'javascript:;'
+      .homeworks= link_to '管理学生', 'javascript:;'
+      .publish= link_to '发布', 'javascript:;'
+    .blank 还没有添加任何章节信息

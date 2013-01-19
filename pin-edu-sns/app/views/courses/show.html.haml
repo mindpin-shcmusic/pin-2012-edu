@@ -89,5 +89,7 @@
     /     = render '/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_AUDIO).with_semester(current_semester)
     /     = render '/courses/parts/uploader', :course=>@course, :kind=>:audio, :semester => current_semester
 
-    = page_field :'audio-list', :title=>'教学方案' do
+    = page_field :'teaching-plans', :title=>'教学方案' do
+      .teaching-plan
+        .title 教学方案一
       .add-teaching-plan= link_to '添加教学方案', '/courses?demo=new'
