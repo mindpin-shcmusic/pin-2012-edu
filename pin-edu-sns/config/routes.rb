@@ -331,5 +331,10 @@ MindpinEduSns::Application.routes.draw do
       put :announce
     end
   end
+  
+  get '/c1/show' => 'c1#show'
+
+  get '/f1/show' => 'f1#show'
+  get '/d1/show' => 'd1#show'
 
 end
