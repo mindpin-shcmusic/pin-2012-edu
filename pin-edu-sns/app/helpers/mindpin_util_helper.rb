@@ -169,6 +169,11 @@ module MindpinUtilHelper
                             :class => 'form-submit-button'
     end
 
+    def jfsubmit_stop(text, href)
+      content_tag :a, text, :href => href,
+                            :class => 'form-submit-button stop'
+    end
+
     def jfcancel(text)
       # %a.form-cancel-button{:href=>'javascript:history.go(-1);'} 返回
       content_tag :a, text, :href => 'javascript:history.go(-1);',
