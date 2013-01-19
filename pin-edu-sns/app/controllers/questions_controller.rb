@@ -15,6 +15,8 @@ class QuestionsController < ApplicationController
       answered   {questions.answered}
       unanswered {questions.unanswered}
     end
+
+    render "demo_#{params[:demo]}" if params[:demo]
   end
 
 

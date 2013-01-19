@@ -1,0 +1,175 @@
+.page-homework-timeline
+  .teacher
+    .avatar= avatar current_user
+    .title
+      #{current_user.real_name} 老师的作业管理时间线
+
+  .homeworks
+    .homework
+      .line
+      .title 第四章课后习题
+      .events
+        .event.word{:style=>'left:140px;'}
+          .t
+            .avatar= demo_avatar_by_name("张三丰")
+            .name 张三丰
+          .c 
+            .c1 上传附件：要求说明
+            %a{:href=>'javascript:;'} 打开下载
+        .event.comment{:style=>'left:280px;'}
+          .t
+            .avatar= demo_avatar_by_name("李雷")
+            .name 李雷
+          .c 这么快就有人做完了？……
+        .event.code{:style=>'left:420px;'}
+          .t
+            .avatar= demo_avatar_by_name("韩梅梅")
+            .name 韩梅梅
+          .c 
+            .c1 上传：习题1代码
+            %a{:href=>'javascript:;'} 打开下载
+        .event.question{:style=>'left:560px;'}
+          .t
+            .avatar= demo_avatar_by_name("李飞")
+            .name 李飞
+          .c
+            .c1 提出问题：挺难的
+            %a{:href=>'javascript:;'} 打开查看
+
+        .event.down.code{:style=>'left:170px;'}
+          .t
+            .avatar= demo_avatar_by_name("门旭")
+            .name 门旭
+          .c 
+            .c1 上传：习题1代码
+            %a{:href=>'javascript:;'} 打开下载
+
+        .event.down.comment{:style=>'left:370px;'}
+          .t
+            .avatar= demo_avatar_by_name("邹柏青")
+            .name 邹柏青
+          .c 咱们一起讨论下呗
+
+        .event.down.comment{:style=>'left:620px;'}
+          .t
+            .avatar= demo_avatar_by_name("吴笛")
+            .name 吴笛
+          .c ……提个建议，以后的作业可以以小组为单位来做
+
+        .event.code{:style=>'left:720px;'}
+          .t
+            .avatar= demo_avatar_by_name("宋亮")
+            .name 宋亮
+          .c
+            .c1 上传：习题1代码
+            %a{:href=>'javascript:;'} 打开下载
+
+        .event.down.code{:style=>'left:760px;'}
+          .t
+            .avatar= demo_avatar_by_name("吴笛")
+            .name 吴笛
+          .c
+            .c1 上传：习题1代码
+            %a{:href=>'javascript:;'} 打开下载
+
+    .homework
+      .line
+      .title 第三章课后习题
+      .events
+        .event.word{:style=>'left:140px;'}
+          .t
+            .avatar= demo_avatar_by_name("张三丰")
+            .name 张三丰
+          .c 
+            .c1 上传附件：要求说明
+            %a{:href=>'javascript:;'} 打开下载
+        .event.question{:style=>'left:286px;'}
+          .t
+            .avatar= demo_avatar_by_name("黄锴")
+            .name 黄锴
+          .c 
+            .c1 提出问题：关于算法
+            %a{:href=>'javascript:;'} 打开查看
+
+        .event.code{:style=>'left:470px;'}
+          .t
+            .avatar= demo_avatar_by_name("聂建元")
+            .name 聂建元
+          .c 
+            .c1 上传：习题2代码
+            %a{:href=>'javascript:;'} 打开下载
+
+        .event.comment{:style=>'left:620px;'}
+          .t
+            .avatar= demo_avatar_by_name("韩梅梅")
+            .name 韩梅梅
+          .c 
+            .c1 上传：多个附件
+            %a{:href=>'javascript:;'} 打开下载
+
+        .event.down.code{:style=>'left:240px;'}
+          .t
+            .avatar= demo_avatar_by_name("门旭")
+            .name 门旭
+          .c 
+            .c1 上传：习题2代码
+            %a{:href=>'javascript:;'} 打开下载
+
+        .event.down.comment{:style=>'left:400px;'}
+          .t
+            .avatar= demo_avatar_by_name("李雷")
+            .name 李雷
+          .c 比上一次的难
+
+        .event.down.question{:style=>'left:580px;'}
+          .t
+            .avatar= demo_avatar_by_name("聂建元")
+            .name 聂建元
+          .c
+            .c1 提出问题：卡壳了求思路
+            %a{:href=>'javascript:;'} 打开查看
+
+    .homework
+      .line
+      .title 第二章课后习题
+      .events
+        .event.word{:style=>'left:140px;'}
+          .t
+            .avatar= demo_avatar_by_name("张三丰")
+            .name 张三丰
+          .c 
+            .c1 上传附件：要求说明
+            %a{:href=>'javascript:;'} 打开下载
+
+        .event.comment{:style=>'left:300px;'}
+          .t
+            .avatar= demo_avatar_by_name("宋亮")
+            .name 宋亮
+          .c 
+            .c1 上传：多个附件
+            %a{:href=>'javascript:;'} 打开下载
+        .event.down.comment{:style=>'left:470px;'}
+          .t
+            .avatar= demo_avatar_by_name("吴笛")
+            .name 吴笛
+          .c 小组作业由谁提交？
+
+    .homework
+      .line
+      .title 第一章课后习题
+      .events
+
+        .event.word{:style=>'left:140px;'}
+          .t
+            .avatar= demo_avatar_by_name("张三丰")
+            .name 张三丰
+          .c 
+            .c1 上传附件：要求说明
+            %a{:href=>'javascript:;'} 打开下载
+        .event.comment{:style=>'left:300px;'}
+          .t
+            .avatar= demo_avatar_by_name("曾涛")
+            .name 曾涛
+          .c 
+            .c1 上传：多个附件
+            %a{:href=>'javascript:;'} 打开下载

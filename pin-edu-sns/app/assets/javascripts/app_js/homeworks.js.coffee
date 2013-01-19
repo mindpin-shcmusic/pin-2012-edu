@@ -1,20 +1,14 @@
 pie.load ->
-  # 布置作业时，选择班级
-  jQuery('.page-homework-form .teams-selector').select2()
-
-  # 布置作业时，选择课程
-  jQuery('.page-homework-form .courses-selector').select2()
-
   # -------------------
 
   # 创建作业，增加需求项
-  jQuery('.page-homework-form .add-student-attachement-field').click ->
+  jQuery('.page-model-form.homework .add-student-attachement-field').click ->
     attachement_field = "<input type='text' size='30' name='homework[homework_requirements_attributes][][title]'>"
     del_field = "<a href='javascript:;' class='delete'>×</a>"
-    jQuery('.page-homework-form .student-attachement-fields').append("<div>#{attachement_field}#{del_field}</div>")
+    jQuery('.page-model-form.homework .student-attachement-fields').append("<div>#{attachement_field}#{del_field}</div>")
 
   # 删除需求项
-  jQuery('.page-homework-form .student-attachement-fields a.delete').live 'click', ->
+  jQuery('.page-model-form.homework .student-attachement-fields a.delete').live 'click', ->
     jQuery(this).parent().remove()
 
   # --------------------
@@ -30,7 +24,7 @@ pie.load ->
       $('.student-home-work-status .signed').removeClass('hide').hide().fadeIn()
 
 
-  jQuery('.page-homework-show .student-submit a.form-button').click ->
+  jQuery('.page-model-show.homework .student-submit a.form-button').click ->
     $student_submit = jQuery(this).closest('.student-submit')
     url = $student_submit.data('url')
     content = $student_submit.find('textarea').val()

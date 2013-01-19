@@ -301,14 +301,14 @@ pie.load ->
 # 作业附件上传
 pie.load ->
 
-  $upload_button = jQuery('.page-homework-form .page-upload-button')
+  $upload_button = jQuery('.page-model-form.homework .page-upload-button')
 
   if $upload_button.exists()
     uploader = new FileUploader $upload_button,
       render: (file_wrapper)->        
         # 添加上传进度条
-        $file = jQuery('.page-homework-form .field.attachments .sample.hide .file').clone()
-        $list = jQuery('.page-homework-form .field.attachments')
+        $file = jQuery('.page-model-form.homework .field.attachments .sample.hide .file').clone()
+        $list = jQuery('.page-model-form.homework .field.attachments')
 
         $file.find('.name').html file_wrapper.file_name
 
@@ -346,7 +346,7 @@ pie.load ->
 # --------------
 # 作业提交物上传
 pie.load ->
-  $upload_buttons = jQuery('.page-homework-show .page-upload-button')
+  $upload_buttons = jQuery('.page-model-show.homework .page-upload-button')
 
   $upload_buttons.each ->
     $button = jQuery(this)
@@ -389,7 +389,7 @@ pie.load ->
           success: (res)->
             file_wrapper.$elm.addClass('complete').removeClass('uploading')
             if res.all_completed
-              file_wrapper.$elm.closest('.student-info').find('.student-submit').show()
+              file_wrapper.$elm.closest(".page-model-show.homework").find('.student-submit').show()
           error: ->
             file_wrapper.error()
 

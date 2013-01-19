@@ -1,22 +1,41 @@
 - htitle '课程维护'
 
 - hbreadcrumb '首页', '/'
-- hbreadcrumb '课程调查', '/course_surveys'
-- hbreadcrumb '增加课程调查'
+- hbreadcrumb '在线调查', '/course_surveys'
+- hbreadcrumb '填写调查'
+
+:ruby
+  ls = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+  oh = ActiveSupport::OrderedHash.new
+  oh['您的性别是？'] = ['男','女']
+  oh['您的年龄是？'] = ['16~18','19~21','22~24']
+  oh['您的年级是？'] = ['大一','大二','大三','大四']
+  oh['您的专业是？'] = ['理科类','文科类','艺术类']
+  oh['您的家庭所在地?'] = ['城市','乡镇','农村']
+  oh['您的家庭经济情况是?'] = ['富裕','小康','困难']
+  oh['您的月消费大约是?'] = ['500以下','500~800','800~1100','1100~1400']
+  oh['您的生活费的来源是?'] = ['父母支持','勤工俭学','政府贷款','奖学金','都有']
+  oh['您最希望的生活费的来源是?'] = ['父母支持','勤工俭学','政府贷款','奖学金','都有']
+  oh['您的消费支出比例最大的是?'] = ['伙食费','娱乐所用费用','通讯费用','电子产品','都有']
+  oh['您是否有记账的习惯?'] = ['有，每天都记','有，每月总结','没有，但想过','从没有']
+  oh['您觉得生活费是否够用?'] = ['是，比较宽松','是，刚刚好','不，比较紧张','不，完全不够']
+  oh['生活费不够时，你会?'] = ['减少开支','找父母要','向同学借钱','自己打工挣钱']
+  oh['您对待大学中请客，娱乐等活动的态度是?'] = ['无可厚非','持批评态度','中立']
+  oh['学校是否组织过关于消费观的讲座?'] = ['是','否']
+  oh['您赞成以下哪种观点?'] = ['节俭是种美德，永远不会过时','一定范围内可以提倡勤俭节约','全社会提倡勤俭节约不现实','我喜欢的东西，再贵也会花钱买下来']
+  oh['在你现在的人际交往中，您觉得您的人际关系如何?'] = ['关系不错，我很满意','人际关系一般，勉强过得去','关系很差，不知道怎么办']
+  oh['与他人同住一室后，您是否觉得自己生活规律被打破?'] = ['是','不是','有点','无所谓']
 
 .page-model-form
-  = flash_info
-  :ruby
-    kind = params[:kind]
-    case kind
-    when '1'
-      record = CourseSurveyRecord.new
-      form = 'form_1'
-    when '2'
-      record = CourseSurveyEsRecord.new
-      form = 'form_2'
-    end
+  .page-survey-questions
+    .tt 大学生消费状况调查
 
-  = form_for record, :url => "/course_surveys/#{@course_survey.id}/course_survey_records?kind=#{kind}" do |f|
-    
-    =render form, :f => f
+    - oh.each do |title, arr|
+      = page_field :title, :title=>title do
+        - i = -1
+        - arr.each do |t|
+          .item
+            .f
+              %input{:type=>:radio}
+            .i= ls[i+=1]
+            .t= t

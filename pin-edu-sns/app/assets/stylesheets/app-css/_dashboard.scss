@@ -326,27 +326,43 @@
       margin-left:-15px;
       margin-right:-15px;
       margin-bottom:0;
-      .homework{
-        padding:0 15px 0 35px;
-        height:40px;line-height:40px;
-        overflow:hidden;
-        border-bottom:solid 1px #E8E8E8;
-        position:relative;
-        &:last-child{border:none;}
-        &:before{
-          content:"";
-          @include border-radius(10px);
-          height:10px;
-          width:10px;
-          position:absolute;
-          top:15px;
-          left:15px;
-          background-color:#2C86D4;
+      .tabs{
+        .navs{
+          border-bottom:solid 1px #E5E5E5;
+          height:40px;line-height:40px;
+          @include floatfix;
+          background-color:#F1F1F1;
+          .nav{
+            float:left;height:30px;line-height:30px;
+            padding:0 15px;
+            margin-top:9px;
+            border-right:solid 1px #E5E5E5;
+            background-color:#F8F8F8;
+            border-top:solid 1px #E5E5E5;
+            border-bottom:solid 1px #E5E5E5;
+            color:#555;
+            &.current{
+              background-color:white;
+              border-bottom-color:white;
+            }
+          }
         }
-        .title, .course, .stat{float:left;}
-        .title{width:100px;}
-        .course{width:100px;}
-        .stat{float:right;text-align:right;}
+
+        .item{
+          border-bottom:solid 1px #E8E8E8;
+          height:40px;line-height:40px;
+          padding:0 15px;
+          &:last-child{
+            border:none;
+          }
+
+          &.homework{
+            .title, .course, .stat{float:left;overflow:hidden;white-space:nowrap;}
+            .title{width:100px;}
+            .course{width:100px;}
+            .stat{float:right;text-align:right;}
+          }
+        }
       }
     }
   }
@@ -426,6 +442,25 @@
         .course{width:100px;}
         .stat{float:right;text-align:right;}
       }
+    }
+  }
+
+  .page-field.xxt{
+    background-color:white;
+    width:334px;
+    float:left;margin-right:20px;
+    .field-title{
+      border-bottom:solid 1px #E8E8E8;
+      &:before{
+        @include xicon(1, 2, 3);
+      }
+    }
+    .field-data{
+      margin-left:-15px;
+      margin-right:-15px;
+      margin-bottom:0;
+      height:163px;
+      background:url(/assets/canvas1.png) 0 -24px no-repeat #FEFEFE;
     }
   }
 

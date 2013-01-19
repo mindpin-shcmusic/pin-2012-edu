@@ -16,16 +16,127 @@
     survey_list = 'survey_2_list'
   end
 
-.page-unfixed-head
+= page_top_fixed 'buttons' do
   = page_buttons do |p|
     = p.button '返回列表页', '/course_surveys'
 
-.page-model-show
-  = page_field :title, :title=>'标题' do
-    = @course_survey.title
+:ruby
+  ls = ['A', 'B', 'C', 'D', 'E', 'F', 'G']
+  oh = ActiveSupport::OrderedHash.new
 
-  = page_field :'student-count', :title=>'学生人数' do
-    = course_survey_records.count
-  
-  = page_field :content, :title => '调查表内容' do
-    = render survey_list, :survey_count => survey_count, :course_survey_records => course_survey_records
+  oh['您的性别是？'] = { 
+      :items => ['男','女'],
+      :count => [13,7]
+    }
+  oh['您的年龄是？'] = { 
+      :items => ['16~18','19~21','22~24'],
+      :count => [8,6,6]
+    }
+  oh['您的年级是？'] = { 
+      :items => ['大一','大二','大三','大四'],
+      :count => [11,5,4,0]
+    }
+  oh['您的专业是？'] = { 
+      :items => ['理科类','文科类','艺术类'],
+      :count => [8,4,8]
+    }
+  oh['您的家庭所在地?'] = { 
+      :items => ['城市','乡镇','农村'],
+      :count => [10,5,5]
+    }
+  oh['您的家庭经济情况是?'] = { 
+      :items => ['富裕','小康','困难'],
+      :count => [8,5,7]
+    }
+  oh['您的月消费大约是?'] = { 
+      :items => ['500以下','500~800','800~1100','1100~1400'],
+      :count => [5,6,4,5]
+    }
+  oh['您的生活费的来源是?'] = { 
+      :items => ['父母支持','勤工俭学','政府贷款','奖学金','都有'],
+      :count => [6,5,4,2,3]
+    }
+  oh['您最希望的生活费的来源是?'] = { 
+      :items => ['父母支持','勤工俭学','政府贷款','奖学金','都有'],
+      :count => [5,6,3,2,4]
+    }
+  oh['您的消费支出比例最大的是?'] = { 
+      :items => ['伙食费','娱乐所用费用','通讯费用','电子产品','都有'],
+      :count => [4,4,3,7,2]
+    }
+  oh['您是否有记账的习惯?'] = { 
+      :items => ['有，每天都记','有，每月总结','没有，但想过','从没有'],
+      :count => [8,4,3,5,0]
+    }
+  oh['您觉得生活费是否够用?'] = { 
+      :items => ['是，比较宽松','是，刚刚好','不，比较紧张','不，完全不够'],
+      :count => [5,6,4,5]
+    }
+  oh['生活费不够时，你会?'] = { 
+      :items => ['减少开支','找父母要','向同学借钱','自己打工挣钱'],
+      :count => [6,4,3,7]
+    }
+  oh['您对待大学中请客，娱乐等活动的态度是?'] = { 
+      :items => ['无可厚非','持批评态度','中立'],
+      :count => [9,6,5]
+    }
+  oh['学校是否组织过关于消费观的讲座?'] = { 
+      :items => ['是','否'],
+      :count => [9,11]
+    }
+  oh['您赞成以下哪种观点?'] = { 
+      :items => ['节俭是种美德，永远不会过时','一定范围内可以提倡勤俭节约','全社会提倡勤俭节约不现实','我喜欢的东西，再贵也会花钱买下来'],
+      :count => [7,4,5,4]
+    }
+  oh['在你现在的人际交往中，您觉得您的人际关系如何?'] = { 
+      :items => ['关系不错，我很满意','人际关系一般，勉强过得去','关系很差，不知道怎么办'],
+      :count => [7,8,5]
+    }
+  oh['与他人同住一室后，您是否觉得自己生活规律被打破?'] = { 
+      :items => ['是','不是','有点','无所谓'],
+      :count => [5,6,4,5]
+    }
+
+.page-survey-image-show
+  .meta
+    .avatar= avatar current_user
+    .m
+      .t 大学生消费状况调查
+      .name 由#{current_user.real_name}发起
+      .c 20人参与
+  .canvas
+    - oh.each do |title, hash|
+      .question
+        .line
+        .title= title
+        .rs
+          - i = 0
+          - hash[:items].each do |item|
+            :ruby
+              count = hash[:count][i]
+              i+=1
+              r = Math.sqrt(count) * 16
+              w = r * 2 + 1
+              mt = (80 - r)
+
+              cr = (150 - 100 * count / 20).to_i.to_s(16)
+              cg = (200 - 133 * count / 20).to_i.to_s(16)
+              cb = '00'
+
+              klass = count == 0 ? 'zero' : ''
+
+            .r.n{:style=>"width:#{w}px;height:#{w}px;margin-top:#{mt}px;background-color:##{cr}#{cg}#{cb};display:none;", :class=>klass}
+              .rt= truncate_u item, 16
+
+- content_for :javascript do
+  :javascript
+    var show_first = function() {
+      var r = jQuery('.rs .r.n').first();
+      r.removeClass('n');
+      r.fadeIn(500);
+      setTimeout(function(){
+        show_first();
+      }, 100);
+    }
+
+    show_first();
