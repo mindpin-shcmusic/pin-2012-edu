@@ -332,4 +332,10 @@ MindpinEduSns::Application.routes.draw do
     end
   end
 
+  get '/c1/show' => 'c1#show'
+  resources :e1
+  resources :e2
+  get '/f1/show' => 'f1#show'
+  get '/d1/show' => 'd1#show'
+
 end
