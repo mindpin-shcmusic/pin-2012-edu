@@ -5,5 +5,5 @@ jQuery('.page-teaching-plan-show.page-model-show .chapter .publish a').click ->
   jQuery(this).text(text)
 
 jQuery('.page-teaching-plan-show.page-model-show .chapters .create-button').click ->
-  jQuery('page-teaching-plan-show.page-model-show .chapters .blank').hide()
-  #jQuery('page-teaching-plan-show.page-model-show .chapters')
+  jQuery('.page-teaching-plan-show.page-model-show .chapters .blank').hide()
+  jQuery('.page-teaching-plan-show.page-model-show .chapters :hidden').first().fadeIn()
