@@ -17,7 +17,7 @@
     .user #{user_link creator} 上传，#{jtime created_at}
     .course-ware{:style => 'font-size:32px;font-weight:heavy;'} 课件
 
-  = jimage '/assets/demo_ppt/page1.png', :width=>640, :height=>400
+  = jimage @media_resource.pages[0], :width=>640, :height=>400
   .teaching-plan
     关联到
     = link_to 'Java程序设计 / 教学方案一 / 第三章节', 'javascript:;'

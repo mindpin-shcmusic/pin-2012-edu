@@ -6,5 +6,6 @@ DemoResources = DemoResourceNames.map do |name|
                  :created_at => 4.days.ago,
                  :is_dir     => false,
                  :id         => DemoResourceNames.index(name) + 1,
-                 :path       => 'javascript:;')
+                 :path       => 'javascript:;',
+                 :pages      => ['/assets/demo_ppt/page1.png'])
 end
