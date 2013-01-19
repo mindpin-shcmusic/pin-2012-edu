@@ -643,3 +643,82 @@
     }
   }
 }
+
+.page-teaching-plan-show{
+  .head{
+    border-bottom:solid 1px #DADDE0;
+    padding-bottom:15px;
+    margin-bottom: 15px;
+  }
+  .chapters{
+    width:600px;
+    .chs{
+      margin-bottom: 10px;
+    }
+    .chapter{
+      margin-bottom:5px;
+      position:relative;
+      background-color:#f9f9f9;
+      padding:14px;
+      border:solid 1px #EDEDED;
+
+      @include border-radius(4px 0 0);
+
+      .title{
+        font-size:20px;
+        font-weight:bold;
+        height:30px;line-height:30px;
+        margin-bottom:10px;
+      }
+
+      .desc{
+        width:340px;
+      }
+
+      .ops{
+        position:absolute;
+        top:15px;right:15px;
+        .edit, .remove, .publish{
+          float:left;
+          margin-left:10px;
+          a{
+            @include mini-button-blue;
+            height:22px;line-height:22px;
+            font-size:12px;
+            padding:0 12px;
+          }
+        }
+      }
+
+      .items{
+        position:absolute;
+        top:52px;right:15px;
+        @include border-radius(4px);
+        .students, .homeworks{
+          @include border-radius(4px);
+          
+          height:24px;line-height:24px;
+          background-color:#eaeaea;
+          @include floatfix;
+          .count{
+            float:left;
+            margin-right:5px;
+          }
+          .edit{float:left;}
+          margin-left:12px;
+          padding:0 12px;
+          float:left;
+          font-size:12px;
+        }
+      }
+    }
+    .blank{
+      color:#999;
+      margin-bottom:15px;
+    }
+    .create-button{
+      @include floatfix;
+      a{@include mini-button;}
+    }
+  }
+}
