@@ -503,3 +503,143 @@
     }
   }
 }
+
+.page-admin-course{
+  width:720px;
+
+  .teachers{
+    .teacher{
+      border:solid 1px #EDEDED;
+      margin-top:15px;
+
+      .student-info{
+        border-bottom:solid 1px #ededed;
+        background-color:#F9F9F9;
+        height:24px;line-height:24px;
+        padding:10px;
+        @include floatfix;
+
+        .avatar{
+          float:left;
+          img{@include border-radius(2px);}
+          margin-right:10px;
+        }
+        .name{
+          float:left;
+          margin-right:10px;
+          font-size:16px;
+        }
+        .tid{
+          float:left;
+          font-size:12px;
+        }
+
+        .ops{
+          float:right;
+          a{
+            @include mini-button-blue;
+            height:22px;line-height:22px;
+            padding:0 7px;
+            font-size:12px !important;
+          }
+        }
+      }
+
+      .students-brief{display:block;}
+      .students-detail{display:none;}
+
+      &.opened{
+        .students-brief{display:none;}
+        .students-detail{display:block;}
+      }
+
+      .students-brief{
+        @include floatfix;
+        padding:10px;
+
+        .student{
+          float:left;
+          width:24px;height:24px;
+          margin-right:10px;
+          img{
+            @include border-radius(2px);
+          }
+        }
+
+        .desc{
+          float:left;
+          height:24px;line-height:24px;
+        }
+
+        a.open{
+          @include mini-button-gray;
+          float:right;
+          height:22px;line-height:22px;
+          padding:0 7px;
+          font-size:12px !important;
+        }
+      }
+
+      .students-detail{
+        .h{
+          @include floatfix;
+          padding:10px;
+          border-bottom:solid 1px #ededed;
+          .desc{
+            float:left;
+            height:24px;line-height:24px;
+          }
+          a.close{
+            @include mini-button-gray;
+            float:right;
+            height:22px;line-height:22px;
+            padding:0 7px;
+            font-size:12px !important;
+          }
+        }
+
+        .students{
+          @include floatfix;
+          padding:5px 0 0 5px;
+          .student{
+            @include floatfix;
+            float:left;
+            border:solid 1px #ededed;
+            background-color:#F9F9F9;
+            height:42px;line-height:42px;
+            width:110px;
+            margin:0 5px 5px 0;
+            .avatar{float:left;margin:5px;}
+            .name{margin-left:47px;}
+          }
+        }
+      }
+    }
+  }
+}
+
+.page-admin-course{
+  .teaching-plans{
+    .plans{
+      a.teaching-plan{
+        display:block;
+        border-bottom:solid 1px #E5E5E5;
+        padding-bottom:15px;
+        margin-bottom:15px;
+
+        color:#444;
+        @include floatfix;
+
+        .title{
+          font-size:20px;
+          font-weight:bold;
+          margin-bottom:15px;
+        }
+      }
+    }
+
+    .add-teaching-plan{
+      a{@include mini-button;}
+    }
+  }
+}

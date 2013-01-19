@@ -676,6 +676,34 @@ body{
   }
 }
 
+.page-model-filters{
+  .semester-filters{
+    padding:15px 15px 0;
+    background:#F8F8F8;
+
+    a.semester{
+      background-color:#eaeaea;
+      margin-right:5px;
+      color:#555;
+      margin-top:-1px;
+      border-top:solid 1px #eaeaea;
+      &:hover{
+        background-color:#dedede;
+        border-top:solid 1px #dedede;
+      }
+
+      &.current{
+        color:#333;
+        font-weight:bold;
+        background-color:#fff;
+        border:solid 1px #DCDCDC;
+        border-bottom:solid 1px #fff;
+        margin:-1px 5px 0 0px;
+      }
+    }
+  }
+}
+
 // 临时先写在这里
 
 .page-admin-teacher{

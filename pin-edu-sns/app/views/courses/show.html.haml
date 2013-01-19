@@ -6,7 +6,7 @@
 
 - teachers = @course.get_teachers(:semester=> get_semester)
 
-.page-model-show
+.page-model-show{:style=>'border-bottom:solid 1px #DCDCDC;'}
   .page-admin-course
     = page_field :'course-info', :title=>'课程信息' do
       .field.image
@@ -32,8 +32,11 @@
     = page_field :'syllabus-info', :title=>'教学大纲' do
       = sanitize @course.syllabus
 
-    
-    = page_semester_filters "/courses/#{@course.id}"
+.page-model-filters
+  = page_semester_filters "/courses/#{@course.id}"
+
+.page-model-show
+  .page-admin-course
     = page_field :'teacher-list', :title=>'任课教师' do
       .add-teacher
         .teachers
@@ -46,24 +49,26 @@
                 count = students.count
                 course_teacher = CourseTeacher.get_by_params(@course, current_semester, user)
 
-              .teacher
+              .teacher.opened
                 .student-info
-                  .name
+                  .avatar
                     = avatar user, :mini
+                  .name
                     = link_to user.teacher.real_name, "/users/#{user.id}"
+                  .tid
                     = user.teacher.tid
 
                 .students-brief
                   - students[0..4].each do |student|
-                    .student= avatar_link student, :tiny
+                    .student= avatar_link student, :mini
                   .desc= "等 #{count} 个学生"
 
-                  %a.open{:href=>'javascript:;'} 展开
+                  %a.open{:href=>'javascript:;'} 展开列表
 
                 .students-detail
                   .h
                     .desc= "总共 #{count} 个学生"
-                    %a.close{:href=>'javascript:;'} 关闭
+                    %a.close{:href=>'javascript:;'} 收起列表
 
                   .students
                     - students.each do |student|
@@ -71,25 +76,10 @@
                         .avatar= avatar student, :tiny
                         .name= user_link student
 
-    / = page_field :'image-list', :title=>'课程照片' do
-    /   .detail.images
-    /     .upload= jupload_button '上传照片'
-    /     = render '/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_IMAGE).with_semester(current_semester)
-    /     = render '/courses/parts/uploader', :course=>@course, :kind=>:image, :semester => current_semester
-
-    / = page_field :'courseware-list', :title=>'课程课件' do
-    /   .detail.images
-    /     .upload= jupload_button '上传课件'
-    /     = render '/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_COURSEWARE).with_semester(current_semester)
-    /     = render '/courses/parts/uploader', :course=>@course, :kind=>:courseware, :semester => current_semester
-
-    / = page_field :'audio-list', :title=>'课程音频' do
-    /   .detail.images
-    /     .upload= jupload_button '上传音频'
-    /     = render '/courses/parts/resources', :course_resources => @course.course_resources.with_kind(CourseResource::KIND_AUDIO).with_semester(current_semester)
-    /     = render '/courses/parts/uploader', :course=>@course, :kind=>:audio, :semester => current_semester
-
     = page_field :'teaching-plans', :title=>'教学方案' do
-      .teaching-plan
-        .title 教学方案一
+      .plans
+        = link_to 'javascript:;', :class=>'teaching-plan' do
+          .title 一号教学方案
+          .desc 这是一号教学方案，这是一个用于DEMO演示的虚拟方案
+
       .add-teaching-plan= link_to '添加教学方案', '/courses?demo=new'
