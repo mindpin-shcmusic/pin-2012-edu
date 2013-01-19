@@ -11,8 +11,7 @@
     .head
       %h1.title Java程序设计教学方案
       .description
-        这是一个用于DEMO演示用的JAVA程序设计教学方案<br/>
-        这是这个方案的简单概况
+        这个方案是给第一批学员准备的 主要是学习课程的基础部分以及给与空余时间来熟悉学校环境
 
     .chapters
       .chs
@@ -26,7 +25,7 @@
           .items
             .students
               .count 22个学生
-              .edit= link_to '分配', 'javascript:;'
+              .edit= link_to '分配', '/f1/show'
             .homeworks
               .count 0个课件
               .edit= link_to '管理', 'javascript:;'
@@ -64,3 +63,4 @@
       .blank 还没有添加任何章节
 
       .create-button= link_to '新增章节', 'javascript:;'
+      =link_to "预览","/d1/show"
