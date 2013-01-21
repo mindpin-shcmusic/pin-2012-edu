@@ -77,9 +77,12 @@
                         .name= user_link student
 
     = page_field :'teaching-plans', :title=>'教学方案' do
-      .plans
-        = link_to 'javascript:;', :class=>'teaching-plan' do
-          .title 一号教学方案
-          .desc 这是一号教学方案，这是一个用于DEMO演示的虚拟方案
+      - if params[:step]
+        .plans
+          = link_to '/courses?demo=show2', :class=>'teaching-plan' do
+            .title Java程序设计教学方案
+            .desc 这个方案是给第一批学员准备的 主要是学习课程的基础部分以及给与空余时间来熟悉学校环境
+        - else
+          .blank 当前课程还没有教学方案
 
       .add-teaching-plan= link_to '添加教学方案', '/courses?demo=new'
