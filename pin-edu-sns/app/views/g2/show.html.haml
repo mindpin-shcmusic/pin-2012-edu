@@ -1,0 +1,54 @@
+创建作业的表单
+
+- htitle '作业'
+
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '作业', '/homeworks'
+- hbreadcrumb '布置作业'
+
+.page-model-form.homework
+  = form_for Homework.new,:url=>"/g3/show",:method=>:get, :html => {:class => "assign_form", :multipart => true} do |f|
+    = flash_info
+
+    .field.need
+      %label 标题
+      = f.text_field :title
+    
+    .field
+      %label 内容
+      = f.text_area :content, :class => 'kind-editor'
+    
+    .field.need
+      %label 请选择日期
+      = f.text_field :deadline, :class=>'datetime-picker'
+    
+    .field.attachments
+      %label 老师附件
+
+      .sample.hide
+        .file
+          .complete 上传完毕
+          .bar
+            .p{:style=>'width:23%;'}
+          .percent 23%
+          .name 123.txt
+          %a.close{:href=>'javascript:;'}
+
+          %input.fid{:type=>'hidden', :name=>'file_entities[][id]'}
+          %input.fname{:type=>'hidden', :name=>'file_entities[][name]'}
+
+
+      = jupload_button '上传附件'
+
+      
+    .field
+      %label 需求
+      .added-requirements
+
+
+      %a.add-student-attachement-field{:href => "javascript:;"} 添加+
+      .student-attachement-fields
+      
+    .field.submit
+      = jfsubmit "布置作业"
+
