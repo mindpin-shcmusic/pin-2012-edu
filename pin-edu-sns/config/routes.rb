@@ -347,5 +347,6 @@ MindpinEduSns::Application.routes.draw do
   resources :j1
   resources :k1
   resources :j2
+  resources :j3
 
 end
