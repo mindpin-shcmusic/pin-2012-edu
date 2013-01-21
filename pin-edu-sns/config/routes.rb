@@ -337,5 +337,7 @@ MindpinEduSns::Application.routes.draw do
   resources :e2
   get '/f1/show' => 'f1#show'
   get '/d1/show' => 'd1#show'
+  get 'g2/show'  => 'g2#show'
+  get 'g3/show'  => 'g3#show'
 
 end

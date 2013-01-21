@@ -1,0 +1,65 @@
+- homework_title = "作业标题占位"
+- homework_content = "作业要求占位"
+- homework_creator = User.find_by_name("zhugeliang")
+- homework_deadline = Time.now+1.day
+- homework_create_at = Time.now
+- attachments = ["作业参考附件.ppt"]
+
+- student_names = "关平,关彝,张嶷,周仓,魏延,关索,关统,夏侯霸,关兴,赵云,黄月英,张飞,关羽,王平,黄盖,张翼,黄崇,吕凯,黄忠,黄承彦,张苞,姜维"
+- student_users = student_names.split(',').map{|name|Student.find_by_real_name(name).user}
+
+- htitle "作业 - #{homework_title}"
+
+- hgoback '/homeworks'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '作业', '/homeworks'
+- hbreadcrumb homework_title
+
+.page-model-show.homework
+  = page_field :'base-info', :title => '作业信息' do
+    .head
+      .title= homework_title
+      .user #{user_link homework_creator} 创建，#{jtime homework_create_at}
+
+  = page_field :requirements, :title => '作业要求' do
+    .ct= sanitize homework_content
+
+  = page_field :action, :title => '' do
+    = link_to "切换到时间线视图", "到h1页面"
+    = link_to "预览", "到I1界面"
+
+  = page_field :deadline, :title => '作业过期时间' do
+    .time= jtimeformat homework_deadline
+    .state= Time.now < homework_deadline ? '未过期' : '已过期'
+
+  - if !attachments.blank?
+    = page_field :attachements, :title => '作业参考附件' do
+      .list
+        - attachments.each do |attachment|
+          .file
+            .cover
+              .name= link_to attachment, 'javascript:;'
+      .zip
+        %a.down{:href=>"#"} 打包下载附件
+
+  = page_field :'page-homework-students-list', :title => '学生作业完成情况' do
+    .students-list
+      - student_users.each do |user|
+        :ruby
+          submitted = false
+          finished = false
+
+        .student
+          .cell.avatar= avatar user, :mini
+          .cell.name= link_to user.real_name, "#"
+
+          .cell.count
+            %span= 0
+            %span /
+            %span= 3
+
+          .cell.submitted
+            %span= submitted ? '已完成' : '未完成'
+
+          .cell.finished
+            %span= finished ? '已确认' : '未确认'
