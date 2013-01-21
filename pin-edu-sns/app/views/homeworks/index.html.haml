@@ -24,6 +24,8 @@
   - when '2'
     = render 'homeworks/parts/timeline2'
 
+- elsif params[:demo]
+  = render "homeworks/parts/demo_#{params[:demo]}"
 - else
 
   :ruby
