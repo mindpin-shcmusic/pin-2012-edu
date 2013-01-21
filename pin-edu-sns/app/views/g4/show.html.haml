@@ -4,7 +4,11 @@
 - hbreadcrumb '作业列表', '/homeworks'
 
 :ruby
-  homeworks = []
+  homeworks = [
+    ["类和对象的基本概念","完成课后习题,试着用形象的语言来描述自己对类和对象的理解",3],
+    ["面向对象程序设计基本思想","完成课后习题",4],
+    ["类的设计","完成课后习题",4]
+  ]
 .page-model-show.homework
   .head
     .title= "面向对象程序设计"
@@ -17,4 +21,3 @@
         .ct= homework[1]
       .require
         .count="#{homework[2]}项作业要求"
-  = link_to "创建作业","/g2/show"
