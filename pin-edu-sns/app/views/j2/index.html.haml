@@ -1,0 +1,102 @@
+- hgoback '/courses'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb 'Java程序设计', 'javascript:;'
+- hbreadcrumb '教学方案'
+
+- hide = params[:hide] == 'false'
+- style = hide ? '' : 'display:none;'
+
+
+:css
+  .progress {
+    float: right;
+    display: inline;
+    width: 60px;
+    margin: 0px 0px 0px 0px;
+  }
+  .a {
+    float: left;
+    width: 100px;
+    height: 20px;
+    background-color:green;
+    display: block;
+    margin-left: 2px;
+  }
+
+  .b {
+    float: left;
+    width: 100px;
+    height: 20px;
+    background-color:green;
+    display: block;
+    margin-left: 2px;
+  }
+
+  .c {
+    float: left;
+    width: 100px;
+    height: 20px;
+    background-color:grey;
+    display: block;
+    margin-left: 2px;
+  }
+
+.page-model-show
+  .page-teaching-plan-show
+    .head
+      %h1.title 类与变量
+      .description
+        全局变量怎么声明了
+
+    .chapters
+      .chs
+        .chapter{:style=>''}
+          .title 第一作业
+          .desc 作业描述
+          .ops
+            .remove= '三项作业要求'
+
+          .items
+            .a
+            .b
+            .c
+
+            %p
+
+              .progress
+                正在进行
+
+          
+        .chapter{:style=>''}
+          .title 第二作业
+          .desc 作业描述
+          .ops
+            .remove= '三项作业要求'
+
+          .items
+            .a
+            .c
+            .c
+
+            %p
+
+              .progress
+                正在进行
+
+        .chapter{:style=>''}
+          .title 第三作业
+          .desc 作业描述
+          .ops
+            .remove= '三项作业要求'
+
+          .items
+            .a
+            .a
+            .a
+
+            %p
+
+              .progress
+                通过检验
+          
+      

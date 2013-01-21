@@ -1,0 +1,36 @@
+- htitle "作业/JAVA程序 - 实现俄罗斯方块小游戏"
+
+- hgoback '/homeworks'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '作业/艺术实践', '/homeworks'
+- hbreadcrumb '实现俄罗斯方块小游戏'
+
+
+.page-model-show.homework
+  = page_field :'base-info', :title => '作业信息' do
+    .head
+      .title= "实现俄罗斯方块小游戏"
+      .user 诸葛亮 创建, 1月15日 18:06
+
+  = page_field :requirements, :title => '作业要求' do
+    .ct= '实现俄罗斯方块小游戏'
+
+  = page_field :deadline, :title => '作业过期时间' do
+    .time= '2013年01月19日 08:00'
+    .state= '已过期'
+
+  = page_field :attachements, :title => '作业参考附件' do
+    .list
+      .file
+        .cover
+          .name= link_to '附件1', 'javascript:;'
+    .zip
+      %a.down{:href=>""} 打包下载附件
+
+  - if current_user.is_student?
+    = page_field :'homework-student-info', :title => '作业完成情况' do
+      = # render '/homeworks/parts/show_student_info', :homework => @homework
+ 
+  - if current_user.is_student?
+    = page_field :comments, :title => '发表评论' do
+      = # jcomments @homework.assign_record_of(current_user)
