@@ -1,3 +1,5 @@
+- step = params[:step] || '0'
+
 .page-homework-timeline
   .teacher
     .avatar= avatar current_user
@@ -16,7 +18,7 @@
           .c 
             .c1 创建作业要求
             %a{:href=>'javascript:;'} 打开下载
-        - if params[:step] >= '1'
+        - if step >= '1'
           .event.down.code{:style=>'left:200px;'}
             .t
               .avatar= demo_avatar_by_name('张飞')
@@ -31,7 +33,6 @@
             .c 
               .c1 上传了习题1、2代码
               %a{:href=>'javascript:;'} 打开下载
-        - if params[:step] >= '2'
           .event.down.comment{:style=>'left:390px;'}
             .t
               .avatar= demo_avatar_by_name('赵云')
@@ -51,13 +52,13 @@
             .c 
               .c1 习题6有点难
               %a{:href=>'javascript:;'} 打开查看
+        - if step >= '2'
           .event.comment{:style=>'left:580px;'}
             .t
               .avatar= demo_avatar_by_name('马超')
               .name 马超
             .c 
               .c1 ……提个建议，以后的作业可以以小组为单位来做
-        - if params[:step] >= '3'
           .event.down.comment{:style=>'left:680px;'}
             .t
               .avatar= demo_avatar_by_name('诸葛亮')
