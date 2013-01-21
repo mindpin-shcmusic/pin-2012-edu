@@ -1,0 +1,43 @@
+- hgoback '/'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '我的文件夹'
+
+:css
+  .page-nav {
+    float: left;
+    width: 100%;
+  }
+  
+
+= page_top_fixed 'page-media-resources-head' do
+  .page-media-resource-head
+    %a.create-folder-button{:href=>'javascript:;'} 新建文件夹
+    = jupload_button '上传文件'
+
+  .page-media-resource-nav
+    .go-parent-dir
+      %span.quiet 上一级
+
+    .navs
+      %span= link_to '根文件夹', ''
+      %span= link_to '我的文件夹', ''
+      %span= link_to 'JAVA课', ''
+      %span= link_to '章节一', ''
+
+
+
+
+.page-media-resources
+ 
+  .media-resource{:href=>'javascript:;'}
+    .meta-box
+      .cover{:'data-src'=> 'http://edushare.mindpin.com/attachments/attaches/121/small/02630_sunsetinthebigcity_1920x1080.jpg?1351501099'}
+      .detail
+        .ftime= '2012年10月29日 16:58'
+        
+        .link.share= link_to '共享给…', ''
+
+        .link.delete= link_to '删　除', 'javascript:;'
+
+      .title= link_to '', ''
+

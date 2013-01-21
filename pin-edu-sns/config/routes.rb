@@ -341,4 +341,10 @@ MindpinEduSns::Application.routes.draw do
   get 'g3/show'  => 'g3#show'
 
   get 'g1/show'  => 'g1#show'
+
+  resources :i1
+  resources :j1
+  resources :k1
+  resources :j2
+
 end
