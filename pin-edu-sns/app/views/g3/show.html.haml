@@ -1,9 +1,9 @@
-- homework_title = "作业标题占位"
-- homework_content = "作业要求占位"
+- homework_title = "类和对象的基本概念"
+- homework_content = "完成课后习题,试着用形象的语言来描述自己对类和对象的理解"
 - homework_creator = User.find_by_name("zhugeliang")
 - homework_deadline = Time.now+1.day
-- homework_create_at = Time.now
-- attachments = ["作业参考附件.ppt"]
+- homework_create_at = Time.now-3.second
+- attachments = ["作业习题.doc"]
 
 - student_names = "关平,关彝,张嶷,周仓,魏延,关索,关统,夏侯霸,关兴,赵云,黄月英,张飞,关羽,王平,黄盖,张翼,黄崇,吕凯,黄忠,黄承彦,张苞,姜维"
 - student_users = student_names.split(',').map{|name|Student.find_by_real_name(name).user}
@@ -13,6 +13,8 @@
 - hgoback '/homeworks'
 - hbreadcrumb '首页', '/'
 - hbreadcrumb '作业', '/homeworks'
+- hbreadcrumb 'Java程序设计教学方案', '/homeworks'
+- hbreadcrumb '面向对象程序设计', '/homeworks'
 - hbreadcrumb homework_title
 
 .page-model-show.homework

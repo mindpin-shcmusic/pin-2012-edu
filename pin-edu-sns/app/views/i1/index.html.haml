@@ -1,36 +1,62 @@
-- htitle "作业/JAVA程序 - 实现俄罗斯方块小游戏"
+- homework_title = "类和对象的基本概念"
+- homework_content = "完成课后习题,试着用形象的语言来描述自己对类和对象的理解"
+- homework_creator = User.find_by_name("zhugeliang")
+- homework_deadline = Time.now+1.day
+- homework_create_at = Time.now-3.second
+- attachments = ["作业习题.doc"]
+- requirements = ["作业的源代码","作业遇到的问题","参考的书籍列表"]
+
+    
+
+
+
+- htitle "作业 - #{homework_title}"
 
 - hgoback '/homeworks'
 - hbreadcrumb '首页', '/'
-- hbreadcrumb '作业/艺术实践', '/homeworks'
-- hbreadcrumb '实现俄罗斯方块小游戏'
+- hbreadcrumb '作业', '/homeworks'
+- hbreadcrumb 'Java程序设计教学方案', '/homeworks'
+- hbreadcrumb '面向对象程序设计', '/homeworks'
 
 
 .page-model-show.homework
   = page_field :'base-info', :title => '作业信息' do
     .head
-      .title= "实现俄罗斯方块小游戏"
-      .user 诸葛亮 创建, 1月15日 18:06
+      .title= homework_title
+      .user #{user_link homework_creator} 创建，#{jtime homework_create_at}
 
   = page_field :requirements, :title => '作业要求' do
-    .ct= '实现俄罗斯方块小游戏'
+    - requirements.each do |requirement|
+      .ct= requirement
 
   = page_field :deadline, :title => '作业过期时间' do
-    .time= '2013年01月19日 08:00'
-    .state= '已过期'
+    .time= jtimeformat homework_deadline
+    .state= Time.now < homework_deadline ? '未过期' : '已过期'
 
   = page_field :attachements, :title => '作业参考附件' do
     .list
       .file
         .cover
-          .name= link_to '附件1', 'javascript:;'
+          .name= link_to attachments[0], 'javascript:;'
     .zip
       %a.down{:href=>""} 打包下载附件
 
-  - if current_user.is_student?
-    = page_field :'homework-student-info', :title => '作业完成情况' do
-      = # render '/homeworks/parts/show_student_info', :homework => @homework
+  = page_field :'homework-student-info', :title => '作业完成情况' do
+    .requirements
+      .title 要求提交以下内容
+      .list
+        - requirements.each do |requirement|
+          .requirement{:'data-id'=>requirement.id}
+            .t= requirement
+            .ops
+              .error 上传出错 ×，你可以重新上传
+              .complete 已经上传完毕 √，你可以重新上传
+              .upload= jupload_button '上传文件'
+            .upload-data
+              .bar
+                .p{:style=>'width:20%;'}
+              .percent 0%
+              .name
  
-  - if current_user.is_student?
-    = page_field :comments, :title => '发表评论' do
-      = # jcomments @homework.assign_record_of(current_user)
+  = page_field :comments, :title => '发表评论' do
+    %div 还没有评论
