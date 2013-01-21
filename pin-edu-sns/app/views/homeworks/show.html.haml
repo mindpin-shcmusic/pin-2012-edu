@@ -15,7 +15,11 @@
       .user #{user_link @homework.creator} 创建，#{jtime @homework.created_at}
 
   = page_field :requirements, :title => '作业要求' do
-    .ct= sanitize @homework.content
+    / .ct= render '/homeworks/parts/show_work_10', :homeworks => @homeworks
+    / .ct= sanitize @homework.content
+    .list 
+      - @homeworks.each do |homework|
+        .ct= homework.content
 
   = page_field :deadline, :title => '作业过期时间' do
     .time= jtimeformat @homework.deadline
