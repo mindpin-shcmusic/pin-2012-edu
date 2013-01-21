@@ -1,0 +1,15 @@
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '作业显示', '/homeworks'
+
+.page-model-show.homework
+  .head
+    .title= "章节:类与变量"
+    .describe= '描述信息'
+
+  .list-works
+    - @homeworks.each do |homework|
+      .work
+        .title="第一个作业"
+        .ct= homework.content
+      .require
+        .count="5项作业要求"

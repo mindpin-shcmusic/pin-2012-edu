@@ -52,8 +52,8 @@ class HomeworksController < ApplicationController
   
   def show
     @homework = Homework.find(params[:id])
-    @homeworks = Homework.limit(10)
   end
+
 
   # def edit
   #   @homework = Homework.find(params[:id])
