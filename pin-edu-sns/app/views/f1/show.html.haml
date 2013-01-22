@@ -10,7 +10,7 @@
 
   students = student_names.split(',').map{|name|Student.find_by_real_name(name)}
 
-.page-admin-students-selector
+.page-model-form.page-admin-students-selector
 
   = form_tag "#", :method=>:put do |f|
     .list-selector
@@ -38,4 +38,5 @@
       %input.ids{:name=>:student_user_ids, :type=>'hidden', :value=>selected_ids_str}
 
     .field.submit
-      = link_to "确定","/courses?demo=show&hide=false"
+      = jfsubmit_stop '确定', '/courses?demo=show&hide=false'
+      = jfcancel '取消'
