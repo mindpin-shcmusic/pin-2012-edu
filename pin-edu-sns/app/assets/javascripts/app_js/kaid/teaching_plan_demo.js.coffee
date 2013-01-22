@@ -7,7 +7,7 @@ jQuery('.page-teaching-plan-show .chapter .publish a').click ->
     jQuery(this).text('取消')
     jQuery(this).closest('.publish').find('.status').text('已发布')
   
-
 jQuery('.page-teaching-plan-show .chapters .create-button').click ->
   jQuery('.page-teaching-plan-show .chapters .blank').remove()
-  jQuery('.page-teaching-plan-show .chapters :hidden').first().fadeIn()
+
+  jQuery('.page-teaching-plan-show .chapters .chapter:hidden').first().fadeIn()
