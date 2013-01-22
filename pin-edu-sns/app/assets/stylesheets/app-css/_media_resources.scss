@@ -343,9 +343,7 @@
         padding:0 14px;
       }
       a.add-public{
-        @include mini-button;
-        @include gradient(#FDA034, #FF8201);
-        &:hover{@include gradient(lighten(#FDA034, 10%), lighten(#FF8201, 10%));}
+        @include mini-button-blue;
       }
       a.set-category{
         float:left;
