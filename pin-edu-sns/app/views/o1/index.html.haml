@@ -1,0 +1,14 @@
+- hgoback '/'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '在线问答'
+
+:css
+  .page-question-list .question {border:1px solid #000;margin-bottom:4px;}
+
+.page-model-list.page-question-list
+  - @questions.each do |question|
+    .question
+      .title= question.title
+      .meta
+        .creator= question.creator
+        .date= question.created_at
