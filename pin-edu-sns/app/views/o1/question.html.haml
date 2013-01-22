@@ -1,0 +1,58 @@
+- require 'question_demo'
+
+- htitle '老师问答'
+
+- hgoback '/questions'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '老师问答', '/questions'
+- hbreadcrumb @question.title
+
+.page-unfixed-head
+  = page_buttons do |p|
+    = p.button '编辑修改', "/questions/demo/edit"
+    = p.button '添加到faq', '/o1/faq_form'
+
+.page-model-show.page-demo-question
+  = page_field :question, :title => '问题' do
+    .title= @question.title
+
+    .ct
+      = sanitize "<p>涉及到对象操作 object.xxxx(),如果对象为null则会抛异常，如果每次都if(o !=null) 代码很丑陋</p><p>一种做法是创建对象或者方法返回对象时都new一个对象而不是返回null<br>\n不过这样有时也不太好，比如结果为空的时候返回null更合理一点</p><p>有更好的建议么 ？</p>"
+
+    .asker
+      = avatar User.find(185), :tiny
+      .name= link_to @question.creator, "/users/hmm"
+
+    = render 'o1/parts/comments', :comments => @zyq_comments
+
+  = page_field :answers, :title => "#{@answers.count}个答案" do
+    - @answers.each do |answer|
+      .answser
+        .vote
+          .score= answer.score
+          .up= link_to '顶', 'javascript:;'
+          .down= link_to '踩', 'javascript:;'
+
+        .content
+          = sanitize answer.content
+
+        - if !answer.attachment.blank?
+          .attachment{:style => 'border:1px solid #ccc;padding:4px 8px;'}
+            %span 附件下载: 
+            = link_to answer.attachment, 'javascript:;'
+
+        .answerer
+          = avatar User.first, :tiny
+          .name= link_to answer.creator, '/users/hmm'
+
+        = render 'o1/parts/comments', :comments => answer.comments
+
+  = page_field :'answer-form', :title => '添加答案' do
+    = form_tag 'javascript:;' do
+      .field
+        %label 内容
+        = text_area_tag :content
+      .field
+        = link_to '添加附件', 'javascript:;'
+      .field.submit
+        = jfsubmit_stop '确定', 'javascript:;'
