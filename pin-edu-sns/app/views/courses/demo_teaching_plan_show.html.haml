@@ -5,6 +5,7 @@
 
 - hide = params[:hide] == 'false'
 - style = hide ? '' : 'display:none;'
+- blank_style = hide ? 'display:none;' : ''
 
 - titles = ['第一章节', '第二章节', '第三章节']
 
@@ -27,12 +28,12 @@
               .slides
                 .edit= link_to '管理课件', '/c1/show'
                 .count 0
-              .publish
+              .publish.hide
                 .status 未发布
                 .edit= link_to '发布', 'javascript:;'
               .remove= link_to '删除', 'javascript:;'
 
-      .blank 还没有添加任何章节
+      .blank{:style=>blank_style} 还没有添加任何章节
 
       .btns
         .create-button= link_to '新增章节', 'javascript:;'
