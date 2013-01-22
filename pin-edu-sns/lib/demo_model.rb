@@ -99,7 +99,7 @@ module DemoModel
   KEJIAN_2 = Kejian.new
   KEJIAN_2.title = '深入生活的JAVA语言'
   KEJIAN_2.desc = '展示JAVA语言与我们日常生活，互联网，手机应用的密切关系'
-  KEJIAN_2.filename = '深入生活的JAVA语言.ppt'
+  KEJIAN_2.filename = '深入生活的JAVA语言.avi'
 
   KEJIAN_3 = Kejian.new
   KEJIAN_3.title = '课件标题'
