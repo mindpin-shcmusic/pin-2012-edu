@@ -107,6 +107,18 @@ module DemoModel
 
   CHAPTER_1_KEJIANS = [KEJIAN_1, KEJIAN_2, KEJIAN_3]
 
+  # -----------------------------------
+
+  DemoResourceNames = ['面向对象程序设计.ppt', '数组与字符串.ppt']
+
+  DemoResources = DemoResourceNames.map do |name|
+    OpenStruct.new(:name       => name,
+                   :created_at => 4.days.ago,
+                   :is_dir     => false,
+                   :id         => DemoResourceNames.index(name) + 1,
+                   :path       => 'javascript:;',
+                   :pages      => ['/assets/demo_ppt/page1.png'])
+  end
 
   # --------- question ---------------
   class Question
@@ -269,7 +281,5 @@ module DemoModel
   COURSES = ['Java程序设计', 'Java EE & Android开发培训课程', 'Javascript & jQuery培训课程'].map do |title|
     Course.new(:title => title)
   end
-
-
-
+  
 end

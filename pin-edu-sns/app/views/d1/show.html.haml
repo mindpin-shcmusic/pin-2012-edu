@@ -49,13 +49,13 @@
     .preview1.preview
       .label="课件预览"
       .tabs
-        .navs
-          %a.nav.current{:href=>'javascript:;'} 类和对象的基本概念
-          %a.nav{:href=>'javascript:;'} 用JAVA开发的Android应用
+        .navs.titles
+          %a.title.nav.current{:href=>'javascript:;'} 面向对象基础
+          %a.title.nav{:href=>'javascript:;'} 用JAVA开发的Android应用
         .contents
-          .content.current
+          .kejian.content.current
             = chapter1_ppt(:width=>640, :height=>480)
-          .content
+          .kejian.content
             .flash-player{:style=>"width:640px;height:480px;",:data => {:video => 'http://agile.mindpin.com/chapter2.mp4', :'first-frame' => ''}}
 
     .preview2.preview{:style=>"display:none;"}

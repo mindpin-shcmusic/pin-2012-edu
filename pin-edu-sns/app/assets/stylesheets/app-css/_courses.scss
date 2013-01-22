@@ -956,3 +956,70 @@
     }
   }
 }
+
+.media-resource{
+  .course-ware{
+    overflow:hidden;
+    font-size:0;
+    line-height:20em;
+    position:absolute;
+    width:24px;height:24px;
+    bottom:3px;right:5px;
+    background:url('/assets/kejian_link.png') no-repeat 4px 4px;
+  }
+}
+
+.page-media-resource.demo{
+  .head{
+    border-bottom:solid 1px #DADDE0;
+    padding-bottom:15px;
+    margin-bottom:15px;
+  }
+
+  .preview{
+    padding:5px;
+    border:solid 1px #DADDE0;
+    background-color:#f8f8f8;
+    width:640px;
+    height:480px;
+  }
+
+  .teaching-plan-link{
+    border-top:solid 1px #DADDE0;
+    border-bottom:solid 1px #DADDE0;
+    background-color:#f8f8f8;
+    margin:15px -15px;
+    padding:15px;
+    .label{
+      height:24px;line-height:24px;
+      padding-left:30px;
+      background:url('/assets/kejian_link.png') no-repeat 3px 3px;
+      margin-bottom:5px;
+    }
+    .links{
+      padding-left:30px;
+    }
+  }
+
+  .tags{
+    margin-bottom:15px;
+    label{
+      font-weight:bold;
+    }
+    a{
+      margin-left:10px;
+    }
+  }
+}
+
+.page-comments{
+  .navs{
+    border-bottom:solid 1px #DADDE0;
+    padding-bottom:5px;
+    margin-bottom:5px;
+    a.nav{
+      height:24px;line-height:24px;
+      margin-right:10px;
+    }
+  }
+}
