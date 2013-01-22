@@ -17,13 +17,13 @@
     .title= @question.title
 
     .ct
-      = sanitize "<p>涉及到对象操作 object.xxxx(),如果对象为null则会抛异常，如果每次都if(o !=null) 代码很丑陋</p><p>一种做法是创建对象或者方法返回对象时都new一个对象而不是返回null<br>\n不过这样有时也不太好，比如结果为空的时候返回null更合理一点</p><p>有更好的建议么 ？</p>"
+      = sanitize @question.desc
 
     .asker
-      = avatar User.find(185), :tiny
-      .name= link_to @question.creator, "/users/hmm"
+      = avatar @question.creator, :tiny
+      .name= link_to @question.creator.real_name, "/users/hmm"
 
-    = render 'o1/parts/comments', :comments => @zyq_comments
+    = render 'o1/parts/comments', :comments => @question.comments
 
   = page_field :answers, :title => "#{@answers.count}个答案" do
     - @answers.each do |answer|
@@ -42,8 +42,8 @@
             = link_to answer.attachment, 'javascript:;'
 
         .answerer
-          = avatar User.first, :tiny
-          .name= link_to answer.creator, '/users/hmm'
+          = avatar answer.creator, :tiny
+          .name= link_to answer.creator.real_name, '/users/hmm'
 
         = render 'o1/parts/comments', :comments => answer.comments
 

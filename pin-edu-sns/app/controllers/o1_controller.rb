@@ -18,17 +18,14 @@ class O1Controller < ApplicationController
   end
 
   def question
-    @question = ZYQuestions[2]
+    @question = DemoModel::STUDENT_QUESTIONS[0]
     @answers = case params[:step]
-               when '1'
-                 DemoAnswers[2..2]
-               when '2'
-                 DemoAnswers[1..2]
-               when '3'
-                 DemoAnswers[0..2]
-               else
-                 DemoAnswers
+                when '1'
+                  @question.answers[2..2]
+                when '2'
+                  @question.answers[1..2]
+                else
+                  @question.answers
                end
-    @zyq_comments = ZYQComments
   end
 end
