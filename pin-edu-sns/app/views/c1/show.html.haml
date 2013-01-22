@@ -22,7 +22,7 @@
     }
   ]
 
-.page-zhangjie-edit
+.page-model-show.page-zhangjie-edit
   .base-info
     .title.editcontent
       = link_to "编辑","javascript:void(0);", :class => "edit"
@@ -46,54 +46,41 @@
         = link_to "1",'javascript:void(0);',:class=>"nav current",:style=>"display:none;"
         = link_to "2",'javascript:void(0);',:class=>"nav",:style=>"display:none;"
         = link_to "3",'javascript:void(0);',:class=>"nav",:style=>"display:none;"
-        = link_to "+",'javascript:void(0);',:class=>"add"
+        = link_to "+ 增加课件",'javascript:void(0);',:class=>"add"
       .contents
-        .content.clearfix
-          .kejian-base-info{:style=>"float:left;"}
-            .title.editcontent
-              = link_to "编辑","javascript:void(0);", :class => "edit"
-              .info1{:style => "display:inline;"} 课件标题
-              .info2{:style => "display:none;"} JAVA语言的基本概念
-              .form{:style => "display:none;"}
-                = text_field_tag "desc","课件标题"
-                = link_to "保存","javascript:void(0);", :class => "save"
-            .desc.editcontent
-              = link_to "编辑","javascript:void(0);", :class => "edit"
-              .info1{:style => "display:inline;"} 课件描述
-              .info2{:style => "display:none;"} 详细讲解JAVA语言的基本概念
-              .form{:style => "display:none;"}
-                = text_area_tag "desc","课件描述"
-                = link_to "保存","javascript:void(0);", :class => "save"
-          .kejian-file{:style=>"float:left;"}
-            = jupload_button "上传课件文件"
-            = link_to "从我的资源盘选取","#"
-            = render '/c1/parts/upload'
-            %ul.kejian-list{:style=>"display:none;"}
-              %li JAVA语言的基本概念.ppt
-        .content
-          .kejian-base-info{:style=>"float:left;"}
-            .title.editcontent
-              = link_to "编辑","javascript:void(0);", :class => "edit"
-              .info1{:style => "display:inline;"} 课件标题
-              .info2{:style => "display:none;"} 深入生活的JAVA语言
-              .form{:style => "display:none;"}
-                = text_field_tag "desc","课件标题"
-                = link_to "保存","javascript:void(0);", :class => "save"
-            .desc.editcontent
-              = link_to "编辑","javascript:void(0);", :class => "edit"
-              .info1{:style => "display:inline;"} 课件描述
-              .info2{:style => "display:none;"} 介绍深入生活的JAVA语言
-              .form{:style => "display:none;"}
-                = text_area_tag "desc","课件描述"
-                = link_to "保存","javascript:void(0);", :class => "save"
-          .kejian-file{:style=>"float:left;"}
-            = jupload_button "上传课件文件"
-            =jfbox_link :select, "从我的资源盘选取"
-            = render '/c1/parts/upload'
+        - i = 0
+        - DemoModel::CHAPTER_1_KEJIANS.each do |kejian|
+          - i = i + 1
+          - _title = "课件标题-#{i}"
+          - _desc = "课件描述-#{i}"
+          - jfbox_id = "select-#{i}"
 
-            = jfbox :select, "选择课件" do
-              .dynatree{:data=>{:children=>resources.to_json}}
-              .submit= link_to "确定", "javascript:;"
+          .content
+            .kejian-base-info
+              .title.editcontent
+                = link_to "编辑","javascript:void(0);", :class => "edit"
+                .info1{:style => "display:inline;"}= _title
+                .info2{:style => "display:none;"}= kejian.title
+                .form{:style => "display:none;"}
+                  = text_field_tag "desc", _title
+                  = link_to "保存","javascript:void(0);", :class => "save"
+              .desc.editcontent
+                = link_to "编辑","javascript:void(0);", :class => "edit"
+                .info1{:style => "display:inline;"}= _desc
+                .info2{:style => "display:none;"}= kejian.desc
+                .form{:style => "display:none;"}
+                  = text_area_tag "desc", _desc
+                  = link_to "保存","javascript:void(0);", :class => "save"
+            .kejian-file
+              .btns
+                = jupload_button "上传文件"
+                = jfbox_link jfbox_id, "从资源盘选取"
+              
+              = render '/c1/parts/upload'
+              
+              = jfbox jfbox_id, "选择课件" do
+                .dynatree{:data=>{:children=>resources.to_json}}
+                .submit= link_to "确定", "javascript:;"
 
-            %ul.kejian-list{:style=>"display:none;"}
-              %li 介绍深入生活的JAVA语言.ppt
+              %ul.kejian-list{:style=>"display:none;"}
+                %li= kejian.filename

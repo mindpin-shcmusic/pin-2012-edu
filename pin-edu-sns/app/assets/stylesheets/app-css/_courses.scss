@@ -656,6 +656,7 @@
     border-bottom:solid 1px #DADDE0;
     padding-bottom:15px;
     margin-bottom: 15px;
+    width:600px;
   }
   .chapters{
     width:600px;
@@ -672,7 +673,7 @@
       @include border-radius(4px 0 0);
 
       .title{
-        font-size:20px;
+        font-size:16px;
         font-weight:bold;
         height:30px;line-height:30px;
         margin-bottom:10px;
@@ -680,28 +681,21 @@
 
       .desc{
         width:340px;
+        &.bl{
+          color:#999;
+        }
       }
 
       .ops{
         position:absolute;
         top:15px;right:15px;
-        .edit, .remove, .publish{
-          float:left;
-          margin-left:10px;
-          a{
-            @include mini-button-blue;
-            height:22px;line-height:22px;
-            font-size:12px;
-            padding:0 12px;
-          }
-        }
       }
 
       .items{
         position:absolute;
         top:52px;right:15px;
         @include border-radius(4px);
-        .students, .homeworks{
+        .homeworks, .slides{
           @include border-radius(4px);
           
           height:24px;line-height:24px;
@@ -709,10 +703,37 @@
           @include floatfix;
           .count{
             float:left;
+            margin-left:5px;
+          }
+          .edit{float:left;}
+          margin-left:5px;
+          padding:0 12px;
+          float:left;
+          font-size:12px;
+        }
+        .publish{
+          @include border-radius(4px);
+          
+          height:24px;line-height:24px;
+          background-color:#eaeaea;
+          @include floatfix;
+          .status{
+            float:left;
             margin-right:5px;
           }
           .edit{float:left;}
-          margin-left:12px;
+          margin-left:5px;
+          padding:0 12px;
+          float:left;
+          font-size:12px;
+        }
+        .remove{
+          @include border-radius(4px);
+          
+          height:24px;line-height:24px;
+          background-color:#eaeaea;
+          @include floatfix;
+          margin-left:5px;
           padding:0 12px;
           float:left;
           font-size:12px;
@@ -723,9 +744,109 @@
       color:#999;
       margin-bottom:15px;
     }
-    .create-button{
+
+    &>.btns{
       @include floatfix;
-      a{@include mini-button;}
+      .create-button, .preview-button{
+        @include floatfix;
+        a{@include mini-button;}
+        margin-right:15px;
+        float:left;
+      }
+
+      .students{
+        height:30px;line-height:30px;
+        border:solid 1px #EDEDED;
+        @include border-radius(4px);
+        float:right;
+        background-color:#F9F9F9;
+        padding:0 15px;
+        .count{font-size:14px;float:left;margin-right:7px;}
+        .edit{float:left;}
+      }
+    }
+  }
+}
+
+.page-zhangjie-edit{
+  .base-info{
+    margin-bottom:30px;
+
+    .title{
+      font-size:16px;
+      font-weight:bold;
+      margin-bottom:10px;
+      .edit{font-size:12px;font-weight:normal;}
+    }
+    .desc{
+      .edit{font-size:12px;font-weight:normal;}
+    }
+  }
+  .desc-info{
+    .navs{
+      @include floatfix;
+      padding-bottom:15px;
+      border-bottom:solid 1px #ddd;
+
+      a.nav{
+        height:30px;line-height:30px;
+        background-color:#eee;
+        @include border-radius(2px);
+        margin-right:10px;
+        padding:0 12px;
+        border:solid 1px #b1b1b1;
+        font-size:16px;
+        color:#444;
+        float:left;
+        &:hover{
+          background-color:#ddd;
+        }
+      }
+      a.add{
+        @include mini-button;
+        float:left;
+      }
+    }
+
+    .contents{
+      min-height:600px;
+      .content{
+        .kejian-base-info{
+          width:240px;
+          padding-top:15px;
+          padding-right:15px;
+          border-right:solid 1px #ddd;
+          min-height:599px;
+          float:left;
+
+          .title{
+            font-size:16px;
+            font-weight:bold;
+            margin-bottom:10px;
+            .edit{font-size:12px;font-weight:normal;}
+          }
+          .desc{
+            .edit{font-size:12px;font-weight:normal;}
+          }
+        }
+        .kejian-file{
+          margin-left:240px + 15px + 1px;
+          .btns{
+            overflow:hidden;
+            padding:15px;
+            border-bottom:solid 1px #DDDDDD;
+            background-color:#fafafa;
+
+            .page-upload-button{
+              float:left;margin-right:15px;
+            }
+            a.page-float-box-link{
+              @include mini-button-blue;
+              float:left;
+            }
+          }
+        }
+      }
     }
   }
 }
