@@ -3,18 +3,18 @@ require 'question_demo'
 
 class O1Controller < ApplicationController
   def zhaoyun
-    @questions = ZYQuestions
+    @questions = DemoModel::STUDENT_QUESTIONS
     render 'o1/index'
   end
 
   def zhugeliang
-    @questions = DemoQuestions
+    @questions = DemoModel::TEACHER_QUESTIONS
     render 'o1/index'
   end
 
   def faq_form
-    @question = ZYQuestions.first
-    @courses = ['Java程序设计', 'Java EE & Android开发培训课程', 'Javascript & jQuery培训课程']
+    @question = DemoModel::STUDENT_QUESTIONS[0]
+    @courses = DemoModel::COURSES
   end
 
   def question
