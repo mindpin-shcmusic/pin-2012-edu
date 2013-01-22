@@ -1023,3 +1023,68 @@
     }
   }
 }
+
+.page-admin-students-selector{
+  .list-selector{
+    background:none;
+    padding:0;
+    border:none;
+
+    div.search{
+      border-bottom:solid 1px #DADDE0;
+      margin:-15px -15px 15px;
+      padding:15px;
+      background-color:#f8f8f8;
+
+      .field{
+        margin-bottom:0;
+        input{
+          margin-bottom:0;
+        }
+      }
+      .desc{
+        top:15px;
+      }
+    }
+
+    .filter{
+      border-bottom:solid 1px #DADDE0;
+      margin:-15px -15px 15px;
+      padding-top:5px;
+      padding-left:15px;
+      @include floatfix;
+
+      a{
+        border:solid 1px #DADDE0;
+        margin:0 6px -1px 0;
+        height:30px;line-height:30px;
+        padding:0 10px;
+        float:left;
+        background-color:#f2f2f2;
+        &.view{
+          border-bottom:solid 1px white;
+          background-color:white;
+        }
+      }
+    }
+
+    .selector{
+      .list{
+        width:421px;
+        @include border-radius(2px);
+
+        .item{
+          &.selected{
+            background-color:#6caa00;
+          }
+          &.selected:after{
+            content:"";
+            width:24px;height:24px;
+            background:url('/assets/tick_1.png') 4px 4px no-repeat;
+            top:3px;right:3px;
+          }
+        }
+      }
+    }
+  }
+}
