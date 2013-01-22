@@ -348,10 +348,12 @@ MindpinEduSns::Application.routes.draw do
   resources :k1
   resources :j2
   resources :j3
+
   resources :o1 do
     collection do
       get :zhaoyun
       get :zhugeliang
+      get :faq_form
     end
   end
 
