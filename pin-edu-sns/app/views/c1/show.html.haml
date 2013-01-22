@@ -11,10 +11,24 @@
       :title => '个人资源库', :isFolder => true, :activate => true, :expand => true,
       :children=>[
         {
-          :title => '课件', :isFolder => true, :expand => false,
+          :title => 'PPT', :isFolder => true, :expand => false,
+          :children => [
+            {
+              :title => '深入生活的JAVA语言.ppt'
+            },
+            {
+              :title => 'JAVA数组和字符串.ppt'
+            }
+          ]
+        },
+        {
+          :title => '视频', :isFolder => true, :expand => false,
           :children=>[
             {
-              :title => '介绍深入生活的JAVA语言.ppt'
+              :title => '深入生活的JAVA语言.avi'
+            },
+            {
+              :title => 'JAVA数组和字符串.avi'
             }
           ]
         }
@@ -84,3 +98,7 @@
 
               %ul.kejian-list{:style=>"display:none;"}
                 %li= kejian.filename
+                - if 1 == i
+                  = chapter1_ppt(:width=>400, :height => 200)
+                - else 2 == i
+                  .flash-player{:style=>"width:400px;height:200px;",:data => {:video => 'http://agile.mindpin.com/chapter2.mp4', :'first-frame' => ''}}
