@@ -107,4 +107,114 @@ module DemoModel
 
   CHAPTER_1_KEJIANS = [KEJIAN_1, KEJIAN_2, KEJIAN_3]
 
+
+  # --------- question ---------------
+  class Question
+    attr_accessor :title, :desc, :answers, :creator, :comments, :best_answer
+  end
+
+  class Answer
+    attr_accessor :content, :attachment, :creator, :comments
+  end
+
+  class Comment
+    attr_accessor :content, :creator
+  end
+
+  zhaoyun = User.find_by_name("zhaoyun")
+  guanyu = User.find_by_name("guanyu")
+  zhugeliang = User.find_by_name('zhugeliang')
+
+  question_1 = Question.new
+  question_1.title = "java如不想么每次都判空 if(o !=null) 怎么做？"
+  question_1.desc = "代码中好多这种代码，看起来好混乱，但是又不知道怎么去精简掉"
+  question_1.creator = zhaoyun
+
+  answer_1_1 = Answer.new
+  answer_1_1.content = "建议使用NullObject模式。"
+  answer_1_1.creator = zhugeliang
+
+  question_2 = Question.new
+  question_2.title = "Java里ClassName.this和this有什么不一样"
+  question_2.desc = ""
+  question_2.creator = zhaoyun
+  question_2.comments = []
+  question_2.answers = []
+
+  question_3 = Question.new
+  question_3.title = "有Java的布隆过滤器实现吗？"
+  question_3.desc = ""
+  question_3.creator = zhaoyun
+  question_3.comments = []
+  question_3.answers = []
+
+  question_4 = Question.new
+  question_4.title = "Integer和int有什么不同？"
+  question_4.desc = ""
+  question_4.creator = zhaoyun
+  question_4.comments = []
+  question_4.answers = []
+
+  question_5 = Question.new
+  question_5.title = "Java参数向量argv问题"
+  question_5.desc = ""
+  question_5.creator = zhaoyun
+  question_5.comments = []
+  question_5.answers = []
+
+  question_6 = Question.new
+  question_6.title = "java内部是如何处理判断一个对象是否被实例化的？"
+  question_6.desc = ""
+  question_6.creator = guanyu
+  question_6.comments = []
+  question_6.answers = []
+
+  question_7 = Question.new
+  question_7.title = "Java中的接口有什么作用？"
+  question_7.desc = ""
+  question_7.creator = guanyu
+  question_7.comments = []
+  question_7.answers = []
+
+  question_8 = Question.new
+  question_8.title = "什么是对象持久化，与数据序列化有何联系？"
+  question_8.desc = ""
+  question_8.creator = guanyu
+  question_8.comments = []
+  question_8.answers = []
+
+  question_9 = Question.new
+  question_9.title = "java如何用byte[]构造BufferedImage,处理之后怎么再输出为byte[]?"
+  question_9.desc = ""
+  question_9.creator = guanyu
+  question_9.comments = []
+  question_9.answers = []
+
+  question_10 = Question.new
+  question_10.title = "关于电梯算法"
+  question_10.desc = ""
+  question_10.creator = guanyu
+  question_10.comments = []
+  question_10.answers = []
+
+  TEACHER_QUESTIONS = [
+    question_1,
+    question_2,
+    question_3,
+    question_4,
+    question_5,
+    question_6,
+    question_7,
+    question_8,
+    question_9,
+    question_10
+  ]
+
+  STUDENT_QUESTIONS = [
+    question_1,
+    question_2,
+    question_3,
+    question_4,
+    question_5
+  ]
 end
