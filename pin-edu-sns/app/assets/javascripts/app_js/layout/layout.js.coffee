@@ -1,4 +1,6 @@
 pie.load ->
+  return if jQuery('body').hasClass('auth')
+
   total_fixed_height = 40
 
   jQuery('.page-top-fixed').each ->

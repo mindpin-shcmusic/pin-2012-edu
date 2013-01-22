@@ -638,6 +638,13 @@
       }
     }
 
+    .blank{
+      border-bottom:solid 1px #E5E5E5;
+      padding-bottom:15px;
+      margin-bottom:15px;
+      color:#999;
+    }
+
     .add-teaching-plan{
       a{@include mini-button;}
     }

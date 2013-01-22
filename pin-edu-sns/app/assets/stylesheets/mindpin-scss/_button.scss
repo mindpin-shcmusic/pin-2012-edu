@@ -73,9 +73,9 @@
 
 @mixin mini-button-gray{
   @include base-mini-button;
-  @include gradient(#F3F3F3, #ECECEC);
+  @include gradient(#F8F8F8, #ECECEC);
   box-shadow:0 0 1px #FBFBFB inset;
-  border-color:rgba(black, 0.3);
+  border-color:rgba(black, 0.1);
   height:30px;line-height:30px;
   padding:0 14px;
   color:#73797C;
