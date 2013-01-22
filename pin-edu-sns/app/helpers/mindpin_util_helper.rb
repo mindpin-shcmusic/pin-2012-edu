@@ -90,8 +90,11 @@ module MindpinUtilHelper
     end
 
     def demo_avatar_by_name(str)
-      id = str.hash%20+2
-      user = User.find(id)
+      teacher = Teacher.find_by_real_name(str)
+      student = Student.find_by_real_name(str)
+
+      model = teacher || student
+      user = model.user
       avatar user, :mini
     end
   end

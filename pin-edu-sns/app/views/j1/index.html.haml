@@ -1,3 +1,5 @@
+- teaching_plans = DemoModel::TEACHING_PLANS
+
 - hgoback '/courses'
 - hbreadcrumb '首页', '/'
 - hbreadcrumb '我参与的教学方案'
@@ -11,30 +13,13 @@
       .title 我参与的教学方案
 
     .teaching-plans
-      .teaching-plan
-        .title Java程序设计教学方案
-        .desc  这个方案是给第一批学员准备的 主要是学习课程的基础部分以及给与空余时间来熟悉学校环境
-        .teacher= user_link(User.find_by_name('zhugeliang'))
-        .desc
-          %span= '46%'
-          %span= link_to '查看课件', ''
-          %span= link_to '查看作业', '/j2'
+      - teaching_plans.each do |teaching_plan|
+        .teaching-plan
+          .title= teaching_plan.title
+          .desc= teaching_plan.desc
+          .teacher= user_link teaching_plan.creator
+          .desc
+            %span= teaching_plan.progress
+            %span= link_to '查看课件', ''
+            %span= link_to '查看作业', '/j2'
         
-      .teaching-plan
-        .title Android开发课程教学方案
-        .desc  这个方案是给第一批学员准备的 主要是学习如何进行Android 应用的开发
-        .teacher= user_link(User.find_by_name('zhugeliang'))
-        .desc
-          %span= '0%'
-          %span= link_to '查看课件', ''
-          %span= link_to '查看作业', '/j2'
-
-      .teaching-plan
-        .title JavaScript开发教学方案
-        .desc  这个方案是给第一批学员准备的 主要是学习Web开发中用到的JavaScript语言
-        .teacher= user_link(User.find_by_name('zhugeliang'))
-        .desc
-          %span= '16%'
-          %span= link_to '查看课件', ''
-          %span= link_to '查看作业', '/j2'
-          
