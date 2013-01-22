@@ -14,7 +14,7 @@
 
   = page_field :'faq-contents', :title => '内容' do
     - DemoModel::FAQ.each_with_index do |question,index|
-      .faq{:id=>"#faq#{index+1}"}
+      .faq{:id=>"faq#{index+1}"}
         .title= question.title
       %p.answer= question.best_answer.html_safe
       .link= link_to '打开查看', 'javascript:;'
