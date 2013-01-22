@@ -10,5 +10,5 @@
     .question
       .title= link_to question.title, question.link
       .meta
-        .creator= question.creator
+        .creator= user_link(question.creator)
         .date= question.created_at
