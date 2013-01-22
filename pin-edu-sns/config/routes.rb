@@ -354,6 +354,7 @@ MindpinEduSns::Application.routes.draw do
       get :zhaoyun
       get :zhugeliang
       get :faq_form
+      get :question
     end
   end
 

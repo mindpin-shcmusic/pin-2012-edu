@@ -1,0 +1,8 @@
+- if !comments.blank?
+  .comments
+    .number #{comments.count}个评论
+    - comments.each do |comment|
+      .comment
+        .commenter= link_to comment.creator, 'javascript:;'
+        .date= comment.date
+        .content= sanitize comment.content
