@@ -767,3 +767,86 @@
     }
   }
 }
+
+.page-zhangjie-edit{
+  .base-info{
+    margin-bottom:30px;
+
+    .title{
+      font-size:16px;
+      font-weight:bold;
+      margin-bottom:10px;
+      .edit{font-size:12px;font-weight:normal;}
+    }
+    .desc{
+      .edit{font-size:12px;font-weight:normal;}
+    }
+  }
+  .desc-info{
+    .navs{
+      @include floatfix;
+      padding-bottom:15px;
+      border-bottom:solid 1px #ddd;
+
+      a.nav{
+        height:30px;line-height:30px;
+        background-color:#eee;
+        @include border-radius(2px);
+        margin-right:10px;
+        padding:0 12px;
+        border:solid 1px #b1b1b1;
+        font-size:16px;
+        color:#444;
+        float:left;
+        &:hover{
+          background-color:#ddd;
+        }
+      }
+      a.add{
+        @include mini-button;
+        float:left;
+      }
+    }
+
+    .contents{
+      min-height:600px;
+      .content{
+        .kejian-base-info{
+          width:240px;
+          padding-top:15px;
+          padding-right:15px;
+          border-right:solid 1px #ddd;
+          min-height:599px;
+          float:left;
+
+          .title{
+            font-size:16px;
+            font-weight:bold;
+            margin-bottom:10px;
+            .edit{font-size:12px;font-weight:normal;}
+          }
+          .desc{
+            .edit{font-size:12px;font-weight:normal;}
+          }
+        }
+        .kejian-file{
+          margin-left:240px + 15px + 1px;
+          .btns{
+            overflow:hidden;
+            padding:15px;
+            border-bottom:solid 1px #DDDDDD;
+            background-color:#fafafa;
+
+            .page-upload-button{
+              float:left;margin-right:15px;
+            }
+            a.page-float-box-link{
+              @include mini-button-blue;
+              float:left;
+            }
+          }
+        }
+      }
+    }
+  }
+}
