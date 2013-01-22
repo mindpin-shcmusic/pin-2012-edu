@@ -48,13 +48,15 @@
       
     .preview1.preview
       .label="课件预览"
-      .titles
-        %a.title{:href=>'javascript:;'} 类和对象的基本概念
-        %a.title{:href=>'javascript:;'} 用JAVA开发的Android应用
-      .kejian.k1
-        = chapter1_ppt(:width=>640, :height=>480)
-      .kejian.k2{:style=>'display:none;'}
-        .flash-player{:style=>"width:640px;height:480px;",:data => {:video => 'http://agile.mindpin.com/chapter2.mp4', :'first-frame' => ''}}
+      .tabs
+        .navs
+          %a.nav.current{:href=>'javascript:;'} 类和对象的基本概念
+          %a.nav{:href=>'javascript:;'} 用JAVA开发的Android应用
+        .contents
+          .content.current
+            = chapter1_ppt(:width=>640, :height=>480)
+          .content
+            .flash-player{:style=>"width:640px;height:480px;",:data => {:video => 'http://agile.mindpin.com/chapter2.mp4', :'first-frame' => ''}}
 
     .preview2.preview{:style=>"display:none;"}
       .label="课件预览"
