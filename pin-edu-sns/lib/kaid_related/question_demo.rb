@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 class DemoQuestion
-  attr_accessor :title, :teacher_user, :creator, :has_answered, :created_at
+  attr_accessor :title, :teacher_user, :creator, :has_answered, :created_at, :link
 end
 
 DemoQuestionTitles = {
@@ -28,6 +28,7 @@ DemoQuestions = DemoQuestionTitles.map do |creator, title|
   q.created_at = [1, 2, 3][rand 3].day.ago
   q.has_answered = [true, false][rand 2]
   q.has_answered = true if creator.include? '赵云'
+  q.link = '/questions?demo=show1'
   q
 end.shuffle
 

@@ -14,6 +14,7 @@
 .page-unfixed-head
   = page_buttons do |p|
     = p.button '编辑修改', "/questions/demo/edit"
+    = p.button '添加到faq', '/o1/faq_form'
 
 .page-model-show.page-demo-question
   = page_field :question, :title => '问题' do
