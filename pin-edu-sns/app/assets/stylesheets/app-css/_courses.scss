@@ -656,6 +656,7 @@
     border-bottom:solid 1px #DADDE0;
     padding-bottom:15px;
     margin-bottom: 15px;
+    width:600px;
   }
   .chapters{
     width:600px;
@@ -672,7 +673,7 @@
       @include border-radius(4px 0 0);
 
       .title{
-        font-size:20px;
+        font-size:16px;
         font-weight:bold;
         height:30px;line-height:30px;
         margin-bottom:10px;
@@ -680,28 +681,21 @@
 
       .desc{
         width:340px;
+        &.bl{
+          color:#999;
+        }
       }
 
       .ops{
         position:absolute;
         top:15px;right:15px;
-        .edit, .remove, .publish{
-          float:left;
-          margin-left:10px;
-          a{
-            @include mini-button-blue;
-            height:22px;line-height:22px;
-            font-size:12px;
-            padding:0 12px;
-          }
-        }
       }
 
       .items{
         position:absolute;
         top:52px;right:15px;
         @include border-radius(4px);
-        .students, .homeworks{
+        .homeworks, .slides{
           @include border-radius(4px);
           
           height:24px;line-height:24px;
@@ -709,10 +703,37 @@
           @include floatfix;
           .count{
             float:left;
+            margin-left:5px;
+          }
+          .edit{float:left;}
+          margin-left:5px;
+          padding:0 12px;
+          float:left;
+          font-size:12px;
+        }
+        .publish{
+          @include border-radius(4px);
+          
+          height:24px;line-height:24px;
+          background-color:#eaeaea;
+          @include floatfix;
+          .status{
+            float:left;
             margin-right:5px;
           }
           .edit{float:left;}
-          margin-left:12px;
+          margin-left:5px;
+          padding:0 12px;
+          float:left;
+          font-size:12px;
+        }
+        .remove{
+          @include border-radius(4px);
+          
+          height:24px;line-height:24px;
+          background-color:#eaeaea;
+          @include floatfix;
+          margin-left:5px;
           padding:0 12px;
           float:left;
           font-size:12px;
@@ -723,9 +744,26 @@
       color:#999;
       margin-bottom:15px;
     }
-    .create-button{
+
+    &>.btns{
       @include floatfix;
-      a{@include mini-button;}
+      .create-button, .preview-button{
+        @include floatfix;
+        a{@include mini-button;}
+        margin-right:15px;
+        float:left;
+      }
+
+      .students{
+        height:30px;line-height:30px;
+        border:solid 1px #EDEDED;
+        @include border-radius(4px);
+        float:right;
+        background-color:#F9F9F9;
+        padding:0 15px;
+        .count{font-size:14px;float:left;margin-right:7px;}
+        .edit{float:left;}
+      }
     }
   }
 }
