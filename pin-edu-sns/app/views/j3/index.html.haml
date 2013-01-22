@@ -1,82 +1,26 @@
 - hgoback '/courses'
 - hbreadcrumb '首页', '/'
 - hbreadcrumb 'Java程序设计', 'javascript:;'
-- hbreadcrumb '教学方案'
+- hbreadcrumb 'Java程序设计教学方案'
+- hbreadcrumb '面向对象程序设计'
 
 
-:css
-  .a {
-    float: left;
-    width: 100px;
-    height: 20px;
-    background-color:green;
-    display: block;
-    margin-left: 2px;
-  }
+:ruby
+  homeworks = [
+    ["类和对象的基本概念","完成课后习题,试着用形象的语言来描述自己对类和对象的理解",3],
+    ["面向对象程序设计基本思想","完成课后习题",4],
+    ["类的设计","完成课后习题",4]
+  ]
 
-  .b {
-    float: left;
-    width: 100px;
-    height: 20px;
-    background-color:green;
-    display: block;
-    margin-left: 2px;
-  }
+.page-model-show.chapter-homeworks
+  .head
+    .title= "面向对象程序设计"
+    .describe= '详细介绍面向对象设计到得各种概念'
 
-
-.page-model-show
-  .page-teaching-plan-show
-    .head
-      %h1.title 类与变量
-      .description
-        全局变量怎么声明了
-
-    .chapters
-      .chs
-        .chapter
-          .title 第一作业
-          .desc 作业描述
-          .ops
-            .count= '3项作业要求'
-
-          .items
-            .a
-            .a
-            .b
-
-          .status
-            正在进行
-
-          
-        .chapter
-          .title 第二作业
-          .desc 作业描述
-          .ops
-            .count= '4项作业要求'
-
-          .items
-            .a
-            .a
-            .b
-            .b
-
-          .status
-            正在进行
-
-
-        .chapter
-          .title 第三作业
-          .desc 作业描述
-          .ops
-            .count= '4项作业要求'
-
-          .items
-            .a
-            .a
-            .b
-            .b
-
-          .status
-            通过老师验收
-          
-      
+  .homeworks
+    - homeworks.each do |homework|
+      .homework
+        .title= homework[0]
+        .ct= homework[1]
+      .require
+        .count="#{homework[2]}项作业要求"

@@ -1,7 +1,7 @@
 - hgoback '/courses'
 - hbreadcrumb '首页', '/'
 - hbreadcrumb 'Java程序设计', 'javascript:;'
-- hbreadcrumb '教学方案'
+- hbreadcrumb 'Java程序设计教学方案'
 
 - hide = params[:hide] == 'false'
 - style = hide ? '' : 'display:none;'
@@ -38,17 +38,17 @@
 .page-model-show
   .page-teaching-plan-show
     .head
-      %h1.title 类与变量
+      %h1.title Java程序设计教学方案
       .description
-        全局变量怎么声明了
+        这个方案是给第一批学员准备的 主要是学习课程的基础部分以及给与空余时间来熟悉学校环境
 
     .chapters
       .chs
         .chapter
-          .title 第一作业
-          .desc 作业描述
+          .title 面向对象程序设计
+          .desc 详细介绍面向对象设计到得各种概念
           .ops
-            .count= '5作业'
+            .count= '11作业'
             .check= link_to '查看作业', '/j3'
 
           .items
@@ -60,8 +60,8 @@
 
           
         .chapter
-          .title 第二作业
-          .desc 作业描述
+          .title 数组与字符串
+          .desc 讲解JAVA中的数组与字符串
           .ops
             .count= '0作业'
             .check= link_to '查看作业', '/j3'
@@ -71,8 +71,8 @@
 
 
         .chapter
-          .title 第三作业
-          .desc 作业描述
+          .title 常用Java系统类和接口
+          .desc 详细讲解JAVA中常用的一些API
           .ops
             .count= '5作业'
             .check= link_to '查看作业', '/j3'

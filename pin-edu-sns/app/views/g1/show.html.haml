@@ -5,14 +5,14 @@
 
 :ruby
   homeworks = []
-.page-model-show.homework
+.page-model-show.chapter-homeworks
   .head
     .title= "面向对象程序设计"
     .describe= '详细介绍面向对象设计到得各种概念'
 
-  .list-works
+  .homeworks
     - homeworks.each do |homework|
-      .work
+      .homework
         .title= homework[0]
         .ct= homework[1]
       .require
