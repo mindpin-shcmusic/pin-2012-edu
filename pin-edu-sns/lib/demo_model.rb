@@ -31,13 +31,13 @@ module DemoModel
   TEACHING_PLAN_2.title = "Android开发课程教学方案"
   TEACHING_PLAN_2.desc = "给有一定Java基础的学生准备的教学方案，通过这个方案的学习，让学生学会搭建Andorid开发环境，熟悉SDK，会做一些简单的Android应用"
   TEACHING_PLAN_2.creator = User.find_by_name('zhugeliang')
-  TEACHING_PLAN_2.progress = "0%"
+  TEACHING_PLAN_2.progress = "29%"
 
   TEACHING_PLAN_3 = TeachingPlan.new
   TEACHING_PLAN_3.title = "JavaScript开发教学方案"
   TEACHING_PLAN_3.desc = "给有一定HTML基础的学生准备的教学方案，通过这个方案的学习，让学生可以在HTML静态页面的基础上做一些更复杂交互的页面"
   TEACHING_PLAN_3.creator = User.find_by_name('zhugeliang')
-  TEACHING_PLAN_3.progress = "16%"
+  TEACHING_PLAN_3.progress = "37%"
   TEACHING_PLANS = [TEACHING_PLAN_1,TEACHING_PLAN_2,TEACHING_PLAN_3]
 
 
@@ -57,6 +57,13 @@ module DemoModel
   chapter_3.desc = "详细讲解JAVA中常用的一些API"
   chapter_3.homeworks = []
   TEACHING_PLAN_1.add_chapter(chapter_3)
+
+  TEACHING_PLAN_2.chapters = []
+
+  chapter_2_1 = Chapter.new
+  chapter_2_1.title = "基本语法"
+  chapter_2_1.desc = "详细介绍Javascript的基本语法"
+  TEACHING_PLAN_3.add_chapter(chapter_2_1)
 
 
   homework = Homework.new

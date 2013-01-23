@@ -1250,3 +1250,62 @@
     }
   }
 }
+
+.page-teaching-plan-list{
+  width:600px;
+  .head{
+    .title{
+      font-size:16px;
+      padding-bottom:15px;
+      margin-bottom:15px;
+      border-bottom:solid 1px #ddd;
+    }
+  }
+
+  .teaching-plans{
+    .teaching-plan{
+      padding:10px;
+      background-color:#f8f8f8;
+      @include border-radius(3px);
+      margin-bottom:15px;
+      border:solid 1px #DADDE0;
+      position:relative;
+
+      .title{
+        font-size:16px;
+        font-weight:bold;
+        margin-bottom:10px;
+        span.c{
+          a{color:#999;margin-left:10px;font-size:14px;font-weight:normal;}
+        }
+      }
+      .desc{
+        width:400px;
+        margin-bottom:10px;
+      }
+      .prog{
+        position:absolute;
+        top:10px;right:15px;
+        font-size:32px;font-weight:bold;
+      }
+      .info{
+        @include floatfix;
+        .kejian, .homework{
+          float:left;margin-right:10px;
+        }
+        margin-bottom:10px;
+      }
+      .pbar{
+        height:12px;
+        @include border-radius(10px);
+        border:solid 1px #ccc;
+        background-color:white;
+        overflow:hidden;
+        .b{
+          height:12px;
+          background-color:#8EC500;
+        }
+      }
+    }
+  }
+}
