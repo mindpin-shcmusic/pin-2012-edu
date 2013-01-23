@@ -31,9 +31,8 @@
       .title= homework_title
       .user #{user_link homework_creator} 创建，#{jtime homework_created_at}
 
-  = page_field :requirements, :title => '作业要求' do
-    - requirements.each do |requirement|
-      .ct= requirement
+  = page_field :content, :title => '作业说明' do
+    .ct= sanitize homework_content
 
   = page_field :deadline, :title => '作业过期时间' do
     .time= jtimeformat homework_deadline

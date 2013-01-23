@@ -11,6 +11,7 @@
   homework_deadline = homework.deadline
   homework_created_at = homework.created_at
   attachments = homework.attachments
+  requirements = homework.requirements
   student_users = homework.student_users
 
 - htitle "作业 - #{homework_title}"
@@ -32,8 +33,12 @@
         = link_to "查看时间线", "/homeworks?demo=timeline", :class=>'timeline'
         = link_to "预览", "/i1", :class=>'preview'
 
-  = page_field :requirements, :title => '作业说明' do
+  = page_field :content, :title => '作业说明' do
     .ct= sanitize homework_content
+    
+  = page_field :requirements, :title => '作业要求' do
+    - requirements.each do |requirement|
+      .ct= requirement
 
   = page_field :deadline, :title => '作业过期时间' do
     .time= jtimeformat homework_deadline
