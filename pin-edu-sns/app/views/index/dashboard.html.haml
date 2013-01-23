@@ -45,7 +45,7 @@
                 %span> ，
                 %span.time>= course_time_expression.class_time
                 %span> ，
-                %span.course>= link_to course.name, "/courses/#{course.id}"
+                %span.course>= link_to truncate_u(course.name, 12), "/courses/#{course.id}"
               .icon
             - else
               - expressions = next_course_time_expression_collection.course_time_expressions

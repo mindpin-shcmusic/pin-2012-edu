@@ -1,22 +1,9 @@
-- content_for :javascript do
-  :javascript
-    var $days = jQuery('.page-dashboard .contribution .days');
-    var $lv1 = $days.find('.day[data-contribution=1]');
-    var $lv2 = $days.find('.day[data-contribution=2]');
-    var $lv3 = $days.find('.day[data-contribution=3]');
-    var $lv4 = $days.find('.day[data-contribution=4]');
-    var $lv5 = $days.find('.day[data-contribution=5]');
-
-    $lv1.css('background', '#ccc');
-    $lv2.css('background', '#d6e685');
-    $lv3.css('background', '#8cc665');
-    $lv4.css('background', '#44a340');
-    $lv5.css('background', '#1e6823');
-
-.contribution{:style => 'overflow:visible;'}
-  .days{:style => 'height:70px;width:510px;'}
+.contribution
+  .days
+    - i = 0
     - 1.upto(51) do |week|
-      .week{:style => 'width:10px;height:70px;float:left'}
+      .week
         - 1.upto(7) do |day|
-          - contribution = [1,2,3,4,5][rand 5]
-          .day{:style => 'width:8px;height:8px;border:1px solid #000;', :'data-contribution' => contribution}
+          - contribution = DemoModel::TEACHER_DATA[i].score
+          - i = i + 1
+          .day{:class=>"lv#{contribution}"}
