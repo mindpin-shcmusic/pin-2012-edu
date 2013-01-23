@@ -1,1 +1,22 @@
+- teaching_plans = DemoModel::TEACHING_PLANS
+
 = page_field :'teaching-plan', :title=>'教学方案' do
+  - if current_user.is_teacher?
+    .teacher
+      .teaching_plans
+        - teaching_plans.each do |teaching_plan|
+          .teaching_plan
+            .title= teaching_plan.title
+            .desc= teaching_plan.desc
+            .count= teaching_plan.chapters.count
+  - else current_user.is_student?
+    .student
+      .teaching_plans
+        - teaching_plans.each do |teaching_plan|
+          .teaching_plan
+            .title= teaching_plan.title
+            .desc= teaching_plan.desc
+            .count= teaching_plan.chapters.count
+            .homework-progress= teaching_plan.progress
+
+

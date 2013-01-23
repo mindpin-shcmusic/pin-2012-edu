@@ -58,6 +58,13 @@ module DemoModel
   chapter_3.homeworks = []
   TEACHING_PLAN_1.add_chapter(chapter_3)
 
+  TEACHING_PLAN_2.chapters = []
+
+  chapter_2_1 = Chapter.new
+  chapter_2_1.title = "基本语法"
+  chapter_2_1.desc = "详细介绍Javascript的基本语法"
+  TEACHING_PLAN_3.add_chapter(chapter_2_1)
+
 
   homework = Homework.new
   homework.title = "类和对象的基本概念"
