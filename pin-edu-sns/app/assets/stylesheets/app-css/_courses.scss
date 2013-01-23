@@ -1134,6 +1134,32 @@
           float:left;
         }
       }
+      .bar{
+        position:absolute;
+        right:15px;
+        bottom:15px;
+        height:10px;
+        width:300px;
+        @include border-radius(10px);
+        border:solid 1px #558000;
+        background-color:white;
+        overflow:hidden;
+
+        @include floatfix;
+        .bl{
+          float:left;
+          height:10px;
+          background-color:white;
+          
+          box-shadow:-1px 0 1px #558000 inset;
+          &:last-child{
+            box-shadow:none;
+          }
+          &.done{
+            background-color:#8EC500;
+          }
+        }
+      }
     }
   }
   .create{
