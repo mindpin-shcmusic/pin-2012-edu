@@ -21,14 +21,10 @@
     
     .field
       %label 内容
-      = f.text_area :content, :class => 'kind-editor'
-    
-    .field.need
-      %label 请选择日期
-      = f.text_field :deadline, :class=>'datetime-picker'
+      = f.text_area :content, :class => 'kind-editor', :'data-height'=>200
     
     .field.attachments
-      %label 老师附件
+      %label 作业附件
 
       .sample.hide
         .file
@@ -47,11 +43,10 @@
 
       
     .field
-      %label 需求
+      %label 作业要求
       .added-requirements
 
-
-      %a.add-student-attachement-field{:href => "javascript:;"} 添加+
+      %a.add-student-attachement-field{:href => "javascript:;"} 增加要求 +
       .student-attachement-fields
       
     .field.submit

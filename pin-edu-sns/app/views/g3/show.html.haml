@@ -28,26 +28,26 @@
       .title= homework_title
       .user #{user_link homework_creator} 创建，#{jtime homework_created_at}
 
-  = page_field :requirements, :title => '作业要求' do
-    .ct= sanitize homework_content
+      .ops
+        = link_to "查看时间线", "/homeworks?demo=timeline", :class=>'timeline'
+        = link_to "预览", "/i1", :class=>'preview'
 
-  = page_field :action, :title => '' do
-    = link_to "切换到时间线视图", "/homeworks?demo=timeline"
-    = link_to "预览", "/i1"
+  = page_field :requirements, :title => '作业说明' do
+    .ct= sanitize homework_content
 
   = page_field :deadline, :title => '作业过期时间' do
     .time= jtimeformat homework_deadline
     .state= Time.now < homework_deadline ? '未过期' : '已过期'
 
   - if !attachments.blank?
-    = page_field :attachements, :title => '作业参考附件' do
+    = page_field :attachments, :title => '作业参考附件' do
       .list
         - attachments.each do |attachment|
           .file
             .cover
               .name= link_to attachment, 'javascript:;'
       .zip
-        %a.down{:href=>"#"} 打包下载附件
+        %a.down{:href=>"#"} 下载所有附件
 
   = page_field :'page-homework-students-list', :title => '学生作业完成情况' do
     .students-list

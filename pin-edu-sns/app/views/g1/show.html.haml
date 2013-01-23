@@ -19,10 +19,5 @@
     .describe= chapter_desc
 
   .homeworks
-    - homeworks.each do |homework|
-      .homework
-        .title= homework[0]
-        .ct= homework[1]
-      .require
-        .count="#{homework[2]}项作业要求"
-  = link_to "创建作业","/g2/show"
+    .hcount 还没有创建作业
+  .create= link_to "创建作业","/g2/show"

@@ -1088,3 +1088,86 @@
     }
   }
 }
+
+.page-model-show.chapter-homeworks{
+  .head{
+    padding-bottom:15px;
+    margin-bottom:15px;
+    border-bottom:solid 1px #DADDE0;
+    .title{font-size:18px;font-weight:bold;margin-bottom:10px;}
+    .describe{}
+  }
+  .homeworks{
+    width:600px;
+    margin-bottom:10px;
+    .hcount{
+      margin-bottom:10px;
+      font-size:16px;
+    }
+
+    .homework{
+      padding:15px;
+      background-color:#F9F9F9;
+      margin-bottom:5px;
+      border:solid 1px #EDEDED;
+      position:relative;
+
+      .title{
+        font-size:16px;
+        margin-bottom:5px;
+      }
+      .ct{
+        width:500px;
+        margin-bottom:15px;
+      }
+      .require-count{
+        height:24px;line-height:24px;
+        @include floatfix;
+        .co{
+          background-color:#ddd;
+          padding:0 8px;
+          font-weight:bold;
+          float:left;
+          margin-right:5px;
+        }
+        .tx{
+          float:left;
+        }
+      }
+    }
+  }
+  .create{
+    @include floatfix;
+    a{@include mini-button;}
+  }
+}
+
+.page-model-form.homework{
+  >form{
+    width:652px;
+  }
+  a.add-student-attachement-field{
+    margin-bottom:5px;
+  }
+
+  .student-attachement-fields{
+    >div{
+      @include floatfix;
+    }
+    textarea{
+      margin-bottom:5px;
+      width:400px;
+      height:60px;
+      @include border-radius(2px);
+      float:left;
+    }
+    a.delete{
+      float:left;
+      width:24px;height:24px;
+      font-size:0;
+      line-height:20px;
+      overflow:hidden;
+      background:url('/assets/delete.png') no-repeat 4px 4px;
+    }
+  }
+}
