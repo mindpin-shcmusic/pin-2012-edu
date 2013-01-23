@@ -8,6 +8,7 @@ class QuestionsController < ApplicationController
   end
 
   def index
+    return render "questions/demo_#{params[:demo]}" if params[:demo]
     questions  = Question.with_user(current_user)
 
     @questions = filter questions do
@@ -15,8 +16,6 @@ class QuestionsController < ApplicationController
       answered   {questions.answered}
       unanswered {questions.unanswered}
     end
-
-    render "demo_#{params[:demo]}" if params[:demo]
   end
 
 

@@ -80,9 +80,9 @@
       - if params[:step]
         .plans
           = link_to '/courses?demo=show2', :class=>'teaching-plan' do
-            .title Java程序设计教学方案
-            .desc 这个方案是给第一批学员准备的 主要是学习课程的基础部分以及给与空余时间来熟悉学校环境
+            .title= DemoModel::TEACHING_PLAN_1.title
+            .desc= DemoModel::TEACHING_PLAN_1.desc
         - else
-          .blank 当前课程还没有教学方案
+          .blank 当前课程下还没有教学方案
 
       .add-teaching-plan= link_to '添加教学方案', '/courses?demo=new'

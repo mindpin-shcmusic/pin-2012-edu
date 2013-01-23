@@ -2,19 +2,6 @@
 - hbreadcrumb '首页', '/'
 - hbreadcrumb '作业'
 
-- if current_user.is_teacher?
-  = page_top_fixed 'buttons' do
-    = page_buttons do |p|
-      = p.button '布置新作业', new_homework_path, :class => 'create'
-
-= page_top_fixed 'filters' do
-  = page_filters homeworks_path do |p|
-    = p.filter '全部', :tab => 'all', :default => true
-    = p.filter '未过期', :tab => 'unexpired'
-    = p.filter '已过期', :tab => 'expired'
-
-  = timeline_button
-
 - if timeline_open?
   - case params[:t]
   - when nil
@@ -27,6 +14,19 @@
 - elsif params[:demo]
   = render "homeworks/parts/demo_#{params[:demo]}"
 - else
+
+  - if current_user.is_teacher?
+    = page_top_fixed 'buttons' do
+      = page_buttons do |p|
+        = p.button '布置新作业', new_homework_path, :class => 'create'
+
+  = page_top_fixed 'filters' do
+    = page_filters homeworks_path do |p|
+      = p.filter '全部', :tab => 'all', :default => true
+      = p.filter '未过期', :tab => 'unexpired'
+      = p.filter '已过期', :tab => 'expired'
+
+  = timeline_button
 
   :ruby
     cols_hash = {

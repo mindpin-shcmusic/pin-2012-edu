@@ -1,102 +1,26 @@
+:ruby
+  teaching_plan = DemoModel::TEACHING_PLAN_1
+  teaching_plan_title = teaching_plan.title
+  teaching_plan_desc = teaching_plan.desc
+  chapters = teaching_plan.chapters
+
 - hgoback '/courses'
 - hbreadcrumb '首页', '/'
-- hbreadcrumb 'Java程序设计', 'javascript:;'
-- hbreadcrumb '教学方案'
-
-- hide = params[:hide] == 'false'
-- style = hide ? '' : 'display:none;'
-
-
-:css
-  .progress {
-    float: right;
-    display: inline;
-    width: 60px;
-    margin: 0px 0px 0px 0px;
-  }
-  .a {
-    float: left;
-    width: 100px;
-    height: 20px;
-    background-color:green;
-    display: block;
-    margin-left: 2px;
-  }
-
-  .b {
-    float: left;
-    width: 100px;
-    height: 20px;
-    background-color:green;
-    display: block;
-    margin-left: 2px;
-  }
-
-  .c {
-    float: left;
-    width: 100px;
-    height: 20px;
-    background-color:grey;
-    display: block;
-    margin-left: 2px;
-  }
+- hbreadcrumb teaching_plan_title
 
 .page-model-show
   .page-teaching-plan-show
     .head
-      %h1.title 类与变量
-      .description
-        全局变量怎么声明了
+      %h1.title= teaching_plan_title
+      .description= teaching_plan.desc
 
     .chapters
       .chs
-        .chapter{:style=>''}
-          .title 第一作业
-          .desc 作业描述
-          .ops
-            .remove= '三项作业要求'
-
-          .items
-            .a
-            .b
-            .c
-
-            %p
-
-              .progress
-                正在进行
-
-          
-        .chapter{:style=>''}
-          .title 第二作业
-          .desc 作业描述
-          .ops
-            .remove= '三项作业要求'
-
-          .items
-            .a
-            .c
-            .c
-
-            %p
-
-              .progress
-                正在进行
-
-        .chapter{:style=>''}
-          .title 第三作业
-          .desc 作业描述
-          .ops
-            .remove= '三项作业要求'
-
-          .items
-            .a
-            .a
-            .a
-
-            %p
-
-              .progress
-                通过检验
-          
+        - chapters.each do |chapter|
+          .chapter
+            .title= chapter.title
+            .desc= chapter.desc
+            .ops
+              .count= "#{chapter.homeworks.count}作业"
+              .check= link_to '查看作业', '/j3'
       

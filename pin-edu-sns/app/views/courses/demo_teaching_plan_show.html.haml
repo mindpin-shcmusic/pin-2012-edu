@@ -5,62 +5,39 @@
 
 - hide = params[:hide] == 'false'
 - style = hide ? '' : 'display:none;'
+- blank_style = hide ? 'display:none;' : ''
+
+- titles = ['第一章节', '第二章节', '第三章节']
 
 .page-model-show
   .page-teaching-plan-show
     .head
-      %h1.title Java程序设计教学方案
-      .description
-        这个方案是给第一批学员准备的 主要是学习课程的基础部分以及给与空余时间来熟悉学校环境
+      %h1.title= DemoModel::TEACHING_PLAN_1.title
+      .description= DemoModel::TEACHING_PLAN_1.desc
 
     .chapters
       .chs
-        .chapter{:style=>style}
-          .title 第一章节
-          .desc 章节还没有简介信息
-          .ops
-            .edit= link_to '编辑', '/c1/show'
-            .remove= link_to '删除', 'javascript:;'
-            .publish= link_to '发布', 'javascript:;'
-          .items
-            .students
-              .count 22个学生
-              .edit= link_to '分配', '/f1/show'
-            .homeworks
-              .count 0个课件
-              .edit= link_to '管理', 'javascript:;'
+        - titles.each do |title|
+          .chapter{:style=>style}
+            .title= title
+            .desc.bl 章节还没有简介信息
+            .items
+              .homeworks
+                .edit= link_to '管理作业', 'javascript:;'
+                .count 0
+              .slides
+                .edit= link_to '管理课件', '/c1/show'
+                .count 0
+              .publish.hide
+                .status 未发布
+                .edit= link_to '发布', 'javascript:;'
+              .remove= link_to '删除', 'javascript:;'
 
-        .chapter{:style=>style}
-          .title 第二章节
-          .desc 章节还没有简介信息
-          .ops
-            .edit= link_to '编辑', '/c1/show'
-            .remove= link_to '删除', 'javascript:;'
-            .publish= link_to '发布', 'javascript:;'
-          .items
-            .students
-              .count 22个学生
-              .edit= link_to '分配', 'javascript:;'
-            .homeworks
-              .count 0个课件
-              .edit= link_to '管理', 'javascript:;'
+      .blank{:style=>blank_style} 还没有添加任何章节
 
-        .chapter{:style=>style}
-          .title 第三章节
-          .desc 章节还没有简介信息
-          .ops
-            .edit= link_to '编辑', '/c1/show'
-            .remove= link_to '删除', 'javascript:;'
-            .publish= link_to '发布', 'javascript:;'
-          .items
-            .students
-              .count 22个学生
-              .edit= link_to '分配', 'javascript:;'
-            .homeworks
-              .count 0个课件
-              .edit= link_to '管理', 'javascript:;'
-
-      .blank 还没有添加任何章节
-
-      .create-button= link_to '新增章节', 'javascript:;'
-      =link_to "预览","/d1/show"
+      .btns
+        .create-button= link_to '新增章节', 'javascript:;'
+        .preview-button= link_to "预览","/d1/show"
+        .students
+          .count 22个学生参与此方案
+          .edit= link_to '分配', '/f1/show'

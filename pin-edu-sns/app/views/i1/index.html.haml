@@ -1,12 +1,18 @@
-- homework_title = "类和对象的基本概念"
-- homework_content = "完成课后习题,试着用形象的语言来描述自己对类和对象的理解"
-- homework_creator = User.find_by_name("zhugeliang")
-- homework_deadline = Time.now+1.day
-- homework_create_at = Time.now-3.second
-- attachments = ["作业习题.doc"]
-- requirements = ["作业的源代码","作业遇到的问题","参考的书籍列表"]
+:ruby
+  teaching_plan = DemoModel::TEACHING_PLAN_1
+  teaching_plan_title = teaching_plan.title
+  chapter = teaching_plan.chapters[0]
+  chapter_title = chapter.title
+  homework = chapter.homeworks[0]
 
-    
+  homework_title = homework.title
+  homework_content = homework.desc
+  homework_creator = homework.creator
+  homework_deadline = homework.deadline
+  homework_created_at = homework.created_at
+  attachments = homework.attachments
+  student_users = homework.student_users
+  requirements = homework.requirements
 
 
 
@@ -15,19 +21,18 @@
 - hgoback '/homeworks'
 - hbreadcrumb '首页', '/'
 - hbreadcrumb '作业', '/homeworks'
-- hbreadcrumb 'Java程序设计教学方案', '/homeworks'
-- hbreadcrumb '面向对象程序设计', '/homeworks'
+- hbreadcrumb teaching_plan_title, '/homeworks'
+- hbreadcrumb chapter_title, '/homeworks'
 
 
 .page-model-show.homework
   = page_field :'base-info', :title => '作业信息' do
     .head
       .title= homework_title
-      .user #{user_link homework_creator} 创建，#{jtime homework_create_at}
+      .user #{user_link homework_creator} 创建，#{jtime homework_created_at}
 
-  = page_field :requirements, :title => '作业要求' do
-    - requirements.each do |requirement|
-      .ct= requirement
+  = page_field :content, :title => '作业说明' do
+    .ct= sanitize homework_content
 
   = page_field :deadline, :title => '作业过期时间' do
     .time= jtimeformat homework_deadline
@@ -41,9 +46,8 @@
     .zip
       %a.down{:href=>""} 打包下载附件
 
-  = page_field :'homework-student-info', :title => '作业完成情况' do
+  = page_field :'homework-student-info', :title => '提交作业要求情况' do
     .requirements
-      .title 要求提交以下内容
       .list
         - requirements.each do |requirement|
           .requirement{:'data-id'=>requirement.id}

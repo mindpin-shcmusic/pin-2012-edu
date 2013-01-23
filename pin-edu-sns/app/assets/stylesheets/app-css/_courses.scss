@@ -638,6 +638,13 @@
       }
     }
 
+    .blank{
+      border-bottom:solid 1px #E5E5E5;
+      padding-bottom:15px;
+      margin-bottom:15px;
+      color:#999;
+    }
+
     .add-teaching-plan{
       a{@include mini-button;}
     }
@@ -649,6 +656,7 @@
     border-bottom:solid 1px #DADDE0;
     padding-bottom:15px;
     margin-bottom: 15px;
+    width:600px;
   }
   .chapters{
     width:600px;
@@ -665,7 +673,7 @@
       @include border-radius(4px 0 0);
 
       .title{
-        font-size:20px;
+        font-size:16px;
         font-weight:bold;
         height:30px;line-height:30px;
         margin-bottom:10px;
@@ -673,28 +681,21 @@
 
       .desc{
         width:340px;
+        &.bl{
+          color:#999;
+        }
       }
 
       .ops{
         position:absolute;
         top:15px;right:15px;
-        .edit, .remove, .publish{
-          float:left;
-          margin-left:10px;
-          a{
-            @include mini-button-blue;
-            height:22px;line-height:22px;
-            font-size:12px;
-            padding:0 12px;
-          }
-        }
       }
 
       .items{
         position:absolute;
         top:52px;right:15px;
         @include border-radius(4px);
-        .students, .homeworks{
+        .homeworks, .slides{
           @include border-radius(4px);
           
           height:24px;line-height:24px;
@@ -702,10 +703,37 @@
           @include floatfix;
           .count{
             float:left;
+            margin-left:5px;
+          }
+          .edit{float:left;}
+          margin-left:5px;
+          padding:0 12px;
+          float:left;
+          font-size:12px;
+        }
+        .publish{
+          @include border-radius(4px);
+          
+          height:24px;line-height:24px;
+          background-color:#eaeaea;
+          @include floatfix;
+          .status{
+            float:left;
             margin-right:5px;
           }
           .edit{float:left;}
-          margin-left:12px;
+          margin-left:5px;
+          padding:0 12px;
+          float:left;
+          font-size:12px;
+        }
+        .remove{
+          @include border-radius(4px);
+          
+          height:24px;line-height:24px;
+          background-color:#eaeaea;
+          @include floatfix;
+          margin-left:5px;
           padding:0 12px;
           float:left;
           font-size:12px;
@@ -716,9 +744,568 @@
       color:#999;
       margin-bottom:15px;
     }
-    .create-button{
+
+    &>.btns{
       @include floatfix;
-      a{@include mini-button;}
+      .create-button, .preview-button{
+        @include floatfix;
+        a{@include mini-button;}
+        margin-right:15px;
+        float:left;
+      }
+
+      .students{
+        height:30px;line-height:30px;
+        border:solid 1px #EDEDED;
+        @include border-radius(4px);
+        float:right;
+        background-color:#F9F9F9;
+        padding:0 15px;
+        .count{font-size:14px;float:left;margin-right:7px;}
+        .edit{float:left;}
+      }
+    }
+  }
+}
+
+.page-zhangjie-edit{
+  .base-info{
+    margin-bottom:30px;
+
+    .title{
+      font-size:16px;
+      font-weight:bold;
+      margin-bottom:10px;
+      .edit{font-size:12px;font-weight:normal;}
+    }
+    .desc{
+      .edit{font-size:12px;font-weight:normal;}
+    }
+  }
+  .desc-info{
+    .navs{
+      @include floatfix;
+      padding-bottom:15px;
+      border-bottom:solid 1px #ddd;
+
+      a.nav{
+        height:30px;line-height:30px;
+        background-color:#eee;
+        @include border-radius(2px);
+        margin-right:10px;
+        padding:0 12px;
+        border:solid 1px #b1b1b1;
+        font-size:16px;
+        color:#444;
+        float:left;
+        &:hover{
+          background-color:#ddd;
+        }
+      }
+      a.add{
+        @include mini-button;
+        float:left;
+      }
+    }
+
+    .contents{
+      min-height:600px;
+      .content{
+        .kejian-base-info{
+          width:240px;
+          padding-top:15px;
+          padding-right:15px;
+          border-right:solid 1px #ddd;
+          min-height:599px;
+          float:left;
+
+          .title{
+            font-size:16px;
+            font-weight:bold;
+            margin-bottom:10px;
+            .edit{font-size:12px;font-weight:normal;}
+          }
+          .desc{
+            .edit{font-size:12px;font-weight:normal;}
+          }
+        }
+        .kejian-file{
+          margin-left:240px + 15px + 1px;
+          .btns{
+            overflow:hidden;
+            padding:15px;
+            border-bottom:solid 1px #DDDDDD;
+            background-color:#fafafa;
+
+            .page-upload-button{
+              float:left;margin-right:15px;
+            }
+            a.page-float-box-link{
+              @include mini-button-blue;
+              float:left;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+.page-fangan-review{
+  padding-bottom:0;
+
+  .head{
+    margin:0 -15px;
+    padding:0 15px;
+    border-bottom:solid 1px #DADDE0;
+    padding-bottom:15px;
+    .h{width:600px;}
+  }
+
+  .bd{
+    margin:0 -15px;
+    min-height:600px;
+    @include floatfix;
+    .sidebar{
+      float:left;
+      width:240px;
+      border-right:solid 1px #DADDE0;
+      min-height:610px;
+
+      .label{
+        background-color:#F7F7F7;
+        border-bottom:solid 1px #DADDE0;
+        height:32px;line-height:32px;
+        padding:0 15px;
+        margin-bottom:10px;
+      }
+
+      .chapter a{
+        display:block;
+        height:30px;line-height:30px;
+        margin-bottom:10px;
+        border:solid 1px #DADDE0;
+        @include border-radius(3px);
+        background-color:#f8f8f8;
+        margin-left:10px;
+        width:240px - 2px - 10px * 2 - 12px * 2;
+        padding:0 12px;
+        color:#555;
+        &:hover{
+          background-color:#eee;
+        }
+
+        @include floatfix;
+        .o{float:left;}
+        .l{float:left;}
+        .o{
+          background-color:#eee;
+          height:30px;line-height:30px;
+          padding:0 8px;
+          border-right:solid 1px #DADDE0;
+          @include border-radius(3px 0 0 3px);
+          margin-left:-12px;
+          margin-right:10px;
+          font-weight:bold;
+          font-size:12px;
+        }
+      }
+    }
+
+    .preview{
+      margin-left:241px;
+      .label{
+        background-color:#F7F7F7;
+        border-bottom:solid 1px #DADDE0;
+        height:32px;line-height:32px;
+        padding:0 15px;
+        padding-left:15px;
+      }
+
+      .titles{
+        background-color:#F7F7F7;
+        border-bottom:solid 1px #DADDE0;
+        height:32px;line-height:32px;
+        padding:0 15px;
+        padding-left:15px;
+        @include floatfix;
+        a{
+          position:relative;
+          padding-left:16px;
+          height:32px;line-height:32px;
+          float:left;
+          margin-right:10px;
+          &:before{
+            content:"";
+            position:absolute;
+            width:6px;height:6px;
+            @include border-radius(10px);
+            top:13px;left:5px;
+            background-color:#555;
+          }
+        }
+      }
+
+      .kejian{
+        margin:15px;
+        padding:5px;
+        border:solid 1px #DADDE0;
+        background-color:#f8f8f8;
+        float:left;
+      }
+    }
+  }
+}
+
+.media-resource{
+  .course-ware{
+    overflow:hidden;
+    font-size:0;
+    line-height:20em;
+    position:absolute;
+    width:24px;height:24px;
+    bottom:3px;right:5px;
+    background:url('/assets/kejian_link.png') no-repeat 4px 4px;
+  }
+}
+
+.page-media-resource.demo{
+  .head{
+    border-bottom:solid 1px #DADDE0;
+    padding-bottom:15px;
+    margin-bottom:15px;
+  }
+
+  .preview{
+    padding:5px;
+    border:solid 1px #DADDE0;
+    background-color:#f8f8f8;
+    width:640px;
+    height:480px;
+  }
+
+  .teaching-plan-link{
+    border-top:solid 1px #DADDE0;
+    border-bottom:solid 1px #DADDE0;
+    background-color:#f8f8f8;
+    margin:15px -15px;
+    padding:15px;
+    .label{
+      height:24px;line-height:24px;
+      padding-left:30px;
+      background:url('/assets/kejian_link.png') no-repeat 3px 3px;
+      margin-bottom:5px;
+    }
+    .links{
+      padding-left:30px;
+    }
+  }
+
+  .tags{
+    margin-bottom:15px;
+    label{
+      font-weight:bold;
+    }
+    a{
+      margin-left:10px;
+    }
+  }
+}
+
+.page-comments{
+  .navs{
+    border-bottom:solid 1px #DADDE0;
+    padding-bottom:5px;
+    margin-bottom:5px;
+    a.nav{
+      height:24px;line-height:24px;
+      margin-right:10px;
+    }
+  }
+}
+
+.page-admin-students-selector{
+  .list-selector{
+    background:none;
+    padding:0;
+    border:none;
+
+    div.search{
+      border-bottom:solid 1px #DADDE0;
+      margin:-15px -15px 15px;
+      padding:15px;
+      background-color:#f8f8f8;
+
+      .field{
+        margin-bottom:0;
+        input{
+          margin-bottom:0;
+        }
+      }
+      .desc{
+        top:15px;
+      }
+    }
+
+    .filter{
+      border-bottom:solid 1px #DADDE0;
+      margin:-15px -15px 15px;
+      padding-top:5px;
+      padding-left:15px;
+      @include floatfix;
+
+      a{
+        border:solid 1px #DADDE0;
+        margin:0 6px -1px 0;
+        height:30px;line-height:30px;
+        padding:0 10px;
+        float:left;
+        background-color:#f2f2f2;
+        &.view{
+          border-bottom:solid 1px white;
+          background-color:white;
+        }
+      }
+    }
+
+    .selector{
+      .list{
+        width:421px;
+        @include border-radius(2px);
+
+        .item{
+          &.selected{
+            background-color:#6caa00;
+          }
+          &.selected:after{
+            content:"";
+            width:24px;height:24px;
+            background:url('/assets/tick_1.png') 4px 4px no-repeat;
+            top:3px;right:3px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.page-model-show.chapter-homeworks{
+  .head{
+    padding-bottom:15px;
+    margin-bottom:15px;
+    border-bottom:solid 1px #DADDE0;
+    .title{font-size:18px;font-weight:bold;margin-bottom:10px;}
+    .describe{}
+  }
+  .homeworks{
+    width:600px;
+    margin-bottom:10px;
+    .hcount{
+      margin-bottom:10px;
+      font-size:16px;
+    }
+
+    .homework{
+      padding:15px;
+      background-color:#F9F9F9;
+      margin-bottom:5px;
+      border:solid 1px #EDEDED;
+      position:relative;
+
+      .title{
+        font-size:16px;
+        margin-bottom:5px;
+      }
+      .ct{
+        width:500px;
+        margin-bottom:15px;
+      }
+      .require-count{
+        height:24px;line-height:24px;
+        @include floatfix;
+        .co{
+          background-color:#ddd;
+          padding:0 8px;
+          font-weight:bold;
+          float:left;
+          margin-right:5px;
+        }
+        .tx{
+          float:left;
+        }
+      }
+    }
+  }
+  .create{
+    @include floatfix;
+    a{@include mini-button;}
+  }
+}
+
+.page-model-form.homework{
+  >form{
+    width:652px;
+  }
+  a.add-student-attachement-field{
+    margin-bottom:5px;
+  }
+
+  .student-attachement-fields{
+    >div{
+      @include floatfix;
+    }
+    textarea{
+      margin-bottom:5px;
+      width:400px;
+      height:60px;
+      @include border-radius(2px);
+      float:left;
+    }
+    a.delete{
+      float:left;
+      width:24px;height:24px;
+      font-size:0;
+      line-height:20px;
+      overflow:hidden;
+      background:url('/assets/delete.png') no-repeat 4px 4px;
+    }
+  }
+}
+
+.page-question-list{
+  width:600px;
+
+  .head{
+    @include floatfix;
+
+    .avatar{
+      float:left;
+      padding:3px;
+      background-color:#fff;
+      width:48px;height:48px;
+      border:solid 1px #ddd;
+      img{@include border-radius(0);}
+    }
+
+    .name, .desc{
+      margin-left:70px;
+    }
+
+    padding-bottom:15px;
+    margin-bottom:15px;
+    border-bottom:solid 1px #ddd;
+  }
+  .question{
+    margin-bottom:5px;
+    padding:10px;
+    background-color:#f8f8f8;
+    border:solid 1px #ddd;
+
+    .avatar{
+      float:left;
+      width:32px;height:32px;
+      padding:3px;
+      background-color:#fff;
+      border:solid 1px #ddd;
+      img{@include border-radius(0);}
+    }
+
+    .data{
+      margin-left: 50px;
+      .title{
+        font-size:16px;
+        margin-bottom:5px;
+      }
+      .date{
+        font-size:12px;
+        color:#999;
+      }
+    }
+  }
+}
+
+.page-model-show.faqs{
+  .faq-toc {
+    .link {
+      font-size:16px;
+      margin-bottom:8px;
+      &:before{
+        content:">";
+        color:#999;
+        margin-right:10px;
+      }
+    }
+    .link:last-child {margin:0;}
+  }
+
+  .faq-contents {
+    .faq {
+      padding-bottom:15px;
+      margin-bottom:15px;
+      border-bottom:solid 1px #ddd;
+      .title {
+        font-size:20px;
+        margin-bottom:10px;
+      }
+    }
+  }
+}
+
+.page-teaching-plan-list{
+  width:600px;
+  .head{
+    .title{
+      font-size:16px;
+      padding-bottom:15px;
+      margin-bottom:15px;
+      border-bottom:solid 1px #ddd;
+    }
+  }
+
+  .teaching-plans{
+    .teaching-plan{
+      padding:10px;
+      background-color:#f8f8f8;
+      @include border-radius(3px);
+      margin-bottom:15px;
+      border:solid 1px #DADDE0;
+      position:relative;
+
+      .title{
+        font-size:16px;
+        font-weight:bold;
+        margin-bottom:10px;
+        span.c{
+          a{color:#999;margin-left:10px;font-size:14px;font-weight:normal;}
+        }
+      }
+      .desc{
+        width:400px;
+        margin-bottom:10px;
+      }
+      .prog{
+        position:absolute;
+        top:10px;right:15px;
+        font-size:32px;font-weight:bold;
+      }
+      .info{
+        @include floatfix;
+        .kejian, .homework{
+          float:left;margin-right:10px;
+        }
+        margin-bottom:10px;
+      }
+      .pbar{
+        height:12px;
+        @include border-radius(10px);
+        border:solid 1px #ccc;
+        background-color:white;
+        overflow:hidden;
+        .b{
+          height:12px;
+          background-color:#8EC500;
+        }
+      }
     }
   }
 }

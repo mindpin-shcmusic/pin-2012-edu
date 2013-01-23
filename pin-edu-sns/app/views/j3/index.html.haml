@@ -5,12 +5,12 @@
   chapter = teaching_plan.chapters[0]
   chapter_title = chapter.title
   chapter_desc = chapter.desc
-  homeworks = []
+  homeworks = chapter.homeworks
 
+- hgoback '/courses'
 - hbreadcrumb '首页', '/'
-- hbreadcrumb teaching_plan_title, '/homeworks'
-- hbreadcrumb chapter_title, '/homeworks'
-- hbreadcrumb '作业列表', '/homeworks'
+- hbreadcrumb teaching_plan_title
+- hbreadcrumb chapter_title
 
 
 .page-model-show.chapter-homeworks
@@ -19,5 +19,9 @@
     .describe= chapter_desc
 
   .homeworks
-    .hcount 还没有创建作业
-  .create= link_to "创建作业","/g2/show"
+    - homeworks.each do |homework|
+      .homework
+        .title= homework.title
+        .ct= homework.desc
+      .require
+        .count="#{homework.requirements.count}项作业要求"

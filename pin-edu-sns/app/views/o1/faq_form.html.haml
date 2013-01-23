@@ -1,0 +1,16 @@
+- hgoback '/'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '在线问答', 'javascript:;'
+- hbreadcrumb '创建faq'
+
+.page-model-form
+  = form_tag 'javascript:;' do
+    .field
+      %label 标题
+      = text_field_tag :title, @question.title
+    .field
+      %label 课程
+      = select_tag :course, options_for_select(@courses.map(&:title))
+    .field.submit
+      = jfsubmit_stop '确定', '/questions?demo=faq'
+      = jfcancel '取消'

@@ -1,8 +1,14 @@
+:ruby
+  teaching_plan = DemoModel::TEACHING_PLAN_1
+  teaching_plan_title = teaching_plan.title
+  chapter = teaching_plan.chapters[0]
+  chapter_title = chapter.title
+
 - htitle '作业'
 
 - hbreadcrumb '首页', '/'
-- hbreadcrumb 'Java程序设计教学方案', '/homeworks'
-- hbreadcrumb '面向对象程序设计', '/homeworks'
+- hbreadcrumb teaching_plan_title, '/homeworks'
+- hbreadcrumb chapter_title, '/homeworks'
 - hbreadcrumb '布置作业'
 
 .page-model-form.homework
@@ -15,14 +21,10 @@
     
     .field
       %label 内容
-      = f.text_area :content, :class => 'kind-editor'
-    
-    .field.need
-      %label 请选择日期
-      = f.text_field :deadline, :class=>'datetime-picker'
+      = f.text_area :content, :class => 'kind-editor', :'data-height'=>200
     
     .field.attachments
-      %label 老师附件
+      %label 作业附件
 
       .sample.hide
         .file
@@ -41,11 +43,10 @@
 
       
     .field
-      %label 需求
+      %label 作业要求
       .added-requirements
 
-
-      %a.add-student-attachement-field{:href => "javascript:;"} 添加+
+      %a.add-student-attachement-field{:href => "javascript:;"} 增加要求 +
       .student-attachement-fields
       
     .field.submit
