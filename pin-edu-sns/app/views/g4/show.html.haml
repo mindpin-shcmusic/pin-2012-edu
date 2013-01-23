@@ -7,7 +7,6 @@
   chapter_desc = chapter.desc
   homeworks = chapter.homeworks
 
-
 - hbreadcrumb '首页', '/'
 - hbreadcrumb teaching_plan_title, '/homeworks'
 - hbreadcrumb chapter_title, '/homeworks'
@@ -19,10 +18,13 @@
     .describe= chapter_desc
 
   .homeworks
+    .hcount 该章节包含三个作业
     - homeworks.each do |homework|
       .homework
-        .title= homework.title
+        .title= link_to homework.title, 'javascript:;'
         .ct= homework.desc
-      .require
-        .count="#{homework.requirements.count}项作业要求"
-  = link_to "创建作业","/g2/show"
+        .require-count
+          .co= homework.requirements.count
+          .tx 作业要求
+
+  .create= link_to "创建作业","/g2/show"

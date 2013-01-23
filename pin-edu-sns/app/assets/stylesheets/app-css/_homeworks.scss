@@ -147,12 +147,12 @@
 
   .head{
     @include floatfix;
-    margin-bottom:20px;
 
     .title{
       // margin-left:68px;
-      font-size:19px;font-weight:bold;
+      font-size:18px;font-weight:bold;
       height:21px;line-height:21px;
+      margin-bottom:15px;
     }
     .user{
       // margin-left:68px;
@@ -161,6 +161,22 @@
       margin-top:6px;
       .u-name{font-weight:bold;}
     }
+    position:relative;
+
+    .ops{
+      position:absolute;
+      top:0;right:0;
+      @include floatfix;
+      .timeline{
+        @include mini-button-blue;margin-right:10px;
+        float:left;
+      }
+      .preview{
+        @include mini-button-blue;
+        float:left;
+      }
+    }
+
   }
 
   .content{
@@ -175,11 +191,7 @@
   }
 
   .deadline{
-    border:solid 1px #ddd;
-    background-color:rgba(black, 0.05);
-    padding:10px;
-    @include border-radius(3px);
-    margin-bottom:10px;
+
     .title{
       margin-bottom:10px;
     }
@@ -190,28 +202,23 @@
   }
 
   .attachments{
-    border:solid 1px #ddd;
-    background-color:rgba(black, 0.05);
-    padding:10px;
-    @include border-radius(3px);
-    margin-bottom:10px;
-    .title{
-      margin-bottom:10px;
-    }
     .list{
       margin-bottom:10px;
+      font-size:16px;
     }
 
     .zip {
       @include floatfix;
       a.down{
         @include mini-button-black;
+        height:22px;line-height:22px;
+        padding:0 12px;
+        font-size:12px;
       }
     }
   }
 
   .requirements{
-    padding-top:10px;
     .title{
       margin-bottom:10px;
     }
