@@ -8,6 +8,7 @@
 
 - hbreadcrumb teaching_plan_title, '/homeworks'
 - hbreadcrumb chapter_title, '/homeworks'
+- hbreadcrumb '类和对象的基本概念'
 
 - step = params[:step] || '0'
 
@@ -15,14 +16,14 @@
   .teacher
     .avatar= avatar current_user
     .title
-      #{current_user.real_name} 老师的作业管理时间线
+      #{current_user.real_name}老师 - 类和对象的基本概念 - 作业时间线
 
   .homeworks
     .homework
       .line
       .title= homework_title
       .events
-        .event.word{:style=>'left:140px;'}
+        .event.word{:style=>'left:160px;'}
           .t
             .avatar= demo_avatar_by_name('诸葛亮')
             .name 诸葛亮
