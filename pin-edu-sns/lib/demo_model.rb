@@ -439,4 +439,18 @@ module DemoModel
     end
 
   end
+
+  # 2012 年 1 月 1 日
+  first_day = Time.at(1325348337)
+  TEACHER_DATA = []
+  0.upto(364) do |i|
+    day = first_day+i.day
+    TEACHER_DATA << DemoModel::Contribution.new(day)
+  end
+  STUDENT_DATA = []
+  0.upto(364) do |i|
+    day = first_day+i.day
+    STUDENT_DATA << DemoModel::Contribution.new(day)
+  end
+
 end
