@@ -5,16 +5,15 @@
 - hbreadcrumb '老师问答', '/questions'
 - hbreadcrumb 'Java编程语言问答FAQ'
 
-.page-unfixed-head
-
 .page-model-show.faqs
-  = page_field :'faq-toc', :title => '内容列表' do
+  = page_field :'faq-toc', :title => 'FAQ 问题索引' do
     - DemoModel::FAQ.each_with_index do |question,index|
       .link= link_to question.title, "#faq#{index+1}"
 
-  = page_field :'faq-contents', :title => '内容' do
+  = page_field :'faq-contents', :title => 'FAQ（点击问题查看详情）' do
     - DemoModel::FAQ.each_with_index do |question,index|
       .faq{:id=>"faq#{index+1}"}
-        .title= question.title
-      %p.answer= question.best_answer.html_safe
-      .link= link_to '打开查看', 'javascript:;'
+        .title= link_to question.title, 'javascript:;'
+        %p.answer
+          %span.best.bold> 最佳答案：
+          %span>= question.best_answer.html_safe

@@ -15,11 +15,14 @@
     .teaching-plans
       - teaching_plans.each do |teaching_plan|
         .teaching-plan
-          .title= teaching_plan.title
+          .title
+            %span.t= teaching_plan.title
+            %span.c= user_link teaching_plan.creator
           .desc= teaching_plan.desc
-          .teacher= user_link teaching_plan.creator
-          .desc
-            %span= teaching_plan.progress
-            %span= link_to '查看课件', ''
-            %span= link_to '查看作业', '/j2'
+          .prog= teaching_plan.progress
+          .info
+            .kejian= link_to '查看课件', ''
+            .homework= link_to '查看作业练习', '/j2'
+          .pbar
+            .b{:style=>"width:#{teaching_plan.progress};"}
         

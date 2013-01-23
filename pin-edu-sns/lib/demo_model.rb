@@ -31,13 +31,13 @@ module DemoModel
   TEACHING_PLAN_2.title = "Android开发课程教学方案"
   TEACHING_PLAN_2.desc = "给有一定Java基础的学生准备的教学方案，通过这个方案的学习，让学生学会搭建Andorid开发环境，熟悉SDK，会做一些简单的Android应用"
   TEACHING_PLAN_2.creator = User.find_by_name('zhugeliang')
-  TEACHING_PLAN_2.progress = "0%"
+  TEACHING_PLAN_2.progress = "29%"
 
   TEACHING_PLAN_3 = TeachingPlan.new
   TEACHING_PLAN_3.title = "JavaScript开发教学方案"
   TEACHING_PLAN_3.desc = "给有一定HTML基础的学生准备的教学方案，通过这个方案的学习，让学生可以在HTML静态页面的基础上做一些更复杂交互的页面"
   TEACHING_PLAN_3.creator = User.find_by_name('zhugeliang')
-  TEACHING_PLAN_3.progress = "16%"
+  TEACHING_PLAN_3.progress = "37%"
   TEACHING_PLANS = [TEACHING_PLAN_1,TEACHING_PLAN_2,TEACHING_PLAN_3]
 
 
@@ -73,7 +73,11 @@ module DemoModel
   homework.created_at = Time.now-3.second
   homework.deadline = Time.now+1.day
   homework.attachments = ["作业习题.doc"]
-  homework.requirements = ["作业的源代码","作业遇到的问题","参考的书籍列表"]
+  homework.requirements = [
+    '编写一个Hello类，根据附件要求，实现hello_world()类方法',
+    '编写一个Book类，根据附件要求，实现read()实例方法',
+    '编写一个Store类，根据附件要求，实现add()实例方法'
+  ]
   student_names = "关平,关彝,张嶷,周仓,魏延,关索,关统,夏侯霸,关兴,赵云,黄月英,张飞,关羽,王平,黄盖,张翼,黄崇,吕凯,黄忠,黄承彦,张苞,姜维"
   homework.student_users = student_names.split(',').map{|name|Student.find_by_real_name(name).user}
 
@@ -158,7 +162,7 @@ module DemoModel
   zhugeliang = User.find_by_name('zhugeliang')
 
   question_1 = Question.new
-  question_1.title = "java如不想么每次都判空 if(o !=null) 怎么做？"
+  question_1.title = "java如不想么每次都进行空值判断 if(o!=null) 怎么做？"
   question_1.desc = "<p>涉及到对象操作 object.xxxx(),如果对象为null则会抛异常，如果每次都if(o !=null) 代码很丑陋</p><p>一种做法是创建对象或者方法返回对象时都new一个对象而不是返回null<br>\n不过这样有时也不太好，比如结果为空的时候返回null更合理一点</p><p>有更好的建议么 ？</p>"
   question_1.creator = zhaoyun
   question_1.teacher_user = zhugeliang
