@@ -1,9 +1,18 @@
-- questions = ["java如不想么每次都判空 if(o !=null) 怎么做？","Java里ClassName.this和this有什么不一样","关于电梯算法","插值查找的问题"]
+:ruby
+  if current_user.is_teacher?
+    questions = DemoModel::TEACHER_QUESTIONS
+  elsif current_user.is_student?
+    questions = DemoModel::STUDENT_QUESTIONS
+  end
 
 = page_field :'questions-info', :title=>'问答' do
-  - get_dashboard_arr(questions).each do |question|
-    - if !question.blank?
+  .page-question-list
+    - questions.each do |question|
       .question
-        .title= link_to truncate_u(question), "#"
-    - else
-      .question.blank
+        .avatar= avatar question.creator, :tiny
+        .data
+          .title
+            %span.c>= user_link(question.creator)
+            %span> ：
+            %span.q>= link_to question.title, question.link
+          .date= question.created_at
