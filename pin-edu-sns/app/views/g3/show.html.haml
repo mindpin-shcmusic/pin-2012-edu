@@ -35,10 +35,6 @@
 
   = page_field :content, :title => '作业说明' do
     .ct= sanitize homework_content
-    
-  = page_field :requirements, :title => '作业要求' do
-    - requirements.each do |requirement|
-      .ct= requirement
 
   = page_field :deadline, :title => '作业过期时间' do
     .time= jtimeformat homework_deadline
@@ -54,6 +50,10 @@
       .zip
         %a.down{:href=>"#"} 下载所有附件
 
+  = page_field :requirements, :title => '作业要求' do
+    - requirements.each do |requirement|
+      .ct= requirement
+
   = page_field :'page-homework-students-list', :title => '学生作业完成情况' do
     .students-list
       - student_users.each do |user|
@@ -63,12 +63,16 @@
 
         .student
           .cell.avatar= avatar user, :mini
-          .cell.name= link_to user.real_name, "#"
+          .cell.name= link_to user.real_name, "javascript:;"
 
-          .cell.count
-            %span= 0
-            %span /
-            %span= 3
+          .cell.progress
+            - count = rand(4)
+            - p = ((count / 3.0) * 10000.0).round / 100.0 
+
+            - 3.times do |i|
+              .blo{:class=>count >= i ? 'done' : ''}
+
+          .cell.perc #{p}%
 
           .cell.submitted
             %span= submitted ? '已完成' : '未完成'

@@ -4,11 +4,13 @@ require 'question_demo'
 class O1Controller < ApplicationController
   def zhaoyun
     @questions = DemoModel::STUDENT_QUESTIONS
+    @str = '提出的所有问题'
     render 'o1/index'
   end
 
   def zhugeliang
     @questions = DemoModel::TEACHER_QUESTIONS
+    @str = '被提问的问题'
     render 'o1/index'
   end
 

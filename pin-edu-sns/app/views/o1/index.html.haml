@@ -1,14 +1,22 @@
 - hgoback '/'
 - hbreadcrumb '首页', '/'
 - hbreadcrumb '在线问答'
+- hbreadcrumb '我提出的问题'
 
-:css
-  .page-question-list .question {border:1px solid #000;margin-bottom:4px;}
+.page-model-show
+  .page-question-list
+    .head
+      - creator = current_user
+      .avatar= avatar creator
+      .name= creator.real_name
+      .desc= @str
 
-.page-model-list.page-question-list
-  - @questions.each do |question|
-    .question
-      .title= link_to question.title, question.link
-      .meta
-        .creator= user_link(question.creator)
-        .date= question.created_at
+    - @questions.each do |question|
+      .question
+        .avatar= avatar question.creator, :tiny
+        .data
+          .title
+            %span.c>= user_link(question.creator)
+            %span> ：
+            %span.q>= link_to question.title, question.link
+          .date= question.created_at

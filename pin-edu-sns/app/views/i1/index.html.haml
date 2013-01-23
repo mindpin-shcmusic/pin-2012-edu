@@ -46,9 +46,8 @@
     .zip
       %a.down{:href=>""} 打包下载附件
 
-  = page_field :'homework-student-info', :title => '作业完成情况' do
+  = page_field :'homework-student-info', :title => '提交作业要求情况' do
     .requirements
-      .title 要求提交以下内容
       .list
         - requirements.each do |requirement|
           .requirement{:'data-id'=>requirement.id}
