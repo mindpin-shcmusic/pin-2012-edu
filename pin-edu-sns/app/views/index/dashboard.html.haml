@@ -6,11 +6,6 @@
   map = current_user.course_time_expression_collection_map
   next_course_time_expression_collection = map.next_course_time_expression_collection
 
-  next_course_time_expression_collections = map.next_course_time_expression_collections
-
-  line_course_time_expression_collections = map.line_course_time_expression_collections
-
-
 .page-model-show
   .page-dashboard
 
@@ -69,126 +64,23 @@
               %span.course 无
             .icon
 
-    = page_field :'courses-info', :title=>'一周课程' do
-      - line_course_time_expression_collections.each do |array|
-        - weekday = array[0]
-        - course_time_expression_collections = array[1]
-        .weekday
-          .t
-            .w= change_to_weekday(weekday)
-            .d= change_to_weekdate(weekday)
-          - course_time_expression_collections.each do |course_time_expression_collection|
-            - if !course_time_expression_collection.conflict?
-              .course-time
-                :ruby
-                  course_time_expression = course_time_expression_collection.course_time_expression
-                  course_teacher = course_time_expression.course_teacher
-                  course = course_teacher.course
-                  students_count = course.get_students(:semester=>Semester.now, :teacher_user=>current_user).length
-                  location = course_teacher.location
-                  location = '地点待定' if location.blank?
-
-                .time
-                  %span.start= course_time_expression.start_time_str
-                  %span -
-                  %span.end= course_time_expression.end_time_str
-                .course>= link_to truncate_u(course.name, 10), "/courses/#{course.id}"
-                - if current_user.is_teacher?
-                  .students
-                    %span.count>= students_count
-                    %span 个学生
-                - if current_user.is_student?
-                  .teacher
-                
-                .location>= location
-            - else
-              .course-time
-                .time
-                  %span.start= course_time_expression_collection.start_time_str
-                  %span -
-                  %span.end= course_time_expression_collection.end_time_str
-                - course_time_expressions = course_time_expression_collection.course_time_expressions
-                - course_time_expressions.each do |expression|
-                  - course_teacher = expression.course_teacher
-                  - course = course_teacher.course
-                  .course>= link_to course.name, "/courses/#{course.id}"
-
-
-      .see-curriculum
-        .hours
-          :ruby
-            count = current_user.get_course_hours_count
-            p = count*100/84.to_f
-          .count
-            %span 每周上课
-            %span.c= count
-            %span 课时
-
-        %a.see{:href=>'/courses/curriculum'} 查看课程表
-
-    = page_field :'homeworks-info', :title=>'作业和教学实践' do
+    = page_field :'desc-info', :title=>'' do
       .tabs
         .navs
-          = link_to "要上的课",'javascript:void(0);',:class=>"nav current"
-          = link_to "作业",'javascript:void(0);',:class=>"nav"
-          = link_to "自定义",'javascript:void(0);',:class=>"nav"
+          =link_to "课程","javascript:void(0);",:class=>"nav current"
+          =link_to "教学方案","javascript:void(0);",:class=>"nav"
+          =link_to "问答","javascript:void(0);",:class=>"nav"
+          =link_to "资源统计","javascript:void(0);",:class=>"nav"
+          =link_to "订阅与通知","javascript:void(0);",:class=>"nav"
         .contents
           .content.current
-            - get_dashboard_arr(next_course_time_expression_collections)[0...3].each do |collection|
-              - if !collection.blank?
-                :ruby
-                  course_time_expression = collection.course_time_expression
-                  weekday = course_time_expression.weekday
-                  course_teacher = course_time_expression.course_teacher
-                  course = course_teacher.course
-                .item= link_to course.name, course
-              - else
-                .item.blank
+            = render "index/parts/part_1"
           .content
-            - get_dashboard_arr(current_user.homeworks)[0...3].each do |homework|
-              - if !homework.blank?
-                .item.homework
-                  - course = homework.course
-                  - stat = "#{homework.submitted_students.count}/#{homework.assignees.count}"
-
-                  .title= link_to truncate_u(homework.title), homework
-                  .course= link_to course.name, course
-                  .stat= stat
-              - else
-                .item.blank
+            = render "index/parts/part_2"
           .content
-            - customs = ['预习编译原理第二章','参加计算机爱好社团组织的活动','去图书馆借阅操作系统相关的一些书籍','向数据结构老师询问几个疑惑的问题']
-            - get_dashboard_arr(customs)[0...3].each do |custom|
-              .item= link_to custom, 'javascript:;'
-
-    = page_field :'xxt', :title=>'资源贡献统计' do
-      .xxt
-
-    = page_field :'faq-info', :title=>'在线问答(Q&A)' do
-      - questions = ["java如不想么每次都判空 if(o !=null) 怎么做？","Java里ClassName.this和this有什么不一样","关于电梯算法","插值查找的问题"]
-      - get_dashboard_arr(questions).each do |question|
-        - if !question.blank?
-          .question
-            .title= link_to truncate_u(question), "#"
-        - else
-          .question.blank
-
-    = page_field :'notices-info', :title=>'通知信息' do
-      .notice
-        = link_to truncate_u('本周举办乒乓球比赛'), 'javascript:;'
-      .notice
-        = link_to truncate_u('本周辩论赛通知'), 'javascript:;'
-      .notice
-        = link_to truncate_u('上周卫生调查结果公告'), 'javascript:;'
-      .notice
-        = link_to truncate_u('即将举办网页制作大赛'), 'javascript:;'
-
-    = page_field :'subscriptions-info', :title=>'订阅信息' do
-      .subscription
-        = link_to truncate_u('上海的故事：第三辑（64年版65印）'), 'javascript:;'
-      .subscription
-        = link_to truncate_u('漫游植物王国：蕨类（彩图）'), 'javascript:;'
-      .subscription
-        = link_to truncate_u('气球上的五星期'), 'javascript:;'
-      .subscription
-        = link_to truncate_u('thinking in java 中文版'), 'javascript:;'
+            = render "index/parts/part_3"
+          .content
+            = render "index/parts/part_4"
+          .content
+            = render "index/parts/part_5"
+    

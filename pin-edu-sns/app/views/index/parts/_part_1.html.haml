@@ -1,0 +1,60 @@
+:ruby
+  map = current_user.course_time_expression_collection_map
+  line_course_time_expression_collections = map.line_course_time_expression_collections
+
+= page_field :'courses-info', :title=>'一周课程' do
+  - line_course_time_expression_collections.each do |array|
+    - weekday = array[0]
+    - course_time_expression_collections = array[1]
+    .weekday
+      .t
+        .w= change_to_weekday(weekday)
+        .d= change_to_weekdate(weekday)
+      - course_time_expression_collections.each do |course_time_expression_collection|
+        - if !course_time_expression_collection.conflict?
+          .course-time
+            :ruby
+              course_time_expression = course_time_expression_collection.course_time_expression
+              course_teacher = course_time_expression.course_teacher
+              course = course_teacher.course
+              students_count = course.get_students(:semester=>Semester.now, :teacher_user=>current_user).length
+              location = course_teacher.location
+              location = '地点待定' if location.blank?
+
+            .time
+              %span.start= course_time_expression.start_time_str
+              %span -
+              %span.end= course_time_expression.end_time_str
+            .course>= link_to truncate_u(course.name, 10), "/courses/#{course.id}"
+            - if current_user.is_teacher?
+              .students
+                %span.count>= students_count
+                %span 个学生
+            - if current_user.is_student?
+              .teacher
+            
+            .location>= location
+        - else
+          .course-time
+            .time
+              %span.start= course_time_expression_collection.start_time_str
+              %span -
+              %span.end= course_time_expression_collection.end_time_str
+            - course_time_expressions = course_time_expression_collection.course_time_expressions
+            - course_time_expressions.each do |expression|
+              - course_teacher = expression.course_teacher
+              - course = course_teacher.course
+              .course>= link_to course.name, "/courses/#{course.id}"
+
+
+  .see-curriculum
+    .hours
+      :ruby
+        count = current_user.get_course_hours_count
+        p = count*100/84.to_f
+      .count
+        %span 每周上课
+        %span.c= count
+        %span 课时
+
+    %a.see{:href=>'/courses/curriculum'} 查看课程表
