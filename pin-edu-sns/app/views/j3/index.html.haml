@@ -12,6 +12,7 @@
 - hbreadcrumb teaching_plan_title
 - hbreadcrumb chapter_title
 
+- done_counts = [2, 2, 3]
 
 .page-model-show.chapter-homeworks
   .head
@@ -19,9 +20,18 @@
     .describe= chapter_desc
 
   .homeworks
+    .hcount 该章节包含三个作业
+    - i = 0
     - homeworks.each do |homework|
       .homework
-        .title= homework.title
+        .title= link_to homework.title, 'javascript:;'
         .ct= homework.desc
-      .require
-        .count="#{homework.requirements.count}项作业要求"
+        .require-count
+          .co= homework.requirements.count
+          .tx 作业要求
+        .bar
+          - width = 300.0 / homework.requirements.count
+          - done_count = done_counts[i]
+          - i = i + 1
+          - homework.requirements.count.times do |j|
+            .bl{:style=>"width:#{width}px;", :class=>done_count>j ? 'done' : ''}

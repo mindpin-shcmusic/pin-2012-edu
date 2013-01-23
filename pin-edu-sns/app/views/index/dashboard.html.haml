@@ -45,7 +45,7 @@
                 %span> ，
                 %span.time>= course_time_expression.class_time
                 %span> ，
-                %span.course>= link_to course.name, "/courses/#{course.id}"
+                %span.course>= link_to truncate_u(course.name, 12), "/courses/#{course.id}"
               .icon
             - else
               - expressions = next_course_time_expression_collection.course_time_expressions
@@ -64,23 +64,22 @@
               %span.course 无
             .icon
 
-    = page_field :'desc-info', :title=>'' do
-      .tabs
-        .navs
-          =link_to "课程","javascript:void(0);",:class=>"nav current"
-          =link_to "教学方案","javascript:void(0);",:class=>"nav"
-          =link_to "问答","javascript:void(0);",:class=>"nav"
-          =link_to "资源统计","javascript:void(0);",:class=>"nav"
-          =link_to "订阅与通知","javascript:void(0);",:class=>"nav"
-        .contents
-          .content.current
-            = render "index/parts/part_1"
-          .content
-            = render "index/parts/part_2"
-          .content
-            = render "index/parts/part_3"
-          .content
-            = render "index/parts/part_4"
-          .content
-            = render "index/parts/part_5"
-    
+    .tabs
+      .navs
+        =link_to "课程","javascript:void(0);",:class=>"nav current"
+        =link_to "教学方案","javascript:void(0);",:class=>"nav"
+        =link_to "问答","javascript:void(0);",:class=>"nav"
+        =link_to "资源统计","javascript:void(0);",:class=>"nav"
+        =link_to "订阅与通知","javascript:void(0);",:class=>"nav"
+      .contents
+        .content.current
+          = render "index/parts/part_1"
+        .content
+          = render "index/parts/part_2"
+        .content
+          = render "index/parts/part_3"
+        .content
+          = render "index/parts/part_4"
+        .content
+          = render "index/parts/part_5"
+  

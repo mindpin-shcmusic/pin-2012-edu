@@ -5,14 +5,13 @@
     questions = DemoModel::STUDENT_QUESTIONS
   end
 
-= page_field :'questions-info', :title=>'问答' do
-  .page-question-list
-    - questions.each do |question|
-      .question
-        .avatar= avatar question.creator, :tiny
-        .data
-          .title
-            %span.c>= user_link(question.creator)
-            %span> ：
-            %span.q>= link_to question.title, question.link
-          .date= question.created_at
+.page-question-list
+  - questions.each do |question|
+    .question
+      .avatar= avatar question.creator, :tiny
+      .data
+        .title
+          %span.c>= user_link(question.creator)
+          %span> ：
+          %span.q>= link_to question.title, question.link
+        .date= question.created_at
