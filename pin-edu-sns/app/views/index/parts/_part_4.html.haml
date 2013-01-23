@@ -1,9 +1,30 @@
+:ruby
+  if current_user.is_teacher?
+    data = DemoModel::TEACHER_DATA
+  else
+    data = DemoModel::STUDENT_DATA
+  end
+
+  sum = data.map{|x| x.score}.sum
+
+
 .contribution
+  .title
+    年度资源贡献度统计
+
+  .sum
+    %span 过去一年共上传
+    %span.count= sum
+    %span 份文件资源
+
+  .desc
+    以下是按天进行的资源贡献统计
   .days
     - i = 0
     - 1.upto(51) do |week|
       .week
         - 1.upto(7) do |day|
-          - contribution = DemoModel::TEACHER_DATA[i].score
+          - contribution = data[i].score
           - i = i + 1
           .day{:class=>"lv#{contribution}"}
+

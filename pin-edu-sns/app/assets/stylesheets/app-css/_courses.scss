@@ -1370,19 +1370,44 @@
         }
       }
     }
+    .contents{
+      min-height:1000px;
+    }
   }
 
   .contribution{
+    .title{
+      font-size:18px;
+      margin-bottom:10px;
+    }
+
+    .sum{
+      .count{
+        font-size:18px;font-weight:bold;
+        margin:0 5px;
+      }
+      margin-bottom: 10px;
+    }
+
+    .desc{
+      margin-bottom:10px;
+    }
+
     .days{
-      $s:10px;
+      border:solid 1px #ddd;
+      padding:1px 2px;
+      @include floatfix;
+      float:left;
+
+      $s:12px;
       .week{
         float:left;
         width:$s;
-        margin-right:2px;
+        margin:0 1px;
         .day{
           width:$s;
           height:$s;
-          margin-bottom:3px;
+          margin:2px 0;
           &.lv1{background:#EEEEEE;}
           &.lv2{background:#D6E685;}
           &.lv3{background:#8CC665;}
@@ -1391,5 +1416,39 @@
         }
       }
     }
+  }
+
+  .page-admin-course{
+    padding:15px;
+    .desc{
+      width:500px;
+      margin-bottom:10px;
+    }
+
+    .count{
+      margin-bottom:10px;
+    }
+
+    .homework-progress{
+      
+    }
+  }
+}
+
+.page-field.course-info{
+  .field.image{
+    width:160px;
+    float:left;
+  }
+  .field.name, .field.cid, .field.desc{
+    margin-left:175px;
+    label{
+      float:left;
+      width:80px;
+      text-align: right;
+      margin-right:10px;
+      color:#666;
+    }
+    font-size:16px;
   }
 }
