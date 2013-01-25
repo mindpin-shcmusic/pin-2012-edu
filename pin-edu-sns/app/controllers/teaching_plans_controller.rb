@@ -36,6 +36,13 @@ class TeachingPlansController < ApplicationController
   end
 
   def update
+    if @teaching_plan.update_attributes(params[:teaching_plan])
+      return redirect_to "/teaching_plans"
+    end
+
+    error = @teaching_plan.errors.first
+    flash[:error] = error[1]
+    redirect_to "/teaching_plans"
   end
 
   def destroy

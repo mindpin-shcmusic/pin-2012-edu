@@ -1,0 +1,14 @@
+- htitle '教学方案'
+
+
+- hgoback '/teaching_plans'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb "教学方案", '/teaching_plans'
+- hbreadcrumb '编辑教学方案'
+
+
+.page-model-form
+  = flash_info
+  = form_for @teaching_plan do |f|
+    
+    =render 'form', :f => f
