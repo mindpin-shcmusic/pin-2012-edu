@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130111033635) do
+ActiveRecord::Schema.define(:version => 20130125080814) do
 
   create_table "announcement_rules", :force => true do |t|
     t.integer  "creator_id"
@@ -64,6 +64,14 @@ ActiveRecord::Schema.define(:version => 20130111033635) do
 
   add_index "categories", ["is_removed"], :name => "index_categories_on_is_removed"
   add_index "categories", ["parent_id"], :name => "index_categories_on_parent_id"
+
+  create_table "chapters", :force => true do |t|
+    t.string   "title"
+    t.text     "desc"
+    t.integer  "teaching_plan_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "comments", :force => true do |t|
     t.integer  "model_id"
@@ -198,6 +206,16 @@ ActiveRecord::Schema.define(:version => 20130111033635) do
 
   add_index "course_teachers", ["course_id"], :name => "index_course_teachers_on_course_id"
   add_index "course_teachers", ["teacher_user_id"], :name => "index_course_teachers_on_teacher_user_id"
+
+  create_table "course_wares", :force => true do |t|
+    t.string   "title"
+    t.text     "desc"
+    t.integer  "chapter_id"
+    t.string   "kind"
+    t.integer  "media_resource_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "courses", :force => true do |t|
     t.string   "name",       :default => "",    :null => false
@@ -526,14 +544,13 @@ ActiveRecord::Schema.define(:version => 20130111033635) do
 
   create_table "teaching_plans", :force => true do |t|
     t.string   "title"
+    t.text     "desc"
+    t.integer  "course_id"
+    t.integer  "teacher_user_id"
+    t.string   "semester_value"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_removed"
-    t.string   "semester_value"
-    t.text     "content"
   end
-
-  add_index "teaching_plans", ["is_removed"], :name => "index_teaching_plans_on_is_removed"
 
   create_table "team_students", :force => true do |t|
     t.integer  "team_id"
@@ -546,13 +563,15 @@ ActiveRecord::Schema.define(:version => 20130111033635) do
   add_index "team_students", ["team_id"], :name => "index_team_students_on_team_id"
 
   create_table "teams", :force => true do |t|
-    t.string   "name",       :default => "",    :null => false
+    t.string   "name",                   :default => "",    :null => false
     t.string   "cid"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_removed", :default => false
+    t.boolean  "is_removed",             :default => false
+    t.integer  "course_teacher_team_id"
   end
 
+  add_index "teams", ["course_teacher_team_id"], :name => "index_teams_on_course_teacher_team_id"
   add_index "teams", ["is_removed"], :name => "index_teams_on_is_removed"
 
   create_table "upload_document_dirs", :force => true do |t|
