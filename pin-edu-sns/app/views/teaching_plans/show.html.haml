@@ -1,0 +1,29 @@
+- htitle '教学方案'
+
+
+- hgoback '/teaching_plans'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '教学方案', '/teaching_plans'
+- hbreadcrumb @teaching_plan.title
+
+
+.page-unfixed-head
+  = page_buttons do |p|
+    = p.button '编辑修改', "/teaching_plans/#{@teaching_plan.id}/edit"
+
+
+.page-model-show
+  = page_field :teaching_plan, :title => '教学方案' do
+    .field.title
+      %label 标题
+      .v= @teaching_plan.title
+
+    .field.desc
+      %label 描述
+      .v= sanitize @teaching_plan.desc
+    
+
+    
+
+   
+
