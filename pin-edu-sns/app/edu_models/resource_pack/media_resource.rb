@@ -12,12 +12,12 @@ class MediaResource < ActiveRecord::Base
   has_many   :media_resources,
              :foreign_key => 'dir_id'
 
+  belongs_to :course_ware
+
   belongs_to :dir,
              :class_name  => 'MediaResource',
              :foreign_key => 'dir_id',
              :conditions  => {:is_dir => true}
-
-
 
   validates  :name,
              :uniqueness  => {
