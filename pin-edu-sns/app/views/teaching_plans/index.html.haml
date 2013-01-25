@@ -1,0 +1,39 @@
+- htitle '教学方案'
+
+- hgoback '/'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb "教学方案"
+
+
+= page_top_fixed 'buttons' do
+  = page_buttons do |p|
+    = p.button '创建', '/teaching_plans/new', :class => 'new'
+
+
+:ruby
+  cols_hash = {
+    :title => 5,
+    :course => 2,
+    :teacher => 2,
+    :semester => 1
+  }
+
+= page_top_fixed 'list-head' do
+
+  .headtop
+    = list_pagination(@teaching_plans)
+
+  = page_list_head :cols=>cols_hash do |p|
+    = p.cell :title, '标题'
+    = p.cell :course, '课程'
+    = p.cell :teacher, '老师'
+    = p.cell :semester, '学期'
+
+= page_model_list @teaching_plans, :cols=>cols_hash, :class=>'teaching_plans' do |p|
+  - teaching_plan = p.model
+  - user = teacher.user
+
+  = p.cell :title, teaching_plan.title
+  = p.cell :course, teaching_plan.course
+  = p.cell :teacher, teaching_plan.teacher_user.name
+  = p.cell :semester, teaching_plan.semester_value

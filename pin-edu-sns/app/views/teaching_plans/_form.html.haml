@@ -1,0 +1,17 @@
+.field
+  = f.hidden_field :course_id, :value => 1
+  = f.hidden_field :teacher_user_id, :value => 1
+  = f.hidden_field :semester_value, :value => '2012B'
+
+.field.need
+  %label 标题
+  = f.text_field :title
+
+.field
+  %label 描述
+  = f.text_area :desc, :class => 'kind-editor'
+
+
+.field
+  = jfsubmit '确定'
+  = jfcancel '取消'

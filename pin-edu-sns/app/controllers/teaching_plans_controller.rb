@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-class Admin::TeachingPlansController < ApplicationController
-  layout 'admin'
+class TeachingPlansController < ApplicationController
   before_filter :login_required
   before_filter :pre_load
 
@@ -15,17 +14,19 @@ class Admin::TeachingPlansController < ApplicationController
 
   def new
     @teaching_plan = TeachingPlan.new
+
+    @courses = current_user.get_teacher_courses :semester => Semester.now
   end
 
   def create
-    @teaching_plan = TeachingPlan.new(params[:teaching_plan])
+    @teaching_plan = current_user.teaching_plans.create(params[:teaching_plan])
     if @teaching_plan.save
-      return redirect_to "/admin/teaching_plans/#{@teaching_plan.id}"
+      return redirect_to "/teaching_plans/#{@teaching_plan.id}"
     end
     
     error = @teaching_plan.errors.first
     flash[:error] = error[1]
-    redirect_to "/admin/teaching_plans/new"
+    redirect_to "/teaching_plans/new"
   end
 
   def show
@@ -35,14 +36,18 @@ class Admin::TeachingPlansController < ApplicationController
   end
 
   def update
+    if @teaching_plan.update_attributes(params[:teaching_plan])
+      return redirect_to "/teaching_plans"
+    end
+
+    error = @teaching_plan.errors.first
+    flash[:error] = error[1]
+    redirect_to "/teaching_plans"
   end
 
   def destroy
-    @teaching_plan.remove
+    @teaching_plan.destroy
     render :text => 'ok'
-  end
-
-  def import_from_csv_page
   end
 
 end
