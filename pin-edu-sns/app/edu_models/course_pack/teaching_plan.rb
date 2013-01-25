@@ -1,4 +1,9 @@
 class TeachingPlan < ActiveRecord::Base
+  belongs_to :creator,
+             :class_name  => 'User',
+             :foreign_key => :creator_id
+
+             
   belongs_to :course
 
   belongs_to :teacher_user,
@@ -7,6 +12,12 @@ class TeachingPlan < ActiveRecord::Base
 
   has_many :chapters
   
-  validates :title, :desc, :course, :teacher_user, :semester_value, :presence => true
+  validates :title, :desc, :presence => true
+
+  validates :teacher_user, :presence => true,
+    :uniqueness => {:scope => [:course_id, :semester_value]}
+
+
+  include CourseTeacherRelativeMethods
   
 end
