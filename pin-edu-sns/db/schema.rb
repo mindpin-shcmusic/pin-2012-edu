@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130125080814) do
+ActiveRecord::Schema.define(:version => 20130125084948) do
 
   create_table "announcement_rules", :force => true do |t|
     t.integer  "creator_id"
@@ -215,6 +215,7 @@ ActiveRecord::Schema.define(:version => 20130125080814) do
     t.integer  "media_resource_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "creator_id"
   end
 
   create_table "courses", :force => true do |t|
@@ -563,15 +564,13 @@ ActiveRecord::Schema.define(:version => 20130125080814) do
   add_index "team_students", ["team_id"], :name => "index_team_students_on_team_id"
 
   create_table "teams", :force => true do |t|
-    t.string   "name",                   :default => "",    :null => false
+    t.string   "name",       :default => "",    :null => false
     t.string   "cid"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "is_removed",             :default => false
-    t.integer  "course_teacher_team_id"
+    t.boolean  "is_removed", :default => false
   end
 
-  add_index "teams", ["course_teacher_team_id"], :name => "index_teams_on_course_teacher_team_id"
   add_index "teams", ["is_removed"], :name => "index_teams_on_is_removed"
 
   create_table "upload_document_dirs", :force => true do |t|
