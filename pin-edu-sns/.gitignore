@@ -24,3 +24,4 @@ public/system/*
 coverage/
 .idea/*
 *DS_*
+db/schema.rb
