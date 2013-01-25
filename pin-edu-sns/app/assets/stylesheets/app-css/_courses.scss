@@ -1134,6 +1134,32 @@
           float:left;
         }
       }
+      .bar{
+        position:absolute;
+        right:15px;
+        bottom:15px;
+        height:10px;
+        width:300px;
+        @include border-radius(10px);
+        border:solid 1px #558000;
+        background-color:white;
+        overflow:hidden;
+
+        @include floatfix;
+        .bl{
+          float:left;
+          height:10px;
+          background-color:white;
+          
+          box-shadow:-1px 0 1px #558000 inset;
+          &:last-child{
+            box-shadow:none;
+          }
+          &.done{
+            background-color:#8EC500;
+          }
+        }
+      }
     }
   }
   .create{
@@ -1307,5 +1333,122 @@
         }
       }
     }
+  }
+}
+
+.page-dashboard{
+  .course-data{
+    .next{
+      .c{font-size:12px;}
+    }
+  }
+  .tabs{
+    .navs{
+      border-bottom:solid 1px #ccc;
+      margin-bottom:15px;
+      @include floatfix;
+
+      .nav{
+        height:32px;line-height:32px;
+        border:solid 1px #ccc;
+        background-color:#f2f2f2;
+        float:left;
+        margin-left:8px;
+        padding:0 14px;
+        font-size:16px;
+        margin-bottom:-1px;
+        color:#444;
+        @include border-radius(5px 5px 0 0);
+
+        &:hover{
+          background-color:#ddd;
+        }
+
+        &.current{
+          background-color:white;
+          border-bottom:solid 1px white;
+        }
+      }
+    }
+    .contents{
+      min-height:1000px;
+    }
+  }
+
+  .contribution{
+    .title{
+      font-size:18px;
+      margin-bottom:10px;
+    }
+
+    .sum{
+      .count{
+        font-size:18px;font-weight:bold;
+        margin:0 5px;
+      }
+      margin-bottom: 10px;
+    }
+
+    .desc{
+      margin-bottom:10px;
+    }
+
+    .days{
+      border:solid 1px #ddd;
+      padding:1px 2px;
+      @include floatfix;
+      float:left;
+
+      $s:12px;
+      .week{
+        float:left;
+        width:$s;
+        margin:0 1px;
+        .day{
+          width:$s;
+          height:$s;
+          margin:2px 0;
+          &.lv1{background:#EEEEEE;}
+          &.lv2{background:#D6E685;}
+          &.lv3{background:#8CC665;}
+          &.lv4{background:#44A340;}
+          &.lv5{background:#1E6823;}
+        }
+      }
+    }
+  }
+
+  .page-admin-course{
+    padding:15px;
+    .desc{
+      width:500px;
+      margin-bottom:10px;
+    }
+
+    .count{
+      margin-bottom:10px;
+    }
+
+    .homework-progress{
+      
+    }
+  }
+}
+
+.page-field.course-info{
+  .field.image{
+    width:160px;
+    float:left;
+  }
+  .field.name, .field.cid, .field.desc{
+    margin-left:175px;
+    label{
+      float:left;
+      width:80px;
+      text-align: right;
+      margin-right:10px;
+      color:#666;
+    }
+    font-size:16px;
   }
 }

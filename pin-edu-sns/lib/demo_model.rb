@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 module DemoModel
   class TeachingPlan
     attr_accessor :title, :desc, :chapters, :creator, :progress
@@ -390,5 +391,74 @@ module DemoModel
     question_12,
     question_13
   ]
+
+  class Contribution
+    attr_accessor :date, :score
+
+    def initialize(date)
+      self.date  = date.to_date
+      self.score = generate_score
+    end
+
+    def generate_score
+      return 0 if self.on_holiday?
+      return self.weekend_contribution if self.on_weekend?
+      self.weekday_contribution
+    end
+
+    def weekend_contribution
+      self.contribution_rate_from [[0]*35, [1]*25, [2]*15, [3]*15, [4]*5, [5]*5]
+    end
+
+    def weekday_contribution
+      self.contribution_rate_from [[0]*5, [1]*5, [2]*15, [3]*15, [4]*25, [5]*35]
+    end
+
+    def contribution_rate_from(possibility_array)
+      possibility_array.flatten[rand 100]
+    end
+
+    def on_weekend?
+      [6, 0].include? self.date.wday
+    end
+
+    def on_holiday?
+      self.on_winter_holiday? || self.on_summer_holiday?
+    end
+
+    def this_year
+      Time.now.year
+    end
+
+    def on_winter_holiday?
+      (Date.new(self.this_year, 1, 1)..Date.new(self.this_year, 2, 7)).include? self.date
+    end
+
+    def on_summer_holiday?
+      (Date.new(self.this_year, 7, 1)..Date.new(self.this_year, 9, 1)).include? self.date
+    end
+
+  end
+
+  res = [5, 4, 4, 3, 4, 4, 4, 4, 5, 3, 4, 4, 0, 2, 0, 4, 0, 5, 5, 5, 0, 3, 5, 5, 4, 0, 5, 4, 0, 4, 5, 4, 2, 5, 1, 5, 3, 2, 5, 5, 5, 3, 0, 2, 0, 4, 5, 4, 0, 0, 1, 5, 1, 4, 0, 0, 3, 3, 5, 0, 4, 0, 3, 0, 4, 3, 4, 4, 5, 4, 4, 5, 5, 5, 2, 5, 4, 1, 2, 2, 2, 0, 5, 0, 1, 5, 3, 4, 4, 4, 0, 1, 0, 4, 1, 3, 1, 3, 1, 4, 4, 3, 4, 5, 0, 1, 4, 5, 5, 3, 2, 0, 1, 5, 5, 0, 2, 5, 1, 1, 2, 3, 2, 2, 1, 1, 3, 5, 0, 2, 4, 5, 3, 3, 4, 4, 2, 1, 5, 1, 4, 1, 5, 3, 5, 5, 1, 3, 3, 2, 5, 5, 5, 3, 0, 3, 2, 5, 4, 5, 0, 5, 5, 5, 3, 0, 4, 0, 0, 4, 4, 5, 5, 3, 0, 1, 3, 5, 5, 5, 3, 3, 0, 3, 2, 4, 2, 0, 2, 2, 3, 3, 2, 2, 2, 0, 4, 2, 4, 3, 3, 4, 0, 0, 5, 2, 3, 5, 4, 3, 0, 4, 5, 5, 5, 5, 1, 0, 2, 3, 5, 2, 3, 0, 2, 2, 0, 5, 4, 5, 2, 2, 2, 5, 5, 5, 5, 3, 0, 1, 5, 3, 4, 5, 3, 0, 0, 4, 4, 5, 3, 3, 2, 4, 1, 5, 5, 5, 0, 5, 4, 3, 5, 3, 5, 0, 0, 3, 4, 5, 2, 2, 2, 5, 4, 5, 3, 4, 5, 0, 1, 3, 3, 3, 5, 5, 3, 0, 5, 5, 0, 2, 4, 2, 1, 3, 5, 4, 5, 5, 2, 0, 4, 4, 2, 2, 3, 0, 1, 4, 2, 5, 2, 4, 3, 2, 3, 2, 2, 4, 4, 2, 1, 4, 2, 5, 5, 5, 3, 0, 2, 5, 5, 3, 4, 2, 2, 5, 4, 4, 2, 4, 2, 1, 3, 4, 4, 5, 4, 2, 2, 2, 4, 5, 5, 5, 0, 3, 5, 4, 4, 5, 5, 5, 1]
+  # 2012 年 1 月 1 日
+  first_day = Time.at(1325348337)
+  struct = Struct.new(:date,:score)
+  TEACHER_DATA = []
+  res.each_with_index do |score,index|
+    score = score - 2
+    score = 1 if score < 1
+    day = first_day + index.day
+    TEACHER_DATA << struct.new(day,score)
+  end
+
+  res_2 = [1, 5, 4, 4, 2, 4, 1, 1, 5, 5, 2, 5, 5, 2, 2, 0, 5, 4, 5, 5, 3, 0, 4, 2, 4, 5, 3, 4, 1, 2, 3, 1, 5, 4, 0, 1, 3, 4, 2, 0, 5, 0, 0, 4, 0, 5, 5, 2, 0, 2, 4, 3, 1, 5, 2, 3, 2, 5, 2, 3, 4, 3, 0, 3, 2, 3, 5, 2, 5, 0, 0, 4, 4, 1, 5, 2, 0, 2, 5, 4, 5, 5, 2, 3, 0, 3, 5, 4, 4, 2, 0, 0, 5, 5, 4, 2, 4, 2, 2, 5, 4, 1, 0, 4, 1, 1, 3, 5, 5, 4, 3, 0, 5, 0, 5, 0, 0, 2, 1, 4, 4, 5, 2, 1, 5, 3, 2, 5, 4, 4, 4, 0, 0, 3, 5, 3, 0, 5, 5, 2, 0, 4, 1, 5, 0, 5, 0, 3, 5, 2, 3, 5, 5, 0, 0, 4, 4, 3, 5, 3, 1, 2, 4, 4, 4, 4, 0, 3, 1, 0, 1, 2, 1, 3, 1, 2, 5, 2, 5, 4, 3, 0, 0, 5, 2, 1, 1, 2, 4, 2, 3, 0, 5, 4, 4, 5, 0, 4, 2, 2, 0, 4, 0, 3, 3, 5, 5, 2, 5, 3, 3, 2, 5, 5, 0, 4, 4, 5, 5, 2, 2, 4, 4, 0, 3, 4, 5, 3, 3, 5, 1, 4, 2, 2, 2, 4, 4, 1, 0, 3, 3, 2, 3, 5, 2, 1, 0, 3, 5, 4, 2, 3, 4, 4, 4, 2, 3, 4, 0, 1, 5, 4, 5, 5, 5, 0, 4, 4, 2, 3, 4, 1, 0, 3, 3, 4, 5, 4, 5, 1, 1, 5, 0, 3, 2, 3, 0, 5, 4, 5, 5, 3, 3, 1, 0, 3, 3, 2, 3, 2, 0, 0, 4, 5, 5, 4, 3, 2, 0, 3, 5, 4, 2, 2, 3, 3, 4, 4, 4, 2, 3, 3, 2, 3, 5, 5, 5, 0, 0, 1, 5, 0, 5, 5, 0, 1, 1, 5, 5, 5, 5, 0, 0, 0, 2, 5, 2, 3, 1, 0, 2, 1, 5, 5, 5, 2, 2, 0, 4, 5, 3, 2, 0, 3, 0]
+  STUDENT_DATA = []
+  res_2.each_with_index do |score,index|
+    score = score - 2
+    score = 1 if score < 1
+    day = first_day + index.day
+    STUDENT_DATA << struct.new(day,score)
+  end
 
 end

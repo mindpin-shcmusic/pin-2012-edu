@@ -1,22 +1,32 @@
 - teaching_plans = DemoModel::TEACHING_PLANS
 
-= page_field :'teaching-plan', :title=>'教学方案' do
-  - if current_user.is_teacher?
-    .teacher
-      .teaching_plans
-        - teaching_plans.each do |teaching_plan|
-          .teaching_plan
-            .title= teaching_plan.title
-            .desc= teaching_plan.desc
-            .count= teaching_plan.chapters.count
-  - else current_user.is_student?
-    .student
-      .teaching_plans
-        - teaching_plans.each do |teaching_plan|
-          .teaching_plan
-            .title= teaching_plan.title
-            .desc= teaching_plan.desc
-            .count= teaching_plan.chapters.count
-            .homework-progress= teaching_plan.progress
+.page-admin-course
+  .teaching-plans
+    - if current_user.is_teacher?
+      .teacher
+        .plans
+          - teaching_plans.each do |teaching_plan|
+            = link_to 'javascript:;', :class=>'teaching-plan' do
+              .title= teaching_plan.title
+              .desc= teaching_plan.desc
+              .count #{teaching_plan.chapters.count}个章节
+    - else
+      .page-teaching-plan-list
+        .head
+          .title 我参与的教学方案
+
+        .teaching-plans
+          - teaching_plans.each do |teaching_plan|
+            .teaching-plan
+              .title
+                %span.t= teaching_plan.title
+                %span.c= user_link teaching_plan.creator
+              .desc= teaching_plan.desc
+              .prog= teaching_plan.progress
+              .info
+                .kejian= link_to '查看课件', ''
+                .homework= link_to '查看作业练习', '/j2'
+              .pbar
+                .b{:style=>"width:#{teaching_plan.progress};"}
 
 
