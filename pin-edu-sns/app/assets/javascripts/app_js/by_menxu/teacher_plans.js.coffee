@@ -3,6 +3,9 @@ pie.load ->
   $chapters = jQuery('.page-teaching-plan-show .chapters .chs')
   $blank = $chapters.parent().find('.blank')
   $chapter_destroy = $chapters.find('.chapter .items .remove a')
+  $course_ware_title = jQuery('.page-fangan-review .preview .navs.titles .title')
+  $course_ware_contents = jQuery('.page-fangan-review .preview .contents')
+
 
   $create_button.on 'click', ->
     jQuery.ajax
@@ -25,3 +28,9 @@ pie.load ->
         $chapter.fadeOut ->
           $chapter.remove()
           $blank.fadeIn() if $chapters.children().length == 0
+
+  $course_ware_title.on 'click', ->
+    id = jQuery(this).data('cw-id')
+    console.log id
+    console.log $course_ware_contents.find('.current').removeClass('current')
+    console.log $course_ware_contents.find("[data-cw-id=#{id}]").addClass('current')

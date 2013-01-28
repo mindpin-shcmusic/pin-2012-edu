@@ -1,13 +1,13 @@
 - course_wares = chapter.course_wares
-.preview1.preview
+.preview
   .label 课件预览
   .tabs
     .navs.titles
-      - course_wares.each_with_index do |course_ware, index|
-        %a.title.nav{:href=>'javascript:;', :class => index == 0 ? 'current' : ''} 面向对象基础
+      - course_wares.each do |course_ware|
+        %a.title.nav{:href=>'javascript:;', :'data-cw-id' => course_ware.id}= course_ware.title
     .contents
       - course_wares.each_with_index do |course_ware, index|
-        .kejian.content{:class => index == 0 ? 'current' : ''}
+        .kejian.content{:class => "course-ware-#{index+1}", :class => index == 0 ? 'current' : '', :'data-cw-id' => course_ware.id}
           - case course_ware.kind
           - when 'PPT'
             = chapter1_ppt(:width=>640, :height=>480)

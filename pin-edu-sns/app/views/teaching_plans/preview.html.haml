@@ -17,6 +17,9 @@
       - @teaching_plan.chapters.each_with_index do |chapter, index|
         - count = index + 1
         .chapter
-          = link_to "javascript:;", :class=>"zhangjie1" do
+          = link_to "?chapter=#{chapter.id}" do
             .o= count
             .l= chapter.title
+
+    - if @current_chapter
+      = render 'teaching_plans/parts/chapter_preview', :chapter => @current_chapter
