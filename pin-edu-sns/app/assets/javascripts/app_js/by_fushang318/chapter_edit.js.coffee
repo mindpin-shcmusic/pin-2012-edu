@@ -9,18 +9,18 @@ pie.load ->
     $save = $form.find('.save')
     $cancel = $form.find('.cancel')
 
-    $edit.click ->
+    $edit.live 'click', ->
       $edit.hide()
       $content.hide()
       $form_content.attr('value',$content.text())
       $form.show()
 
-    $cancel.click ->
+    $cancel.live 'click', ->
       $form.hide()
       $content.show()
       $edit.show()
 
-    $save.click ->
+    $save.live 'click', ->
       url = $form.data('url')
       jQuery.ajax
         url: url

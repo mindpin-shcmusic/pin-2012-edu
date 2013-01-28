@@ -3,15 +3,15 @@
   .title.editcontent
     = link_to "编辑","javascript:void(0);", :class => "edit"
     .content{:style => "display:inline;"}= course_ware.title
-    .form{:style => "display:none;"}
+    .form{:style => "display:none;",:data=>{:url=>"/course_wares/#{course_ware.id}/update_title"}}
       = text_field_tag "title", course_ware.title, :class => 'form-content'
       = link_to "保存","javascript:void(0);", :class => "save"
       = link_to "取消","javascript:void(0);", :class => "cancel"
   .desc.editcontent
     = link_to "编辑","javascript:void(0);", :class => "edit"
     .content{:style => "display:inline;"}= course_ware.desc
-    .form{:style => "display:none;"}
-      = text_area_tag "desc", course_ware.desc
+    .form{:style => "display:none;",:data=>{:url=>"/course_wares/#{course_ware.id}/update_desc"}}
+      = text_area_tag "desc", course_ware.desc, :class => 'form-content'
       = link_to "保存","javascript:void(0);", :class => "save"
       = link_to "取消","javascript:void(0);", :class => "cancel"
 .kejian-file
