@@ -18,7 +18,7 @@ class TeachingPlan < ActiveRecord::Base
 
   before_create :validate_semester_value
 
-  scope :with_semester, lambda { |semester, teacher_user, course| {:conditions => 
+  scope :with_teacher, lambda { |teacher_user, semester, course| {:conditions => 
                             {
                               :semester_value => semester.value,
                               :teacher_user_id => teacher_user.id,
