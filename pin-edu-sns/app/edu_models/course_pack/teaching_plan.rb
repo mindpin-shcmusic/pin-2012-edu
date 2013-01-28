@@ -18,6 +18,15 @@ class TeachingPlan < ActiveRecord::Base
 
   before_create :validate_semester_value
 
+  scope :with_semester, lambda { |semester, teacher_user, course| {:conditions => 
+                            {
+                              :semester_value => semester.value,
+                              :teacher_user_id => teacher_user.id,
+                              :course_id => course.id
+                            }
+                          } 
+                        }
+
 
   def validate_semester_value
     return true if Semester.get_by_value(self.semester_value).value == self.semester_value
