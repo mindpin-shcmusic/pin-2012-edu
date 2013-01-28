@@ -10,5 +10,11 @@
 .page-model-form
   = flash_info
   = form_for @teaching_plan do |f|
+
+    .field
+      = f.hidden_field :course_id, :value => params['course_id']
+      = f.hidden_field :teacher_user_id, :value => current_user.id
+      = f.hidden_field :semester_value, :value => params['semester_value']
+
     
     =render 'form', :f => f

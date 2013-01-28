@@ -36,7 +36,7 @@ class TeachingPlansController < ApplicationController
 
     error = @teaching_plan.errors.first
     flash[:error] = error[1]
-    redirect_to "/teaching_plans"
+    redirect_to "/teaching_plans/#{@teaching_plan.id}/edit"
   end
 
   def destroy
