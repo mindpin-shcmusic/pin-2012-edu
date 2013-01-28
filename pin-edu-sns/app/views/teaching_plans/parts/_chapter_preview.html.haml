@@ -1,0 +1,15 @@
+- course_wares = chapter.course_wares
+.preview
+  .label 课件预览
+  .tabs
+    .navs.titles
+      - course_wares.each do |course_ware|
+        %a.title.nav{:href=>'javascript:;', :'data-cw-id' => course_ware.id}= course_ware.title
+    .contents
+      - course_wares.each_with_index do |course_ware, index|
+        .kejian.content{:class => "course-ware-#{index+1}", :class => index == 0 ? 'current' : '', :'data-cw-id' => course_ware.id}
+          - case course_ware.kind
+          - when 'PPT'
+            = chapter1_ppt(:width=>640, :height=>480)
+          - when 'VIDEO'
+            .flash-player{:style=>"width:640px;height:480px;",:data => {:video => 'http://agile.mindpin.com/chapter2.mp4', :'first-frame' => ''}}

@@ -44,6 +44,7 @@ class TeachingPlansController < ApplicationController
   end
 
   def preview
+    @current_chapter = params[:chapter] && @teaching_plan.chapters.find(params[:chapter]) || @teaching_plan.chapters.first
   end
 
 end

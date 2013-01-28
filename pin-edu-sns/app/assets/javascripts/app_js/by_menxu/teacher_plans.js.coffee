@@ -2,6 +2,10 @@ pie.load ->
   $create_button = jQuery('.page-teaching-plan-show .chapters .btns .create-button a')
   $chapters = jQuery('.page-teaching-plan-show .chapters .chs')
   $chapter_destroy = $chapters.find('.chapter .items .remove a')
+  $blank = $chapters.parent().find('.blank')
+  $course_ware_title = jQuery('.page-fangan-review .preview .navs.titles .title')
+  $course_ware_contents = jQuery('.page-fangan-review .preview .contents')
+
 
   $create_button.on 'click', ->
     jQuery.ajax
@@ -10,9 +14,8 @@ pie.load ->
       success: (res) ->
         $res = jQuery(res).hide()
         $chapters.append $res
-        $chapters.parent().find('.blank').fadeOut()
+        $blank.fadeOut()
         $res.fadeIn()
-
 
   jQuery(document).on 'click', $chapter_destroy.selector, ->
     $self = jQuery(this)
@@ -21,10 +24,14 @@ pie.load ->
       url: $self.data('url')
       type: 'DELETE'
       success: (res) ->
-        $chapter.fadeOut()
+        $chapter.fadeOut ->
+          $chapter.remove()
+          $blank.fadeIn() if $chapters.children().length == 0
 
-
-
+  $course_ware_title.on 'click', ->
+    id = jQuery(this).data('cw-id')
+    $course_ware_contents.find('.current').removeClass('current')
+    $course_ware_contents.find("[data-cw-id=#{id}]").addClass('current')
 
   # 删除教学方案
   jQuery(document).delegate '.plans .item a.remove', 'click', ->
@@ -38,5 +45,3 @@ pie.load ->
         success: (res)->
           $resource.fadeOut 400, ->
             $resource.remove()
-
- 
