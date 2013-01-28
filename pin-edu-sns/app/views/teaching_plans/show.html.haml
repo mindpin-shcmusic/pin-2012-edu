@@ -1,29 +1,43 @@
-- htitle '教学方案'
-
-
-- hgoback '/teaching_plans'
+- hgoback '/courses'
 - hbreadcrumb '首页', '/'
-- hbreadcrumb '教学方案', '/teaching_plans'
-- hbreadcrumb @teaching_plan.title
-
-
-.page-unfixed-head
-  = page_buttons do |p|
-    = p.button '编辑修改', "/teaching_plans/#{@teaching_plan.id}/edit"
-
+- hbreadcrumb '教学方案', teaching_plans_path
+- hbreadcrumb @teaching_plan.title, teaching_plan_path(@teaching_plan)
+- hbreadcrumb '教学方案'
 
 .page-model-show
-  = page_field :teaching_plan, :title => '教学方案' do
-    .field.title
-      %label 标题
-      .v= @teaching_plan.title
+  .page-teaching-plan-show
+    .head
+      %h1.title= @teaching_plan.title
+      .description= @teaching_plan.desc
 
-    .field.desc
-      %label 描述
-      .v= sanitize @teaching_plan.desc
-    
 
-    
+    .chapters
+      - if @teaching_plan.chapters.blank?
+        .blank 还没有添加任何章节
+      - else
+        .chs
+          - @teaching_plan.chapters.each do |chapter|
+            .chapter
+              .title= chapter.title
+              .desc.bl 章节还没有简介信息
+              .items
+                / 此处还不知道怎么做，暂时保持demo状态
+                .homeworks
+                  .edit= link_to '管理作业', 'javascript:;'
+                  .count 0
+                  .slides
+                    .edit= link_to '管理课件', '/c1/show'
+                    .count 0
+                  .publish.hide
+                    .status 未发布
+                    .edit= link_to '发布', 'javascript:;'
+                  .remove= link_to '删除', chapter_path(chapter), :method => :delete
 
-   
-
+      .btns
+        .create-button= link_to '新增章节', "/teaching_plans/#{@teaching_plan.id}/chapters", :method => :post
+        .preview-button= link_to "预览","/d1/show"
+        .students
+          / 此处还不知道怎么做，暂时保持demo状态
+          .count 22 个学生参与此方案
+          / 此处还不知道怎么做，暂时保持demo状态
+          .edit= link_to '分配', '/f1/show'

@@ -10,10 +10,16 @@ class ChaptersController < ApplicationController
   def create
     @chapter = @teaching_plan.chapters.build(:creator=>current_user)
     if @chapter.save
-      return render :text=>200
+      return redirect_to :back
     end
 
     error = @chapter.errors.first[1]
     render :text => error, :status => 422
   end
+
+  def destroy
+    @chapter.destroy
+    redirect_to :back
+  end
+
 end
