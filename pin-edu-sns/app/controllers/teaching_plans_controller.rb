@@ -8,10 +8,6 @@ class TeachingPlansController < ApplicationController
   end
 
 
-  def index
-    @teaching_plans = TeachingPlan.paginate(:page => params[:page], :per_page => 20)
-  end
-
   def new
     @teaching_plan = TeachingPlan.new
 
@@ -37,7 +33,7 @@ class TeachingPlansController < ApplicationController
 
   def update
     if @teaching_plan.update_attributes(params[:teaching_plan])
-      return redirect_to "/teaching_plans"
+      return redirect_to "/teaching_plans/#{@teaching_plan.id}"
     end
 
     error = @teaching_plan.errors.first
