@@ -5,30 +5,15 @@ pie.load ->
     $contents = $tabs.find('.contents')
 
     nav_arr = $navs.find('.nav')
-    content_arr = $contents.find('.content')
 
-    nav_arr.click ->
+    nav_arr.live 'click', ->
+      content_arr = $contents.find('> .content')
       index = jQuery(this).index()
       nav_arr.removeClass('current')
       content_arr.removeClass('current')
 
       nav_arr.eq(index).addClass('current') 
       content_arr.eq(index).addClass('current') 
-
-  count = 0
-  $nav = jQuery('.page-zhangjie-edit .desc-info .tabs .navs .nav')
-  jQuery('.page-zhangjie-edit .desc-info .tabs .navs .add').click ->
-    if 0 == count
-      $tabs = jQuery('.page-zhangjie-edit .tabs')
-      $navs = $tabs.find('.navs')
-      $contents = $tabs.find('.contents')
-      $nav_arr = $navs.find('.nav')
-      $content_arr = $contents.find('.content')
-      $nav_arr.eq(0).addClass('current') 
-      $content_arr.eq(0).addClass('current') 
-
-    $nav.eq(count).show()
-    count+=1
 
 pie.load ->
   $dynatree = jQuery('.page-zhangjie-edit .dynatree')

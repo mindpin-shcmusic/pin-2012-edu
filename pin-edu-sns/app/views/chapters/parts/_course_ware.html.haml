@@ -1,0 +1,27 @@
+- resources = []
+.kejian-base-info
+  .title.editcontent
+    = link_to "编辑","javascript:void(0);", :class => "edit"
+    .content{:style => "display:inline;"}= course_ware.title
+    .form{:style => "display:none;"}
+      = text_field_tag "title", course_ware.title, :class => 'form-content'
+      = link_to "保存","javascript:void(0);", :class => "save"
+      = link_to "取消","javascript:void(0);", :class => "cancel"
+  .desc.editcontent
+    = link_to "编辑","javascript:void(0);", :class => "edit"
+    .content{:style => "display:inline;"}= course_ware.desc
+    .form{:style => "display:none;"}
+      = text_area_tag "desc", course_ware.desc
+      = link_to "保存","javascript:void(0);", :class => "save"
+      = link_to "取消","javascript:void(0);", :class => "cancel"
+.kejian-file
+  - jfbox_id = "select-#{course_ware.id}"
+  .btns
+    = jupload_button "上传文件"
+    = jfbox_link jfbox_id, "从资源盘选取"
+  
+  = render '/c1/parts/upload'
+  
+  = jfbox jfbox_id, "选择课件" do
+    .dynatree{:data=>{:children=>resources.to_json}}
+    .submit= link_to "确定", "javascript:;"

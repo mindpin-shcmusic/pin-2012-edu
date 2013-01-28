@@ -1,4 +1,4 @@
-class CoursewaresController < ApplicationController
+class CourseWaresController < ApplicationController
   before_filter :login_required
   before_filter :per_load
   def per_load
@@ -12,7 +12,9 @@ class CoursewaresController < ApplicationController
   def create
     @course_ware = @chapter.course_wares.build(:creator => current_user)
     if @course_ware.save
-      render :text => 200
+      return render :partial => '/chapters/parts/course_ware', :locals => {
+        :course_ware => @course_ware
+      }
     end
 
     error = @course_ware.errors.first[1]
