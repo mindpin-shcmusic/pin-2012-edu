@@ -10,7 +10,7 @@ pie.load ->
       success: (res) ->
         $res = jQuery(res).hide()
         $chapters.append $res
-        $chapters.find('.blank').fadeOut()
+        $chapters.parent().find('.blank').fadeOut()
         $res.fadeIn()
 
 
