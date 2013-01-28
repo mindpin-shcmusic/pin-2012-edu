@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 class Chapter < ActiveRecord::Base
   belongs_to :teaching_plan
   belongs_to :creator, :class_name => 'User'
@@ -9,7 +10,13 @@ class Chapter < ActiveRecord::Base
 
   before_validation :set_chapter_title, :on => :create
   def set_chapter_title
-    count = self.teaching_plan.chapters.count
-    self.title = "第 #{count+1} 章节"
+    self.title = self.generate_title
   end
+
+  def generate_title
+    last_chapter = self.teaching_plan.chapters.last
+    num = last_chapter ? last_chapter.title.chars.to_a[2].to_i + 1 : 1
+    "第 #{num} 章节"
+  end
+
 end
