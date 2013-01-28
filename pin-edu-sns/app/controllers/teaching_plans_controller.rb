@@ -10,8 +10,6 @@ class TeachingPlansController < ApplicationController
 
   def new
     @teaching_plan = TeachingPlan.new
-
-    @courses = current_user.get_teacher_courses :semester => Semester.now
   end
 
   def create
