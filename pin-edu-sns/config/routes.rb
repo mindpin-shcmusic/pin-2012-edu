@@ -158,6 +158,9 @@ MindpinEduSns::Application.routes.draw do
   # ----------------------------------------------------------------
 
 
+
+
+
   root :to => 'index#index'
   # 工作台
   get '/dashboard' => 'index#dashboard'
@@ -357,5 +360,12 @@ MindpinEduSns::Application.routes.draw do
       get :question
     end
   end
+
+  resources :teaching_plans do
+    resources :chapters, :shallow => true do
+      resources :course_wares, :shallow => true
+    end
+  end
+
 
 end
