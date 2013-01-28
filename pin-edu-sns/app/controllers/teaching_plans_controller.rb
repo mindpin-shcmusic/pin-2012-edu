@@ -41,7 +41,7 @@ class TeachingPlansController < ApplicationController
 
   def destroy
     @teaching_plan.destroy
-    render :text => 'ok'
+    render :nothing => true, :status => 200
   end
 
 end
