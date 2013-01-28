@@ -1,0 +1,15 @@
+- course_wares = chapter.course_wares
+.preview1.preview
+  .label 课件预览
+  .tabs
+    .navs.titles
+      - course_wares.each_with_index do |course_ware, index|
+        %a.title.nav{:href=>'javascript:;', :class => index == 0 ? 'current' : ''} 面向对象基础
+    .contents
+      - course_wares.each_with_index do |course_ware, index|
+        .kejian.content{:class => index == 0 ? 'current' : ''}
+          - case course_ware.kind
+          - when 'PPT'
+            = chapter1_ppt(:width=>640, :height=>480)
+          - when 'VIDEO'
+            .flash-player{:style=>"width:640px;height:480px;",:data => {:video => 'http://agile.mindpin.com/chapter2.mp4', :'first-frame' => ''}}

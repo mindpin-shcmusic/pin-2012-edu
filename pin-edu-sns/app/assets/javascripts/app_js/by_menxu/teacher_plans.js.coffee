@@ -1,6 +1,7 @@
 pie.load ->
   $create_button = jQuery('.page-teaching-plan-show .chapters .btns .create-button a')
   $chapters = jQuery('.page-teaching-plan-show .chapters .chs')
+  $blank = $chapters.parent().find('.blank')
   $chapter_destroy = $chapters.find('.chapter .items .remove a')
 
   $create_button.on 'click', ->
@@ -10,7 +11,7 @@ pie.load ->
       success: (res) ->
         $res = jQuery(res).hide()
         $chapters.append $res
-        $chapters.parent().find('.blank').fadeOut()
+        $blank.fadeOut()
         $res.fadeIn()
 
 
@@ -21,4 +22,6 @@ pie.load ->
       url: $self.data('url')
       type: 'DELETE'
       success: (res) ->
-        $chapter.fadeOut()
+        $chapter.fadeOut ->
+          $chapter.remove()
+          $blank.fadeIn() if $chapters.children().length == 0
