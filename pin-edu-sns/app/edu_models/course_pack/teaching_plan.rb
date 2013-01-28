@@ -12,7 +12,7 @@ class TeachingPlan < ActiveRecord::Base
 
   has_many :chapters
   
-  validates :title, :desc, :creator, :presence => true
+  validates :title, :desc, :creator, :course, :presence => true
 
   include CourseTeacherRelativeMethods
 

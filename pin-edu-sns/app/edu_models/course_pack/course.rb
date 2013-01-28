@@ -7,6 +7,7 @@ class Course < ActiveRecord::Base
   validates :cid, :uniqueness => { :if => Proc.new { |course| !course.cid.blank? } }
 
   has_many :course_resources
+  has_many :teaching_plans
 
   belongs_to :cover,
              :class_name  => 'CourseResource',
