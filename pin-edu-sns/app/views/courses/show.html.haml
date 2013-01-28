@@ -83,8 +83,10 @@
       - else
         .plans
           - @teaching_plans.each do |teaching_plan|
-            = link_to "/teaching_plans/#{teaching_plan.id}", :class=>'teaching-plan' do
-              .title= teaching_plan.title
-              .desc= teaching_plan.desc
+            .item{:data=>{:path => "/teaching_plans/#{teaching_plan.id}"}}
+              = link_to "/teaching_plans/#{teaching_plan.id}", :class=>'teaching-plan' do
+                .title= teaching_plan.title
+                .desc= sanitize teaching_plan.desc
+                %a.remove{:href => 'javascript:;'} 删除
  
       .add-teaching-plan= link_to '添加教学方案', "/teaching_plans/new?course_id=#{@course.id}&semester_value=#{current_semester.value}"
