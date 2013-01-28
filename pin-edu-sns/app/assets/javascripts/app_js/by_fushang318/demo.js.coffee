@@ -30,24 +30,24 @@ pie.load ->
     $nav.eq(count).show()
     count+=1
 
-pie.load ->
-  jQuery('.page-zhangjie-edit .editcontent').each ->
-    $edit_content = jQuery(this)
+# pie.load ->
+#   jQuery('.page-zhangjie-edit .editcontent').each ->
+#     $edit_content = jQuery(this)
 
-    $edit = $edit_content.find('.edit')
-    $info1 = $edit_content.find('.info1')
-    $info2 = $edit_content.find('.info2')
-    $form = $edit_content.find('.form')
-    $save = $form.find('.save')
+#     $edit = $edit_content.find('.edit')
+#     $info1 = $edit_content.find('.info1')
+#     $info2 = $edit_content.find('.info2')
+#     $form = $edit_content.find('.form')
+#     $save = $form.find('.save')
 
-    $edit.click ->
-      $edit.hide()
-      $info1.hide()
-      $form.show()
-    $save.click ->
-      $edit.show()
-      $info2.css({display:'inline'})
-      $form.hide()
+#     $edit.click ->
+#       $edit.hide()
+#       $info1.hide()
+#       $form.show()
+#     $save.click ->
+#       $edit.show()
+#       $info2.css({display:'inline'})
+#       $form.hide()
 
 
 pie.load ->
