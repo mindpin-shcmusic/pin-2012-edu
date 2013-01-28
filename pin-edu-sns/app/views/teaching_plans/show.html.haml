@@ -17,24 +17,10 @@
       - else
         .chs
           - @teaching_plan.chapters.each do |chapter|
-            .chapter
-              .title= chapter.title
-              .desc.bl 章节还没有简介信息
-              .items
-                / 此处还不知道怎么做，暂时保持demo状态
-                .homeworks
-                  .edit= link_to '管理作业', 'javascript:;'
-                  .count 0
-                  .slides
-                    .edit= link_to '管理课件', '/c1/show'
-                    .count 0
-                  .publish.hide
-                    .status 未发布
-                    .edit= link_to '发布', 'javascript:;'
-                  .remove= link_to '删除', chapter_path(chapter), :method => :delete
+            =render 'teaching_plans/parts/chapter' , :chapter => chapter
 
       .btns
-        .create-button= link_to '新增章节', "/teaching_plans/#{@teaching_plan.id}/chapters", :method => :post
+        .create-button= link_to '新增章节', 'javascript:;', :'data-url' => "/teaching_plans/#{@teaching_plan.id}/chapters"
         .preview-button= link_to "预览","/d1/show"
         .students
           / 此处还不知道怎么做，暂时保持demo状态

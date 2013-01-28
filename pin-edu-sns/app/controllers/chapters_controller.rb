@@ -10,7 +10,7 @@ class ChaptersController < ApplicationController
   def create
     @chapter = @teaching_plan.chapters.build(:creator=>current_user)
     if @chapter.save
-      return redirect_to :back
+      return render :partial => 'teaching_plans/parts/chapter', :locals => {:chapter => @chapter}
     end
 
     error = @chapter.errors.first[1]
@@ -18,8 +18,8 @@ class ChaptersController < ApplicationController
   end
 
   def destroy
-    @chapter.destroy
-    redirect_to :back
+    return render :text => 'ok', :status => 200 if @chapter.destroy
+    render :text => 'error', :status => 422
   end
 
 end

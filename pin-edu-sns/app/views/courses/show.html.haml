@@ -77,12 +77,12 @@
                         .name= user_link student
 
     = page_field :'teaching-plans', :title=>'教学方案' do
-      - if params[:step]
+      - if @course.teaching_plans.blank?
+        .blank 当前课程下还没有教学方案
+      - else
         .plans
           = link_to '/courses?demo=show2', :class=>'teaching-plan' do
             .title= DemoModel::TEACHING_PLAN_1.title
             .desc= DemoModel::TEACHING_PLAN_1.desc
-        - else
-          .blank 当前课程下还没有教学方案
 
       .add-teaching-plan= link_to '添加教学方案', '/courses?demo=new'
