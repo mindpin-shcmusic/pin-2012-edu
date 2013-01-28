@@ -22,7 +22,7 @@ class CoursesController < ApplicationController
   def show
     @current_tab = (params[:tab] || :basic).to_sym
 
-    @teaching_plans = TeachingPlan.with_teacher(current_user, Semester.now, @course)
+    @teaching_plans = TeachingPlan.with_current_course_teacher(current_user, Semester.now, @course)
   end
 
   def curriculum
