@@ -35,34 +35,21 @@ pie.load ->
 
 
 pie.load ->
-  # $nav = jQuery('.page-zhangjie-edit .desc-info .tabs .navs .nav')
-    # if 0 == count
-    #   $tabs = jQuery('.page-zhangjie-edit .tabs')
-    #   $navs = $tabs.find('.navs')
-    #   $contents = $tabs.find('.contents')
-    #   $nav_arr = $navs.find('.nav')
-    #   $content_arr = $contents.find('.content')
-    #   $nav_arr.eq(0).addClass('current') 
-    #   $content_arr.eq(0).addClass('current') 
+  $tabs = jQuery('.page-zhangjie-edit .desc-info .tabs')
+  $navs = $tabs.find('.navs')
+  $contents = $tabs.find('> .contents')
+  $add = $navs.find('> .add')
+  url = $add.data('url')
+  $add.click ->
+    jQuery.ajax
+      url: url
+      type: 'POST'
+      success: (res)->
+        $content = jQuery("<div class='content'></div>")
+        $content.append(res)
+        $contents.append($content)
 
-    # $nav.eq(count).show()
-    # count+=1
-
-    $tabs = jQuery('.page-zhangjie-edit .desc-info .tabs')
-    $navs = $tabs.find('.navs')
-    $contents = $tabs.find('> .contents')
-    $add = $navs.find('> .add')
-    url = $add.data('url')
-    $add.click ->
-      jQuery.ajax
-        url: url
-        type: 'POST'
-        success: (res)->
-          $content = jQuery("<div class='content'></div>")
-          $content.append(res)
-          $contents.append($content)
-
-          $nav = jQuery("<a class='nav' href='javascript:void(0);'></a>")
-          count = $tabs.find('.navs .nav').length
-          $nav.text(count+1)
-          $add.before($nav)
+        $nav = jQuery("<a class='nav' href='javascript:void(0);'></a>")
+        count = $tabs.find('.navs .nav').length
+        $nav.text(count+1)
+        $add.before($nav)
