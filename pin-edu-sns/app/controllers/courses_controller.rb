@@ -21,6 +21,8 @@ class CoursesController < ApplicationController
 
   def show
     @current_tab = (params[:tab] || :basic).to_sym
+
+    @teaching_plans = TeachingPlan.all
   end
 
   def curriculum
