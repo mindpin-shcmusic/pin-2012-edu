@@ -14,11 +14,16 @@ class TeachingPlan < ActiveRecord::Base
   
   validates :title, :desc, :creator, :presence => true
 
-  #validates :teacher_user, :presence => true,
-  #  :uniqueness => {:scope => [:course_id, :semester_value]}
+  include CourseTeacherRelativeMethods
+
+  before_create :validate_semester_value
 
 
-  #include CourseTeacherRelativeMethods
+  def validate_semester_value
+    return true if Semester.get_by_value(self.semester_value).value == self.semester_value
+    return false
+  end
+
 
 
   module UserMethods
