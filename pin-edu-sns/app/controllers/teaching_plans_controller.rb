@@ -23,7 +23,6 @@ class TeachingPlansController < ApplicationController
   end
 
   def show
-    @teaching_plan = TeachingPlan.find params[:id]
   end
 
   def edit
@@ -36,12 +35,12 @@ class TeachingPlansController < ApplicationController
 
     error = @teaching_plan.errors.first
     flash[:error] = error[1]
-    redirect_to "/teaching_plans"
+    redirect_to "/teaching_plans/#{@teaching_plan.id}/edit"
   end
 
   def destroy
     @teaching_plan.destroy
-    render :text => 'ok'
+    render :nothing => true, :status => 200
   end
 
   def preview
