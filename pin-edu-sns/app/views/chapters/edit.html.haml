@@ -1,0 +1,77 @@
+- course = @teaching_plan.course
+
+- hgoback '/courses'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb course.name, "/courses/#{course.id}"
+- hbreadcrumb @teaching_plan.title, "/teaching_plans/#{@teaching_plan.id}"
+- hbreadcrumb @chapter.title, "/chapters/#{@chapter.id}"
+- hbreadcrumb '编辑'
+
+- resources = []
+
+.page-model-show.page-zhangjie-edit
+  .base-info
+    .title.editcontent
+      = link_to "编辑","javascript:void(0);", :class => "edit"
+      .content{:style => "display:inline;"}= @chapter.title
+      .form{:style => "display:none;",:data=>{:url=>"/chapters/#{@chapter.id}/update_title"}}
+        = text_field_tag "title", @chapter.title, :class => 'form-content'
+        = link_to "保存","javascript:void(0);", :class => "save"
+        = link_to "取消","javascript:void(0);", :class => "cancel"
+
+    .desc.editcontent
+      = link_to "编辑","javascript:void(0);", :class => "edit"
+      .content{:style => "display:inline;"}= @chapter.desc
+      .form{:style => "display:none;",:data=>{:url=>"/chapters/#{@chapter.id}/update_desc"}}
+        = text_area_tag "desc", @chapter.desc, :class => 'form-content'
+        = link_to "保存","javascript:void(0);", :class => "save"
+        = link_to "取消","javascript:void(0);", :class => "cancel"
+
+  .desc-info
+    .tabs
+      .navs
+        = link_to "1",'javascript:void(0);',:class=>"nav current",:style=>"display:none;"
+        = link_to "2",'javascript:void(0);',:class=>"nav",:style=>"display:none;"
+        = link_to "3",'javascript:void(0);',:class=>"nav",:style=>"display:none;"
+        = link_to "+ 增加课件",'javascript:void(0);',:class=>"add"
+      .contents
+        - i = 0
+        - DemoModel::CHAPTER_1_KEJIANS.each do |kejian|
+          - i = i + 1
+          - _title = "课件标题-#{i}"
+          - _desc = "课件描述-#{i}"
+          - jfbox_id = "select-#{i}"
+
+          .content
+            .kejian-base-info
+              .title.editcontent
+                = link_to "编辑","javascript:void(0);", :class => "edit"
+                .info1{:style => "display:inline;"}= _title
+                .info2{:style => "display:none;"}= kejian.title
+                .form{:style => "display:none;"}
+                  = text_field_tag "desc", _title
+                  = link_to "保存","javascript:void(0);", :class => "save"
+              .desc.editcontent
+                = link_to "编辑","javascript:void(0);", :class => "edit"
+                .info1{:style => "display:inline;"}= _desc
+                .info2{:style => "display:none;"}= kejian.desc
+                .form{:style => "display:none;"}
+                  = text_area_tag "desc", _desc
+                  = link_to "保存","javascript:void(0);", :class => "save"
+            .kejian-file
+              .btns
+                = jupload_button "上传文件"
+                = jfbox_link jfbox_id, "从资源盘选取"
+              
+              = render '/c1/parts/upload'
+              
+              = jfbox jfbox_id, "选择课件" do
+                .dynatree{:data=>{:children=>resources.to_json}}
+                .submit= link_to "确定", "javascript:;"
+
+              %ul.kejian-list{:style=>"display:none;"}
+                %li= kejian.filename
+                - if 1 == i
+                  = chapter1_ppt(:width=>400, :height => 200)
+                - else 2 == i
+                  .flash-player{:style=>"width:400px;height:200px;",:data => {:video => 'http://agile.mindpin.com/chapter2.mp4', :'first-frame' => ''}}

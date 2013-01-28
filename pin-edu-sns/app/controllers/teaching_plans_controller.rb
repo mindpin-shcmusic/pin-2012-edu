@@ -24,6 +24,7 @@ class TeachingPlansController < ApplicationController
   end
 
   def show
+    @teaching_plan = TeachingPlan.find params[:id]
   end
 
   def edit

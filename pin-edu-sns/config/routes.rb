@@ -363,9 +363,12 @@ MindpinEduSns::Application.routes.draw do
 
   resources :teaching_plans do
     resources :chapters, :shallow => true do
+      member do
+        post :update_title
+        post :update_desc
+      end
       resources :course_wares, :shallow => true
     end
   end
-
 
 end
