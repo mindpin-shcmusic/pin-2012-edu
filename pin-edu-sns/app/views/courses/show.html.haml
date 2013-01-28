@@ -77,11 +77,13 @@
                         .name= user_link student
 
     = page_field :'teaching-plans', :title=>'教学方案' do
-      .plans
-        - @teaching_plans.each do |teaching_plan|
-          = link_to "/teaching_plans/#{teaching_plan.id}", :class=>'teaching-plan' do
-            .title= teaching_plan.title
-            .desc= teaching_plan.desc
+      - if @teaching_plans.blank?
+        .blank 当前课程下还没有教学方案
+      - else
+        .plans
+          - @teaching_plans.each do |teaching_plan|
+            = link_to "/teaching_plans/#{teaching_plan.id}", :class=>'teaching-plan' do
+              .title= teaching_plan.title
+              .desc= teaching_plan.desc
  
-
       .add-teaching-plan= link_to '添加教学方案', "/teaching_plans/new?course_id=#{@course.id}&semester_value=#{current_semester.value}"

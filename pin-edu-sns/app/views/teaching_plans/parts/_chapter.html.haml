@@ -1,0 +1,15 @@
+.chapter
+  .title= chapter.title
+  .desc.bl= chapter.desc
+  .items
+    / 此处还不知道怎么做，暂时保持demo状态
+    .homeworks
+      .edit= link_to '管理作业', 'javascript:;'
+      .count 0
+      .slides
+        .edit= link_to '管理课件', '/c1/show'
+        .count 0
+      .publish.hide
+        .status 未发布
+        .edit= link_to '发布', 'javascript:;'
+      .remove= link_to '删除', 'javascript:;', :'data-url' => chapter_path(chapter)
