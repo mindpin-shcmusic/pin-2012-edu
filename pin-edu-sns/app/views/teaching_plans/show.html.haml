@@ -8,12 +8,13 @@
   .page-teaching-plan-show
     .head
       %h1.title= @teaching_plan.title
-      .description= @teaching_plan.desc
+      .description= sanitize @teaching_plan.desc
 
 
     .chapters
       - if @teaching_plan.chapters.blank?
         .blank 还没有添加任何章节
+        .chs
       - else
         .chs
           - @teaching_plan.chapters.each do |chapter|

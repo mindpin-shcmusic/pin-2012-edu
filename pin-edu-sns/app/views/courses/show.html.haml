@@ -79,6 +79,7 @@
     = page_field :'teaching-plans', :title=>'教学方案' do
       - if @teaching_plans.blank?
         .blank 当前课程下还没有教学方案
+        .plans
       - else
         .plans
           - @teaching_plans.each do |teaching_plan|

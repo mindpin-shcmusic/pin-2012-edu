@@ -7,7 +7,6 @@ class TeachingPlansController < ApplicationController
     @teaching_plan  = TeachingPlan.find params[:id] if params[:id]
   end
 
-
   def new
     @teaching_plan = TeachingPlan.new
   end
@@ -43,6 +42,9 @@ class TeachingPlansController < ApplicationController
   def destroy
     @teaching_plan.destroy
     render :text => 'ok'
+  end
+
+  def preview
   end
 
 end
