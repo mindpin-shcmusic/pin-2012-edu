@@ -6,7 +6,7 @@ class ChaptersController < ApplicationController
     @teaching_plan = TeachingPlan.find params[:teaching_plan_id] if params[:teaching_plan_id]
     @chapter = Chapter.find params[:id] if params[:id]
 
-    if @teaching_plan.blank? || !@chapter.blank?
+    if @teaching_plan.blank? && !@chapter.blank?
       @teaching_plan = @chapter.teaching_plan
     end
   end
