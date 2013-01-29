@@ -64,27 +64,35 @@ pie.load ->
 
 # 从资源盘选取资源到课件
 pie.load ->
-  jQuery('.page-zhangjie-edit .kejian-file').each ->
-    $ele = jQuery(this)
-    course_ware_id = $ele.data('course_ware_id')
+  return if !jQuery('.page-zhangjie-edit .kejian-file').exists()
 
-    # 资源树
-    $dynatree = $ele.find('.dynatree')
-    $dynatree.dynatree
-      debugLevel: 0
-      children: $dynatree.data('children')
+  add_kejian_file_event = ->
+    jQuery('.page-zhangjie-edit .kejian-file').each ->
+      $ele = jQuery(this)
+      return if $ele.data('loaded')
+      $ele.data('loaded',true)
+      course_ware_id = $ele.data('course_ware_id')
+
+      # 资源树
+      $dynatree = $ele.find('.dynatree')
+      $dynatree.dynatree
+        debugLevel: 0
+        children: $dynatree.data('children')
 
 
-    $submit = $ele.find('.page-float-box .select-submit')
-    jfbox_id = $submit.closest('.page-float-box').data('jfbox-id')
-    $submit.on 'click', ->
-      $node = $dynatree.dynatree("getActiveNode")
-      if !$node.data.isFolder
-        jQuery.ajax
-          url: "/course_wares/#{course_ware_id}/link_file"
-          type: 'PUT'
-          data:
-            media_resource_id: $node.data.id
-          success: (res)->
-            $ele.find('> .file').html(res)
-            pie.close_fbox(jfbox_id)
+      $submit = $ele.find('.page-float-box .select-submit')
+      jfbox_id = $submit.closest('.page-float-box').data('jfbox-id')
+      $submit.on 'click', ->
+        $node = $dynatree.dynatree("getActiveNode")
+        if !$node.data.isFolder
+          jQuery.ajax
+            url: "/course_wares/#{course_ware_id}/link_file"
+            type: 'PUT'
+            data:
+              media_resource_id: $node.data.id
+            success: (res)->
+              $ele.find('> .file').html(res)
+              pie.close_fbox(jfbox_id)
+
+  add_kejian_file_event()
+  jQuery(document).on('chapter:add_course_ware',add_kejian_file_event)
