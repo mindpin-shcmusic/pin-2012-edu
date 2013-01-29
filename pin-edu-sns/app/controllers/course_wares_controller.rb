@@ -40,4 +40,12 @@ class CourseWaresController < ApplicationController
     render :partial => '/chapters/parts/resource',
       :locals => {:resource => @course_ware.media_resource}
   end
+
+  def link_file
+    media_resource = MediaResource.find(params[:media_resource_id])
+    @course_ware.link_file(media_resource)    
+
+    render :partial => '/chapters/parts/resource',
+      :locals => {:resource => @course_ware.media_resource}
+  end
 end

@@ -24,4 +24,9 @@ class CourseWare < ActiveRecord::Base
     self.media_resource = media_resource
     self.save
   end
+
+  def link_file(media_resource)
+    self.media_resource = media_resource
+    self.save
+  end
 end

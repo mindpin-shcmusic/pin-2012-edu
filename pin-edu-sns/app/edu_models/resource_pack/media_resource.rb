@@ -323,6 +323,26 @@ class MediaResource < ActiveRecord::Base
     self.save
   end
 
+  # 个人资源库 整个文件树的 dynatree 数据
+  def self.dynatree(user)
+    root_resources = user.media_resources.root_res
+    [{
+      :title => '根目录', :isFolder => true, :activate => true, :dir => "",
+      :children=>_dynatree(root_resources), :expand => true
+    }]
+  end
+
+  def self._dynatree(resources)
+    resources.map do |resource|
+      media_resources = resource.media_resources
+      {
+        :title => resource.name, :isFolder => resource.is_dir?,
+        :activate => true, :id => resource.id,
+        :children=>_dynatree(media_resources), :expand => false
+      }
+    end
+  end
+
   private
     def self.process_same_file_name(creator,resource_path)
       resource = self.get(creator,resource_path)

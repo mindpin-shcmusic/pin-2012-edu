@@ -53,3 +53,30 @@ pie.load ->
         count = $tabs.find('.navs .nav').length
         $nav.text(count+1)
         $add.before($nav)
+
+# 从资源盘选取资源到课件
+pie.load ->
+  jQuery('.page-zhangjie-edit .kejian-file').each ->
+    $ele = jQuery(this)
+    course_ware_id = $ele.data('course_ware_id')
+
+    # 资源树
+    $dynatree = $ele.find('.dynatree')
+    $dynatree.dynatree
+      debugLevel: 0
+      children: $dynatree.data('children')
+
+
+    $submit = $ele.find('.page-float-box .select-submit')
+    jfbox_id = $submit.closest('.page-float-box').data('jfbox-id')
+    $submit.live 'click', ->
+      $node = $dynatree.dynatree("getActiveNode")
+      if !$node.data.isFolder
+        jQuery.ajax
+          url: "/course_wares/#{course_ware_id}/link_file"
+          type: 'PUT'
+          data:
+            media_resource_id: $node.data.id
+          success: (res)->
+            $ele.find('> .file').html(res)
+            pie.close_fbox(jfbox_id)
