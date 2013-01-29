@@ -43,7 +43,6 @@ class TeachingPlansController < ApplicationController
       @teaching_plan.destroy
       render :nothing => true, :status => 200
     end
-    
   end
 
   def preview
