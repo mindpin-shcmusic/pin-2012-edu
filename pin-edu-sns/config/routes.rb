@@ -375,6 +375,8 @@ MindpinEduSns::Application.routes.draw do
         member do
           post :update_title
           post :update_desc
+          put :upload_file
+          put :link_file
         end
       end
     end

@@ -20,8 +20,13 @@
     = jupload_button "上传文件"
     = jfbox_link jfbox_id, "从资源盘选取"
   
-  = render '/c1/parts/upload'
+  = render '/chapters/parts/upload', :course_ware => course_ware
   
   = jfbox jfbox_id, "选择课件" do
     .dynatree{:data=>{:children=>resources.to_json}}
     .submit= link_to "确定", "javascript:;"
+
+  .file
+    - media_resource = course_ware.media_resource
+    - if !media_resource.blank?
+      = render '/chapters/parts/resource', :resource => media_resource

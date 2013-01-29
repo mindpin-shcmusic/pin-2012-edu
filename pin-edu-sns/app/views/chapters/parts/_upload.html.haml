@@ -1,0 +1,15 @@
+= jfbox "upload_resource_#{randstr}", '上传文件' do
+  .page-media-file-uploader{:data=>{:course_ware_id => course_ware.id}}
+    .progress-bar-sample.hide
+      .file{:'data-name'=>'', :'data-size'=>''}
+        .bar
+          .p{:style=>'width:26%;'}
+        .data
+          .name on_your_mark.rmvb
+          .attr.size 65.5MB
+          .attr.percent 26%
+          .attr.speed 32KB/s
+          .state 上传出错
+        .ops
+          %a.close{:href=>'javascript:;', :title=>'取消上传'} 关闭
+    .uploading-files-list

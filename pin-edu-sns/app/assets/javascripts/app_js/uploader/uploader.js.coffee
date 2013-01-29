@@ -683,8 +683,17 @@ pie.load ->
         $wrapper.find('.speed').html("#{speed}KB/s")
 
       success: (file_wrapper)->
-        pie.close_fbox(jfbox_id)
-        $kejian_list.show()
+        course_ware_id = $uploader_elm.data('course_ware_id')
+        url = "/course_wares/#{course_ware_id}/upload_file"
+        jQuery.ajax
+          url:  url
+          type: 'PUT'
+          data:
+            'file_entity_id': file_wrapper.FILE_ENTITY_ID
+            'file_name': file_wrapper.file_name
+          success: (res)->
+            pie.close_fbox(jfbox_id)
+            $upload_kejian.find('> .file').html(res)
         
 
       error: ($wrapper, msg)->
