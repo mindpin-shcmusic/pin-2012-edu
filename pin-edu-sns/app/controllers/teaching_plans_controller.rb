@@ -39,8 +39,11 @@ class TeachingPlansController < ApplicationController
   end
 
   def destroy
-    @teaching_plan.destroy
-    render :nothing => true, :status => 200
+    if current_user == @teaching_plan.creator
+      @teaching_plan.destroy
+      render :nothing => true, :status => 200
+    end
+    
   end
 
   def preview
