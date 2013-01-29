@@ -30,4 +30,22 @@ class CourseWaresController < ApplicationController
     @course_ware.update_attribute(:desc,params[:content])
     render :text => @course_ware.desc
   end
+
+  def upload_file
+    file_entity = FileEntity.find(params[:file_entity_id])
+    file_name = params[:file_name]
+
+    @course_ware.upload_file(file_entity, file_name, current_user)
+
+    render :partial => '/chapters/parts/resource',
+      :locals => {:resource => @course_ware.media_resource}
+  end
+
+  def link_file
+    media_resource = MediaResource.find(params[:media_resource_id])
+    @course_ware.link_file(media_resource)    
+
+    render :partial => '/chapters/parts/resource',
+      :locals => {:resource => @course_ware.media_resource}
+  end
 end
