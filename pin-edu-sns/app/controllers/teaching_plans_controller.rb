@@ -39,8 +39,9 @@ class TeachingPlansController < ApplicationController
   end
 
   def destroy
-    @teaching_plan.destroy
-    render :nothing => true, :status => 200
+    if current_user.teaching_plans.find_by_id(params[:id]).destroy
+      render :nothing => true, :status => 200
+    end
   end
 
   def preview
