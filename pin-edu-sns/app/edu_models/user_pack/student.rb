@@ -118,12 +118,6 @@ private
         role? "student"
       end
 
-      def belongs_to_teaching_plan?(teaching_plan)
-        course   = teaching_plan.course
-        students = course.get_students :teacher_user => teaching_plan.creator,
-                                       :semester     => Semester.now
-        students.include?(self) && self.is_student?
-      end
     end
   end
 

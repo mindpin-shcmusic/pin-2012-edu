@@ -19,8 +19,17 @@ class CoursesController < ApplicationController
 
   def show
     @current_tab = (params[:tab] || :basic).to_sym
+    semester = Semester.now
 
-    @teaching_plans = TeachingPlan.with_course_teacher(current_user, Semester.now, @course)
+    @teaching_plans = if current_user.is_teacher?
+      TeachingPlan.with_course_teacher(current_user, semester, @course)
+    elsif current_user.get_student_courses(:semester => semester,
+                                           :student_user => current_user).include?(@course)
+
+      TeachingPlan.with_course_teacher(@course.teacher_user, semester, @course)
+    else
+      []
+    end
   end
 
   def curriculum
