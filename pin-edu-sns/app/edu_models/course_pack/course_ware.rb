@@ -33,15 +33,19 @@ class CourseWare < ActiveRecord::Base
   end
 
   def content_kind
-    media_resource && self.media_resource.file_entity.content_kind
+    media_resource && self.file_entity.content_kind
   end
 
   def url
-    media_resource && self.media_resource.file_entity.attach_flv_url
+    media_resource && self.file_entity.attach_flv_url
   end
 
   def video_encode_status
-    media_resource && self.media_resource.file_entity.video_encode_status
+    media_resource && self.file_entity.video_encode_status
+  end
+
+  def file_entity
+    media_resource && self.media_resource.file_entity
   end
 
 end
