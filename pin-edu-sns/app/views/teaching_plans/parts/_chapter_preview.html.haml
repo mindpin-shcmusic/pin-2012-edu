@@ -14,6 +14,7 @@
           - when :video
             - case course_ware.video_encode_status
             - when 'SUCCESS'
-              .flash-player{:style=>"width:640px;height:480px;",:data => {:video => course_ware.url, :'first-frame' => ''}}
+              = video_tag course_ware.url
+              -# .flash-player{:style=>"width:640px;height:480px;",:data => {:video => course_ware.url, :'first-frame' => ''}}
             - when 'ENCODING'
               = '视频正在转码'
