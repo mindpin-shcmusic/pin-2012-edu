@@ -8,8 +8,12 @@
     .contents
       - course_wares.each_with_index do |course_ware, index|
         .kejian.content{:class => "course-ware-#{index+1}", :class => index == 0 ? 'current' : '', :'data-cw-id' => course_ware.id}
-          - case course_ware.kind
-          - when 'PPT'
-            = chapter1_ppt(:width=>640, :height=>480)
-          - when 'VIDEO'
-            .flash-player{:style=>"width:640px;height:480px;",:data => {:video => 'http://agile.mindpin.com/chapter2.mp4', :'first-frame' => ''}}
+          - case course_ware.content_kind
+          - when :document
+            = link_to '下载', course_ware.url
+          - when :video
+            - case course_ware.video_encode_status
+            - when 'SUCCESS'
+              .flash-player{:style=>"width:640px;height:480px;",:data => {:video => course_ware.url, :'first-frame' => ''}}
+            - when 'ENCODING'
+              = '视频正在转码'
