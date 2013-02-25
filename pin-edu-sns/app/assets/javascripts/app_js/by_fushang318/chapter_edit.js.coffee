@@ -64,7 +64,7 @@ pie.load ->
 
 # 从资源盘选取资源到课件
 pie.load ->
-  return if !jQuery('.page-zhangjie-edit .kejian-file').exists()
+  return if !jQuery('.page-zhangjie-edit .desc-info').exists()
 
   add_kejian_file_event = ->
     jQuery('.page-zhangjie-edit .kejian-file').each ->

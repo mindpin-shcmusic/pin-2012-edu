@@ -638,7 +638,7 @@ pie.load ->
 
 #--------------------- 演示 教学方案 的章节编辑页面 上传课件
 pie.load ->
-  return if !jQuery('.page-zhangjie-edit .kejian-file').exists()
+  return if !jQuery('.page-zhangjie-edit .desc-info').exists()
 
   add_course_ware_upload_file = ->
     $upload_kejian = jQuery('.page-zhangjie-edit .kejian-file')
