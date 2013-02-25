@@ -2,6 +2,7 @@
 class TeachingPlansController < ApplicationController
   before_filter :login_required
   before_filter :pre_load
+  before_filter :restrict_student_access
 
   def pre_load
     @teaching_plan  = TeachingPlan.find params[:id] if params[:id]
@@ -46,6 +47,12 @@ class TeachingPlansController < ApplicationController
 
   def preview
     @current_chapter = params[:chapter] && @teaching_plan.chapters.find(params[:chapter]) || @teaching_plan.chapters.first
+  end
+
+protected
+
+  def restrict_student_access
+    redirect_to root_path if !current_user.belongs_to_teaching_plan?(@teaching_plan)
   end
 
 end
