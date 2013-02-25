@@ -26,7 +26,8 @@ class CoursesController < ApplicationController
     elsif current_user.get_student_courses(:semester => semester,
                                            :student_user => current_user).include?(@course)
 
-      TeachingPlan.with_course_teacher(@course.teacher_user, semester, @course)
+      teacher_user = CourseStudentAssign.where('course_id = ? and student_user_id = ?', @course.id, current_user.id).first.teacher_user
+      TeachingPlan.with_course_teacher(teacher_user, semester, @course)
     else
       []
     end
