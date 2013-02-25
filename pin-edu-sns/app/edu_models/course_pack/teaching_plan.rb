@@ -44,7 +44,7 @@ class TeachingPlan < ActiveRecord::Base
     module InstanceMethod
       def own_teaching_plan?(teaching_plan)
         return false if !self.is_teacher?
-        teacher_teaching_plan.creator == self
+        teaching_plan.creator == self
       end
 
       def can_access_teaching_plan?(teaching_plan)
