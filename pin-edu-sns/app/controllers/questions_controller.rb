@@ -8,9 +8,6 @@ class QuestionsController < ApplicationController
   end
 
   def index
-    return render "questions/demo_#{params[:demo]}" if params[:demo]
-    questions  = Question.with_user(current_user)
-
     @questions = filter questions do
       all        {:default}
       answered   {questions.answered}
