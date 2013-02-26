@@ -1,25 +1,30 @@
-=link_to "添加", "/admin/course_teachers/new"
-=link_to "列表", "/admin/course_teachers"
-
 .page-admin-form
   = flash_info
   = form_for [:admin, @course_teacher], :url => {:action => "update_time_expression" } do |t|
 
-    .field
-      - 12.times do |hour|          
-        .item
-          = hour + 1
-          - 7.times do |weekday|
+    .field{:style=>"overflow:hidden;"}
+
+      .items{:style=>"float:left;"}
+        - 0.upto(12) do |number|
+          .item{:style=>"width:60px;height:25px;"}= change_to_course_number(number)
+
+      - 1.upto 7 do |weekday|
+        :ruby
+          weekday = weekday % 7
+          weekday_label = change_to_weekday(weekday)
+
+        .items{:style=>"float:left;"}
+          .item{:style=>"width:60px;height:25px;"}= weekday_label
+          - 1.upto(12) do |number|
             :ruby
               checked = false
               @course_teacher.time_expression_array.each do |time|
-                if time[:weekday] == weekday
-                  checked = time[:number] == hour + 1
+                if time[:weekday] == weekday && time[:number] == number
+                  checked = true
                 end
               end
-            = check_box_tag "time_expression[]", "#{weekday},#{hour + 1}", checked
-      
+            .item{:style=>"width:60px;height:25px;"}= check_box_tag "time_expression[]", "#{weekday},#{number}", checked
 
-      .field.submit
-        = jfsubmit '编辑'
-        = jfcancel '取消'
+    .field.submit
+      = jfsubmit '编辑'
+      = jfcancel '取消'
