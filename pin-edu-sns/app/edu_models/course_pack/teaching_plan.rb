@@ -18,6 +18,15 @@ class TeachingPlan < ActiveRecord::Base
     paper
   end
 
+  def can_write?(current_user)
+    current_user.is_teacher?
+  end
+
+  def can_read?(current_user)
+    return true if can_write?(current_user)
+    self.course.get_students.include?(current_user)
+  end
+
   module UserMethods
     def self.included(base)
       base.has_many :teaching_plans, :class_name => 'TeachingPlan', :foreign_key => :creator_id

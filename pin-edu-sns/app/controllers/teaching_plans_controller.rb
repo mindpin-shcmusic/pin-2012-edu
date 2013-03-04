@@ -2,8 +2,7 @@
 class TeachingPlansController < ApplicationController
   before_filter :login_required
   before_filter :pre_load
-  before_filter :restrict_access, :except => [:new, :create]
-  before_filter :teacher_only, :only => [:new, :create]
+  before_filter :can_write, :except => [:preview]
 
   def pre_load
     @teaching_plan  = TeachingPlan.find params[:id] if params[:id]
@@ -54,13 +53,10 @@ class TeachingPlansController < ApplicationController
   end
 
 protected
-
-  def restrict_access
-    redirect_to root_path if !current_user.can_access_teaching_plan?(@teaching_plan)
-  end
-
-  def teacher_only
-    redirect_to root_path if !current_user.is_teacher?
+  def can_write
+    if !@teaching_plan.can_write?(current_user)
+      redirect_to root_path 
+    end
   end
 
 end
