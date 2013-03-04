@@ -9,8 +9,6 @@ class HomeworksController < ApplicationController
   
   def create
     create_resource current_user.teacher_homeworks.build(params[:homework]) do |homework|
-      homework.assign_to_expression({:courses => [homework.course_id]}.to_json)
-      
       if params[:file_entities]
         params[:file_entities].each do |file|
           attach = HomeworkTeacherAttachment.create(:creator        => current_user,
@@ -36,11 +34,11 @@ class HomeworksController < ApplicationController
   end
 
   def new
+    return redirect_to root_path if !params[:teaching_plan_id]
+    @teaching_plan = TeachingPlan.find(params[:teaching_plan_id])
     @homework = Homework.new
     @teacher_attachments = []
     @requirements = []
-
-    @courses = current_user.get_teacher_courses :semester => Semester.now
   end
 
   def index

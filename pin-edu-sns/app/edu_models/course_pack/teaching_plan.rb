@@ -12,6 +12,7 @@ class TeachingPlan < ActiveRecord::Base
 
   has_many :chapters
   has_many :test_questions
+  has_many :homeworks
   
   validates :title, :desc, :creator, :course, :presence => true
 
