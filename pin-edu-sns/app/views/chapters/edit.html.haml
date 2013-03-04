@@ -1,0 +1,40 @@
+- course = @teaching_plan.course
+
+- hgoback '/courses'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb course.name, "/courses/#{course.id}"
+- hbreadcrumb @teaching_plan.title, "/teaching_plans/#{@teaching_plan.id}"
+- hbreadcrumb @chapter.title, "/chapters/#{@chapter.id}"
+- hbreadcrumb '编辑'
+
+.page-model-show.page-zhangjie-edit
+  .base-info
+    .title.editcontent
+      = link_to "编辑","javascript:void(0);", :class => "edit"
+      .content{:style => "display:inline;"}= @chapter.title
+      .form{:style => "display:none;",:data=>{:url=>"/chapters/#{@chapter.id}/update_title"}}
+        = text_field_tag "title", @chapter.title, :class => 'form-content'
+        = link_to "保存","javascript:void(0);", :class => "save"
+        = link_to "取消","javascript:void(0);", :class => "cancel"
+
+    .desc.editcontent
+      = link_to "编辑","javascript:void(0);", :class => "edit"
+      .content{:style => "display:inline;"}= @chapter.desc
+      .form{:style => "display:none;",:data=>{:url=>"/chapters/#{@chapter.id}/update_desc"}}
+        = text_area_tag "desc", @chapter.desc, :class => 'form-content'
+        = link_to "保存","javascript:void(0);", :class => "save"
+        = link_to "取消","javascript:void(0);", :class => "cancel"
+
+  .desc-info
+    - course_wares = @chapter.course_wares
+    .tabs
+      .navs
+        - course_wares.each_with_index do |course_ware,index|
+          - class_name = index == 0 ? "nav current" : 'nav'
+          = link_to "#{index+1}",'javascript:void(0);', :class => class_name
+        = link_to "+ 增加课件",'javascript:void(0);',:class=>"add",:data=>{:url=>"/chapters/#{@chapter.id}/course_wares"}
+      .contents
+        - course_wares.each_with_index do |course_ware,index|
+          - class_name = index == 0 ? "current" : ''
+          .content{:class => class_name}
+            = render '/chapters/parts/course_ware', :course_ware => course_ware

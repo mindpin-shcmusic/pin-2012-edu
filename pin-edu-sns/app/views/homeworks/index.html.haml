@@ -2,74 +2,59 @@
 - hbreadcrumb '首页', '/'
 - hbreadcrumb '作业'
 
-- if timeline_open?
-  - case params[:t]
-  - when nil
-    = render 'homeworks/parts/timeline'
-  - when '1'
-    = render 'homeworks/parts/timeline1'
-  - when '2'
-    = render 'homeworks/parts/timeline2'
+- if current_user.is_teacher?
+  = page_top_fixed 'buttons' do
+    = page_buttons do |p|
+      = p.button '布置新作业', new_homework_path, :class => 'create'
 
-- elsif params[:demo]
-  = render "homeworks/parts/demo_#{params[:demo]}"
-- else
+= page_top_fixed 'filters' do
+  = page_filters homeworks_path do |p|
+    = p.filter '全部', :tab => 'all', :default => true
+    = p.filter '未过期', :tab => 'unexpired'
+    = p.filter '已过期', :tab => 'expired'
 
-  - if current_user.is_teacher?
-    = page_top_fixed 'buttons' do
-      = page_buttons do |p|
-        = p.button '布置新作业', new_homework_path, :class => 'create'
+:ruby
+  cols_hash = {
+    :title => 6,
+    :deadline => 3,
+    :attach => 1,
+    :course => 4,
+    :kind => 2,
+    :count => 4    
+  }
 
-  = page_top_fixed 'filters' do
-    = page_filters homeworks_path do |p|
-      = p.filter '全部', :tab => 'all', :default => true
-      = p.filter '未过期', :tab => 'unexpired'
-      = p.filter '已过期', :tab => 'expired'
-
-  = timeline_button
-
-  :ruby
-    cols_hash = {
-      :title => 6,
-      :deadline => 3,
-      :attach => 1,
-      :course => 4,
-      :kind => 2,
-      :count => 4    
-    }
-
-  = page_top_fixed 'list-head' do
-    .headtop
-      - if current_user.is_teacher?
-        = page_buttons do |p|
-          = p.batch_destroy Homework
-
-      = list_pagination(@homeworks)
-
-    = page_list_head :cols=>cols_hash do |p|
-      - if current_user.is_teacher?
-        = p.checkbox
-      = p.cell :title, '标题', :sortable => true
-      = p.cell :deadline, '截止时间', :sortable => true
-      = p.cell :attach, '附件'
-      = p.cell :course, '所属课程'
-      = p.cell :kind, '类别', :sortable => true
-      = p.cell :count, '已分配/已提交'
-
-  = page_model_list @homeworks, :cols=>cols_hash, :class=>'homeworks' do |p|
-    - homework = p.model
-    - course = homework.course
+= page_top_fixed 'list-head' do
+  .headtop
     - if current_user.is_teacher?
-      = p.checkbox(homework)
-    = p.cell :title do
-      = link_to hspan(homework.title), homework
-    = p.cell :deadline do
-      = homework.deadline.to_s
-    = p.cell :attach do
-      = homework.homework_teacher_attachments.count
-    = p.cell :course do
-      = link_to hspan(course.name), course
-    = p.cell :kind do
-      = homework.kind_str
-    = p.cell :count do
-      #{homework.assignees.count}/#{homework.submitted_students.count}
+      = page_buttons do |p|
+        = p.batch_destroy Homework
+
+    = list_pagination(@homeworks)
+
+  = page_list_head :cols=>cols_hash do |p|
+    - if current_user.is_teacher?
+      = p.checkbox
+    = p.cell :title, '标题', :sortable => true
+    = p.cell :deadline, '截止时间', :sortable => true
+    = p.cell :attach, '附件'
+    = p.cell :course, '所属课程'
+    = p.cell :kind, '类别', :sortable => true
+    = p.cell :count, '已分配/已提交'
+
+= page_model_list @homeworks, :cols=>cols_hash, :class=>'homeworks' do |p|
+  - homework = p.model
+  - course = homework.course
+  - if current_user.is_teacher?
+    = p.checkbox(homework)
+  = p.cell :title do
+    = link_to hspan(homework.title), homework
+  = p.cell :deadline do
+    = homework.deadline.to_s
+  = p.cell :attach do
+    = homework.homework_teacher_attachments.count
+  = p.cell :course do
+    = link_to hspan(course.name), course
+  = p.cell :kind do
+    = homework.kind_str
+  = p.cell :count do
+    #{homework.assignees.count}/#{homework.submitted_students.count}

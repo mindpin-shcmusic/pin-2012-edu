@@ -1,14 +1,14 @@
 .chapter
   .title= chapter.title
-  .desc.bl 章节还没有简介信息
+  .desc.bl= sanitize chapter.desc
   .items
     / 此处还不知道怎么做，暂时保持demo状态
     .homeworks
       .edit= link_to '管理作业', 'javascript:;'
       .count 0
       .slides
-        .edit= link_to '管理课件', '/c1/show'
-        .count 0
+        .edit= link_to '管理课件', edit_chapter_path(chapter)
+        .count= chapter.course_wares.count
       .publish.hide
         .status 未发布
         .edit= link_to '发布', 'javascript:;'

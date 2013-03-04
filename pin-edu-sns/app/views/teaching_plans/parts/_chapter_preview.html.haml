@@ -1,0 +1,20 @@
+- course_wares = chapter.course_wares
+.preview
+  .label 课件预览
+  .tabs
+    .navs.titles
+      - course_wares.each do |course_ware|
+        %a.title.nav{:href=>'javascript:;', :'data-cw-id' => course_ware.id}= course_ware.title
+    .contents
+      - course_wares.each_with_index do |course_ware, index|
+        .kejian.content{:class => "course-ware-#{index+1}", :class => index == 0 ? 'current' : '', :'data-cw-id' => course_ware.id}
+          - case course_ware.content_kind
+          - when :document
+            = link_to '下载', course_ware.url
+          - when :video
+            - case course_ware.video_encode_status
+            - when 'SUCCESS'
+              = video_tag course_ware.file_entity
+              -# .flash-player{:style=>"width:640px;height:480px;",:data => {:video => course_ware.url, :'first-frame' => ''}}
+            - when 'ENCODING'
+              = '视频正在转码'

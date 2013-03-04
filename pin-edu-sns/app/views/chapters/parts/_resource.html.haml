@@ -1,0 +1,12 @@
+:ruby
+  cover_src = media_resource_cover_src(resource)
+  title = resource.name
+
+  open_url = file_show_link(resource)
+  download_url = media_resource_download_link(resource)
+
+.media-resource
+  .cover{:'data-src'=>cover_src}
+  .title= title
+  = link_to '打  开', open_url
+  = link_to '下　载', download_url

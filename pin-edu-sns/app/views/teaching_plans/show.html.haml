@@ -8,12 +8,12 @@
   .page-teaching-plan-show
     .head
       %h1.title= @teaching_plan.title
-      .description= @teaching_plan.desc
-
+      .description= sanitize @teaching_plan.desc
 
     .chapters
       - if @teaching_plan.chapters.blank?
         .blank 还没有添加任何章节
+        .chs
       - else
         .chs
           - @teaching_plan.chapters.each do |chapter|
@@ -21,7 +21,7 @@
 
       .btns
         .create-button= link_to '新增章节', 'javascript:;', :'data-url' => "/teaching_plans/#{@teaching_plan.id}/chapters"
-        .preview-button= link_to "预览","/d1/show"
+        .preview-button= link_to "预览","/teaching_plans/#{@teaching_plan.id}/preview"
         .students
           / 此处还不知道怎么做，暂时保持demo状态
           .count 22 个学生参与此方案

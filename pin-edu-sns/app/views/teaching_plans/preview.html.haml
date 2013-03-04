@@ -1,0 +1,25 @@
+- hgoback '/courses'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb @teaching_plan.course.name, course_path(@course)
+- hbreadcrumb '教学方案', teaching_plans_path
+- hbreadcrumb @teaching_plan.title, teaching_plan_path(@teaching_plan)
+- hbreadcrumb '预览'
+
+.page-model-show.page-fangan-review
+  .head
+    .h
+      %h1.title= @teaching_plan.title
+      .description= sanitize @teaching_plan.desc
+
+  .bd
+    .sidebar
+      .label="章节选择"
+      - @teaching_plan.chapters.each_with_index do |chapter, index|
+        - count = index + 1
+        .chapter
+          = link_to "?chapter=#{chapter.id}" do
+            .o= count
+            .l= chapter.title
+
+    - if @current_chapter
+      = render 'teaching_plans/parts/chapter_preview', :chapter => @current_chapter

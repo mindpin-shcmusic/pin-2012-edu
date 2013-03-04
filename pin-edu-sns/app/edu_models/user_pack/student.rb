@@ -117,6 +117,7 @@ private
       def is_student?
         role? "student"
       end
+
     end
   end
 

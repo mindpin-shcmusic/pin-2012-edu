@@ -39,10 +39,10 @@ class Admin::CourseTeachersController < ApplicationController
   end
 
   def update_time_expression
-    time_expression = CourseTeacherMethods.combine_time_expression(params[:time_expression])
+    time_expression = CourseTeacherMethods.params_to_time_expression(params[:time_expression])
     @course_teacher.update_attributes(:time_expression => time_expression.to_json)
 
-    redirect_to "/admin/course_teachers"
+    redirect_to "/admin/teachers/#{@course_teacher.teacher_user.teacher.id}"
   end
 
 

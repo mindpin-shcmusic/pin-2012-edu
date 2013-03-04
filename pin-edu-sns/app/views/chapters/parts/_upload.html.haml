@@ -1,5 +1,5 @@
 = jfbox "upload_resource_#{randstr}", '上传文件' do
-  .page-media-file-uploader
+  .page-media-file-uploader{:data=>{:course_ware_id => course_ware.id}}
     .progress-bar-sample.hide
       .file{:'data-name'=>'', :'data-size'=>''}
         .bar
