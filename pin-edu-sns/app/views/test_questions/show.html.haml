@@ -1,0 +1,21 @@
+- htitle '题目录入'
+
+- hgoback admin_test_questions_path
+- hbreadcrumb '首页', '/admin'
+- hbreadcrumb '题目录入', admin_test_questions_path
+- hbreadcrumb @test_question.title
+
+.page-unfixed-head
+  = page_buttons do |p|
+    = p.button '修改信息', "/admin/test_questions/#{@test_question.id}/edit"
+
+
+
+.page-model-show
+
+  .page-admin-course
+
+    = page_field :'plan-info', :title=>'标题' do
+      = @test_question.title
+    
+

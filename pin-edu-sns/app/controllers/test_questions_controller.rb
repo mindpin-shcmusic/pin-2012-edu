@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
-class Admin::TestQuestionsController < ApplicationController
-  layout 'admin'
+class TestQuestionsController < ApplicationController
   before_filter :login_required
   before_filter :pre_load
 
@@ -10,7 +9,7 @@ class Admin::TestQuestionsController < ApplicationController
 
 
   def index
-    @test_questions = sort_scope(TestQuestion).with_semester(params[:semester]).
+    @test_questions = sort_scope(TestQuestion).
       paginate(:page => params[:page], :per_page => 20)
   end
 
@@ -45,7 +44,7 @@ class Admin::TestQuestionsController < ApplicationController
   end
 
   def destroy
-    @test_question.remove
+    @test_question.destroy
   end
 
 end
