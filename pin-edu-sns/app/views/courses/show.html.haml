@@ -1,7 +1,5 @@
 - hgoback '/courses'
 - hbreadcrumb '首页', '/'
-- hbreadcrumb '课程浏览', '/courses'
-
 - hbreadcrumb @course.name
 
 - teachers = @course.get_teachers(:semester=> get_semester)

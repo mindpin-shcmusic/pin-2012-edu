@@ -115,10 +115,10 @@
         color:#555;
         margin-bottom:15px;
       }
-      .chapters{
+      .attach{
         margin-left:80px + 6px + 15px;
 
-        .count{
+        .cp-count, .hw-count{
           float:left;
           background-color:#F0F5F9;
           color:#2C86D4;
@@ -126,6 +126,7 @@
           height:24px;line-height:24px;
           padding:0 6px;
           @include border-radius(2px);
+          margin-right:10px;
         }
       }
     }

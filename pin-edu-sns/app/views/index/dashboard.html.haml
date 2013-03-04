@@ -35,7 +35,10 @@
             src = course.cover_url
             title = course.name
             desc = course.desc
-            cp_count = 3
+            desc = desc.blank? ? '课程没有描述信息' : desc
+
+            cp_count = course.chapters.count
+            hw_count = 4
 
           .course
             %a.img{:href=>href}
@@ -44,5 +47,6 @@
             .title
               %a{:href=>href}= title
             .desc= desc
-            .chapters
-              .count 章节 × #{cp_count}
+            .attach
+              .cp-count 章节 × #{cp_count}
+              .hw-count 作业练习 x #{hw_count}
