@@ -1,0 +1,19 @@
+- htitle '题目录入'
+
+- hgoback '/teaching_plans/#{@teaching_plan.id}/test_questions'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '题目录入', "/teaching_plans/#{@teaching_plan.id}/test_questions"
+- hbreadcrumb '增加题目'
+
+  
+.page-model-form
+  = flash_info
+  = form_for [@teaching_plan, @test_question], :action => :create do |t|
+    .field
+      %label 计划标题
+      = t.text_field :title
+
+
+    .field.submit
+      = jfsubmit '确定'
+      = jfcancel '取消'

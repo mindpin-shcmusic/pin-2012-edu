@@ -1,0 +1,7 @@
+.page-model-show.page-test-paper-show
+  %h1 测验#{@test_paper.id}
+
+  .test-questions
+    - @test_paper.test_questions.each_with_index do |question, index|
+      .test-question
+        %h2 #{index + 1}. #{question.title}

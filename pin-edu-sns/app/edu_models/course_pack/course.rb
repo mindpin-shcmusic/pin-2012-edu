@@ -136,6 +136,20 @@ class Course < ActiveRecord::Base
       where("course_student_assigns.student_user_id = #{student_user.id} and course_student_assigns.course_id = #{self.id} and course_student_assigns.semester_value = '#{semester.value}'").first
   end
 
+  def get_teaching_plan(current_user = nil)
+    return self.teaching_plans.first if current_user.blank?
+
+    if self.teaching_plans.blank?
+      self.teaching_plans.create(
+        :title => self.name,
+        :desc => self.name,
+        :creator => current_user
+      )
+    else
+      self.teaching_plans.first
+    end
+  end
+
   module UserMethods
     def add_course(options)
       raise InvalidCourseParams.new if options[:course].blank? || options[:semester].blank? || options[:teacher_user].blank?

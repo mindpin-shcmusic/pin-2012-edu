@@ -2,11 +2,6 @@
 - hbreadcrumb '首页', '/'
 - hbreadcrumb '作业'
 
-- if current_user.is_teacher?
-  = page_top_fixed 'buttons' do
-    = page_buttons do |p|
-      = p.button '布置新作业', new_homework_path, :class => 'create'
-
 = page_top_fixed 'filters' do
   = page_filters homeworks_path do |p|
     = p.filter '全部', :tab => 'all', :default => true
@@ -18,13 +13,13 @@
     :title => 6,
     :deadline => 3,
     :attach => 1,
-    :course => 4,
+    :teaching_plan => 4,
     :kind => 2,
     :count => 4    
   }
 
 = page_top_fixed 'list-head' do
-  .headtop
+  .head
     - if current_user.is_teacher?
       = page_buttons do |p|
         = p.batch_destroy Homework
@@ -37,13 +32,13 @@
     = p.cell :title, '标题', :sortable => true
     = p.cell :deadline, '截止时间', :sortable => true
     = p.cell :attach, '附件'
-    = p.cell :course, '所属课程'
+    = p.cell :teaching_plan, '所属教学方案'
     = p.cell :kind, '类别', :sortable => true
     = p.cell :count, '已分配/已提交'
 
 = page_model_list @homeworks, :cols=>cols_hash, :class=>'homeworks' do |p|
   - homework = p.model
-  - course = homework.course
+  - teaching_plan = homework.teaching_plan
   - if current_user.is_teacher?
     = p.checkbox(homework)
   = p.cell :title do
@@ -52,8 +47,11 @@
     = homework.deadline.to_s
   = p.cell :attach do
     = homework.homework_teacher_attachments.count
-  = p.cell :course do
-    = link_to hspan(course.name), course
+  = p.cell :teaching_plan do
+    - if !teaching_plan.blank?
+      = link_to hspan("#{teaching_plan.course.name} - #{teaching_plan.title}"), teaching_plan_path(teaching_plan)
+    - else
+      = "已删除"
   = p.cell :kind do
     = homework.kind_str
   = p.cell :count do

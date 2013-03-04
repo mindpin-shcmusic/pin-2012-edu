@@ -19,18 +19,14 @@ class CoursesController < ApplicationController
 
   def show
     @current_tab = (params[:tab] || :basic).to_sym
-    semester = Semester.now
+  end
 
-    @teaching_plans = if current_user.is_teacher?
-      TeachingPlan.with_course_teacher(current_user, semester, @course)
-    elsif current_user.get_student_courses(:semester => semester,
-                                           :student_user => current_user).include?(@course)
-
-      teacher_user = CourseStudentAssign.where('course_id = ? and student_user_id = ?', @course.id, current_user.id).first.teacher_user
-      TeachingPlan.with_course_teacher(teacher_user, semester, @course)
-    else
-      []
+  def edit_chapters
+    if current_user.is_teacher?
+      @teaching_plan = @course.get_teaching_plan(current_user)
+      return redirect_to "/teaching_plans/#{@teaching_plan.id}"
     end
+    redirect_to "/courses/#{@course.id}"
   end
 
   def curriculum

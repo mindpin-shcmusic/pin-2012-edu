@@ -32,6 +32,16 @@
     = page_field :'syllabus-info', :title=>'教学大纲' do
       = sanitize @course.syllabus
 
+    = page_field :'teaching-plans', :title=>'教学章节' do
+      - if current_user.is_teacher?
+        = link_to "编辑章节", "/courses/#{@course.id}/edit_chapters"
+      - else current_user.is_student?
+        - teaching_plan = @course.get_teaching_plan
+        - if !teaching_plan.blank?
+          = link_to "查看章节", "/teaching_plans/#{teaching_plan.id}/preview"
+        - else
+          = "还没有内容"
+
 .page-model-filters
   = page_semester_filters "/courses/#{@course.id}"
 
@@ -45,9 +55,9 @@
           - else
             - teachers.each do |user|
               :ruby
-                students = @course.get_students(:semester => current_semester,:teacher_user => user)
+                students = @course.get_students(:semester => get_semester,:teacher_user => user)
                 count = students.count
-                course_teacher = CourseTeacher.get_by_params(@course, current_semester, user)
+                course_teacher = CourseTeacher.get_by_params(@course, get_semester, user)
 
               .teacher.opened
                 .student-info
@@ -76,33 +86,3 @@
                       .student
                         .avatar= avatar student, :tiny
                         .name= user_link student
-
-    - if current_user.is_teacher?
-      = page_field :'teaching-plans', :title=>'我创建的教学方案' do
-        - if @teaching_plans.blank?
-          .blank 当前课程下还没有教学方案
-          .plans
-        - else
-          .plans
-            - @teaching_plans.each do |teaching_plan|
-              .item{:data=>{:path => "/teaching_plans/#{teaching_plan.id}"}}
-                = link_to "/teaching_plans/#{teaching_plan.id}", :class=>'teaching-plan' do
-                  .title= teaching_plan.title
-                  .desc= sanitize teaching_plan.desc
-                  %a.remove{:href => 'javascript:;'} 删除
-   
-        .add-teaching-plan= link_to '添加教学方案', "/teaching_plans/new?course_id=#{@course.id}&semester_value=#{params[:semester] || current_semester.value}"
-
-
-    - if current_user.is_student?
-      = page_field :'teaching-plans', :title=>'分配给我的教学方案' do
-        - if @teaching_plans.blank?
-          .blank 当前课程下还没有教学方案
-          .plans
-        - else
-          .plans
-            - @teaching_plans.each do |teaching_plan|
-              .item{:data=>{:path => "/teaching_plans/#{teaching_plan.id}"}}
-                = link_to "/teaching_plans/#{teaching_plan.id}/preview", :class=>'teaching-plan' do
-                  .title= teaching_plan.title
-                  .desc= sanitize teaching_plan.desc
