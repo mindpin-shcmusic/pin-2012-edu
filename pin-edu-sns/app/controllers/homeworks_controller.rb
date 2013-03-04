@@ -42,7 +42,9 @@ class HomeworksController < ApplicationController
   end
 
   def index
-    @homeworks = filter current_user.homeworks do
+    homeworks = current_user.homeworks
+    homeworks = homeworks.where(:teaching_plan_id => params[:teaching_plan_id]) if params[:teaching_plan_id]
+    @homeworks = filter homeworks do
       expired   {current_user.expired_homeworks}
       unexpired {current_user.unexpired_homeworks}
     end

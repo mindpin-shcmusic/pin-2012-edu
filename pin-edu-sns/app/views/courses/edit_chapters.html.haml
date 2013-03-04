@@ -12,8 +12,6 @@
     .head
       %h1.title= @teaching_plan.title
       .description= sanitize @teaching_plan.desc
-      .new-homework
-        = link_to '新建作业', new_homework_path(:teaching_plan_id => @teaching_plan.id)
 
     .chapters
       - if @teaching_plan.chapters.blank?
