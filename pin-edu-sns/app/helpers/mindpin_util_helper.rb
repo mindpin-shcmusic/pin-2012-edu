@@ -353,6 +353,12 @@ module MindpinUtilHelper
     def rich_text(text)
       text.html_safe
     end
+
+    def progress_bar(percent)
+      content_tag :div, :class => 'page-progress-bar' do
+        content_tag :div, '', :class => 'p', :style => "width:#{percent}%;"
+      end
+    end
   end
 
   module CourseMethods

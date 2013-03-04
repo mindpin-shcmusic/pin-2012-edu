@@ -22,7 +22,7 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'jquery-rails'
+gem 'jquery-rails', '1.0.19' # jQuery 1.7.1
 gem 'juggernaut', '2.1.1'
 gem 'system_timer'
 gem 'haml'

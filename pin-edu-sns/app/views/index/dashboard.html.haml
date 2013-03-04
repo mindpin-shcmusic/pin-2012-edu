@@ -1,75 +1,45 @@
 - hgoback '/'
 - hbreadcrumb '首页', '/'
-- hbreadcrumb "工作台 - #{current_user.real_name}"
 
-:ruby
-  map = current_user.course_time_expression_collection_map
-  next_course_time_expression_collection = map.next_course_time_expression_collection
+= page_top_fixed 'page-dashboard-base-info' do
+  .user-data
+    .avatar= avatar current_user, :medium
+    .data
+      .name
+        %span= current_user.real_name
+        %span= current_user_title
+      .id
+        - if current_user.is_teacher?
+          %span 工号：
+          %span= current_user.teacher.tid
+        - if current_user.is_student?
+          %span 学号：
+          %span= current_user.student.sid
+
+  .course-data
+    .today
+      .day= Time.now.day
+      .d
+        .weekday= ['星期天','星期一','星期二','星期三','星期四','星期五','星期六'][Time.now.wday]
+        .date #{Time.now.strftime('%m-%d')}，#{Semester.now.to_s}学期
+      .icon
 
 .page-model-show
   .page-dashboard
+    .courses
+      :ruby
+        href = 'javascript:;'
+        src = '/assets/covers/course.small.jpg'
+        title = '中国传统文化系列'
+        desc = '中国传统文化是中华文明演化而汇集成的一种反映民族特质和风貌的民族文化，具有鲜明民族特色的、历史悠久、内涵博大精深、传统优良的文化。它是中华民族几千年文明的结晶'
 
-    = page_field :'base-info', :title=>'基本信息' do
-      .user-data
-        .avatar= avatar current_user, :medium
-        .data
-          .name
-            %span= current_user.real_name
-            %span= current_user_title
-          .id
-            - if current_user.is_teacher?
-              %span 工号：
-              %span= current_user.teacher.tid
-            - if current_user.is_student?
-              %span 学号：
-              %span= current_user.student.sid
-      .course-data
-        .today
-          .day= Time.now.day
-          .d
-            .weekday= ['星期天','星期一','星期二','星期三','星期四','星期五','星期六'][Time.now.wday]
-            .date #{Time.now.strftime('%m-%d')}，#{Semester.now.to_s}学期
-          .icon
+      - 3.times do
+        .course
+          %a.img{:href=>href}
+            = jimage src, :width=>80, :height=>80
 
-        - if !next_course_time_expression_collection.blank?
-          .next
-            - if !next_course_time_expression_collection.conflict?
-              :ruby
-                course_time_expression = next_course_time_expression_collection.course_time_expression
-                weekday = course_time_expression.weekday
-                course_teacher = course_time_expression.course_teacher
-                course = course_teacher.course
-              .t 下一节课：
-              .c
-                %span.week>= change_to_weekday(weekday)
-                %span> ，
-                %span.time>= course_time_expression.class_time
-                %span> ，
-                %span.course>= link_to truncate_u(course.name, 12), "/courses/#{course.id}"
-              .icon
-            - else
-              - expressions = next_course_time_expression_collection.course_time_expressions
-              - expressions.each do |expression|
-                - course = expression.course_teacher.course
-                %span.course>= link_to course.name, "/courses/#{course.id}"
-
-        - else
-          .next
-            .t 下一节课：
-            .c
-              %span.week
-              %span
-              %span.time
-              %span
-              %span.course 无
-            .icon
-
-    -# .tabs
-    -#   .navs
-    -#     =link_to "课程","javascript:void(0);",:class=>"nav current"
-    -#     =link_to "教学方案","javascript:void(0);",:class=>"nav"
-    -#     =link_to "问答","javascript:void(0);",:class=>"nav"
-    -#     =link_to "资源统计","javascript:void(0);",:class=>"nav"
-    -#     =link_to "订阅与通知","javascript:void(0);",:class=>"nav"
-    -#   .contents
-    -#     // demo内容已删！
+          .title
+            %a{:href=>href}= title
+          .desc= desc
+          .chapters
+            .count 章节 × 3 

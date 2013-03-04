@@ -147,6 +147,11 @@ MindpinSidebar::Base.config do
   # 学生
   rule :student do
     group :resources, :name => '学生功能…' do
+
+      nav :dashboard, :name => '首页', :url => '/dashboard' do
+        controller :index, :only => :dashboard
+      end
+
       nav :media_resources, :name => '资源网盘', :url => '/file' do
         subnav :my_resources, :name => '我的文件夹', :url => '/file' do
           controller :media_resources
@@ -158,18 +163,6 @@ MindpinSidebar::Base.config do
 
         subnav :public_resources, :name => '公共资源库', :url => '/public_resources' do
           controller :public_resources
-        end
-      end
-
-      nav :dashboard, :name => '我的工作台', :url => '/dashboard' do
-        controller :index, :only => :dashboard
-
-        subnav :dashboard, :name => '信息概览', :url => '/dashboard' do
-          controller :index, :only => :dashboard
-        end
-
-        subnav :homeworks, :name => '我的作业和实践', :url => '/homeworks' do
-          controller :homeworks
         end
       end
 
@@ -198,6 +191,7 @@ MindpinSidebar::Base.config do
           controller :comments
         end
       end
+
     end
   end
 end
