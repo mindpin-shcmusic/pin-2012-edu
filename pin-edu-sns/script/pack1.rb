@@ -28,7 +28,7 @@ def tail_to_head(array)
 end
 
 defpack 1 do
-  semester = Semester.get(2012, :B)
+  semester = Semester.now
 
   admin = User.create(:name => 'admin',
                       :email => 'admin@edu.dev',

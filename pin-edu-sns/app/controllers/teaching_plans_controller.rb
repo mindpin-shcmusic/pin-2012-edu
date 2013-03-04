@@ -2,7 +2,8 @@
 class TeachingPlansController < ApplicationController
   before_filter :login_required
   before_filter :pre_load
-  before_filter :restrict_access
+  before_filter :restrict_access, :except => [:new, :create]
+  before_filter :teacher_only, :only => [:new, :create]
 
   def pre_load
     @teaching_plan  = TeachingPlan.find params[:id] if params[:id]
@@ -56,6 +57,10 @@ protected
 
   def restrict_access
     redirect_to root_path if !current_user.can_access_teaching_plan?(@teaching_plan)
+  end
+
+  def teacher_only
+    redirect_to root_path if !current_user.is_teacher?
   end
 
 end
