@@ -8,6 +8,7 @@ class QuestionsController < ApplicationController
   end
 
   def index
+    questions = Question.paginated(params[:page])
     @questions = filter questions do
       all        {:default}
       answered   {questions.answered}
