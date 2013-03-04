@@ -4,5 +4,6 @@ class CreateTestPapers < ActiveRecord::Migration
       t.integer :teaching_plan_id
       t.integer :student_user_id
       t.timestamps
+    end
   end
 end
