@@ -21,7 +21,7 @@ class TeachingPlansController < ApplicationController
     
     error = @teaching_plan.errors.first
     flash[:error] = error[1]
-    redirect_to "/teaching_plans/new"
+    redirect_to :back
   end
 
   def show

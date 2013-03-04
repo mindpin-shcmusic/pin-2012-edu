@@ -11,6 +11,7 @@ class TeachingPlan < ActiveRecord::Base
              :foreign_key => :teacher_user_id
 
   has_many :chapters
+  has_many :test_questions
   
   validates :title, :desc, :creator, :course, :presence => true
 
@@ -33,7 +34,11 @@ class TeachingPlan < ActiveRecord::Base
     return false
   end
 
-
+  def make_test_paper_for(student_user)
+    paper = TestPaper.create :teaching_plan => self, :student_user => student_user
+    paper.select_random_questons
+    paper
+  end
 
   module UserMethods
     def self.included(base)
