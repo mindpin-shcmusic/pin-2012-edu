@@ -1,8 +1,8 @@
-class TestPaperTestQeustion < ActiveRecord::Base
+class TestPaperTestQuestion < ActiveRecord::Base
   belongs_to :test_paper
-  belongs_to :teaching_plan
+  belongs_to :test_question
 
   validates :test_paper,
-            :teaching_plan,
+            :test_question,
             :presence => true
 end

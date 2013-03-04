@@ -6,7 +6,6 @@ class User < ActiveRecord::Base
   # --- 作业
   include Homework::UserMethods
   include HomeworkAssign::UserMethods
-  include HomeworkAssignRule::UserMethods
   include HomeworkRequirement::UserMethods
   include HomeworkStudentUpload::UserMethods
   # --- 通知

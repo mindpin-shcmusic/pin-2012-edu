@@ -15,8 +15,9 @@
       = f.text_area :content, :class => 'kind-editor'
     
     .field
-      %label 请选择课程
-      = f.select :course_id, @courses.collect {|item| [item.name, item.id]}, {}, {:class => 'courses-selector'}
+      %label 教学方案
+      %div  #{@teaching_plan.course.name} - #{@teaching_plan.title}
+      = f.hidden_field :teaching_plan_id, :value => @teaching_plan.id
     
     .field.need
       %label 请选择日期

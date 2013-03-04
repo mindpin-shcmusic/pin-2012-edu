@@ -8,7 +8,7 @@ class Homework < ActiveRecord::Base
              :class_name => 'User',
              :foreign_key => 'creator_id'
 
-  belongs_to :course
+  belongs_to :teaching_plan
 
   has_many :homework_requirements
   accepts_nested_attributes_for :homework_requirements
@@ -40,13 +40,22 @@ class Homework < ActiveRecord::Base
   
   # --- 校验方法
   validates :title, :content, :presence => true
-  validates :course, :presence => true
   validates :kind, :presence => true, :inclusion => {:in => Homework::KINDS}
 
   default_scope order('created_at DESC')
 
   include Paginated
   include Pacecar
+
+  after_create :assign_after_save
+
+  def assign_after_save
+    students = self.teaching_plan.course.get_students :teacher_user => self.creator,
+                                                      :semester     => self.teaching_plan.semester
+    students.each do |student|
+      HomeworkAssign.find_or_initialize_by_homework_id_and_user_id(self.id, student.id).save
+    end
+  end
 
   def teacher_attachment_zip_path
     "#{self.class::HOMEWORK_ATTACHMENTS_DIR}/homework_teacher#{self.creator.id}_#{self.id}.zip"
@@ -181,6 +190,5 @@ class Homework < ActiveRecord::Base
 
     end
   end
-  include HomeworkAssignRule::HomeworkMethods
   include Comment::CommentableMethods
 end
