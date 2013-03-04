@@ -386,4 +386,7 @@ MindpinEduSns::Application.routes.draw do
     end
   end
 
+
+  resources :test_questions
+
 end
