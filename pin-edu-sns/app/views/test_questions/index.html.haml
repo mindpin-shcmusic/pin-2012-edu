@@ -1,12 +1,12 @@
 - htitle '题目录入'
 
-- hgoback '/admin'
-- hbreadcrumb '首页', '/admin'
+- hgoback '/'
+- hbreadcrumb '首页', '/'
 - hbreadcrumb '题目录入'
 
 = page_top_fixed 'buttons' do
   = page_buttons do |p|
-    = p.button '增加题目', '/admin/test_questions/new'
+    = p.button '增加题目', "/teaching_plans/#{@teaching_plan.id}/test_questions/new"
 
 
 :ruby
@@ -33,6 +33,6 @@
 
   = p.checkbox(test_question)
   = p.cell :ops do
-    %a.edit{:href=>"/admin/test_questions/#{test_question.id}/edit"} 编辑
+    %a.edit{:href=>"/test_questions/#{test_question.id}/edit"} 编辑
   = p.cell :title do
-    %a.detail{:href=>"/admin/test_questions/#{test_question.id}"}= test_question.title
+    %a.detail{:href=>"/test_questions/#{test_question.id}"}= test_question.title

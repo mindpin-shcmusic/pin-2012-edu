@@ -11,4 +11,11 @@ class TestQuestion < ActiveRecord::Base
              :through => :test_paper_test_questions
 
   validates :title, :teaching_plan, :creator, :presence => true
+
+  include ModelRemovable
+
+
+  def destroyable_by?(user)
+    user.is_teacher?
+  end
 end

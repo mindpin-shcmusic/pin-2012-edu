@@ -385,9 +385,12 @@ MindpinEduSns::Application.routes.draw do
         end
       end
     end
+
+    resources :test_questions, :shallow => true do
+    end
   end
 
 
-  resources :test_questions
+  
 
 end

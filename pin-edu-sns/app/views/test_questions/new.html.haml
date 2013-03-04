@@ -1,13 +1,14 @@
 - htitle '题目录入'
 
-- hgoback admin_test_questions_path
-- hbreadcrumb '首页', '/admin'
-- hbreadcrumb '题目录入', "/admin/test_questions"
+- hgoback '/teaching_plans/#{@teaching_plan.id}/test_questions'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '题目录入', "/teaching_plans/#{@teaching_plan.id}/test_questions"
 - hbreadcrumb '增加题目'
+
   
 .page-model-form
   = flash_info
-  = form_for [:admin, @test_question] do |t|
+  = form_for [@teaching_plan, @test_question], :action => :create do |t|
     .field
       %label 计划标题
       = t.text_field :title
