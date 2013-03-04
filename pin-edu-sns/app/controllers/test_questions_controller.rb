@@ -46,7 +46,11 @@ class TestQuestionsController < ApplicationController
   end
 
   def destroy
-    @test_question.destroy
+    if current_user == @test_question.creator
+      @test_question.remove
+    end
+    render :text => 'ok'
+
   end
 
 end
