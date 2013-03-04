@@ -50,8 +50,7 @@ class Homework < ActiveRecord::Base
   after_create :assign_after_save
 
   def assign_after_save
-    students = self.teaching_plan.course.get_students :teacher_user => self.creator,
-                                                      :semester     => self.teaching_plan.semester
+    students = self.teaching_plan.course.get_students(:semester => Semester.now)
     students.each do |student|
       HomeworkAssign.find_or_initialize_by_homework_id_and_user_id(self.id, student.id).save
     end

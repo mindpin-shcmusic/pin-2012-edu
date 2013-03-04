@@ -53,7 +53,10 @@
   = p.cell :attach do
     = homework.homework_teacher_attachments.count
   = p.cell :teaching_plan do
-    = link_to hspan("#{teaching_plan.course.name} - #{teaching_plan.title}"), teaching_plan_path(teaching_plan)
+    - if !teaching_plan.blank?
+      = link_to hspan("#{teaching_plan.course.name} - #{teaching_plan.title}"), teaching_plan_path(teaching_plan)
+    - else
+      = "已删除"
   = p.cell :kind do
     = homework.kind_str
   = p.cell :count do
