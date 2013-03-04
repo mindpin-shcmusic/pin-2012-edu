@@ -151,6 +151,8 @@ MindpinEduSns::Application.routes.draw do
     end
     
     resources :announcements
+
+    resources :test_questions
     
     root :to=>"index#index"
   end
