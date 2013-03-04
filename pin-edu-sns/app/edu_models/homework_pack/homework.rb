@@ -39,7 +39,7 @@ class Homework < ActiveRecord::Base
   has_many :homework_teacher_attachments
   
   # --- 校验方法
-  validates :title, :content, :presence => true
+  validates :teaching_plan, :title, :content, :presence => true
   validates :kind, :presence => true, :inclusion => {:in => Homework::KINDS}
 
   default_scope order('created_at DESC')

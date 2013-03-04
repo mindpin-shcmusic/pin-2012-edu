@@ -2,11 +2,6 @@
 - hbreadcrumb '首页', '/'
 - hbreadcrumb '作业'
 
-- if current_user.is_teacher?
-  = page_top_fixed 'buttons' do
-    = page_buttons do |p|
-      = p.button '布置新作业', new_homework_path, :class => 'create'
-
 = page_top_fixed 'filters' do
   = page_filters homeworks_path do |p|
     = p.filter '全部', :tab => 'all', :default => true
@@ -18,13 +13,13 @@
     :title => 6,
     :deadline => 3,
     :attach => 1,
-    :teaching_plan => 8,
+    :teaching_plan => 4,
     :kind => 2,
     :count => 4    
   }
 
 = page_top_fixed 'list-head' do
-  .headtop
+  .head
     - if current_user.is_teacher?
       = page_buttons do |p|
         = p.batch_destroy Homework
