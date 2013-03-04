@@ -45,9 +45,9 @@
           - else
             - teachers.each do |user|
               :ruby
-                students = @course.get_students(:semester => current_semester,:teacher_user => user)
+                students = @course.get_students(:semester => get_semester,:teacher_user => user)
                 count = students.count
-                course_teacher = CourseTeacher.get_by_params(@course, current_semester, user)
+                course_teacher = CourseTeacher.get_by_params(@course, get_semester, user)
 
               .teacher.opened
                 .student-info
@@ -91,7 +91,7 @@
                   .desc= sanitize teaching_plan.desc
                   %a.remove{:href => 'javascript:;'} 删除
    
-        .add-teaching-plan= link_to '添加教学方案', "/teaching_plans/new?course_id=#{@course.id}&semester_value=#{params[:semester] || current_semester.value}"
+        .add-teaching-plan= link_to '添加教学方案', "/teaching_plans/new?course_id=#{@course.id}&semester_value=#{params[:semester] || get_semester.value}"
 
 
     - if current_user.is_student?
