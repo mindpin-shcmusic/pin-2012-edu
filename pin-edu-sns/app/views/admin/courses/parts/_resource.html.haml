@@ -1,0 +1,13 @@
+:ruby
+  file_entity = course_resource.file_entity
+  download_url = download_link file_entity, course_resource.name
+
+.image{:data=>{:path=>url_for(course_resource)}}
+  .cover= jimage file_entity_cover_src(file_entity), :width => 160, :height => 120
+  .file-detail
+    .ftime= jtime course_resource.created_at
+
+    .link.download= link_to '下　载', download_url
+    .link.delete= link_to '删　除', 'javascript:;'
+
+  .title= link_to course_resource.name, course_resource

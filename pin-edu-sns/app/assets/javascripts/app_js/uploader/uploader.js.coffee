@@ -489,16 +489,19 @@ pie.load ->
 # -----
 # 管理员界面图片，课件上传
 pie.load ->
-  
-  $upload_button = jQuery('.page-admin-course .page-upload-button')
-  $uploader_elm = jQuery('.page-media-file-uploader')
 
-  if $upload_button.exists() && $uploader_elm.exists()
+  
+
+  jQuery('.page-admin-course .detail.images').each ->
+    $this = jQuery(this)
+    $upload_button = $this.find('.page-upload-button')
+    $uploader_elm = $this.find('.page-media-file-uploader')
+    jfbox_id = $uploader_elm.closest('.page-float-box').data('jfbox-id')
 
     uploader = new FileUploader $upload_button,
       render: (file_wrapper)->
         # 显示上传框
-        pie.open_fbox 'upload_resource'
+        pie.open_fbox jfbox_id
 
         # 添加上传进度条
         $file = $uploader_elm.find('.progress-bar-sample .file').clone()
@@ -549,6 +552,9 @@ pie.load ->
             'kind': kind
             'semester_value': semester_value
 
+          success: (res) ->
+            pie.close_fbox(jfbox_id)
+            $this.find(".images").prepend(res)
           error: ->
             file_wrapper.error()
 
