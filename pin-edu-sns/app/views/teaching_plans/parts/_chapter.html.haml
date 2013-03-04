@@ -7,8 +7,8 @@
       .edit= link_to '管理作业', 'javascript:;'
       .count 0
       .slides
-        .edit= link_to '管理课件', "/chapters/#{chapter.id}/edit"
-        .count 0
+        .edit= link_to '管理课件', edit_chapter_path(chapter)
+        .count= chapter.course_wares.count
       .publish.hide
         .status 未发布
         .edit= link_to '发布', 'javascript:;'

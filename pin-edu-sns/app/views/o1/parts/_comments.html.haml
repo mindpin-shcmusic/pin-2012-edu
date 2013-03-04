@@ -1,8 +1,0 @@
-- if !comments.blank?
-  .comments
-    .number #{comments.count}个评论
-    - comments.each do |comment|
-      .comment
-        .commenter= user_link(comment.creator)
-        .date= comment.created_at
-        .content= sanitize comment.content

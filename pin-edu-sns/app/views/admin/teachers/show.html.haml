@@ -44,7 +44,7 @@
           .course-info
             .name= link_to course.name, "/admin/courses/#{course.id}"
             .ops= link_to "分配学生", "/admin/course_teachers/#{course_teacher.id}/select_students_page"
-            .ops{:style=>'margin-right:6px;'}= link_to "课时调整", "/admin/course_teachers/#{course_teacher.id}/course_change_records/new"
+            .ops{:style=>'margin-right:6px;'}= link_to "课时调整", "/admin/course_teachers/#{course_teacher.id}/edit_time_expression"
 
           .students-brief
             - students[0..4].each do |student|

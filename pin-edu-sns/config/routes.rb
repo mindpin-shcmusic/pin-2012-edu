@@ -118,10 +118,10 @@ MindpinEduSns::Application.routes.draw do
       member do
         get :select_students_page
         put :select_students
-        get :edit_time_expression
-        get :show_time_expression
-        put :update_time_expression
         put :update_location
+        get :edit_time_expression
+        put :update_time_expression
+        get :show_time_expression
       end
 
       resources :course_change_records, :shallow => true
@@ -247,12 +247,12 @@ MindpinEduSns::Application.routes.draw do
       get :next_for_student
       get :next_for_teacher
       get :subscriptions
-      get :curriculum_demo
     end
 
     member do
       put :subscribe
     end
+
     resources :course_resources, :shallow => true
   end
 

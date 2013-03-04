@@ -76,17 +76,32 @@
                         .avatar= avatar student, :tiny
                         .name= user_link student
 
-    = page_field :'teaching-plans', :title=>'教学方案' do
-      - if @teaching_plans.blank?
-        .blank 当前课程下还没有教学方案
-        .plans
-      - else
-        .plans
-          - @teaching_plans.each do |teaching_plan|
-            .item{:data=>{:path => "/teaching_plans/#{teaching_plan.id}"}}
-              = link_to "/teaching_plans/#{teaching_plan.id}", :class=>'teaching-plan' do
-                .title= teaching_plan.title
-                .desc= sanitize teaching_plan.desc
-                %a.remove{:href => 'javascript:;'} 删除
- 
-      .add-teaching-plan= link_to '添加教学方案', "/teaching_plans/new?course_id=#{@course.id}&semester_value=#{current_semester.value}"
+    - if current_user.is_teacher?
+      = page_field :'teaching-plans', :title=>'我创建的教学方案' do
+        - if @teaching_plans.blank?
+          .blank 当前课程下还没有教学方案
+          .plans
+        - else
+          .plans
+            - @teaching_plans.each do |teaching_plan|
+              .item{:data=>{:path => "/teaching_plans/#{teaching_plan.id}"}}
+                = link_to "/teaching_plans/#{teaching_plan.id}", :class=>'teaching-plan' do
+                  .title= teaching_plan.title
+                  .desc= sanitize teaching_plan.desc
+                  %a.remove{:href => 'javascript:;'} 删除
+   
+        .add-teaching-plan= link_to '添加教学方案', "/teaching_plans/new?course_id=#{@course.id}&semester_value=#{current_semester.value}"
+
+
+    - if current_user.is_student?
+      = page_field :'teaching-plans', :title=>'分配给我的教学方案' do
+        - if @teaching_plans.blank?
+          .blank 当前课程下还没有教学方案
+          .plans
+        - else
+          .plans
+            - @teaching_plans.each do |teaching_plan|
+              .item{:data=>{:path => "/teaching_plans/#{teaching_plan.id}"}}
+                = link_to "/teaching_plans/#{teaching_plan.id}/preview", :class=>'teaching-plan' do
+                  .title= teaching_plan.title
+                  .desc= sanitize teaching_plan.desc

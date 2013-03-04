@@ -8,8 +8,6 @@ class CoursesController < ApplicationController
   end
 
   def index
-    return render "demo_teaching_plan_#{params[:demo]}" if params[:demo]
-
     case params[:tab]
     when 'mine'
       _index_mine
@@ -21,24 +19,22 @@ class CoursesController < ApplicationController
 
   def show
     @current_tab = (params[:tab] || :basic).to_sym
+    semester = Semester.now
 
-    @teaching_plans = TeachingPlan.with_course_teacher(current_user, Semester.now, @course)
+    @teaching_plans = if current_user.is_teacher?
+      TeachingPlan.with_course_teacher(current_user, semester, @course)
+    elsif current_user.get_student_courses(:semester => semester,
+                                           :student_user => current_user).include?(@course)
+
+      teacher_user = CourseStudentAssign.where('course_id = ? and student_user_id = ?', @course.id, current_user.id).first.teacher_user
+      TeachingPlan.with_course_teacher(teacher_user, semester, @course)
+    else
+      []
+    end
   end
 
   def curriculum
     @course_time_expression_collection_map = current_user.course_time_expression_collection_map
-  end
-
-  def curriculum_demo
-    @demo_data = [
-      ["Java 语言","Java 语言","数据结构","数据结构",nil,nil,"计算机操作系统","计算机操作系统",nil,nil,"计算机图形学",nil],
-      ["编译原理","编译原理",nil,"Java 语言","Java 语言",nil,nil,"数据结构","数据结构",nil,nil,nil],
-      ["计算机图形学","计算机图形学",nil,nil,nil,nil,nil,"计算机操作系统","计算机操作系统",nil,"数据结构",nil],
-      ["编译原理","编译原理",nil,nil,nil,nil,"Android 开发","Android 开发",nil,nil,nil,nil],
-      ["计算机操作系统",nil,nil,nil,nil,nil,nil,nil,"计算机图形学","计算机图形学","编译原理",nil],
-      [nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil],
-      [nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil,nil]
-    ]
   end
 
   # 从现在时间开始，本周内上的课程，包括当前正在进行的课程

@@ -88,15 +88,6 @@ module MindpinUtilHelper
         avatar(user, style)
       end
     end
-
-    def demo_avatar_by_name(str)
-      teacher = Teacher.find_by_real_name(str)
-      student = Student.find_by_real_name(str)
-
-      model = teacher || student
-      user = model.user
-      avatar user, :mini
-    end
   end
 
   module UserSignMethods
