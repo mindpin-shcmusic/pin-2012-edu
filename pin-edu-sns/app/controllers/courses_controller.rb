@@ -29,7 +29,7 @@ class CoursesController < ApplicationController
     redirect_to "/courses/#{@course.id}"
   end
 
-  def preview_chapters
+  def browse_chapters
     @teaching_plan = @course.get_teaching_plan
     redirect_to "/teaching_plans/#{@teaching_plan.id}/preview"
   end
