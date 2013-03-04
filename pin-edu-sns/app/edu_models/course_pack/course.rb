@@ -156,6 +156,12 @@ class Course < ActiveRecord::Base
     teaching_plan.chapters
   end
 
+  def homeworks
+    teaching_plan = get_teaching_plan
+    return [] if teaching_plan.blank?
+    teaching_plan.homeworks
+  end
+
   module UserMethods
     def add_course(options)
       raise InvalidCourseParams.new if options[:course].blank? || options[:semester].blank? || options[:teacher_user].blank?
