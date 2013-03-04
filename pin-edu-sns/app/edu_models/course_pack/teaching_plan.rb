@@ -34,9 +34,14 @@ class TeachingPlan < ActiveRecord::Base
     return false
   end
 
+  def get_test_paper_for(student_user)
+    TestPaper.where(:teaching_plan_id => self.id, :student_user_id => student_user.id).first
+  end
+
   def make_test_paper_for(student_user)
-    paper = TestPaper.create :teaching_plan => self, :student_user => student_user
-    paper.select_random_questons
+    paper = TestPaper.find_or_initialize_by_teaching_plan_id_and_student_user_id(self.id, student_user.id)
+    paper.save
+    paper.select_questions
     paper
   end
 

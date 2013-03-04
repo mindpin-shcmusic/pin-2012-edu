@@ -10,6 +10,13 @@
     .h
       %h1.title= @teaching_plan.title
       .description= sanitize @teaching_plan.desc
+    - if current_user.is_student?
+      .test-paper
+        - test_paper = @teaching_plan.get_test_paper_for(current_user)
+        - if test_paper
+          = link_to '开始答题', test_paper_path(test_paper)
+        - else
+          = link_to '开始答题', test_papers_path(:teaching_plan_id => @teaching_plan.id), :method => :post
 
   .bd
     .sidebar
