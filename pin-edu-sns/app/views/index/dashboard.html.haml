@@ -24,22 +24,25 @@
         .date #{Time.now.strftime('%m-%d')}，#{Semester.now.to_s}学期
       .icon
 
-.page-model-show
-  .page-dashboard
-    .courses
-      :ruby
-        href = 'javascript:;'
-        src = '/assets/covers/course.small.jpg'
-        title = '中国传统文化系列'
-        desc = '中国传统文化是中华文明演化而汇集成的一种反映民族特质和风貌的民族文化，具有鲜明民族特色的、历史悠久、内涵博大精深、传统优良的文化。它是中华民族几千年文明的结晶'
+- if current_user.is_student?
+  .page-model-show
+    .page-dashboard
+      .courses
+        - courses = current_user.get_student_courses(:semester => Semester.now)
+        - courses.each do |course|
+          :ruby
+            href = "/courses/#{course.id}"
+            src = course.cover_url
+            title = course.name
+            desc = course.desc
+            cp_count = 3
 
-      - 3.times do
-        .course
-          %a.img{:href=>href}
-            = jimage src, :width=>80, :height=>80
+          .course
+            %a.img{:href=>href}
+              = jimage src, :width=>80, :height=>80
 
-          .title
-            %a{:href=>href}= title
-          .desc= desc
-          .chapters
-            .count 章节 × 3 
+            .title
+              %a{:href=>href}= title
+            .desc= desc
+            .chapters
+              .count 章节 × #{cp_count}
