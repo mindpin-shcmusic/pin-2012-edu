@@ -67,7 +67,7 @@ class TeachingPlan < ActiveRecord::Base
         return false if !self.is_student?
         course   = teaching_plan.course
         students = course.get_students :teacher_user => teaching_plan.creator,
-                                       :semester     => Semester.now
+                                       :semester     => teaching_plan.semester
         students.include?(self)
       end
     end
