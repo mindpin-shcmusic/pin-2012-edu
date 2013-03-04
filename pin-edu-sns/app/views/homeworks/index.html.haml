@@ -23,6 +23,8 @@
     - if current_user.is_teacher?
       = page_buttons do |p|
         = p.batch_destroy Homework
+        - if params[:teaching_plan_id]
+          = link_to '增加新作业', new_homework_path(:teaching_plan_id => params[:teaching_plan_id])
 
     = list_pagination(@homeworks)
 
