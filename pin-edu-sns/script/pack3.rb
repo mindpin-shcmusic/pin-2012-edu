@@ -5,7 +5,6 @@ def pack3_1
   homeworks = Homework.where('title like "课程实践作业%"')
 
   homeworks.each do |homework|
-    homework.homework_assign_rule.delete
     homework.homework_assigns.destroy_all
     homework.homework_requirements.delete_all
   end
@@ -15,19 +14,17 @@ def pack3_1
   Teacher.all.map(&:user).each do |teacher_user|
     courses = teacher_user.get_teacher_courses(:semester => Semester.get(2012, :B))
 
-    courses.each do |course|
+    teaching_plans = courses.map {|c| c.get_teaching_plan(teacher_user)}.flatten.uniq.each do |plan|
       name = names[rand 4]
 
-      homework = Homework.create(:title    => "课程实践作业#{name} - #{course.name}",
-                                 :content  => "进行#{name}练习。",
-                                 :course   => course,
-                                 :deadline => [4, 5, 6][rand 3].days.from_now,
-                                 :creator  => teacher_user,
-                                 :kind     => Homework::KINDS[rand 2])
+      homework = Homework.create(:title         => "课程实践作业#{name} - #{course.name}",
+                                 :content       => "进行#{name}练习。",
+                                 :teaching_plan => plan,
+                                 :deadline      => [4, 5, 6][rand 3].days.from_now,
+                                 :creator       => teacher_user,
+                                 :kind          => Homework::KINDS[rand 2])
 
       HomeworkRequirement.create :title => name, :homework => homework
-      homework.assign_to({:courses => [course.id]})
-      homework.homework_assign_rule.build_assign
     end
 
   end
