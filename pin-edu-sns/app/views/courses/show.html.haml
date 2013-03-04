@@ -71,6 +71,7 @@
                     %a.close{:href=>'javascript:;'} 收起列表
 
                   .students
+
                     - students.each do |student|
                       .student
                         .avatar= avatar student, :tiny
@@ -90,7 +91,7 @@
                   .desc= sanitize teaching_plan.desc
                   %a.remove{:href => 'javascript:;'} 删除
    
-        .add-teaching-plan= link_to '添加教学方案', "/teaching_plans/new?course_id=#{@course.id}&semester_value=#{current_semester.value}"
+        .add-teaching-plan= link_to '添加教学方案', "/teaching_plans/new?course_id=#{@course.id}&semester_value=#{params[:semester] || current_semester.value}"
 
 
     - if current_user.is_student?

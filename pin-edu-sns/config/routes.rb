@@ -133,6 +133,8 @@ MindpinEduSns::Application.routes.draw do
       end
     end
 
+    resources :test_papers
+
     resources :course_surveys do
       collection do
         get :show_courses_by_semester
