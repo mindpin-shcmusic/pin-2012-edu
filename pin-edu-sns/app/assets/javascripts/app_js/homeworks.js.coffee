@@ -8,7 +8,7 @@ pie.load ->
     jQuery('.page-model-form.homework .student-attachement-fields').append("<div>#{attachement_field}#{del_field}</div>")
 
   # 删除需求项
-  jQuery('.page-model-form.homework .student-attachement-fields a.delete').live 'click', ->
+  jQuery('.page-model-form.homework .student-attachement-fields a.delete').on 'click', ->
     jQuery(this).parent().remove()
 
   # --------------------
@@ -39,7 +39,7 @@ pie.load ->
 
 
 
-  jQuery('.page-homework-student .upload a.comments-count').live 'click', ->
+  jQuery('.page-homework-student .upload a.comments-count').on 'click', ->
     $upload = jQuery(this).closest('.upload')
     model_id = $upload.data('id')
     model_type = 'HomeworkStudentUpload'

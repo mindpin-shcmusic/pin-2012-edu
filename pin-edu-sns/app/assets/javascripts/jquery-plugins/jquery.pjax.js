@@ -24,7 +24,7 @@
 //
 // Returns the jQuery object
 $.fn.pjax = function( container, options ) {
-  return this.live('click.pjax', function(event){
+  return this.on('click.pjax', function(event){
     handleClick(event, container, options)
   })
 }
@@ -38,7 +38,7 @@ $.fn.pjax = function( container, options ) {
 //
 // Examples
 //
-//   $('a').live('click', $.pjax.click)
+//   $('a').on('click', $.pjax.click)
 //   // is the same as
 //   $('a').pjax()
 //

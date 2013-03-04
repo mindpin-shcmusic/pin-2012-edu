@@ -34,7 +34,7 @@ jQuery.fn.confirm_dialog = function(str, func){
   });
 }
 
-jQuery('.page-confirm-dialog .editable-cancel').live('click',function(){
+jQuery('.page-confirm-dialog .editable-cancel').on('click',function(){
   jQuery('.page-confirm-dialog').remove();
   pie.hide_page_overlay();
 })

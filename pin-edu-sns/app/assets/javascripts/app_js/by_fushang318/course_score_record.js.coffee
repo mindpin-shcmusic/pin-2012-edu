@@ -3,7 +3,7 @@ pie.load ->
   return if !$form.exists()
 
   $student_select = $form.find('select.student-select')
-  $form.find('select.course-select').live 'change', ->
+  $form.find('select.course-select').on 'change', ->
     jQuery.ajax
       url: '/admin/course_score_records/get_students_by_course'
       type: 'GET'

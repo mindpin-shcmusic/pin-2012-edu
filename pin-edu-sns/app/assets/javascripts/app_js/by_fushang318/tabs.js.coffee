@@ -6,7 +6,7 @@ pie.load ->
 
     nav_arr = $navs.find('.nav')
 
-    nav_arr.live 'click', ->
+    nav_arr.on 'click', ->
       content_arr = $contents.find('> .content')
       index = jQuery(this).index()
       nav_arr.removeClass('current')

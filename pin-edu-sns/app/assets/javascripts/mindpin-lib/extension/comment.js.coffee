@@ -96,19 +96,19 @@ pie.load ->
   # 
   # 不符合条件的，都认为是普通的新增评论
 
-  jQuery('.page-comments form a.form-submit-button').live 'click', ->
+  jQuery('.page-comments form a.form-submit-button').on 'click', ->
     $page_comments = jQuery(this).closest('.page-comments')
     new CommentForm($page_comments).submit()
 
 
   # 删除评论
-  jQuery('.page-comments .comment .ops a.delete').live 'click', ->
+  jQuery('.page-comments .comment .ops a.delete').on 'click', ->
     $page_comments = jQuery(this).closest('.page-comments')
     new CommentForm($page_comments).remove(jQuery(this))
 
 
   # 回复评论
-  jQuery('.page-comments .comment .ops a.reply').live 'click', ->
+  jQuery('.page-comments .comment .ops a.reply').on 'click', ->
     $page_comments = jQuery(this).closest('.page-comments')
     new CommentForm($page_comments).prepare_reply(jQuery(this))
 

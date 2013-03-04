@@ -23,7 +23,7 @@ class FileUploader
   bind_button: ->
     that = this
 
-    @$button.find('input[type=file]').live 'change', (evt)->
+    @$button.find('input[type=file]').on 'change', (evt)->
       files = evt.target.files
       jQuery.each files, (index, file)=>
         new FileUploadWrapper(that, file).render().upload()

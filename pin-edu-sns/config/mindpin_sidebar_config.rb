@@ -147,7 +147,7 @@ MindpinSidebar::Base.config do
   # 学生
   rule :student do
     group :resources, :name => '学生功能…' do
-      nav :media_resources, :name => '媒体资源', :url => '/file' do
+      nav :media_resources, :name => '资源网盘', :url => '/file' do
         subnav :my_resources, :name => '我的文件夹', :url => '/file' do
           controller :media_resources
         end
@@ -168,28 +168,8 @@ MindpinSidebar::Base.config do
           controller :index, :only => :dashboard
         end
 
-        subnav :students, :name => '学生浏览', :url => '/students' do
-          controller :students, :only => :index
-        end
-
-        subnav :teachers, :name => '老师浏览', :url => '/teachers' do
-          controller :teachers, :only => :index
-        end
-
         subnav :homeworks, :name => '我的作业和实践', :url => '/homeworks' do
           controller :homeworks
-        end
-
-        subnav :course_surveys, :name => '在线调查', :url => '/course_surveys' do
-          controller :course_surveys
-        end
-
-        subnav :questions, :name => '在线问答', :url => '/questions' do
-          controller :questions
-        end
-
-        subnav :mentor_students, :name => '导师双向选择', :url => '/mentor_students' do
-          controller :mentor_students
         end
       end
 

@@ -68,15 +68,6 @@
 
       .title{
         display:none;
-        // background-color:#265672;
-        // box-shadow:0 1px 0 #4B748B inset;
-        // @include border-radius(0 5px 0 0);
-        // border:1px solid #284352;
-        // border-left:none;
-
-        // color:#fff;
-        // padding-left:20px;
-        // height:39px;line-height:39px;
       }
 
       .items{
@@ -85,7 +76,6 @@
         background-color:#F2F2F2;
         border-right:solid 1px #b1b1b1;
         border-bottom:solid 1px #b1b1b1;
-        @include border-radius(0 0 5px 0);
 
         &:after{
           content:"";

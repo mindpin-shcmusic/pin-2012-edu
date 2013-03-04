@@ -31,18 +31,18 @@ pie.load ->
 
     build_filter: ->
       that = this
-      @$filter.find('a.all').live 'click', ->
+      @$filter.find('a.all').on 'click', ->
         that.$filter.find('a').removeClass('view')
         jQuery(this).addClass('view')
         that.$mode = 'all'
         that.$items.show()
-      @$filter.find('a.selected').live 'click', ->
+      @$filter.find('a.selected').on 'click', ->
         that.$filter.find('a').removeClass('view')
         jQuery(this).addClass('view')
         that.$mode = 'selected'
         that.$items.hide()
         that.$list.find('.item.selected').show()
-      @$filter.find('a.unselected').live 'click', ->
+      @$filter.find('a.unselected').on 'click', ->
         that.$filter.find('a').removeClass('view')
         jQuery(this).addClass('view')
         that.$mode = 'unselected'
@@ -51,7 +51,7 @@ pie.load ->
 
     bind: ->
       that = this
-      @$items.live 'click', ->
+      @$items.on 'click', ->
         $item = jQuery(this)
         if $item.hasClass('selected')
           that.unselect($item)

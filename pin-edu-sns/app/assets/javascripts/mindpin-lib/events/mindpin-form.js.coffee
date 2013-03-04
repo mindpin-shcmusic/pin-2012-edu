@@ -2,7 +2,7 @@
 # 如果按钮是 disabled 状态，不允许提交
 # 如果按钮时 stop 状态，也不允许提交
 pie.load ->
-  jQuery('form a.form-submit-button').live 'click', ->
+  jQuery('form a.form-submit-button').on 'click', ->
     $button = jQuery(this)
     return if $button.hasClass('disabled')
     return if $button.hasClass('stop')
@@ -13,7 +13,7 @@ pie.load ->
       $form.submit()
 
 pie.load ->
-  jQuery('form.page-search-bar a.go').live 'click', ->
+  jQuery('form.page-search-bar a.go').on 'click', ->
     $form = jQuery(this).closest('form')
     if pie.is_form_all_need_filled($form)
       $form.submit()
@@ -24,7 +24,7 @@ pie.load ->
 #   提交表单
 
 pie.load ->
-  jQuery('form .field input').live 'keypress', (evt)->
+  jQuery('form .field input').on 'keypress', (evt)->
     if evt.keyCode == 13 # 回车
       evt.preventDefault()
 
@@ -51,7 +51,7 @@ pie.load ->
 
 # 加载 jcheckbox 事件
 pie.load ->
-  jQuery('.pie-j-checkbox span.c, .pie-j-checkbox a.text').live 'click', ->
+  jQuery('.pie-j-checkbox span.c, .pie-j-checkbox a.text').on 'click', ->
     $jelm = jQuery(this).closest('.pie-j-checkbox')
 
     $span = $jelm.find('span.c')

@@ -24,7 +24,7 @@ module MindpinUtilHelper
       end
     end
 
-    # 在 layout 的 :topbar 区域生成面包屑导航
+    # 生成面包屑导航
     def hbreadcrumb(str, url = nil, options = {})
       url ||= 'javascript:;'
 
