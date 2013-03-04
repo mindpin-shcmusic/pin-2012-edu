@@ -1,13 +1,13 @@
 - htitle '题目录入'
 
-- hgoback admin_test_questions_path
-- hbreadcrumb '首页', '/admin'
-- hbreadcrumb '题目录入', admin_test_questions_path
+- hgoback "/test_questions"
+- hbreadcrumb '首页', '/'
+- hbreadcrumb '题目录入', "/test_questions/#{@test_question.id}"
 - hbreadcrumb @test_question.title
 
 .page-unfixed-head
   = page_buttons do |p|
-    = p.button '修改信息', "/admin/test_questions/#{@test_question.id}/edit"
+    = p.button '修改信息', "/test_questions/#{@test_question.id}/edit"
 
 
 

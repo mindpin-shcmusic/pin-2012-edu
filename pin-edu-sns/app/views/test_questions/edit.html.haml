@@ -2,12 +2,12 @@
 
 - hgoback admin_test_questions_path
 - hbreadcrumb '首页', '/admin'
-- hbreadcrumb '题目录入', "/admin/test_questions/#{test_question.id}/edit"
+- hbreadcrumb '题目录入', "/admin/test_questions/#{@test_question.id}/edit"
 - hbreadcrumb '编辑题目'
   
 .page-model-form
   = flash_info
-  = form_for [:admin, @test_question] do |t|
+  = form_for @test_question do |t|
     .field
       %label 题目标题
       = t.text_field :title
