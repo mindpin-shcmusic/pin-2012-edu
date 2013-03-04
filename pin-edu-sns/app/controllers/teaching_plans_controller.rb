@@ -24,6 +24,9 @@ class TeachingPlansController < ApplicationController
   end
 
   def show
+    if current_user.is_student?
+      return redirect_to "/teaching_plans/#{@teaching_plan.id}/preview" 
+    end
   end
 
   def edit
