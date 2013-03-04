@@ -12,7 +12,7 @@
       .description= sanitize @teaching_plan.desc
     - if current_user.is_student?
       .test-paper
-        - test_paper = @teaching_plan.get_test_paper_for(current_user)
+        - test_paper = @teaching_plan.get_test_paper_for(current_user) && @teaching_plan.test_questions.count < 10
         - if test_paper
           = link_to '开始答题', test_paper_path(test_paper)
         - else
