@@ -34,11 +34,11 @@
             href = "/courses/#{course.id}"
             src = course.cover_url
             title = course.name
-            desc = course.desc
-            desc = desc.blank? ? '课程没有描述信息' : desc
+            desc = sanitize course.desc
+            desc = desc.blank? ? '课程没有简介信息' : desc
 
             cp_count = course.chapters.count
-            hw_count = 4
+            hw_count = course.homeworks.count
 
           .course
             %a.img{:href=>href}

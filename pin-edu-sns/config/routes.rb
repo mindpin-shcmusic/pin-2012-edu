@@ -254,6 +254,10 @@ MindpinEduSns::Application.routes.draw do
     member do
       put :subscribe
       get :edit_chapters
+
+      get :nav_teachers
+      get :nav_chapters
+      get :nav_homeworks
     end
 
     resources :course_resources, :shallow => true

@@ -51,6 +51,25 @@ class CoursesController < ApplicationController
     @courses = current_user.subscribed_courses
   end
 
+# ------------------
+
+  def nav_teachers
+    @cnav = :teachers
+    render :show
+  end
+
+  def nav_chapters
+    @cnav = :chapters
+    render :show
+  end
+
+  def nav_homeworks
+    @cnav = :homeworks
+    render :show
+  end
+
+# ------------------
+
   private
   def _index_mine
     courses = if current_user.is_teacher?

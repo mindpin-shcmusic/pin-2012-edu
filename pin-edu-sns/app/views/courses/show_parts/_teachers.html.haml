@@ -1,0 +1,45 @@
+- teachers = course.get_teachers(:semester=> get_semester)
+
+.nav-title 任课教师
+.nav-desc 课程的任课教师以及上课学生
+
+.page-admin-course
+  = page_field :'teacher-list', :title=>'任课教师' do
+    .add-teacher
+      .teachers
+        - if teachers.blank?
+          .blank 目前列表内没有内容
+        - else
+          - teachers.each do |user|
+            :ruby
+              students = course.get_students(:semester => get_semester,:teacher_user => user)
+              count = students.count
+              course_teacher = CourseTeacher.get_by_params(course, get_semester, user)
+
+            .teacher.opened
+              .student-info
+                .avatar
+                  = avatar user, :mini
+                .name
+                  = link_to user.teacher.real_name, "/users/#{user.id}"
+                .tid
+                  = user.teacher.tid
+
+              .students-brief
+                - students[0..4].each do |student|
+                  .student= avatar_link student, :mini
+                .desc= "等 #{count} 个学生"
+
+                %a.open{:href=>'javascript:;'} 展开列表
+
+              .students-detail
+                .h
+                  .desc= "总共 #{count} 个学生"
+                  %a.close{:href=>'javascript:;'} 收起列表
+
+                .students
+
+                  - students.each do |student|
+                    .student
+                      .avatar= avatar student, :tiny
+                      .name= user_link student

@@ -142,3 +142,49 @@
     height:10px;
   }
 }
+
+// -----------------
+
+.page-course-nav{
+  height:40px;
+  line-height:40px;
+  border-left:solid 1px #B1B1B1;
+  background-color:#F8F8F8;
+  border-bottom:solid 1px #DADDE0;
+  box-shadow:0 1px 0 white inset;
+  padding-left:15px;
+
+  a.item{
+    margin-top:7px;
+    margin-right:5px;
+    float:left;
+    height:32px;line-height:32px;
+    padding:0 14px;
+    background-color:#EAEAEA;
+    border-top:solid 1px #DADDE0;
+    border-left:solid 1px #DADDE0;
+    border-right:solid 1px #DADDE0;
+    color:#555;
+    &:hover{
+      background-color:#dedede;
+      color:#444;
+    }
+    &.current{
+      font-weight:bold;
+      color:#444;
+      background-color:white;
+      padding-bottom:1px;
+    }
+  }
+}
+
+.page-course-show{
+  .nav-title{
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:15px;
+  }
+  .nav-desc{
+    margin-bottom:15px;
+  }
+}

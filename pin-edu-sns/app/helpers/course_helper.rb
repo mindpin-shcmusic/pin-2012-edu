@@ -63,4 +63,12 @@ module CourseHelper
     end
   end
 
+  def course_nav_link(name, course, sym = '')
+    href = sym.blank? ? "/courses/#{course.id}" : "/courses/#{course.id}/nav_#{sym}"
+
+    @cnav ||= ''
+
+    link_to name, href, :class => "item #{@cnav == sym ? 'current' : ''}"
+  end
+
 end

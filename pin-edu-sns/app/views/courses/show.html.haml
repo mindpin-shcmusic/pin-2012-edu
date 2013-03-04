@@ -2,85 +2,13 @@
 - hbreadcrumb '首页', '/'
 - hbreadcrumb @course.name
 
-- teachers = @course.get_teachers(:semester=> get_semester)
-
-.page-model-show{:style=>'border-bottom:solid 1px #DCDCDC;'}
-  .page-admin-course
-    = page_field :'course-info', :title=>'课程信息' do
-      .field.image
-        = jimage @course.cover_url, :width => 160, :height => 96
-      .field.name
-        %label 课程名
-        .v= @course.name
-      .field.cid
-        %label 课程编号
-        .v= @course.cid
-      .field.desc
-        %label 课程简介
-        .v= sanitize @course.desc
-    = page_field :'resource-subscription', :title=> '订阅课程资源' do
-      - if current_user.subscribed_course?(@course)
-        = '已订阅'
-      - else
-        = link_to '订阅', "/courses/#{@course.id}/subscribe", :method => :put
-
-    = page_field :'base-info', :title=>'基础信息' do
-      = ''
-
-    = page_field :'syllabus-info', :title=>'教学大纲' do
-      = sanitize @course.syllabus
-
-    = page_field :'teaching-plans', :title=>'教学章节' do
-      - if current_user.is_teacher?
-        = link_to "编辑章节", "/courses/#{@course.id}/edit_chapters"
-      - else current_user.is_student?
-        - teaching_plan = @course.get_teaching_plan
-        - if !teaching_plan.blank?
-          = link_to "查看章节", "/teaching_plans/#{teaching_plan.id}/preview"
-        - else
-          = "还没有内容"
-
-.page-model-filters
-  = page_semester_filters "/courses/#{@course.id}"
+= page_top_fixed 'page-course-nav' do
+  = course_nav_link '课程首页', @course
+  = course_nav_link '任课教师', @course, :teachers
+  = course_nav_link '教学章节', @course, :chapters
+  = course_nav_link '作业与练习', @course, :homeworks
 
 .page-model-show
-  .page-admin-course
-    = page_field :'teacher-list', :title=>'任课教师' do
-      .add-teacher
-        .teachers
-          - if teachers.blank?
-            .blank 目前列表内没有内容
-          - else
-            - teachers.each do |user|
-              :ruby
-                students = @course.get_students(:semester => get_semester,:teacher_user => user)
-                count = students.count
-                course_teacher = CourseTeacher.get_by_params(@course, get_semester, user)
-
-              .teacher.opened
-                .student-info
-                  .avatar
-                    = avatar user, :mini
-                  .name
-                    = link_to user.teacher.real_name, "/users/#{user.id}"
-                  .tid
-                    = user.teacher.tid
-
-                .students-brief
-                  - students[0..4].each do |student|
-                    .student= avatar_link student, :mini
-                  .desc= "等 #{count} 个学生"
-
-                  %a.open{:href=>'javascript:;'} 展开列表
-
-                .students-detail
-                  .h
-                    .desc= "总共 #{count} 个学生"
-                    %a.close{:href=>'javascript:;'} 收起列表
-
-                  .students
-
-                    - students.each do |student|
-                      .student
-                        .avatar= avatar student, :tiny
-                        .name= user_link student
+  .page-course-show
+    - if !@cnav.blank?
+      = render "courses/show_parts/#{@cnav}", :course=>@course
