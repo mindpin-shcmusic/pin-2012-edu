@@ -1,0 +1,38 @@
+- htitle '题目录入'
+
+- hgoback '/admin'
+- hbreadcrumb '首页', '/admin'
+- hbreadcrumb '题目录入'
+
+= page_top_fixed 'buttons' do
+  = page_buttons do |p|
+    = p.button '增加题目', '/admin/test_questions/new'
+
+
+:ruby
+  cols_hash = {
+    :ops => 1,
+    :title => 2
+  }
+
+= page_top_fixed 'list-head' do
+  .headtop
+    = page_buttons do |p|
+      = p.batch_destroy TestQuestion
+
+    = list_pagination(@test_questions)
+
+  = page_list_head :cols=>cols_hash do |p|
+    = p.checkbox
+    = p.cell :ops, '操作'
+    = p.cell :title, '标题', :sortable=>true
+
+
+= page_model_list @test_questions, :cols=>cols_hash, :class=>'admin-test-questions' do |p|
+  - test_question = p.model
+
+  = p.checkbox(test_question)
+  = p.cell :ops do
+    %a.edit{:href=>"/admin/test_questions/#{test_question.id}/edit"} 编辑
+  = p.cell :title do
+    %a.detail{:href=>"/admin/test_questions/#{test_question.id}"}= test_question.title
