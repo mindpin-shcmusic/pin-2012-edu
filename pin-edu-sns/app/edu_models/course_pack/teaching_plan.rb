@@ -1,16 +1,11 @@
 class TeachingPlan < ActiveRecord::Base
-  belongs_to :creator,
-             :class_name  => 'User',
-             :foreign_key => :creator_id
-
-
   belongs_to :course
 
   has_many :chapters
   has_many :test_questions
   has_many :homeworks
   
-  validates :title, :desc, :creator, :course, :presence => true
+  validates :title, :desc, :course, :presence => true
   validates :course_id, :presence => true
 
   def get_test_paper_for(student_user)
@@ -31,12 +26,6 @@ class TeachingPlan < ActiveRecord::Base
   def can_read?(current_user)
     return true if can_write?(current_user)
     self.course.get_students.include?(current_user)
-  end
-
-  module UserMethods
-    def self.included(base)
-      base.has_many :teaching_plans, :class_name => 'TeachingPlan', :foreign_key => :creator_id
-    end
   end
 
 end
