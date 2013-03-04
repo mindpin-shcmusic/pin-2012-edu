@@ -1,0 +1,30 @@
+- hgoback '/courses'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb @course.name, "/courses/#{@course.id}"
+- hbreadcrumb '预览章节'
+
+.page-model-show.page-fangan-review
+  .head
+    .h
+      %h1.title= @teaching_plan.title
+      .description= sanitize @teaching_plan.desc
+    - if current_user.is_student?
+      .test-paper
+        - test_paper = @teaching_plan.get_test_paper_for(current_user) && @teaching_plan.test_questions.count < 10
+        - if test_paper
+          = link_to '开始答题', test_paper_path(test_paper)
+        - else
+          = link_to '开始答题', test_papers_path(:teaching_plan_id => @teaching_plan.id), :method => :post
+
+  .bd
+    .sidebar
+      .label="章节选择"
+      - @teaching_plan.chapters.each_with_index do |chapter, index|
+        - count = index + 1
+        .chapter
+          = link_to "?chapter=#{chapter.id}" do
+            .o= count
+            .l= chapter.title
+
+    - if @current_chapter
+      = render 'teaching_plans/parts/chapter_preview', :chapter => @current_chapter
