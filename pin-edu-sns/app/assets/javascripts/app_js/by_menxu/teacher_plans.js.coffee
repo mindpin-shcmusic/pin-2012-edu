@@ -13,7 +13,6 @@ pie.load ->
         $chapters.find('.blank').fadeOut()
         $res.fadeIn()
 
-
   jQuery(document).on 'click', $chapter_destroy.selector, ->
     $self = jQuery(this)
     $chapter = $self.closest('.chapter')
@@ -22,3 +21,4 @@ pie.load ->
       type: 'DELETE'
       success: (res) ->
         $chapter.fadeOut()
+        
