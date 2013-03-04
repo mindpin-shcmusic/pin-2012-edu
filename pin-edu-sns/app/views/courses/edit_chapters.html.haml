@@ -26,7 +26,7 @@
 
       .btns
         .create-button= link_to '新增章节', 'javascript:;', :'data-url' => "/teaching_plans/#{@teaching_plan.id}/chapters"
-        .preview-button= link_to "预览","/teaching_plans/#{@teaching_plan.id}/preview"
+        .preview-button= link_to "预览","/courses/#{@course.id}/browse_chapters"
         .students
           / 此处还不知道怎么做，暂时保持demo状态
           .count 22 个学生参与此方案

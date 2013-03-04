@@ -27,7 +27,6 @@ class CoursesController < ApplicationController
 
   def browse_chapters
     @teaching_plan = @course.get_teaching_plan
-    redirect_to "/teaching_plans/#{@teaching_plan.id}/preview"
   end
 
   def curriculum
