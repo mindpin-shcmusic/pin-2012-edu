@@ -1,0 +1,34 @@
+- hgoback '/courses'
+- hbreadcrumb '首页', '/'
+- hbreadcrumb @course.name, "/courses/#{@course.name}"
+- hbreadcrumb '编辑章节'
+
+.page-model-show
+  .page-teaching-plan-show
+
+    .top
+      =link_to "创建题目", "/teaching_plans/#{@teaching_plan.id}/test_questions/new"
+
+    .head
+      %h1.title= @teaching_plan.title
+      .description= sanitize @teaching_plan.desc
+      .new-homework
+        = link_to '新建作业', new_homework_path(:teaching_plan_id => @teaching_plan.id)
+
+    .chapters
+      - if @teaching_plan.chapters.blank?
+        .blank 还没有添加任何章节
+        .chs
+      - else
+        .chs
+          - @teaching_plan.chapters.each do |chapter|
+            =render 'teaching_plans/parts/chapter' , :chapter => chapter
+
+      .btns
+        .create-button= link_to '新增章节', 'javascript:;', :'data-url' => "/teaching_plans/#{@teaching_plan.id}/chapters"
+        .preview-button= link_to "预览","/courses/#{@course.id}/browse_chapters"
+        .students
+          / 此处还不知道怎么做，暂时保持demo状态
+          .count 22 个学生参与此方案
+          / 此处还不知道怎么做，暂时保持demo状态
+          .edit= link_to '分配', '/f1/show'

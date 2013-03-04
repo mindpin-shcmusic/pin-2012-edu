@@ -22,11 +22,11 @@ class CoursesController < ApplicationController
   end
 
   def edit_chapters
-    if current_user.is_teacher?
-      @teaching_plan = @course.get_teaching_plan(current_user)
-      return redirect_to "/teaching_plans/#{@teaching_plan.id}"
-    end
-    redirect_to "/courses/#{@course.id}"
+    @teaching_plan = @course.get_teaching_plan
+  end
+
+  def browse_chapters
+    @teaching_plan = @course.get_teaching_plan
   end
 
   def curriculum

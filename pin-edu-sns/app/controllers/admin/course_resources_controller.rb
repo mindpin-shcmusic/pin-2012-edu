@@ -2,14 +2,15 @@ class Admin::CourseResourcesController < ApplicationController
   before_filter :login_required
 
   def create
-    CourseResource.create(
+    resource = CourseResource.create(
       :file_entity_id => params[:file_entity_id],
       :course_id => params[:course_id],
       :name => params[:name],
       :kind => params[:kind].upcase,
       :semester => Semester.get_by_value(params[:semester_value]),
       :creator => current_user)
-    render :text => '资源上传成功'
+
+    render :partial =>'/admin/courses/parts/resource', :locals => {:course_resource => resource}
   end
 
   def destroy
