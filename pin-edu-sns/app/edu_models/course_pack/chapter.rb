@@ -3,6 +3,7 @@ class Chapter < ActiveRecord::Base
   belongs_to :teaching_plan
   belongs_to :creator, :class_name => 'User'
   has_many :course_wares
+  has_many :homeworks
 
   validates :title, :desc, :teaching_plan, :creator, :presence => true
 
