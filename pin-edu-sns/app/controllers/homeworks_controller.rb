@@ -110,4 +110,9 @@ class HomeworksController < ApplicationController
     HomeworkRequirement.find(params[:id]).destroy
     render :text => 'requirement destroyed!'
   end
+
+  def destroy
+    homework = Homework.find(params[:id])
+    redirect_to homework.destroy ? "/courses/#{homework.course.id}/nav_homeworks" : homework_path(homework)
+  end
 end

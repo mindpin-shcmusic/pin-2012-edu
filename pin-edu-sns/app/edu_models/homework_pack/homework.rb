@@ -56,6 +56,10 @@ class Homework < ActiveRecord::Base
     end
   end
 
+  def course
+    self.chapter.teaching_plan.course
+  end
+
   def teacher_attachment_zip_path
     "#{self.class::HOMEWORK_ATTACHMENTS_DIR}/homework_teacher#{self.creator.id}_#{self.id}.zip"
   end
