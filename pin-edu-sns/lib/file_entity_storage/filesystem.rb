@@ -118,6 +118,20 @@ module FileEntityStorage
         self.attach.url(style)
       end
 
+      def screenshot_urls
+        httpurl = self.http_url
+        urls = []
+        1.upto(10) do |i|
+          arr = httpurl.split('original')
+          arr.pop
+          urls << arr.push("/screenshot_#{i}.jpg").join('original')
+        end
+
+        urls
+      rescue
+        []
+      end
+
     end
 
   end

@@ -48,4 +48,10 @@ class CourseWare < ActiveRecord::Base
     media_resource && self.media_resource.file_entity
   end
 
+  def screenshot_urls
+    media_resource.file_entity.screenshot_urls
+  rescue
+    []
+  end
+
 end
