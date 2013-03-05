@@ -8,7 +8,11 @@ class HomeworksController < ApplicationController
   end
   
   def create
-    create_resource current_user.teacher_homeworks.build(params[:homework]) do |homework|
+    course = TeachingPlan.find(params[:homework][:teaching_plan_id]).course
+    new_homework = current_user.teacher_homeworks.build(params[:homework])
+    create_resource new_homework,
+                    :success_url => "/courses/#{course.id}/nav_homeworks" do |homework|
+
       if params[:file_entities]
         params[:file_entities].each do |file|
           attach = HomeworkTeacherAttachment.create(:creator        => current_user,
