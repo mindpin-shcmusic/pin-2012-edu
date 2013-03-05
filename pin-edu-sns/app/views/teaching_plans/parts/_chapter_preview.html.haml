@@ -15,4 +15,4 @@
   .navs.titles
     %label.d 视频列表
     - course_wares.each_with_index do |course_ware,index|
-      %a.title.nav{:href=>"?chapter=#{chapter.id}&course_ware=#{@current_course_ware.id}"}= index + 1
+      %a.title.nav{:href=>"?chapter=#{chapter.id}&course_ware=#{course_ware.id}"}= index + 1
