@@ -1,5 +1,6 @@
 .chapters
   - course.chapters.each do |chapter|
     .chapter
-      .title= chapter.title
+      = page_head_cell '', chapter.title, chapter.desc
+
 = link_to '浏览', "/courses/#{course.id}/browse_chapters"

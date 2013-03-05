@@ -185,6 +185,19 @@
 }
 
 .page-course-show{
+  width:700px;
+  .course-head{
+    padding-bottom:15px;
+    margin-bottom:15px;
+    border-bottom:solid 1px #eee;
+  }
+
+  .course-resources, .course-teachers{
+    padding-bottom:15px;
+    margin-bottom:15px;
+    border-bottom:solid 1px #eee;
+  }
+
   .nav-title{
     font-size:18px;
     font-weight:bold;
@@ -192,5 +205,94 @@
   }
   .nav-desc{
     margin-bottom:15px;
+  }
+}
+
+.page-head-cell{
+  @include floatfix;
+  .image{
+    border:solid 1px #DADDE0;
+    padding:2px;
+    width:80px;height:80px;
+    float:left;
+  }
+  .ctitle{
+    font-size:18px;
+    font-weight:bold;
+    margin-bottom:10px;
+    margin-left:80px + 6px + 15px;
+  }
+  .cdesc{
+    margin-left:80px + 6px + 15px;
+  }
+}
+
+.page-images-grid{
+  @include floatfix;
+  .cell{
+    float:left;
+    margin-right:15px;
+    margin-bottom:15px;
+    position:relative;
+
+    .image{
+      width:200px;
+      height:150px;
+      border:solid 1px #DADDE0;
+      padding:2px;
+      .auto-fit-image{
+        background-color:#F8F8F8;
+      }
+    }
+
+    .title{
+      position:absolute;
+      left:0;right:0;bottom:0;
+      height:32px;line-height:32px;
+      background-color:rgba(black, 0.7);
+      color:white;
+      padding:0 14px;
+      font-size:12px;
+      overflow:hidden;
+    }
+  }
+}
+
+.page-cell-head-and-more{
+  margin-bottom:20px;
+  position:relative;
+  .title{
+    font-weight:bold;
+    margin-bottom:10px;
+  }
+  .desc{
+    color:#888;
+  }
+  .more{
+    @include mini-button;
+    position:absolute;
+    right:0;bottom:0;
+  }
+}
+
+.page-user-cards{
+  @include floatfix;
+  .card{
+    float:left;
+    background-color:#f8f8f8;
+    border:solid 1px #EDEDED;
+    padding:2px;
+    width:100px;
+    margin-right:15px;
+    margin-bottom:15px;
+
+    .avatar{
+      width:32px;height:32px;
+      float:left;
+    }
+    .name{
+      margin-left:32px + 10px;
+      height:32px;line-height:32px;
+    }
   }
 }

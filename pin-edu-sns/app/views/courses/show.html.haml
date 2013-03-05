@@ -4,11 +4,27 @@
 
 = page_top_fixed 'page-course-nav' do
   = course_nav_link '课程首页', @course
-  = course_nav_link '任课教师', @course, :teachers
   = course_nav_link '教学章节', @course, :chapters
+  = course_nav_link '任课教师', @course, :teachers
   = course_nav_link '作业与练习', @course, :homeworks
 
 .page-model-show
   .page-course-show
+    .course-head
+      = page_head_cell @course.cover_url, @course.name, @course.desc
+
     - if !@cnav.blank?
       = render "courses/show_parts/#{@cnav}", :course=>@course
+    - else
+      .course-resources
+        = page_cell_head_and_more('课程章节', "课程下共有 #{@course.chapters.count} 个章节", '查看更多', "/courses/#{@course.id}/nav_chapters")
+
+        - hashs = page_course_resources(@course)[0...6]
+        = page_images_grid hashs
+
+      .course-teachers
+        - teachers = @course.get_teachers(:semester => Semester.now)
+
+        = page_cell_head_and_more('任课教师', '这门课的负责教师', '查看更多', "/courses/#{@course.id}/nav_teachers")
+
+        = page_user_small_cards teachers
