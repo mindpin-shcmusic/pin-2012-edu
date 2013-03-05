@@ -91,6 +91,12 @@
 .page-dashboard{
   width:700px;
 
+  .courses-title{
+    border-bottom:solid 1px #EEEEEE;
+    height:40px;line-height:40px;
+    padding-bottom:10px;
+    margin-bottom:10px;
+  }
   .courses{
     .course{
       @include floatfix;

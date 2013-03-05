@@ -25,10 +25,13 @@
       .icon
 
 - if current_user.is_student?
+  :ruby
+    courses = current_user.get_student_courses(:semester => Semester.now)
+
   .page-model-show
     .page-dashboard
+      .courses-title 你有 #{courses.count} 门课程可供浏览
       .courses
-        - courses = current_user.get_student_courses(:semester => Semester.now)
         - courses.each do |course|
           :ruby
             href = "/courses/#{course.id}"
