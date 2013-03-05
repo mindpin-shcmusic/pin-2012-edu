@@ -8,8 +8,9 @@
     .sidebar
       .label="章节选择"
       - @teaching_plan.chapters.each_with_index do |chapter, index|
+        - klass = @current_chapter == chapter ? "current" : ""
         - count = index + 1
-        .chapter
+        .chapter{:class=>klass}
           = link_to "?chapter=#{chapter.id}" do
             .o= count
             .l= truncate_u chapter.title, 10
