@@ -8,7 +8,7 @@ class HomeworksController < ApplicationController
   end
   
   def create
-    course = TeachingPlan.find(params[:homework][:teaching_plan_id]).course
+    course = Chapter.find(params[:homework][:chapter_id]).teaching_plan.course
     new_homework = current_user.teacher_homeworks.build(params[:homework])
     create_resource new_homework,
                     :success_url => "/courses/#{course.id}/nav_homeworks" do |homework|
@@ -38,8 +38,8 @@ class HomeworksController < ApplicationController
   end
 
   def new
-    return redirect_to root_path if !params[:teaching_plan_id]
-    @teaching_plan = TeachingPlan.find(params[:teaching_plan_id])
+    return redirect_to root_path if !params[:chapter_id]
+    @chapter = Chapter.find(params[:chapter_id])
     @homework = Homework.new
     @teacher_attachments = []
     @requirements = []

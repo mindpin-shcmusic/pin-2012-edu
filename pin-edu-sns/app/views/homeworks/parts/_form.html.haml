@@ -15,9 +15,10 @@
       = f.text_area :content, :class => 'kind-editor'
     
     .field
-      %label 教学方案
-      %div  #{@teaching_plan.course.name} - #{@teaching_plan.title}
-      = f.hidden_field :teaching_plan_id, :value => @teaching_plan.id
+      %label 课程章节
+      - teaching_plan = @chapter.teaching_plan
+      %div  #{teaching_plan.course.name} - #{teaching_plan.title} - #{@chapter.title}
+      = f.hidden_field :chapter_id, :value => @chapter.id
     
     .field.need
       %label 请选择日期

@@ -20,13 +20,15 @@ pie.load ->
   jQuery(document).on 'click', $chapter_destroy.selector, ->
     $self = jQuery(this)
     $chapter = $self.closest('.chapter')
-    jQuery.ajax
-      url: $self.data('url')
-      type: 'DELETE'
-      success: (res) ->
-        $chapter.fadeOut ->
-          $chapter.remove()
-          $blank.fadeIn() if $chapters.children().length == 0
+
+    jQuery(this).confirm_dialog '确定要删除吗', =>
+      jQuery.ajax
+        url: $self.data('url')
+        type: 'DELETE'
+        success: (res) ->
+          $chapter.fadeOut ->
+            $chapter.remove()
+            $blank.fadeIn() if $chapters.children().length == 0
 
   $course_ware_title.on 'click', ->
     id = jQuery(this).data('cw-id')
