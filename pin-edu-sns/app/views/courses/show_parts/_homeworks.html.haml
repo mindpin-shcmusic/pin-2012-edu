@@ -6,9 +6,24 @@
         .dd
           .title= chapter.title
         .homeworks
-          - chapter.homeworks do |homework|
-            .title= homework.title
-            .desc= sanitize homework.desc
-
+          - chapter.homeworks.each do |homework|
+            .homework
+              .htitle
+                %a{:href=>"/homeworks/#{homework.id}"}= homework.title
+              .hdesc= sanitize homework.content
         .homeworks-ops
           %a.create-homework{:href=>"/homeworks/new?chapter_id=#{chapter.id}"} 新增作业
+
+- if current_user.is_student?
+  .course-chapters
+    - course.chapters.each do |chapter|
+      - url = "/courses/#{course.id}/browse_chapters?chapter=#{chapter.id}"
+      .chapter
+        .dd
+          .title= chapter.title
+        .homeworks
+          - chapter.homeworks.each do |homework|
+            .homework
+              .htitle
+                %a{:href=>"/homeworks/#{homework.id}"}= homework.title
+              .hdesc= sanitize homework.content
