@@ -20,9 +20,10 @@
       %div  #{teaching_plan.course.name} - #{teaching_plan.title} - #{@chapter.title}
       = f.hidden_field :chapter_id, :value => @chapter.id
     
-    .field.need
-      %label 请选择日期
-      = f.text_field :deadline, :class=>'datetime-picker'
+    = f.hidden_field :deadline, :value => Date.new(2013, 12, 1)
+    -# .field.need
+    -#   %label 请选择日期
+    -#   = f.text_field :deadline, :class=>'datetime-picker'
     
     .field.attachments
       %label 老师附件
