@@ -6,5 +6,9 @@
         .dd
           .title= chapter.title
         .homeworks
+          - chapter.homeworks do |homework|
+            .title= homework.title
+            .desc= sanitize homework.desc
+
         .homeworks-ops
           %a.create-homework{:href=>"/homeworks/new?chapter_id=#{chapter.id}"} 新增作业
