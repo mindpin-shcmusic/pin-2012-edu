@@ -652,14 +652,8 @@
 }
 
 .page-teaching-plan-show{
-  .head{
-    border-bottom:solid 1px #DADDE0;
-    padding-bottom:15px;
-    margin-bottom: 15px;
-    width:600px;
-  }
   .chapters{
-    width:600px;
+    width:700px;
     .chs{
       margin-bottom: 15px;
     }
@@ -680,7 +674,7 @@
       }
 
       .desc{
-        width:340px;
+        width:500px;
         &.bl{
           color:#999;
         }
@@ -693,10 +687,9 @@
 
       .items{
         position:absolute;
-        top:52px;right:15px;
-        @include border-radius(4px);
+        top:15px;right:15px;
+
         .homeworks, .slides{
-          @include border-radius(4px);
           
           height:24px;line-height:24px;
           background-color:#eaeaea;
@@ -727,9 +720,7 @@
           float:left;
           font-size:12px;
         }
-        .remove{
-          @include border-radius(4px);
-          
+        .remove{          
           height:24px;line-height:24px;
           background-color:#eaeaea;
           @include floatfix;

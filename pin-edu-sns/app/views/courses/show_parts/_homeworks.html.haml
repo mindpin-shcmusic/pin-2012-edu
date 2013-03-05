@@ -1,0 +1,10 @@
+- if current_user.is_teacher?
+  .course-chapters
+    - course.chapters.each do |chapter|
+      - url = "/courses/#{course.id}/browse_chapters?chapter=#{chapter.id}"
+      .chapter
+        .dd
+          .title= chapter.title
+        .homeworks
+        .homeworks-ops
+          %a.create-homework{:href=>"/homeworks/new?chapter_id=#{chapter.id}"} 新增作业

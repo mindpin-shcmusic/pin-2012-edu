@@ -53,3 +53,33 @@
             .attach
               .cp-count 章节 × #{cp_count}
               .hw-count 作业练习 x #{hw_count}
+
+- if current_user.is_teacher?
+  :ruby
+    courses = current_user.get_teacher_courses(:semester => Semester.now)
+
+  .page-model-show
+    .page-dashboard
+      .courses-title 你有 #{courses.count} 门课程可供浏览
+      .courses
+        - courses.each do |course|
+          :ruby
+            href = "/courses/#{course.id}"
+            src = course.cover_url
+            title = course.name
+            desc = sanitize course.desc
+            desc = desc.blank? ? '课程没有简介信息' : desc
+
+            cp_count = course.chapters.count
+            hw_count = course.homeworks.count
+
+          .course
+            %a.img{:href=>href}
+              = jimage src, :width=>80, :height=>80
+
+            .title
+              %a{:href=>href}= title
+            .desc= desc
+            .attach
+              .cp-count 章节 × #{cp_count}
+              .hw-count 作业练习 x #{hw_count}

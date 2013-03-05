@@ -1,18 +1,14 @@
 - hgoback '/courses'
 - hbreadcrumb '首页', '/'
 - hbreadcrumb @course.name, "/courses/#{@course.name}"
-- hbreadcrumb '编辑章节'
+- hbreadcrumb '编辑课程章节'
 
 .page-model-show
+  .page-course-show
+    .course-head
+      = page_head_cell @course.cover_url, @course.name, @course.desc
+
   .page-teaching-plan-show
-
-    .top
-      =link_to "创建题目", "/teaching_plans/#{@teaching_plan.id}/test_questions/new"
-
-    .head
-      %h1.title= @teaching_plan.title
-      .description= sanitize @teaching_plan.desc
-
     .chapters
       - if @teaching_plan.chapters.blank?
         .blank 还没有添加任何章节
@@ -25,8 +21,3 @@
       .btns
         .create-button= link_to '新增章节', 'javascript:;', :'data-url' => "/teaching_plans/#{@teaching_plan.id}/chapters"
         .preview-button= link_to "预览","/courses/#{@course.id}/browse_chapters"
-        .students
-          / 此处还不知道怎么做，暂时保持demo状态
-          .count 22 个学生参与此方案
-          / 此处还不知道怎么做，暂时保持demo状态
-          .edit= link_to '分配', '/f1/show'

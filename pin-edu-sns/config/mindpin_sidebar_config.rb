@@ -68,48 +68,11 @@ MindpinSidebar::Base.config do
   rule :teacher do
     group :resources, :name => '教师功能…' do
 
-      nav :dashboard, :name => '教学工作台', :url => '/dashboard' do
+      nav :dashboard, :name => '课程首页', :url => '/dashboard' do
         controller :index, :only => :dashboard
-
-        subnav :dashboard, :name => '信息概览', :url => '/dashboard' do
-          controller :index, :only => :dashboard
-        end
-
-        subnav :homeworks, :name => '布置的作业和实践', :url => '/homeworks' do
-          controller :homeworks
-          controller :homework_assigns
-        end
-
-        subnav :course_surveys, :name => '在线调查', :url => '/course_surveys' do
-          controller :course_surveys
-        end
-
-        subnav :questions, :name => '在线问答', :url => '/questions' do
-          controller :questions
-        end
       end
 
-      nav :'teaching-info', :name => '教学信息', :url => '/teachers' do
-        subnav :teachers, :name => '教师浏览', :url => '/teachers' do
-          controller :teachers, :only => :index
-        end
-
-        subnav :students, :name => '学生浏览', :url => '/students' do
-          controller :students, :only => :index
-        end
-
-        subnav :courses, :name => '课程浏览', :url => '/courses' do
-          controller :courses, :only => [:index,:show]
-        end
-
-        subnav :couse_subscriptions, :name => '订阅的课程', :url => '/courses/subscriptions' do
-          controller :courses, :only => :subscriptions
-        end
-      end
-
-      nav :'media-resources', :name => '媒体资源', :url => '/file' do
-        controller :media_resources
-
+      nav :media_resources, :name => '资源网盘', :url => '/file' do
         subnav :my_resources, :name => '我的文件夹', :url => '/file' do
           controller :media_resources
         end
@@ -120,12 +83,6 @@ MindpinSidebar::Base.config do
 
         subnav :public_resources, :name => '公共资源库', :url => '/public_resources' do
           controller :public_resources
-        end
-      end
-
-      nav :course, :name => '课程', :url => '/courses/curriculum' do
-        subnav :curriculum, :name => '我的课程表', :url => '/courses/curriculum' do
-          controller :courses, :only => :curriculum
         end
       end
 
@@ -140,6 +97,7 @@ MindpinSidebar::Base.config do
           controller :comments
         end
       end
+
     end
   end
 

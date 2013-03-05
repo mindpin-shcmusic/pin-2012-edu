@@ -1,15 +1,10 @@
 .chapter
   .title= chapter.title
-  .desc.bl= sanitize chapter.desc
+  .desc.bl= truncate_u chapter.desc, 70
   .items
-    / 此处还不知道怎么做，暂时保持demo状态
-    .homeworks
-      .edit= link_to '管理作业', homeworks_path(:teaching_plan_id => chapter.teaching_plan.id)
-      .count 0
-      .slides
-        .edit= link_to '管理课件', edit_chapter_path(chapter)
-        .count= chapter.course_wares.count
-      .publish.hide
-        .status 未发布
-        .edit= link_to '发布', 'javascript:;'
-      .remove= link_to '删除', 'javascript:;', :'data-url' => chapter_path(chapter)
+    .slides
+      .edit= link_to '编辑章节', edit_chapter_path(chapter)
+    .publish.hide
+      .status 未发布
+      .edit= link_to '发布', 'javascript:;'
+    .remove= link_to '删除', 'javascript:;', :'data-url' => chapter_path(chapter)

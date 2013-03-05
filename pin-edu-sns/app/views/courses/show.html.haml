@@ -12,10 +12,17 @@
   .page-course-show
     .course-head
       = page_head_cell @course.cover_url, @course.name, @course.desc
-
     - if !@cnav.blank?
       = render "courses/show_parts/#{@cnav}", :course=>@course
     - else
+
+      - if current_user.is_teacher?
+        .page-course-teacher-ops
+          .desc 任课教师可以进行以下操作：
+          .ops
+            %a.edit-chapters{:href=>"/courses/#{@course.id}/edit_chapters"} 编辑课程章节
+            %a.homework{:href=>"/courses/#{@course.id}/nav_homeworks"} 布置作业
+
       .course-resources
         = page_cell_head_and_more('课程章节', "课程下共有 #{@course.chapters.count} 个章节", '查看更多', "/courses/#{@course.id}/nav_chapters")
 

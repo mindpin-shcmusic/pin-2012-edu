@@ -223,6 +223,7 @@
       border-bottom:solid 1px #eee;
       padding-bottom:30px;
       margin-bottom:15px;
+      position:relative;
 
       .image{
         border:solid 1px #DADDE0;
@@ -280,6 +281,14 @@
           bottom:5px;right:0;
         }
 
+      }
+
+      .homeworks{
+      }
+      .homeworks-ops{
+        position:absolute;
+        top:0;right:0;
+        a{@include mini-button;}
       }
     }
   }
@@ -370,6 +379,26 @@
     .name{
       margin-left:32px + 10px;
       height:32px;line-height:32px;
+    }
+  }
+}
+
+.page-course-teacher-ops{
+  background-color:#FEF7C0;
+  border:solid 1px rgba(black, 0.1);
+  padding:15px;
+  margin-bottom:15px;
+
+  .desc{
+    color:#403e30;
+    margin-bottom:15px;
+  }
+
+  .ops{
+    @include floatfix;
+    a{
+      @include mini-button-blue;
+      margin-right:15px;
     }
   }
 }
