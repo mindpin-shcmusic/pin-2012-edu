@@ -154,9 +154,7 @@ class Course < ActiveRecord::Base
   end
 
   def homeworks
-    teaching_plan = get_teaching_plan
-    return [] if teaching_plan.blank?
-    teaching_plan.homeworks
+    self.chapters.map(&:homeworks).flatten
   end
 
   module UserMethods
