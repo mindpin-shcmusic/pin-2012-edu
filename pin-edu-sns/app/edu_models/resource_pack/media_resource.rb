@@ -344,6 +344,12 @@ class MediaResource < ActiveRecord::Base
     end
   end
 
+  def video_time_str
+    FfmpegMovieInfo.new(self.file_entity.attach.path).raw_duration
+  rescue
+    "00:00:00"
+  end
+
   private
     def self.process_same_file_name(creator,resource_path)
       resource = self.get(creator,resource_path)
