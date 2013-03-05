@@ -29,11 +29,7 @@
         = flash_player file_entity.attach.url
         .video-screenshots
           .desc 视频截图预览
-          - 1.upto 6 do |i|
-            :ruby
-              arr = file_entity.http_url.split('original')
-              arr.pop
-              src = arr.push("/screenshot_#{i}.jpg").join('original')
+          - file_entity.screenshot_urls[0...6].each do |src|
             .img
               = jimage src, :width=>160, :height=>120
 
