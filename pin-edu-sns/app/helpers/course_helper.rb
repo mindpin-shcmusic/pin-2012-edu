@@ -107,10 +107,7 @@ module CourseHelper
 
       cw = ch.course_wares[0]
       hash[:title] = ch.title
-
-      if !cw.blank?
-
-      end
+      hash[:url] = ch.cover_url
 
       hash
     end

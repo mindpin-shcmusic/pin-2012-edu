@@ -1,6 +1,6 @@
 .chapters
   - course.chapters.each do |chapter|
     .chapter
-      = page_head_cell '', chapter.title, chapter.desc
+      = jimage chapter.cover_url, :width=>200, :height=>150
 
 = link_to '浏览', "/courses/#{course.id}/browse_chapters"
