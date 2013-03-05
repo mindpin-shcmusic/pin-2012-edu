@@ -26,7 +26,7 @@
 
       - elsif file_entity.video_encode_success?
 
-        = video_tag file_entity
+        = flash_player file_entity.attach.url
         .video-screenshots
           .desc 视频截图预览
           - 1.upto 6 do |i|

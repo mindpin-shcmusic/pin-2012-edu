@@ -148,7 +148,7 @@ MindpinSidebar::Base.config do
   rule :student do
     group :resources, :name => '学生功能…' do
 
-      nav :dashboard, :name => '首页', :url => '/dashboard' do
+      nav :dashboard, :name => '课程首页', :url => '/dashboard' do
         controller :index, :only => :dashboard
       end
 
@@ -163,20 +163,6 @@ MindpinSidebar::Base.config do
 
         subnav :public_resources, :name => '公共资源库', :url => '/public_resources' do
           controller :public_resources
-        end
-      end
-
-      nav :course, :name => '课程', :url => '/courses/curriculum' do
-        subnav :curriculum, :name => '我的课程表', :url => '/courses/curriculum' do
-          controller :courses, :only => :curriculum
-        end
-
-        subnav :couses, :name => '课程浏览', :url => '/courses' do
-          controller :courses, :only => [:index,:show]
-        end
-
-        subnav :couse_subscriptions, :name => '订阅的课程', :url => '/courses/subscriptions' do
-          controller :courses, :only => :subscriptions
         end
       end
 
