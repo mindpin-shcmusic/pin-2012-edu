@@ -2,9 +2,6 @@
 .preview
   .label 课件预览
   .tabs
-    .navs.titles
-      - course_wares.each do |course_ware|
-        %a.title.nav{:href=>'javascript:;', :'data-cw-id' => course_ware.id}= course_ware.title
     .contents
       - course_wares.each_with_index do |course_ware, index|
         .kejian.content{:class => "course-ware-#{index+1}", :class => index == 0 ? 'current' : '', :'data-cw-id' => course_ware.id}
@@ -14,6 +11,13 @@
           - when :video
             - case course_ware.video_encode_status
             - when 'SUCCESS'
-              = flash_player course_ware.url
+              = flash_player course_ware.url, 480, 360
             - when 'ENCODING'
               = '视频正在转码'
+
+    .navs.titles
+      %label.d 视频列表
+      - i = 1
+      - course_wares.each do |course_ware|
+        %a.title.nav{:href=>'javascript:;', :'data-cw-id' => course_ware.id}= i
+        - i = i + 1

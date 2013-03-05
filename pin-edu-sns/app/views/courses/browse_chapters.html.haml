@@ -4,11 +4,6 @@
 - hbreadcrumb '预览章节'
 
 .page-model-show.page-fangan-review
-  .head
-    .h
-      %h1.title= @teaching_plan.title
-      .description= sanitize @teaching_plan.desc
-
   .bd
     .sidebar
       .label="章节选择"
@@ -21,3 +16,7 @@
 
     - if @current_chapter
       = render 'teaching_plans/parts/chapter_preview', :chapter => @current_chapter
+
+  .page-course-show
+    .course-head
+      = page_head_cell @course.cover_url, @course.name, @course.desc

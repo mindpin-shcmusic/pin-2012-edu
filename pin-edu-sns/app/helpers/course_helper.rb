@@ -102,13 +102,8 @@ module CourseHelper
   def page_course_resources(course)
     hashs = course.chapters.map do |ch|
       hash = Hash.new('')
-      hash[:url] = ''
-      hash[:title] = '无标题'
-
-      cw = ch.course_wares[0]
       hash[:title] = ch.title
       hash[:url] = ch.cover_url
-
       hash
     end
   end
