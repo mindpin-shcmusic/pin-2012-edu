@@ -16,14 +16,16 @@
       = mindpin_sidebar :admin
 
     .page-topbar
+      %a.topbar-logo{:href=>'/'} 返回首页
       = yield :topbar
 
-      .current-user
-        .name>
-          %span> 教务管理
-      .ops
-        %a.setting{:href=>'/admin/setting/password'} 设置密码
-        %a.logout{:href=>'/auth/logout'} 退出登录
+      .fl
+        .current-user
+          .name>
+            %span> 教务管理
+        .ops
+          %a.setting{:href=>'/admin/setting/password'} 设置密码
+          %a.logout{:href=>'/auth/logout'} 退出登录
 
     .page-content
       .page-breadcrumb.page-top-fixed
