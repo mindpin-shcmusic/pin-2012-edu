@@ -113,6 +113,6 @@ class HomeworksController < ApplicationController
 
   def destroy
     homework = Homework.find(params[:id])
-    redirect_to homework.destroy ? "/courses/#{homework.course.id}/nav_homeworks" : homework_path(homework)
+    render :text => homework.destroy ? "/courses/#{homework.course.id}/nav_homeworks" : homework_path(homework)
   end
 end

@@ -59,11 +59,14 @@ pie.load ->
           $comments = jQuery(res)
           $comments.appendTo($upload).hide().fadeIn(200)
 
-  jQuery('.page-model-show.homework .head .delete').click ->
+
+  jQuery('.page-model-show.homework .head .delete').click (event)->
+    event.stopPropagation()
+    event.preventDefault()
+    url = jQuery(this).attr('href')
     jQuery(this).confirm_dialog '确定要删除吗', =>
       jQuery.ajax
         url: url
         type: 'DELETE'
         success: (res)=>
-          $category.fadeOut 200, ->
-            $category.remove()
+          window.location = res
