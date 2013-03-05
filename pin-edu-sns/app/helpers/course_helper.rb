@@ -92,7 +92,7 @@ module CourseHelper
           jimage ih[:url], :width => 200, :height => 150
         end
         s2 = content_tag :div, ih[:title], :class => 'title'
-        content_tag :div, :class => 'cell' do
+        link_to ih[:link], :class => 'cell' do
           s1 + s2
         end
       end.join('').html_safe
@@ -104,6 +104,7 @@ module CourseHelper
       hash = Hash.new('')
       hash[:title] = ch.title
       hash[:url] = ch.cover_url
+      hash[:link] = "/courses/#{course.id}/browse_chapters?chapter=#{ch.id}"
       hash
     end
   end

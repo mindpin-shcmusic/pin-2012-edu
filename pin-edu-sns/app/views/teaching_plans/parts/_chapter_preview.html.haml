@@ -1,6 +1,6 @@
 - course_wares = chapter.course_wares
 .preview
-  .label 课件预览
+  .label #{chapter.title}
   .kejian.content{:class => "course-ware", :'data-cw-id' => @current_course_ware.id}
     - case @current_course_ware.content_kind
     - when :document

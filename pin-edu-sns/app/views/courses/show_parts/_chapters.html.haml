@@ -1,15 +1,18 @@
 .course-chapters
   - course.chapters.each do |chapter|
+    - url = "/courses/#{course.id}/browse_chapters?chapter=#{chapter.id}"
     .chapter
       .dd
         .title= chapter.title
         .desc= simple_format truncate_u(chapter.desc, 140)
-      .image= jimage chapter.cover_url, :width=>240, :height=>160
+      %a.image{:href=>url}
+        = jimage chapter.cover_url, :width=>240, :height=>160
 
       .videos
         .vt 章节课件与视频
-        %a.play{:href=>"/courses/#{course.id}/browse_chapters"} 打开浏览
+
+        %a.play{:href=>url} 打开浏览
         - i = 1
         - chapter.course_wares.each do |cw|
-          %a.video{:href=>"/courses/#{course.id}/browse_chapters"}= i
+          %a.video{:href=>"#{url}&course_ware=#{cw.id}"}= i
           - i = i + 1

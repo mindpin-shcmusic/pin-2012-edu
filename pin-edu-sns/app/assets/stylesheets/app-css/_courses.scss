@@ -902,12 +902,18 @@
           height:30px;line-height:30px;
           padding:0 8px;
           border-right:solid 1px #DADDE0;
-          @include border-radius(3px 0 0 3px);
           margin-left:-12px;
           margin-right:10px;
           font-weight:bold;
           font-size:12px;
         }
+      }
+
+      .chapter.current a{
+        background-color:white;
+        border:solid 1px ccc;
+        color:black;
+        border-bottom:solid 2px #3399FF;
       }
     }
 
@@ -945,6 +951,12 @@
           border-left:solid 1px #DADDE0;
           &:hover{
             background-color:rgba(black, 0.05);
+          }
+          &.current{
+            color:black;
+            background-color:white;
+            font-weight:bold;
+            border-left:solid 2px #3399FF;
           }
         }
         label.d{
