@@ -18,4 +18,18 @@ class Chapter < ActiveRecord::Base
     last_chapter ? last_chapter.title.chars.to_a[2].to_i + 1 : 1
   end
 
+  def cover_url
+    image_url = ""
+
+    course_ware = self.course_wares.first
+    if !course_ware.blank?
+      url = course_ware.screenshot_urls.first  
+      if !url.blank?
+        image_url = url
+      end
+    end
+
+    image_url
+  end
+
 end
