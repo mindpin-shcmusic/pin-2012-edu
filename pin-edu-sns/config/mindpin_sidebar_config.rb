@@ -24,10 +24,6 @@ MindpinSidebar::Base.config do
         controller :'admin/index'
       end
 
-      nav :teaching_plans, :name => '教学计划', :url => '/admin/teaching_plans' do
-        controller :'admin/teaching_plans'
-      end
-
       nav :students, :name => '学籍管理', :url => '/admin/students' do
         controller :'admin/students'
       end
