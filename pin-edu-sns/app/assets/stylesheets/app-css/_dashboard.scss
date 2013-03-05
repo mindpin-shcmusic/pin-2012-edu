@@ -284,6 +284,28 @@
       }
 
       .homeworks{
+        clear:both;
+        margin-left:50px;
+        font-size:12px;
+        .homework{
+          padding-bottom:15px;
+          position:relative;
+          .htitle{
+            margin-bottom:10px;
+            height:20px;line-height:20px;
+            font-size:14px;
+          }
+          .hdesc{
+            width:500px;
+          }
+          &:before{
+            content:"";
+            width:10px;height:10px;
+            background-color:#3399FF;
+            position:absolute;
+            top:6px;left:-13px;
+          }
+        }
       }
       .homeworks-ops{
         position:absolute;
