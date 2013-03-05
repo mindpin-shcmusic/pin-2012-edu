@@ -29,6 +29,8 @@ class CoursesController < ApplicationController
     @teaching_plan = @course.get_teaching_plan
     
     @current_chapter = params[:chapter] && @teaching_plan.chapters.find(params[:chapter]) || @teaching_plan.chapters.first
+
+    @current_course_ware = params[:course_ware] && @current_chapter.course_wares.find(params[:course_ware]) || @current_chapter.course_wares.first
   end
 
   def curriculum
