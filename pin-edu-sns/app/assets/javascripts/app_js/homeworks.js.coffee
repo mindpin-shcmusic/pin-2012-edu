@@ -2,13 +2,13 @@ pie.load ->
   # -------------------
 
   # 创建作业，增加需求项
-  jQuery('.page-model-form.homework .add-student-attachement-field').click ->
+  jQuery(document).on 'click', '.page-model-form.homework .add-student-attachement-field', ->
     attachement_field = "<textarea name='homework[homework_requirements_attributes][][title]' />"
     del_field = "<a href='javascript:;' class='delete'>×</a>"
     jQuery('.page-model-form.homework .student-attachement-fields').append("<div>#{attachement_field}#{del_field}</div>")
 
   # 删除需求项
-  jQuery('.page-model-form.homework .student-attachement-fields a.delete').on 'click', ->
+  jQuery(document).on 'click', '.page-model-form.homework .student-attachement-fields a.delete', ->
     jQuery(this).parent().remove()
 
   # --------------------
