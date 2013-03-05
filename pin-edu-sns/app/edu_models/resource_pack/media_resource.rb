@@ -10,7 +10,8 @@ class MediaResource < ActiveRecord::Base
              :foreign_key => 'creator_id'
 
   has_many   :media_resources,
-             :foreign_key => 'dir_id'
+             :foreign_key => 'dir_id',
+             :order => "name asc"
 
   belongs_to :course_ware
 
