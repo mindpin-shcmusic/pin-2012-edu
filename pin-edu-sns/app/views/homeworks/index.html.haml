@@ -10,16 +10,16 @@
 
 :ruby
   cols_hash = {
-    :title => 6,
+    :title => 3,
     :deadline => 3,
     :attach => 1,
-    :chapter => 4,
+    :chapter => 7,
     :kind => 2,
     :count => 4    
   }
 
 = page_top_fixed 'list-head' do
-  .head
+  .headtop
     - if current_user.is_teacher?
       = page_buttons do |p|
         = p.batch_destroy Homework
