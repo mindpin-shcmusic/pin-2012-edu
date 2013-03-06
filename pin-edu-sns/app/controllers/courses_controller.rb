@@ -72,6 +72,11 @@ class CoursesController < ApplicationController
     render :show
   end
 
+  def nav_ctest
+    @cnav = :ctest
+    render :show
+  end
+
 # ------------------
 
   private
