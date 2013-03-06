@@ -13,7 +13,8 @@
     .head
       .title= @homework.title
       .user #{user_link @homework.creator} 创建，#{jtime @homework.created_at}
-      .delete= link_to '删除作业', homework_path(@homework), :method => :delete
+      - if current_user == @homework.creator
+        .delete= link_to '删除作业', homework_path(@homework), :method => :delete
 
   = page_field :requirements, :title => '作业要求' do
     .ct= sanitize @homework.content

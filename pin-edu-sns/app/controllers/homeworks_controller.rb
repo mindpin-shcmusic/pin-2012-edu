@@ -112,6 +112,7 @@ class HomeworksController < ApplicationController
 
   def destroy
     homework = Homework.find(params[:id])
+    redirect_to root_path if current_user != homework.creator
     render :text => homework.destroy ? "/courses/#{homework.course.id}/nav_homeworks" : homework_path(homework)
   end
 end
