@@ -5,6 +5,8 @@
     - case @current_course_ware.content_kind
     - when :document
       = link_to '下载', @current_course_ware.url
+    - when :swf
+      = swf_tag(@current_course_ware.file_entity.http_url)
     - when :video
       - case @current_course_ware.video_encode_status
       - when 'SUCCESS'

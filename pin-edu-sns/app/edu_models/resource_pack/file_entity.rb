@@ -20,7 +20,8 @@ class FileEntity < ActiveRecord::Base
     :document => [
         'pdf', 'xls', 'doc', 'ppt', 
         'txt'
-      ].map{|x| file_content_type(x)}.uniq
+      ].map{|x| file_content_type(x)}.uniq,
+    :swf => ['swf'].map{|x| file_content_type(x)}.uniq
   }
 
   has_many :media_resources
@@ -41,6 +42,8 @@ class FileEntity < ActiveRecord::Base
       :image
     when *CONTENT_TYPES[:document]
       :document
+    when *CONTENT_TYPES[:swf]
+      :swf
     end
   end
 
