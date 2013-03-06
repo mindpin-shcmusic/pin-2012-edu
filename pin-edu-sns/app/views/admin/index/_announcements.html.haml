@@ -25,4 +25,4 @@
       = p.cell :title, announcement.title
       = p.cell :time, announcement.updated_at.to_s
       = p.cell :detail do
-        = link_to '打开查看', 'javascript:;'
+        = link_to '打开查看', "/admin/announcements/#{announcement.id}"
