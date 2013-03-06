@@ -12,7 +12,8 @@
       / 音乐播放
       %audio{:preload=>"auto"}
         %source{:src=>file_entity.http_url}
-
+    - elsif file_entity.content_kind == :swf
+      = swf_tag(file_entity.http_url)
     - elsif file_entity.is_video?
       - if file_entity.video_encoding?
         .state.encoding 视频正在进行转码，请等待转码完毕
