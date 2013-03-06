@@ -19,7 +19,7 @@
           - if @user.is_student?
             %span 学号
             %span= @user.student.sid
-          - else
+          - elsif @user.is_teacher?
             %span 工号
             %span= @user.teacher.tid
 
