@@ -51,7 +51,8 @@
     = homework.homework_teacher_attachments.count
   = p.cell :chapter do
     - if !chapter.blank?
-      = link_to hspan("#{chapter.course.name} - #{chapter.title}"), chapter_path(chapter)
+      - course = chapter.course
+      = link_to hspan("#{course.name} - #{chapter.title}"), "/courses/#{course.id}/nav_chapters"
     - else
       = "已删除"
   = p.cell :kind do
