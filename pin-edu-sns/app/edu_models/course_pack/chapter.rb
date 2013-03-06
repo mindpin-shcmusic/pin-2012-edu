@@ -19,6 +19,10 @@ class Chapter < ActiveRecord::Base
     last_chapter ? last_chapter.title.chars.to_a[2].to_i + 1 : 1
   end
 
+  def course
+    self.teaching_plan.course
+  end
+
   def cover_url
     image_url = ""
 
