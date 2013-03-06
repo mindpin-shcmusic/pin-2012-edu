@@ -7,15 +7,16 @@
   resource_name = truncate_u @media_resource.name, 16
   created_at = @media_resource.created_at
 
-.page-media-resource
-  .head
-    .avatar= avatar creator
-    .resource-name= resource_name
-    .user #{user_link creator} 上传，#{jtime created_at}
+.page-model-show
+  .page-media-resource
+    .head
+      .avatar= avatar creator
+      .resource-name= resource_name
+      .user #{user_link creator} 上传，#{jtime created_at}
 
-  = render 'aj/file_entity_preview', :file_entity=>@media_resource.file_entity
-  = render 'media_resources/parts/resource_share_state', :resource=>@media_resource
+    = render 'aj/file_entity_preview', :file_entity=>@media_resource.file_entity
+    = render 'media_resources/parts/resource_share_state', :resource=>@media_resource
 
-  = render 'media_resources/parts/resource_tag', :resource=>@media_resource
+    = render 'media_resources/parts/resource_tag', :resource=>@media_resource
 
-= jcomments @media_resource
+  = jcomments @media_resource

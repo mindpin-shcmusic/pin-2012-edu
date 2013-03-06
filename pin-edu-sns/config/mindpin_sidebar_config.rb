@@ -82,16 +82,24 @@ MindpinSidebar::Base.config do
         end
       end
 
-      nav :notice, :name => '系统通知', :url => '/announcements' do
+      nav :homeworks, :name => '作业', :url => '/homeworks' do
+        controller :homeworks
+      end
+
+      nav :questions, :name => '问答', :url => '/questions' do
+        controller :questions
+      end
+
+      nav :course_surveys, :name => '课程调查', :url => '/course_surveys' do
+        controller :course_surveys
+      end
+
+      nav :announcements, :name => '系统通知', :url => '/announcements' do
         controller :announcements
+      end
 
-        subnav :announcements, :name => '通知', :url => '/announcements' do
-          controller :announcements
-        end
-
-        subnav :comments, :name => '收到的评论', :url => '/comments/received' do
-          controller :comments
-        end
+      nav :comments, :name => '收到的评论', :url => '/comments/received' do
+        controller :comments
       end
 
     end
@@ -120,16 +128,24 @@ MindpinSidebar::Base.config do
         end
       end
 
-      nav :notice, :name => '系统通知', :url => '/announcements' do
+      nav :homeworks, :name => '作业', :url => '/homeworks' do
+        controller :homeworks
+      end
+
+      nav :questions, :name => '问答', :url => '/questions' do
+        controller :questions
+      end
+
+      nav :course_surveys, :name => '课程调查', :url => '/course_surveys' do
+        controller :course_surveys
+      end
+
+      nav :announcements, :name => '系统通知', :url => '/announcements' do
         controller :announcements
+      end
 
-        subnav :announcements, :name => '通知', :url => '/announcements' do
-          controller :announcements
-        end
-
-        subnav :comments, :name => '收到的评论', :url => '/comments/received' do
-          controller :comments
-        end
+      nav :comments, :name => '收到的评论', :url => '/comments/received' do
+        controller :comments
       end
 
     end
