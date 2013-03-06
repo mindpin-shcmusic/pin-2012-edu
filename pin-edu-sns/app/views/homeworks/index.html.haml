@@ -13,7 +13,7 @@
     :title => 6,
     :deadline => 3,
     :attach => 1,
-    :teaching_plan => 4,
+    :chapter => 4,
     :kind => 2,
     :count => 4    
   }
@@ -23,8 +23,8 @@
     - if current_user.is_teacher?
       = page_buttons do |p|
         = p.batch_destroy Homework
-        - if params[:teaching_plan_id]
-          = link_to '增加新作业', new_homework_path(:teaching_plan_id => params[:teaching_plan_id])
+        - if params[:chapter_id]
+          = link_to '增加新作业', new_homework_path(:chapter_id => params[:chapter_id])
 
     = list_pagination(@homeworks)
 
@@ -34,13 +34,13 @@
     = p.cell :title, '标题', :sortable => true
     = p.cell :deadline, '截止时间', :sortable => true
     = p.cell :attach, '附件'
-    = p.cell :teaching_plan, '所属教学方案'
+    = p.cell :chapter, '所属课程章节'
     = p.cell :kind, '类别', :sortable => true
     = p.cell :count, '已分配/已提交'
 
 = page_model_list @homeworks, :cols=>cols_hash, :class=>'homeworks' do |p|
   - homework = p.model
-  - teaching_plan = homework.teaching_plan
+  - chapter = homework.chapter
   - if current_user.is_teacher?
     = p.checkbox(homework)
   = p.cell :title do
@@ -49,9 +49,9 @@
     = homework.deadline.to_s
   = p.cell :attach do
     = homework.homework_teacher_attachments.count
-  = p.cell :teaching_plan do
-    - if !teaching_plan.blank?
-      = link_to hspan("#{teaching_plan.course.name} - #{teaching_plan.title}"), teaching_plan_path(teaching_plan)
+  = p.cell :chapter do
+    - if !chapter.blank?
+      = link_to hspan("#{chapter.course.name} - #{chapter.title}"), chapter_path(chapter)
     - else
       = "已删除"
   = p.cell :kind do
