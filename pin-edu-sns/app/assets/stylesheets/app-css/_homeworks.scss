@@ -161,6 +161,11 @@
       margin-top:6px;
       .u-name{font-weight:bold;}
     }
+    .delete a{
+      @include mini-button-red;
+      margin-top:15px;
+    }
+
     position:relative;
 
     .ops{
