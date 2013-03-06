@@ -258,6 +258,7 @@ MindpinEduSns::Application.routes.draw do
       get :nav_teachers
       get :nav_chapters
       get :nav_homeworks
+      get :nav_ctest
       get :browse_chapters
     end
 
