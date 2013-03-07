@@ -1,7 +1,7 @@
 # encoding: utf-8
 class HomeworksController < ApplicationController
-  before_filter :pre_load_teacher, :except => [:show, :index, :create_student_upload, :download_teacher_zip, :set_submitted, :student]
   before_filter :login_required
+  before_filter :pre_load_teacher, :only => [:create, :new, :destroy]
 
   def pre_load_teacher
     return redirect_to '/' unless current_user.is_teacher?
