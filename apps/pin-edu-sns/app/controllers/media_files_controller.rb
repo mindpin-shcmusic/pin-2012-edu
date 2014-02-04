@@ -1,7 +1,26 @@
+require 'open-uri'
+require 'nokogiri'
 class MediaFilesController < ApplicationController
-  before_filter :login_required, :except => [:create_by_edu,:encode_complete]
+  before_filter :login_required, :except => [:create_by_edu, :encode_complete, :file_merge_complete]
+
+  # 我的资源
+  def mine
+    @kind = params[:kind]
+    category_id = params[:category_id]
+    @current_category = category_id.blank? ? nil : Category.find(category_id)
+
+    @media_files = current_user.media_files.with_kind(@kind).paginate(:per_page=>50, :page=>1)
+
+    if request.headers['X-PJAX']
+      render :layout => false
+    end
+
+  end
+
+
   def index
     @level1_categories = Category.roots
+    # @current_category = Category.find(params[:category_id]) if params[:category_id]
     if params[:index_alt]
       render :template => "media_files/index_alt"
     end
@@ -12,7 +31,7 @@ class MediaFilesController < ApplicationController
   end
   
   def create
-    @media_file = MediaFile.create(:category_id=>nil,:file=>params[:files],:place=>MediaFile::PLACE_OSS,:creator=>current_user,:uuid=>UUIDTools::UUID.random_create.to_s)
+    @media_file = MediaFile.create(:category_id=>nil,:file=>params[:files],:place=>MediaFile::PLACE_OSS,:creator=>current_user)
     redirect_to @media_file
   rescue ActiveRecord::RecordInvalid => e
     respond_to do |format|
@@ -42,7 +61,6 @@ class MediaFilesController < ApplicationController
       :file_content_type=>params[:type],
       :file_file_size=>params[:size],
       :file_updated_at=>Time.now,
-      :uuid=>params[:uuid],
       :place=>MediaFile::PLACE_EDU,
       :video_encode_status=>video_encode_status,
       :creator_id=>params[:creator_id])
@@ -55,7 +73,7 @@ class MediaFilesController < ApplicationController
   end
   
   def encode_complete
-    @media_file = MediaFile.find_by_uuid(params[:uuid])
+    @media_file = MediaFile.find(params[:id])
     @media_file.video_encode_status = params[:result]
     @media_file.save
     render :text=>"success"
@@ -65,5 +83,18 @@ class MediaFilesController < ApplicationController
     @media_files = MediaFile.all
   end
 
+  def file_merge_complete
+    @media_file = MediaFile.find(params[:id])
+    @media_file.file_merged = true
+    @media_file.save
+    render :text=>"success"
+  end
+  
+  
+  def rss
+    media_data = MediaFile.all
+    @feed = MediaFile.build_rss_feed(media_data)
+    render :layout => false
+  end
 
 end

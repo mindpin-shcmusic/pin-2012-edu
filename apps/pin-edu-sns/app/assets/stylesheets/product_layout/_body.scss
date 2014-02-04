@@ -1,7 +1,8 @@
 html{
   width:100%;
   height:100%;
-  overflow:hidden;
+  overflow-x:hidden;
+  overflow-y:scroll;
 }
 
 body{
@@ -11,8 +12,6 @@ body{
   color:#333;
   width:100%;
   height:100%;
-  overflow-x:hidden;
-  overflow-y:scroll;
 
   a{
     //color:#1C5AC4;
@@ -25,10 +24,10 @@ body{
   .page-container{
     height:100%;
     margin:0 auto;
-    background-color:#ececec;
+    background-color:#F8F8F8;
 
     position:relative;
-    &:after{
+    &:before{
       content:"";
       position:absolute;
       height:100%;
@@ -39,17 +38,29 @@ body{
       pointer-events:none;
     }
 
-    &.col6{width:1440px;}
-    &.col5{width:1200px;}
-    &.col4{width:960px;}
+    &.col6{
+      width:1440px;
+      .page-header{width:1199px;}
+    }
+    &.col5{
+      width:1200px;
+      .page-header{width:959px;}
+    }
+    &.col4{
+      width:960px;
+      .page-header{width:719px;}
+    }
 
     .page-nav{
       position:fixed;
       width:238px;
-      background-color:#FFF8ED;
-      border:solid 1px #FCDFBE;
+      //background-color:#FFF8ED;
+      //border:solid 1px #FCDFBE;
       //background-color:#FFFAE8;
       //border:solid 1px #bdbdbd;
+      background-color:#ECECEC;
+      border:solid 1px #bdbdbd;
+
       border-top:none;border-bottom:none;
       height:100%;
       
@@ -87,25 +98,26 @@ body{
           float:left;
           width:96px;height:96px;
           overflow:hidden;
-          @include border-radius(3px);
-          img{width:96px;height:96px;@include border-radius(3px);}
+          @include border-radius(2px);
+          img{width:96px;height:96px;@include border-radius(2px);}
           padding:3px;
           border:dashed 1px #bdbdbd;
+          background-color:rgba(white, 0.6);
         }
         .name{
-          margin-left:112px;font-size:14px;
+          margin-left:116px;font-size:14px;
           margin-bottom:7px;
           a{color:#333;}
         }
         .setting{
-          margin-left:112px;
+          margin-left:116px;
         }
       }
 
       .sp{
         height:0;
-        border-top:solid 1px #FCDFBE;
-        //border-top:solid 1px #eee;
+        //border-top:solid 1px #FCDFBE;
+        border-top:solid 1px #C6C6C6;
         border-bottom:solid 1px white;
         margin:6px 12px;
       }
@@ -135,6 +147,8 @@ body{
       border-bottom:solid 1px #bdbdbd;
       height:40px;line-height:40px;
       margin-left:240px;
+      position:fixed;
+      z-index:10;
       
       .settings{
         position:absolute;
@@ -187,15 +201,53 @@ body{
       .user{
         overflow:hidden;
         float:right;margin-right:20px;
-        .current-user, .logout{
+        .current-user{
           float:left;
-          margin-left:20px;
+          margin-right:12px;
+          overflow:hidden;
+        }
+        a.logout{
+          float:left;
+          border:solid 1px #ADADAD;
+          @include border-radius(3px);
+          @include gradient(#FFFFFF, #F3F3F3);
+          width:30px;height:24px;
+          font-size:0;line-height:30em;
+          margin-top:7px;
+          overflow:hidden;
+          position:relative;
+
+          &:before{
+            content:"";
+            position:absolute;
+            width:8px;height:8px;
+            border:solid 2px #333;
+            @include border-radius(10px);
+            top:6px;left:9px;
+          }
+          &:after{
+            content:"";
+            position:absolute;
+            width:2px;
+            background-color:#333;
+            border:solid 2px #FEFEFE;
+            @include border-radius(10px);
+            top:3px;left:12px;
+            height:8px;
+          }
+
+          &:hover{
+            @include gradient(#F7F7F7, #F3F3F3);
+            &:before{border-color:#5080D8;}
+            &:after{background-color:#5080D8;}
+          }
         }
       }
     }
     
     .page-content{
       margin-left:240px;
+      padding-top:41px;
       background-color:#f8f8f8;
       //border-bottom:dashed 1px #bdbdbd;
       position:relative;

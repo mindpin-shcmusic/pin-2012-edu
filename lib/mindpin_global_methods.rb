@@ -106,3 +106,15 @@ def _pin_url_for_env(domains,site_name,path)
   site_url = "http://#{domain}"
   File.join(site_url, path)
 end
+
+def file_content_type(file_name)
+  MIME::Types.type_for(file_name).first.content_type
+rescue
+  ext = file_name.split(".")[-1]
+  case ext
+  when 'rmvb'
+    'application/vnd.rn-realmedia'
+  else
+    'application/octet-stream'
+  end
+end

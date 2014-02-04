@@ -28,13 +28,13 @@
         .items
           .sp
           %a.item.upload{:href=>'/'} 上传资源
-          %a.item.mine{:href=>'javascript:;'} 我的资源
+          %a.item.mine{:href=>'/media_files/mine', :'data-pjax'=>'.page-content'} 我的资源
           .sp
-          %a.item.video{:href=>'javascript:;'} 视频
-          %a.item.audio{:href=>'javascript:;'} 音乐
-          %a.item.image{:href=>'javascript:;'} 图片
-          %a.item.ppt{:href=>'javascript:;'} 课件
-          %a.item.others{:href=>'javascript:;'} 其他
+          %a.item.video{:href=>'/media_files/mine?kind=video', :'data-pjax'=>'.page-content'} 视频
+          %a.item.audio{:href=>'/media_files/mine?kind=audio', :'data-pjax'=>'.page-content'} 音频
+          %a.item.image{:href=>'/media_files/mine?kind=image', :'data-pjax'=>'.page-content'} 图片
+          %a.item.document{:href=>'/media_files/mine?kind=document', :'data-pjax'=>'.page-content'} 文档
+          %a.item.other{:href=>'/media_files/mine?kind=other', :'data-pjax'=>'.page-content'} 其他
           .sp
 
       .page-header
@@ -47,7 +47,7 @@
 
         .user
           .current-user 欢迎你，#{current_user.name}
-          .logout=link_to '退出登录', pin_url_for('auth', '/logout')
+          %a.logout{:href=>pin_url_for('auth', '/logout'), :title=>'退出登录'} 退出登录
 
       .page-content
         = yield
